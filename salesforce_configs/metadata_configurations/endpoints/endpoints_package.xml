@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>endpoint_for_contact_outbound_message</members>
+        <members>GESB_AC</members>
+        <members>GESB_AV</members>
+        <name>RemoteSiteSetting</name>
+    </types>
+    <types>
+        <members>Contact.contact_outbound_message</members>
+        <name>WorkflowOutboundMessage</name>
+    </types>
+    <version>39.0</version>
+</Package>
