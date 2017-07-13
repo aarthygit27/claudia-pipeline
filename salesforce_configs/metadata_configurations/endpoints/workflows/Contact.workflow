@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <outboundMessages>
         <fullName>contact_outbound_message</fullName>
         <apiVersion>39.0</apiVersion>
         <description>send all contact fields to an endpoint</description>
-        <endpointUrl>https://artan.extra.sonera.fi:61100/SFOutboundContactService</endpointUrl>
+        <endpointUrl>https://emily.extra.sonera.fi:62100/SFOutboundContactService</endpointUrl>
         <fields>AccountId</fields>
         <fields>AssistantName</fields>
         <fields>AssistantPhone</fields>
@@ -68,11 +69,13 @@
         <fields>Salutation</fields>
         <fields>SystemModstamp</fields>
         <fields>Title</fields>
+        <fields>telia_3rd_party__c</fields>
         <fields>telia_AIDA_ID__c</fields>
         <fields>telia_Contact_SF_ID__c</fields>
         <fields>telia_Last_Modified_By_External_User__c</fields>
         <fields>telia_OutboundMessageError__c</fields>
         <fields>telia_OutboundMessageStatus__c</fields>
+        <fields>telia_Phone__c</fields>
         <fields>telia_aai_all__c</fields>
         <fields>telia_aai_assurance__c</fields>
         <fields>telia_aai_billing__c</fields>
@@ -167,7 +170,7 @@
         <fields>vlocity_cmt__UserId__c</fields>
         <fields>vlocity_cmt__WebSite__c</fields>
         <includeSessionId>false</includeSessionId>
-        <integrationUser>gesb.integration@teliacompany.com</integrationUser>
+        <integrationUser>ginte@teliacompany.com</integrationUser>
         <name>contact outbound message</name>
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>
