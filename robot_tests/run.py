@@ -24,6 +24,8 @@ def extend_pythonpath(libroot):
         path = path_join(libroot, dirname)
         if isdir(path):
            sys.path.insert(1, path)
+    config_parser_path = os.path.realpath(path_join(CURDIR, "..", "config"))
+    sys.path.insert(1,config_parser_path)
 
 def _create_docs_path(docroot, filepath):
     _, filename = path_split(filepath)

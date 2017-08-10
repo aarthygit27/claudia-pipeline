@@ -1,0 +1,39 @@
+[systeam]
+username: fbl11955@teliacompany.com.systeam
+password: Cp4r2P7hT2T4!332!2rRtn
+token: zNsC5SYVgMO12cNImB0kkkYm
+instance: test
+
+[preprod]
+username: fbl11955@teliacompany.com.preprod
+password: Cp4r2P7hT2T4
+token: dUCxZhR8IUdvmZ3IoYZnObUCg
+instance: test
+
+[b2bdev]
+username: fbl11955@teliacompany.com.b2bdev
+password: K4dRR2!!fGt
+token: W7d5BekIj5BwrX8gAO27zHPx
+instance: test
+
+[dev]
+username: fbl11955@teliacompany.com.dev
+password: K4dRR2!!fGt
+token: pAgLpy96gNcZhxEYuJYWFaBYT
+instance: test
+
+[int]
+username: fbl11955@teliacompany.com.int
+password: K23!kUTr41S
+token: SzKpQFwp1Vc5z7g74GH0wQcSp
+instance: test
+
+[prod]
+username: fbl11955@teliacompany.com
+password: Trt1e!!gXCxw34!8
+token: 18f9iUD37VsNoBw9ZTChOpuqV
+instance: prod
+
+[wiki]
+username: fbl11955
+password: Cp4r2P7hT2T4

@@ -1,13 +1,16 @@
 import ConfigParser
 import os
 
-script_dir = os.path.dirname(__file__)
+def setup(env="salesforce"):
+    global CONF
+    script_dir = os.path.dirname(__file__)
 
-relative_path = "../config/salesforce"
-conf_file_path = os.path.join(script_dir, relative_path)
+    conf_file_path = os.path.join(script_dir, env)
 
-CONF = ConfigParser.ConfigParser()
-CONF.read(conf_file_path)
+    CONF = ConfigParser.ConfigParser()
+    CONF.read(conf_file_path)
+
+setup()
 
 def ConfigSectionMap(section):
     dict1 = {}

@@ -3,7 +3,7 @@ Resource            ${PROJECTROOT}${/}resources${/}salesforce_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}multibella_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}uad_keywords.robot
 
-Library             libs.config_parser
+Library             config_parser
 
 Suite Setup         Open Browser And Go To Login Page
 Suite Teardown      Close All Browsers
