@@ -7,9 +7,10 @@ Suite Teardown          Close Browser
 *** Variables ***
 ${USERNAME}             fbl11955@teliacompany.com.preprod
 ${PASSWORD}             Cp4r2P7hT2T4
-${AddressValidation}    https://artan.extra.sonera.fi:61502/Adapters/Global/AddressValidation/Service/ValidateAddressService.serviceagent/ValidateAddressPortTypeEndpoint1
-${AvailabilityCheck}    https://artan.extra.sonera.fi:61503/Adapters/Global/AvailabilityCheck/Service/AvailabilityCheckService.serviceagent/AvailabilityCheckPortTypeEndpoint1
-${BEHIND_PROXY}         ${FALSE}
+${AddressValidation}    https://emily.extra.sonera.fi:62502/Adapters/Global/AddressValidation/Service/ValidateAddressService.serviceagent/ValidateAddressPortTypeEndpoint1
+${AvailabilityCheck}    https://emily.extra.sonera.fi:62503/Adapters/Global/AvailabilityCheck/Service/AvailabilityCheckService.serviceagent/AvailabilityCheckPortTypeEndpoint1
+${CaseManagement}       https://emily.extra.sonera.fi:62501/Adapters/B2BSelfcare/CRMCaseManagementCommon-service0.serviceagent/CRMCaseManagementCommonEndpoint0
+${BEHIND_PROXY}         False
 ${LOGIN_PAGE}           https://test.salesforce.com
 ${BROWSER}              Firefox
 ${LOGOUT_BUTTON}        //div[@id='userNav-menuItems']//a[text()='Logout']
@@ -23,6 +24,7 @@ Change Named Credentials
     Navigate To Named Credentials Page
     Set AvailabilityCheck
     Set AddressValidation
+    Set CaseManagement
 
 
 *** Keywords ***
@@ -114,6 +116,12 @@ Set AddressValidation
     Click Element       xpath=//a[contains(@title, 'AddressValidation')]
     Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: AddressValidation']
     Input Text          xpath=//label[contains(text(),'URL')]/../following-sibling::td//textarea      ${AddressValidation}
+    Click Save
+
+Set CaseManagement
+    Click Element       xpath=//a[contains(@title, 'CaseManagement')]
+    Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: CaseManagement']
+    Input Text          xpath=//label[contains(text(),'URL')]/../following-sibling::td//textarea      ${CaseManagement}
     Click Save
 
 Click Save
