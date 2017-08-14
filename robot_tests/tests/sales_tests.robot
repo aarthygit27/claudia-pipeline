@@ -251,7 +251,7 @@ Revert Account Owner Back To GESB Integration
     Change Account Owner    GESB Integration
 
 Close active opportunity
-    [Documentation]     Template for BQA-42 - BQA-45 tests
+    [Documentation]     Template for BQA-42 - BQA-45, and BQA-70 tests
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Go to Account   ${TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}

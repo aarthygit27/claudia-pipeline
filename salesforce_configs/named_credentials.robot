@@ -86,8 +86,8 @@ Navigate To Setup Page
     Run Keyword If    '${r}'=='False'           Try From Menubar
 
 Try From Dropdown
-    Click Element       id=userNavButton
-    Click Element       xpath=//div[@id='userNav-menuItems']/a[text()='Setup']
+    Click Element       id=globalHeaderNameMink
+    Click Element       xpath=//a[@id='globalHeaderNameMink']/following-sibling::ul//a[@title='Setup']
     Wait Until Page Contains Element        id=setupSearch      5 seconds
 
 Try From Menubar
