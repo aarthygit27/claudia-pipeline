@@ -110,7 +110,7 @@ try:
     #########################################
     total = 0
     for defect in defect_classes:
-        string = urllib.urlencode({"jql": "project = {0} and issuetype = {1} and 'Defect Class' = '{2}' and status not in (Closed, Resolved, Rejected)".format(project, issue_type, defect)})
+        string = urllib.urlencode({"jql": "project = {0} and issuetype = {1} and 'Defect Class' = '{2}' and status not in (Closed, Resolved, Rejected, \"Development Complete\", Testing)".format(project, issue_type, defect)})
         r = requests.get(jira_url + "/rest/api/2/search?" + string + "&maxResults=0", auth=HTTPBasicAuth(jira_user, jira_passwd))
         print defect, r.json()['total']
         total += r.json()['total']
