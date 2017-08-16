@@ -170,6 +170,10 @@ Click Edit Contact Person
 Click Feed Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_FEED}
 
+Click New Event
+    Click Feed Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${NEW_EVENT_BUTTON_AT_DETAILS}
+
 Click New Opportunity (Details Tab)
     ${status}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword And Return Status
     ...     Element Should Be Visible     ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}
@@ -340,6 +344,22 @@ Fill Close Reason And Comment And Save
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Value       ${CLOSE_REASON_FIELD}//select    08 Other
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      ${CLOSE_COMMENT_FIELD}/textarea         Close comment for ${OPPORTUNITY_NAME}
     Save Opportunity
+
+Fill Event Data
+    [Documentation]     Enter following data: Subject, Event Type (Meeting), Reason, set Start and End Date in future
+    [Arguments]     ${contact_person}=${OPPO_TEST_CONTACT}
+    ...             ${account}=${TEST_ACCOUNT}
+    ${subject}=     Create Unique Name      Test Event Subject
+    ${start_date}=      Get Date From Future    1
+    ${end_date}=        Get Date From Future    2
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_SUBJECT_FIELD}      ${subject}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Select From List By Value   ${NEW_EVENT_EVENT_TYPE_FIELD}   Meeting
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Select From List By Value   ${NEW_EVENT_REASON_FIELD}       New Customer
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_START_FIELD}    ${start_date}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_END_FIELD}      ${end_date}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_CONTACT_PERSON_FIELD}       ${contact_person}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_ACCOUNT_FIELD}      ${account}
+    Set Test Variable       ${TEST_SUBJECT_NAME}        ${subject}
 
 Fill Mandatory Classification
     [Arguments]    ${account_name}=${OPPO_TEST_ACCOUNT}

@@ -38,6 +38,7 @@ ${MORE_DROPDOWN_AT_DETAILS}                 //span[@class='optionLabel' and cont
 ${NEW_CONTACT_AT_MORE_DROPDOWN}             ul//span[contains(text(), 'New Contact')]
 ${NEW_CONTACT_BUTTON_AT_DETAILS}            //span[@class= 'optionLabel' and text()= 'New Contact']
 ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}        //span[@class= 'optionLabel' and text()= 'New Opportunity']
+${NEW_EVENT_BUTTON_AT_DETAILS}              //span[@class= 'optionLabel' and text()= 'New Event']
 ${NEW_OPPORTUNITY_AT_MORE_DROPDOWN}         ul//span[contains(text(), 'New Opportunity')]
 ${ACCOUNT_DETAILS}                          //a[@title='Details']
 ${FIELD_DETAIL}                             //h2[contains(text(),'Detail')]
@@ -68,3 +69,12 @@ ${CPQ_CREATE_ASSETS}                        //span[contains(text(), 'Create Asse
 ${VIEW_RECORD_BUTTON}                       //button[@title='View Record']
 ${SUBMIT_ORDER_TO_DELIVERY}                 //input[@title='Submit Order']  # //td[@id='topButtonRow']
 ${SAVE_ORDER_BUTTON}                        //.[contains(text(), 'Order Detail')]/../following-sibling::td//.[@title='Save']
+
+# New Event
+${NEW_EVENT_SUBJECT_FIELD}                  //div[./label[text()='Subject']]/following-sibling::div/input
+${NEW_EVENT_EVENT_TYPE_FIELD}               //div[./label[text()='Event Type']]/following-sibling::div//select
+${NEW_EVENT_REASON_FIELD}                   //div[./label[text()='Reason']]/following-sibling::div//select
+${NEW_EVENT_START_FIELD}                    //div[./label[text()='Start']]/following-sibling::div//input
+${NEW_EVENT_END_FIELD}                      //div[./label[text()='End']]/following-sibling::div//input
+${NEW_EVENT_CONTACT_PERSON_FIELD}           //input[@title='Name' and contains(@id,'evt')]
+${NEW_EVENT_ACCOUNT_FIELD}                  //input[@title='Related To' and contains(@id,'evt')]

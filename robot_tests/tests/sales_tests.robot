@@ -205,6 +205,14 @@ Sales Admin: Update closed opportunity
     # Closed Not Won      Not Won
     # Closed Won          Won         Negotiate and Close
 
+Quick actions: create Meeting
+    [Tags]      BQA-17      wip
+    [Setup]     Login to Salesforce and Close All Tabs
+    Go to Account       ${TEST_ACCOUNT}
+    Open Details Tab At Account View
+    Click New Event
+    Fill Event Data
+
 *** Keywords ***
 
 Check If Contact Person Exists And Create New One If Not
