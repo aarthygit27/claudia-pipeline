@@ -70,7 +70,7 @@ Addresses Should Be Available
     ${frame}=       Get Account Tab Iframe Xpath    Availability
     Run Inside Iframe   ${frame}        Wait Until Page Contains Element
     ...     //tr[.//td[text()='${address}']/following-sibling::td[text()='${street_number}']/following-sibling::td[text()='${postal_code}']/following-sibling::td[text()='${city}']]
-    ...     10s
+    ...     30s
 
 App Is Open
     [Arguments]         ${app_name}
@@ -748,6 +748,10 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
 
 Update Opportunity Close Date And Close Reason
     [Arguments]     ${days}=2       ${reason}=09 Customer Postponed
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        p3      10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Label       p3      Opportunity
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //input[@title='Continue']
     ${date}=        Get Date From Future    ${days}
     ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
