@@ -82,7 +82,7 @@ Run Inside Iframe
     [Arguments]         ${frame}    ${keyword}     @{args}
     Wait Until Page Contains Element    ${frame}      10 seconds
     Run Keyword and Ignore Error    Select Frame        ${frame}
-    ${ret}=     Run Keyword And Return      ${keyword}    @{args}
+    ${ret}=     Run Keyword      ${keyword}    @{args}
     [Teardown]          Unselect Frame
     [Return]    ${ret}
 

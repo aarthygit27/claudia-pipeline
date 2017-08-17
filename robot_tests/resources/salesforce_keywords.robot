@@ -145,6 +145,12 @@ Click Contact Person Details
 Click Create Contact Person Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
 
+Click Create Event Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
+    # If there are multiple contacts with the same name, we must choose the correct contact person from a list.  By default one is already selected
+    ${multiple_contacts}=       Run Keyword And Return Status     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[text()[contains(.,'Multiple items found')]]
+    Run Keyword If      ${multiple_contacts}    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
+
 Click Create New Opportunity
     Run Inside Iframe    ${IFRAME}    Click Element    ${NEW_OPPORTUNITY_BUTTON}
     Sleep    1
@@ -163,8 +169,11 @@ Click Details Button
     ...     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_DETAILS}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element       ${FIELD_DETAIL}
 
-Click Edit Contact Person
+Click Edit Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    ${EDIT_BUTTON}
+
+Click Edit Contact Person
+    Click Edit Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Contact Edit')]
 
 Click Feed Button
@@ -307,6 +316,13 @@ Dismiss Mobile Phone Registration
     Capture Page Screenshot
     Click Element       //a[text()="I Don't Want to Register My Phone"]
 
+Edit Event Description and WIG Areas
+    Click Edit Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      ${NEW_EVENT_DESCRIPTION_FIELD}      Description for event ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${NEW_EVENT_WIG_GLORY_FIELD}
+    Click Bottom Save Button
+
 Edit Opportunity
     Open Details View At Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
@@ -359,7 +375,7 @@ Fill Event Data
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_END_FIELD}      ${end_date}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_CONTACT_PERSON_FIELD}       ${contact_person}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_ACCOUNT_FIELD}      ${account}
-    Set Test Variable       ${TEST_SUBJECT_NAME}        ${subject}
+    Set Test Variable       ${TEST_EVENT_SUBJECT}        ${subject}
 
 Fill Mandatory Classification
     [Arguments]    ${account_name}=${OPPO_TEST_ACCOUNT}
@@ -795,6 +811,15 @@ Verify That Error Messages Are Shown
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(text(),'Error: Invalid Data.')]      15 s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_REASON_FIELD}/div[contains(@class,'errorMsg')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_COMMENT_FIELD}/div[@class='errorMsg']
+
+Verify That Event Has Correct Data
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Wait Until Page Contains Element    //td[text()='Subject']/following-sibling::td/div[text()='${TEST_EVENT_SUBJECT}']    15s
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Element Text Should Be              //td[text()='Event Type']/following-sibling::td/div     Meeting
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Element Text Should Be              //td[text()='Reason']/following-sibling::td/div         New Customer
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Element Text Should Be              //td[text()='Related To']/following-sibling::td/div     ${TEST_ACCOUNT}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Element Text Should Be              //td[text()='Name']/following-sibling::td/div           ${OPPO_TEST_CONTACT}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div           Description for event ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Page Should Contain Element         //td[text()='Glory']/following-sibling::td//img[@title='Checked']
 
 Verify That Opportunity Creation Succeeded
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     10 s

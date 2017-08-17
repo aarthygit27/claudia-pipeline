@@ -78,3 +78,5 @@ ${NEW_EVENT_START_FIELD}                    //div[./label[text()='Start']]/follo
 ${NEW_EVENT_END_FIELD}                      //div[./label[text()='End']]/following-sibling::div//input
 ${NEW_EVENT_CONTACT_PERSON_FIELD}           //input[@title='Name' and contains(@id,'evt')]
 ${NEW_EVENT_ACCOUNT_FIELD}                  //input[@title='Related To' and contains(@id,'evt')]
+${NEW_EVENT_DESCRIPTION_FIELD}              //td[./label[text()='Description']]/following-sibling::td/textarea
+${NEW_EVENT_WIG_GLORY_FIELD}                //td[./label[text()='Glory']]/following-sibling::td/input

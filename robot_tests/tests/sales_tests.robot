@@ -206,12 +206,16 @@ Sales Admin: Update closed opportunity
     # Closed Won          Won         Negotiate and Close
 
 Quick actions: create Meeting
-    [Tags]      BQA-17      wip
+    [Tags]      BQA-17
     [Setup]     Login to Salesforce and Close All Tabs
     Go to Account       ${TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Event
     Fill Event Data
+    Click Create Event Button
+    Go To Account       ${TEST_EVENT_SUBJECT}
+    Edit Event Description and WIG Areas
+    Verify That Event Has Correct Data
 
 *** Keywords ***
 
