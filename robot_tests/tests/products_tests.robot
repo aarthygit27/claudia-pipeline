@@ -238,6 +238,7 @@ Availability Check Test Case
     ...             ${city}=${EMPTY}
     ...             ${address}=${EMPTY}
     ...             ${street_number}=${EMPTY}
+    ${passed}=      Set Variable        FAILED
     Log to Console    ${address} ${street_number}, ${postal_code} ${city}
     Go To Account       ${OPPO_TEST_ACCOUNT}
     Open Dashboard Tab At Account View
@@ -245,3 +246,5 @@ Availability Check Test Case
     Fill Address Validation Information     ${postal_code}      ${city}     ${address}      ${street_number}
     Addresses Should Be Available           ${postal_code}      ${city}     ${address}      ${street_number}
     Select First Address and Verify Products Are Found
+    ${passed}=      Set Variable        PASSED
+    [Teardown]      Log to Console      ${passed}
