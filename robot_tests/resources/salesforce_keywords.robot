@@ -454,7 +454,7 @@ Go to Account
     Wait Until Keyword Succeeds     30s     5s      Search And Verify Account Is Found    ${target_account}
     Select Account    ${target_account}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
-    Wait Until Keyword Succeeds    10s      1s      Close Search Tab
+    Wait Until Keyword Succeeds    20s      1s      Close Search Tab
 
 Go to other view and then back to Sales Plan
     Open Details Tab At Account View
