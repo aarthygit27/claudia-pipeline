@@ -107,11 +107,11 @@ Check that contact has been saved and can be found under proper Account
     Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${contact_person_name_related_to_account}
 
 Click Account Tab Button And It Should Stay Open
-    [Arguments]     ${tab}
+    [Arguments]     ${tab}      ${direction}=left
     [Documentation]     Salesforce has a tendency of randomly switching back to an old
     ...                 tab so we need to wait for a moment to see if the tab stays active
     # Small resolutions have small arrows to navigate to different tabs
-    Run Keyword And Ignore Error    Click Element   //div[contains(@class,'x-tab-scroller-left')]
+    Run Keyword And Ignore Error    Click Element   //div[contains(@class,'x-tab-scroller-${direction}')]
     Click Element    //span[@class='tabText' and contains(text(), '${tab}')]
     Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
     Sleep    2
@@ -555,7 +555,7 @@ Open Contacts
     Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    ${NEW_CONTACT_BUTTON}   10 seconds
 
 Open Dashboard Tab At Account View
-    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard
+    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard    right
 
 Open Details Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Details
@@ -752,6 +752,8 @@ Update Opportunity Close Date And Close Reason
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        p3      10s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Label       p3      Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //input[@title='Continue']
+    ${xpath}=       Set Variable        //td[./label[text()[contains(.,'Close Date')]]]/following-sibling::td//input
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}//input     ${date}
     ${date}=        Get Date From Future    ${days}
     ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
