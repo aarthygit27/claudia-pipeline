@@ -201,9 +201,10 @@ Sales Admin: Update closed opportunity
     [Tags]      BQA-70      wip
     [Template]      Update Closed Opportunity Test Case
     Cancelled           Cancelled
-    # Closed Lost         Lost
-    # Closed Not Won      Not Won
-    # Closed Won          Won         Negotiate and Close
+    Closed Lost         Lost
+    Closed Not Won      Not Won
+    Closed Won          Won         Negotiate and Close
+    [Teardown]      No Operation
 
 Quick actions: create Meeting
     [Tags]      BQA-17
@@ -309,3 +310,4 @@ Update Closed Opportunity Test Case
     Login to Salesforce and Close All Tabs      Sales Admin User
     Go To Account   ${OPPORTUNITY_NAME}
     Update Opportunity Close Date And Close Reason
+    [Teardown]      Close Tabs And Logout

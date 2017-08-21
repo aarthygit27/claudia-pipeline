@@ -598,7 +598,10 @@ Search Salesforce
 
 Searched Item Should Be Visible
     [Arguments]         ${account_name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']
+    ${visible}=     Run Keyword and Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']
+    # Sometimes the search shows more options. If we reload the page, the extra results shuold vanish.
+    Run Keyword Unless      ${visible}      Reload Page
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']       20s
 
 Search (Setup)
     [Arguments]         ${item}
@@ -748,21 +751,24 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
 
 Update Opportunity Close Date And Close Reason
     [Arguments]     ${days}=2       ${reason}=09 Customer Postponed
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]      10s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        p3      10s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Label       p3      Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //input[@title='Continue']
     ${xpath}=       Set Variable        //td[./label[text()[contains(.,'Close Date')]]]/following-sibling::td//input
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}//input     ${date}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        ${xpath}        10s
     ${date}=        Get Date From Future    ${days}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}     ${date}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Value       //td[./label[text()[contains(.,'Close Reason')]]]/following-sibling::td//select     ${reason}
+    # ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}//input     ${date}
     ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}//input     ${date}
-    ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Element Is Visible       InlineEditDialogContent
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List by Value   //div[@id='InlineEditDialogContent']//td[text()='Close Reason']/following-sibling::td//select   ${reason}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //div[@id='InlineEditDialog_buttons']/input[@value='OK']
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Element Is Visible       InlineEditDialogContent
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List by Value   //div[@id='InlineEditDialogContent']//td[text()='Close Reason']/following-sibling::td//select   ${reason}
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //div[@id='InlineEditDialog_buttons']/input[@value='OK']
     Click Bottom Save Button
 
 Verify That Business Customer Is Terminated
