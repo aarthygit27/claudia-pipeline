@@ -5,11 +5,12 @@ Resource            ${PROJECTROOT}${/}resources${/}uad_keywords.robot
 
 Library             config_parser
 
-Suite Setup         Open Browser And Go To Login Page
-Suite Teardown      Close All Browsers
+# Suite Setup         Open Browser And Go To Login Page
+# Suite Teardown      Close All Browsers
 
+Test Setup          Open Browser And Go To Login Page
 #Test Setup          Login to Salesforce
-Test Teardown       Close Tabs And Logout
+Test Teardown       Close All Browsers
 Force Tags          sales
 
 *** Variables ***
