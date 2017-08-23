@@ -1,18 +1,18 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import os
-import sys
+# #!/usr/bin/env python
+# # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+import os, sys, re, time
+
 import requests
 from requests.auth import HTTPBasicAuth
+
+from datetime import datetime, timedelta
+from robot.api import ExecutionResult, ResultVisitor
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 CONFIG_PATH = os.path.realpath(os.path.join(PROJECT_ROOT, "..", "config"))
 sys.path.append(PROJECT_ROOT)
 sys.path.append(CONFIG_PATH)
-
-OUTPUT_FILE = os.path.join(PROJECT_ROOT, "testOutput", "tmp", "output.xml")
-
-import xml.etree.ElementTree as ET
 
 import config_parser
 from config_parser import ConfigSectionMap
@@ -24,24 +24,79 @@ influx_passwd = influxdb["password"]
 influx_url = influxdb["url"]
 influx_write = influx_url + '/write?db=verso'
 
+class KeywordTimes(ResultVisitor):
+    """ Counts the time used in execution of a keyword and send the data to InfluxDB by using InfluxDBExporter class.
 
-def change_to_seconds(time):
-    time = time.split()[1].split(":")
-    seconds = float(time[0]) * 3600 + float(time[1]) * 60 + float(time[2])
-    return seconds
+    Keyword execution data is collected from robot framework test output file (usually output.xml).
 
-if __name__ == "__main__":
-    tree = ET.parse(OUTPUT_FILE)
-    root = tree.getroot()
-    keyword = root.find(".//kw[@name='Search And Add Product To Cart (CPQ)']")
-    kw_name =  keyword.get("name")
-    status = keyword.find("status")
-    kw_status = status.get("status")
-    start =  change_to_seconds(status.get("starttime"))
-    end = change_to_seconds(status.get("endtime"))
-    elapsed = end - start
+    Indented to be run as python script in the root of the project in a following way:
 
-    requests.post(influx_write,
-                    data="keyword_monitor,keyword=" + kw_name.replace(" ", "\ ") + ",status=" + kw_status.replace(" ", "\ ") + " keyword=" + kw_name.replace(" ", "\ ") + ",elapsedTime=" + str(elapsed) + ",status=" + kw_status.replace(" ", "\ "),
+    python libs\result_exporter\KeywordTimes.py    robot_framework_output.xml    keyword name/pattern
+
+    Example:
+
+    python libs\result_exporter\KeywordTimes.py output.xml "Customer Search Is Complete"
+
+    Code is based on https://gist.github.com/Tattoo/6208942.
+
+    """
+
+    VAR_PATTERN = re.compile(r'^(\$|\@)\{[^\}]+\}(, \$\{[^\}]+\})* = ')
+    COUNT = 1
+
+    def __init__(self, robot_file, target_kw_name):
+        self.robot_output_file = robot_file
+        self.target_keyword_name = target_kw_name
+        self.keywords = {}
+
+    def end_keyword(self, keyword):
+        name = self._get_name(keyword)
+        if self.target_keyword_name in name:
+            new_name = name + ' ' + str(self.COUNT)
+            (dt, msecs) = keyword.endtime.strip().split(".")
+            dt = datetime(*time.strptime(dt, "%Y%m%d %H:%M:%S")[0:6])
+            mseconds = timedelta(microseconds=int(msecs))
+            fulldatetime = dt + mseconds
+            self.keywords[new_name] = [new_name, 0, 0]
+            self.keywords[new_name][1] = keyword.elapsedtime
+            self.keywords[new_name][2] = time.mktime(fulldatetime.timetuple())
+            self.COUNT += 1
+
+    def _get_name(self, keyword):
+        name = keyword.name
+        m = self.VAR_PATTERN.search(name)
+        if m:
+            return name[m.end():]
+        return name
+
+
+def process(output_file, keyword_name, dryrun=False):
+    """ Process robot report and fetch following data related to keyword:
+    total time (ms) | Unix timestamp | Keyword name
+
+    After prosessing send data to InfluxDB using InfluxDBExporter.
+
+    :param output_file: robot test report xml.
+    :param keyword_name: robot keyword which data is parsed from report
+    :return: 505 |   1432552546.0 | "customers_keywords.Customer Search Is Complete 1"
+    """
+    result = ExecutionResult(output_file)
+    times = KeywordTimes(output_file, keyword_name)
+    result.visit(times)
+    s = sorted(times.keywords.values(), lambda a, b: b[1] - a[1])
+    print 'Total time (ms) | Unix timestamp | Keyword name'
+    for k, d, ut in s:
+        print str(d).rjust(15) + ' | ' + str(ut).rjust(14) + (' | "%s"' % k)
+        # Skip data export when running tests etc.
+        if not dryrun:
+            requests.post(influx_write,
+                    data="keyword_monitor,keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name.replace(" ", "\ ") + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut),
                     auth=HTTPBasicAuth(influx_user, influx_passwd))
+            time.sleep(0.1)     # Ensure we get a different timestamp
+    return s
 
+
+if __name__ == '__main__' and __package__ is None:
+    robot_output_file = sys.argv[1]
+    for target_keyword_name in sys.argv[2:]:
+        process(robot_output_file, target_keyword_name)
