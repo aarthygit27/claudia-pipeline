@@ -1,0 +1,9 @@
+[jira]
+username: devopsbot
+password: ca46d95476f1363684b5d8853
+url: https://devopsjira.verso.sonera.fi
+
+[influxdb]
+username: verso
+password: gRWzPJHzuEDmELS3zVt75vWdX5Fv8Ans
+url: https://influxdb.verso.sonera.fi
