@@ -114,7 +114,7 @@ Käyttötuki
     Telia Käyttötuki    Muu tuote
 
 Web Contact Center
-    [Tags]      BQA-86    wip   test-next
+    [Tags]      BQA-86    wip
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Kontakti L    Telia Kontakti
 
@@ -151,7 +151,7 @@ Devices-as-a-Service (DataInfo)
 Devices Tablets
     [Tags]      BQA-93
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    iPad Air 2 32GB WiFi + Cellular Kulta    Muu tuote
+    iPad Air 2 32GB WiFi + Cellular Kulta Telia Laitesopimus    Muu tuote
 
 Devices Laptops
     [Tags]      BQA-94    wip    no-product-yet

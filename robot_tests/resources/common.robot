@@ -48,6 +48,10 @@ Logout From All Systems
     Run Keyword If      ${salesforce_open}      Run Keyword and Ignore Error    Close Tabs And Logout   # Salesforce
     Run Keyword and Ignore Error    MUBE Logout CRM         # MultiBella
 
+Logout From All Systems and Close Browser
+    Logout From All Systems
+    Close Browser
+
 Open Browser And Go To Login Page
     Run Keyword If    '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)
     ...     ELSE        Open Browser        ${LOGIN_PAGE}       ${BROWSER}

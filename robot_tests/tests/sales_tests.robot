@@ -6,11 +6,10 @@ Resource            ${PROJECTROOT}${/}resources${/}uad_keywords.robot
 Library             config_parser
 
 # Suite Setup         Open Browser And Go To Login Page
-# Suite Teardown      Close All Browsers
+Suite Teardown      Close All Browsers
 
 Test Setup          Open Browser And Go To Login Page
-#Test Setup          Login to Salesforce
-Test Teardown       Close All Browsers
+Test Teardown       Logout From All Systems and Close Browser
 Force Tags          sales
 
 *** Variables ***
@@ -27,20 +26,20 @@ ${TEST_PASSIVE_ACCOUNT}                     T. E. Roos Oy
 
 Contact: Add new contact (valid data)
     [Tags]    add_new_contact    BQA-1
-    [Setup]    Login to Salesforce And Close All Tabs
+    Go To Salesforce and Login
     Go to Account    ${TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory information and save new contact
     Check that contact has been saved and can be found under proper Account
-    [Teardown]    Logout From Salesforce
+    # [Teardown]    Logout From Salesforce
 
 Contact: Add new contact (invalid data)
     [Tags]    add_new_contact_invalid    BQA-1
-    [Setup]    Login to Salesforce And Close All Tabs
+    Go To Salesforce and Login
     Go to Account    ${TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory (invalid) information and verify cp was not saved
-    [Teardown]    Logout From Salesforce
+    # [Teardown]    Logout From Salesforce
 
 Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     [Tags]      add_new_contact     BQA-53      BQA-1835    smoke
@@ -58,21 +57,21 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
-    [Teardown]    Logout From All Systems
+    # [Teardown]    Logout From All Systems
 
 Sales Admin: Change Account owner
     [Tags]      BQA-8
-    [Setup]     Login to Salesforce and Close All Tabs      Sales Admin User
     [Documentation]     Change the owner of ${TEST_ACCOUNT} to Sales admin. Then revert the changes.
+    Go To Salesforce and Login      Sales Admin User
     Go To Account   ${TEST_ACCOUNT}
     Change Account Owner    Sales Admin
     Verify that Owner Has Changed   Sales Admin
     [Teardown]  Run Keywords    Revert Account Owner Back To GESB Integration   AND
-    ...                         Logout From Salesforce
+    ...                         Logout From All Systems and Close Browser
 
 Update Contact Person in SalesForce
     [Tags]      BQA-117    wip
-    [Setup]    Login to Salesforce and Close All Tabs      Sales Admin User
+    Go To Salesforce and Login      Sales Admin User
     Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
@@ -80,11 +79,11 @@ Update Contact Person in SalesForce
     Update Contact Person Email And Phone
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Email And Phone Are Updated
-    [Teardown]    Logout From All Systems
+    # [Teardown]    Logout From All Systems
 
 Sales Process: Create opportunity from Account
     [Tags]      BQA-27
-    [Setup]     Login to Salesforce and Close All Tabs
+    Go To Salesforce and Login
     Go To Account   ${TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Creation Succeeded
@@ -95,57 +94,57 @@ Sales Process: Create opportunity from Account
 Opportunity: Closing active opportunity as cancelled
     [Tags]      BQA-42
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Setup]     Login to Salesforce and Close All Tabs
+    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Cancelled    Cancelled
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Closing active opportunity as lost
     [Tags]      BQA-43
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Setup]     Login to Salesforce and Close All Tabs
+    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Closed Lost    Lost
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Closing active opportunity as not won
     [Tags]      BQA-44
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Setup]     Login to Salesforce and Close All Tabs
+    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Closed Not Won    Not Won
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Closing active opportunity as won
     [Tags]      BQA-45
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Setup]     Login to Salesforce and Close All Tabs
+    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Closed Won    Won    Negotiate and Close
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Sales Admin: Change Account owner for Group Account
     [Tags]      BQA-5    wip
-    [Setup]     Create Test Account With Admin User     Group
-    Login to Salesforce and Close All Tabs      Sales Admin User
+    Create Test Account With Admin User     Group
+    Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_GROUP_ACCOUNT_NAME}
     Change Account Owner    Sales Admin
     Verify that Owner Has Changed   Sales Admin
     Go to Account   ${TEST_ACCOUNT_NAME}
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Sales Admin: Remove Account owner
     [Tags]      BQA-7   wip
-    [Setup]     Create Test Account With Admin User     Billing
-    Login to Salesforce and Close All Tabs      Sales Admin User
+    Create Test Account With Admin User     Billing
+    Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_ACCOUNT_NAME}
     # TODO
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     [Tags]    BQA-1840      smoke
-    [Setup]    Go To Salesforce and Login
     [Documentation]     The beginning of the test is the same as Contact: Add new contact (valid data) test case (BQA-1)
+    Go To Salesforce and Login
     Go to Account    ${TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory information and save new contact
@@ -156,11 +155,11 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     Wait Until Contact Person Is Found In MultiBella
     UAD Go to Main Page
     Contact Person Should Be Found In MIT UAD   ${TEST_ACCOUNT_CUSTOMER_ID}
-    [Teardown]    Logout From All Systems
+    # [Teardown]    Logout From All Systems
 
 Sales Process: Create/update Sales Plan
     [Tags]      BQA-24      wip
-    [Setup]     Go to Salesforce and Login
+    Go to Salesforce and Login
     Go to Account    ${TEST_ACCOUNT}
     Open Sales Plan Tab At Account View
     Create New Sales Plan
@@ -168,11 +167,11 @@ Sales Process: Create/update Sales Plan
     Add Solution Area and update Solution Sub Area data
     Go to other view and then back to Sales Plan
     Verify that updated values are visible in Sales Plan
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Contact: Update contact
     [Tags]      BQA-23
-    [Setup]     Login to Salesforce and Close All Tabs
+    Go To Salesforce and Login
     Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
@@ -182,19 +181,19 @@ Contact: Update contact
     Verify That Sales Role Is Updated       Business Contact
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Sales Role Is Updated
-    [Teardown]  Logout From All Systems
+    # [Teardown]  Logout From All Systems
 
 Opportunity: Check that opportunity cannot be created for a Group Account
     [Tags]      BQA-40
-    [Setup]     Create Test Account With Admin User     Group
-    Login to Salesforce and Close All Tabs
+    Create Test Account With Admin User     Group
+    Go To Salesforce and Login
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That User Cannot Create New Opportunity
-    [Teardown]  Close Tabs And Logout
+    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Check that opportunity cannot be created for Account with passive legal status
     [Tags]      BQA-41
-    [Setup]     Login to Salesforce and Close All Tabs
+    Go To Salesforce and Login
     Go to Account       ${TEST_PASSIVE_ACCOUNT}
     Try To Create New Opportunity And It Should Fail
 
@@ -205,11 +204,11 @@ Sales Admin: Update closed opportunity
     Closed Lost         Lost
     Closed Not Won      Not Won
     Closed Won          Won         Negotiate and Close
-    [Teardown]      No Operation
+    # [Teardown]      No Operation
 
 Quick actions: create Meeting
     [Tags]      BQA-17
-    [Setup]     Login to Salesforce and Close All Tabs
+    Go To Salesforce and Login
     Go to Account       ${TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Event
@@ -267,6 +266,7 @@ Revert Account Owner Back To GESB Integration
 Close active opportunity
     [Documentation]     Template for BQA-42 - BQA-45, and BQA-70 tests
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
+    Open Browser And Go To Login Page
     Go to Account   ${TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
     Verify That Opportunity Is Found With Search
@@ -305,10 +305,11 @@ Wait Until Contact Person Is Found In MultiBella
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Log to Console    ${status}
-    Login to Salesforce and Close All Tabs
+    Open Browser And Go To Login Page
+    Go To Salesforce and Login
     Close active Opportunity    ${stage}    ${status}       ${original_stage}
     Close Tabs And Logout
     Login to Salesforce and Close All Tabs      Sales Admin User
     Go To Account   ${OPPORTUNITY_NAME}
     Update Opportunity Close Date And Close Reason
-    [Teardown]      Close Tabs And Logout
+    [Teardown]      Logout From All Systems And Close Browser

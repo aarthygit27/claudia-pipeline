@@ -478,8 +478,9 @@ Go To Salesforce
     Login Page Should Be Open
 
 Go To Salesforce and Login
+    [Arguments]     ${user}=Digisales User
     Go to Salesforce
-    Login To Salesforce And Close All Tabs
+    Login To Salesforce And Close All Tabs      ${user}
 
 Log Error Message
     [Arguments]    ${error_msg_field}
