@@ -13,10 +13,10 @@ Test Teardown       Logout From All Systems and Close Browser
 Force Tags          sales
 
 *** Variables ***
-${TEST_ACCOUNT}                             Gavetec Oy
-${OPPO_TEST_ACCOUNT}                        Gavetec Oy
-${MUBE_CUSTOMER_ID}                         2140131-3   # Putki Pasi
-${TEST_ACCOUNT_CUSTOMER_ID}                 0750491-4   # Gavetec Oy
+${TEST_ACCOUNT}                             Juleco
+# ${OPPO_TEST_ACCOUNT}                        Juleco
+${MUBE_CUSTOMER_ID}                         2030101-1   # Juleco
+${TEST_ACCOUNT_CUSTOMER_ID}                 2030101-1   # Juleco
 ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${EMPTY}    # 1916290
 ${CONTACT_PERSON_NAME}                      ${EMPTY}    # Test Contact Person 77590434
 ${PRODUCT}                                  ${EMPTY}    # required for creating Opportunities
