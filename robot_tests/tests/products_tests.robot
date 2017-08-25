@@ -213,6 +213,7 @@ Create CPQ
     Select Sales Type For Order (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
+    Click View Record (CPQ)
     # Click Create Assets (CPQ)
     Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
     Submit Order To Delivery (CPQ)

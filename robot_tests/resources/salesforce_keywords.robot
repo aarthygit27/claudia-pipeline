@@ -17,8 +17,7 @@ Add Account For Contact Person
 Add Contact Person To Product Order
     [Arguments]    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${EDIT_BUTTON}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']      10s
+    Wait Until Keyword Succeeds       20s     1s      Click Edit Button And Wait Product Order Edit Opens
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
     Sleep   1
@@ -171,6 +170,10 @@ Click Details Button
 
 Click Edit Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    ${EDIT_BUTTON}
+
+Click Edit Button And Wait Product Order Edit Opens
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${EDIT_BUTTON}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']      10s
 
 Click Edit Contact Person
     Click Edit Button

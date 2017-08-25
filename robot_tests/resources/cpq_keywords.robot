@@ -41,7 +41,7 @@ Click View Record (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_RECORD_BUTTON}    30 seconds
     Wait Until Keyword Succeeds    20 s    3 s
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${VIEW_RECORD_BUTTON}
-    Wait Until Keyword Succeeds    5 s     1 s      Select Window    new
+    # Wait Until Keyword Succeeds    5 s     1 s      Select Window    new
 
 Click View Quote And Go Back To CPQ
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        View Quote      20s
