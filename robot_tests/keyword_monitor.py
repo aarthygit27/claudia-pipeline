@@ -57,7 +57,7 @@ class KeywordTimes(ResultVisitor):
             dt = datetime(*time.strptime(dt, "%Y%m%d %H:%M:%S")[0:6])
             mseconds = timedelta(microseconds=int(msecs))
             fulldatetime = dt + mseconds
-            self.keywords[new_name] = [new_name, 0, 0]
+            self.keywords[new_name] = [new_name, 0, 0, keyword.status]
             self.keywords[new_name][1] = keyword.elapsedtime
             self.keywords[new_name][2] = time.mktime(fulldatetime.timetuple())
             self.COUNT += 1
@@ -84,13 +84,12 @@ def process(output_file, keyword_name, dryrun=False):
     times = KeywordTimes(output_file, keyword_name)
     result.visit(times)
     s = sorted(times.keywords.values(), lambda a, b: b[1] - a[1])
-    print 'Total time (ms) | Unix timestamp | Keyword name'
-    for k, d, ut in s:
-        print str(d).rjust(15) + ' | ' + str(ut).rjust(14) + (' | "%s"' % k)
+    for k, d, ut, stat in s:
+        print str(d).rjust(15) + ' | ' + str(ut).rjust(14) + ' | ' + stat.rjust(6) + (' | "%s"' % k)
         # Skip data export when running tests etc.
         if not dryrun:
             requests.post(influx_write,
-                    data="keyword_monitor,keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut),
+                    data="keyword_monitor,keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=" + stat,
                     auth=HTTPBasicAuth(influx_user, influx_passwd))
             time.sleep(0.1)     # Ensure we get a different timestamp
     return s
@@ -98,5 +97,6 @@ def process(output_file, keyword_name, dryrun=False):
 
 if __name__ == '__main__' and __package__ is None:
     robot_output_file = sys.argv[1]
+    print 'Total time (ms) | Unix timestamp | Status | Keyword name'
     for target_keyword_name in sys.argv[2:]:
         process(robot_output_file, target_keyword_name)
