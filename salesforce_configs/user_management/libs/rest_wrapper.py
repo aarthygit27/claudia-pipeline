@@ -304,7 +304,6 @@ class RestWrapper(object):
         return False
 
     def reset_user_password(self, user_id):
-        data = { "isExpired": 1 }
-        r = self._session.post(self._rest_base + "/sobjects/User/{0}/password".format(user_id) , headers=self._headers, data=json.dumps(data))
+        r = self._session.delete(self._rest_base + "/sobjects/User/{0}/password".format(user_id) , headers=self._headers)
         return r
 
