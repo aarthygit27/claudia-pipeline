@@ -31,7 +31,6 @@ Contact: Add new contact (valid data)
     Open Details and choose New Contact from More tab
     Enter mandatory information and save new contact
     Check that contact has been saved and can be found under proper Account
-    # [Teardown]    Logout From Salesforce
 
 Contact: Add new contact (invalid data)
     [Tags]    add_new_contact_invalid    BQA-1
@@ -39,7 +38,6 @@ Contact: Add new contact (invalid data)
     Go to Account    ${TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory (invalid) information and verify cp was not saved
-    # [Teardown]    Logout From Salesforce
 
 Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     [Tags]      add_new_contact     BQA-53      BQA-1835    smoke
@@ -57,7 +55,6 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
-    # [Teardown]    Logout From All Systems
 
 Sales Admin: Change Account owner
     [Tags]      BQA-8
@@ -79,7 +76,6 @@ Update Contact Person in SalesForce
     Update Contact Person Email And Phone
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Email And Phone Are Updated
-    # [Teardown]    Logout From All Systems
 
 Sales Process: Create opportunity from Account
     [Tags]      BQA-27
@@ -94,34 +90,26 @@ Sales Process: Create opportunity from Account
 Opportunity: Closing active opportunity as cancelled
     [Tags]      BQA-42
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Cancelled    Cancelled
-    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Closing active opportunity as lost
     [Tags]      BQA-43
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Closed Lost    Lost
-    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Closing active opportunity as not won
     [Tags]      BQA-44
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Closed Not Won    Not Won
-    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Closing active opportunity as won
     [Tags]      BQA-45
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    # [Setup]     Go To Salesforce and Login
     [Template]      Close active opportunity
     Closed Won    Won    Negotiate and Close
-    # [Teardown]  Close Tabs And Logout
 
 Sales Admin: Change Account owner for Group Account
     [Tags]      BQA-5    wip
@@ -131,7 +119,6 @@ Sales Admin: Change Account owner for Group Account
     Change Account Owner    Sales Admin
     Verify that Owner Has Changed   Sales Admin
     Go to Account   ${TEST_ACCOUNT_NAME}
-    # [Teardown]  Close Tabs And Logout
 
 Sales Admin: Remove Account owner
     [Tags]      BQA-7   wip
@@ -139,7 +126,6 @@ Sales Admin: Remove Account owner
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_ACCOUNT_NAME}
     # TODO
-    # [Teardown]  Close Tabs And Logout
 
 Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     [Tags]    BQA-1840      smoke
@@ -155,7 +141,6 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     Wait Until Contact Person Is Found In MultiBella
     UAD Go to Main Page
     Contact Person Should Be Found In MIT UAD   ${TEST_ACCOUNT_CUSTOMER_ID}
-    # [Teardown]    Logout From All Systems
 
 Sales Process: Create/update Sales Plan
     [Tags]      BQA-24      wip
@@ -167,7 +152,6 @@ Sales Process: Create/update Sales Plan
     Add Solution Area and update Solution Sub Area data
     Go to other view and then back to Sales Plan
     Verify that updated values are visible in Sales Plan
-    # [Teardown]  Close Tabs And Logout
 
 Contact: Update contact
     [Tags]      BQA-23
@@ -181,7 +165,6 @@ Contact: Update contact
     Verify That Sales Role Is Updated       Business Contact
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Sales Role Is Updated
-    # [Teardown]  Logout From All Systems
 
 Opportunity: Check that opportunity cannot be created for a Group Account
     [Tags]      BQA-40
@@ -189,7 +172,6 @@ Opportunity: Check that opportunity cannot be created for a Group Account
     Go To Salesforce and Login
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That User Cannot Create New Opportunity
-    # [Teardown]  Close Tabs And Logout
 
 Opportunity: Check that opportunity cannot be created for Account with passive legal status
     [Tags]      BQA-41
@@ -204,7 +186,6 @@ Sales Admin: Update closed opportunity
     Closed Lost         Lost
     Closed Not Won      Not Won
     Closed Won          Won         Negotiate and Close
-    # [Teardown]      No Operation
 
 Quick actions: create Meeting
     [Tags]      BQA-17
@@ -217,6 +198,17 @@ Quick actions: create Meeting
     Go To Account       ${TEST_EVENT_SUBJECT}
     Edit Event Description and WIG Areas
     Verify That Event Has Correct Data
+
+Quick actions: create Opportunity from Account (Feed) by Customer Care user
+    [Tags]      BQA-19      wip
+    # 1. Go to Account
+    # 2. Choose New Opportunity (if not visible then via More tab)
+    # 3. Choose Account, enter opportunity name and description and Save
+    # 4. Close date is automatically give two days ahead.
+    # 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
+    Go To Salesforce and Login      Customer Care User
+    Go to Account    ${TEST_ACCOUNT}
+    Create New Opportunity For Customer
 
 *** Keywords ***
 
