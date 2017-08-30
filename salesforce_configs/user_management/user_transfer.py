@@ -51,7 +51,7 @@ if __name__ == "__main__":
             if rw.get_user_info_from_salesforce(id)["IsActive"]:
                 print "User '{0}' ({1}) was supposed be deactivated, but was active".format(u, salesforce_users[u]["Name"])
                 continue
-            print "User", u, "({0}) deactivated.".format(salesforce_users[u]["Name"])
+            print "User", u, "({0}) deactivated.".format(salesforce_users[u]["Name"].encode("utf-8"))
 
     # Create a list with all Salesforce users in lower case to prevent typo errors
     current_users = map(lambda x: x.lower(), salesforce_users.keys())
