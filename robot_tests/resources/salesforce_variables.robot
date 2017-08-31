@@ -12,7 +12,7 @@ ${CUSTOMER_CARE_USER}                       custcare@teliacompany.com.preprod
 ${SALES_ADMIN_USER}                         saleadm@teliacompany.com.preprod
 ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.preprod
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
-${PASSWORD}                                 PahaPassu7
+${PASSWORD}                                 PahaPassu1
 
 ${NEW_OPPORTUNITY_BUTTON}                   //input[contains(@title,'New Opportunity')]
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
