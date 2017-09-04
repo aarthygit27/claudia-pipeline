@@ -109,7 +109,6 @@ Search And Add Product To Cart (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text                              ${CPQ_SEARCH_FIELD}    ${target_product}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Enter On                          ${CPQ_SEARCH_FIELD}
     Wait Until Keyword Succeeds     30s    1s   Select Exact Product                    ${target_product}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      20s
 
 Select Exact Product
     [Arguments]    ${target_product}
@@ -126,8 +125,10 @@ Select Exact Product
     \    Exit For Loop If    ${exact_product}
     Run Keyword If    ${exact_product}    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s    Click Element
     ...    //div[@layout-name='cpq-product-list']/ng-include/div/div[@index='${i}']//p[normalize-space()='${target_product}']/../../following-sibling::div//button[contains(text(),'Add to Cart')]
-    Run Keyword If    ${exact_product}    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      10s
     ...     ELSE    Fail    ${target_product} not found from search results
+
+    Run Keyword If    ${exact_product}      Wait Until Product Appears In Cart (CPQ)      ${target_product}
+
 
 Select Sales Type For Order (CPQ)
     ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
@@ -150,3 +151,7 @@ Verify That Product In Cart Is Correct
     ${product_in_cart}=    Set Variable
     ...    //div[contains(@class, 'cpq-cart-item-title')]//div[contains(text(), '${target_product}')]
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
+
+Wait Until Product Appears In Cart (CPQ)
+    [Arguments]     ${target_product}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      20s
