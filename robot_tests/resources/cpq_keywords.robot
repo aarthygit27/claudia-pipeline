@@ -124,6 +124,7 @@ Fill Required Information For Microsoft Office 365
 
 Load More Products (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       //a[contains(text(),'Load More')]    20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    //div[@class='slds-spinner_container']      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       //a[contains(text(),'Load More')]
     Sleep   0.2
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //a[contains(text(),'Load More')]
