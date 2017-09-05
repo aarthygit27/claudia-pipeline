@@ -14,7 +14,7 @@ Single Product
 Multiple Products
     [Tags]      multiple_products
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Create Product Order        Telia Yritysinternet     Yritysinternet     Multiple
+    Create Product Order        10 Products     Yritysinternet     Multiple
 
 
 *** Keywords ***
@@ -60,7 +60,7 @@ Add 10 Products To Order
     # Load More Products (CPQ)
     # Load More Products (CPQ)
     :FOR    ${i}    IN RANGE    10
-    \   Add Nth Product To Card (CPQ)   ${i+1}
+    \   Add Nth Product To Cart (CPQ)   ${i+1}
     # \   Add Random Product To Cart (CPQ)
     # \   Search And Add Product To Cart (CPQ)    ${PRODUCT}      ${i+1}
     # \   Fill Missing Required Information If Needed (CPQ)

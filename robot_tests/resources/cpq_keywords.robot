@@ -5,7 +5,7 @@ Resource                ${PROJECTROOT}${/}resources${/}common.robot
 Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robot
 
 *** Keywords ***
-Add Nth Product To Card (CPQ)
+Add Nth Product To Cart (CPQ)
     [Arguments]     ${i}
     ${xpath}=       Set Variable    //div[@class='slds-col cpq-items-container scroll']//div[@data='card']
     ${target_product}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}
