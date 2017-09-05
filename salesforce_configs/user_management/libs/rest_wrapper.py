@@ -15,8 +15,8 @@ class RestWrapper(object):
         self._headers = {"Authorization" : "Bearer {0}".format(self._session_id),
                         "Content-Type": "application/json; charset=UTF-8"}
 
-        self._rest_base = self._url + "/services/data/v39.0"
-        self._bulk_base = self._url + "/services/async/39.0"
+        self._rest_base = self._url + "/services/data/v40.0"
+        self._bulk_base = self._url + "/services/async/40.0"
 
         # Salesforce requires TLS>=1.1
         self._session = requests.Session()
