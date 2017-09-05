@@ -1,7 +1,7 @@
 # #!/usr/bin/env python
 # # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-import os, sys, re, time
+import os, sys, re, time, platform
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -23,6 +23,8 @@ influx_user = influxdb["username"]
 influx_passwd = influxdb["password"]
 influx_url = influxdb["url"]
 influx_write = influx_url + '/write?db=verso'
+
+system = platform.system()
 
 class KeywordTimes(ResultVisitor):
     """ Counts the time used in execution of a keyword and send the data to InfluxDB by using InfluxDBExporter class.
@@ -89,7 +91,7 @@ def process(output_file, keyword_name, env, dryrun=False):
         # Skip data export when running tests etc.
         if not dryrun:
             requests.post(influx_write,
-                    data="keyword_monitor,keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=\"" + stat + "\"" + ",sandbox=\"" + env + "\"",
+                    data="keyword_monitor,keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=\"" + stat + "\"" + ",sandbox=\"" + env + "\",platform=\"" + system + "\"",
                     auth=HTTPBasicAuth(influx_user, influx_passwd))
             time.sleep(0.1)     # Ensure we get a different timestamp
     return s
