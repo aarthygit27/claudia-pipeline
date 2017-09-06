@@ -128,6 +128,7 @@ Load More Products (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       //a[contains(text(),'Load More')]
     Sleep   0.2
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //a[contains(text(),'Load More')]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    //div[@class='slds-spinner_container']      20s
     Capture Page Screenshot
 
 Search And Add Product To Cart (CPQ)
