@@ -44,7 +44,7 @@ Create CPQ Single
 Create CPQ Multiple
     Open Details View At Opportunity
     Click CPQ At Opportunity View
-    Add 10 Products To Order
+    Add 50 Products To Order
     Select Sales Type For Order (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
@@ -53,13 +53,14 @@ Create CPQ Multiple
     # Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
     # Submit Order To Delivery (CPQ)
 
-Add 10 Products To Order
+Add 50 Products To Order
     Search For Product (CPQ)      Telia
     Load More Products (CPQ)
-    # Load More Products (CPQ)
-    # Load More Products (CPQ)
-    # Load More Products (CPQ)
-    :FOR    ${i}    IN RANGE    10
+    Load More Products (CPQ)
+    Load More Products (CPQ)
+    Load More Products (CPQ)
+    Load More Products (CPQ)
+    :FOR    ${i}    IN RANGE    50
     \   Add Nth Product To Cart (CPQ)   ${i+1}
     # \   Add Random Product To Cart (CPQ)
     # \   Search And Add Product To Cart (CPQ)    ${PRODUCT}      ${i+1}
