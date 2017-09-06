@@ -72,7 +72,7 @@ class KeywordTimes(ResultVisitor):
         return name
 
 
-def process(output_file, keyword_name, env, dryrun=False):
+def process(output_file, keyword_name, env, dryrun=True):
     """ Process robot report and fetch following data related to keyword:
     total time (ms) | Unix timestamp | Keyword name
 

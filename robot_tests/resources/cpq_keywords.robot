@@ -11,7 +11,7 @@ Add Nth Product To Cart (CPQ)
     ${target_product}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}
     ...     Execute Javascript      return document.evaluate("${xpath}[${i}]//p[contains(@class,'product-name')]",document, null, XPathResult.ANY_TYPE, null).iterateNext().innerText;
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element   ${xpath}[${i}]//button[contains(text(),'Add to Cart')]
-    Wait Until Product Appears In Cart (CPQ)        ${target_product}
+    Wait Until Product Appears In Cart (CPQ)        ${target_product}       timeout=1 min
 
 
 Add Random Product To Cart (CPQ)
@@ -185,7 +185,7 @@ Verify That Product In Cart Is Correct
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
 
 Wait Until Product Appears In Cart (CPQ)
-    [Arguments]     ${target_product}   ${amount}=1
+    [Arguments]     ${target_product}   ${amount}=1     ${timeout}=20s
     # Wait Until Keyword Succeeds     20s     1s
     # ...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Locator Should Match X Times    //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      ${amount}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      ${timeout}
