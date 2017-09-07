@@ -46,7 +46,8 @@ Logout From All Systems
     [Documentation]     General logout keyword for test teardowns
     ${salesforce_open}=     Run Keyword And Return Status       Location Should Contain     salesforce.com
     Run Keyword If      ${salesforce_open}      Run Keyword and Ignore Error    Close Tabs And Logout   # Salesforce
-    Run Keyword and Ignore Error    MUBE Logout CRM         # MultiBella
+    ${mube_open}=           Run Keyword And Return Status       Location Should Contain     replicator-mnt.stadi.sonera.fi/
+    Run Keyword If      ${mube_open}            Run Keyword and Ignore Error    MUBE Logout CRM         # MultiBella
 
 Logout From All Systems and Close Browser
     Logout From All Systems

@@ -886,6 +886,12 @@ Verify That Opportunity Status Has Been Changed
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Should Not Be Visible       ${EDIT_BUTTON}
 
+Verify That opportunity Close Reason And Date Has Been Changed
+    [Arguments]     ${days}     ${reason}
+    ${date}=     Get Date From Future   ${days}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Reason']/following-sibling::td/div[text()='${reason}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
+
 Verify That Owner Has Changed
     [Arguments]         ${owner}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //td[text()='Account Owner']/following-sibling::td//a[contains(text(),'${owner}')]

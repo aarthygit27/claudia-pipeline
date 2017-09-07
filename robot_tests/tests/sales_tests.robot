@@ -180,7 +180,8 @@ Opportunity: Check that opportunity cannot be created for Account with passive l
     Try To Create New Opportunity And It Should Fail
 
 Sales Admin: Update closed opportunity
-    [Tags]      BQA-70      wip
+    [Tags]      BQA-70
+    [Setup]     No Operation
     [Template]      Update Closed Opportunity Test Case
     Cancelled           Cancelled
     Closed Lost         Lost
@@ -259,6 +260,7 @@ Close active opportunity
     [Documentation]     Template for BQA-42 - BQA-45, and BQA-70 tests
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Open Browser And Go To Login Page
+    Login to Salesforce
     Go to Account   ${TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
     Verify That Opportunity Is Found With Search
@@ -297,11 +299,12 @@ Wait Until Contact Person Is Found In MultiBella
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Log to Console    ${status}
-    Open Browser And Go To Login Page
-    Go To Salesforce and Login
+    ${new_close_reason}=        Set Variable If         '${status}'=='Won'
+    ...     01 Relationship     09 Customer Postponed
     Close active Opportunity    ${stage}    ${status}       ${original_stage}
     Close Tabs And Logout
     Login to Salesforce and Close All Tabs      Sales Admin User
     Go To Account   ${OPPORTUNITY_NAME}
-    Update Opportunity Close Date And Close Reason
+    Update Opportunity Close Date And Close Reason      reason=${new_close_reason}
+    Verify That opportunity Close Reason And Date Has Been Changed      2     ${new_close_reason}
     [Teardown]      Logout From All Systems And Close Browser
