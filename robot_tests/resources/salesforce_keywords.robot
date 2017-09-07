@@ -345,6 +345,7 @@ Extract MuBe CaseID From Opportunity
 Fill Account Name
     [Arguments]         ${name}=Test Account
     ${fullname}=        Create Unique Name      ${name}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    acc2    20s
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2    ${fullname}
     Set Test Variable   ${TEST_ACCOUNT_NAME}      ${fullname}
 
@@ -454,6 +455,7 @@ Get Account Tab Iframe Xpath
 Go to Account
     [Documentation]    This keyword works also with contact person and other parameters which can be searched at main search
     [Arguments]    ${target_account}
+    Log     Going to '${target_account}'
     Wait Until Keyword Succeeds     30s     5s      Search And Verify Account Is Found    ${target_account}
     Select Account    ${target_account}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
