@@ -294,7 +294,7 @@ Create New Opportunity From Main Page
 Create New Sales Plan
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
     Run Inside Iframe   ${frame}        Click Element       //button[text()='Create new']
-    Dismiss Alert
+    Run Keyword And Ignore Error        Dismiss Alert
     Sleep           1s      Page needs to reload
 
 Created Contact Person Should Be Open
@@ -568,6 +568,8 @@ Open Details Tab At Account View
 
 Open Sales Plan Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Sales Plan
+    ${frame}=   Get Account Tab Iframe Xpath    Sales Plan
+    Run Keyword And Ignore Error    Run Inside Iframe   ${frame}    Click element   //div[@id='saveSalesplanModal']/div[@class='slds-modal__container']//button[contains(text(),'Not now')]
 
 Open Details View At Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${ACCOUNT_DETAILS}
@@ -721,6 +723,16 @@ Type Account Name
     [Arguments]         ${account_name}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2         ${account_name}
 
+Update Contact Person Business Card Title, Gender, 3rd Party Contact, Sales Role, And Marketing Permissions
+    # These might actually be always the same, so these might be unnecessary to change
+    ${OLD_BUSINESS_CARD_TITLE}=         Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Business Card Title']/following-sibling::td/div
+    ${OLD_GENDER}=                      Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Gender']/following-sibling::td/div
+    # ${OLD_3RD_PARTY_CONTACT}=           Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='3rd Party Contact']/following-sibling::td/div/img
+    ${OLD_SALES_ROLE}=                  Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[./span[text()[contains(.,'Sales Role')]]]/following-sibling::td/div
+    ${OLD_MARKETING_SMS_PERMISSION}=    Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Marketing - SMS']/following-sibling::td/div
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       ${EDIT_BUTTON}
+
+
 Update Contact Person Email And Phone
     ${OLD_EMAIL}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Email']/following-sibling::td/div/a
     ${OLD_PHONE}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Phone']/following-sibling::td/div
@@ -736,6 +748,10 @@ Update Contact Person Email And Phone
     ${NEW_PHONE}=       Strip Area Code From Phone Number   ${NEW_PHONE}
     Set Test Variable   ${NEW_EMAIL}
     Set Test Variable   ${NEW_PHONE}
+
+Update Contact Person In Salesforce
+    Update Contact Person Email And Phone
+    Update Contact Person Business Card Title, Gender, 3rd Party Contact, Sales Role, And Marketing Permissions
 
 Update Contact Person Sales Role
     [Arguments]     ${new_role}
