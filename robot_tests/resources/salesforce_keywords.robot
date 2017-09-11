@@ -9,6 +9,7 @@ Account Should Be Open
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${account_name}')]      60 seconds
 
 Add Account For Contact Person
+    [Documentation]     Deprecated
     [Arguments]         ${account_name}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_NAME_LOOKUP}
     Search (Lookup)     ${account_name}
@@ -47,6 +48,7 @@ Add Mandatory Contact Data
 
 Add Mandatory Opportunity Data
     [Documentation]    TODO
+    ...                 Deprecated
     [Arguments]     ${days}=1
     ...             ${stage}=Analyse Prospect
     Fill Mandatory Opportunity Information      stage=${stage}    days=${days}
@@ -283,6 +285,7 @@ Create New Opportunity For Customer
     Click Create Opportunity Button
 
 Create New Opportunity From Main Page
+    [Documentation]     Deprecated
     [Arguments]     ${days}=1
     ...             ${stage}=Analyse Prospect
     Open Opportunities
@@ -428,6 +431,7 @@ Fill Mandatory Opportunity Information
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Press Tab On                           ${OPPO_INFO_CLOSE_DATE_FIELD}
 
 Fill Opportunity Account name
+    [Documentation]     Deprecated
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element                          ${CLASSIF_ACCOUNT_SEARCH_BUTTON}
     Search (Lookup)      ${OPPO_TEST_ACCOUNT}
     Select New Opportunity Window And Validate Title
@@ -620,6 +624,7 @@ Search (Setup)
 Search (Lookup)
     [Documentation]     Some sort of verification should be run after this keyword
     ...                 Update on 5.6.2017: This keyword is still a complete disaster.
+    ...                 Deprecated
     [Arguments]         ${item}
     ${kw_passed}=    Set Variable    ${FALSE}
     Wait Until Keyword Succeeds    20 s    1 s    Select Popup Search Window And Validate Title
@@ -727,7 +732,8 @@ Update Contact Person Business Card Title, Gender, 3rd Party Contact, Sales Role
     # These might actually be always the same, so these might be unnecessary to change
     ${OLD_BUSINESS_CARD_TITLE}=         Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Business Card Title']/following-sibling::td/div
     ${OLD_GENDER}=                      Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Gender']/following-sibling::td/div
-    # ${OLD_3RD_PARTY_CONTACT}=           Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='3rd Party Contact']/following-sibling::td/div/img
+    ${checked}=     Run Keyword And Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element    //td[text()='3rd Party Contact']/following-sibling::td/div/img[@title='Checked']
+    ${OLD_3RD_PARTY_CONTACT}=           Set Variable If     ${checked}      Yes     No
     ${OLD_SALES_ROLE}=                  Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[./span[text()[contains(.,'Sales Role')]]]/following-sibling::td/div
     ${OLD_MARKETING_SMS_PERMISSION}=    Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Marketing - SMS']/following-sibling::td/div
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       ${EDIT_BUTTON}
