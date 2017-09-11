@@ -69,13 +69,16 @@ Sales Admin: Change Account owner
 Update Contact Person in SalesForce
     [Tags]      BQA-117    wip
     Go To Salesforce and Login      Sales Admin User
-    Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
+    # Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
+    Set Test Variable     ${TEST_CONTACT_PERSON_LAST_NAME}      Contact Person 61058906
+    Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct
-    Update Contact Person Email And Phone
+    Update Contact Person in Salesforce
     MUBE Open Browser And Login As CM User
-    MUBE Verify That Contact Person Email And Phone Are Updated
+    MUBE Verify That Contact Person Information Is Updated
+    # Business Card Title, Gender, 3rd Party Contact, Sales Role, Marketing - Phone, Marketing - Letter, Marketing - Traffic Data, Marketing - eMail, Marketing - SMS, Marketing - Research
 
 Sales Process: Create opportunity from Account
     [Tags]      BQA-27
@@ -119,6 +122,8 @@ Sales Admin: Change Account owner for Group Account
     Change Account Owner    Sales Admin
     Verify that Owner Has Changed   Sales Admin
     Go to Account   ${TEST_ACCOUNT_NAME}
+    Verify that Owner Has Changed   Sales Admin
+    [Teardown]      Pause Execution
 
 Sales Admin: Remove Account owner
     [Tags]      BQA-7   wip
@@ -152,6 +157,7 @@ Sales Process: Create/update Sales Plan
     Add Solution Area and update Solution Sub Area data
     Go to other view and then back to Sales Plan
     Verify that updated values are visible in Sales Plan
+    [Teardown]      Pause Execution
 
 Contact: Update contact
     [Tags]      BQA-23

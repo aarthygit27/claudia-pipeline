@@ -728,41 +728,38 @@ Type Account Name
     [Arguments]         ${account_name}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2         ${account_name}
 
-Update Contact Person Business Card Title, Gender, 3rd Party Contact, Sales Role, And Marketing Permissions
-    # These might actually be always the same, so these might be unnecessary to change
-    ${OLD_BUSINESS_CARD_TITLE}=         Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Business Card Title']/following-sibling::td/div
-    ${OLD_GENDER}=                      Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Gender']/following-sibling::td/div
-    ${checked}=     Run Keyword And Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element    //td[text()='3rd Party Contact']/following-sibling::td/div/img[@title='Checked']
-    ${OLD_3RD_PARTY_CONTACT}=           Set Variable If     ${checked}      Yes     No
-    ${OLD_SALES_ROLE}=                  Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[./span[text()[contains(.,'Sales Role')]]]/following-sibling::td/div
-    ${OLD_MARKETING_SMS_PERMISSION}=    Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Marketing - SMS']/following-sibling::td/div
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       ${EDIT_BUTTON}
 
-
-Update Contact Person Email And Phone
+Update Contact Person In Salesforce
     ${OLD_EMAIL}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Email']/following-sibling::td/div/a
     ${OLD_PHONE}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Phone']/following-sibling::td/div
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       ${EDIT_BUTTON}
     ${NEW_EMAIL}=       Create Unique Email
     ${NEW_PHONE}=       Create Unique Phone Number
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Email']]/following-sibling::td/input   ${NEW_EMAIL}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Phone']]/following-sibling::td/input   ${NEW_PHONE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
     ${OLD_PHONE}=       Strip Area Code From Phone Number   ${OLD_PHONE}
     Set Test Variable   ${OLD_EMAIL}
     Set Test Variable   ${OLD_PHONE}
-    ${NEW_PHONE}=       Strip Area Code From Phone Number   ${NEW_PHONE}
     Set Test Variable   ${NEW_EMAIL}
+    Set Test Variable   ${NEW_BUSINESS_CARD_TITLE}          Slave of slaves
+    Set Test Variable   ${NEW_GENDER}                       not known
+    Set Test Variable   ${NEW_SALES_ROLE}                   Business Contact
+    Set Test Variable   ${NEW_MARKETING_SMS_PERMISSION}     PERMIT
+    Set Test Variable   ${NEW_3RD_PARTY_CONTACT}            Yes
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[./label[text()='Business Card Title']]/following-sibling::td/input
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Email']]/following-sibling::td/input   ${NEW_EMAIL}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Phone']]/following-sibling::td/input   ${NEW_PHONE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Business Card Title']]/following-sibling::td/input    ${NEW_BUSINESS_CARD_TITLE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Gender']]/following-sibling::td//select     0 - ${NEW_GENDER}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[.//label[text()[contains(.,'Sales Role')]]]/following-sibling::td//select    ${NEW_SALES_ROLE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Marketing - SMS']]/following-sibling::td//select   ${NEW_MARKETING_SMS_PERMISSION}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
+    # Salesforce requires the phone number to be in +<country code>xxxx format, so strip the country code after input
+    ${NEW_PHONE}=       Strip Area Code From Phone Number   ${NEW_PHONE}
     Set Test Variable   ${NEW_PHONE}
-
-Update Contact Person In Salesforce
-    Update Contact Person Email And Phone
-    Update Contact Person Business Card Title, Gender, 3rd Party Contact, Sales Role, And Marketing Permissions
 
 Update Contact Person Sales Role
     [Arguments]     ${new_role}
     [Documentation]     Assumes user is already in the edit contact person window
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label       //td[.//label[text()='Sales Role']]/following-sibling::td//select       ${new_role}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[.//label[text()='Sales Role']]/following-sibling::td//select       ${new_role}
     Click Bottom Save Button
 
 Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
@@ -792,7 +789,7 @@ Update Opportunity Close Date And Close Reason
     # ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
     # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
     # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}//input     ${date}
-    ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
+    # ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
     # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
     # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Element Is Visible       InlineEditDialogContent
     # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List by Value   //div[@id='InlineEditDialogContent']//td[text()='Close Reason']/following-sibling::td//select   ${reason}
