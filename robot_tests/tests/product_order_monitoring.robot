@@ -26,6 +26,7 @@ Create Product Order
     Go To Account       ${OPPO_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found With Search
+    Add Price Book For Opportunity
     Run Keyword     Create CPQ ${product_amount}
 
 Create CPQ Single

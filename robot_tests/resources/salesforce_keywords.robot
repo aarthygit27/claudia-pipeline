@@ -55,6 +55,15 @@ Add Mandatory Opportunity Data
     Fill Mandatory Classification
     Fill Opportunity Account Name
 
+Add Price Book For Opportunity
+    [Arguments]     ${pricebook}=B2B Pricebook
+    Click Details Button
+    Click Edit Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    Pricebook2      10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      Pricebook2      ${pricebook}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Save Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']
+
 Add Solution Area and update Solution Sub Area data
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
     Run Inside Iframe   ${frame}        Click Element       addSolutionAreasButton
