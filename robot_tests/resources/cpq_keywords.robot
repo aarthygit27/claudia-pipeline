@@ -42,8 +42,9 @@ Click Create Order (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ORDER}    30 seconds
     Wait Until Keyword Succeeds    20 s    3 s
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_ORDER}
-    Wait Until Keyword Succeeds    20 s    3 s    Run Inside Iframe    ${OPPORTUNITY_FRAME}
-    ...    Page Should Not Contain Element    ${CPQ_CREATE_ORDER}
+    # Wait Until Keyword Succeeds    20 s    3 s    Run Inside Iframe    ${OPPORTUNITY_FRAME}
+    # ...    Page Should Not Contain Element    ${CPQ_CREATE_ORDER}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${CPQ_CREATE_ORDER}     1 min
 
 Click Create Quote (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_QUOTE}    30 seconds
