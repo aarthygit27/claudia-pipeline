@@ -62,7 +62,7 @@ Add Price Book For Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    Pricebook2      10s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      Pricebook2      ${pricebook}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Save Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']       20S
 
 Add Solution Area and update Solution Sub Area data
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
