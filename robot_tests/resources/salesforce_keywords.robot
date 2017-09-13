@@ -572,6 +572,14 @@ Open Activities
     Select Correct Tab Type     Activities
     Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Task']   20 seconds
 
+Open Calendar For Sales Console
+    Select Correct Tab Type     Calendar For Sales Console
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //div[@class='bCalendar']   20 seconds
+
+Open Cases
+    Select Correct Tab Type     Cases
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Case']   20 seconds
+
 Open Chatter
     Select Correct Tab Type     Chatter
     Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    publishereditablearea   20 seconds
@@ -597,6 +605,10 @@ Open Sales Plan Tab At Account View
 
 Open Details View At Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${ACCOUNT_DETAILS}
+
+Open Ideas
+    Select Correct Tab Type     Ideas
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Idea']   20 seconds
 
 Open Todays Page
     Select Correct Tab Type     Today

@@ -29,7 +29,9 @@ Open Different Tabs And Check Their Loading Times
     Opportunities   Closing Next Month
     Dashboards
     Activities
-
+    Calendar For Sales Console
+    Cases
+    Ideas
 
 *** Keywords ***
 Create Product Order
