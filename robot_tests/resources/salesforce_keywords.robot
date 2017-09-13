@@ -80,7 +80,6 @@ Addresses Should Be Available
     ${frame}=       Get Account Tab Iframe Xpath    Availability
     Run Inside Iframe   ${frame}        Wait Until Page Contains Element
     ...     //tr[.//td[text()='${address}']/following-sibling::td[text()='${street_number}']/following-sibling::td[text()='${postal_code}']/following-sibling::td[text()='${city}']]
-    ...     30s
 
 App Is Open
     [Arguments]         ${app_name}
@@ -361,7 +360,7 @@ Fill Account Name
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2    ${fullname}
     Set Test Variable   ${TEST_ACCOUNT_NAME}      ${fullname}
 
-Fill Address Validation Information
+Fill Address Validation Information And Click Next
     [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
     ${frame}=       Get Account Tab Iframe Xpath    Availability
     Run Inside Iframe   ${frame}    Wait Until Element Is Visible    PostalCode      10s
@@ -567,11 +566,23 @@ Navigate To App
 
 Open Accounts
     Select Correct Tab Type     Accounts
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   ${NEW_ACCOUNT_BUTTON}   10 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   ${NEW_ACCOUNT_BUTTON}   20 seconds
+
+Open Activities
+    Select Correct Tab Type     Activities
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Task']   20 seconds
+
+Open Chatter
+    Select Correct Tab Type     Chatter
+    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    publishereditablearea   20 seconds
 
 Open Contacts
     Select Correct Tab Type     Contacts
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    ${NEW_CONTACT_BUTTON}   10 seconds
+    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    ${NEW_CONTACT_BUTTON}   20 seconds
+
+Open Dashboards
+    Select Correct Tab Type     Dashboards
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //img[@title='Dashboards']   20 seconds
 
 Open Dashboard Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard    right
@@ -593,7 +604,7 @@ Open Todays Page
 
 Open Opportunities
     Select Correct Tab Type     Opportunities
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    10 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    20 seconds
 
 Save New Contact Person
     Click Bottom Save Button
@@ -670,7 +681,7 @@ Select Account Type
     Sleep       0.3     Without this the keyword fails for a dead object error
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'New Account')]    10 seconds
 
-Select Correct Opportunity View Type
+Select Correct View Type
     [Arguments]         ${type}
     Run Inside Iframe   ${IFRAME}    Select From List By Label   //select[contains(@title, 'View:')]     ${type}
     Run Inside Iframe   ${IFRAME}    Wait For Load
@@ -876,7 +887,7 @@ Verify That Opportunity Creation Succeeded
 Verify That Opportunity Is Found From My Opportunities
     Close All Tabs
     Open Opportunities
-    Select Correct Opportunity View Type     My All Opportunities
+    Select Correct View Type     My All Opportunities
     Filter Opportunities By    Close Date
     Run Inside Iframe   ${IFRAME}   Page Should Contain Element     //td[./div/a/span[text()='${OPPORTUNITY_NAME}']]/following-sibling::td//span[text()='${TEST_ACCOUNT}']
 
@@ -894,7 +905,7 @@ Verify That Opportunity Is Found With Search
 Verify That Opportunity Is Not Found From Open Opportunities
     Close All Tabs
     Open Opportunities
-    Select Correct Opportunity View Type     My All Open Opportunities
+    Select Correct View Type     My All Open Opportunities
     Filter Opportunities By    Close Date
     Run Inside Iframe   ${IFRAME}   Page Should Not Contain Element    //td/div/a/span[text()='${OPPORTUNITY_NAME}']
 
@@ -942,4 +953,9 @@ Verify That User Cannot Create New Opportunity
 
 Wait For Load
     Sleep    0.5
-    Wait Until Keyword Succeeds    10 s   0.5 s    Element Should Not Be Visible     //div/div/span[text()='Loading...']
+    # @class='waitingSearchDiv'
+    Wait Until Keyword Succeeds    20 s   0.5 s    Element Should Not Be Visible     //div/div/span[text()='Loading...']
+
+Wait Until Address Validation Results Page Has Loaded
+    ${frame}=       Get Account Tab Iframe Xpath    Availability
+    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //label[text()[contains(.,'Available Addresses')]]      30s

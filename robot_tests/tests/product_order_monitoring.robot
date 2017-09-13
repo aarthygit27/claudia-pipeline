@@ -4,17 +4,31 @@ Resource            ${PROJECTROOT}${/}resources${/}salesforce_keywords.robot
 Test Setup          Run Keywords    Open Browser And Go To Login Page    AND    Go to Salesforce And Login
 Test Teardown       Close Browser
 
+Force Tags          Performance
+
 
 *** Test Cases ***
-Single Product
+Create an Order With One Product
     [Tags]      single_product
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Create Product Order        Telia Yritysinternet     Yritysinternet     Single
 
-Multiple Products
+Create And Order With Many Products
     [Tags]      multiple_products
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Create Product Order        10 Products     Yritysinternet     Multiple
+
+Open Different Tabs And Check Their Loading Times
+    [Tags]      wtf     wip
+    [Documentation]     This test case does not really test anything, it is only used to measure the load times of different
+    ...                 tabs from the top left corner menu
+    [Template]      Open The Correct Page And Select View All
+    Todays Page
+    Accounts        New This Week
+    Contacts        New This Week
+    Opportunities   Closing Next Month
+    Dashboards
+    Activities
 
 
 *** Keywords ***
@@ -37,10 +51,6 @@ Create CPQ Single
     Select Sales Type For Order (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
-    # Click View Record (CPQ)
-    # Click Create Assets (CPQ)
-    # Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
-    # Submit Order To Delivery (CPQ)
 
 Create CPQ Multiple
     Open Details View At Opportunity
@@ -49,10 +59,6 @@ Create CPQ Multiple
     Select Sales Type For Order (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
-    # Click View Record (CPQ)
-    # Click Create Assets (CPQ)
-    # Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
-    # Submit Order To Delivery (CPQ)
 
 Add 50 Products To Order
     Search For Product (CPQ)      Telia
@@ -63,6 +69,13 @@ Add 50 Products To Order
     Load More Products (CPQ)
     :FOR    ${i}    IN RANGE    50
     \   Add Nth Product To Cart (CPQ)   ${i+1}
-    # \   Add Random Product To Cart (CPQ)
-    # \   Search And Add Product To Cart (CPQ)    ${PRODUCT}      ${i+1}
-    # \   Fill Missing Required Information If Needed (CPQ)
+
+Reset View To Default
+    [Arguments]     ${default}
+    Select Correct View Type    ${default}
+
+Open The Correct Page And Select View All
+    [Arguments]     ${page}     ${default}=${EMPTY}
+    Run Keyword     Open ${page}
+    Run Keyword Unless      '${default}'=='${EMPTY}'    Select Correct View Type    All ${page}
+    Run Keyword Unless      '${default}'=='${EMPTY}'    Reset View To Default   ${default}
