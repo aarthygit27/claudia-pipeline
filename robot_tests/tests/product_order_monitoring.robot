@@ -79,5 +79,14 @@ Reset View To Default
 Open The Correct Page And Select View All
     [Arguments]     ${page}     ${default}=${EMPTY}
     Run Keyword     Open ${page}
-    Run Keyword Unless      '${default}'=='${EMPTY}'    Select Correct View Type    All ${page}
+    Run Keyword Unless      '${default}'=='${EMPTY}'    Run Keyword     Select All ${page} View
     Run Keyword Unless      '${default}'=='${EMPTY}'    Reset View To Default   ${default}
+
+Select All Accounts View
+    Select Correct View Type    All Accounts
+
+Select All Contacts View
+    Select Correct View Type    All Contacts
+
+Select All Opportunities View
+    Select Correct View Type    All Opportunities
