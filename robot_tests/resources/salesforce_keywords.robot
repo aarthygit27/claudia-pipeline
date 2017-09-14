@@ -969,7 +969,7 @@ Verify That User Cannot Create New Opportunity
 Wait For Load
     Sleep    0.5
     # @class='waitingSearchDiv'
-    Wait Until Keyword Succeeds    60 s   0.5 s    Element Should Not Be Visible     //div/div/span[text()='Loading...']
+    Wait Until Keyword Succeeds    5 min   0.5 s    Element Should Not Be Visible     //div/div/span[text()='Loading...']
 
 Wait Until Address Validation Results Page Has Loaded
     ${frame}=       Get Account Tab Iframe Xpath    Availability
