@@ -152,7 +152,7 @@ Sales Process: Create/update Sales Plan
     Go to Salesforce and Login
     Go to Account    ${TEST_ACCOUNT}
     Open Sales Plan Tab At Account View
-    Create New Sales Plan
+    Create New Sales Plan If Inactive
     Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
     Add Solution Area and update Solution Sub Area data
     Go to other view and then back to Sales Plan
@@ -208,14 +208,10 @@ Quick actions: create Meeting
 
 Quick actions: create Opportunity from Account (Feed) by Customer Care user
     [Tags]      BQA-19      wip
-    # 1. Go to Account
-    # 2. Choose New Opportunity (if not visible then via More tab)
-    # 3. Choose Account, enter opportunity name and description and Save
-    # 4. Close date is automatically give two days ahead.
-    # 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
     Go To Salesforce and Login      Customer Care User
     Go to Account    ${TEST_ACCOUNT}
     Create New Opportunity For Customer
+    # todo: 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
 
 *** Keywords ***
 

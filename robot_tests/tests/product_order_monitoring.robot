@@ -19,7 +19,7 @@ Create And Order With Many Products
     Create Product Order        10 Products     Yritysinternet     Multiple
 
 Open Different Tabs And Check Their Loading Times
-    [Tags]      wtf     wip
+    [Tags]      view_page_load
     [Documentation]     This test case does not really test anything, it is only used to measure the load times of different
     ...                 tabs from the top left corner menu
     [Template]      Open The Correct Page And Select View All

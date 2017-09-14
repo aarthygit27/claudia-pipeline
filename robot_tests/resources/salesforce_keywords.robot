@@ -302,8 +302,10 @@ Create New Opportunity From Main Page
     Save Opportunity
     Verify That Opportunity Is Saved And Data Is Correct
 
-Create New Sales Plan
+Create New Sales Plan If Inactive
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
+    ${active}=    Run Keyword And Return Status   Run Inside Iframe   ${frame}    Element Should Be Visible     //span[text()='Active']
+    Return From Keyword If      ${active}
     Run Inside Iframe   ${frame}        Click Element       //button[text()='Create new']
     Run Keyword And Ignore Error        Dismiss Alert
     Sleep           1s      Page needs to reload
@@ -772,7 +774,7 @@ Update Contact Person In Salesforce
     Set Test Variable   ${OLD_PHONE}
     Set Test Variable   ${NEW_EMAIL}
     Set Test Variable   ${NEW_BUSINESS_CARD_TITLE}          Slave of slaves
-    Set Test Variable   ${NEW_GENDER}                       not known
+    Set Test Variable   ${NEW_GENDER}                       male
     Set Test Variable   ${NEW_SALES_ROLE}                   Business Contact
     Set Test Variable   ${NEW_MARKETING_SMS_PERMISSION}     PERMIT
     Set Test Variable   ${NEW_3RD_PARTY_CONTACT}            Yes
@@ -799,6 +801,7 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //button[@title='Edit this Field']      10s
     Run Inside Iframe   ${frame}    Click Element   //button[@title='Edit this Field']
     ${rand_string}=     Create Unique Name          Sales plan description
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //textarea[contains(@id,'Description')]     10s
     Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Description')]     ${rand_string}
     Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Customer_Business_Goals')]     Sales plan customer business goals
     Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Customer_Business_Challenges')]     Sales plan customer business challenges

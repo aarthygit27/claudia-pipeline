@@ -21,7 +21,7 @@ ${CREATE_BUTTON}                //a[contains(text(), 'Create')]
 ${KEYWORD_RETRY}                1 sec
 ${KEYWORD_WAIT}                 1 min
 ${LOADING_ANIMATION}            //div[contains(@class, 'loading-animation')]
-${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324
+${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324x2
 ${MUBE_CUSTOMER_USERNAME}       tas-cm1-1
 ${MUBE_ADMIN_USERNAME}          tas-cim-adm2
 ${MUBE_ADMIN_PASSWORD}          9XwHVkDt3FgT551123244
@@ -615,8 +615,11 @@ MUBE Verify That Contact Person Information Is Updated
     MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      ${OLD_PHONE}        ${NEW_PHONE}
     MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}            ${NEW_BUSINESS_CARD_TITLE}
     MUBE Check History Old And New Value For Contact Person Attribute    Gender                 -- None --          ${NEW_GENDER}
+    MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${NEW_3RD_PARTY_CONTACT}
     MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             -- None --          ${NEW_SALES_ROLE}
-    MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
+    MUBE Check History Old And New Value For Contact Person Attribute    Marketing via SMS      PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
+    # TODO: Business Card Title, Gender, 3rd Party Contact, Sales Role, Marketing - SMS
+
 
 MUBE Verify That Contact Person Sales Role Is Updated
     Sleep    30 s    Wait For All Contact Person Changes to be applied.
