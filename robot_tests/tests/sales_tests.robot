@@ -69,16 +69,14 @@ Sales Admin: Change Account owner
 Update Contact Person in SalesForce
     [Tags]      BQA-117    wip
     Go To Salesforce and Login      Sales Admin User
-    # Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
-    Set Test Variable     ${TEST_CONTACT_PERSON_LAST_NAME}      Contact Person 61058906
-    Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+    Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct
     Update Contact Person in Salesforce
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Information Is Updated
-    # Business Card Title, Gender, 3rd Party Contact, Sales Role, Marketing - Phone, Marketing - Letter, Marketing - Traffic Data, Marketing - eMail, Marketing - SMS, Marketing - Research
+    # Todo: check this works after integrations are open
 
 Sales Process: Create opportunity from Account
     [Tags]      BQA-27
@@ -131,6 +129,18 @@ Sales Admin: Remove Account owner
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_ACCOUNT_NAME}
     # TODO
+
+Sales Admin: Add new owner for Group Account
+    [Tags]      BQA-9    wip
+    Create Test Account With Admin User     Group
+    Go To Salesforce and Login      Sales Admin User
+    Go to Account   ${TEST_GROUP_ACCOUNT_NAME}
+    Change Account Owner    Sales Admin
+    Verify that Owner Has Changed   Sales Admin
+    Go to Account   ${TEST_ACCOUNT_NAME}
+    Verify that Owner Has Changed   Sales Admin
+    # TODO: voiko accountilla olla yksi owner?
+    [Teardown]      Pause Execution
 
 Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     [Tags]    BQA-1840      smoke
@@ -200,9 +210,8 @@ Quick actions: create Meeting
     Go to Account       ${TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Event
-    Fill Event Data
+    Fill Event data     type=Meeting    reason=New Customer
     Click Create Event Button
-    Go To Account       ${TEST_EVENT_SUBJECT}
     Edit Event Description and WIG Areas
     Verify That Event Has Correct Data
 
@@ -212,6 +221,18 @@ Quick actions: create Opportunity from Account (Feed) by Customer Care user
     Go to Account    ${TEST_ACCOUNT}
     Create New Opportunity For Customer
     # todo: 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
+
+Quick actions: create Customer Call
+    [Tags]      BQA-18
+    Go To Salesforce and Login
+    Go to Account       ${TEST_ACCOUNT}
+    Open Details Tab At Account View
+    Click New Event
+    Fill Event Data     type=Customer Call    reason=Booking
+    Click Create Event Button
+    Verify That Event Is Created And Go To Event
+    Edit Event Description and WIG Areas
+    Verify That Event Has Correct Data
 
 *** Keywords ***
 
