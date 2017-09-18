@@ -28,8 +28,10 @@ Add Random Product To Cart (CPQ)
 Click CPQ At Opportunity View
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPORTUNITY_CPQ_BUTTON}    30 seconds
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${OPPORTUNITY_CPQ_BUTTON}
-    Wait Until Keyword Succeeds    20 s    3 s    Run Inside Iframe    ${OPPORTUNITY_FRAME}
-    ...    Page Should Not Contain Element    ${OPPORTUNITY_CPQ_BUTTON}
+    # Wait Until Keyword Succeeds    20 s    3 s    Run Inside Iframe    ${OPPORTUNITY_FRAME}
+    # ...    Page Should Not Contain Element    ${OPPORTUNITY_CPQ_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']    30s
+    # Capture Page Screenshot
 
 Click Create Assets (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ASSETS}    30 seconds
