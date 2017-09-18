@@ -217,6 +217,7 @@ Quick actions: create Meeting
     Go To Event
     Edit Event Description and WIG Areas
     Verify That Event Has Correct Data
+    Verify That Description And WIG Areas Are Correct
     Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
 Quick actions: create Opportunity from Account (Feed) by Customer Care user
@@ -238,10 +239,11 @@ Quick actions: create Customer Call
     Go To Event
     Edit Event Description and WIG Areas
     Verify That Event Has Correct Data
+    Verify That Description And WIG Areas Are Correct
     Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
 Meeting/Customer Call: Update meeting to Done
-    [Tags]      BQA-21      wip
+    [Tags]      BQA-21
     Go To Salesforce and Login
     Go to Account       ${TEST_ACCOUNT}
     Create New Event If Necessary

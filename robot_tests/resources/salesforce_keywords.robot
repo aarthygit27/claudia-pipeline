@@ -487,7 +487,10 @@ Go to Account
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
 
 Go To Event
+    [Documentation]     This works for other than events also. This is used for stuff that cannot be found with main search and
+    ...                 need to be selected from an account. For other cases `Go to Account` should be used.
     [Arguments]     ${event}=${TEST_EVENT_SUBJECT}
+    Log         Going to ${event}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //div/a[text()='${event}']
     ${frame}=       Get Account Tab Iframe Xpath    ${event}
     Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //h2[@class='pageDescription' and contains(text(),'${event}')]      20s
@@ -909,6 +912,8 @@ Verify That Event Has Correct Data
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Reason']/following-sibling::td/div         ${EVENT_REASON}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Related To']/following-sibling::td/div     ${TEST_ACCOUNT}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Name']/following-sibling::td/div           ${OPPO_TEST_CONTACT}
+
+Verify That Description And WIG Areas Are Correct
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='Glory']/following-sibling::td//img[@title='Checked']
 
