@@ -252,7 +252,17 @@ Meeting/Customer Call: Update meeting to Done
     Add Meeting Outcome and Save
     Verify That Event Has Correct Data
 
-
+Contact persons added address can not saved without City populated
+    [Tags]      BQA-1809    wip
+    Go To Salesforce and Login
+    Go to Account    ${TEST_ACCOUNT}
+    Open Details and choose New Contact from More tab
+    Enter mandatory information and save new contact    salutation=--None--
+    Check that contact has been saved and can be found under proper Account
+    # Basically BQA-1 until this point
+    Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+    Edit Contact Person's Added Address
+    # Todo: actually edit the address
 
 
 *** Keywords ***
@@ -275,7 +285,12 @@ Check If Contact Person Exists And Create New One If Not
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
 
 Enter mandatory information and save new contact
-    Add Mandatory Contact Data
+    [Arguments]     ${first_name}=${EMPTY}
+    ...             ${last_name}=${EMPTY}
+    ...             ${email}=noreply@teliasonera.com
+    ...             ${phone_number}=+358888888
+    ...             ${salutation}=Mr.
+    Add Mandatory Contact Data      ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
     Click Create Contact Person Button
     Verify That Create Contact Person Button Is Not Visible
     Verify That Error Message Is Not Displayed

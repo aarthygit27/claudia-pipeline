@@ -34,6 +34,7 @@ Add Mandatory Contact Data
     ...         ${last_name}=${EMPTY}
     ...         ${email}=noreply@teliasonera.com
     ...         ${phone_number}=+358888888
+    ...         ${salutation}=Mr.
     ${name}=            Create Unique Name      Contact Person
     ${email}=           Create Unique Email     ${email}
     ${first_name}=      Set Variable If    '${first_name}' == '${EMPTY}'    Test        ${first_name}
@@ -42,7 +43,7 @@ Add Mandatory Contact Data
     Fill Mandatory Contact Person Values
     ...    ${first_name}
     ...    ${TEST_CONTACT_PERSON_LAST_NAME}
-    ...    Mr.
+    ...    ${salutation}
     ...    ${email}
     ...    ${phone_number}
 
@@ -338,6 +339,11 @@ Dismiss Mobile Phone Registration
     Capture Page Screenshot
     Click Element       //a[text()="I Don't Want to Register My Phone"]
 
+Edit Contact Person's Added Address
+    Click Details Button
+    Click Edit Contact Person
+    # Todo: Finish once address is editable
+
 Edit Event Description and WIG Areas
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}    Click Edit Button
@@ -423,7 +429,7 @@ Fill Mandatory Contact Person Values
     Set Test Variable    ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${CONTACT_PERSON_TITLE_DROPDOWN}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${CONTACT_PERSON_TITLE_DROPDOWN}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    ${CONTACT_PERSON_TITLE_DROPDOWN}    ${salutation}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Label    ${CONTACT_PERSON_TITLE_DROPDOWN}    ${salutation}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    ${CP_SALES_ROLE_FIELD}    TS_SALES_ROLE_TYPES.DECISON_MAKER_ICT
     Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_FIRSTNAME_FIELD}        ${firstname}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_LASTNAME_FIELD}         ${lastname}
@@ -902,7 +908,7 @@ Verify That Error Message Is Displayed
 
 Verify That Error Messages Are Shown
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(text(),'Error: Invalid Data.')]      15 s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_REASON_FIELD}/div[contains(@class,'errorMsg')]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_REASON_FIELD}/div[contains(@class,'errorMsg')]      15s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_COMMENT_FIELD}/div[@class='errorMsg']
 
 Verify That Event Has Correct Data
