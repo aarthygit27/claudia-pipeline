@@ -28,6 +28,18 @@ password: K23!kUTr41S
 token: Dayv51cnj6072kX534OOhECd
 instance: test
 
+[sint]
+username: fbl11955@teliacompany.com.sint
+password: Trt1e!!gXCxw34!822
+token: Dayv51cnj6072kX534OOhECd
+instance: test
+
+[spreprod]
+username: fbl11955@teliacompany.com.spreprod
+password: Trt1e!!gXCxw34!822
+token: 18f9iUD37VsNoBw9ZTChOpuqV
+instance: test
+
 [prod]
 username: fbl11955@teliacompany.com
 password: Trt1e!!gXCxw34!822
