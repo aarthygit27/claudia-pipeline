@@ -55,6 +55,12 @@ Add Mandatory Opportunity Data
     Fill Mandatory Classification
     Fill Opportunity Account Name
 
+Add Meeting Outcome and Save
+    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe   ${frame}    Select From List By Label   //td[./label[text()='Meeting Outcome']]/following-sibling::td//select   Positive
+    Run Inside Iframe   ${frame}    Click Bottom Save Button
+    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   ${EDIT_BUTTON}
+
 Add Price Book For Opportunity
     [Arguments]     ${pricebook}=B2B Pricebook
     Click Details Button
@@ -480,6 +486,12 @@ Go to Account
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
 
+Go To Event
+    [Arguments]     ${event}=${TEST_EVENT_SUBJECT}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //div/a[text()='${event}']
+    ${frame}=       Get Account Tab Iframe Xpath    ${event}
+    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //h2[@class='pageDescription' and contains(text(),'${event}')]      20s
+
 Go to other view and then back to Sales Plan
     Open Details Tab At Account View
     Sleep       2s
@@ -660,33 +672,33 @@ Search (Setup)
     Input Text          id=setupSearch      ${item}
     Wait Until Page Contains Element        xpath=//div[@id='AutoNumber5']//a[contains(text(),'${item}')]
 
-Search (Lookup)
-    [Documentation]     Some sort of verification should be run after this keyword
-    ...                 Update on 5.6.2017: This keyword is still a complete disaster.
-    ...                 Deprecated
-    [Arguments]         ${item}
-    ${kw_passed}=    Set Variable    ${FALSE}
-    Wait Until Keyword Succeeds    20 s    1 s    Select Popup Search Window And Validate Title
-    # ${ret}=    Run Inside Iframe    resultsFrame   Run Keyword And Return Status      Click Element      //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
-    # ${ret}=    Run Keyword And Return Status      Click Element      //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
-    # Run Keyword If    ${ret}    Set Variable     ${kw_passed}     ${TRUE}
-    # Return From Keyword If     ${ret}
-    Select Frame    searchFrame
-    Input Text      ${LOOKUP_SEARCH_FIELD}    ${item}
-    Click Element   ${LOOKUP_SEARCH_GO_BUTTON}
-    Press Tab On    ${LOOKUP_SEARCH_GO_BUTTON}
-    Unselect Frame
-    Press Tab On    resultsFrame
-    Select Frame    resultsFrame
-    Press Tab On    //a[contains(text(),'Clear Search Results')]
-    Press Enter On      //div[@class='listRelatedObject lookupBlock']//table//th/a[1]
-    # Focus    //a[contains(text(), '${item}')]
-    # Execute Javascript       document.dispatchEvent(new KeyboardEvent('keydown', {'which': 9, 'keyCode':9}));
-    # Run Keyword and Ignore Error     Select Frame   resultsFrame
-    # Run Keyword and Ignore Error     Click Element       //a[contains(text(), '${item}')]
-    # ${kw_passed}=    Set Variable    ${TRUE}
-    [Teardown]      Select Window     main
-    # [Teardown]      Run Keywords      Log to console     ${kw_passed}    AND    Run Keyword If   '${kw_passed}'=='${FALSE}'     Close Browser
+# Search (Lookup)
+#     [Documentation]     Some sort of verification should be run after this keyword
+#     ...                 Update on 5.6.2017: This keyword is still a complete disaster.
+#     ...                 Deprecated
+#     [Arguments]         ${item}
+#     ${kw_passed}=    Set Variable    ${FALSE}
+#     Wait Until Keyword Succeeds    20 s    1 s    Select Popup Search Window And Validate Title
+#     # ${ret}=    Run Inside Iframe    resultsFrame   Run Keyword And Return Status      Click Element      //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
+#     # ${ret}=    Run Keyword And Return Status      Click Element      //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
+#     # Run Keyword If    ${ret}    Set Variable     ${kw_passed}     ${TRUE}
+#     # Return From Keyword If     ${ret}
+#     Select Frame    searchFrame
+#     Input Text      ${LOOKUP_SEARCH_FIELD}    ${item}
+#     Click Element   ${LOOKUP_SEARCH_GO_BUTTON}
+#     Press Tab On    ${LOOKUP_SEARCH_GO_BUTTON}
+#     Unselect Frame
+#     Press Tab On    resultsFrame
+#     Select Frame    resultsFrame
+#     Press Tab On    //a[contains(text(),'Clear Search Results')]
+#     Press Enter On      //div[@class='listRelatedObject lookupBlock']//table//th/a[1]
+#     # Focus    //a[contains(text(), '${item}')]
+#     # Execute Javascript       document.dispatchEvent(new KeyboardEvent('keydown', {'which': 9, 'keyCode':9}));
+#     # Run Keyword and Ignore Error     Select Frame   resultsFrame
+#     # Run Keyword and Ignore Error     Click Element       //a[contains(text(), '${item}')]
+#     # ${kw_passed}=    Set Variable    ${TRUE}
+#     [Teardown]      Select Window     main
+#     # [Teardown]      Run Keywords      Log to console     ${kw_passed}    AND    Run Keyword If   '${kw_passed}'=='${FALSE}'     Close Browser
 
 Select Account
     [Arguments]         ${account_name}
@@ -814,6 +826,15 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     Run Inside Iframe   ${frame}    Wait Until Element Is Not Visible       //button[text()='Save' and not(contains(@id,'saveList'))]   20s
     Set Test Variable   ${SALES_PLAN_DESCRIPTION}       ${rand_string}
 
+Update meeting status to Done and Save
+    [Documentation]     An Error is expected from this keyword. The meeting outcome is not yet set so it should complain about it.
+    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe   ${frame}    Click Edit Button
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
+    Run Inside Iframe   ${frame}    Select From List By Label   //td[./label[text()='Meeting Status']]/following-sibling::td//select    Done
+    Run Inside Iframe   ${frame}    Click Bottom Save Button
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[@class='errorMsg' and text()[contains(.,'Please select a value in the Meeting Outcome field')]]   10s
+
 Update Opportunity Close Date And Close Reason
     [Arguments]     ${days}=2       ${reason}=09 Customer Postponed
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]      10s
@@ -826,14 +847,6 @@ Update Opportunity Close Date And Close Reason
     ${date}=        Get Date From Future    ${days}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}     ${date}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Value       //td[./label[text()[contains(.,'Close Reason')]]]/following-sibling::td//select     ${reason}
-    # ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
-    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
-    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}//input     ${date}
-    # ${xpath}=       Set Variable        //td[text()='Close Date']/following-sibling::td
-    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Execute Javascript      document.evaluate("${xpath}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dispatchEvent(new Event('dblclick'));
-    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Element Is Visible       InlineEditDialogContent
-    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List by Value   //div[@id='InlineEditDialogContent']//td[text()='Close Reason']/following-sibling::td//select   ${reason}
-    # Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //div[@id='InlineEditDialog_buttons']/input[@value='OK']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Bottom Save Button
 
 Verify That Business Customer Is Terminated
@@ -899,11 +912,8 @@ Verify That Event Has Correct Data
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='Glory']/following-sibling::td//img[@title='Checked']
 
-Verify That Event Is Created And Go To Event
+Verify That Event Is Created
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[./a[text()[contains(.,'${TEST_EVENT_SUBJECT}')]]]/following-sibling::a[text()='created an event.']     20s
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //div/a[text()='${TEST_EVENT_SUBJECT}']
-    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //h2[@class='pageDescription' and contains(text(),'${TEST_EVENT_SUBJECT}')]      20s
 
 Verify That Opportunity Creation Succeeded
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     10 s

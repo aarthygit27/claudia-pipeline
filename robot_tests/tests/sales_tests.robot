@@ -21,6 +21,7 @@ ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${EMPTY}    # 1916290
 ${CONTACT_PERSON_NAME}                      ${EMPTY}    # Test Contact Person 77590434
 ${PRODUCT}                                  ${EMPTY}    # required for creating Opportunities
 ${TEST_PASSIVE_ACCOUNT}                     T. E. Roos Oy
+${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${EMPTY}
 
 *** Test Cases ***
 
@@ -212,8 +213,11 @@ Quick actions: create Meeting
     Click New Event
     Fill Event data     type=Meeting    reason=New Customer
     Click Create Event Button
+    Verify That Event Is Created
+    Go To Event
     Edit Event Description and WIG Areas
     Verify That Event Has Correct Data
+    Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
 Quick actions: create Opportunity from Account (Feed) by Customer Care user
     [Tags]      BQA-19      wip
@@ -230,9 +234,24 @@ Quick actions: create Customer Call
     Click New Event
     Fill Event Data     type=Customer Call    reason=Booking
     Click Create Event Button
-    Verify That Event Is Created And Go To Event
+    Verify That Event Is Created
+    Go To Event
     Edit Event Description and WIG Areas
     Verify That Event Has Correct Data
+    Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
+
+Meeting/Customer Call: Update meeting to Done
+    [Tags]      BQA-21      wip
+    Go To Salesforce and Login
+    Go to Account       ${TEST_ACCOUNT}
+    Create New Event If Necessary
+    Go To Event
+    Update meeting status to Done and Save
+    Add Meeting Outcome and Save
+    Verify That Event Has Correct Data
+
+
+
 
 *** Keywords ***
 
@@ -331,3 +350,13 @@ Update Closed Opportunity Test Case
     Update Opportunity Close Date And Close Reason      reason=${new_close_reason}
     Verify That opportunity Close Reason And Date Has Been Changed      2     ${new_close_reason}
     [Teardown]      Logout From All Systems And Close Browser
+
+Create New Event If Necessary
+    ${event_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
+    Run Keyword If    ${event_exists}    Set Test Variable       ${TEST_EVENT_SUBJECT}   ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
+    Run Keyword If    ${event_exists}    Return From Keyword
+    Open Details Tab At Account View
+    Click New Event
+    Fill Event Data     type=Customer Call    reason=Booking
+    Click Create Event Button
+    Verify That Event Is Created
