@@ -50,7 +50,9 @@ Create CPQ Single
     Click CPQ At Opportunity View
     Search And Add Product To Cart (CPQ)    ${PRODUCT}
     Fill Missing Required Information If Needed (CPQ)
+    Click Next (CPQ)
     Select Sales Type For Order (CPQ)
+    Click Next (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
 
@@ -58,7 +60,9 @@ Create CPQ Multiple
     Open Details View At Opportunity
     Click CPQ At Opportunity View
     Add 50 Products To Order
+    Click Next (CPQ)
     Select Sales Type For Order (CPQ)
+    Click Next (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
 

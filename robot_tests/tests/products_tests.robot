@@ -210,7 +210,9 @@ Create CPQ
     Click CPQ At Opportunity View
     Search And Add Product To Cart (CPQ)    ${PRODUCT}
     Fill Missing Required Information If Needed (CPQ)
+    Click Next (CPQ)
     Select Sales Type For Order (CPQ)
+    Click Next (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
     # Click View Record (CPQ)

@@ -264,8 +264,48 @@ Contact persons added address can not saved without City populated
     Edit Contact Person's Added Address
     # Todo: actually edit the address
 
+Sales Process: E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
+    # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
+    # 12. Check that Quote status has been automatically updated to Submitted. Go to Opportunity and check that its stage is automatically updated to Negotiate & Close and opportunity status is Offer Sent. Check that values from Quote have been updated to opportunity.
+    # 13. Go to Account (via link in Quote) and Create new contract (Service Agreement). Set contract status as Signed and save. Contract will appear in Account record.
+    # 14. Go to Quote and open CPQ. Press Create Order button and then View Record.
+    # 15. Press Preview order summary button to check order summary pdf. Close preview and send order summary to customer by pressing Send Order Summary Email.
+    # 16. Send order to delivery by pressing Submit Order to Delivery button. Check that order status has been automatically updated from Draft into In Progress. Check that order can be found from Multibella Case Management.
+    # 17. Go to opportunity and close it as Won. Check that mandatory data is needed (win probability is updated automatically to 100%, Close Reason and Close Comment are mandatory).
+    # 18. Check that opportunity cannot be updated after status has been set to Won.
+    # 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
+    [Tags]      BQA-33      wip
+    Go To Salesforce and Login
+    Go to Account    ${TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    Open just created opportunity and update Win probability, add Competitor and Partner
+    # 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
+    # 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
+    # Open Details View At Opportunity
+    Click CPQ At Opportunity View
+    Add modelled product and unmodelled product
+    Update Sales Type and Prices For unmodelled Product
+    Click View Quote And Go Back To CPQ
+    Click Create Order (CPQ)
+    Press Review Record and add Contact and Quote email text
+    # 10. Create Quote. Press Review Record and add Contact and Quote email text.
+
+    [Teardown]      Pause Execution
+
 
 *** Keywords ***
+
+Add modelled product and unmodelled product
+    Search And Add Product To Cart (CPQ)    Telia Yritysinternet Plus
+    Set Test Variable   ${PRODUCT}      Telia Yritysinternet Plus
+    Fill Missing Required Information If Needed (CPQ)
+    Search And Add Product To Cart (CPQ)    DataNet Multi
+
+Update Sales Type and Prices For unmodelled Product
+    Click Next (CPQ)
+    Select Sales Type For Order (CPQ)
+    Set Prices For Unmodelled Product (CPQ)     DataNet Multi
+    Click Next (CPQ)
 
 Check If Contact Person Exists And Create New One If Not
     [Arguments]    ${contact_person}
@@ -377,3 +417,8 @@ Create New Event If Necessary
     Fill Event Data     type=Customer Call    reason=Booking
     Click Create Event Button
     Verify That Event Is Created
+
+Press Review Record and add Contact and Quote email text
+    Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
+    Add Quote Email Text To Product Order
+    # Todo: quote email text

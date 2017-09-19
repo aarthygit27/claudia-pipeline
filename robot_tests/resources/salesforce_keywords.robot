@@ -15,6 +15,12 @@ Add Account For Contact Person
     Search (Lookup)     ${account_name}
     Select New Contact Window And Validate Title
 
+Add Competitor And Partner
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Value       //td[./label[text()='Competitor']]/following-sibling::td//select[contains(@id,'unselected')]    4
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //td[./label[text()='Competitor']]/following-sibling::td//a[@title='Add']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Value       //td[./label[text()='Partner']]/following-sibling::td//select[contains(@id,'unselected')]       1
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //td[./label[text()='Partner']]/following-sibling::td//a[@title='Add']
+
 Add Contact Person To Product Order
     [Arguments]    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}
@@ -70,6 +76,11 @@ Add Price Book For Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      Pricebook2      ${pricebook}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Save Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']       20S
+
+Add Quote Email Text To Product Order
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}
+    Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[.//label[text()='Quote Email Text']]/following-sibling::td//textarea       Quote email text for ${OPPORTUNITY_NAME}
 
 Add Solution Area and update Solution Sub Area data
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
@@ -626,11 +637,6 @@ Open Dashboard Tab At Account View
 Open Details Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Details
 
-Open Sales Plan Tab At Account View
-    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Sales Plan
-    ${frame}=   Get Account Tab Iframe Xpath    Sales Plan
-    Run Keyword And Ignore Error    Run Inside Iframe   ${frame}    Click element   //div[@id='saveSalesplanModal']/div[@class='slds-modal__container']//button[contains(text(),'Not now')]
-
 Open Details View At Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${ACCOUNT_DETAILS}
 
@@ -638,13 +644,25 @@ Open Ideas
     Select Correct Tab Type     Ideas
     Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Idea']   20 seconds
 
-Open Todays Page
-    Select Correct Tab Type     Today
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter
+Open just created opportunity and update Win probability, add Competitor and Partner
+    Go To Account   ${OPPORTUNITY_NAME}
+    Edit Opportunity
+    Update Win Probability      10%
+    Add Competitor And Partner
+    Save Opportunity
 
 Open Opportunities
     Select Correct Tab Type     Opportunities
     Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    20 seconds
+
+Open Sales Plan Tab At Account View
+    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Sales Plan
+    ${frame}=   Get Account Tab Iframe Xpath    Sales Plan
+    Run Keyword And Ignore Error    Run Inside Iframe   ${frame}    Click element   //div[@id='saveSalesplanModal']/div[@class='slds-modal__container']//button[contains(text(),'Not now')]
+
+Open Todays Page
+    Select Correct Tab Type     Today
+    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter
 
 Save New Contact Person
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
@@ -788,7 +806,6 @@ Type Account Name
     [Arguments]         ${account_name}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2         ${account_name}
 
-
 Update Contact Person In Salesforce
     ${OLD_EMAIL}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Email']/following-sibling::td/div/a
     ${OLD_PHONE}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Phone']/following-sibling::td/div
@@ -857,6 +874,10 @@ Update Opportunity Close Date And Close Reason
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}     ${date}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Value       //td[./label[text()[contains(.,'Close Reason')]]]/following-sibling::td//select     ${reason}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Bottom Save Button
+
+Update Win Probability
+    [Arguments]     ${probability}=50%
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Value       //td[./label[text()='Win Probability %']]/following-sibling::td//select     ${probability}
 
 Verify That Business Customer Is Terminated
     [Documentation]     Searches for a business customer and checks if the status is set

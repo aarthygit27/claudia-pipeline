@@ -53,6 +53,10 @@ Click Create Quote (CPQ)
     Wait Until Keyword Succeeds    20 s    3 s
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_QUOTE}
 
+Click Next (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //*[text()='Next']
+
 Click Save Order (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SAVE_ORDER_BUTTON}    30 seconds
     Wait Until Keyword Succeeds    20 s    3 s
@@ -165,16 +169,19 @@ Search For Product (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Enter On                          ${CPQ_SEARCH_FIELD}
 
 Select Sales Type For Order (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //button[contains(@class,'slds-button')]/span[text()='Next']
     ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
     # All products do not need a sales type
-    Run Keyword If    not ${status}     Run Keywords    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //p[text()='Next']
+    Return From Keyword If    not ${status}
     ...     AND         Return From Keyword
     ${length}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Execute Javascript
     ...     return document.evaluate("count(//tr//select[contains(@class,'slds-select slds-required')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
     :FOR   ${i}     IN RANGE    ${length}
     \   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+1}]//select[contains(@class,'slds-select slds-required')]      New Money-New Services
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //p[text()='Next']
+
+Set Prices For Unmodelled Product (CPQ)
+    [Arguments]     ${product}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='DataNet Multi']/following-sibling::td[1]/input     50      # one time total
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='DataNet Multi']/following-sibling::td[2]/input     50      # recurring total
 
 Submit Order To Delivery (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}
