@@ -96,7 +96,7 @@ class RestWrapper(object):
 
         return setup
 
-    def _get_all_user_ids(self, output, wiki_users):
+    def _get_all_user_ids(self, output, wiki_users=None):
         ids = {}
         for u in output["records"]:
             name = u["Name"]
@@ -204,7 +204,7 @@ class RestWrapper(object):
         r = self._session.post(self._rest_base + "/sobjects/User", headers=self._headers, data=user)
         return r
 
-    def get_all_user_info_from_salesforce(self, output, wiki_users):
+    def get_all_user_info_from_salesforce(self, output, wiki_users=None):
         '''
         @param: output: a JSON object from get_all_users_from_salesforce()
         '''
