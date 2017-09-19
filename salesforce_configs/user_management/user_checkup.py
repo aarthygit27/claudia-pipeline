@@ -24,7 +24,7 @@ if __name__ == "__main__":
     Check the data of a single user
     '''
     if len(sys.argv) != 3: sys.exit("Usage: python user_transfer.py <environment> <tcad>")
-    env = sys.argv[1]
+    env = sys.argv[1].lower()
     tcad = sys.argv[2]
     salesforce = ConfigSectionMap(env)
     wiki = ConfigSectionMap("wiki")

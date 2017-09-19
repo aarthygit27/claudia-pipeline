@@ -16,7 +16,7 @@ from config_parser import ConfigSectionMap
 
 if __name__ == "__main__":
     if len(sys.argv) != 2: sys.exit("Usage: python user_transfer.py <environment>")
-    env = sys.argv[1]
+    env = sys.argv[1].lower()
     salesforce = ConfigSectionMap(env)
     wiki = ConfigSectionMap("wiki")
 
