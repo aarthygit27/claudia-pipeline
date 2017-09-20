@@ -66,7 +66,7 @@ if __name__ == "__main__":
         new_info = rw.get_user_info_from_salesforce(id)
 
         if old_info["IsActive"] != new_info["IsActive"]:
-            send_notification_email(username, wiki_users[u]["Email"], salesforce["instance"])
+            send_notification_email(username, email, salesforce["instance"])
 
         print "User {0} ({1} {2}) activated.".format(tcad, firstname, lastname)
         if profile not in ["Chatter Free User", "Chatter External User"]:
@@ -86,14 +86,4 @@ if __name__ == "__main__":
         new_user["Profile"] = profile
 
         rw.create_new_user_to_salesforce(new_user, profile_id, role_id, env)
-        # if r.status_code != 201:
-        #     print "Failed to create new user {0} ({1} {2}): {3}".format(tcad, firstname, lastname, r.text)
-        # else: 
-        #     print "Created new user to Salesforce: {0} ({1} {2})".format(tcad, firstname, lastname)
-        #     id = rw.get_user_id_from_salesforce(tcad)
-        #     if profile not in ["Chatter Free User", "Chatter External User"]:
-        #         rw.set_permission_set_rights(u, id)
-        #     # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
-        #     rw.reset_user_password(id)
-        # # print "User", tcad, "is not in Salesforce", env, "sandbox."
 

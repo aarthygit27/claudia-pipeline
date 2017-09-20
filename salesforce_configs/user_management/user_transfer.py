@@ -65,15 +65,6 @@ if __name__ == "__main__":
         if u.lower() not in current_users:
             # If the user is in Wiki, but not in Salesforce, create the user
             r = rw.create_new_user_to_salesforce(wiki_users[u], profile_id, role_id, env)
-            # if r.status_code != 201:
-            #     print "Failed to create new user {0} ({1} {2}): {3}".format(u, wiki_users[u]["FirstName"], wiki_users[u]["LastName"], r.text)
-            #     continue
-            # print "Created new user to Salesforce: {0} ({1} {2})".format(u, wiki_users[u]["FirstName"], wiki_users[u]["LastName"])
-            # id = rw.get_user_id_from_salesforce(wiki_users[u]["Alias"])
-            # if wiki_users[u]["Profile"] not in ["Chatter Free User", "Chatter External User"]:
-            #     rw.set_permission_set_rights(u, id)
-            # # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
-            # rw.reset_user_password(id)
         else:
             # If the user is also in salesforce, ensure their account is activated
             id = salesforce_users[u]["Id"]
