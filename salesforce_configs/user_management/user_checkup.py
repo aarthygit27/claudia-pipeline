@@ -15,9 +15,9 @@ from config_parser import ConfigSectionMap
 
 if __name__ == "__main__":
     '''
-    Check the data of a single user
+    Update or create a single user
     '''
-    if len(sys.argv) != 7: sys.exit("Usage: python user_transfer.py <environment> <tcad> <email> <profile-role>")
+    if len(sys.argv) != 7: sys.exit("Usage: python user_transfer.py <environment> <tcad> <email> <profile[-role]>")
     env = sys.argv[1].lower()
     tcad = sys.argv[2]
     firstname = sys.argv[3]
@@ -68,13 +68,14 @@ if __name__ == "__main__":
         if old_info["IsActive"] != new_info["IsActive"]:
             send_notification_email(username, wiki_users[u]["Email"], salesforce["instance"])
 
-        print "User {0} ({1} {2}) activated.".format(firstname, lastname)
+        print "User {0} ({1} {2}) activated.".format(tcad, firstname, lastname)
         if profile not in ["Chatter Free User", "Chatter External User"]:
-            rights_changed = rw.set_permission_set_rights(u, id)
+            rights_changed = rw.set_permission_set_rights(tcad, id)
         else:
             rights_changed = False
         changed = "UPDATED" if (rw.user_data_updated(old_info, new_info) or rights_changed) else "UNCHANGED"
         print "...", changed
+    # Create new user
     else:
         new_user = {}
         new_user["FirstName"] = firstname
@@ -82,16 +83,17 @@ if __name__ == "__main__":
         new_user["Alias"] = tcad
         new_user["Email"] = email
         new_user["AboutMe"] = ""
+        new_user["Profile"] = profile
 
-        r = rw.create_new_user_to_salesforce(wiki_users[u], profile_id, role_id, env)
-        if r.status_code != 201:
-            print "Failed to create new user {0} ({1} {2}): {3} ".format(tcad, firstname, lastname, r.text)
-        else: 
-            print "Created new user to Salesforce: {0} ({1} {2})".format(tcad, firstname, lastname)
-            id = rw.get_user_id_from_salesforce(tcad)
-            if wiki_users[u]["Profile"] not in ["Chatter Free User", "Chatter External User"]:
-                rw.set_permission_set_rights(u, id)
-            # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
-            rw.reset_user_password(id)
-        # print "User", tcad, "is not in Salesforce", env, "sandbox."
+        rw.create_new_user_to_salesforce(new_user, profile_id, role_id, env)
+        # if r.status_code != 201:
+        #     print "Failed to create new user {0} ({1} {2}): {3}".format(tcad, firstname, lastname, r.text)
+        # else: 
+        #     print "Created new user to Salesforce: {0} ({1} {2})".format(tcad, firstname, lastname)
+        #     id = rw.get_user_id_from_salesforce(tcad)
+        #     if profile not in ["Chatter Free User", "Chatter External User"]:
+        #         rw.set_permission_set_rights(u, id)
+        #     # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
+        #     rw.reset_user_password(id)
+        # # print "User", tcad, "is not in Salesforce", env, "sandbox."
 

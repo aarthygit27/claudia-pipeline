@@ -28,7 +28,7 @@ if __name__ == "__main__":
     salesforce_users = rw.get_all_user_info_from_salesforce(output, wiki_users)
 
     if len(wiki_users) == 0:
-        sys.exit("Unable to parse any users. Arboting")
+        sys.exit("Unable to parse any users. Aborting")
 
     # These users cannot be changed via REST API. Test Automation user is skipped to ensure we always have one usable account to use
     # Rainer Sipronius is default user
@@ -49,9 +49,9 @@ if __name__ == "__main__":
                     "Username" : salesforce_users[u]["Username"] + ".deactivated"}
             rw.update_user(id, data)
             if rw.get_user_info_from_salesforce(id)["IsActive"]:
-                print "User '{0}' ({1}) was supposed be deactivated, but was active".format(u, salesforce_users[u]["Name"])
+                print "User '{0}' ({1}) was supposed be deactivated, but was active".format(u, salesforce_users[u]["Name"].encode("utf-8"))
                 continue
-            print "User", u, "({0}) deactivated.".format(salesforce_users[u]["Name"].encode("utf-8"))
+            print "User {0} ({1}) deactivated.".format(u, salesforce_users[u]["Name"].encode("utf-8"))
 
     # Create a list with all Salesforce users in lower case to prevent typo errors
     current_users = map(lambda x: x.lower(), salesforce_users.keys())
@@ -65,15 +65,15 @@ if __name__ == "__main__":
         if u.lower() not in current_users:
             # If the user is in Wiki, but not in Salesforce, create the user
             r = rw.create_new_user_to_salesforce(wiki_users[u], profile_id, role_id, env)
-            if r.status_code != 201:
-                print "Failed to create new user {0} ({1} {2}): {3} ".format(u, wiki_users[u]["FirstName"], wiki_users[u]["LastName"], r.text)
-                continue
-            print "Created new user to Salesforce:", u, "({0} {1})".format(wiki_users[u]["FirstName"], wiki_users[u]["LastName"])
-            id = rw.get_user_id_from_salesforce(wiki_users[u]["Alias"])
-            if wiki_users[u]["Profile"] not in ["Chatter Free User", "Chatter External User"]:
-                rw.set_permission_set_rights(u, id)
-            # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
-            rw.reset_user_password(id)
+            # if r.status_code != 201:
+            #     print "Failed to create new user {0} ({1} {2}): {3}".format(u, wiki_users[u]["FirstName"], wiki_users[u]["LastName"], r.text)
+            #     continue
+            # print "Created new user to Salesforce: {0} ({1} {2})".format(u, wiki_users[u]["FirstName"], wiki_users[u]["LastName"])
+            # id = rw.get_user_id_from_salesforce(wiki_users[u]["Alias"])
+            # if wiki_users[u]["Profile"] not in ["Chatter Free User", "Chatter External User"]:
+            #     rw.set_permission_set_rights(u, id)
+            # # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
+            # rw.reset_user_password(id)
         else:
             # If the user is also in salesforce, ensure their account is activated
             id = salesforce_users[u]["Id"]
@@ -102,7 +102,7 @@ if __name__ == "__main__":
                 continue
 
             # Check whether anything has been changed from the users
-            print "User", u, "({0} {1})".format(wiki_users[u]["FirstName"], wiki_users[u]["LastName"]), "activated."
+            print "User {0} ({1} {2}) activated.".format(u, wiki_users[u]["FirstName"], wiki_users[u]["LastName"])
             if wiki_users[u]["Profile"] not in ["Chatter Free User", "Chatter External User"]:
                 rights_changed = rw.set_permission_set_rights(u, id)
             else:

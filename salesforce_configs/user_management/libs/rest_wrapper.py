@@ -204,6 +204,16 @@ class RestWrapper(object):
     def create_new_user_to_salesforce(self, user_info, profile_id, role_id, environment):
         user = self._generate_new_user_data(user_info, profile_id, role_id, environment)
         r = self._session.post(self._rest_base + "/sobjects/User", headers=self._headers, data=user)
+        if r.status_code != 201:
+            print "Failed to create new user {0} ({1} {2}): {3}".format(user_info["Alias"], user_info["FirstName"], user_info["LastName"], r.text)
+        else:
+            print "Created new user to Salesforce: {0} ({1} {2})".format(user_info["Alias"], user_info["FirstName"], user_info["LastName"])
+            id = self.get_user_id_from_salesforce(user_info["Alias"])
+            if user_info["Profile"] not in ["Chatter Free User", "Chatter External User"]:
+                self.set_permission_set_rights(user_info["Alias"], id)
+            # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
+            self.reset_user_password(id)
+
         return r
 
     def get_all_user_info_from_salesforce(self, output, wiki_users=None):
