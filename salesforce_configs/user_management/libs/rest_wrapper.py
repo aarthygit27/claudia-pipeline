@@ -110,12 +110,14 @@ class RestWrapper(object):
         '''
         Create a json object to be used as the REST call body when creating a new user
         '''
+        username = self.generate_new_username(user_info["Alias"], environment)
+
         new_user = {}
         new_user["FirstName"] = user_info["FirstName"]
         new_user["LastName"] = user_info["LastName"]
         new_user["Alias"] = user_info["Alias"]
         new_user["Email"] = user_info["Email"]
-        new_user["Username"] = user_info["Alias"] + "@teliacompany.com.{0}".format(environment)   # [alias]@teliacompany.com.[environment]
+        new_user["Username"] = username   # [alias]@teliacompany.com.[environment]
         new_user["AboutMe"] = user_info["AboutMe"]
         if role_id:
             new_user["UserRoleId"] = role_id
@@ -227,10 +229,8 @@ class RestWrapper(object):
             raise RuntimeError("Failed to get users from Wiki. Status code: {0}. Output: {1}".format(r.status_code, r.text.encode("utf-8")))
         return self._parse_users_from_wiki_output(r.text.encode("utf-8"))
 
-    def generate_new_username(self, data, environment):
-        username = data["Alias"]
-
-        return username + "@teliacompany.com." + environment
+    def generate_new_username(self, alias, environment):
+        return alias + "@teliacompany.com." + environment
 
     def user_data_updated(self, first, second):
         ignored_fields = ["LastViewedDate", "LastReferencedDate", "SystemModstamp", "LastModifiedDate", "LastModifiedById"]

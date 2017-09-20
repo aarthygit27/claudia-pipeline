@@ -77,7 +77,7 @@ if __name__ == "__main__":
         else:
             # If the user is also in salesforce, ensure their account is activated
             id = salesforce_users[u]["Id"]
-            username = rw.generate_new_username(wiki_users[u], env)
+            username = rw.generate_new_username(wiki_users[u]["Alias"], env)
             data = {"IsActive" : 1,
                     "ProfileId" : profile_id,
                     "FirstName" : wiki_users[u]["FirstName"],
