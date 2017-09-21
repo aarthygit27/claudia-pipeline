@@ -178,6 +178,11 @@ Click Create Event Button
     ${multiple_contacts}=       Run Keyword And Return Status     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[text()[contains(.,'Multiple items found')]]
     Run Keyword If      ${multiple_contacts}    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
 
+Click Create New Contract
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='New Contract']
+    ${frame}=   Get Account Tab Iframe Xpath    New Contract
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[contains(text(),'New Contract')]   30s
+
 Click Create New Opportunity
     Run Inside Iframe    ${IFRAME}    Click Element    ${NEW_OPPORTUNITY_BUTTON}
     Sleep    1
@@ -296,6 +301,18 @@ Create New Account
     Fill Account Name   ${name}
     Run Keyword If  '${parent}'!='${EMPTY}'  Fill Parent Account Name    ${parent}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
+
+Create New Contract For Customer
+    [Arguments]     ${status}=Signed
+    ...             ${days}=0
+    Open Details Tab At Account View
+    Open Details View At Opportunity
+    Click Create New Contract
+    ${frame}=   Get Account Tab Iframe Xpath    New Contract
+    ${date}=    Get Date From Future    ${days}
+    Run Inside Iframe   ${frame}    Select From List By Value   //td[.//label[contains(text(),'Status')]]/following-sibling::td//select     ${status}
+    Run Inside Iframe   ${frame}    Input Text      //td[.//label[contains(text(),'Contract Start Date')]]/following-sibling::td//input     ${date}
+    Click Bottom Save Button
 
 Create New Opportunity For Customer
     [Arguments]     ${opport_name}=${EMPTY}
@@ -791,6 +808,11 @@ Select Tab With Keyboard Shortcut
     # 86 is the ASCII code for 'V' key, which is the shortcut for the navigation tab
     Execute Javascript      document.dispatchEvent(new KeyboardEvent('keydown', {'which': 86, 'keyCode':86}));
 
+Send Quote Email To Customer
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Send Quote Email']
+    Dismiss Alert
+    # Todo: does this work?
+
 Set Opportunity Stage And Save
     [Arguments]     ${stage}
     Edit Opportunity
@@ -1005,6 +1027,10 @@ Verify That opportunity Close Reason And Date Has Been Changed
 Verify That Owner Has Changed
     [Arguments]         ${owner}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //td[text()='Account Owner']/following-sibling::td//a[contains(text(),'${owner}')]
+
+Verify That Quote Status Is Updated to
+    [Arguments]         ${status}
+    Wait Until Keyword Succeeds     30s     1s      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Text Should Be      Status_ileinner     ${status}
 
 Verify That Sales Role Is Updated
     [Arguments]         ${role}

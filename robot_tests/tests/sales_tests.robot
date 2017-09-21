@@ -265,9 +265,6 @@ Contact persons added address can not saved without City populated
     # Todo: actually edit the address
 
 Sales Process: E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
-    # 12. Check that Quote status has been automatically updated to Submitted. Go to Opportunity and check that its stage is automatically updated to Negotiate & Close and opportunity status is Offer Sent. Check that values from Quote have been updated to opportunity.
-    # 13. Go to Account (via link in Quote) and Create new contract (Service Agreement). Set contract status as Signed and save. Contract will appear in Account record.
     # 14. Go to Quote and open CPQ. Press Create Order button and then View Record.
     # 15. Press Preview order summary button to check order summary pdf. Close preview and send order summary to customer by pressing Send Order Summary Email.
     # 16. Send order to delivery by pressing Submit Order to Delivery button. Check that order status has been automatically updated from Draft into In Progress. Check that order can be found from Multibella Case Management.
@@ -288,8 +285,12 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
     Press Review Record and add Contact and Quote email text
-    # 10. Create Quote. Press Review Record and add Contact and Quote email text.
-
+    Send Quote Email To Customer # Quote email is sent to Contact visible in Quote.
+    Verify That Quote Status Is Updated to      Submitted
+    Go To Account   ${OPPORTUNITY_NAME}
+    Verify That Opportunity Status Has Been Changed     Negotiate & Close   Offer Sent      # Check that values from Quote have been updated to opportunity.
+    Go To Account   ${TEST_ACCOUNT}
+    Create New Contract For Customer
     [Teardown]      Pause Execution
 
 
@@ -421,4 +422,3 @@ Create New Event If Necessary
 Press Review Record and add Contact and Quote email text
     Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
     Add Quote Email Text To Product Order
-    # Todo: quote email text

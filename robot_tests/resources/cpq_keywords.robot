@@ -195,7 +195,7 @@ Verify That Product In Cart Is Correct
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
 
 Wait Until Product Appears In Cart (CPQ)
-    [Arguments]     ${target_product}   ${amount}=1     ${timeout}=20s
+    [Arguments]     ${target_product}   ${amount}=1     ${timeout}=30s
     # Wait Until Keyword Succeeds     20s     1s
     # ...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Locator Should Match X Times    //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      ${amount}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //span[@class='cpq-product-name' and contains(text(),'${target_product}')]      ${timeout}
