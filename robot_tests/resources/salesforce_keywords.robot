@@ -299,7 +299,7 @@ Create New Account
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h1[contains(text(),'New Account')]    5 seconds
     Select Account Type    ${type}
     Fill Account Name   ${name}
-    Run Keyword If  '${parent}'!='${EMPTY}'  Fill Parent Account Name    ${parent}
+    Run Keyword If      '${parent}'!='${EMPTY}'     Fill Parent Account Name    ${parent}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
 
 Create New Contract For Customer

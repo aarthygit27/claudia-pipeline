@@ -78,15 +78,7 @@ Click View Quote And Go Back To CPQ
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //td[@id='topButtonRow']//input[@title='CPQ']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${CPQ_CREATE_ORDER}
 
-Fill Missing Required Information
-    ${close_button}=        Set Variable        //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
-    Run Keyword     Fill Required Information For ${PRODUCT}
-    Sleep   0.5
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
-    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']   20s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
-    ...         //div[@class='cpq-cart-item-root-product-messages']//span[contains(text(),'Required attribute missing')]    30s
+Close Missing Information Popup (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Click Element   ${close_button}
     # For some strange reason clicking the "close" can result in another load and the close button needs to be pressed a second time
@@ -96,6 +88,13 @@ Fill Missing Required Information
     ...         20s   1s    Click Element   ${close_button}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[@class='slds-modal__container']   10s
+
+Fill Missing Required Information
+    ${close_button}=        Set Variable        //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
+    Run Keyword     Fill Required Information For ${PRODUCT}
+    Wait Until Filled Information Is Recognized (CPQ)
+    Close Missing Information Popup (CPQ)
     [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${close_button}
 
 Fill Missing Required Information If Needed (CPQ)
@@ -136,7 +135,6 @@ Load More Products (CPQ)
     Sleep   0.2
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //a[contains(text(),'Load More')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    //div[@class='slds-spinner_container']      20s
-    Capture Page Screenshot
 
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
@@ -193,6 +191,14 @@ Verify That Product In Cart Is Correct
     ${product_in_cart}=    Set Variable
     ...    //div[contains(@class, 'cpq-cart-item-title')]//div[contains(text(), '${target_product}')]
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
+
+Wait Until Filled Information Is Recognized (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
+    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
+    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']   20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
+    ...         //div[@class='cpq-cart-item-root-product-messages']//span[contains(text(),'Required attribute missing')]    30s
 
 Wait Until Product Appears In Cart (CPQ)
     [Arguments]     ${target_product}   ${amount}=1     ${timeout}=30s
