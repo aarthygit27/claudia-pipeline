@@ -41,7 +41,7 @@ Contact: Add new contact (invalid data)
     Enter mandatory (invalid) information and verify cp was not saved
 
 Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
-    [Tags]      add_new_contact     BQA-53      BQA-1835    smoke
+    [Tags]      add_new_contact     BQA-53      BQA-108      BQA-1835    smoke
     [Documentation]     Entry Conditions: MultiBella userIntegrations are open
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
