@@ -280,8 +280,8 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     # 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
     # Open Details View At Opportunity
     Click CPQ At Opportunity View
-    Add modelled product and unmodelled product
-    Update Sales Type and Prices For unmodelled Product
+    Add modelled product and unmodelled product to cart (CPQ)
+    Update Sales Type and Prices For unmodelled Product (CPQ)
     Click View Quote And Go Back To CPQ
     Click Create Order (CPQ)
     Press Review Record and add Contact and Quote email text
@@ -295,18 +295,6 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
 
 
 *** Keywords ***
-
-Add modelled product and unmodelled product
-    Search And Add Product To Cart (CPQ)    Telia Yritysinternet Plus
-    Set Test Variable   ${PRODUCT}      Telia Yritysinternet Plus
-    Fill Missing Required Information If Needed (CPQ)
-    Search And Add Product To Cart (CPQ)    DataNet Multi
-
-Update Sales Type and Prices For unmodelled Product
-    Click Next (CPQ)
-    Select Sales Type For Order (CPQ)
-    Set Prices For Unmodelled Product (CPQ)     DataNet Multi
-    Click Next (CPQ)
 
 Check If Contact Person Exists And Create New One If Not
     [Arguments]    ${contact_person}
@@ -324,22 +312,6 @@ Check If Contact Person Exists And Create New One If Not
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
-
-Enter mandatory information and save new contact
-    [Arguments]     ${first_name}=${EMPTY}
-    ...             ${last_name}=${EMPTY}
-    ...             ${email}=noreply@teliasonera.com
-    ...             ${phone_number}=+358888888
-    ...             ${salutation}=Mr.
-    Add Mandatory Contact Data      ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
-    Click Create Contact Person Button
-    Verify That Create Contact Person Button Is Not Visible
-    Verify That Error Message Is Not Displayed
-
-Enter mandatory (invalid) information and verify cp was not saved
-    Add Mandatory Contact Data    Test    Invalid Contact    noreply@teliasonera.com    12notNumbers
-    Click Create Contact Person Button
-    Verify That Error Message Is Displayed
 
 Open Details and choose New Contact from More tab
     Open Details Tab At Account View

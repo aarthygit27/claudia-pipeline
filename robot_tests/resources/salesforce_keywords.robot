@@ -385,6 +385,22 @@ Edit Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}
 
+Enter mandatory information and save new contact
+    [Arguments]     ${first_name}=${EMPTY}
+    ...             ${last_name}=${EMPTY}
+    ...             ${email}=noreply@teliasonera.com
+    ...             ${phone_number}=+358888888
+    ...             ${salutation}=Mr.
+    Add Mandatory Contact Data      ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
+    Click Create Contact Person Button
+    Verify That Create Contact Person Button Is Not Visible
+    Verify That Error Message Is Not Displayed
+
+Enter mandatory (invalid) information and verify cp was not saved
+    Add Mandatory Contact Data    Test    Invalid Contact    noreply@teliasonera.com    12notNumbers
+    Click Create Contact Person Button
+    Verify That Error Message Is Displayed
+
 Extract MuBe CaseID From Opportunity
     Sleep   2       The browser needs to catch its breath or it will complain about a JavaScript error
     Reload Page

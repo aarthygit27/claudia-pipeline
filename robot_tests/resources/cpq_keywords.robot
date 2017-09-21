@@ -5,6 +5,14 @@ Resource                ${PROJECTROOT}${/}resources${/}common.robot
 Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robot
 
 *** Keywords ***
+
+Add modelled product and unmodelled product to cart (CPQ)
+    [Arguments]=    ${modelled_product}=Telia Yritysinternet Plus   ${unmodelled_product}=DataNet Multi
+    Search And Add Product To Cart (CPQ)    ${modelled_product}
+    Set Test Variable   ${PRODUCT}      ${modelled_product}
+    Fill Missing Required Information If Needed (CPQ)
+    Search And Add Product To Cart (CPQ)    ${unmodelled_product}
+
 Add Nth Product To Cart (CPQ)
     [Arguments]     ${i}
     ${xpath}=       Set Variable    //div[@class='slds-col cpq-items-container scroll']//div[@data='card']
@@ -185,6 +193,13 @@ Submit Order To Delivery (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${SUBMIT_ORDER_TO_DELIVERY}
     Wait Until Keyword Succeeds    20 s    1 s    Confirm Action
+
+Update Sales Type and Prices For unmodelled Product (CPQ)
+    [Arguments]     ${unmodelled_product}=DataNet Multi
+    Click Next (CPQ)
+    Select Sales Type For Order (CPQ)
+    Set Prices For Unmodelled Product (CPQ)     ${unmodelled_product}
+    Click Next (CPQ)
 
 Verify That Product In Cart Is Correct
     [Arguments]    ${target_product}=${PRODUCT}
