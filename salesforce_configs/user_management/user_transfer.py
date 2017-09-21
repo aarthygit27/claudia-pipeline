@@ -15,15 +15,21 @@ import config_parser
 from config_parser import ConfigSectionMap
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2: sys.exit("Usage: python user_transfer.py <environment>")
+    if len(sys.argv) != 3: sys.exit("Usage: python user_transfer.py <environment> test/development")
     env = sys.argv[1].lower()
+    if sys.argv[1] == "test":
+        correct_list = 62789322 # list of test users
+    elif sys.argv[2] == "development"
+        correct_list = 64292580 # list of development users
+    else:
+        sys.exit("Invalid list of users: Use either 'test' or 'development'")
     salesforce = ConfigSectionMap(env)
     wiki = ConfigSectionMap("wiki")
 
     session_id, server_url = get_sessionId_and_serverUrl(salesforce["instance"], PROJECT_ROOT, salesforce["username"], salesforce["password"] + salesforce["token"])
 
     rw = RestWrapper(session_id, server_url, env)
-    wiki_users = rw.get_users_from_wiki(wiki["username"], wiki["password"])
+    wiki_users = rw.get_users_from_wiki(wiki["username"], wiki["password"], correct_list)
     output = rw.get_all_users_from_salesforce()
     salesforce_users = rw.get_all_user_info_from_salesforce(output, wiki_users)
 

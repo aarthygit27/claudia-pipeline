@@ -232,9 +232,8 @@ class RestWrapper(object):
             raise RuntimeError("Failed to get integrations from Wiki. Status code: {0}. Output: {1}".format(r.status_code, r.text.encode("utf-8")))
         return self._parse_integrations_from_wiki_output(r.json()["body"]["storage"]["value"])
 
-    def get_users_from_wiki(self, username, password):
-        r = self._session.get("http://wiki.intra.sonera.fi/rest/api/content/62789322?expand=body.storage", auth=(username, password))   # List of Test Users
-        # r = self._session.get("http://wiki.intra.sonera.fi/rest/api/content/64292580?expand=body.storage", auth=(username, password))   # List of Developments Userss
+    def get_users_from_wiki(self, username, password, correct_list):
+        r = self._session.get("http://wiki.intra.sonera.fi/rest/api/content/{0}?expand=body.storage".format(correct_list), auth=(username, password))
         if r.status_code != 200:
             raise RuntimeError("Failed to get users from Wiki. Status code: {0}. Output: {1}".format(r.status_code, r.text.encode("utf-8")))
         return self._parse_users_from_wiki_output(r.text.encode("utf-8"))
