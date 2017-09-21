@@ -529,9 +529,9 @@ Get Account Tab Iframe Xpath
 
 Go to Account
     [Documentation]    This keyword works also with contact person and other parameters which can be searched at main search
-    [Arguments]    ${target_account}
+    [Arguments]    ${target_account}    ${type}=${EMPTY}
     Log     Going to '${target_account}'
-    Wait Until Keyword Succeeds     30s     5s      Search And Verify Account Is Found    ${target_account}
+    Wait Until Keyword Succeeds     30s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
@@ -707,10 +707,10 @@ Save Opportunity
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
 
 Search And Verify Account Is Found
-    [Arguments]     ${target_account}
+    [Arguments]     ${target_account}   ${type}=${EMPTY}
     Run Keyword And Ignore Error      Close All Tabs
     Search Salesforce    ${target_account}
-    Searched Item Should Be Visible    ${target_account}
+    Searched Item Should Be Visible    ${target_account}    ${type}
 
 Search Salesforce
     [Arguments]         ${item}
@@ -720,11 +720,11 @@ Search Salesforce
     Click Element       id=phSearchClearButton
 
 Searched Item Should Be Visible
-    [Arguments]         ${account_name}
+    [Arguments]         ${account_name}     ${type}=${EMPTY}
     ${visible}=     Run Keyword and Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']
     # Sometimes the search shows more options. If we reload the page, the extra results shuold vanish.
     Run Keyword Unless      ${visible}      Reload Page
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']       20s
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       /div[contains(@id,'${type}')]//a[text()='${account_name}']       20s
 
 Search (Setup)
     [Arguments]         ${item}
@@ -1061,6 +1061,10 @@ Verify That Updated Values Are Visible In Sales Plan
 Verify That User Cannot Create New Opportunity
     Click Feed Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Not Contain Element     //span[text()='New Opportunity']
+
+Verify That Win Probability Is
+    [Arguments]     ${probability}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be       //td[text()='Win Probability %']/following-sibling::td/div     ${probability}
 
 Wait For Load
     Sleep    0.5
