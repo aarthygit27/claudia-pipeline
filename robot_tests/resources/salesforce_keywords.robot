@@ -985,6 +985,16 @@ Verify That Description And WIG Areas Are Correct
 Verify That Event Is Created
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[./a[text()[contains(.,'${TEST_EVENT_SUBJECT}')]]]/following-sibling::a[text()='created an event.']     20s
 
+
+Verify That Opportunity Cannot Be Updated
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${EDIT_BUTTON}
+
+Verify That opportunity Close Reason And Date Has Been Changed
+    [Arguments]     ${days}     ${reason}
+    ${date}=     Get Date From Future   ${days}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Reason']/following-sibling::td/div[text()='${reason}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
+
 Verify That Opportunity Creation Succeeded
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     10 s
     Reload Page
@@ -1034,11 +1044,9 @@ Verify That Opportunity Status Has Been Changed
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Should Not Be Visible       ${EDIT_BUTTON}
 
-Verify That opportunity Close Reason And Date Has Been Changed
-    [Arguments]     ${days}     ${reason}
-    ${date}=     Get Date From Future   ${days}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Reason']/following-sibling::td/div[text()='${reason}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
+Verify That Order Status Is Updated To
+    [Arguments]         ${status}
+    Wait Until Keyword Succeeds     30s     1s      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Text Should Be      Status_ileinner     ${status}
 
 Verify That Owner Has Changed
     [Arguments]         ${owner}

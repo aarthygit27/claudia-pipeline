@@ -301,8 +301,11 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Click CPQ At Opportunity View       # Todo: Check this works when going from a quote instead of opportunity
     Click Create Order (CPQ)
     # Click View Record (CPQ)
-    # 15. Press Preview order summary button to check order summary pdf. Close preview and send order summary to customer by pressing Send Order Summary Email.
+    # todo: 15. Press Preview order summary button to check order summary pdf. Close preview and send order summary to customer by pressing Send Order Summary Email.
     # 16. Send order to delivery by pressing Submit Order to Delivery button. Check that order status has been automatically updated from Draft into In Progress. Check that order can be found from Multibella Case Management.
+    Submit Order To Delivery (CPQ)
+    Verify That Order Status Is Updated to      In Progress
+    Verify That Order Can Be Found From Multibella
     # 17. Go to opportunity and close it as Won. Check that mandatory data is needed (win probability is updated automatically to 100%, Close Reason and Close Comment are mandatory).
     Go To Account   ${OPPORTUNITY_NAME}
     Set Opportunity Stage And Save      Closed Won
@@ -311,7 +314,19 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Verify That Opportunity Status Has Been Changed      Closed Won    Won
     Verify That Win Probability Is      100%
     # 18. Check that opportunity cannot be updated after status has been set to Won.
-    # 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
+    Verify That Opportunity Cannot Be Updated
+    # todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
+    [Teardown]      Pause Execution
+
+Opportunity: Check that Account can be changed for an active opportunity
+    [Tags]      BQA-39      wip
+    # 1. Go to open opportunity
+    # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
+    # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
+    Go To Salesforce and Login
+    Go to Account    ${TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    # Todo: This requires lookup search
     [Teardown]      Pause Execution
 
 
@@ -415,3 +430,7 @@ Create New Event If Necessary
 Press Review Record and add Contact and Quote email text
     Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
     Add Quote Email Text To Product Order
+
+Verify That Order Can Be Found From Multibella
+    Wait Until Keyword Succeeds    60 s    5 s    Extract MuBe CaseID From Opportunity
+    # Todo: Do I need to go to MUBE?
