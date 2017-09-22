@@ -724,7 +724,7 @@ Searched Item Should Be Visible
     ${visible}=     Run Keyword and Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']
     # Sometimes the search shows more options. If we reload the page, the extra results shuold vanish.
     Run Keyword Unless      ${visible}      Reload Page
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       /div[contains(@id,'${type}')]//a[text()='${account_name}']       20s
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //div[contains(@id,'${type}')]//a[text()='${account_name}']       20s
 
 Search (Setup)
     [Arguments]         ${item}
