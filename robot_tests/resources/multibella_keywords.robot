@@ -26,7 +26,7 @@ ${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324x2
 ${MUBE_ADMIN_USERNAME}          tas-cim-adm2
 ${MUBE_ADMIN_PASSWORD}          9XwHVkDt3FgT5511232449
 ${MUBE_CIM_USER}                tas-cim2
-${MUBE_CIM_PASSWORD}            9XwHVkDt3dXy2511232517
+${MUBE_CIM_PASSWORD}            9XwHVkDt3dXy25112325173
 ${POSTAL_CODE_FIELD}            //td[contains(text(), "Postal Code")]/following-sibling::td/div/input
 ${DIV_CONTAINING_ALL_CASES_TEXT}    xpath=//div[@class='block-title']/a[contains(text(), 'All cases')]
 ${CASE_LINK}                    //td/a/span
