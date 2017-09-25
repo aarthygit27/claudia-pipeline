@@ -51,8 +51,10 @@ if __name__ == "__main__":
         if u.lower() not in skip_users:
             # If the user is in Salesforce, but not in Wiki, deactivate the user
             id = salesforce_users[u]["Id"]
+            tmp = salesforce_users[u]["Username"]
+            username = tmp if u.endswith(".deactivated") else tmp + ".deactivated"
             data = {"IsActive" : 0,
-                    "Username" : salesforce_users[u]["Username"] + ".deactivated"}
+                    "Username" : username}
             rw.update_user(id, data)
             if rw.get_user_info_from_salesforce(id)["IsActive"]:
                 print "User '{0}' ({1}) was supposed be deactivated, but was active".format(u, salesforce_users[u]["Name"].encode("utf-8"))
