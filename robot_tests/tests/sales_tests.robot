@@ -2,6 +2,7 @@
 Resource            ${PROJECTROOT}${/}resources${/}salesforce_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}multibella_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}uad_keywords.robot
+Resource            ${PROJECTROOT}${/}resources${/}tellu_keywords.robot
 
 Library             config_parser
 
@@ -326,8 +327,30 @@ Opportunity: Check that Account can be changed for an active opportunity
     Go To Salesforce and Login
     Go to Account    ${TEST_ACCOUNT}
     Create New Opportunity For Customer
-    # Todo: This requires lookup search
+    # Todo: This requires lookup search and probably won't finish this
     [Teardown]      Pause Execution
+
+Create in SalesForce and in MultiBella a new Contact Person
+    [Tags]      BQA-118     wip
+    # 1. Create new Contact Person in SalesForce, all attributes in integration populated 2. Create new Contact Person in MultiBella, all attributes in integration populated
+    # Go To Salesforce and Login
+    # Go To Account   ${TEST_ACCOUNT}
+    # Click Add New Contact
+    # Enter mandatory information and save new contact
+    # Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
+    # MUBE Open Browser And Login As CM User
+    # MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
+    # MUBE Logout CRM
+    # Set Test Variable   ${SECOND_CONTACT_PERSON}    ${TEST_CONTACT_PERSON_LAST_NAME}
+    Set Test Variable   ${SECOND_FIRST_PERSON}    Pesusieni
+    Set Test Variable   ${SECOND_SECOND_PERSON}    Pesusieni
+    TellU Go to Login Page And Login
+    TellU Open Contact Person Editor
+    TellU Search Contact Person By Attribute    Customer Name    ${TEST_ACCOUNT}
+    # Search Result Page In Tellu Should Contain Customer Data    ${TEST}    ${KEY_CUSTOMER_BUSINESS_ID}    14107
+    TellU Search Result Page Should Contain Contact Person With Name    ${FIRST_CONTACT_PERSON}
+    TellU Search Result Page Should Contain Contact Person With Name    ${SECOND_CONTACT_PERSON}
+    # Todo: TellU
 
 
 *** Keywords ***
