@@ -15,8 +15,8 @@ class RestWrapper(object):
         self._headers = {"Authorization" : "Bearer {0}".format(self._session_id),
                         "Content-Type": "application/json; charset=UTF-8"}
 
-        self._rest_base = self._url + "/services/data/v39.0"
-        self._bulk_base = self._url + "/services/async/39.0"
+        self._rest_base = self._url + "/services/data/v40.0"
+        self._bulk_base = self._url + "/services/async/40.0"
 
         # Salesforce requires TLS>=1.1
         self._session = requests.Session()
@@ -46,7 +46,8 @@ class RestWrapper(object):
                                 "Profile": profile,
                                 "Role": role,
                                 "AboutMe": aboutme}
-                    wiki_users[" ".join([firstname, lastname])] = json_data
+                    # wiki_users[" ".join([firstname, lastname])] = json_data
+                    wiki_users[alias] = json_data
                 except ValueError:
                     print "Unable to split line: \'", line, "\'. Ignoring the line."
             return wiki_users
@@ -95,12 +96,13 @@ class RestWrapper(object):
 
         return setup
 
-    def _get_all_user_ids(self, output):
+    def _get_all_user_ids(self, output, wiki_users):
         ids = {}
         for u in output["records"]:
             name = u["Name"]
             i = u["Id"]
-            ids[name] = i
+            alias = u["Alias"]
+            ids[alias] = i
         return ids
 
 
@@ -124,6 +126,7 @@ class RestWrapper(object):
         new_user["LocaleSidKey"] = "fi_FI_EURO"
         new_user["LanguageLocaleKey"] = "en_US"
         new_user["ProfileId"] = profile_id
+        new_user["telia_user_ID__c"] = user_info["Alias"]
         
         json_data = json.dumps(new_user)
 
@@ -131,7 +134,7 @@ class RestWrapper(object):
 
 
     def get_all_users_from_salesforce(self):
-        r = self._session.get(self._rest_base + "/query/?q=SELECT+Name,Id+FROM+User",
+        r = self._session.get(self._rest_base + "/query/?q=SELECT+Name,Id,Alias+FROM+User",
                                 headers=self._headers)
         return r.json()
         
@@ -201,13 +204,13 @@ class RestWrapper(object):
         r = self._session.post(self._rest_base + "/sobjects/User", headers=self._headers, data=user)
         return r
 
-    def get_all_user_info_from_salesforce(self, output):
+    def get_all_user_info_from_salesforce(self, output, wiki_users):
         '''
         @param: output: a JSON object from get_all_users_from_salesforce()
         '''
-        info = self._get_all_user_ids(output)
+        info = self._get_all_user_ids(output, wiki_users)
         users = {}
-        for i in info:  # i = name, info[i] = user id
+        for i in info:  # i = alias, info[i]
             users[i.encode("utf-8")] = self.get_user_info_from_salesforce(info[i])
         return users
 
@@ -300,4 +303,7 @@ class RestWrapper(object):
             return True
         return False
 
+    def reset_user_password(self, user_id):
+        r = self._session.delete(self._rest_base + "/sobjects/User/{0}/password".format(user_id) , headers=self._headers)
+        return r
 

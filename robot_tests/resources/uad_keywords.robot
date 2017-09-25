@@ -36,9 +36,14 @@ UAD Page Should Be Open
 UAD Search for Customer
     [Arguments]         ${customer_id}
     Click Element       ${CLEAR_BUTTON}
+    Wait Until Page Contains Element        FIRST_INFO_TITLE
+    Click Element       ${SEARCH_FIELD}
     Sleep               0.5
     Input Text          ${SEARCH_FIELD}     ${customer_id}
+    Sleep               0.5
     Click Element       ${SEARCH_BUTTON}
+    ${search_failed}=   Run Keyword And Return Status       Page Should Contain Element        //h1[text()='Hakuarvo puuttuu']
+    Run Keyword If      ${search_failed}    FAIL
     Wait Until Page Contains Element        //span[@class='v-captiontext' and text()='${customer_id}']
 
 UAD Select Correct Tab

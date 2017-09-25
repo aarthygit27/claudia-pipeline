@@ -21,8 +21,8 @@ ${CREATE_BUTTON}                //a[contains(text(), 'Create')]
 ${KEYWORD_RETRY}                1 sec
 ${KEYWORD_WAIT}                 1 min
 ${LOADING_ANIMATION}            //div[contains(@class, 'loading-animation')]
-${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324
 ${MUBE_CUSTOMER_USERNAME}       tas-cm1-1
+${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324x2
 ${MUBE_ADMIN_USERNAME}          tas-cim-adm2
 ${MUBE_ADMIN_PASSWORD}          9XwHVkDt3FgT5511232449
 ${MUBE_CIM_USER}                tas-cim2
@@ -605,14 +605,21 @@ MUBE Verify That Case Attributes Are Populated Correctly
     MUBE Check History Old And New Value For Attribute    Group    ${EMPTY}    Delivery team [TSF]
     MUBE Check History Description Value Should Not Be Empty
 
-MUBE Verify That Contact Person Email And Phone Are Updated
+MUBE Verify That Contact Person Information Is Updated
     [Documentation]     Assumes test variables NEW_EMAIL, NEW_PHONE, OLD_EMAIL, and OLD_PHONE are set
     Sleep    30 s    Wait For All Contact Person Changes to be applied.
     MUBE Select Contact Person    ${TEST_CONTACT_PERSON_LAST_NAME}
     MUBE Get Contact Person Crm Id
     Wait Until Keyword Succeeds    60 s    10 s    MUBE Open Tab    History
-    MUBE Check History Old And New Value For Contact Person Attribute    Email                  ${OLD_EMAIL}    ${NEW_EMAIL}
-    MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      ${OLD_PHONE}    ${NEW_PHONE}
+    MUBE Check History Old And New Value For Contact Person Attribute    Email                  ${OLD_EMAIL}        ${NEW_EMAIL}
+    MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      ${OLD_PHONE}        ${NEW_PHONE}
+    MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}            ${NEW_BUSINESS_CARD_TITLE}
+    MUBE Check History Old And New Value For Contact Person Attribute    Gender                 -- None --          ${NEW_GENDER}
+    MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${NEW_3RD_PARTY_CONTACT}
+    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             -- None --          ${NEW_SALES_ROLE}
+    MUBE Check History Old And New Value For Contact Person Attribute    Marketing via SMS      PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
+    # TODO: Business Card Title, Gender, 3rd Party Contact, Sales Role, Marketing - SMS
+
 
 MUBE Verify That Contact Person Sales Role Is Updated
     Sleep    30 s    Wait For All Contact Person Changes to be applied.

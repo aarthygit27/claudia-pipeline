@@ -1,11 +1,12 @@
 *** Variables ***
+${BROWSER}                                  Firefox
+${LOGIN_PAGE}                               https://test.salesforce.com/
+${IFRAME}                                   //iframe
 ${NAVIGATORTAB}                             //li[contains(@id, 'navigatortab__scc-pt')]
 ${LOGOUT_BUTTON}                            //div[@id='userNav-menuItems']//a[text()='Logout']
 ${LOOKUP_SEARCH_FIELD}                      id=lksrch
 ${LOOKUP_SEARCH_GO_BUTTON}                  //input[@title='Go!']
-${LOGIN_PAGE}                               https://test.salesforce.com/
-${BROWSER}                                  Firefox
-${IFRAME}                                   //iframe
+
 
 ### Credentials
 ${CUSTOMER_CARE_USER}                       custcare@teliacompany.com.preprod

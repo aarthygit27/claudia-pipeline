@@ -120,6 +120,21 @@ class SeleniumExtensions(object):
             print "No alert found"
         return alertFound
 
+    def addRandomProductToCart(self):
+        '''
+        Add a random product to the cart in the CPQ view of Salesforce
+        '''
+        xpath = "//div[@class='slds-col cpq-items-container scroll']//div[@data='card']"
+        js = "return document.evaluate(\"count({0})\", document, null, XPathResult.ANY_TYPE, null).numberValue;".format(xpath)
+        count = self._selenium2lib.execute_javascript(js)
+        i = random.randint(1,count)
+        js = "return document.evaluate(\"{0}[{1}]//p[contains(@class,'product-name')]\", document, null, XPathResult.ANY_TYPE, null).iterateNext().innerText;".format(xpath, i)
+        product_name = self._selenium2lib.execute_javascript(js)
+        self._click("{0}[{1}]//button[contains(text(),'Add to Cart')]".format(xpath, i))
+        return product_name
+
+
+
     @property
     def using_java(self):
         return "_element_find" not in dir(self._selenium2lib)
