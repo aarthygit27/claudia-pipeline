@@ -4,6 +4,9 @@ Documentation           CPQ is a part of Salesforce, which is used for product o
 Resource                ${PROJECTROOT}${/}resources${/}common.robot
 Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robot
 
+*** Variables ***
+${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
+
 *** Keywords ***
 
 Add modelled product and unmodelled product to cart (CPQ)
@@ -76,22 +79,21 @@ Click View Quote And Go Back To CPQ
 
 Close Missing Information Popup (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Click Element   ${close_button}
+    ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     # For some strange reason clicking the "close" can result in another load and the close button needs to be pressed a second time
     ${hidden}=     Run Keyword and Return Status       Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
-    ...         ${close_button}      5s
+    ...         ${CLOSE_BUTTON}      5s
     Run Keyword If      not ${hidden}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Click Element   ${close_button}
+    ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[@class='slds-modal__container']   10s
 
 Fill Missing Required Information
-    ${close_button}=        Set Variable        //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
     Run Keyword     Fill Required Information For ${PRODUCT}
     Wait Until Filled Information Is Recognized (CPQ)
     Close Missing Information Popup (CPQ)
-    [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${close_button}
+    [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${CLOSE_BUTTON}
 
 Fill Missing Required Information If Needed (CPQ)
     ${xpath}=   Set Variable    //h2[contains(text(),'Required attribute missing')]
@@ -195,8 +197,9 @@ Verify That Product In Cart Is Correct
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
 
 Wait Until Filled Information Is Recognized (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
-    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
+    # ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    Sleep   0.5
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']   20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
