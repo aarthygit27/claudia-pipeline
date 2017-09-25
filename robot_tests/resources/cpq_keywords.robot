@@ -105,11 +105,15 @@ Fill Required Information For Telia Sopiva Pro L
     ...         10s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
 
 Fill Required Information For Telia Yritysinternet
+    ${xpath}=   Set Variable   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element
-    ...     //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']    10s
+    ...     ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']    10s
     Log     BQA-1821 test case ends here
+    ${visible}=     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Element Should Be Visible   ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//span[text()='Telia Yritysinternet']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//a[text()[contains(.,'Product Configuration')]]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//select    1
+    ...         20s   1s    Select From List By Value   ${xpath}//select    1
 
 Fill Required Information For Telia Yritysinternet Langaton
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
