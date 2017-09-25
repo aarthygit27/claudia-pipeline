@@ -21,10 +21,10 @@ ${CREATE_BUTTON}                //a[contains(text(), 'Create')]
 ${KEYWORD_RETRY}                1 sec
 ${KEYWORD_WAIT}                 1 min
 ${LOADING_ANIMATION}            //div[contains(@class, 'loading-animation')]
-${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324x2
 ${MUBE_CUSTOMER_USERNAME}       tas-cm1-1
+${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324x2
 ${MUBE_ADMIN_USERNAME}          tas-cim-adm2
-${MUBE_ADMIN_PASSWORD}          9XwHVkDt3FgT551123244
+${MUBE_ADMIN_PASSWORD}          9XwHVkDt3FgT5511232449
 ${MUBE_CIM_USER}                tas-cim2
 ${MUBE_CIM_PASSWORD}            9XwHVkDt3dXy2511232517
 ${POSTAL_CODE_FIELD}            //td[contains(text(), "Postal Code")]/following-sibling::td/div/input
