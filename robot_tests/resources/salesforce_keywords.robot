@@ -150,6 +150,7 @@ Click Add New Contact
     ${button_clicked}=    Run Keyword And Return Status    Click Add New Contact Via Dropdown
     Run Keyword Unless    ${button_clicked}
     ...    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    ${NEW_CONTACT_BUTTON_AT_DETAILS}  #If dropdown is not visible
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       ${CREATE_CP_BUTTON}
 
 Click Add New Contact Via Dropdown
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}
@@ -472,7 +473,7 @@ Fill Mandatory Contact Person Values
     ...    ${phone_number}=+358888888
     Set Test Variable    ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${CONTACT_PERSON_TITLE_DROPDOWN}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${CONTACT_PERSON_TITLE_DROPDOWN}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${CONTACT_PERSON_TITLE_DROPDOWN}  10s
     Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Label    ${CONTACT_PERSON_TITLE_DROPDOWN}    ${salutation}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    ${CP_SALES_ROLE_FIELD}    TS_SALES_ROLE_TYPES.DECISON_MAKER_ICT
     Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_FIRSTNAME_FIELD}        ${firstname}

@@ -22,18 +22,20 @@ TellU Open Contact Person Editor
 TellU Open Contact Person Editor And Verify
     Wait Until Element Is Visible    ${TELLU_CONTACT_PERSON_LINK}
     Click Element    ${TELLU_CONTACT_PERSON_LINK}
-    Select Window    ${TELLU_EDIT_CONTACT_PERSON_PAGE_TITLE}
+    Wait Until Keyword Succeeds    5s    1s     Select Window    ${TELLU_EDIT_CONTACT_PERSON_PAGE_TITLE}
 
 TellU Search Contact Person By Attribute
-    [Arguments]    ${attribute}    ${value}
-    Wait Until Element Is Visible    //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input
-    Prolonged Input Text    //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input    ${value}
-    Wait Until Element Is Visible    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}    10 s
+    [Arguments]    ${attribute}     ${value}
+    Reload Page
+    Wait Until Element Is Visible   //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input
+    Prolonged Input Text            //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input    ${value}
+    Wait Until Element Is Visible   ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}    10 s
     Click Element    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}
-    Element Should Be Visible    ${TELLU_SEARCH_RESULT_PAGE_HEADER}    30 s
+    Wait Until Element Is Visible    ${TELLU_SEARCH_RESULT_PAGE_HEADER}    30 s
 
 TellU Search Result Page Should Contain Contact Person With Name
     [Arguments]    ${contact_person_last_name}
+    Wait Until Page Contains Element    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}      10s
     Unselect Checkbox    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}
     #TODO: this is only needed when there is a lot of contact persons. Fix this to be used on when needed.
     Run Keyword And Ignore Error    Click Element    ${TELLU_CONTACT_PERSON_SELECT_ALL_BUTTON}
@@ -41,4 +43,4 @@ TellU Search Result Page Should Contain Contact Person With Name
 
 TellU Page Should Contain Contact Person Last Name
     [Arguments]    ${contact_person_last_name}
-    Page Should Contain    ${contact_person_last_name}
+    Wait Until Page Contains    ${contact_person_last_name}     10s
