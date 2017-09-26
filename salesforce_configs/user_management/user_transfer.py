@@ -17,7 +17,7 @@ from config_parser import ConfigSectionMap
 if __name__ == "__main__":
     if len(sys.argv) != 3: sys.exit("Usage: python user_transfer.py <environment> test/development")
     env = sys.argv[1].lower()
-    if sys.argv[1] == "test":
+    if sys.argv[2] == "test":
         correct_list = 62789322 # list of test users
     elif sys.argv[2] == "development":
         correct_list = 64292580 # list of development users
