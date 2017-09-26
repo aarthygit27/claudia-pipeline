@@ -19,7 +19,7 @@ if __name__ == "__main__":
     env = sys.argv[1].lower()
     if sys.argv[1] == "test":
         correct_list = 62789322 # list of test users
-    elif sys.argv[2] == "development"
+    elif sys.argv[2] == "development":
         correct_list = 64292580 # list of development users
     else:
         sys.exit("Invalid list of users: Use either 'test' or 'development'")
