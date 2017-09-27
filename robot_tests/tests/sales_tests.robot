@@ -69,16 +69,19 @@ Sales Admin: Change Account owner
     ...                         Logout From All Systems and Close Browser
 
 Update Contact Person in SalesForce
-    [Tags]      BQA-117    wip
-    Go To Salesforce and Login      Sales Admin User
+    [Tags]      BQA-117     BQA-109
     Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
+    Go To Salesforce and Login      Sales Admin User
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct
     Update Contact Person in Salesforce
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Information Is Updated
-    # Todo: check this works after integrations are open
+    TellU Go to Login Page And Login
+    TellU Open Contact Person Editor
+    TellU Search Contact Person By Attribute    Last Name   ${TEST_CONTACT_PERSON_LAST_NAME}
+    TellU Verify That Contact Person Is Updated
 
 Sales Process: Create opportunity from Account
     [Tags]      BQA-27
@@ -341,11 +344,8 @@ Create in SalesForce and in MultiBella a new Contact Person
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
     MUBE Logout CRM
     Set Test Variable   ${SECOND_CONTACT_PERSON}    ${TEST_CONTACT_PERSON_LAST_NAME}
-    TellU Go to Login Page And Login
-    TellU Open Contact Person Editor
-    TellU Search Contact Person By Attribute    Customer Name    ${TEST_ACCOUNT}
-    TellU Search Result Page Should Contain Contact Person With Name    ${FIRST_CONTACT_PERSON}
-    TellU Search Result Page Should Contain Contact Person With Name    ${SECOND_CONTACT_PERSON}
+    Contact Persons Should Be Visible in TellU
+
 
 
 *** Keywords ***
@@ -373,7 +373,7 @@ Open Details and choose New Contact from More tab
     Click Add New Contact
 
 Wait Until Account Is In Salesforce And Go To Account
-    Wait Until Keyword Succeeds     15 minutes   15 seconds      Run Keywords
+    Wait Until Keyword Succeeds     25 minutes   15 seconds      Run Keywords
     ...         Run Keyword And Ignore Error    Close All Tabs      AND
     ...         Go To Account       Test ${TEST_CONTACT_PERSON_LAST_NAME}
 
@@ -452,3 +452,10 @@ Press Review Record and add Contact and Quote email text
 Verify That Order Can Be Found From Multibella
     Wait Until Keyword Succeeds    60 s    5 s    Extract MuBe CaseID From Opportunity
     # Todo: Do I need to go to MUBE?
+
+Contact Persons Should Be Visible in TellU
+    TellU Go to Login Page And Login
+    TellU Open Contact Person Editor
+    TellU Search Contact Person By Attribute    Customer Name    ${TEST_ACCOUNT}
+    TellU Search Result Page Should Contain Contact Person With Name    ${FIRST_CONTACT_PERSON}
+    TellU Search Result Page Should Contain Contact Person With Name    ${SECOND_CONTACT_PERSON}

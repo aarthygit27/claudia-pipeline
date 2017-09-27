@@ -43,4 +43,12 @@ TellU Search Result Page Should Contain Contact Person With Name
 
 TellU Page Should Contain Contact Person Last Name
     [Arguments]    ${contact_person_last_name}
-    Wait Until Page Contains    ${contact_person_last_name}     10s
+    Wait Until Page Contains Element    //tr[./td/div[contains(text(),'Search Result')]]/following-sibling::tr//p[text()='${contact_person_last_name}']     10s
+
+TellU Verify That Contact Person Is Updated
+    [Arguments]     ${contact_person_last_name}=${TEST_CONTACT_PERSON_LAST_NAME}
+    Log    ${contact_person_last_name}
+    TellU Page Should Contain Contact Person Last Name    ${contact_person_last_name}
+    ${x}=       Get Selected List Label    //tr[./td/div[contains(text(),'Search Result')]]/following-sibling::tr//td[./div/div/p[text()='${contact_person_last_name}']]/following-sibling::td//select[contains(@name,'role')]
+    Should Be Equal As Strings      ${x}    Business Contact
+
