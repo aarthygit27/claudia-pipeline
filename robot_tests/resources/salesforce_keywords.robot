@@ -143,7 +143,6 @@ Click Account Tab Button And It Should Stay Open
     Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
     Sleep    2
     Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
-    Sleep    5
 
 Click Add New Contact
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${MORE_DROPDOWN_AT_DETAILS}
@@ -864,9 +863,10 @@ Update Contact Person In Salesforce
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Email']]/following-sibling::td/input   ${NEW_EMAIL}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Phone']]/following-sibling::td/input   ${NEW_PHONE}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Business Card Title']]/following-sibling::td/input    ${NEW_BUSINESS_CARD_TITLE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Gender']]/following-sibling::td//select     0 - ${NEW_GENDER}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Gender']]/following-sibling::td//select     1 - ${NEW_GENDER}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[.//label[text()[contains(.,'Sales Role')]]]/following-sibling::td//select    ${NEW_SALES_ROLE}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Marketing - SMS']]/following-sibling::td//select   ${NEW_MARKETING_SMS_PERMISSION}
+    Sleep    2
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
     # Salesforce requires the phone number to be in +<country code>xxxx format, so strip the country code after input
     ${NEW_PHONE}=       Strip Area Code From Phone Number   ${NEW_PHONE}

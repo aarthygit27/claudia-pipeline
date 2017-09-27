@@ -614,10 +614,10 @@ MUBE Verify That Contact Person Information Is Updated
     MUBE Check History Old And New Value For Contact Person Attribute    Email                  ${OLD_EMAIL}        ${NEW_EMAIL}
     MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      ${OLD_PHONE}        ${NEW_PHONE}
     MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}            ${NEW_BUSINESS_CARD_TITLE}
-    MUBE Check History Old And New Value For Contact Person Attribute    Gender                 -- None --          ${NEW_GENDER}
+    MUBE Check History Old And New Value For Contact Person Attribute    Gender                 ${EMPTY}            ${NEW_GENDER}
     MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${NEW_3RD_PARTY_CONTACT}
-    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             -- None --          ${NEW_SALES_ROLE}
-    MUBE Check History Old And New Value For Contact Person Attribute    Marketing via SMS      PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
+    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             ${EMPTY}            ${NEW_SALES_ROLE}
+    MUBE Check History Old And New Value For Contact Person Attribute    SMS                    PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
     # TODO: Business Card Title, Gender, 3rd Party Contact, Sales Role, Marketing - SMS
 
 
