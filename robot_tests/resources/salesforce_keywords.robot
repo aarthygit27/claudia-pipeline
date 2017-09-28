@@ -130,7 +130,7 @@ Check that contact has been saved and can be found under proper Account
     ${contact_person_name}=    Set Variable
     ...    //span[contains(text(), 'Name')]/following-sibling::span[contains(text(), '${TEST_CONTACT_PERSON_LAST_NAME}')]
     ${contact_person_name_related_to_account}=    Set Variable
-    ...    ${contact_person_name}/../following-sibling::li/span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${TEST_ACCOUNT}')]
+    ...    ${contact_person_name}/../following-sibling::li/span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${DEFAULT_TEST_ACCOUNT}')]
     Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${contact_person_name_related_to_account}
 
 Click Account Tab Button And It Should Stay Open
@@ -438,7 +438,7 @@ Fill Close Reason And Comment And Save
 Fill Event Data
     [Documentation]     Enter following data: Subject, Event Type, Reason, set Start and End Date in future
     [Arguments]     ${contact_person}=${DEFAULT_TEST_CONTACT}
-    ...             ${account}=${TEST_ACCOUNT}
+    ...             ${account}=${DEFAULT_TEST_ACCOUNT}
     ...             ${type}=Meeting
     ...             ${reason}=New Customer
     ${subject}=     Create Unique Name      Test Event Subject
@@ -977,7 +977,7 @@ Verify That Event Has Correct Data
     Run Inside Iframe   ${frame}        Wait Until Page Contains Element    //td[text()='Subject']/following-sibling::td/div[text()='${TEST_EVENT_SUBJECT}']    15s
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Event Type']/following-sibling::td/div     ${EVENT_TYPE}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Reason']/following-sibling::td/div         ${EVENT_REASON}
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Related To']/following-sibling::td/div     ${TEST_ACCOUNT}
+    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Related To']/following-sibling::td/div     ${DEFAULT_TEST_ACCOUNT}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Name']/following-sibling::td/div           ${DEFAULT_TEST_CONTACT}
 
 Verify That Description And WIG Areas Are Correct
@@ -1008,7 +1008,7 @@ Verify That Opportunity Is Found From My Opportunities
     Open Opportunities
     Select Correct View Type    My All Opportunities
     Filter Opportunities By     Close Date
-    Run Inside Iframe   ${IFRAME}   Page Should Contain Element     //td[./div/a/span[text()='${OPPORTUNITY_NAME}']]/following-sibling::td//span[text()='${TEST_ACCOUNT}']
+    Run Inside Iframe   ${IFRAME}   Page Should Contain Element     //td[./div/a/span[text()='${OPPORTUNITY_NAME}']]/following-sibling::td//span[text()='${DEFAULT_TEST_ACCOUNT}']
 
 Verify That Opportunity Is Found In Todays Page
     Close All Tabs

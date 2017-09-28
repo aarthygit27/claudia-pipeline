@@ -14,3 +14,4 @@ ${DEFAULT_PHONE}                            +3588881234
 ${DEFAULT_EMAIL}                            noreply@teliasonera.com
 ${DEFAULT_LANGUAGE}                         Finnish
 ${DEFAULT_SALUTATION}                       Mr.
+${DEFAULT_TEST_ACCOUNT_CUSTOMER_ID}         2030101-1

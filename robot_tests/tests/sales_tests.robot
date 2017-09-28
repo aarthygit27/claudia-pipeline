@@ -14,10 +14,7 @@ Test Teardown       Logout From All Systems and Close Browser
 Force Tags          sales
 
 *** Variables ***
-${TEST_ACCOUNT}                             Juleco
-# ${OPPO_TEST_ACCOUNT}                        Juleco
 ${MUBE_CUSTOMER_ID}                         2030101-1   # Juleco
-${TEST_ACCOUNT_CUSTOMER_ID}                 2030101-1   # Juleco
 ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${EMPTY}    # 1916290
 ${CONTACT_PERSON_NAME}                      ${EMPTY}    # Test Contact Person 77590434
 ${PRODUCT}                                  ${EMPTY}    # required for creating Opportunities
@@ -29,7 +26,7 @@ ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${EMPTY}
 Contact: Add new contact (valid data)
     [Tags]    add_new_contact    BQA-1
     Go To Salesforce and Login
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory information and save new contact
     Check that contact has been saved and can be found under proper Account
@@ -37,7 +34,7 @@ Contact: Add new contact (valid data)
 Contact: Add new contact (invalid data)
     [Tags]    add_new_contact_invalid    BQA-1
     Go To Salesforce and Login
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory (invalid) information and verify cp was not saved
 
@@ -60,9 +57,9 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
 
 Sales Admin: Change Account owner
     [Tags]      BQA-8
-    [Documentation]     Change the owner of ${TEST_ACCOUNT} to Sales admin. Then revert the changes.
+    [Documentation]     Change the owner of ${DEFAULT_TEST_ACCOUNT} to Sales admin. Then revert the changes.
     Go To Salesforce and Login      Sales Admin User
-    Go To Account   ${TEST_ACCOUNT}
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Change Account Owner    Sales Admin
     Verify that Owner Has Changed   Sales Admin
     [Teardown]  Run Keywords    Revert Account Owner Back To GESB Integration   AND
@@ -86,7 +83,7 @@ Update Contact Person in SalesForce
 Sales Process: Create opportunity from Account
     [Tags]      BQA-27
     Go To Salesforce and Login
-    Go To Account   ${TEST_ACCOUNT}
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Creation Succeeded
     Verify That Opportunity Is Found In Todays Page
@@ -151,21 +148,21 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     [Tags]    BQA-1840      smoke
     [Documentation]     The beginning of the test is the same as Contact: Add new contact (valid data) test case (BQA-1)
     Go To Salesforce and Login
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory information and save new contact
     Check that contact has been saved and can be found under proper Account
     MUBE Open Browser And Login As CM User
     MUBE Open Customers Page
-    MUBE Search and Select Customer With Name    ${TEST_ACCOUNT}
+    MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella
     UAD Go to Main Page
-    Contact Person Should Be Found In MIT UAD   ${TEST_ACCOUNT_CUSTOMER_ID}
+    Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_CUSTOMER_ID}
 
 Sales Process: Create/update Sales Plan
     [Tags]      BQA-24      wip
     Go to Salesforce and Login
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Sales Plan Tab At Account View
     Create New Sales Plan If Inactive
     Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
@@ -212,7 +209,7 @@ Sales Admin: Update closed opportunity
 Quick actions: create Meeting
     [Tags]      BQA-17
     Go To Salesforce and Login
-    Go to Account       ${TEST_ACCOUNT}
+    Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Event
     Fill Event data     type=Meeting    reason=New Customer
@@ -227,14 +224,14 @@ Quick actions: create Meeting
 Quick actions: create Opportunity from Account (Feed) by Customer Care user
     [Tags]      BQA-19      wip
     Go To Salesforce and Login      Customer Care User
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     # todo: 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
 
 Quick actions: create Customer Call
     [Tags]      BQA-18
     Go To Salesforce and Login
-    Go to Account       ${TEST_ACCOUNT}
+    Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Event
     Fill Event Data     type=Customer Call    reason=Booking
@@ -249,7 +246,7 @@ Quick actions: create Customer Call
 Meeting/Customer Call: Update meeting to Done
     [Tags]      BQA-21
     Go To Salesforce and Login
-    Go to Account       ${TEST_ACCOUNT}
+    Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Event If Necessary
     Go To Event
     Update meeting status to Done and Save
@@ -259,7 +256,7 @@ Meeting/Customer Call: Update meeting to Done
 Contact persons added address can not saved without City populated
     [Tags]      BQA-1809    wip
     Go To Salesforce and Login
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory information and save new contact    salutation=--None--
     Check that contact has been saved and can be found under proper Account
@@ -272,7 +269,7 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     [Tags]      BQA-33      wip
     Go To Salesforce and Login
     # 1. Go to an Account
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     # 2. Go to Details and choose New Opportunity
         # 3. Enter Opportunity Name, Close Date and Description
         # 4. Press Create
@@ -298,7 +295,7 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Go To Account   ${OPPORTUNITY_NAME}
     Verify That Opportunity Status Has Been Changed     Negotiate & Close   Offer Sent
     # 13. Go to Account (via link in Quote) and Create new contract (Service Agreement). Set contract status as Signed and save. Contract will appear in Account record.
-    Go To Account   ${TEST_ACCOUNT}
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Contract For Customer
     # 14. Go to Quote and open CPQ. Press Create Order button and then View Record.
     Go to Account   ${OPPORTUNITY_NAME}     Quote
@@ -328,7 +325,7 @@ Opportunity: Check that Account can be changed for an active opportunity
     # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
     # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
     Go To Salesforce and Login
-    Go to Account    ${TEST_ACCOUNT}
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     # Todo: This requires lookup search and probably won't finish this
     [Teardown]      Pause Execution
@@ -336,7 +333,7 @@ Opportunity: Check that Account can be changed for an active opportunity
 Create in SalesForce and in MultiBella a new Contact Person
     [Tags]      BQA-118
     Go To Salesforce and Login
-    Go To Account   ${TEST_ACCOUNT}
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Open Details and choose New Contact from More tab
     Enter mandatory information and save new contact
     Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
@@ -379,7 +376,7 @@ Wait Until Account Is In Salesforce And Go To Account
 
 Revert Account Owner Back To GESB Integration
     Close All Tabs
-    Go To Account   ${TEST_ACCOUNT}
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Change Account Owner    GESB Integration
 
 Close active opportunity
@@ -387,7 +384,7 @@ Close active opportunity
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Open Browser And Go To Login Page
     Login to Salesforce
-    Go to Account   ${TEST_ACCOUNT}
+    Go to Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
     Verify That Opportunity Is Found With Search
     Set Opportunity Stage And Save      ${stage}
@@ -456,6 +453,6 @@ Verify That Order Can Be Found From Multibella
 Contact Persons Should Be Visible in TellU
     TellU Go to Login Page And Login
     TellU Open Contact Person Editor
-    TellU Search Contact Person By Attribute    Customer Name    ${TEST_ACCOUNT}
+    TellU Search Contact Person By Attribute    Customer Name    ${DEFAULT_TEST_ACCOUNT}
     TellU Search Result Page Should Contain Contact Person With Name    ${FIRST_CONTACT_PERSON}
     TellU Search Result Page Should Contain Contact Person With Name    ${SECOND_CONTACT_PERSON}
