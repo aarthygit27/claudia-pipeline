@@ -263,7 +263,7 @@ Contact persons added address can not saved without City populated
     # Basically BQA-1 until this point
     Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
     Edit Contact Person's Added Address
-    # Todo: actually edit the address
+    # Todo: test once email is editable
 
 Sales Process: E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
     [Tags]      BQA-33      wip
@@ -277,7 +277,9 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     # 5. Open just created opportunity and update Win probability, add Competitor and Partner.
     Open just created opportunity and update Win probability, add Competitor and Partner
     # todo: 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
+    Log     Todo: 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
     # todo: 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
+    Log     Todo: 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
     # Open Details View At Opportunity
     # 8. Go to CPQ (opportunity stage is updated to Prepare Solution Proposal, opportunity status remains In Progress).
     Click CPQ At Opportunity View
@@ -303,6 +305,7 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Click Create Order (CPQ)
     # Click View Record (CPQ)
     # todo: 15. Press Preview order summary button to check order summary pdf. Close preview and send order summary to customer by pressing Send Order Summary Email.
+    Log     Todo: 15. Press Preview order summary button to check order summary pdf. Close preview and send order summary to customer by pressing Send Order Summary Email.
     # 16. Send order to delivery by pressing Submit Order to Delivery button. Check that order status has been automatically updated from Draft into In Progress. Check that order can be found from Multibella Case Management.
     Submit Order To Delivery (CPQ)
     Verify That Order Status Is Updated to      In Progress
@@ -317,6 +320,7 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     # 18. Check that opportunity cannot be updated after status has been set to Won.
     Verify That Opportunity Cannot Be Updated
     # todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
+    Log     Todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
     [Teardown]      Pause Execution
 
 Opportunity: Check that Account can be changed for an active opportunity

@@ -368,9 +368,19 @@ Dismiss Mobile Phone Registration
     Click Element       //a[text()="I Don't Want to Register My Phone"]
 
 Edit Contact Person's Added Address
+    [Arguments]     ${street_name}=${DEFAULT_STREET_NAME}
+    ...             ${street_number}=${DEFAULT_STREET_NUMBER}
+    ...             ${staircase}=${DEFAULT_STAIRCASE}
+    ...             ${apartment_door}=${DEFAULT_APPARTMENT}
+    ...             ${postal_code}=${DEFAULT_POSTAL_CODE}
+    ...             ${city}=${DEFAULT_CITY}
     Click Details Button
     Click Edit Contact Person
-    # Todo: Finish once address is editable
+    ${address}=     Set Variable    ${street_name} ${street_number} ${staircase} ${apartment_door}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Street']]/following-sibling::td/textarea       ${address}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Postal Code']]/following-sibling::td/input     ${postal_code}
+    # Todo: Address can not be saved without City
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='City']]/following-sibling::td/input            ${city}
 
 Edit Event Description and WIG Areas
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
