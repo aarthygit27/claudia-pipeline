@@ -15,13 +15,12 @@ ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.preprod
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
 ${PASSWORD}                                 PahaPassu2
 
+
 ${NEW_OPPORTUNITY_BUTTON}                   //input[contains(@title,'New Opportunity')]
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
 ${OPPORTUNITY_SAVE_BUTTON}                  //h2[contains(text(), 'Opportunity Edit')]/../following-sibling::td//input[@title='Save']
 ${OPPORTUNITY_CPQ_BUTTON}                   //h2[contains(text(), 'Opportunity Detail')]/../following-sibling::td//input[@title='CPQ']
 ${OPPO_EDIT_TITLE}                          //h1[contains(text(),'Opportunity Edit')]
-${OPPO_TEST_ACCOUNT}                        Juleco
-${OPPO_TEST_CONTACT}                        Paavo Pesusieni
 
 ${OPPO_INFO_OPPO_NAME_FIELD}                //label[contains(text(), 'Opportunity Name')]/../following-sibling::*//input
 ${OPPO_INFO_STAGE_FIELD}                    //label[contains(text(), 'Stage')]/../following-sibling::*//select

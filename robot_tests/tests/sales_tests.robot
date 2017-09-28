@@ -446,7 +446,7 @@ Create New Event If Necessary
     Verify That Event Is Created
 
 Press Review Record and add Contact and Quote email text
-    Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
+    Add Contact Person To Product Order    ${DEFAULT_TEST_CONTACT}
     Add Quote Email Text To Product Order
 
 Verify That Order Can Be Found From Multibella

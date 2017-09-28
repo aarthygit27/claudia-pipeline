@@ -17,9 +17,9 @@ Click Visible Element
     Click Element    ${locator}
 
 Create Unique Email
-    [Arguments]     ${email}=noreply@teliasonera.com
+    [Arguments]     ${email}=${DEFAULT_EMAIL}
     ${email_prefix}=            Create Unique Name    ${EMPTY}
-    ${email}=       Set Variable If     '${email}' == 'noreply@teliasonera.com'    ${email_prefix}${email}     ${email}
+    ${email}=       Set Variable If     '${email}' == '${DEFAULT_EMAIL}'    ${email_prefix}${email}     ${email}
     [Return]        ${email}
 
 Create Unique Phone Number
