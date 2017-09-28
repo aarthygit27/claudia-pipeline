@@ -10,7 +10,7 @@ ${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(te
 *** Keywords ***
 
 Add modelled product and unmodelled product to cart (CPQ)
-    [Arguments]=    ${modelled_product}=Telia Yritysinternet Plus   ${unmodelled_product}=DataNet Multi
+    [Arguments]    ${modelled_product}=Telia Yritysinternet Plus   ${unmodelled_product}=DataNet Multi
     Search And Add Product To Cart (CPQ)    ${modelled_product}
     Set Test Variable   ${PRODUCT}      ${modelled_product}
     Fill Missing Required Information If Needed (CPQ)
