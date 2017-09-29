@@ -929,6 +929,12 @@ Update Win Probability
     [Arguments]     ${probability}=50%
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Value       //td[./label[text()='Win Probability %']]/following-sibling::td//select     ${probability}
 
+Verify That Activity Cannot Be Linked to Group Account
+    Click Feed Button
+    Run Keyword And Expect Error    ElementNotInteractableException*   Click Create Contact Person Button
+    Run Keyword And Expect Error    ElementNotInteractableException*   Click New Opportunity (Details Tab)
+    Run Keyword And Expect Error    ElementNotInteractableException*   Click Create Event Button
+
 Verify That Business Customer Is Terminated
     [Documentation]     Searches for a business customer and checks if the status is set
     ...                 to "Terminated". Keyword assumes that the "NEW_CUSTOMER_NAME" suite
@@ -996,7 +1002,6 @@ Verify That Description And WIG Areas Are Correct
 
 Verify That Event Is Created
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[./a[text()[contains(.,'${TEST_EVENT_SUBJECT}')]]]/following-sibling::a[text()='created an event.']     20s
-
 
 Verify That Opportunity Cannot Be Updated
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${EDIT_BUTTON}

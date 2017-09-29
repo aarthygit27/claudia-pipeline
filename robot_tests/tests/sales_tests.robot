@@ -347,6 +347,12 @@ Create in SalesForce and in MultiBella a new Contact Person
     Set Test Variable   ${SECOND_CONTACT_PERSON}    ${TEST_CONTACT_PERSON_LAST_NAME}
     Contact Persons Should Be Visible in TellU
 
+Try to create Opportunity/Contact Person/or activity linked to Group in SalesForce
+    [Tags]      BQA-107
+    Create Test Account With Admin User     Group
+    Go To Salesforce and Login
+    Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
+    Verify That Activity Cannot Be Linked to Group Account
 
 
 *** Keywords ***
@@ -412,7 +418,8 @@ Create Test Account With Admin User
 Create Child Account
     Close All Tabs
     Open Accounts
-    Sleep   2       The page needs a moment to catch its breath
+    Sleep   5       The page needs a moment to catch its breath
+    Capture Page Screenshot
     Create New Account      Billing     Test Account    ${TEST_GROUP_ACCOUNT_NAME}
 
 Contact Person Should Be Found In MIT UAD
