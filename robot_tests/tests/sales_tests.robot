@@ -169,7 +169,8 @@ Sales Process: Create/update Sales Plan
     Add Solution Area and update Solution Sub Area data
     Go to other view and then back to Sales Plan
     Verify that updated values are visible in Sales Plan
-    [Teardown]      Pause Execution
+    # Todo: Verify when testing starts in PREPROD whether things not showing in Sales Plan is a bug or just missing
+    # functionality in PREPROD.
 
 Contact: Update contact
     [Tags]      BQA-23
@@ -263,7 +264,7 @@ Contact persons added address can not saved without City populated
     # Basically BQA-1 until this point
     Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
     Edit Contact Person's Added Address
-    # Todo: test once email is editable
+    # Todo: test once address is editable
 
 Sales Process: E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
     [Tags]      BQA-33      wip
