@@ -227,6 +227,8 @@ Quick actions: create Opportunity from Account (Feed) by Customer Care user
     Go To Salesforce and Login      Customer Care User
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
+    # todo: 4. Close date is automatically give two days ahead.
+    Verify That Opportunity Creation Succeeded
     # todo: 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
 
 Quick actions: create Customer Call
@@ -355,6 +357,14 @@ Try to create Opportunity/Contact Person/or activity linked to Group in SalesFor
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That Activity Cannot Be Linked to Group Account
 
+Sales Process: Update Sales Plan of an Account which you are not owner
+    [Tags]      BQA-25      wip
+    Go to Salesforce and Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Open Sales Plan Tab At Account View
+    Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
+    Open Active Sales Plan
+    Verify That Sales Plan Update History Is Correct
 
 *** Keywords ***
 

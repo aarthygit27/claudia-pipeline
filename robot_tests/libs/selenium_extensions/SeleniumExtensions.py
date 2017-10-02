@@ -3,6 +3,7 @@ import platform
 import random
 import sys
 import time
+import datetime
 
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -133,7 +134,11 @@ class SeleniumExtensions(object):
         self._click("{0}[{1}]//button[contains(text(),'Add to Cart')]".format(xpath, i))
         return product_name
 
-
+    def editTimeShouldBe(self, modified):
+        timestamp = modified.split(",")[-1].strip()
+        now = datetime.datetime.now()
+        timestamp = datetime.datetime.strptime(timestamp, "%d.%m.%Y %H:%M")
+        return now-timestamp < datetime.timedelta(seconds=120)
 
     @property
     def using_java(self):

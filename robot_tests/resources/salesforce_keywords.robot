@@ -545,6 +545,7 @@ Go to Account
     Select Account    ${target_account}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
+    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
 
 Go To Event
     [Documentation]     This works for other than events also. This is used for stuff that cannot be found with main search and
@@ -649,6 +650,20 @@ Navigate To App
 Open Accounts
     Select Correct Tab Type     Accounts
     Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   ${NEW_ACCOUNT_BUTTON}   20 seconds
+
+Open Active Sales Plan
+    Open Details Tab At Account View
+    Click Details Button
+    ${xpath}=       Set variable    //div[.//h3[text()='Sales Plans'] and contains(@class,'listRelatedObject')]
+    ${elem}=        Set Variable    ${xpath}//th[./following-sibling::td/img[@alt='Checked']]
+    ${hidden}=      Run Keyword And Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Not Be Visible   ${elem}
+    Run Keyword If      ${hidden}   Show More       Sales Plans
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible   ${elem}
+    ${sales_plan}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text        ${elem}/a
+    Set Test Variable   ${SALES_PLAN_NAME}      ${sales_plan}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${elem}/a
+    ${frame}=   Get Account Tab Iframe Xpath    ${SALES_PLAN_NAME}
+    Wait Until Page Contains Element    ${frame}    10s
 
 Open Activities
     Select Correct Tab Type     Activities
@@ -844,6 +859,11 @@ Set Opportunity Stage And Save
     Edit Opportunity
     Change Stage to         ${stage}
     Save Opportunity
+
+Show More
+    [Arguments]     ${page}
+    ${xpath}=   Set Variable    //div[.//h3[text()='${page}'] and contains(@class,'listRelatedObject')]//a[starts-with(text(),'Show')]
+    Wait Until Keyword Succeeds     10s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${xpath}
 
 Try To Create New Opportunity And It Should Fail
     Open Details Tab At Account View
@@ -1072,6 +1092,13 @@ Verify That Owner Has Changed
 Verify That Quote Status Is Updated to
     [Arguments]         ${status}
     Wait Until Keyword Succeeds     30s     1s      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Text Should Be      Status_ileinner     ${status}
+
+Verify That Sales Plan Update History Is Correct
+    [Arguments]     ${user}=B2B DigiSales
+    ${frame}=           Get Account Tab Iframe Xpath    ${SALES_PLAN_NAME}
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[contains(@id,'LastModifiedBy')]/a[text()='${user}']   10s
+    ${t}=   Run Inside Iframe   ${frame}    Get Text    //div[contains(@id,'LastModifiedBy')]
+    Log     ${t}
 
 Verify That Sales Role Is Updated
     [Arguments]         ${role}
