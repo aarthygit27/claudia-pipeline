@@ -109,7 +109,7 @@ Opportunity: Closing active opportunity as not won
     Closed Not Won    Not Won
 
 Opportunity: Closing active opportunity as won
-    [Tags]      BQA-45
+    [Tags]      BQA-45      BQA-46
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
     [Template]      Close active opportunity
     Closed Won    Won    Negotiate and Close
