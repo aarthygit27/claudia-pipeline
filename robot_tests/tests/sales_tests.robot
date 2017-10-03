@@ -358,7 +358,7 @@ Try to create Opportunity/Contact Person/or activity linked to Group in SalesFor
     Verify That Activity Cannot Be Linked to Group Account
 
 Sales Process: Update Sales Plan of an Account which you are not owner
-    [Tags]      BQA-25      wip
+    [Tags]      BQA-25
     Go to Salesforce and Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Sales Plan Tab At Account View

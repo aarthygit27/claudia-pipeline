@@ -1099,6 +1099,7 @@ Verify That Sales Plan Update History Is Correct
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[contains(@id,'LastModifiedBy')]/a[text()='${user}']   10s
     ${t}=   Run Inside Iframe   ${frame}    Get Text    //div[contains(@id,'LastModifiedBy')]
     Log     ${t}
+    Edit Time Should Be Within      120     ${t}
 
 Verify That Sales Role Is Updated
     [Arguments]         ${role}
