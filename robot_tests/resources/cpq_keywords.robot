@@ -90,15 +90,14 @@ Close Missing Information Popup (CPQ)
 
 Fill Missing Required Information
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
-    Run Keyword     Fill Required Information For ${PRODUCT}
-    Wait Until Filled Information Is Recognized (CPQ)
+    Wait Until Keyword Succeeds     30s     1s      Run Keyword     Fill Required Information For ${PRODUCT}
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Filled Information Is Recognized (CPQ)
     Close Missing Information Popup (CPQ)
     [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${CLOSE_BUTTON}
 
 Fill Missing Required Information If Needed (CPQ)
-    ${xpath}=   Set Variable    //h2[contains(text(),'Required attribute missing')]
-    ${s}=   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Wait Until Element is Visible    ${xpath}   30s
-    Run Keyword if    ${s}      Wait Until Keyword Succeeds     30s     1s      Fill Missing Required Information
+    ${s}=   Recognize Product Needs Additional Information (CPQ)
+    Run Keyword if    ${s}      Fill Missing Required Information
 
 Fill Required Information For Telia Sopiva Pro L
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
@@ -137,6 +136,11 @@ Load More Products (CPQ)
     Sleep   0.2
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //a[contains(text(),'Load More')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    //div[@class='slds-spinner_container']      20s
+
+Recognize Product Needs Additional Information (CPQ)
+    ${xpath}=   Set Variable    //h2[contains(text(),'Required attribute missing')]
+    ${s}=   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Wait Until Element is Visible    ${xpath}   30s
+    [Return]    ${s}
 
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
