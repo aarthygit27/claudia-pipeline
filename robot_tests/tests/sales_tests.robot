@@ -254,17 +254,17 @@ Meeting/Customer Call: Update meeting to Done
     Add Meeting Outcome and Save
     Verify That Event Has Correct Data
 
-Contact persons added address can not saved without City populated
-    [Tags]      BQA-1809    wip
-    Go To Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Details and choose New Contact from More tab
-    Enter mandatory information and save new contact    salutation=--None--
-    Check that contact has been saved and can be found under proper Account
-    # Basically BQA-1 until this point
-    Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
-    Edit Contact Person's Added Address
-    # Todo: test once address is editable
+# Contact persons added address can not saved without City populated
+#     [Tags]      BQA-1809    wip
+#     Go To Salesforce and Login
+#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+#     Open Details and choose New Contact from More tab
+#     Enter mandatory information and save new contact    salutation=--None--
+#     Check that contact has been saved and can be found under proper Account
+#     # Basically BQA-1 until this point
+#     Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+#     Edit Contact Person's Added Address
+#     # Todo: test once address is editable
 
 Sales Process: E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
     [Tags]      BQA-33      wip
@@ -363,6 +363,20 @@ Sales Process: Update Sales Plan of an Account which you are not owner
     Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
     Open Active Sales Plan
     Verify That Sales Plan Update History Is Correct
+
+# CP's added address can be removed and change
+#     [Tags]      BQA-1810    wip
+#     Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
+#     Go to Salesforce and Login
+#     Go to Account    ${CONTACT_PERSON_NAME}
+#     # Todo: editable address (same as BQA-1809)
+
+Create/Update new Contact Person in TellU
+    [Tags]      BQA-119     wip
+    # 1. Create a new Contact Person in TellU with all data populated
+    # 2. Update existing Contact Person in TellU, use several attributes
+    TellU Go to Login Page And Login
+    Tellu Create New Contact Person
 
 *** Keywords ***
 
