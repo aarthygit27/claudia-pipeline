@@ -326,6 +326,7 @@ Create New Opportunity For Customer
     Fill Mandatory Opportunity Information      ${opport_name}    ${stage}    ${days}
     Fill Mandatory Classification
     Click Create Opportunity Button
+    Verify That Opportunity Creation Succeeded
 
 Create New Opportunity From Main Page
     [Documentation]     Deprecated

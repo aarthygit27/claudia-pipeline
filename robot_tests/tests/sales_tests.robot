@@ -85,7 +85,6 @@ Sales Process: Create opportunity from Account
     Go To Salesforce and Login
     Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
-    Verify That Opportunity Creation Succeeded
     Verify That Opportunity Is Found In Todays Page
     Verify That Opportunity Is Found With Search
     Verify That Opportunity Is Found From My Opportunities
@@ -228,7 +227,6 @@ Quick actions: create Opportunity from Account (Feed) by Customer Care user
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     # todo: 4. Close date is automatically give two days ahead.
-    Verify That Opportunity Creation Succeeded
     # todo: 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
 
 Quick actions: create Customer Call
