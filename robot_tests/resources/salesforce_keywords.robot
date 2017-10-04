@@ -491,7 +491,7 @@ Fill Mandatory Contact Person Values
     Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_PHONE_FIELD}            ${phone_number}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_MOBILE_FIELD}           ${phone_number}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_EMAIL_FIELD}            ${email}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_BUSINESS_CARD_FIELD}    Chief of chiefs
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_BUSINESS_CARD_FIELD}    ${DEFAULT_BUSINESS_CARD_TITLE}
 
 Fill Mandatory Opportunity Information
     [Arguments]
