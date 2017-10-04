@@ -156,7 +156,7 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella
     UAD Go to Main Page
-    Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_CUSTOMER_ID}
+    Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
 
 Sales Process: Create/update Sales Plan
     [Tags]      BQA-24      wip
