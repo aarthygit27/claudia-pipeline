@@ -23,14 +23,14 @@ Create Unique Email
     [Return]        ${email}
 
 Create Unique Phone Number
-    ${numbers}=    Generate Random String    4    [NUMBERS]
-    [Return]    +358888${numbers}
+    ${numbers}=     Generate Random String    4    [NUMBERS]
+    [Return]        +358888${numbers}
 
 Create Unique Name
-    [Arguments]    ${prefix}
-    ${numbers}=    Generate Random String    8    [NUMBERS]
-    ${email}=      Set Variable If  '${prefix}'=='${EMPTY}'     ${numbers}      ${prefix} ${numbers}
-    [Return]    ${email}
+    [Arguments]     ${prefix}
+    ${numbers}=     Generate Random String    8    [NUMBERS]
+    ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${numbers}      ${prefix} ${numbers}
+    [Return]        ${name}
 
 Get Date From Future
     [Documentation]    Returns current date (format: day.month.year, e.g. 28.6.2020) + x days,
