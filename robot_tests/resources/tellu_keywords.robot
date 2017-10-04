@@ -12,9 +12,10 @@ Tellu Create New Contact Person
     ...             ${postal}=${DEFAULT_POSTAL_CODE}
     ...             ${city}=${DEFAULT_CITY}
     ...             ${country}=${DEFAULT_COUNTRY}
-    Tellu Open Contact Person Editor
     ${name}=    Create Unique Name      Contact Person
     ${email}=   Create Unique Email
+    Tellu Open Contact Person Editor
+    Reload Page
     Wait Until Element Is Visible    ${TELLU_BUSINESS_ID_FIELD}    30 s
     Prolonged Input Text    ${TELLU_BUSINESS_ID_FIELD}    ${customer_business_id}
     Wait Until Element Is Visible    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}
@@ -28,8 +29,9 @@ Tellu Create New Contact Person
     Select Checkbox         ${TELLU_EMAIL_AS_DEFAULT_CHECKBOX}
     Prolonged Input Text    ${TELLU_BUSINESS_CARD_TITLE_FIELD}      ${DEFAULT_BUSINESS_CARD_TITLE}
     Prolonged Input Text    ${TELLU_EMAIL_FIELD}                    ${email}
-    Prolonged Input Text    ${TELLU_MOBILE_PHONE_FIELD}             ${DEFAULT_PHONE}
+    Prolonged Input Text    ${TELLU_MOBILE_PHONE_FIELD}             ${DEFAULT_PHONE[4:]}    # Cut +358 from the phone number
     Select From List        ${TELLU_ADDRESS_TYPE_SELECT}            ${address_type}
+    Wait Until Element Is Visible   ${TELLU_STREETNAME_FIELD}       30s
     Run Keyword And Ignore Error    Select From List    ${TELLU_COUNTRY_CODE_FIELD}    ${country}
     Prolonged Input Text    ${TELLU_STREETNAME_FIELD}               ${streetname}
     Prolonged Input Text    ${TELLU_POSTAL_CODE_FIELD}              ${postal}
