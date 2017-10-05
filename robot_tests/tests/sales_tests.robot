@@ -375,8 +375,11 @@ Create/Update new Contact Person in TellU
     [Tags]      BQA-119     wip
     # 1. Create a new Contact Person in TellU with all data populated
     # 2. Update existing Contact Person in TellU, use several attributes
-    TellU Go to Login Page And Login
-    Tellu Create New Contact Person
+    Create And Update Contact Person In TellU
+    Contact Person Should Be Updated In MultiBella
+    Close Browser
+    Contact Person Should Be Updated In Salesforce
+
 
 *** Keywords ***
 
@@ -490,3 +493,30 @@ Contact Persons Should Be Visible in TellU
     TellU Search Contact Person By Attribute    Customer Name    ${DEFAULT_TEST_ACCOUNT}
     TellU Search Result Page Should Contain Contact Person With Name    ${FIRST_CONTACT_PERSON}
     TellU Search Result Page Should Contain Contact Person With Name    ${SECOND_CONTACT_PERSON}
+
+Create And Update Contact Person In TellU
+    TellU Go to Login Page And Login
+    TellU Create New Contact Person
+    Go To   ${TELLU_SERVER}
+    TellU Select Contact Person     ${TEST_CONTACT_PERSON_LAST_NAME}
+    TellU Edit Contact Person
+
+Contact Person Should Be Updated In MultiBella
+    No Operation
+
+Contact Person Should Be Updated In Salesforce
+    Open Browser And Go To Login page
+    Go To Salesforce and Login
+    Wait Until Contact Person Is Found In Salesforce    Test123 ${TEST_CONTACT_PERSON_LAST_NAME}
+    Go To Account   Test123 ${TEST_CONTACT_PERSON_LAST_NAME}
+    Click Contact Person Details
+    Verify That Contact Person Information is Correct
+    ...     name=Test123 ${TEST_CONTACT_PERSON_LAST_NAME}
+    ...     email=${TEST_CONTACT_PERSON_EMAIL}
+    ...     language=${DEFAULT_LANGUAGE_UPDATED}
+    ...     street_name=${EMPTY}
+    ...     street_number=${EMPTY}
+    ...     staircase=${EMPTY}
+    ...     apartment_door=${DEFAULT_PO_BOX}
+    ...     postal_code=${DEFAULT_POSTAL_CODE_UPDATED}
+    ...     city=${DEFAULT_CITY_UPDATED}

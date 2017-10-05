@@ -141,6 +141,10 @@ class SeleniumExtensions(object):
         timestamp = datetime.datetime.strptime(timestamp, "%d.%m.%Y %H:%M")
         return now-timestamp < datetime.timedelta(seconds=int(within))
 
+    def catenateNonEmptyValues(self, *items):
+        return " ".join(filter(lambda x: len(x)>0, items))
+
+
     @property
     def using_java(self):
         return "_element_find" not in dir(self._selenium2lib)

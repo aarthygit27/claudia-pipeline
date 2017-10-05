@@ -977,7 +977,7 @@ Verify That Contact Person Information is Correct
     ...                 ${apartment_door}=${DEFAULT_APPARTMENT}
     ...                 ${postal_code}=${DEFAULT_POSTAL_CODE}
     ...                 ${city}=${DEFAULT_CITY}
-    ${address}=     Catenate     ${street_name}    ${street_number}    ${staircase}    ${apartment_door}
+    ${address}=     Catenate Non Empty Values     ${street_name}    ${street_number}    ${staircase}    ${apartment_door}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Name        ${name}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Phone       ${phone}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Email Should Be Correct          ${email}
@@ -1128,3 +1128,7 @@ Wait For Load
 Wait Until Address Validation Results Page Has Loaded
     ${frame}=       Get Account Tab Iframe Xpath    Availability
     Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //label[text()[contains(.,'Available Addresses')]]      30s
+
+Wait Until Contact Person Is Found In Salesforce
+    [Arguments]     ${contact_person_name}
+    Wait Until Keyword Succeeds       15min   10s     Search And Verify Account Is Found      ${contact_person_name}
