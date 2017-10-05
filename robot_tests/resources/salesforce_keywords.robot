@@ -885,16 +885,14 @@ Update Contact Person In Salesforce
     Set Test Variable   ${OLD_EMAIL}
     Set Test Variable   ${OLD_PHONE}
     Set Test Variable   ${NEW_EMAIL}
-    Set Test Variable   ${NEW_BUSINESS_CARD_TITLE}          Slave of slaves
-    Set Test Variable   ${NEW_GENDER}                       Male
     Set Test Variable   ${NEW_SALES_ROLE}                   Business Contact
     Set Test Variable   ${NEW_MARKETING_SMS_PERMISSION}     Permit
     Set Test Variable   ${NEW_3RD_PARTY_CONTACT}            Yes
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[./label[text()='Business Card Title']]/following-sibling::td/input
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Email']]/following-sibling::td/input   ${NEW_EMAIL}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Phone']]/following-sibling::td/input   ${NEW_PHONE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Business Card Title']]/following-sibling::td/input    ${NEW_BUSINESS_CARD_TITLE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Gender']]/following-sibling::td//select     1 - ${NEW_GENDER.lower()}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Business Card Title']]/following-sibling::td/input    ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Gender']]/following-sibling::td//select     1 - ${DEFAULT_GENDER.lower()}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[.//label[text()[contains(.,'Sales Role')]]]/following-sibling::td//select    ${NEW_SALES_ROLE}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Marketing - SMS']]/following-sibling::td//select   ${NEW_MARKETING_SMS_PERMISSION.upper()}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Checkbox     //td[./label[text()='3rd Party Contact']]/following-sibling::td//input

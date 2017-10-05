@@ -66,7 +66,7 @@ TellU Edit Contact Person
     Prolonged Input Text    ${TELLU_PO_BOX_NUMNBER_FIELD}           ${DEFAULT_PO_BOX}
     Select From List        ${TELLU_PREFERRED_CONTACT_CHANNEL_SELECT}    Email
     Prolonged Input Text    ${TELLU_OFFICIAL_NAME_FIELD}            Official Name
-    Select From List        ${TELLU_GENDER_SELECT}                  Male
+    Select From List        ${TELLU_GENDER_SELECT}                  ${DEFAULT_GENDER}
     Select From List        ${TELLU_FIRST_ELEMENT_IN_HOBBY_LIST_SELECTION}    Golf
     Click Element           ${TELLU_ADD_HOBBY_SELECTIONS_BUTTON}
     Click Element           ${TELLU_UPDATE_CONTACT_PERSON_BUTTON}

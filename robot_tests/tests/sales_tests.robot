@@ -372,7 +372,7 @@ Sales Process: Update Sales Plan of an Account which you are not owner
 #     # Todo: editable address (same as BQA-1809)
 
 Create/Update new Contact Person in TellU
-    [Tags]      BQA-119     wip
+    [Tags]      BQA-119
     # 1. Create a new Contact Person in TellU with all data populated
     # 2. Update existing Contact Person in TellU, use several attributes
     Create And Update Contact Person In TellU
@@ -498,11 +498,14 @@ Create And Update Contact Person In TellU
     TellU Go to Login Page And Login
     TellU Create New Contact Person
     Go To   ${TELLU_SERVER}
+    Set Test Variable   ${OLD_EMAIL}    ${TEST_CONTACT_PERSON_EMAIL}
     TellU Select Contact Person     ${TEST_CONTACT_PERSON_LAST_NAME}
     TellU Edit Contact Person
+    Set Test Variable   ${NEW_EMAIL}    ${TEST_CONTACT_PERSON_EMAIL}
 
 Contact Person Should Be Updated In MultiBella
-    No Operation
+    MUBE Go To CRM Login Page And Login As CM User
+    MUBE Verify That Contact Person From TellU Is Updated
 
 Contact Person Should Be Updated In Salesforce
     Open Browser And Go To Login page

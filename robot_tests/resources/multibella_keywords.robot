@@ -606,20 +606,31 @@ MUBE Verify That Case Attributes Are Populated Correctly
     MUBE Check History Description Value Should Not Be Empty
 
 MUBE Verify That Contact Person Information Is Updated
-    [Documentation]     Assumes test variables NEW_EMAIL, NEW_PHONE, OLD_EMAIL, and OLD_PHONE are set
     Sleep    30 s    Wait For All Contact Person Changes to be applied.
     MUBE Select Contact Person    ${TEST_CONTACT_PERSON_LAST_NAME}
     MUBE Get Contact Person Crm Id
     Wait Until Keyword Succeeds    60 s    10 s    MUBE Open Tab    History
     MUBE Check History Old And New Value For Contact Person Attribute    Email                  ${OLD_EMAIL}        ${NEW_EMAIL}
     MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      ${OLD_PHONE}        ${NEW_PHONE}
-    MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}            ${NEW_BUSINESS_CARD_TITLE}
-    MUBE Check History Old And New Value For Contact Person Attribute    Gender                 ${EMPTY}            ${NEW_GENDER}
+    MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}            ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
+    MUBE Check History Old And New Value For Contact Person Attribute    Gender                 ${EMPTY}            ${DEFAULT_GENDER}
     MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${NEW_3RD_PARTY_CONTACT}
     MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             ${EMPTY}            ${NEW_SALES_ROLE}
     MUBE Check History Old And New Value For Contact Person Attribute    SMS                    PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
-    # TODO: Business Card Title, Gender, 3rd Party Contact, Sales Role, Marketing - SMS
 
+MUBE Verify That Contact Person From Tellu Is Updated
+    Sleep    30 s    Wait For All Contact Person Changes to be applied.
+    MUBE Select Contact Person    ${TEST_CONTACT_PERSON_LAST_NAME}
+    MUBE Get Contact Person Crm Id
+    Wait Until Keyword Succeeds    60 s    10 s    MUBE Open Tab    History
+    MUBE Check History Old And New Value For Contact Person Attribute    Email                  ${OLD_EMAIL}        ${NEW_EMAIL}
+    MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${DEFAULT_BUSINESS_CARD_TITLE}            ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
+    MUBE Check History Old And New Value For Contact Person Attribute    Gender                 ${EMPTY}            ${DEFAULT_GENDER}
+    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             ${EMPTY}            Business Contact – proposed     # By the way, that is not a "-" but a "–"
+    MUBE Check History Old And New Value For Contact Person Attribute    Name                   Test                Test123
+    MUBE Check History Old And New Value For Contact Person Attribute    Language               ${DEFAULT_LANGUAGE}    ${DEFAULT_LANGUAGE_UPDATED}
+    MUBE Check History Old And New Value For Contact Person Attribute    Address Type A         Physical            PO Box
+    MUBE Check History Old And New Value For Contact Person Attribute    Hobbies                ${EMPTY}            Golf
 
 MUBE Verify That Contact Person Sales Role Is Updated
     Sleep    30 s    Wait For All Contact Person Changes to be applied.
@@ -638,12 +649,12 @@ MUBE Verify That New Contact Person Is Send To Crm
     Run Keyword If    '${mobile_or_email}'=='email'     Email Should Be Set As Default
     Wait Until Keyword Succeeds    60 s    10 s    MUBE Open Tab    History
     MUBE Check History Old And New Value For Contact Person Attribute    Email                  ${EMPTY}    ${DEFAULT_EMAIL}
-    MUBE Check History Old And New Value For Contact Person Attribute    Language               ${EMPTY}    Finnish
+    MUBE Check History Old And New Value For Contact Person Attribute    Language               ${EMPTY}    ${DEFAULT_LANGUAGE}
     MUBE Check History Old And New Value For Contact Person Attribute    Preferred channel      ${EMPTY}    ${preferred_channel}
     MUBE Check History Old And New Value For Contact Person Attribute    Name                   ${EMPTY}    Test
     MUBE Check History Old And New Value For Contact Person Attribute    Office Name            ${EMPTY}    Official Name
     MUBE Check History Old And New Value For Contact Person Attribute    Address Type A         ${EMPTY}    ${address_type}
-    MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}    Test Title
+    MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}    ${DEFAULT_BUSINESS_CARD_TITLE}
 
 MUBE Wait For Load
     # Random error messages can cause this keyword to fail.
