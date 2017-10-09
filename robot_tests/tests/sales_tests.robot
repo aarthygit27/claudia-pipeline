@@ -227,7 +227,7 @@ Quick actions: create Opportunity from Account (Feed) by Customer Care user
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     # todo: 4. Close date is automatically give two days ahead.
-    # todo: 5. Opportunity is either assigned to AM (assigned accounts) or it can found from opportunity queue (unassigned account).
+    Opportunity Should be Unassigned
 
 Quick actions: create Customer Call
     [Tags]      BQA-18

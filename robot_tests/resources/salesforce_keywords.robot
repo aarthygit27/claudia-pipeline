@@ -737,8 +737,10 @@ Open Todays Page
     Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter
 
 Opportunity Should be Unassigned
+    [Arguments]     ${opport_name}=${OPPORTUNITY_NAME}
+    Go To Account       ${opport_name}
     Click Details Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //td[text()='Opportunity Owner']/following-sibling::td//a[text()='GESB Integration']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //td[text()='Opportunity Owner']/following-sibling::td//a[contains(text(),'GESB Integration')]      10s
 
 Save (Ignore Alert) Button Should Be Visible
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //input[@value='Save (Ignore Alert)']
