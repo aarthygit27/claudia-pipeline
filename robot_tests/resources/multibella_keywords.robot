@@ -239,10 +239,10 @@ MUBE Fill In Address Again And Finish Creation
 
 MUBE Fill In Address Information
     [Arguments]     ${address_type}=Official Address
-    ...             ${postal_code}=00500
+    ...             ${postal_code}=${DEFAULT_POSTAL_CODE}
     ...             ${city}=${DEFAULT_CITY}
-    ...             ${street}=Sturenkatu
-    ...             ${street_number}=12-14
+    ...             ${street}=${DEFAULT_STREET_NAME}
+    ...             ${street_number}=${DEFAULT_STREET_NUMBER}
     Sleep    3    Wait For Load
     MUBE Set Form Select    ${address_type}    Address Type    Physical
     MUBE Set Form Input     ${address_type}    Postal Code     ${postal_code}
