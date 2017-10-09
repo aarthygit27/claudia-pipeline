@@ -380,6 +380,12 @@ Create/Update new Contact Person in TellU
     Close Browser
     Contact Person Should Be Updated In Salesforce
 
+Test Contact person double check works ok in Claudia
+    [Tags]      BQA-2335
+    Go to Salesforce and Login
+    Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}
+    User sees a list of Contact Persons and can save with the same name
+
 
 *** Keywords ***
 
@@ -523,3 +529,15 @@ Contact Person Should Be Updated In Salesforce
     ...     apartment_door=${DEFAULT_PO_BOX}
     ...     postal_code=${DEFAULT_POSTAL_CODE_UPDATED}
     ...     city=${DEFAULT_CITY_UPDATED}
+
+Try to create a new contact person with a same name to
+    [Arguments]     ${account}
+    Open Contacts
+    Click To Create New Contact From Main Page
+    Add Mandatory Contact Data      Paavo   Pesusieni   12345678noreply@teliacompany.com
+    Add Account For Contact Person  ${account}
+    Save New Contact Person And Expect Error    duplicate record
+
+User sees a list of Contact Persons and can save with the same name
+    Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     12345678noreply@teliacompany.com
+    Save (Ignore Alert) Button Should Be Visible

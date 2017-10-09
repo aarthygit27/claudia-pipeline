@@ -11,9 +11,10 @@ Account Should Be Open
 Add Account For Contact Person
     [Documentation]     Deprecated
     [Arguments]         ${account_name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_NAME_LOOKUP}
-    Search (Lookup)     ${account_name}
-    Select New Contact Window And Validate Title
+    # Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_NAME_LOOKUP}
+    # Search (Lookup)     ${account_name}
+    # Select New Contact Window And Validate Title
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      id=con4     ${account_name}
 
 Add Competitor And Partner
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Value       //td[./label[text()='Competitor']]/following-sibling::td//select[contains(@id,'unselected')]    4
@@ -292,6 +293,10 @@ Contact Person Address Should Be Correct
 Contact Person Information Should Be Correct
     [Arguments]         ${field}    ${value}
     Page Should Contain Element     //td[text()='${field}']/following-sibling::td/div[contains(text(),'${value}')]
+
+Contact Person List Should Have
+    [Arguments]         ${name}     ${email}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //tr[./th/a[text()='${name}'] and ./td[text()='${email}']]
 
 Create New Account
     [Arguments]     ${type}     ${name}    ${parent}=${EMPTY}
@@ -723,10 +728,18 @@ Open Todays Page
     Select Correct Tab Type     Today
     Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter
 
+Save (Ignore Alert) Button Should Be Visible
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //input[@value='Save (Ignore Alert)']
+
 Save New Contact Person
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
     Verify That Create Contact Person Button Is Not Visible
     Verify That Error Message Is Not Displayed
+
+Save New Contact Person And Expect Error
+    [Arguments]     ${error}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Click Bottom Save Button
+    Verify That Error Message Is Displayed      ${CP_COMMON_ERROR_MESSAGE_FIELD}    ${error}
 
 Save Opportunity
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
@@ -983,6 +996,10 @@ Verify That Contact Person Information is Correct
     Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Address Should Be Correct        ${address}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Address Should Be Correct        ${postal_code} ${city}
 
+Verify That Description And WIG Areas Are Correct
+    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='Glory']/following-sibling::td//img[@title='Checked']
+
 Verify That Error Message Is Not Displayed
     [Documentation]    Uses detailed field message xpath as default,
     ...   but also accepts alternative xpath of error message field as an argument
@@ -994,13 +1011,15 @@ Verify That Error Message Is Not Displayed
 
 Verify That Error Message Is Displayed
     [Documentation]    Uses detailed field message xpath as default,
-    ...   but also accepts alternative xpath of error message field as an argument
-    [Arguments]    ${error_msg_field}=${CP_DETAILED_ERROR_MESSAGE_FIELD}
+    ...     but also accepts alternative xpath of error message field as an argument.
+    ...     Also takes the error message as an optional parameter.
+    [Arguments]     ${error_msg_field}=${CP_DETAILED_ERROR_MESSAGE_FIELD}
+    ...             ${error_text}=${EMPTY}
     ${error_msg}=     Run Keyword And Return Status
-    ...    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${error_msg_field}    3 s
+    ...    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${error_msg_field}[text()[contains(.,'${error_text}')]]    3 s
     Run Keyword If    ${error_msg}    Log Error Message    ${error_msg_field}
     Run Keyword Unless    ${error_msg}    FAIL    Invalid information was added but no errors were displayed
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Visible    ${error_msg_field}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Visible    ${error_msg_field}[text()[contains(.,'${error_text}')]]
 
 Verify That Error Messages Are Shown
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(text(),'Error: Invalid Data.')]      15 s
@@ -1014,10 +1033,6 @@ Verify That Event Has Correct Data
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Reason']/following-sibling::td/div         ${EVENT_REASON}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Related To']/following-sibling::td/div     ${DEFAULT_TEST_ACCOUNT}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Name']/following-sibling::td/div           ${DEFAULT_TEST_CONTACT}
-
-Verify That Description And WIG Areas Are Correct
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='Glory']/following-sibling::td//img[@title='Checked']
 
 Verify That Event Is Created
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[./a[text()[contains(.,'${TEST_EVENT_SUBJECT}')]]]/following-sibling::a[text()='created an event.']     20s
