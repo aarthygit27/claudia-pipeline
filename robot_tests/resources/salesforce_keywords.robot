@@ -65,7 +65,7 @@ Add Mandatory Opportunity Data
 
 Add Meeting Outcome and Save
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}    Select From List By Label   //td[./label[text()='Meeting Outcome']]/following-sibling::td//select   Positive
+    Run Inside Iframe   ${frame}    Select Value For Attribute      Meeting Outcome   Positive
     Run Inside Iframe   ${frame}    Click Bottom Save Button
     Run Inside Iframe   ${frame}    Wait Until Element Is Visible   ${EDIT_BUTTON}
 
@@ -384,9 +384,9 @@ Edit Contact Person's Added Address
     Click Edit Contact Person
     ${address}=     Set Variable    ${street_name} ${street_number} ${staircase} ${apartment_door}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Street']]/following-sibling::td/textarea       ${address}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Postal Code']]/following-sibling::td/input     ${postal_code}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Postal Code     ${postal_code}
     # Todo: Address can not be saved without City
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='City']]/following-sibling::td/input            ${city}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   City    ${city}
 
 Edit Event Description and WIG Areas
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
@@ -588,6 +588,11 @@ Go To Salesforce and Login
     Go to Salesforce
     Login To Salesforce And Close All Tabs      ${user}
 
+Input Value For Attribute
+    [Arguments]     ${field}    ${value}
+    Wait Until Page Contains Element    //td[./label[text()='${field}']]/following-sibling::td/input
+    Input Text      //td[./label[text()='${field}']]/following-sibling::td/input   ${value}
+
 Log Error Message
     [Arguments]    ${error_msg_field}
     ${error_msg}=    Run Inside Iframe    ${ACCOUNT_FRAME}    Get Text    ${error_msg_field}
@@ -731,6 +736,10 @@ Open Todays Page
     Select Correct Tab Type     Today
     Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter
 
+Opportunity Should be Unassigned
+    Click Details Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //td[text()='Opportunity Owner']/following-sibling::td//a[text()='GESB Integration']
+
 Save (Ignore Alert) Button Should Be Visible
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //input[@value='Save (Ignore Alert)']
 
@@ -866,6 +875,10 @@ Select Tab With Keyboard Shortcut
     # 86 is the ASCII code for 'V' key, which is the shortcut for the navigation tab
     Execute Javascript      document.dispatchEvent(new KeyboardEvent('keydown', {'which': 86, 'keyCode':86}));
 
+Select Value For Attribute
+    [Arguments]     ${field}    ${value}
+    Select From List By Label   //td[./label[text()='${field}']]/following-sibling::td//select      ${value}
+
 Send Quote Email To Customer
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Send Quote Email']
     Dismiss Alert
@@ -904,13 +917,12 @@ Update Contact Person In Salesforce
     Set Test Variable   ${NEW_SALES_ROLE}                   Business Contact
     Set Test Variable   ${NEW_MARKETING_SMS_PERMISSION}     Permit
     Set Test Variable   ${NEW_3RD_PARTY_CONTACT}            Yes
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[./label[text()='Business Card Title']]/following-sibling::td/input
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Email']]/following-sibling::td/input   ${NEW_EMAIL}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Phone']]/following-sibling::td/input   ${NEW_PHONE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Business Card Title']]/following-sibling::td/input    ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Gender']]/following-sibling::td//select     1 - ${DEFAULT_GENDER.lower()}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[.//label[text()[contains(.,'Sales Role')]]]/following-sibling::td//select    ${NEW_SALES_ROLE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[./label[text()='Marketing - SMS']]/following-sibling::td//select   ${NEW_MARKETING_SMS_PERMISSION.upper()}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Email   ${NEW_EMAIL}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Phone   ${NEW_PHONE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Business Card Title    ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Gender              1 - ${DEFAULT_GENDER.lower()}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Sales Role          ${NEW_SALES_ROLE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Marketing - SMS     ${NEW_MARKETING_SMS_PERMISSION.upper()}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Checkbox     //td[./label[text()='3rd Party Contact']]/following-sibling::td//input
     Sleep    2
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
@@ -942,7 +954,7 @@ Update meeting status to Done and Save
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}    Click Edit Button
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
-    Run Inside Iframe   ${frame}    Select From List By Label   //td[./label[text()='Meeting Status']]/following-sibling::td//select    Done
+    Run Inside Iframe   ${frame}    Select Value For Attribute      Meeting Status    Done
     Run Inside Iframe   ${frame}    Click Bottom Save Button
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[@class='errorMsg' and text()[contains(.,'Please select a value in the Meeting Outcome field')]]   10s
 
@@ -962,7 +974,7 @@ Update Opportunity Close Date And Close Reason
 
 Update Win Probability
     [Arguments]     ${probability}=50%
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Value       //td[./label[text()='Win Probability %']]/following-sibling::td//select     ${probability}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select Value For Attribute      Win Probability %     ${probability}
 
 Verify That Activity Cannot Be Linked to Group Account
     Click Feed Button
