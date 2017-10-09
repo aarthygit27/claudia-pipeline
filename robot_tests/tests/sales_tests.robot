@@ -386,6 +386,10 @@ Test Contact person double check works ok in Claudia
     Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}
     User sees a list of Contact Persons and can save with the same name
 
+Opportunity Cards
+    [Tags]      BQA-2194    wip
+    Go to Salesforce and Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
 
 *** Keywords ***
 
