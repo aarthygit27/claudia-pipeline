@@ -877,7 +877,7 @@ Select Tab With Keyboard Shortcut
 
 Select Value For Attribute
     [Arguments]     ${field}    ${value}
-    Select From List By Label   //td[./label[text()[contains(.,'${field}')]]/following-sibling::td//select      ${value}
+    Select From List By Label   //td[.//label[text()[contains(.,'${field}')]]/following-sibling::td//select      ${value}
 
 Send Quote Email To Customer
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Send Quote Email']
