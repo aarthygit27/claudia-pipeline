@@ -390,6 +390,10 @@ Opportunity Cards
     [Tags]      BQA-2194    wip
     Go to Salesforce and Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    Open Open Opportunities Tab At Account View
+    Correct Quick Actions Should Be Visible
+    # TODO: Continue when "open opportunities" tab has something to show
 
 *** Keywords ***
 

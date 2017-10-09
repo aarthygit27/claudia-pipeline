@@ -551,7 +551,7 @@ Go to Account
     Select Account    ${target_account}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
-    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
+    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
 
 Go To Event
     [Documentation]     This works for other than events also. This is used for stuff that cannot be found with main search and
@@ -714,6 +714,9 @@ Open just created opportunity and update Win probability, add Competitor and Par
     Update Win Probability      10%
     Add Competitor And Partner
     Save Opportunity
+
+Open Open Opportunities Tab At Account View
+    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
 
 Open Opportunities
     Select Correct Tab Type     Opportunities
@@ -1049,6 +1052,7 @@ Verify That opportunity Close Reason And Date Has Been Changed
 Verify That Opportunity Creation Succeeded
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     10 s
     Reload Page
+    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
     Open Details Tab At Account View
     Verify That Opportunity Is Saved And Data Is Correct
 
