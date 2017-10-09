@@ -877,7 +877,7 @@ Select Tab With Keyboard Shortcut
 
 Select Value For Attribute
     [Arguments]     ${field}    ${value}
-    Select From List By Label   //td[./label[text()='${field}']]/following-sibling::td//select      ${value}
+    Select From List By Label   //td[./label[text()[contains(.,'${field}')]]/following-sibling::td//select      ${value}
 
 Send Quote Email To Customer
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Send Quote Email']
@@ -969,7 +969,7 @@ Update Opportunity Close Date And Close Reason
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        ${xpath}        10s
     ${date}=        Get Date From Future    ${days}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}     ${date}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Value       //td[./label[text()[contains(.,'Close Reason')]]]/following-sibling::td//select     ${reason}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select Value For Attribute      Close Reason     ${reason}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Bottom Save Button
 
 Update Win Probability
