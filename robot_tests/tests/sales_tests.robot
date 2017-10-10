@@ -222,7 +222,7 @@ Quick actions: create Meeting
     Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
 Quick actions: create Opportunity from Account (Feed) by Customer Care user
-    [Tags]      BQA-19      wip
+    [Tags]      BQA-19
     Go To Salesforce and Login      Customer Care User
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
