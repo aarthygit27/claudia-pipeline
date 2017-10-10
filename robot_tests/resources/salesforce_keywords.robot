@@ -81,7 +81,7 @@ Add Price Book For Opportunity
 Add Quote Email Text To Product Order
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}
     Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[.//label[text()='Quote Email Text']]/following-sibling::td//textarea       Quote email text for ${OPPORTUNITY_NAME}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Quote Email Text       Quote email text for ${OPPORTUNITY_NAME}
 
 Add Solution Area and update Solution Sub Area data
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
@@ -322,8 +322,8 @@ Create New Contract For Customer
     Click Create New Contract
     ${frame}=   Get Account Tab Iframe Xpath    New Contract
     ${date}=    Get Date From Future    ${days}
-    Run Inside Iframe   ${frame}    Select From List By Value   //td[.//label[contains(text(),'Status')]]/following-sibling::td//select     ${status}
-    Run Inside Iframe   ${frame}    Input Text      //td[.//label[contains(text(),'Contract Start Date')]]/following-sibling::td//input     ${date}
+    Run Inside Iframe   ${frame}    Select Value For Attribute      Status                  ${status}
+    Run Inside Iframe   ${frame}    Input Value For Attribute       Contract Start Date     ${date}
     Click Bottom Save Button
 
 Create New Opportunity For Customer
@@ -390,10 +390,10 @@ Edit Contact Person's Added Address
     Click Details Button
     Click Edit Contact Person
     ${address}=     Set Variable    ${street_name} ${street_number} ${staircase} ${apartment_door}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      //td[./label[text()='Street']]/following-sibling::td/textarea       ${address}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Street          ${address}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Postal Code     ${postal_code}
     # Todo: Address can not be saved without City
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   City    ${city}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   City            ${city}
 
 Edit Event Description and WIG Areas
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
@@ -455,7 +455,7 @@ Fill Address Validation Information And Click Next
 Fill Close Reason And Comment And Save
     [Documentation]     Fill the mandatory close reason and comment. Fields are only available when the stage is not "analyse prospect"
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select value For Attribute      Close Reason    08 Other
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      ${CLOSE_COMMENT_FIELD}/textarea         Close comment for ${OPPORTUNITY_NAME}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Value For Attribute       Close Comment   Close comment for ${OPPORTUNITY_NAME}
     Save Opportunity
 
 Fill Event Data
@@ -597,8 +597,8 @@ Go To Salesforce and Login
 
 Input Value For Attribute
     [Arguments]     ${field}    ${value}
-    Wait Until Page Contains Element    //td[./label[text()='${field}']]/following-sibling::td/input
-    Input Text      //td[./label[text()='${field}']]/following-sibling::td/input   ${value}
+    Wait Until Page Contains Element    //td[./label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
+    Input Text      //td[./label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']   ${value}
 
 Log Error Message
     [Arguments]    ${error_msg_field}
@@ -943,7 +943,7 @@ Update Contact Person In Salesforce
 Update Contact Person Sales Role
     [Arguments]     ${new_role}
     [Documentation]     Assumes user is already in the edit contact person window
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   //td[.//label[text()='Sales Role']]/following-sibling::td//select       ${new_role}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Sales Role       ${new_role}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
 
 Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
@@ -975,10 +975,8 @@ Update Opportunity Close Date And Close Reason
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        p3      10s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Label       p3      Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //input[@title='Continue']
-    ${xpath}=       Set Variable        //td[./label[text()[contains(.,'Close Date')]]]/following-sibling::td//input
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        ${xpath}        10s
     ${date}=        Get Date From Future    ${days}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Text          ${xpath}     ${date}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Value For Attribute       Close Date     ${date}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select Value For Attribute      Close Reason     ${reason}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Bottom Save Button
 
