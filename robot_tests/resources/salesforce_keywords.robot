@@ -399,7 +399,7 @@ Edit Event Description and WIG Areas
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}    Click Edit Button
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
-    Run Inside Iframe   ${frame}    Input Text      ${NEW_EVENT_DESCRIPTION_FIELD}      Description for event ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe   ${frame}    Input Value For Attribute   Description      Description for event ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}    Click Element   ${NEW_EVENT_WIG_GLORY_FIELD}
     Run Inside Iframe   ${frame}    Click Bottom Save Button
 
