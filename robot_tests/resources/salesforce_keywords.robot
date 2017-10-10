@@ -298,6 +298,13 @@ Contact Person List Should Have
     [Arguments]         ${name}     ${email}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //tr[./th/a[text()='${name}'] and ./td[text()='${email}']]
 
+Correct Quick Actions Should Be Visible
+    ${frame}=   Get Account Tab Iframe Xpath    Open Opportunities
+    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Update']
+    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Create Event']
+    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Create Task']
+    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Close Opportunity']
+
 Create New Account
     [Arguments]     ${type}     ${name}    ${parent}=${EMPTY}
     Run Inside Iframe   ${IFRAME}           Click Element   ${NEW_ACCOUNT_BUTTON}
@@ -722,6 +729,8 @@ Open just created opportunity and update Win probability, add Competitor and Par
 
 Open Open Opportunities Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
+    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
+
 
 Open Opportunities
     Select Correct Tab Type     Opportunities
