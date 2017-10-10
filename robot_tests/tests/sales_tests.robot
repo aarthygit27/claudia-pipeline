@@ -393,7 +393,10 @@ Opportunity Cards
     Create New Opportunity For Customer
     Open Open Opportunities Tab At Account View
     Correct Quick Actions Should Be Visible
-    # TODO: Continue when "open opportunities" tab has something to show
+    # todo: 5: Update the record through Update quick action.
+    # todo: 6: Create a new event through the quick action
+    # todo: 7: Create a new task through the quick action
+    # todo: 8: Close the opportunity through the quick action.
 
 *** Keywords ***
 

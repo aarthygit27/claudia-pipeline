@@ -454,7 +454,7 @@ Fill Address Validation Information And Click Next
 
 Fill Close Reason And Comment And Save
     [Documentation]     Fill the mandatory close reason and comment. Fields are only available when the stage is not "analyse prospect"
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Value       ${CLOSE_REASON_FIELD}//select    08 Other
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select value For Attribute      Close Reason    08 Other
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      ${CLOSE_COMMENT_FIELD}/textarea         Close comment for ${OPPORTUNITY_NAME}
     Save Opportunity
 
@@ -731,7 +731,6 @@ Open Open Opportunities Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
     Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
 
-
 Open Opportunities
     Select Correct Tab Type     Opportunities
     Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    20 seconds
@@ -888,7 +887,7 @@ Select Tab With Keyboard Shortcut
 
 Select Value For Attribute
     [Arguments]     ${field}    ${value}
-    Select From List By Label   //td[.//label[text()[contains(.,'${field}')]]/following-sibling::td//select      ${value}
+    Select From List By Label   //td[.//label[text()[contains(.,'${field}')]]]/following-sibling::td//select      ${value}
 
 Send Quote Email To Customer
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Send Quote Email']
