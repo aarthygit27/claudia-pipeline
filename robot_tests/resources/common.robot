@@ -54,11 +54,11 @@ Logout From All Systems and Close Browser
     Close Browser
 
 Open Browser And Go To Login Page
-    Run Keyword If    '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)
+    Run Keyword If      '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)
     ...     ELSE        Open Browser        ${LOGIN_PAGE}       ${BROWSER}
     Wait Until Page Contains Element     id=username
-    Set Window Size     ${1920}     ${1080}
-    # Maximize Browser Window
+    Run Keyword If      '${BEHIND_PROXY}'=='True'   Set Window Size     ${1920}     ${1080}
+    ...     ELSE        Maximize Browser Window
 
 Open Browser And Go To Login Page (Proxy)
     ${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
