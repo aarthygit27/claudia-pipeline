@@ -493,11 +493,10 @@ Fill Mandatory Contact Person Values
     ...    ${salutation}=${DEFAULT_SALUTATION}
     ...    ${email}=${DEFAULT_EMAIL}
     ...    ${phone_number}=${DEFAULT_PHONE}
-    Set Test Variable    ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${CONTACT_PERSON_TITLE_DROPDOWN}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${CONTACT_PERSON_TITLE_DROPDOWN}  10s
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Label    ${CONTACT_PERSON_TITLE_DROPDOWN}    ${salutation}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    ${CP_SALES_ROLE_FIELD}    TS_SALES_ROLE_TYPES.DECISON_MAKER_ICT
+    ...     ${sales_role}=Business Contact
+    Set Test Variable   ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute     First Name      ${salutation}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute     Sales Role      ${sales_role}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      First Name      ${firstname}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Last Name       ${lastname}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Phone           ${phone_number}
@@ -517,10 +516,8 @@ Fill Mandatory Opportunity Information
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
     Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       ${OPPO_INFO_OPPO_NAME_FIELD}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible          ${OPPO_INFO_OPPO_NAME_FIELD}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Opportunity Name    ${OPPORTUNITY_NAME}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select From List By Value              ${OPPO_INFO_STAGE_FIELD}        ${stage}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Quick Action Value For Attribute    Stage        ${stage}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Close Date   ${OPPORTUNITY_CLOSE_DATE}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Press Tab On                           ${OPPO_INFO_CLOSE_DATE_FIELD}
 
@@ -602,7 +599,7 @@ Input Value For Attribute
 
 Input Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}
-    Wait Until Page Contains Element    ${QUICKACTIONFIELD}/label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}
+    Wait Until Element Is Visible    ${QUICKACTIONFIELD}/label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}
     Input Text      ${QUICKACTIONFIELD}/label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}   ${value}
 
 Log Error Message
@@ -881,6 +878,11 @@ Select Popup Search Window And Validate Title
     Select Window       new
     Title Should Be     Search ~ Salesforce - Unlimited Edition
     Page Should Contain Element   //frameset
+
+Select Quick Action Value For Attribute
+    [Arguments]     ${field}    ${value}
+    Wait Until Element Is Visible    ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//select   20s
+    Select From List By Label      ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//select   ${value}
 
 Select Tab With Coordinates
     # IE cannot handle Javascript Keyboardevents, so we cannot use the keyboard shortcut for IE.
