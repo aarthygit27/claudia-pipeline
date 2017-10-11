@@ -469,11 +469,11 @@ Fill Event Data
     ${end_date}=        Get Date From Future    2
     Set Test Variable   ${EVENT_TYPE}       ${type}
     Set Test Variable   ${EVENT_REASON}     ${reason}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_SUBJECT_FIELD}      ${subject}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Subject      ${subject}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Select From List By Value   ${NEW_EVENT_EVENT_TYPE_FIELD}   ${EVENT_TYPE}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Select From List By Value   ${NEW_EVENT_REASON_FIELD}       ${EVENT_REASON}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_START_FIELD}    ${start_date}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_END_FIELD}      ${end_date}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Start    ${start_date}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      End      ${end_date}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_CONTACT_PERSON_FIELD}       ${contact_person}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_ACCOUNT_FIELD}      ${account}
     Set Test Variable       ${TEST_EVENT_SUBJECT}        ${subject}
@@ -498,12 +498,12 @@ Fill Mandatory Contact Person Values
     Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${CONTACT_PERSON_TITLE_DROPDOWN}  10s
     Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Label    ${CONTACT_PERSON_TITLE_DROPDOWN}    ${salutation}
     Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    ${CP_SALES_ROLE_FIELD}    TS_SALES_ROLE_TYPES.DECISON_MAKER_ICT
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_FIRSTNAME_FIELD}        ${firstname}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_LASTNAME_FIELD}         ${lastname}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_PHONE_FIELD}            ${phone_number}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_MOBILE_FIELD}           ${phone_number}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_EMAIL_FIELD}            ${email}
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${CP_BUSINESS_CARD_FIELD}    ${DEFAULT_BUSINESS_CARD_TITLE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      First Name      ${firstname}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Last Name       ${lastname}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Phone           ${phone_number}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Mobile          ${phone_number}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Email           ${email}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Business Card Title     ${DEFAULT_BUSINESS_CARD_TITLE}
 
 Fill Mandatory Opportunity Information
     [Arguments]
@@ -516,12 +516,12 @@ Fill Mandatory Opportunity Information
     ...    Set Variable If    '${opport_name}' == '${EMPTY}'    ${name}    ${opport_name}
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
-    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}  ${date}
+    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       ${OPPO_INFO_OPPO_NAME_FIELD}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible          ${OPPO_INFO_OPPO_NAME_FIELD}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Text                             ${OPPO_INFO_OPPO_NAME_FIELD}    ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Opportunity Name    ${OPPORTUNITY_NAME}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select From List By Value              ${OPPO_INFO_STAGE_FIELD}        ${stage}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Text                             ${OPPO_INFO_CLOSE_DATE_FIELD}   ${OPPORTUNITY_CLOSE_DATE}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Close Date   ${OPPORTUNITY_CLOSE_DATE}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Press Tab On                           ${OPPO_INFO_CLOSE_DATE_FIELD}
 
 Fill Opportunity Account name
@@ -599,6 +599,11 @@ Input Value For Attribute
     [Arguments]     ${field}    ${value}
     Wait Until Page Contains Element    //td[./label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
     Input Text      //td[./label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']   ${value}
+
+Input Quick Action Value For Attribute
+    [Arguments]     ${field}    ${value}
+    Wait Until Page Contains Element    ${QUICKACTIONFIELD}/label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}
+    Input Text      ${QUICKACTIONFIELD}/label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}   ${value}
 
 Log Error Message
     [Arguments]    ${error_msg_field}

@@ -15,6 +15,9 @@ ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.preprod
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
 ${PASSWORD}                                 PahaPassu2
 
+${QUICKACTIONFIELD}                         //div[@class='quickActionFieldElements' and .//div[@class='quickActionFieldLabel']
+${INPUT_OR_TEXTAREA}                        //*[(local-name()='input' or local-name()='textarea') and not(@type='hidden')]
+
 
 ${NEW_OPPORTUNITY_BUTTON}                   //input[contains(@title,'New Opportunity')]
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
