@@ -39,6 +39,7 @@ ${NEW_ACCOUNT_BUTTON}                       //input[contains(@title,'New Account
 ${NEW_CONTACT_BUTTON}                       //input[contains(@title,'New Contact')]
 ${MORE_DROPDOWN_AT_DETAILS}                 //span[@class='optionLabel' and contains(text(), 'More')]/following-sibling::span[@class='arrowIcon']
 ${NEW_CONTACT_AT_MORE_DROPDOWN}             ul//span[contains(text(), 'New Contact')]
+${ADD_SOLUTION_AREA_AT_DETAILS}             //span[@class='optionLabel' and text()='Add Solution Area']
 ${NEW_CONTACT_BUTTON_AT_DETAILS}            //span[@class= 'optionLabel' and text()= 'New Contact']
 ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}        //span[@class= 'optionLabel' and text()= 'New Opportunity']
 ${NEW_EVENT_BUTTON_AT_DETAILS}              //span[@class= 'optionLabel' and text()= 'New Event']

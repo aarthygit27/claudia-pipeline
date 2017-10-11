@@ -277,12 +277,13 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Create New Opportunity For Customer
     # 5. Open just created opportunity and update Win probability, add Competitor and Partner.
     Open just created opportunity and update Win probability, add Competitor and Partner
-    # todo: 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
-    Log     Todo: 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
+    # 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
+    Add Solution Area With Quick Action
     # todo: 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
     Log     Todo: 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
     # Open Details View At Opportunity
     # 8. Go to CPQ (opportunity stage is updated to Prepare Solution Proposal, opportunity status remains In Progress).
+    Open Details View At Opportunity
     Click CPQ At Opportunity View
     # 9. Add modelled product (i.e. Yritysinternet Plus) and unmodelled product (DataNet Multi) and update Sales Type in Manage Sales Type/Contract Length/Manual Pricing tab. Update prices for unmodelled product here.
     Add modelled product and unmodelled product to cart (CPQ)
@@ -322,7 +323,6 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Verify That Opportunity Cannot Be Updated
     # todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
     Log     Todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
-    [Teardown]      Pause Execution
 
 Opportunity: Check that Account can be changed for an active opportunity
     [Tags]      BQA-39      wip

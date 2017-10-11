@@ -94,6 +94,20 @@ Add Solution Area and update Solution Sub Area data
     Run Inside Iframe   ${frame}    Click Element   //div[@id='addSolutionAreasModal']//button[text()='Add selected']
     [Teardown]      Run Keyword and Ignore Error    Run Inside Iframe   ${frame}    Click Element   //div[@id='addSolutionAreasModal']//button[text()='Cancel']
 
+Add Solution Area With Quick Action
+    Click Feed Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ADD_SOLUTION_AREA_AT_DETAILS}
+    ${nested_iframe}=   Set Variable    //div[@class='grayborder']//iframe
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Wait Until Page Contains Element   //div[.//b[text()='Solution Area:']]/span/select     10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Solution Area:']]/span/select    Devices
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Sales Type:']]/span/select       New Money-New Services
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Contract Length:']]/span/select       12
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='One Time Total:']]/span/input       0
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='Recurring Total:']]/span/input       0
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Click Element   //a[@class='create-button']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Wait Until Page Contains Element     //h4[text()='Success']      20s
+    Reload Page
+
 Addresses Should Be Available
     [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
     ${frame}=       Get Account Tab Iframe Xpath    Availability
@@ -766,8 +780,10 @@ Save New Contact Person And Expect Error
     Verify That Error Message Is Displayed      ${CP_COMMON_ERROR_MESSAGE_FIELD}    ${error}
 
 Save Opportunity
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Element Is Visible           ${EDIT_BUTTON}    10 s
+
 
 Search And Verify Account Is Found
     [Arguments]     ${target_account}   ${type}=${EMPTY}
