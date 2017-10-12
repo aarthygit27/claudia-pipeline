@@ -288,6 +288,7 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     # 9. Add modelled product (i.e. Yritysinternet Plus) and unmodelled product (DataNet Multi) and update Sales Type in Manage Sales Type/Contract Length/Manual Pricing tab. Update prices for unmodelled product here.
     Add modelled product and unmodelled product to cart (CPQ)
     Update Sales Type and Prices For unmodelled Product (CPQ)
+    # TODO: Continue testing when BQA-3540 is fixed.
     Click View Quote And Go Back To CPQ
     # 10. Create Quote. Press Review Record and add Contact and Quote email text.
     Click Create Order (CPQ)
@@ -397,6 +398,22 @@ Opportunity Cards
     # todo: 6: Create a new event through the quick action
     # todo: 7: Create a new task through the quick action
     # todo: 8: Close the opportunity through the quick action.
+
+Opportunity: Pick opportunity from queue
+    [Tags]      BQA-37      wip
+    [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
+    ...         Go To Salesforce and Login      Customer Care User      AND
+    ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
+    ...         Create New Opportunity For Customer                     AND
+    ...         Logout From Salesforce
+    # 2. Switch from Today to Opportunity and open B2B Digisales list. List of unassigned opportunities appears (owner: Integration GESB).
+    # 3. Choose an opportunity from this view by pressing edit icon and go to Details view.
+    # 4. Press Assign to Me button.
+    # 5. Check that opportunity has been assigned to yourself.
+    # 6. Update some opportunity data and save.
+    # 7. Check that opportunity is visible in My All Open Opportunities list.
+    Go To Salesforce and Login
+    Go to Today page and check that there is link to team's opportunity queue
 
 *** Keywords ***
 

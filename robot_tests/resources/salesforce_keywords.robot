@@ -611,6 +611,11 @@ Go To Salesforce and Login
     Go to Salesforce
     Login To Salesforce And Close All Tabs      ${user}
 
+Go to Today page and check that there is link to team's opportunity queue
+    Open Todays Page
+    Run Inside Iframe   ${IFRAME}   Page Should Contain Element     //a/h1[contains(text(),"in your team's queue")]
+    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     10s     0.5s    Dismiss Alert
+
 Input Value For Attribute
     [Arguments]     ${field}    ${value}
     Wait Until Page Contains Element    //td[./label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
@@ -1102,7 +1107,7 @@ Verify That opportunity Close Reason And Date Has Been Changed
 Verify That Opportunity Creation Succeeded
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     10 s
     Reload Page
-    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
+    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
     Open Details Tab At Account View
     Verify That Opportunity Is Saved And Data Is Correct
 
