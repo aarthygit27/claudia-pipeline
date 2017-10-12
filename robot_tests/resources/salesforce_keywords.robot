@@ -1127,7 +1127,6 @@ Verify That Opportunity is Found From My All Open Opportunities
     ${first_letter}=       Set Variable    ${OPPORTUNITY_NAME[0].upper()}
     Run Inside Iframe   ${IFRAME}   Click Element   //a/span[text()='${first_letter}']
     Run Keyword And Ignore Error    Run Inside Iframe   ${IFRAME}   Click Element   //a[./img[@class='first']]
-    # ${pages}=   Get Amount Of Pages
     ${pages}=   Run Inside Iframe   ${IFRAME}   Execute Javascript      return Number(document.evaluate("//div[@class='paginator']//span[@class='right']/input", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getAttribute("maxlength"))-1;
     :FOR   ${i}  IN RANGE   ${pages}
     \   ${opportunity_found}=      Run Keyword And Return Status       Run Inside Iframe    ${IFRAME}   Page Should Contain Element     //span[text()='${OPPORTUNITY_NAME}']
