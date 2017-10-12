@@ -400,20 +400,21 @@ Opportunity Cards
     # todo: 8: Close the opportunity through the quick action.
 
 Opportunity: Pick opportunity from queue
-    [Tags]      BQA-37      wip
+    [Tags]      BQA-37
     [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
     ...         Go To Salesforce and Login      Customer Care User      AND
     ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
     ...         Create New Opportunity For Customer                     AND
     ...         Logout From Salesforce
-    # 2. Switch from Today to Opportunity and open B2B Digisales list. List of unassigned opportunities appears (owner: Integration GESB).
-    # 3. Choose an opportunity from this view by pressing edit icon and go to Details view.
-    # 4. Press Assign to Me button.
-    # 5. Check that opportunity has been assigned to yourself.
-    # 6. Update some opportunity data and save.
-    # 7. Check that opportunity is visible in My All Open Opportunities list.
     Go To Salesforce and Login
     Go to Today page and check that there is link to team's opportunity queue
+    Open Opportunities
+    Select Correct View Type    B2B DigiSales
+    Select Opportunity    ${OPPORTUNITY_NAME}
+    Open Details View At Opportunity
+    Assign Opportunity To Me
+    Set Opportunity Stage And Save      Prepare Solution Proposal
+    Verify That Opportunity is Found From My All Open Opportunities
 
 *** Keywords ***
 

@@ -131,6 +131,11 @@ App Should Be Open
     ${app_open}=        App Is Open     ${app_name}
     Should Be True      ${app_open}
 
+Assign Opportunity To Me
+    [Arguments]     ${owner}=B2B DigiSales
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     10s     1s      Click Element   //input[@value='Assign To Me']
+    Verify That Owner Has Changed   ${owner}    Opportunity
+
 Change Account Owner
     [Arguments]     ${owner}
     Run Keyword And Ignore Error    Open Details Tab At Account View
@@ -249,6 +254,9 @@ Click New Opportunity From More Dropdown
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${MORE_DROPDOWN_AT_DETAILS}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element
     ...     ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::${NEW_OPPORTUNITY_AT_MORE_DROPDOWN}
+
+Click Next Button
+    Run Inside Iframe   ${IFRAME}       Click Element   //a[text()[contains(.,'Next')]]
 
 Click Save Button
     Click Element       //input[@title="Save"]
@@ -1111,6 +1119,23 @@ Verify That Opportunity Creation Succeeded
     Open Details Tab At Account View
     Verify That Opportunity Is Saved And Data Is Correct
 
+Verify That Opportunity is Found From My All Open Opportunities
+    Close All Tabs
+    Open Opportunities
+    Select Correct View Type    My All Open Opportunities
+    Filter Opportunities By     Opportunity Name
+    ${first_letter}=       Set Variable    ${OPPORTUNITY_NAME[0].upper()}
+    Run Inside Iframe   ${IFRAME}   Click Element   //a/span[text()='${first_letter}']
+    Run Keyword And Ignore Error    Run Inside Iframe   ${IFRAME}   Click Element   //a[./img[@class='first']]
+    # ${pages}=   Get Amount Of Pages
+    ${pages}=   Run Inside Iframe   ${IFRAME}   Execute Javascript      return Number(document.evaluate("//div[@class='paginator']//span[@class='right']/input", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getAttribute("maxlength"))-1;
+    :FOR   ${i}  IN RANGE   ${pages}
+    \   ${opportunity_found}=      Run Keyword And Return Status       Run Inside Iframe    ${IFRAME}   Page Should Contain Element     //span[text()='${OPPORTUNITY_NAME}']
+    \   Run Keyword If      ${opportunity_found}   Exit For Loop
+    \   Click Next Button
+    \   Run Inside Iframe   ${IFRAME}   Wait For Load
+    Run Keyword Unless      ${opportunity_found}       FAIL    ${OPPORTUNITY_NAME} not found from My All Open Opportunities.
+
 Verify That Opportunity Is Found From My Opportunities
     Close All Tabs
     Open Opportunities
@@ -1159,8 +1184,8 @@ Verify That Order Status Is Updated To
     Wait Until Keyword Succeeds     30s     1s      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Text Should Be      Status_ileinner     ${status}
 
 Verify That Owner Has Changed
-    [Arguments]         ${owner}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //td[text()='Account Owner']/following-sibling::td//a[contains(text(),'${owner}')]
+    [Arguments]         ${owner}    ${type}=Account
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[text()='${type} Owner']/following-sibling::td//a[contains(text(),'${owner}')]      20s
 
 Verify That Quote Status Is Updated to
     [Arguments]         ${status}
