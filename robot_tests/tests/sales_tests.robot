@@ -279,8 +279,8 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Open just created opportunity and update Win probability, add Competitor and Partner
     # 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
     Add Solution Area With Quick Action
-    # todo: 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
-    Log     Todo: 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
+    # 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
+    Verify That Values Are Visible In Opportunity Layout
     # Open Details View At Opportunity
     # 8. Go to CPQ (opportunity stage is updated to Prepare Solution Proposal, opportunity status remains In Progress).
     Open Details View At Opportunity

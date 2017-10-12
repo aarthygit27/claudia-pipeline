@@ -95,15 +95,20 @@ Add Solution Area and update Solution Sub Area data
     [Teardown]      Run Keyword and Ignore Error    Run Inside Iframe   ${frame}    Click Element   //div[@id='addSolutionAreasModal']//button[text()='Cancel']
 
 Add Solution Area With Quick Action
+    [Arguments]     ${product}=Devices
+    ...             ${sales_type}=New Money-New Services
+    ...             ${one_time_total}=0
+    ...             ${recurring_total}=0
+    ...             ${contract_length}=12
     Click Feed Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ADD_SOLUTION_AREA_AT_DETAILS}
     ${nested_iframe}=   Set Variable    //div[@class='grayborder']//iframe
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Wait Until Page Contains Element   //div[.//b[text()='Solution Area:']]/span/select     10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Solution Area:']]/span/select    Devices
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Sales Type:']]/span/select       New Money-New Services
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Contract Length:']]/span/select       12
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='One Time Total:']]/span/input       0
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='Recurring Total:']]/span/input       0
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Solution Area:']]/span/select    ${product}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Sales Type:']]/span/select       ${sales_type}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Contract Length:']]/span/select       ${contract_length}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='One Time Total:']]/span/input       ${one_time_total}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='Recurring Total:']]/span/input      ${recurring_total}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Click Element   //a[@class='create-button']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Wait Until Page Contains Element     //h4[text()='Success']      20s
     Reload Page
@@ -801,9 +806,11 @@ Search Salesforce
 Searched Item Should Be Visible
     [Arguments]         ${account_name}     ${type}=${EMPTY}
     ${visible}=     Run Keyword and Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']
-    # Sometimes the search shows more options. If we reload the page, the extra results shuold vanish.
+    ${no_matches_found}=    Run Keyword And Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be visible   //div[@id='searchResultsWarningMessageBox']//div[text()='No matches found']
+    Run Keyword If      ${no_matches_found}     Run Keywords    Capture Page Screenshot     AND     Fail    ${account_name} not found in search results.
+    # Sometimes the search shows more options. If we reload the page, the extra results should vanish.
     Run Keyword Unless      ${visible}      Reload Page
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //div[contains(@id,'${type}')]//a[text()='${account_name}']       20s
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //div[contains(@id,'${type}')]//a[text()='${account_name}']       10s
 
 Search (Setup)
     [Arguments]         ${item}
@@ -1175,6 +1182,20 @@ Verify That Updated Values Are Visible In Sales Plan
 Verify That User Cannot Create New Opportunity
     Click Feed Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Not Contain Element     //span[text()='New Opportunity']
+
+Verify That Values Are Visible In Opportunity Layout
+    [Arguments]     ${product}=Devices
+    ...             ${sales_type}=New Money - New Services
+    ...             ${one_time_total}=0,00 €
+    ...             ${recurring_total}=0,00 €
+    ...             ${contract_length}=12
+    Click Details Button
+    ${xpath}=       Set Variable    //tr[contains(@class,'dataRow') and ./th/a[text()='${product}']]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element    ${xpath}    20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[3]    ${sales_type}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[5]    ${one_time_total}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[6]    ${recurring_total}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[7]    ${contract_length}
 
 Verify That Win Probability Is
     [Arguments]     ${probability}
