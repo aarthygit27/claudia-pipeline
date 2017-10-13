@@ -158,6 +158,15 @@ MUBE Check Order Status
     MUBE Click Apply Filters
     Element Should Contain    //td[3]/span    Finished
 
+MUBE Contact Person Should Be Found X Times
+    [Arguments]     ${contact_person_last_name}     ${times}=1
+    Go To    ${CONTACT_PERSONS_PAGE}
+    MUBE Wait For Load
+    MUBE Set Filter Input    Name    ${contact_person_last_name}
+    MUBE Click Apply Filters
+    Wait Until Element Is Visible    ${CONTACT_PERSON_LINK}[./span[contains(text(),'${contact_person_last_name}')]]    10 s
+    Xpath Should Match X Times      ${CONTACT_PERSON_LINK}[./span[contains(text(),'${contact_person_last_name}')]]      ${times}
+
 MUBE Create New Business Customer With Language
     [Documentation]    Generates new business customer with given language and official name (optional).
     ...    Variable "NEW_CUSTOMER_BUSINESS_ID" contains the new business customer business id
@@ -481,7 +490,7 @@ MUBE Select Contact Person
     MUBE Wait For Load
     MUBE Set Filter Input    Name    ${contact_person_last_name}
     MUBE Click Apply Filters
-    MUBE Click Element And Wait Page To Load    ${CONTACT_PERSON_LINK}
+    MUBE Click Element And Wait Page To Load    ${CONTACT_PERSON_LINK}[./span[contains(text(),'${contact_person_last_name}')]]
     MUBE Click Blue Button    Refresh data
 
 MUBE Select Contact Person And Verify Attributes From History

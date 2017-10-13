@@ -411,8 +411,16 @@ Opportunity: Pick opportunity from queue
     Verify That Opportunity is Found From My All Open Opportunities
 
 Create a Contact Person in SalesForce with the same name as new to same Customer
-    [Tags]      BQA-52      wip
+    [Tags]      BQA-52
     Go To Salesforce and Login
+    Create New Contact Person For Customer
+    Create New Contact Person For Customer      last_name=${TEST_CONTACT_PERSON_LAST_NAME}
+    Close Tabs And Logout
+    Close Browser
+    MUBE Open Browser And Login As CM User
+    MUBE Open Customers Page
+    MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
+    Wait Until Contact Person Is Found In MultiBella    2
 
 *** Keywords ***
 
@@ -481,8 +489,10 @@ Contact Person Should Be Found In MIT UAD
     Wait Until Keyword Succeeds     5m     10s      UAD Verify That Contact Person Is Found For Customer        ${customer_id}
 
 Wait Until Contact Person Is Found In MultiBella
+    [Documentation]     The parameter indicates how many contact persons with the same last name should be in MUBE.
+    [Arguments]     ${times}=1
     Wait Until Keyword Succeeds     15 minutes   15 seconds
-    ...     MUBE Select Contact Person      ${TEST_CONTACT_PERSON_LAST_NAME}
+    ...     MUBE Contact Person Should Be Found X Times      ${TEST_CONTACT_PERSON_LAST_NAME}   ${times}
 
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
