@@ -26,9 +26,7 @@ ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${EMPTY}
 Contact: Add new contact (valid data)
     [Tags]    add_new_contact    BQA-1
     Go To Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Details and choose New Contact from More tab
-    Enter mandatory information and save new contact
+    Create New Contact Person For Customer
     Check that contact has been saved and can be found under proper Account
 
 Contact: Add new contact (invalid data)
@@ -147,9 +145,7 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     [Tags]    BQA-1840      smoke
     [Documentation]     The beginning of the test is the same as Contact: Add new contact (valid data) test case (BQA-1)
     Go To Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Details and choose New Contact from More tab
-    Enter mandatory information and save new contact
+    Create New Contact Person For Customer
     Check that contact has been saved and can be found under proper Account
     MUBE Open Browser And Login As CM User
     MUBE Open Customers Page
@@ -339,9 +335,7 @@ Opportunity: Check that Account can be changed for an active opportunity
 Create in SalesForce and in MultiBella a new Contact Person
     [Tags]      BQA-118
     Go To Salesforce and Login
-    Go To Account   ${DEFAULT_TEST_ACCOUNT}
-    Open Details and choose New Contact from More tab
-    Enter mandatory information and save new contact
+    Create New Contact Person For Customer
     Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
@@ -416,6 +410,10 @@ Opportunity: Pick opportunity from queue
     Set Opportunity Stage And Save      Prepare Solution Proposal
     Verify That Opportunity is Found From My All Open Opportunities
 
+Create a Contact Person in SalesForce with the same name as new to same Customer
+    [Tags]      BQA-52      wip
+    Go To Salesforce and Login
+
 *** Keywords ***
 
 Check If Contact Person Exists And Create New One If Not
@@ -434,11 +432,6 @@ Check If Contact Person Exists And Create New One If Not
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
-
-Open Details and choose New Contact from More tab
-    Open Details Tab At Account View
-    Click Feed Button
-    Click Add New Contact
 
 Wait Until Account Is In Salesforce And Go To Account
     Wait Until Keyword Succeeds     25 minutes   15 seconds      Run Keywords

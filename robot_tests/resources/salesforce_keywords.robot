@@ -341,6 +341,17 @@ Create New Account
     Run Keyword If      '${parent}'!='${EMPTY}'     Fill Parent Account Name    ${parent}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
 
+Create New Contact Person For Customer
+    [Arguments]     ${customer}=${DEFAULT_TEST_ACCOUNT}
+    ...             ${first_name}=${EMPTY}
+    ...             ${last_name}=${EMPTY}
+    ...             ${email}=${DEFAULT_EMAIL}
+    ...             ${phone_number}=${DEFAULT_PHONE}
+    ...             ${salutation}=${DEFAULT_SALUTATION}
+    Go To Account   ${customer}
+    Open Details and choose New Contact from More tab
+    Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
+
 Create New Contract For Customer
     [Arguments]     ${status}=Signed
     ...             ${days}=0
@@ -743,6 +754,11 @@ Open Dashboards
 
 Open Dashboard Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard    right
+
+Open Details and choose New Contact from More tab
+    Open Details Tab At Account View
+    Click Feed Button
+    Click Add New Contact
 
 Open Details Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Details
