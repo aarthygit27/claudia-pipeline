@@ -265,23 +265,14 @@ Meeting/Customer Call: Update meeting to Done
 Sales Process: E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
     [Tags]      BQA-33      wip
     Go To Salesforce and Login
-    # 1. Go to an Account
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    # 2. Go to Details and choose New Opportunity
-        # 3. Enter Opportunity Name, Close Date and Description
-        # 4. Press Create
     Create New Opportunity For Customer
-    # 5. Open just created opportunity and update Win probability, add Competitor and Partner.
     Open just created opportunity and update Win probability, add Competitor and Partner
-    # 6. Add solution incl. Sales Type and Contract length to get value of the opportunity.
     Add Solution Area With Quick Action
-    # 7. Check that values are visible in opportunity layout. Note: Values appear after refresh!
     Verify That Values Are Visible In Opportunity Layout
     # Open Details View At Opportunity
-    # 8. Go to CPQ (opportunity stage is updated to Prepare Solution Proposal, opportunity status remains In Progress).
     Open Details View At Opportunity
     Click CPQ At Opportunity View
-    # 9. Add modelled product (i.e. Yritysinternet Plus) and unmodelled product (DataNet Multi) and update Sales Type in Manage Sales Type/Contract Length/Manual Pricing tab. Update prices for unmodelled product here.
     Add modelled product and unmodelled product to cart (CPQ)
     Update Sales Type and Prices For unmodelled Product (CPQ)
     # TODO: Continue testing when BQA-3540 is fixed.
