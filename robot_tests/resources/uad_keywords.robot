@@ -21,7 +21,7 @@ UAD Contact Person Should Be Found
     :FOR   ${i}  IN RANGE   ${pages}
     \   ${customer_found}=      Run Keyword And Return Status       Page Should Contain Element         //div[text()='${TEST_CONTACT_PERSON_LAST_NAME}']
     \   Run Keyword If      ${customer_found}   Exit For Loop
-    \   Run Keyword Unless      ${customer_found}       UAD Click Next Button
+    \   UAD Click Next Button
     Run Keyword Unless      ${customer_found}       FAIL    ${TEST_CONTACT_PERSON_LAST_NAME} not found in MIT.
 
 UAD Click Next Button
