@@ -3,11 +3,15 @@ Resource            ${PROJECTROOT}${/}resources${/}common.robot
 
 
 *** Variables ***
-${UAD_PAGE}         http://ua001colossus.ddc.teliasonera.net:8082/uad_b2b/
-${SEARCH_FIELD}     HEADER_SEARC_FIELD
-${SEARCH_BUTTON}    HEADER_SEARC_BUTTON
-${NEXT_BUTTON}      INTPAG_NEXT_BUTTON
-${CLEAR_BUTTON}     HEADER_CLEAR_BUTTON
+${UAD_PAGE}                 http://ua001colossus.ddc.teliasonera.net:8082/uad_b2b/
+${SEARCH_FIELD}             HEADER_SEARC_FIELD
+${SEARCH_BUTTON}            HEADER_SEARC_BUTTON
+${NEXT_BUTTON}              INTPAG_NEXT_BUTTON
+${CLEAR_BUTTON}             HEADER_CLEAR_BUTTON
+${UAD_USERNAME}             F11685
+${UAD_PASSWORD}             Lr@i4P#yR
+${UAD_USERNAME_FIELD}       gwt-uid-3
+${UAD_PASSWORD_FIELD}       gwt-uid-5
 
 
 *** Keywords ***
@@ -29,6 +33,17 @@ UAD Click Next Button
 UAD Go to Main Page
     Go To               ${UAD_PAGE}
     UAD Page Should Be Open
+
+UAD Go to Page And Log in
+    Go To               ${UAD_PAGE}
+    UAD Log In
+
+UAD Log in
+    Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
+    Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
+    Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
+    Click Element       //span[text()='Kirjaudu sisään']
+    Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
 UAD Page Should Be Open
     Wait Until Page Contains Element        ${SEARCH_FIELD}
