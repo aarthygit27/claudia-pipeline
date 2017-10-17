@@ -72,7 +72,7 @@ class KeywordTimes(ResultVisitor):
         return name
 
 
-def process(output_file, keyword_name, env, dryrun=False):
+def process(output_file, keyword_name, measurement, env, dryrun=False):
     """ Process robot report and fetch following data related to keyword:
     total time (ms) | Unix timestamp | Keyword name
 
@@ -91,7 +91,7 @@ def process(output_file, keyword_name, env, dryrun=False):
         # Skip data export when running tests etc.
         if not dryrun:
             requests.post(influx_write,
-                    data="keyword_monitor,keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=\"" + stat + "\"" + ",sandbox=\"" + env + "\",platform=\"" + system + "\"",
+                    data= measurement + ",keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=\"" + stat + "\"" + ",sandbox=\"" + env + "\",platform=\"" + system + "\"",
                     auth=HTTPBasicAuth(influx_user, influx_passwd))
             time.sleep(0.1)     # Ensure we get a different timestamp
     return s
@@ -100,6 +100,11 @@ def process(output_file, keyword_name, env, dryrun=False):
 if __name__ == '__main__' and __package__ is None:
     robot_output_file = sys.argv[1]
     env = sys.argv[2]
+    if sys.argv[3] == "complex":
+        measurement = "keyword_monitor_complex"
+        sys.argv.pop(3)
+    else:
+        measurement = "keyword_monitor"
     print 'Total time (ms) | Unix timestamp | Status | Keyword name'
     for target_keyword_name in sys.argv[3:]:
-        process(robot_output_file, target_keyword_name, env)
+        process(robot_output_file, target_keyword_name, measurement, env)
