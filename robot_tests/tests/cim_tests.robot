@@ -22,19 +22,19 @@ Create new Business Customer in MultiBella and verify it shows in Salesforce
     Verify New Business Customer Is Found In Salesforce
     Store New Customer Id to Be Removed In Another Test
 
-Execute Customer Termination in MultiBella and verify it shows in Salesforce
-    [Tags]      BQA-76   multibella
-    MUBE Open Browser And Login As CIM User
-    Create New Customer Only If Previously Created Customer Is Not Found
-    MUBE Change Customer Legal Status To Passived       ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
-    MUBE Terminate Customer     ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
-    MUBE Verify That Business Customer Is Terminated    ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
-    MUBE Logout CRM
-    Close Browser
-    Open Browser And Go To Login Page
-    Login To Salesforce as Digisales User
-    Verify New Business Customer is Found In Salesforce
-    Verify That Business Customer Is Terminated         ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
+# Execute Customer Termination in MultiBella and verify it shows in Salesforce
+#     [Tags]      BQA-76   multibella
+#     MUBE Open Browser And Login As CIM User
+#     Create New Customer Only If Previously Created Customer Is Not Found
+#     MUBE Change Customer Legal Status To Passived       ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
+#     MUBE Terminate Customer     ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
+#     MUBE Verify That Business Customer Is Terminated    ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
+#     MUBE Logout CRM
+#     Close Browser
+#     Open Browser And Go To Login Page
+#     Login To Salesforce as Digisales User
+#     Verify New Business Customer is Found In Salesforce
+#     Verify That Business Customer Is Terminated         ${BUSINESS_CUSTOMER_TO_BE_REMOVED}
 
 
 *** Keywords ***

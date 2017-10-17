@@ -39,7 +39,7 @@ Create Product Order
     Set Test Variable   ${PRODUCT}    ${test_product}
     Set Test Variable   ${PRODUCT_TYPE}    ${test_product_type}
     Log To Console      ${\n} Product: ${PRODUCT}
-    Go To Account       ${OPPO_TEST_ACCOUNT}
+    Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found With Search
     Add Price Book For Opportunity

@@ -4,10 +4,13 @@ Documentation           CPQ is a part of Salesforce, which is used for product o
 Resource                ${PROJECTROOT}${/}resources${/}common.robot
 Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robot
 
+*** Variables ***
+${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
+
 *** Keywords ***
 
 Add modelled product and unmodelled product to cart (CPQ)
-    [Arguments]=    ${modelled_product}=Telia Yritysinternet Plus   ${unmodelled_product}=DataNet Multi
+    [Arguments]    ${modelled_product}=Telia Yritysinternet Plus   ${unmodelled_product}=DataNet Multi
     Search And Add Product To Cart (CPQ)    ${modelled_product}
     Set Test Variable   ${PRODUCT}      ${modelled_product}
     Fill Missing Required Information If Needed (CPQ)
@@ -76,38 +79,40 @@ Click View Quote And Go Back To CPQ
 
 Close Missing Information Popup (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Click Element   ${close_button}
+    ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     # For some strange reason clicking the "close" can result in another load and the close button needs to be pressed a second time
     ${hidden}=     Run Keyword and Return Status       Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
-    ...         ${close_button}      5s
+    ...         ${CLOSE_BUTTON}      5s
     Run Keyword If      not ${hidden}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Click Element   ${close_button}
+    ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[@class='slds-modal__container']   10s
 
 Fill Missing Required Information
-    ${close_button}=        Set Variable        //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
-    Run Keyword     Fill Required Information For ${PRODUCT}
-    Wait Until Filled Information Is Recognized (CPQ)
+    Wait Until Keyword Succeeds     30s     1s      Run Keyword     Fill Required Information For ${PRODUCT}
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Filled Information Is Recognized (CPQ)
     Close Missing Information Popup (CPQ)
-    [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${close_button}
+    [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${CLOSE_BUTTON}
 
 Fill Missing Required Information If Needed (CPQ)
-    ${xpath}=   Set Variable    //h2[contains(text(),'Required attribute missing')]
-    ${s}=   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Wait Until Element is Visible    ${xpath}   30s
-    Run Keyword if    ${s}      Wait Until Keyword Succeeds     30s     1s      Fill Missing Required Information
+    ${s}=   Recognize Product Needs Additional Information (CPQ)
+    Run Keyword if    ${s}      Fill Missing Required Information
 
 Fill Required Information For Telia Sopiva Pro L
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         10s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
 
 Fill Required Information For Telia Yritysinternet
+    ${xpath}=   Set Variable   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element
-    ...     //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']    10s
+    ...     ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']    10s
     Log     BQA-1821 test case ends here
+    ${visible}=     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Element Should Be Visible   ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//span[text()='Telia Yritysinternet']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//a[text()[contains(.,'Product Configuration')]]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//select    1
+    ...         20s   1s    Select From List By Value   ${xpath}//select    1
 
 Fill Required Information For Telia Yritysinternet Langaton
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
@@ -120,7 +125,7 @@ Fill Required Information For Telia Yritysinternet Plus
 Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input      1
-    ${email}        Create Unique Email
+    ${email}=       Create Unique Email
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisäsähköpostiosoite')]]/following-sibling::div//input      ${email}
 
@@ -131,6 +136,11 @@ Load More Products (CPQ)
     Sleep   0.2
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //a[contains(text(),'Load More')]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    //div[@class='slds-spinner_container']      20s
+
+Recognize Product Needs Additional Information (CPQ)
+    ${xpath}=   Set Variable    //h2[contains(text(),'Required attribute missing')]
+    ${s}=   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Wait Until Element is Visible    ${xpath}   30s
+    [Return]    ${s}
 
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
@@ -195,8 +205,9 @@ Verify That Product In Cart Is Correct
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
 
 Wait Until Filled Information Is Recognized (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
-    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
+    # ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    Sleep   0.5
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']   20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible

@@ -17,20 +17,20 @@ Click Visible Element
     Click Element    ${locator}
 
 Create Unique Email
-    [Arguments]     ${email}=noreply@teliasonera.com
+    [Arguments]     ${email}=${DEFAULT_EMAIL}
     ${email_prefix}=            Create Unique Name    ${EMPTY}
-    ${email}=       Set Variable If     '${email}' == 'noreply@teliasonera.com'    ${email_prefix}${email}     ${email}
+    ${email}=       Set Variable If     '${email}' == '${DEFAULT_EMAIL}'    ${email_prefix}${email}     ${email}
     [Return]        ${email}
 
 Create Unique Phone Number
-    ${numbers}=    Generate Random String    4    [NUMBERS]
-    [Return]    +358888${numbers}
+    ${numbers}=     Generate Random String    4    [NUMBERS]
+    [Return]        +358888${numbers}
 
 Create Unique Name
-    [Arguments]    ${prefix}
-    ${numbers}=    Generate Random String    8    [NUMBERS]
-    ${email}=      Set Variable If  '${prefix}'=='${EMPTY}'     ${numbers}      ${prefix} ${numbers}
-    [Return]    ${email}
+    [Arguments]     ${prefix}
+    ${numbers}=     Generate Random String    8    [NUMBERS]
+    ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${numbers}      ${prefix} ${numbers}
+    [Return]        ${name}
 
 Get Date From Future
     [Documentation]    Returns current date (format: day.month.year, e.g. 28.6.2020) + x days,
@@ -54,10 +54,11 @@ Logout From All Systems and Close Browser
     Close Browser
 
 Open Browser And Go To Login Page
-    Run Keyword If    '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)
+    Run Keyword If      '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)
     ...     ELSE        Open Browser        ${LOGIN_PAGE}       ${BROWSER}
     Wait Until Page Contains Element     id=username
-    Maximize Browser Window
+    Run Keyword If      '${BEHIND_PROXY}'=='True'   Set Window Size     ${1920}     ${1080}
+    ...     ELSE        Maximize Browser Window
 
 Open Browser And Go To Login Page (Proxy)
     ${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium

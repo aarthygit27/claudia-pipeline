@@ -189,7 +189,7 @@ Create Product Order And Verify It Was Created
     Set Test Variable   ${PRODUCT}    ${test_product}
     Set Test Variable   ${PRODUCT_TYPE}    ${test_product_type}
     Log To Console      ${\n} Product: ${PRODUCT}
-    Go To Account       ${OPPO_TEST_ACCOUNT}
+    Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found With Search
     Create CPQ
@@ -217,7 +217,7 @@ Create CPQ
     Click Create Order (CPQ)
     # Click View Record (CPQ)
     # Click Create Assets (CPQ)
-    Add Contact Person To Product Order    ${OPPO_TEST_CONTACT}
+    Add Contact Person To Product Order    ${DEFAULT_TEST_CONTACT}
     Submit Order To Delivery (CPQ)
     Wait Until Keyword Succeeds    60 s    5 s    Extract MuBe CaseID From Opportunity
     Close Browser
@@ -243,7 +243,7 @@ Availability Check Test Case
     ...             ${street_number}=${EMPTY}
     ${passed}=      Set Variable        FAILED
     Log to Console    ${address} ${street_number}, ${postal_code} ${city}
-    Go To Account       ${OPPO_TEST_ACCOUNT}
+    Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Open Dashboard Tab At Account View
     Click Availability Check Button
     Fill Address Validation Information And Click Next     ${postal_code}      ${city}     ${address}      ${street_number}

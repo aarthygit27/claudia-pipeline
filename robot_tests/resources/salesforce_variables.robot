@@ -15,13 +15,15 @@ ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.preprod
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
 ${PASSWORD}                                 PahaPassu2
 
+${QUICKACTIONFIELD}                         //div[@class='quickActionFieldElements' and .//div[@class='quickActionFieldLabel']
+${INPUT_OR_TEXTAREA}                        //*[(local-name()='input' or local-name()='textarea') and not(@type='hidden')]
+
+
 ${NEW_OPPORTUNITY_BUTTON}                   //input[contains(@title,'New Opportunity')]
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
 ${OPPORTUNITY_SAVE_BUTTON}                  //h2[contains(text(), 'Opportunity Edit')]/../following-sibling::td//input[@title='Save']
 ${OPPORTUNITY_CPQ_BUTTON}                   //h2[contains(text(), 'Opportunity Detail')]/../following-sibling::td//input[@title='CPQ']
 ${OPPO_EDIT_TITLE}                          //h1[contains(text(),'Opportunity Edit')]
-${OPPO_TEST_ACCOUNT}                        Juleco
-${OPPO_TEST_CONTACT}                        Paavo Pesusieni
 
 ${OPPO_INFO_OPPO_NAME_FIELD}                //label[contains(text(), 'Opportunity Name')]/../following-sibling::*//input
 ${OPPO_INFO_STAGE_FIELD}                    //label[contains(text(), 'Stage')]/../following-sibling::*//select
@@ -37,6 +39,7 @@ ${NEW_ACCOUNT_BUTTON}                       //input[contains(@title,'New Account
 ${NEW_CONTACT_BUTTON}                       //input[contains(@title,'New Contact')]
 ${MORE_DROPDOWN_AT_DETAILS}                 //span[@class='optionLabel' and contains(text(), 'More')]/following-sibling::span[@class='arrowIcon']
 ${NEW_CONTACT_AT_MORE_DROPDOWN}             ul//span[contains(text(), 'New Contact')]
+${ADD_SOLUTION_AREA_AT_DETAILS}             //span[@class='optionLabel' and text()='Add Solution Area']
 ${NEW_CONTACT_BUTTON_AT_DETAILS}            //span[@class= 'optionLabel' and text()= 'New Contact']
 ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}        //span[@class= 'optionLabel' and text()= 'New Opportunity']
 ${NEW_EVENT_BUTTON_AT_DETAILS}              //span[@class= 'optionLabel' and text()= 'New Event']
