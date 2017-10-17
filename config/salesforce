@@ -7,7 +7,7 @@ instance: test
 [preprod]
 username: fbl11955@teliacompany.com.preprod
 password: Cp4r2P7hT2T4
-token: CNH3WPpJRgMWeniHZeenNNGJH
+token: RiYzELiGddmoYb778Ulo1M0u
 instance: test
 
 [test]
@@ -43,7 +43,7 @@ instance: test
 [prod]
 username: fbl11955@teliacompany.com
 password: Trt1e!!gXCxw34!822
-token: 18f9iUD37VsNoBw9ZTChOpuqV
+token: 41R1cliteZeOH6Eqyn3A1iGqo
 instance: prod
 
 [wiki]
