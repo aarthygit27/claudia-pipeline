@@ -108,19 +108,19 @@ Navigate To Named Credentials Page
 
 Set AvailabilityCheck
     Click Element       xpath=//a[contains(@title, 'AvailabilityCheck')]
-    Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: AvailabilityCheck']
+    Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: AvailabilityCheck']       20s
     Input Text          xpath=//label[contains(text(),'URL')]/../following-sibling::td//textarea      ${AvailabilityCheck}
     Click Save
 
 Set AddressValidation
     Click Element       xpath=//a[contains(@title, 'AddressValidation')]
-    Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: AddressValidation']
+    Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: AddressValidation']       20s
     Input Text          xpath=//label[contains(text(),'URL')]/../following-sibling::td//textarea      ${AddressValidation}
     Click Save
 
 Set CaseManagement
     Click Element       xpath=//a[contains(@title, 'CaseManagement')]
-    Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: CaseManagement']
+    Wait Until Page Contains Element        xpath=//h1[text()='Named Credential Edit: CaseManagement']          20s
     Input Text          xpath=//label[contains(text(),'URL')]/../following-sibling::td//textarea      ${CaseManagement}
     Click Save
 
