@@ -72,7 +72,7 @@ class KeywordTimes(ResultVisitor):
         return name
 
 
-def process(output_file, keyword_name, measurement, env, dryrun=False):
+def process(output_file, keyword_name, measurement, env, dryrun=True):
     """ Process robot report and fetch following data related to keyword:
     total time (ms) | Unix timestamp | Keyword name
 
@@ -98,13 +98,20 @@ def process(output_file, keyword_name, measurement, env, dryrun=False):
 
 
 if __name__ == '__main__' and __package__ is None:
-    robot_output_file = sys.argv[1]
-    env = sys.argv[2]
-    if sys.argv[3] == "complex":
-        measurement = "keyword_monitor_complex"
-        sys.argv.pop(3)
-    else:
-        measurement = "keyword_monitor"
+    try:
+        i = sys.argv.index("-k")
+        configs = sys.argv[1:i]
+        keywords = sys.argv[i+1:]   # skip "-k"
+    except ValueError:
+        sys.exit("Usage: python keyword_monitor.py <output.xml> <environment> [measurement] -k \"<keyword>\" ...")
+    robot_output_file = configs[0]
+    env = configs[1]
+    measurement = "keyword_monitor"
+    try:
+        measurement += "_" + configs[2]
+    except IndexError:
+        pass
+
     print 'Total time (ms) | Unix timestamp | Status | Keyword name'
-    for target_keyword_name in sys.argv[3:]:
+    for target_keyword_name in keywords:
         process(robot_output_file, target_keyword_name, measurement, env)
