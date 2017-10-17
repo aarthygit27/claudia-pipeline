@@ -1,19 +1,19 @@
 [systeam]
 username: fbl11955@teliacompany.com.systeam
 password: Cp4r2P7hT2T4!332!2rRtn
-token: zNsC5SYVgMO12cNImB0kkkYm
+token: n2EurYWO1OCVtv3WGYZPIl81
 instance: test
 
 [preprod]
 username: fbl11955@teliacompany.com.preprod
 password: Cp4r2P7hT2T4
-token: CNH3WPpJRgMWeniHZeenNNGJH
+token: RiYzELiGddmoYb778Ulo1M0u
 instance: test
 
-[b2bdev]
-username: fbl11955@teliacompany.com.b2bdev
-password: K4dRR2!!fGt
-token: W7d5BekIj5BwrX8gAO27zHPx
+[test]
+username: fbl11955@teliacompany.com.test
+password: Trt1e!!gXCxw34!822
+token: wfcNw9M9AOlC4hhzjGDTI52n
 instance: test
 
 [dev]
@@ -28,10 +28,22 @@ password: K23!kUTr41S
 token: Dayv51cnj6072kX534OOhECd
 instance: test
 
+[sint]
+username: fbl11955@teliacompany.com.sint
+password: Trt1e!!gXCxw34!822
+token: OKAmaHcPIupw2cPcyFnGu1yn
+instance: test
+
+[spreprod]
+username: fbl11955@teliacompany.com.spreprod
+password: Trt1e!!gXCxw34!822
+token: PlPbjOvWtJI1IMcCqNWPOYX4
+instance: test
+
 [prod]
 username: fbl11955@teliacompany.com
-password: Trt1e!!gXCxw34!8
-token: 18f9iUD37VsNoBw9ZTChOpuqV
+password: Trt1e!!gXCxw34!822
+token: 41R1cliteZeOH6Eqyn3A1iGqo
 instance: prod
 
 [wiki]
