@@ -230,8 +230,8 @@ Click Edit Button
     Click Element    ${EDIT_BUTTON}
 
 Click Edit Button And Wait Product Order Edit Opens
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${EDIT_BUTTON}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']      10s
+    Click Element   ${EDIT_BUTTON}
+    Wait Until Page Contains Element    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']      10s
 
 Click Edit Contact Person
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button
