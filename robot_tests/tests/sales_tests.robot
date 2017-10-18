@@ -413,6 +413,34 @@ Create a Contact Person in SalesForce with the same name as new to same Customer
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella    2
 
+Enable Sales Person to rate Opportunity and Task Source Data Quality
+    [Tags]      BQA-2182    wip
+    [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
+    ...         Go To Salesforce and Login      Customer Care User      AND
+    ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
+    ...         Create New Opportunity For Customer                     AND
+    ...         Logout From Salesforce
+    # 1. Pick opportunity from Digisales queue
+    # 2. Check that the "Quality Rating" fields exists
+    # 3. Check that the field has appropriate values (do not select any at this point)
+    # 4. Assign opportunity to yourself, rate it and save
+    # 5. Pick new opportunity from Digisales queue
+    # 6. Check that the "Quality Rating" fields exists
+    # 7. Check that the field has appropriate values (do not select any at this point)
+    # 8. Assign opportunity to yourself and run to Negotiate & Close stage
+    # 9. Try to save opportunity as Closed Won / Closed Lost / Closed Not Won.
+    # 10. Set a value for Quality rating
+    # 11. Create own opportunity and check that Quality rating is not visible
+    # 12. Run own opportunity to Negotiate & Close stage and check that you can close it without setting Quality rating value.
+    # 13. Go to Task received from Customer Care
+    # 14. Check that the "Quality Rating" exists.
+    # 15. Set the status to closed. Save.
+    # 16. Set a random quality rating. Save.
+    # 17. Create own task and check that there is no Quality rating visible
+    # 18. Close own task without setting rating value
+    Go To Salesforce and Login
+    Go To Account   ${OPPORTUNITY_NAME}
+
 *** Keywords ***
 
 Check If Contact Person Exists And Create New One If Not
