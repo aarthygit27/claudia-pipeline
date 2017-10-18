@@ -61,11 +61,12 @@ Open Browser And Go To Login Page
     ...     ELSE        Maximize Browser Window
 
 Open Browser And Go To Login Page (Proxy)
+    [Arguments]     ${page}=${LOGIN_PAGE}
     ${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
     ${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
     ${proxy.https_proxy}=    Set Variable    ${PROXY}
     Create Webdriver    ${BROWSER}    proxy=${proxy}    firefox_profile=${profile}
-    Go To    ${LOGIN_PAGE}
+    Go To    ${page}
 
 Press Enter On
     [Arguments]     ${locator}
@@ -76,11 +77,11 @@ Press Tab On
     Press Key       ${locator}      \\9
 
 Prolonged Input Text
-    [Arguments]    ${locator}    ${text}
+    [Arguments]    ${locator}    ${text}    ${speed}=1.3 seconds
     [Documentation]    Setting input in crm with fast speed causes random special chars to appear in the input field.
     ...    We try to fix this by slowing selenium down when inputing text.
     ...    We return speed to normal after the text has been inputed.
-    ${old_speed_value}=    Set Selenium Speed    1.3 seconds
+    ${old_speed_value}=    Set Selenium Speed    ${speed}
     Input Text    ${locator}    ${text}
     [Teardown]    Set Selenium Speed    ${old_speed_value}
 

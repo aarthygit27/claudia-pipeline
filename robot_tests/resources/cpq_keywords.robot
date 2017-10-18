@@ -168,7 +168,7 @@ Select Exact Product
 Search For Product (CPQ)
     [Arguments]     ${target_product}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${CPQ_SEARCH_FIELD}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text                              ${CPQ_SEARCH_FIELD}    ${target_product}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Prolonged Input Text                    ${CPQ_SEARCH_FIELD}    ${target_product}    0.5s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Enter On                          ${CPQ_SEARCH_FIELD}
 
 Select Sales Type For Order (CPQ)
