@@ -7,16 +7,21 @@ Test Teardown       Close Browser
 Force Tags          Performance
 
 
+
+*** Variables ***
+${PRODUCT}          Telia Yritysinternet
+${PRODUCT_TYPE}     Yritysinternet
+
 *** Test Cases ***
 Create an Order With One Product
     [Tags]      single_product
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Create Product Order        Telia Yritysinternet     Yritysinternet     Single
+    Create Product Order        ${PRODUCT}     ${PRODUCT_TYPE}     Single
 
 Create And Order With Many Products
     [Tags]      multiple_products
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Create Product Order        10 Products     Yritysinternet     Multiple
+    Create Product Order        10 Products     ${PRODUCT_TYPE}     Multiple
 
 Open Different Tabs And Check Their Loading Times
     [Tags]      view_page_load
@@ -36,8 +41,6 @@ Open Different Tabs And Check Their Loading Times
 *** Keywords ***
 Create Product Order
     [Arguments]         ${test_product}    ${test_product_type}     ${product_amount}
-    Set Test Variable   ${PRODUCT}    ${test_product}
-    Set Test Variable   ${PRODUCT_TYPE}    ${test_product_type}
     Log To Console      ${\n} Product: ${PRODUCT}
     Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
