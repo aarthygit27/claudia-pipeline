@@ -13,7 +13,7 @@ ${PRODUCT}          Telia Yritysinternet
 
 *** Test Cases ***
 Single Product Monitor: Telia Yritysinternet
-    [Tags]      single_product
+    [Tags]      single_product      yritysinternet
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Create Product Order        ${PRODUCT}      Single
 
