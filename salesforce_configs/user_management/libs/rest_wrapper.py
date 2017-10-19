@@ -130,6 +130,9 @@ class RestWrapper(object):
         new_user["ProfileId"] = profile_id
         new_user["telia_user_ID__c"] = user_info["Alias"]
         
+        # Other fields
+        new_user["UserPreferencesLightningExperiencePreferred"] = 0
+
         json_data = json.dumps(new_user)
 
         return json_data
