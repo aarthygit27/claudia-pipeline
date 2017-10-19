@@ -81,7 +81,7 @@ class KeywordTimes(ResultVisitor):
             return self._get_test_case(keyword.parent)
 
 
-def process(output_file, keyword_name, measurement, env, dryrun=True):
+def process(output_file, keyword_name, measurement, env, dryrun=False):
     """ Process robot report and fetch following data related to keyword:
     total time (ms) | Unix timestamp | Keyword name
 
