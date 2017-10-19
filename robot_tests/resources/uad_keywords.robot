@@ -72,6 +72,7 @@ UAD Verify That Contact Person Is Found For Customer
     UAD Search for Customer     ${customer_id}
     Wait Until Keyword Succeeds     10s     1s      UAD Select Correct Tab      Yritystiedot
     # We need to get the amount of pages in UAD so we don't try to press next a million times.
+    Wait Until Page Contains Element    //div[contains(@class,'v-label-paging-range-displayer')]    10s
     ${range}=     Get Text    //div[contains(@class,'v-label-paging-range-displayer')]
     ${total_contacts}=    Get Regexp Matches    ${range}    \\(\\ (.*)\\ \\)      1     # Get the total amount of contact persons
     ${pages}=   Evaluate    @{total_contacts}[0] / 10   # 10 results per page
