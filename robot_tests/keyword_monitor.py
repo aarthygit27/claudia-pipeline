@@ -8,6 +8,7 @@ from requests.auth import HTTPBasicAuth
 
 from datetime import datetime, timedelta
 from robot.api import ExecutionResult, ResultVisitor
+from robot.result.model import TestCase
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 CONFIG_PATH = os.path.realpath(os.path.join(PROJECT_ROOT, "..", "config"))
@@ -59,10 +60,12 @@ class KeywordTimes(ResultVisitor):
             dt = datetime(*time.strptime(dt, "%Y%m%d %H:%M:%S")[0:6])
             mseconds = timedelta(microseconds=int(msecs))
             fulldatetime = dt + mseconds
-            self.keywords[new_name] = [new_name, 0, 0, keyword.status]
+            test_case =  self._get_test_case(keyword)
+            self.keywords[new_name] = [new_name, 0, 0, keyword.status, test_case]
             self.keywords[new_name][1] = keyword.elapsedtime
             self.keywords[new_name][2] = time.mktime(fulldatetime.timetuple())
             self.COUNT += 1
+
 
     def _get_name(self, keyword):
         name = keyword.name
@@ -71,8 +74,14 @@ class KeywordTimes(ResultVisitor):
             return name[m.end():]
         return name
 
+    def _get_test_case(self, keyword):
+        if type(keyword) == TestCase:
+            return keyword
+        else:
+            return self._get_test_case(keyword.parent)
 
-def process(output_file, keyword_name, measurement, env, dryrun=False):
+
+def process(output_file, keyword_name, measurement, env, dryrun=True):
     """ Process robot report and fetch following data related to keyword:
     total time (ms) | Unix timestamp | Keyword name
 
@@ -86,12 +95,12 @@ def process(output_file, keyword_name, measurement, env, dryrun=False):
     times = KeywordTimes(output_file, keyword_name)
     result.visit(times)
     s = sorted(times.keywords.values(), lambda a, b: b[1] - a[1])
-    for k, d, ut, stat in s:
-        print str(d).rjust(15) + ' | ' + str(ut).rjust(14) + ' | ' + stat.rjust(6) + (' | "%s"' % k)
+    for k, d, ut, stat, tc in s:
+        print str(d).rjust(15) + ' | ' + str(ut).rjust(14) + ' | ' + stat.rjust(6) + ' | "%s"' % k + " / {0}".format(str(tc))
         # Skip data export when running tests etc.
         if not dryrun:
             requests.post(influx_write,
-                    data= measurement + ",keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=\"" + stat + "\"" + ",sandbox=\"" + env + "\",platform=\"" + system + "\"",
+                    data= measurement + ",keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=\"" + stat + "\",sandbox=\"" + env + "\",platform=\"" + system + "\",testCase=\"" + str(tc) + "\"",
                     auth=HTTPBasicAuth(influx_user, influx_passwd))
             time.sleep(0.1)     # Ensure we get a different timestamp
     return s
@@ -112,6 +121,6 @@ if __name__ == '__main__' and __package__ is None:
     except IndexError:
         pass
 
-    print 'Total time (ms) | Unix timestamp | Status | Keyword name'
+    print 'Total time (ms) | Unix timestamp | Status | Keyword name / Test Case'
     for target_keyword_name in keywords:
         process(robot_output_file, target_keyword_name, measurement, env)
