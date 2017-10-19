@@ -471,7 +471,6 @@ Extract MuBe CaseID From Opportunity
     ${length}=     Get Length    ${mube_id}
     Should Not Be True    '${length}' == '1'  # length is 1 if ID field is empty
     Set Test Variable    ${MUBE_CASE_ID}    ${mube_id}
-    Capture Page Screenshot
 
 Fill Account Name
     [Arguments]         ${name}=Test Account
