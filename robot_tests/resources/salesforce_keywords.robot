@@ -28,10 +28,7 @@ Add Contact Person To Product Order
     Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
-    Sleep   1
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //input[@title="Save"]
-    # If there are multiple contact persons with the same name. Clicking the save button once brings a dropdown menu to choose the correct person.
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword And Ignore Error    Click Save Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button Again If There Are Multiple Contact Persons
 
 Add Mandatory Contact Data
     [Documentation]    Fill mandatory contact person data with given or generated data. Sets lastname of created contact
@@ -79,9 +76,11 @@ Add Price Book For Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']       20S
 
 Add Quote Email Text To Product Order
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      20s
     Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Quote Email Text       Quote email text for ${OPPORTUNITY_NAME}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      20s
 
 Add Solution Area and update Solution Sub Area data
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
@@ -263,6 +262,12 @@ Click Save Button
     # Using "Wait until Element Is Visible" causes stale elements. Instead, we need to wait until Edit button does not have "dipslay: none;"
     Wait Until Page Does Not Contain Element
     ...    //.[contains(text(), 'Order Detail')]/../following-sibling::td//input[@title="Edit" and @style="display: none;"]    10 s
+
+Click Save Button Again If There Are Multiple Contact Persons
+    # If there are multiple contact persons with the same name. Clicking the save button once brings a dropdown menu to choose the correct person.
+    Sleep   1
+    Run Keyword And Ignore Error    Run Keywords    Wait Until Page Contains Element    //input[@title="Save"]      AND
+    ...    Click Save Button
 
 Click To Create New Contact From Main Page
     [Documentation]     Clicks the button when the "Contacts" tab is open
@@ -636,8 +641,8 @@ Go to Today page and check that there is link to team's opportunity queue
 
 Input Value For Attribute
     [Arguments]     ${field}    ${value}
-    Wait Until Page Contains Element    //td[./label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
-    Input Text      //td[./label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']   ${value}
+    Wait Until Page Contains Element    //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
+    Input Text      //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']   ${value}
 
 Input Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}

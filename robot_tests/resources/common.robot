@@ -86,11 +86,11 @@ Prolonged Input Text
     [Teardown]    Set Selenium Speed    ${old_speed_value}
 
 Run Inside Iframe
-    [Arguments]         ${frame}    ${keyword}     @{args}
-    Wait Until Page Contains Element    ${frame}      10 seconds
-    Run Keyword and Ignore Error    Select Frame        ${frame}
-    ${ret}=     Run Keyword      ${keyword}    @{args}
-    [Teardown]          Unselect Frame
+    [Arguments]     ${frame}    ${keyword}      @{args}
+    Wait Until Page Contains Element    ${frame}    10 seconds
+    Run Keyword and Ignore Error    Select Frame    ${frame}
+    ${ret}=     Run Keyword     ${keyword}      @{args}
+    [Teardown]      Unselect Frame
     [Return]    ${ret}
 
 Strip Area Code From Phone Number

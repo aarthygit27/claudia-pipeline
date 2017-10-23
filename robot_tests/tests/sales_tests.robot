@@ -275,12 +275,11 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Click CPQ At Opportunity View
     Add modelled product and unmodelled product to cart (CPQ)
     Update Sales Type and Prices For unmodelled Product (CPQ)
-    # TODO: Continue testing when BQA-3540 is fixed.
-    Click View Quote And Go Back To CPQ
+    Click View Quote (CPQ)
     # 10. Create Quote. Press Review Record and add Contact and Quote email text.
-    Click Create Order (CPQ)
-    # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
     Press Review Record and add Contact and Quote email text
+    # Click Create Order (CPQ)
+    # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
     Send Quote Email To Customer
     # 12. Check that Quote status has been automatically updated to Submitted. Go to Opportunity and check that its stage is automatically updated to Negotiate & Close and opportunity status is Offer Sent. Check that values from Quote have been updated to opportunity.
     Verify That Quote Status Is Updated to      Submitted
