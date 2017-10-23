@@ -46,55 +46,12 @@ class RestWrapper(object):
                                 "Profile": profile,
                                 "Role": role,
                                 "AboutMe": aboutme}
-                    # wiki_users[" ".join([firstname, lastname])] = json_data
                     wiki_users[alias] = json_data
                 except ValueError:
                     print "Unable to split line: \'", line, "\'. Ignoring the line."
             return wiki_users
         except ValueError:  # Unable to retrieve anything from wiki
             raise ValueError(output)
-
-    def _parse_integrations_from_wiki_output(self, output):
-        '''
-        Parses the XML from the integration setup page. Returns a
-        dictionary with the alias as the key and a dictionary with
-        all the fields as the value (with the header as the key)
-        e.g. {"AvailabilityCheck SIT" : {"Alias": "AC SIT",
-                        "Integration name (official)": "AvailabilityCheck",
-                        ...},
-                "AC UAT": {...}, ...}
-        '''
-        table = re.search("<table>(.*?)<\/table>", output).group()
-        table = str(table).replace("&nbsp;", "")
-        root = ET.fromstring(table)
-        headings = root.findall(".//tr")[0].findall("th")
-        trs = root.findall(".//tr")[1:]     # The first <tr> is the header row
-        setup = {}
-        # Alias, Integration name (official), GESB environment, URL, BE environment, Auth, Note
-        for tr in trs:
-            alias, integration, gesb, url, be, auth, note = tr.findall("td")
-
-            try:
-                integration = integration.find("p").text.strip()
-            except AttributeError:
-                integration = integration.text.strip()
-
-            try:
-                url = url.find(".//a").text.strip()
-            except AttributeError:
-                url = ""
-
-            if gesb.text != None:
-                current = {headings[0].text.strip(): alias.text,
-                            headings[1].text.strip(): integration,
-                            headings[2].text.strip(): gesb.text,
-                            headings[3].text.strip(): url,
-                            headings[4].text.strip(): be.text,
-                            headings[5].text.strip(): auth.text,
-                            headings[6].text.strip(): note.text}
-                setup[integration + " " + gesb.text.strip()] = current
-
-        return setup
 
     def _get_all_user_ids(self, output, wiki_users=None):
         ids = {}
@@ -133,14 +90,31 @@ class RestWrapper(object):
         # Other fields
         new_user["UserPreferencesLightningExperiencePreferred"] = 0
 
-        json_data = json.dumps(new_user)
+        return json.dumps(new_user)
 
-        return json_data
 
+    def _get_permission_set_id(self):
+        url ="/query/?q=select+Id,name+from+permissionset+where+name+=+'Sales_Console'"
+        r = self._session.get(self._rest_base + url, headers=self._headers)
+        permissionsetid = r.json()["records"][0]["Id"]
+        return permissionsetid
+
+    def _add_permission_set(self, user_id):
+        permissionsetid = self._get_permission_set_id()
+        body = {"PermissionSetId": permissionsetid, "AssigneeId": user_id}
+        r = self._session.post(self._rest_base + "/sobjects/PermissionSetAssignment", headers=self._headers, data=json.dumps(body))
+        return r
+
+    def _add_permission_set_license(self, user_id):
+        url = "/query/?q=SELECT+Id,PermissionSetLicenseKey+From+PermissionSetLicense+Where+PermissionSetLicenseKey+=+'SalesConsoleUser'"
+        r = self._session.get(self._rest_base + url, headers=self._headers)
+        license_id = r.json()["records"][0]["Id"]
+        body = {"PermissionSetLicenseId": license_id, "AssigneeId": user_id}
+        r = self._session.post(self._rest_base + "/sobjects/PermissionSetLicenseAssign", headers=self._headers, data=json.dumps(body))
+        return r
 
     def get_all_users_from_salesforce(self):
-        r = self._session.get(self._rest_base + "/query/?q=SELECT+Name,Id,Alias+FROM+User",
-                                headers=self._headers)
+        r = self._session.get(self._rest_base + "/query/?q=SELECT+Name,Id,Alias+FROM+User", headers=self._headers)
         return r.json()
         
     def get_user_info_from_salesforce(self, user_id):
@@ -175,31 +149,6 @@ class RestWrapper(object):
         except:
             return None
 
-
-    def open_bulk_job(self):
-        headers = copy.deepcopy(self._headers)
-        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
-        body = { "operation" : "update", "object" : "user", "contentType" : "JSON" }
-        r = self._session.post(self._bulk_base + "/job", headers=headers, data=json.dumps(body))
-        return r.json()["id"]
-
-    def add_batch(self, job_id, body):
-        headers = copy.deepcopy(self._headers)
-        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
-        r = self._session.post(self._bulk_base + "/job/{0}/batch".format(job_id), headers=headers, data=json.dumps(body))
-
-    def close_bulk_job(self, job_id):
-        headers = copy.deepcopy(self._headers)
-        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
-        body = { "state" : "Closed" }
-        r = self._session.post(self._bulk_base + "/job/{0}".format(job_id), headers=headers, data=json.dumps(body))
-
-    def get_bulk_info(self, job_id):
-        headers = copy.deepcopy(self._headers)
-        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
-        r = self._session.get(self._bulk_base + "/job/{0}/batch".format(job_id), headers=headers)
-        return r.json()
-
     def update_user(self, user_id, data):
         # headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
         r = self._session.patch(self._rest_base + "/sobjects/user/{0}".format(user_id), headers=self._headers, data=json.dumps(data))
@@ -228,13 +177,7 @@ class RestWrapper(object):
         for i in info:  # i = alias, info[i]
             users[i.encode("utf-8")] = self.get_user_info_from_salesforce(info[i])
         return users
-
-    def get_integration_setup_from_wiki(self, username, password):
-        r = self._session.get("http://wiki.intra.sonera.fi/rest/api/content/63445308?expand=body.storage", auth=(username, password))
-        if r.status_code != 200:
-            raise RuntimeError("Failed to get integrations from Wiki. Status code: {0}. Output: {1}".format(r.status_code, r.text.encode("utf-8")))
-        return self._parse_integrations_from_wiki_output(r.json()["body"]["storage"]["value"])
-
+ 
     def get_users_from_wiki(self, username, password, correct_list):
         r = self._session.get("http://wiki.intra.sonera.fi/rest/api/content/{0}?expand=body.storage".format(correct_list), auth=(username, password))
         if r.status_code != 200:
@@ -252,37 +195,6 @@ class RestWrapper(object):
                 print "  Field changed:", u
                 changed = True
         return changed
-
-    def get_named_credentials(self):
-        r = self._session.get(self._rest_base + "/query/?q=SELECT+Id,Endpoint,DeveloperName+FROM+NamedCredential", headers=self._headers)
-        return r.json()
-
-    def change_named_credential(self, original, new):
-        rest_url = original["attributes"]["url"]
-        data = {"Endpoint": new["URL"]}
-        r = self._session.patch(self._url + rest_url, headers=self._headers, data=json.dumps(data))
-
-        print r.status_code, r.text
-
-    def _get_permission_set_id(self):
-        url ="/query/?q=select+Id,name+from+permissionset+where+name+=+'Sales_Console'"
-        r = self._session.get(self._rest_base + url, headers=self._headers)
-        permissionsetid = r.json()["records"][0]["Id"]
-        return permissionsetid
-
-    def _add_permission_set(self, user_id):
-        permissionsetid = self._get_permission_set_id()
-        body = {"PermissionSetId": permissionsetid, "AssigneeId": user_id}
-        r = self._session.post(self._rest_base + "/sobjects/PermissionSetAssignment", headers=self._headers, data=json.dumps(body))
-        return r
-
-    def _add_permission_set_license(self, user_id):
-        url = "/query/?q=SELECT+Id,PermissionSetLicenseKey+From+PermissionSetLicense+Where+PermissionSetLicenseKey+=+'SalesConsoleUser'"
-        r = self._session.get(self._rest_base + url, headers=self._headers)
-        license_id = r.json()["records"][0]["Id"]
-        body = {"PermissionSetLicenseId": license_id, "AssigneeId": user_id}
-        r = self._session.post(self._rest_base + "/sobjects/PermissionSetLicenseAssign", headers=self._headers, data=json.dumps(body))
-        return r
 
     def check_permission_set(self, user_id):
         '''
@@ -319,3 +231,89 @@ class RestWrapper(object):
         r = self._session.delete(self._rest_base + "/sobjects/User/{0}/password".format(user_id) , headers=self._headers)
         return r
 
+    # def _parse_integrations_from_wiki_output(self, output):
+    #     '''
+    #     Parses the XML from the integration setup page. Returns a
+    #     dictionary with the alias as the key and a dictionary with
+    #     all the fields as the value (with the header as the key)
+    #     e.g. {"AvailabilityCheck SIT" : {"Alias": "AC SIT",
+    #                     "Integration name (official)": "AvailabilityCheck",
+    #                     ...},
+    #             "AC UAT": {...}, ...}
+    #     '''
+    #     table = re.search("<table>(.*?)<\/table>", output).group()
+    #     table = str(table).replace("&nbsp;", "")
+    #     root = ET.fromstring(table)
+    #     headings = root.findall(".//tr")[0].findall("th")
+    #     trs = root.findall(".//tr")[1:]     # The first <tr> is the header row
+    #     setup = {}
+    #     # Alias, Integration name (official), GESB environment, URL, BE environment, Auth, Note
+    #     for tr in trs:
+    #         alias, integration, gesb, url, be, auth, note = tr.findall("td")
+
+    #         try:
+    #             integration = integration.find("p").text.strip()
+    #         except AttributeError:
+    #             integration = integration.text.strip()
+
+    #         try:
+    #             url = url.find(".//a").text.strip()
+    #         except AttributeError:
+    #             url = ""
+
+    #         if gesb.text != None:
+    #             current = {headings[0].text.strip(): alias.text,
+    #                         headings[1].text.strip(): integration,
+    #                         headings[2].text.strip(): gesb.text,
+    #                         headings[3].text.strip(): url,
+    #                         headings[4].text.strip(): be.text,
+    #                         headings[5].text.strip(): auth.text,
+    #                         headings[6].text.strip(): note.text}
+    #             setup[integration + " " + gesb.text.strip()] = current
+    #     return setup
+
+    # def change_named_credential(self, original, new):
+    #     rest_url = original["attributes"]["url"]
+    #     data = {"Endpoint": new["URL"]}
+    #     r = self._session.patch(self._url + rest_url, headers=self._headers, data=json.dumps(data))
+
+    #     print r.status_code, r.text
+
+    # def get_integration_setup_from_wiki(self, username, password):
+    #     r = self._session.get("http://wiki.intra.sonera.fi/rest/api/content/63445308?expand=body.storage", auth=(username, password))
+    #     if r.status_code != 200:
+    #         raise RuntimeError("Failed to get integrations from Wiki. Status code: {0}. Output: {1}".format(r.status_code, r.text.encode("utf-8")))
+    #     return self._parse_integrations_from_wiki_output(r.json()["body"]["storage"]["value"])
+
+    # def get_named_credentials(self):
+    #     r = self._session.get(self._rest_base + "/query/?q=SELECT+Id,Endpoint,DeveloperName+FROM+NamedCredential", headers=self._headers)
+    #     return r.json()
+
+
+    ##############################################
+    #### BULK API
+    ##############################################
+
+    def open_bulk_job(self):
+        headers = copy.deepcopy(self._headers)
+        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
+        body = { "operation" : "update", "object" : "user", "contentType" : "JSON" }
+        r = self._session.post(self._bulk_base + "/job", headers=headers, data=json.dumps(body))
+        return r.json()["id"]
+
+    def add_batch(self, job_id, body):
+        headers = copy.deepcopy(self._headers)
+        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
+        r = self._session.post(self._bulk_base + "/job/{0}/batch".format(job_id), headers=headers, data=json.dumps(body))
+
+    def close_bulk_job(self, job_id):
+        headers = copy.deepcopy(self._headers)
+        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
+        body = { "state" : "Closed" }
+        r = self._session.post(self._bulk_base + "/job/{0}".format(job_id), headers=headers, data=json.dumps(body))
+
+    def get_bulk_info(self, job_id):
+        headers = copy.deepcopy(self._headers)
+        headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
+        r = self._session.get(self._bulk_base + "/job/{0}/batch".format(job_id), headers=headers)
+        return r.json()
