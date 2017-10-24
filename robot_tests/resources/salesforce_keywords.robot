@@ -954,8 +954,7 @@ Select Value For Attribute
 
 Send Quote Email To Customer
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Send Quote Email']
-    Dismiss Alert
-    # Todo: does this work?
+    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
 
 Set Opportunity Stage And Save
     [Arguments]     ${stage}
