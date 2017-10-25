@@ -213,8 +213,6 @@ Click Create New Contract
 Click Create New Opportunity
     Run Inside Iframe    ${IFRAME}    Click Element    ${NEW_OPPORTUNITY_BUTTON}
     Sleep    1
-    # Check how next step should be done; ignore error ain't the preferred way...
-    # Run Keyword And Ignore Error    Select Opportunity Record Type
     Select Opportunity Record Type
     Sleep    1
     Run Inside Iframe    ${OPPORTUNITY_FRAME}

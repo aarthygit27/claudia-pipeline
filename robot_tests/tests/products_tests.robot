@@ -195,15 +195,15 @@ Create Product Order And Verify It Was Created
     Create CPQ
     Verify Sales Case from Multibella to contain correct data
 
-Create Parameterized Product Order And Verify It Was Created
-    [Arguments]    ${test_product}
-    Set Test Variable    ${PRODUCT}    ${test_product}
-    Log To Console    ${\n} Product: ${PRODUCT}
-    Create New Opportunity From main Page
-    Create CPQ
-    Close Browser
-    MUBE Open Browser And Login As CM User
-    MUBE Verify That Case Exists in MuBe
+# Create Parameterized Product Order And Verify It Was Created
+#     [Arguments]    ${test_product}
+#     Set Test Variable    ${PRODUCT}    ${test_product}
+#     Log To Console    ${\n} Product: ${PRODUCT}
+#     Create New Opportunity From main Page
+#     Create CPQ
+#     Close Browser
+#     MUBE Open Browser And Login As CM User
+#     MUBE Verify That Case Exists in MuBe
 
 Create CPQ
     Open Details View At Opportunity
