@@ -15,7 +15,9 @@ ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.preprod
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
 ${PASSWORD}                                 PahaPassu2
 
+# QUICKACTIONFIELD is an invalid xpath on its own. Needs to be completed with another `]` after the variable has been put
 ${QUICKACTIONFIELD}                         //div[@class='quickActionFieldElements' and .//div[@class='quickActionFieldLabel']
+${ACTIVETEMPLATE_FIELD}                     //div[contains(@class,'activeTemplate')]//div
 ${INPUT_OR_TEXTAREA}                        //*[(local-name()='input' or local-name()='textarea') and not(@type='hidden')]
 
 
@@ -25,8 +27,8 @@ ${OPPORTUNITY_SAVE_BUTTON}                  //h2[contains(text(), 'Opportunity E
 ${OPPORTUNITY_CPQ_BUTTON}                   //h2[contains(text(), 'Opportunity Detail')]/../following-sibling::td//input[@title='CPQ']
 ${OPPO_EDIT_TITLE}                          //h1[contains(text(),'Opportunity Edit')]
 
-${OPPO_INFO_OPPO_NAME_FIELD}                //label[contains(text(), 'Opportunity Name')]/../following-sibling::*//input
-${OPPO_INFO_STAGE_FIELD}                    //label[contains(text(), 'Stage')]/../following-sibling::*//select
+# ${OPPO_INFO_OPPO_NAME_FIELD}                //label[contains(text(), 'Opportunity Name')]/../following-sibling::*//input
+# ${OPPO_INFO_STAGE_FIELD}                    //label[contains(text(), 'Stage')]/../following-sibling::*//select
 ${OPPO_INFO_CLOSE_DATE_FIELD}               //label[contains(text(), 'Close Date')]/../following-sibling::*//input
 ${CLASSIF_DESCRIPTION_FIELD}                //label[text()= 'Description' and *[@class= 'assistiveText']]/../following-sibling::*//textarea
 ${CLASSIF_ACCOUNT_SEARCH_BUTTON}            //label[contains(text(), 'Account Name')]/../following-sibling::*//img[@class='lookupIcon']
@@ -55,13 +57,13 @@ ${SEARCH_TAB}                               //li[contains(@class,'x-tab-strip-cl
 # Add new contact person fields/paths
 ${CONTACT_PERSON_TITLE_DROPDOWN}            //select[@title='Salutation']
 ${CP_FIRSTNAME_FIELD}                       //input[contains(@id,'name_firstcon2')]
-${CP_LASTNAME_FIELD}                        //label[contains(text(), 'Last Name')]/../following-sibling::*//input
-${CP_SALES_ROLE_FIELD}                      //label[contains(text(), 'Sales Role')]/../../following-sibling::*//select
-${CP_MOBILE_FIELD}                          //label[contains(text(), 'Mobile')]/../following-sibling::*//input
-${CP_PHONE_FIELD}                           //label[contains(text(), 'Phone')]/../following-sibling::*//input
-${CP_EMAIL_FIELD}                           //label[contains(text(), 'Email')]/../following-sibling::*//input
-${CP_BUSINESS_CARD_FIELD}                   //label[contains(text(), 'Business Card Title')]/../following-sibling::*//input
-${CP_ACCOUNTNAME_FIELD}                     //label[contains(text(), 'Account Name')]/../following-sibling::td//span[@class='lookupInput']/input
+# ${CP_LASTNAME_FIELD}                        //label[contains(text(), 'Last Name')]/../following-sibling::*//input
+# ${CP_SALES_ROLE_FIELD}                      //label[contains(text(), 'Sales Role')]/../../following-sibling::*//select
+# ${CP_MOBILE_FIELD}                          //label[contains(text(), 'Mobile')]/../following-sibling::*//input
+# ${CP_PHONE_FIELD}                           //label[contains(text(), 'Phone')]/../following-sibling::*//input
+# ${CP_EMAIL_FIELD}                           //label[contains(text(), 'Email')]/../following-sibling::*//input
+# ${CP_BUSINESS_CARD_FIELD}                   //label[contains(text(), 'Business Card Title')]/../following-sibling::*//input
+# ${CP_ACCOUNTNAME_FIELD}                     //label[contains(text(), 'Account Name')]/../following-sibling::td//span[@class='lookupInput']/input
 ${CP_DETAILED_ERROR_MESSAGE_FIELD}          //div[@class='errorMsg']
 ${CP_COMMON_ERROR_MESSAGE_FIELD}            //div[@class='pbError']
 ${CREATE_CP_BUTTON}                         id=publishersharebutton
@@ -75,12 +77,14 @@ ${SUBMIT_ORDER_TO_DELIVERY}                 //input[@title='Submit Order']  # //
 ${SAVE_ORDER_BUTTON}                        //.[contains(text(), 'Order Detail')]/../following-sibling::td//.[@title='Save']
 
 # New Event
-${NEW_EVENT_SUBJECT_FIELD}                  //div[./label[text()='Subject']]/following-sibling::div/input
-${NEW_EVENT_EVENT_TYPE_FIELD}               //div[./label[text()='Event Type']]/following-sibling::div//select
-${NEW_EVENT_REASON_FIELD}                   //div[./label[text()='Reason']]/following-sibling::div//select
-${NEW_EVENT_START_FIELD}                    //div[./label[text()='Start']]/following-sibling::div//input
-${NEW_EVENT_END_FIELD}                      //div[./label[text()='End']]/following-sibling::div//input
-${NEW_EVENT_CONTACT_PERSON_FIELD}           //input[@title='Name' and contains(@id,'evt')]
-${NEW_EVENT_ACCOUNT_FIELD}                  //input[@title='Related To' and contains(@id,'evt')]
-${NEW_EVENT_DESCRIPTION_FIELD}              //td[./label[text()='Description']]/following-sibling::td/textarea
-${NEW_EVENT_WIG_GLORY_FIELD}                //td[./label[text()='Glory']]/following-sibling::td/input
+# Added //div[contains(@class,'activeTemplate')] to xpath, because these also work for New Task
+# ${NEW_EVENT_SUBJECT_FIELD}                  //div[contains(@class,'activeTemplate')]//div[./label[text()='Subject']]/following-sibling::div/input
+# ${NEW_EVENT_EVENT_TYPE_FIELD}               //div[contains(@class,'activeTemplate')]//div[./label[text()='Event Type']]/following-sibling::div//select
+# ${NEW_EVENT_REASON_FIELD}                   //div[contains(@class,'activeTemplate')]//div[./label[text()='Reason']]/following-sibling::div//select
+# ${NEW_EVENT_START_FIELD}                    //div[contains(@class,'activeTemplate')]//div[./label[text()='Start']]/following-sibling::div//input
+# ${NEW_EVENT_END_FIELD}                      //div[contains(@class,'activeTemplate')]//div[./label[text()='End']]/following-sibling::div//input
+${NEW_EVENT_CONTACT_PERSON_FIELD}           //div[contains(@class,'activeTemplate')]//input[@title='Name' and contains(@id,'evt')]
+${NEW_EVENT_ACCOUNT_FIELD}                  //div[contains(@class,'activeTemplate')]//input[@title='Related To' and contains(@id,'evt')]
+# ${NEW_EVENT_DESCRIPTION_FIELD}              //div[contains(@class,'activeTemplate')]//td[./label[text()='Description']]/following-sibling::td/textarea
+${NEW_EVENT_WIG_GLORY_FIELD}                //div[contains(@class,'activeTemplate')]//td[./label[text()='Glory']]/following-sibling::td/input
+# ${NEW_TASK_DUE_DATE_FIELD}                  //div[contains(@class,'activeTemplate')]//div[./label[text()='Due Date']]/following-sibling::div//input
