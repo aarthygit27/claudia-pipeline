@@ -257,15 +257,15 @@ Click New Item For Account
     [Arguments]     ${type}
     Click Feed Button
      ${status}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword And Return Status
-    ...     Element Should Be Visible     //span[@class= 'optionLabel' and text()= '${type}']
-    Run Keyword If       ${status}      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //span[@class= 'optionLabel' and text()= '${type}']
+    ...     Element Should Be Visible     //span[@class='optionLabel' and text()='${type}']
+    Run Keyword If       ${status}      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //span[@class='optionLabel' and text()='${type}']
     Run Keyword Unless   ${status}      Click New Item For Account From Dropdown    ${type}
 
 Click New Item For Account From Dropdown
     [Arguments]     ${type}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${MORE_DROPDOWN_AT_DETAILS}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element
-    ...     ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::ul//span[contains(text(), '${type}')]
+    ...     ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::ul//span[contains(text(),'${type}')]
 
 Click Next Button
     Run Inside Iframe   ${IFRAME}       Click Element   //a[text()[contains(.,'Next')]]
@@ -367,7 +367,8 @@ Create New Contact Person For Customer
     ...             ${phone_number}=${DEFAULT_PHONE}
     ...             ${salutation}=${DEFAULT_SALUTATION}
     Go To Account   ${customer}
-    Open Details and choose New Contact from More tab
+    Open Details Tab At Account View
+    Click New Item For Account      New Contact
     Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
 
 Create New Contract For Customer
@@ -387,8 +388,9 @@ Create New Opportunity For Customer
     ...             ${stage}=Analyse Prospect
     ...             ${days}=1
     Open Details Tab At Account View
-    Click Feed Button
-    Click New Opportunity (Details Tab)
+    # Click Feed Button
+    # Click New Opportunity (Details Tab)
+    Click New Item For Account      New Opportunity
     ${variable_exists}=    Run Keyword And Return Status     Variable Should Exist     ${PRODUCT}
     Run Keyword Unless    ${variable_exists}    Set Test Variable   ${PRODUCT}      ${EMPTY}
     Fill Mandatory Opportunity Information      ${opport_name}    ${stage}    ${days}
@@ -415,15 +417,15 @@ Create New Sales Plan If Inactive
     Sleep           1s      Page needs to reload
 
 Create New Task For Customer
-    [Arguments]     ${opport_name}=${EMPTY}
+    [Arguments]     ${name}=${EMPTY}
     ...             ${stage}=Analyse Prospect
     ...             ${days}=1
     Open Details Tab At Account View
-    Click Feed Button
+    Click New Item For Account      New Task
     ${name}=    Create Unique Name      Task
-    ${date}=    Get Date From Future    1
-    Input Quick Action Value For Attribute      Subject     ${name}
-    Input Quick Action Value For Attribute      Due Date    ${date}
+    ${date}=    Get Date From Future    ${days}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Subject     ${name}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Due Date    ${date}
     Set Test Variable   ${TASK_NAME}    ${name}
 
 Created Contact Person Should Be Open
@@ -784,11 +786,6 @@ Open Dashboards
 Open Dashboard Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard    right
 
-Open Details and choose New Contact from More tab
-    Open Details Tab At Account View
-    Click Feed Button
-    Click Add New Contact
-
 Open Details Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Details
 
@@ -808,7 +805,6 @@ Open just created opportunity and update Win probability, add Competitor and Par
 
 Open Open Opportunities Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
-    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
 
 Open Opportunities
     Select Correct Tab Type     Opportunities

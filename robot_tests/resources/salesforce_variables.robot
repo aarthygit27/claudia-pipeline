@@ -16,8 +16,8 @@ ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
 ${PASSWORD}                                 PahaPassu2
 
 # QUICKACTIONFIELD is an invalid xpath on its own. Needs to be completed with another `]` after the variable has been put
-${QUICKACTIONFIELD}                         //div[@class='quickActionFieldElements' and .//div[@class='quickActionFieldLabel']
-${ACTIVETEMPLATE_FIELD}                     //div[contains(@class,'activeTemplate')]//div
+${ACTIVETEMPLATE_FIELD}                     //div[contains(@class,'activeTemplate')]
+${QUICKACTIONFIELD}                         ${ACTIVETEMPLATE_FIELD}//div[@class='quickActionFieldElements' and .//div[@class='quickActionFieldLabel']
 ${INPUT_OR_TEXTAREA}                        //*[(local-name()='input' or local-name()='textarea') and not(@type='hidden')]
 
 
