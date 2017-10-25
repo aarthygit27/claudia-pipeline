@@ -135,6 +135,10 @@ Assign Opportunity To Me
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     10s     1s      Click Element   //input[@value='Assign To Me']
     Verify That Owner Has Changed   ${owner}    Opportunity
 
+Cancel Edit
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       //input[@value='Cancel']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element is Visible   ${EDIT_BUTTON}      15s
+
 Change Account Owner
     [Arguments]     ${owner}
     Run Keyword And Ignore Error    Open Details Tab At Account View
@@ -147,8 +151,7 @@ Change Account Owner
 
 Change Stage To
     [Arguments]     ${stage}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select From List By Value
-    ...         //label[contains(text(),'Stage')]/../following-sibling::td//select   ${stage}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
 
 Check that contact has been saved and can be found under proper Account
     ${contact_person_name}=    Set Variable
@@ -217,7 +220,7 @@ Click Create New Opportunity
     Run Inside Iframe    ${OPPORTUNITY_FRAME}
     ...    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}    15 seconds
 
-Click Create Opportunity Button
+Click Create Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   publishersharebutton
 
 Click Details Button
@@ -380,7 +383,7 @@ Create New Opportunity For Customer
     Run Keyword Unless    ${variable_exists}    Set Test Variable   ${PRODUCT}      ${EMPTY}
     Fill Mandatory Opportunity Information      ${opport_name}    ${stage}    ${days}
     Fill Mandatory Classification
-    Click Create Opportunity Button
+    Click Create Button
     Verify That Opportunity Creation Succeeded
 
 Create New Opportunity From Main Page
@@ -400,6 +403,18 @@ Create New Sales Plan If Inactive
     Run Inside Iframe   ${frame}        Click Element       //button[text()='Create new']
     Run Keyword And Ignore Error        Dismiss Alert
     Sleep           1s      Page needs to reload
+
+Create New Task For Customer
+    [Arguments]     ${opport_name}=${EMPTY}
+    ...             ${stage}=Analyse Prospect
+    ...             ${days}=1
+    Open Details Tab At Account View
+    Click Feed Button
+    ${name}=    Create Unique Name      Task
+    ${date}=    Get Date From Future    1
+    Input Quick Action Value For Attribute      Subject     ${name}
+    Input Quick Action Value For Attribute      Due Date    ${date}
+    Set Test Variable   ${TASK_NAME}    ${name}
 
 Created Contact Person Should Be Open
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${TEST_CONTACT_PERSON_FULL_NAME}')]    10 seconds
@@ -512,8 +527,8 @@ Fill Event Data
     Set Test Variable   ${EVENT_TYPE}       ${type}
     Set Test Variable   ${EVENT_REASON}     ${reason}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Subject      ${subject}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Select From List By Value   ${NEW_EVENT_EVENT_TYPE_FIELD}   ${EVENT_TYPE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Select From List By Value   ${NEW_EVENT_REASON_FIELD}       ${EVENT_REASON}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Event Type   ${EVENT_TYPE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Reason       ${EVENT_REASON}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Start    ${start_date}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      End      ${end_date}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_CONTACT_PERSON_FIELD}       ${contact_person}
@@ -597,7 +612,7 @@ Go to Account
     Select Account    ${target_account}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
-    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
+    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
 
 Go To Event
     [Documentation]     This works for other than events also. This is used for stuff that cannot be found with main search and
@@ -637,7 +652,7 @@ Go To Salesforce and Login
 Go to Today page and check that there is link to team's opportunity queue
     Open Todays Page
     Run Inside Iframe   ${IFRAME}   Page Should Contain Element     //a/h1[contains(text(),"in your team's queue")]
-    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     10s     0.5s    Dismiss Alert
+    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     10s     0.5s    Dismiss Alert
 
 Input Value For Attribute
     [Arguments]     ${field}    ${value}
@@ -646,8 +661,8 @@ Input Value For Attribute
 
 Input Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}
-    Wait Until Element Is Visible    ${QUICKACTIONFIELD}/label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}
-    Input Text      ${QUICKACTIONFIELD}/label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}   ${value}
+    Wait Until Element Is Visible    ${ACTIVETEMPLATE_FIELD}[./label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}
+    Input Text      ${ACTIVETEMPLATE_FIELD}[./label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}   ${value}
 
 Log Error Message
     [Arguments]    ${error_msg_field}
@@ -783,7 +798,7 @@ Open just created opportunity and update Win probability, add Competitor and Par
 
 Open Open Opportunities Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
-    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
+    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
 
 Open Opportunities
     Select Correct Tab Type     Opportunities
@@ -803,6 +818,13 @@ Opportunity Should be Unassigned
     Go To Account       ${opport_name}
     Click Details Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //td[text()='Opportunity Owner']/following-sibling::td//a[contains(text(),'GESB Integration')]      10s
+
+Rate Opportunity
+    [Arguments]     ${rating}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select Value For Attribute      Quality Rating      ${rating}
+    Save Opportunity
 
 Save (Ignore Alert) Button Should Be Visible
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //input[@value='Save (Ignore Alert)']
@@ -950,6 +972,7 @@ Select Tab With Keyboard Shortcut
 
 Select Value For Attribute
     [Arguments]     ${field}    ${value}
+    Wait Until Page Contains Element    //td[.//label[text()[contains(.,'${field}')]]]/following-sibling::td//select    10s
     Select From List By Label   //td[.//label[text()[contains(.,'${field}')]]]/following-sibling::td//select      ${value}
 
 Send Quote Email To Customer
@@ -971,6 +994,11 @@ Try To Create New Opportunity And It Should Fail
     Open Details Tab At Account View
     Create New Opportunity For Customer
     Verify That Error Message Is Displayed
+
+Try To Save Opportunity And Expect Errors
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
+    Verify That Error Messages Are Shown
 
 Type Account Name
     [Arguments]         ${account_name}
@@ -1134,7 +1162,7 @@ Verify That opportunity Close Reason And Date Has Been Changed
 Verify That Opportunity Creation Succeeded
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     10 s
     Reload Page
-    Run Keyword And Ignore Error    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
+    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
     Open Details Tab At Account View
     Verify That Opportunity Is Saved And Data Is Correct
 
@@ -1204,6 +1232,25 @@ Verify That Order Status Is Updated To
 Verify That Owner Has Changed
     [Arguments]         ${owner}    ${type}=Account
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[text()='${type} Owner']/following-sibling::td//a[contains(text(),'${owner}')]      20s
+
+Verify That Quality Rating Field Does Not Exist
+    Click Details Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible       ${EDIT_BUTTON}      10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible   //td[.//span[text()='Quality Rating']]      10s
+
+Verify That Quality Rating Field Exists
+    Click Details Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[.//span[text()='Quality Rating']]      10s
+
+Verify That Quality Rating Has Correct Values
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Edit Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Excellent']      10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Good']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Average']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Fair']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Poor']
+    Capture Page Screenshot
+    Run Inside iframe   ${OPPORTUNITY_FRAME}    Click Element       //input[@value='Cancel']
 
 Verify That Quote Status Is Updated to
     [Arguments]         ${status}
