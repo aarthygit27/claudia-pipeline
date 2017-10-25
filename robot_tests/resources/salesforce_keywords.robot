@@ -242,10 +242,6 @@ Click Edit Contact Person
 Click Feed Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_FEED}
 
-Click New Event
-    Click Feed Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${NEW_EVENT_BUTTON_AT_DETAILS}
-
 Click New Opportunity (Details Tab)
     ${status}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword And Return Status
     ...     Element Should Be Visible     ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}
@@ -256,6 +252,20 @@ Click New Opportunity From More Dropdown
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${MORE_DROPDOWN_AT_DETAILS}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element
     ...     ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::${NEW_OPPORTUNITY_AT_MORE_DROPDOWN}
+
+Click New Item For Account
+    [Arguments]     ${type}
+    Click Feed Button
+     ${status}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword And Return Status
+    ...     Element Should Be Visible     //span[@class= 'optionLabel' and text()= '${type}']
+    Run Keyword If       ${status}      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //span[@class= 'optionLabel' and text()= '${type}']
+    Run Keyword Unless   ${status}      Click New Item For Account From Dropdown    ${type}
+
+Click New Item For Account From Dropdown
+    [Arguments]     ${type}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${MORE_DROPDOWN_AT_DETAILS}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element
+    ...     ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::ul//span[contains(text(), '${type}')]
 
 Click Next Button
     Run Inside Iframe   ${IFRAME}       Click Element   //a[text()[contains(.,'Next')]]
@@ -661,8 +671,8 @@ Input Value For Attribute
 
 Input Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}
-    Wait Until Element Is Visible    ${ACTIVETEMPLATE_FIELD}[./label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}
-    Input Text      ${ACTIVETEMPLATE_FIELD}[./label[contains(text(),'${field}')]]${INPUT_OR_TEXTAREA}   ${value}
+    Wait Until Element Is Visible    ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//*[local-name()='textarea' or local-name()='input']
+    Input Text       ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//*[local-name()='textarea' or local-name()='input']   ${value}
 
 Log Error Message
     [Arguments]    ${error_msg_field}
