@@ -311,16 +311,16 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     # todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
     Log     Todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
 
-Opportunity: Check that Account can be changed for an active opportunity
-    [Tags]      BQA-39      wip
-    # 1. Go to open opportunity
-    # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
-    # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
-    Go To Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Create New Opportunity For Customer
-    # Todo: This requires lookup search and probably won't finish this
-    [Teardown]      Pause Execution
+# Opportunity: Check that Account can be changed for an active opportunity
+#     [Tags]      BQA-39      wip
+#     # 1. Go to open opportunity
+#     # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
+#     # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
+#     Go To Salesforce and Login
+#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+#     Create New Opportunity For Customer
+#     # Todo: This requires lookup search and probably won't finish this
+#     [Teardown]      Pause Execution
 
 Create in SalesForce and in MultiBella a new Contact Person
     [Tags]      BQA-118
@@ -414,11 +414,11 @@ Create a Contact Person in SalesForce with the same name as new to same Customer
 
 Enable Sales Person to rate Opportunity and Task Source Data Quality
     [Tags]      BQA-2182    wip
-    [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
-    ...         Go To Salesforce and Login      Customer Care User      AND
-    ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
-    ...         Create New Opportunity For Customer                     AND
-    ...         Logout From Salesforce
+    # [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
+    # ...         Go To Salesforce and Login      Customer Care User      AND
+    # ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
+    # ...         Create New Opportunity For Customer                     AND
+    # ...         Logout From Salesforce
     # 1. Pick opportunity from Digisales queue
     # 2. Check that the "Quality Rating" fields exists
     # 3. Check that the field has appropriate values (do not select any at this point)
@@ -437,8 +437,21 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     # 16. Set a random quality rating. Save.
     # 17. Create own task and check that there is no Quality rating visible
     # 18. Close own task without setting rating value
+    Set Test Variable   ${OPPORTUNITY_NAME}     Opportunity 59694389
     Go To Salesforce and Login
     Go To Account   ${OPPORTUNITY_NAME}
+    Verify That Quality Rating Field Exists
+    # Assign Opportunity To Me
+    Verify That Quality Rating Has Correct Values
+    Rate Opportunity    Excellent
+    Rate Opportunity    --None--
+    Set Opportunity Stage And Save      Negotiate and Close
+    Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
+    Rate Opportunity    Excellent
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    Go To Account   ${OPPORTUNITY_NAME}
+    Verify That Quality Rating Field Does Not Exist
 
 *** Keywords ***
 
@@ -591,3 +604,13 @@ Try to create a new contact person with a same name to
 User sees a list of Contact Persons and can save with the same name
     Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     12345678noreply@teliacompany.com
     Save (Ignore Alert) Button Should Be Visible
+
+Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
+    Edit Opportunity
+    Change Stage To     Closed Won
+    Try To Save Opportunity And Expect Errors
+    Change Stage To     Closed Lost
+    Try To Save Opportunity And Expect Errors
+    Change Stage To     Closed Not Won
+    Try To Save Opportunity And Expect Errors
+    Cancel Edit
