@@ -83,7 +83,9 @@ if __name__ == "__main__":
                     "LastName" : wiki_users[u]["LastName"],
                     "Username": username,
                     "Email" : wiki_users[u]["Email"],
-                    "telia_user_ID__c": wiki_users[u]["Alias"]}
+                    "telia_user_ID__c": wiki_users[u]["Alias"],
+                    "UserPreferencesLightningExperiencePreferred": 0
+                    }
 
             if role_id:
                 data["UserRoleId"] = role_id
