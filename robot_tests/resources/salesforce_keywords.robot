@@ -424,7 +424,9 @@ Create New Task For Customer
     ${date}=    Get Date From Future    ${days}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Subject     ${name}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Due Date    ${date}
+    Click Create Button
     Set Test Variable   ${TASK_NAME}    ${name}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[@class='feeditembody']//a[text()[contains(.,'${TASK_NAME}')]]     20s
 
 Created Contact Person Should Be Open
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${TEST_CONTACT_PERSON_FULL_NAME}')]    10 seconds
@@ -825,9 +827,14 @@ Opportunity Should be Unassigned
 
 Rate Opportunity
     [Arguments]     ${rating}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      10s
+    Capture Page Screenshot
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${EDIT_BUTTON}      10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Mouse Over      //td[contains(@id,'Pricebook')]
+    Capture Page Screenshot
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
+    Capture Page Screenshot
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select Value For Attribute      Quality Rating      ${rating}
+    Capture Page Screenshot
     Save Opportunity
 
 Save (Ignore Alert) Button Should Be Visible
