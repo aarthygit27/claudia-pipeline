@@ -1171,9 +1171,8 @@ Verify That opportunity Close Reason And Date Has Been Changed
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
 
 Verify That Opportunity Creation Succeeded
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     10 s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     20 s
     Reload Page
-    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
     Open Details Tab At Account View
     Verify That Opportunity Is Saved And Data Is Correct
 
