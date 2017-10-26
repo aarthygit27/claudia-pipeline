@@ -52,7 +52,8 @@ if __name__ == "__main__":
                 "LastName" : lastname,
                 "Username": username,
                 "Email" : email,
-                "telia_user_ID__c": tcad}
+                "telia_user_ID__c": tcad,
+                "UserPreferencesLightningExperiencePreferred": 0}
 
         if profile != "System Administrator":
             data["ProfileId"] = profile_id
