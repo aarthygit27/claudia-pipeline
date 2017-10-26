@@ -86,7 +86,7 @@ Sales Process: Create opportunity from Account
     Create New Opportunity For Customer
     Verify That Opportunity Is Found In Todays Page
     Verify That Opportunity Is Found With Search
-    Verify That Opportunity Is Found From My Opportunities
+    Verify That Opportunity is Found From My All Open Opportunities
 
 Opportunity: Closing active opportunity as cancelled
     [Tags]      BQA-42
