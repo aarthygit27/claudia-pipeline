@@ -385,6 +385,7 @@ Create New Opportunity For Customer
     [Arguments]     ${opport_name}=${EMPTY}
     ...             ${stage}=Analyse Prospect
     ...             ${days}=1
+    ...             ${expect_error}=${FALSE}
     Open Details Tab At Account View
     # Click Feed Button
     # Click New Opportunity (Details Tab)
@@ -394,7 +395,7 @@ Create New Opportunity For Customer
     Fill Mandatory Opportunity Information      ${opport_name}    ${stage}    ${days}
     Fill Mandatory Classification
     Click Create Button
-    Verify That Opportunity Creation Succeeded
+    Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
 
 Create New Opportunity From Main Page
     [Documentation]     Deprecated
@@ -620,7 +621,7 @@ Go to Account
     [Documentation]    This keyword works also with contact person and other parameters which can be searched at main search
     [Arguments]    ${target_account}    ${type}=${EMPTY}
     Log     Going to '${target_account}'
-    Wait Until Keyword Succeeds     30s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
+    Wait Until Keyword Succeeds     45s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
@@ -851,10 +852,11 @@ Save New Contact Person And Expect Error
     Verify That Error Message Is Displayed      ${CP_COMMON_ERROR_MESSAGE_FIELD}    ${error}
 
 Save Opportunity
+    [Arguments]     ${expect_error}=${FALSE}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Element Is Visible           ${EDIT_BUTTON}    10 s
-
+    Run Keyword If      ${expect_error}     Verify That Error Messages Are Shown
+    ...     ELSE    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Element Is Visible   //div[@class='listHoverLinks']    10 s
 
 Search And Verify Account Is Found
     [Arguments]     ${target_account}   ${type}=${EMPTY}
@@ -991,10 +993,10 @@ Send Quote Email To Customer
     Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
 
 Set Opportunity Stage And Save
-    [Arguments]     ${stage}
+    [Arguments]     ${stage}    ${expect_error}=${FALSE}
     Edit Opportunity
     Change Stage to         ${stage}
-    Save Opportunity
+    Save Opportunity    ${expect_error}
 
 Show More
     [Arguments]     ${page}
@@ -1003,7 +1005,7 @@ Show More
 
 Try To Create New Opportunity And It Should Fail
     Open Details Tab At Account View
-    Create New Opportunity For Customer
+    Create New Opportunity For Customer     expect_error=${TRUE}
     Verify That Error Message Is Displayed
 
 Try To Save Opportunity And Expect Errors

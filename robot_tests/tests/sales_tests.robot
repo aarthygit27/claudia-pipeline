@@ -29,12 +29,12 @@ Contact: Add new contact (valid data)
     Create New Contact Person For Customer
     Check that contact has been saved and can be found under proper Account
 
-Contact: Add new contact (invalid data)
-    [Tags]    add_new_contact_invalid    BQA-1
-    Go To Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Details and choose New Contact from More tab
-    Enter mandatory (invalid) information and verify cp was not saved
+# Contact: Add new contact (invalid data)
+#     [Tags]    add_new_contact_invalid    BQA-1
+#     Go To Salesforce and Login
+#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+#     Open Details and choose New Contact from More tab
+#     Enter mandatory (invalid) information and verify cp was not saved
 
 Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     [Tags]      add_new_contact     BQA-53      BQA-108      BQA-1835    smoke
@@ -52,6 +52,7 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+    Set Suite Variable    ${TEST_CONTACT_PERSON_LAST_NAME}
 
 Sales Admin: Change Account owner
     [Tags]      BQA-8
@@ -462,6 +463,7 @@ Check If Contact Person Exists And Create New One If Not
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+    Set Suite Variable    ${TEST_CONTACT_PERSON_LAST_NAME}
 
 Wait Until Account Is In Salesforce And Go To Account
     Wait Until Keyword Succeeds     25 minutes   15 seconds      Run Keywords
@@ -481,7 +483,7 @@ Close active opportunity
     Go to Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
     Verify That Opportunity Is Found With Search
-    Set Opportunity Stage And Save      ${stage}
+    Set Opportunity Stage And Save      ${stage}    expect_error=${TRUE}
     Verify That Error Messages Are Shown
     Fill Close Reason And Comment And Save
     Verify That Opportunity Status Has Been Changed      ${stage}    ${status}
