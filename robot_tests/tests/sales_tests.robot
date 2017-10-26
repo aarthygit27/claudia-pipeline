@@ -42,6 +42,7 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
     MUBE Logout CRM
+    UAD Open Browser And Go To Login Page
     UAD Go to Page And Log in
     Contact Person Should Be Found In MIT UAD
     Close Browser
@@ -152,6 +153,7 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     MUBE Open Customers Page
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella
+    UAD Open Browser And Go To Login Page
     UAD Go to Page And Log In
     Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
 

@@ -45,6 +45,10 @@ UAD Log in
     Click Element       //span[text()='Kirjaudu sisään']
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
+UAD Open Browser And Go To Login Page
+    Open Browser    ${UAD_PAGE}
+    Maximize Browser Window
+
 UAD Page Should Be Open
     Wait Until Page Contains Element        ${SEARCH_FIELD}
 
