@@ -5,7 +5,7 @@ Resource                ${PROJECTROOT}${/}resources${/}tellu_variables.robot
 
 *** Keywords ***
 
-Tellu Create New Contact Person
+TellU Create New Contact Person
     [Arguments]     ${customer_business_id}=${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     ...             ${address_type}=Physical
     ...             ${streetname}=${DEFAULT_STREET_NAME}
