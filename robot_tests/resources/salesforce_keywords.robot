@@ -147,7 +147,7 @@ Change Account Owner
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    id=newOwn
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      id=newOwn   ${owner}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${FIELD_DETAIL}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${FIELD_DETAIL}     20s
 
 Change Stage To
     [Arguments]     ${stage}
@@ -1018,11 +1018,14 @@ Type Account Name
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2         ${account_name}
 
 Update Contact Person In Salesforce
+    [Arguments]     ${phone}=${EMPTY}
+    ...             ${business_card_title}=${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
     ${OLD_EMAIL}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Email']/following-sibling::td/div/a
     ${OLD_PHONE}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Phone']/following-sibling::td/div
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       ${EDIT_BUTTON}
     ${NEW_EMAIL}=       Create Unique Email
     ${NEW_PHONE}=       Create Unique Phone Number
+    ${NEW_PHONE}=       Set Variable If     '${phone}'=='${EMPTY}'      ${NEW_PHONE}    ${phone}
     ${OLD_PHONE}=       Strip Area Code From Phone Number   ${OLD_PHONE}
     Set Test Variable   ${OLD_EMAIL}
     Set Test Variable   ${OLD_PHONE}
@@ -1032,7 +1035,7 @@ Update Contact Person In Salesforce
     Set Test Variable   ${NEW_3RD_PARTY_CONTACT}            Yes
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Email   ${NEW_EMAIL}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Phone   ${NEW_PHONE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Business Card Title    ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Business Card Title    ${business_card_title}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Gender              1 - ${DEFAULT_GENDER.lower()}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Sales Role          ${NEW_SALES_ROLE}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Marketing - SMS     ${NEW_MARKETING_SMS_PERMISSION.upper()}

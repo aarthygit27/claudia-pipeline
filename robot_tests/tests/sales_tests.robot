@@ -452,7 +452,8 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
 Check If Contact Person Exists And Create New One If Not
     [Arguments]    ${contact_person}
     ${cp_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${contact_person}
-    Run Keyword If    ${cp_exists}    Return From Keyword
+    Run Keyword If      ${cp_exists}    Ensure Contact Person Information Is Reset To Default
+    Run Keyword If      ${cp_exists}    Return From Keyword
     Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
@@ -502,6 +503,13 @@ Create Test Account With Admin User
     Run Keyword If     '${type}'=='Group'    Set Test Variable   ${TEST_GROUP_ACCOUNT_NAME}    ${TEST_ACCOUNT_NAME}
     Run Keyword If     '${type}'=='Group'    Create Child Account
     Close Tabs And Logout
+
+Ensure Contact Person Information Is Reset To Default
+    Open Browser And Go To Login Page
+    Login to Salesforce And Close All Tabs
+    Go To Account       ${CONTACT_PERSON_NAME}
+    Click Contact Person Details
+    Update Contact Person in Salesforce     phone=${DEFAULT_PHONE}      ${DEFAULT_BUSINESS_CARD_TITLE}
 
 Create Child Account
     Close All Tabs
