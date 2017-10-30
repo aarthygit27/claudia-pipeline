@@ -7,16 +7,38 @@ Test Teardown       Close Browser
 Force Tags          Performance
 
 
+
+*** Variables ***
+${PRODUCT}          Telia Yritysinternet
+
 *** Test Cases ***
-Create an Order With One Product
+Single Product Monitor: Telia Yritysinternet
+    [Tags]      single_product      yritysinternet
+    [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
+    Create Product Order        ${PRODUCT}      Single
+
+Single Product Monitor: Telia Maksupääte
     [Tags]      single_product
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Create Product Order        Telia Yritysinternet     Yritysinternet     Single
+    Set Test Variable           ${PRODUCT}      Telia Maksupääte
+    Create Product Order        ${PRODUCT}     Single
+
+Single Product Monitor: Telia Verkkotunnuspalvelu
+    [Tags]      single_product
+    [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
+    Set Test Variable           ${PRODUCT}      Telia Verkkotunnuspalvelu
+    Create Product Order        ${PRODUCT}      Single
+
+Single Product Monitor: DataNet Multi
+    [Tags]      single_product
+    [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
+    Set Test Variable           ${PRODUCT}      DataNet Multi
+    Create Product Order        ${PRODUCT}      Single
 
 Create And Order With Many Products
     [Tags]      multiple_products
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Create Product Order        10 Products     Yritysinternet     Multiple
+    Create Product Order        10 Products     Multiple
 
 Open Different Tabs And Check Their Loading Times
     [Tags]      view_page_load
@@ -35,9 +57,7 @@ Open Different Tabs And Check Their Loading Times
 
 *** Keywords ***
 Create Product Order
-    [Arguments]         ${test_product}    ${test_product_type}     ${product_amount}
-    Set Test Variable   ${PRODUCT}    ${test_product}
-    Set Test Variable   ${PRODUCT_TYPE}    ${test_product_type}
+    [Arguments]         ${test_product}    ${product_amount}
     Log To Console      ${\n} Product: ${PRODUCT}
     Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer

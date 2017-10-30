@@ -29,12 +29,12 @@ Contact: Add new contact (valid data)
     Create New Contact Person For Customer
     Check that contact has been saved and can be found under proper Account
 
-Contact: Add new contact (invalid data)
-    [Tags]    add_new_contact_invalid    BQA-1
-    Go To Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Details and choose New Contact from More tab
-    Enter mandatory (invalid) information and verify cp was not saved
+# Contact: Add new contact (invalid data)
+#     [Tags]    add_new_contact_invalid    BQA-1
+#     Go To Salesforce and Login
+#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+#     Open Details and choose New Contact from More tab
+#     Enter mandatory (invalid) information and verify cp was not saved
 
 Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     [Tags]      add_new_contact     BQA-53      BQA-108      BQA-1835    smoke
@@ -42,6 +42,7 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
     MUBE Logout CRM
+    UAD Open Browser And Go To Login Page
     UAD Go to Page And Log in
     Contact Person Should Be Found In MIT UAD
     Close Browser
@@ -52,6 +53,7 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+    Set Suite Variable    ${TEST_CONTACT_PERSON_LAST_NAME}
 
 Sales Admin: Change Account owner
     [Tags]      BQA-8
@@ -85,7 +87,7 @@ Sales Process: Create opportunity from Account
     Create New Opportunity For Customer
     Verify That Opportunity Is Found In Todays Page
     Verify That Opportunity Is Found With Search
-    Verify That Opportunity Is Found From My Opportunities
+    Verify That Opportunity is Found From My All Open Opportunities
 
 Opportunity: Closing active opportunity as cancelled
     [Tags]      BQA-42
@@ -151,6 +153,7 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     MUBE Open Customers Page
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella
+    UAD Open Browser And Go To Login Page
     UAD Go to Page And Log In
     Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
 
@@ -207,7 +210,7 @@ Quick actions: create Meeting
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
-    Click New Event
+    Click New Item For Account    New Event
     Fill Event data     type=Meeting    reason=New Customer
     Click Create Event Button
     Verify That Event Is Created
@@ -230,7 +233,7 @@ Quick actions: create Customer Call
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
-    Click New Event
+    Click New Item For Account    New Event
     Fill Event Data     type=Customer Call    reason=Booking
     Click Create Event Button
     Verify That Event Is Created
@@ -275,12 +278,11 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Click CPQ At Opportunity View
     Add modelled product and unmodelled product to cart (CPQ)
     Update Sales Type and Prices For unmodelled Product (CPQ)
-    # TODO: Continue testing when BQA-3540 is fixed.
-    Click View Quote And Go Back To CPQ
+    Click View Quote (CPQ)
     # 10. Create Quote. Press Review Record and add Contact and Quote email text.
-    Click Create Order (CPQ)
-    # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
     Press Review Record and add Contact and Quote email text
+    # Click Create Order (CPQ)
+    # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
     Send Quote Email To Customer
     # 12. Check that Quote status has been automatically updated to Submitted. Go to Opportunity and check that its stage is automatically updated to Negotiate & Close and opportunity status is Offer Sent. Check that values from Quote have been updated to opportunity.
     Verify That Quote Status Is Updated to      Submitted
@@ -312,16 +314,16 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     # todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
     Log     Todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
 
-Opportunity: Check that Account can be changed for an active opportunity
-    [Tags]      BQA-39      wip
-    # 1. Go to open opportunity
-    # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
-    # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
-    Go To Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Create New Opportunity For Customer
-    # Todo: This requires lookup search and probably won't finish this
-    [Teardown]      Pause Execution
+# Opportunity: Check that Account can be changed for an active opportunity
+#     [Tags]      BQA-39      wip
+#     # 1. Go to open opportunity
+#     # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
+#     # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
+#     Go To Salesforce and Login
+#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+#     Create New Opportunity For Customer
+#     # Todo: This requires lookup search and probably won't finish this
+#     [Teardown]      Pause Execution
 
 Create in SalesForce and in MultiBella a new Contact Person
     [Tags]      BQA-118
@@ -413,12 +415,47 @@ Create a Contact Person in SalesForce with the same name as new to same Customer
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella    2
 
+Enable Sales Person to rate Opportunity and Task Source Data Quality
+    [Tags]      BQA-2182    wip
+    # [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
+    # ...         Go To Salesforce and Login      Customer Care User      AND
+    # ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
+    # ...         Create New Opportunity For Customer                     AND
+    # ...         Create New Task For Customer                            AND
+    # ...         Logout From Salesforce
+    # 15. Set the status to closed. Save.
+    # 16. Set a random quality rating. Save.
+    # 17. Create own task and check that there is no Quality rating visible
+    # 18. Close own task without setting rating value
+    Set Test Variable   ${OPPORTUNITY_NAME}     Opportunity 62852916
+    Set Test Variable   ${TASK_NAME}    Task 93257960
+    Go To Salesforce and Login
+    Go To Account   ${OPPORTUNITY_NAME}
+    Verify That Quality Rating Field Exists
+    # Assign Opportunity To Me
+    Verify That Quality Rating Has Correct Values
+    Rate Opportunity    Excellent
+    Rate Opportunity    --None--
+    Set Opportunity Stage And Save      Negotiate and Close
+    Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
+    Rate Opportunity    Excellent
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    Go To Account   ${OPPORTUNITY_NAME}
+    Verify That Quality Rating Field Does Not Exist
+    Set Opportunity Stage And Save      Negotiate and Close
+    Go To Account   ${TASK_NAME}
+    Verify That Quality Rating Field Exists
+
 *** Keywords ***
 
 Check If Contact Person Exists And Create New One If Not
     [Arguments]    ${contact_person}
     ${cp_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${contact_person}
-    Run Keyword If    ${cp_exists}    Return From Keyword
+    # We need to ensure the contact person has the default data, because the next keyword (after this)
+    # checks if the CP has default data
+    Run Keyword If      ${cp_exists}    Ensure Contact Person Information Is Reset To Default
+    Run Keyword If      ${cp_exists}    Return From Keyword
     Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
@@ -431,6 +468,7 @@ Check If Contact Person Exists And Create New One If Not
     Verify That Contact Person Information Is Correct
     Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
     Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+    Set Suite Variable    ${TEST_CONTACT_PERSON_LAST_NAME}
 
 Wait Until Account Is In Salesforce And Go To Account
     Wait Until Keyword Succeeds     25 minutes   15 seconds      Run Keywords
@@ -450,7 +488,7 @@ Close active opportunity
     Go to Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
     Verify That Opportunity Is Found With Search
-    Set Opportunity Stage And Save      ${stage}
+    Set Opportunity Stage And Save      ${stage}    expect_error=${TRUE}
     Verify That Error Messages Are Shown
     Fill Close Reason And Comment And Save
     Verify That Opportunity Status Has Been Changed      ${stage}    ${status}
@@ -467,6 +505,14 @@ Create Test Account With Admin User
     Run Keyword If     '${type}'=='Group'    Set Test Variable   ${TEST_GROUP_ACCOUNT_NAME}    ${TEST_ACCOUNT_NAME}
     Run Keyword If     '${type}'=='Group'    Create Child Account
     Close Tabs And Logout
+
+Ensure Contact Person Information Is Reset To Default
+    Open Browser And Go To Login Page
+    Login to Salesforce And Close All Tabs
+    Go To Account       ${CONTACT_PERSON_NAME}
+    Click Contact Person Details
+    Update Contact Person in Salesforce     ${DEFAULT_PHONE}      ${DEFAULT_BUSINESS_CARD_TITLE}
+    Close Browser
 
 Create Child Account
     Close All Tabs
@@ -488,6 +534,7 @@ Wait Until Contact Person Is Found In MultiBella
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Log to Console    ${status}
+    ${ret}=     Set Variable      FAILED
     ${new_close_reason}=        Set Variable If         '${status}'=='Won'
     ...     01 Relationship     09 Customer Postponed
     Close active Opportunity    ${stage}    ${status}       ${original_stage}
@@ -496,14 +543,15 @@ Update Closed Opportunity Test Case
     Go To Account   ${OPPORTUNITY_NAME}
     Update Opportunity Close Date And Close Reason      reason=${new_close_reason}
     Verify That opportunity Close Reason And Date Has Been Changed      2     ${new_close_reason}
-    [Teardown]      Logout From All Systems And Close Browser
+    ${passed}=      Set Variable        PASSED
+    [Teardown]      Run Keywords        Log to Console      ${passed}   AND     Logout From All Systems And Close Browser
 
 Create New Event If Necessary
     ${event_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Set Test Variable       ${TEST_EVENT_SUBJECT}   ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Return From Keyword
     Open Details Tab At Account View
-    Click New Event
+    Click New Item For Account    New Event
     Fill Event Data     type=Customer Call    reason=Booking
     Click Create Event Button
     Verify That Event Is Created
@@ -557,10 +605,20 @@ Try to create a new contact person with a same name to
     [Arguments]     ${account}
     Open Contacts
     Click To Create New Contact From Main Page
-    Add Mandatory Contact Data      Paavo   Pesusieni   12345678noreply@teliacompany.com
+    Add Mandatory Contact Data      Paavo   Pesusieni   12345678noreply@teliacompany.com    location=Main Page
     Add Account For Contact Person  ${account}
     Save New Contact Person And Expect Error    duplicate record
 
 User sees a list of Contact Persons and can save with the same name
     Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     12345678noreply@teliacompany.com
     Save (Ignore Alert) Button Should Be Visible
+
+Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
+    Edit Opportunity
+    Change Stage To     Closed Won
+    Try To Save Opportunity And Expect Errors
+    Change Stage To     Closed Lost
+    Try To Save Opportunity And Expect Errors
+    Change Stage To     Closed Not Won
+    Try To Save Opportunity And Expect Errors
+    Cancel Edit

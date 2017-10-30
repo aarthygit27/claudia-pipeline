@@ -69,13 +69,16 @@ Click View Record (CPQ)
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${VIEW_RECORD_BUTTON}
     # Wait Until Keyword Succeeds    5 s     1 s      Select Window    new
 
-Click View Quote And Go Back To CPQ
+Click View Quote (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        View Quote      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     30s     1s     Click Element    View Quote
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //td[@id='topButtonRow']//input[@title='CPQ']
+
+Click View Quote And Go Back To CPQ
+    Click View Quote (CPQ)
     Sleep   2
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //td[@id='topButtonRow']//input[@title='CPQ']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${CPQ_CREATE_ORDER}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${CPQ_CREATE_ORDER}     15s
 
 Close Missing Information Popup (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
@@ -168,7 +171,7 @@ Select Exact Product
 Search For Product (CPQ)
     [Arguments]     ${target_product}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${CPQ_SEARCH_FIELD}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text                              ${CPQ_SEARCH_FIELD}    ${target_product}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Prolonged Input Text                    ${CPQ_SEARCH_FIELD}    ${target_product}    0.5s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Enter On                          ${CPQ_SEARCH_FIELD}
 
 Select Sales Type For Order (CPQ)
