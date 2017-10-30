@@ -1241,6 +1241,7 @@ Verify That Opportunity Is Found With Search
 Verify That Opportunity Is Not Found From Open Opportunities
     Close All Tabs
     Open Opportunities
+    Run Inside Iframe   ${IFRAME}   Wait For Load
     Select Correct View Type     My All Open Opportunities
     Filter Opportunities By    Close Date
     Run Inside Iframe   ${IFRAME}   Page Should Not Contain Element    //td/div/a/span[text()='${OPPORTUNITY_NAME}']
