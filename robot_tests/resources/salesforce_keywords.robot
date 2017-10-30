@@ -148,6 +148,7 @@ Change Account Owner
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    id=newOwn
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      id=newOwn   ${owner}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait For Load
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${FIELD_DETAIL}     20s
 
 Change Stage To
