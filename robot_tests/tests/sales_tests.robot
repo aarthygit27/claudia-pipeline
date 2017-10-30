@@ -452,6 +452,8 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
 Check If Contact Person Exists And Create New One If Not
     [Arguments]    ${contact_person}
     ${cp_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${contact_person}
+    # We need to ensure the contact person has the default data, because the next keyword (after this)
+    # checks if the CP has default data
     Run Keyword If      ${cp_exists}    Ensure Contact Person Information Is Reset To Default
     Run Keyword If      ${cp_exists}    Return From Keyword
     Close Browser
@@ -509,7 +511,8 @@ Ensure Contact Person Information Is Reset To Default
     Login to Salesforce And Close All Tabs
     Go To Account       ${CONTACT_PERSON_NAME}
     Click Contact Person Details
-    Update Contact Person in Salesforce     phone=${DEFAULT_PHONE}      ${DEFAULT_BUSINESS_CARD_TITLE}
+    Update Contact Person in Salesforce     ${DEFAULT_PHONE}      ${DEFAULT_BUSINESS_CARD_TITLE}
+    Close Browser
 
 Create Child Account
     Close All Tabs
@@ -531,6 +534,7 @@ Wait Until Contact Person Is Found In MultiBella
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Log to Console    ${status}
+    ${ret}=     Set Variable      FAILED
     ${new_close_reason}=        Set Variable If         '${status}'=='Won'
     ...     01 Relationship     09 Customer Postponed
     Close active Opportunity    ${stage}    ${status}       ${original_stage}
@@ -539,7 +543,8 @@ Update Closed Opportunity Test Case
     Go To Account   ${OPPORTUNITY_NAME}
     Update Opportunity Close Date And Close Reason      reason=${new_close_reason}
     Verify That opportunity Close Reason And Date Has Been Changed      2     ${new_close_reason}
-    [Teardown]      Logout From All Systems And Close Browser
+    ${passed}=      Set Variable        PASSED
+    [Teardown]      Run Keywords        Log to Console      ${passed}   AND     Logout From All Systems And Close Browser
 
 Create New Event If Necessary
     ${event_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
