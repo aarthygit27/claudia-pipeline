@@ -605,7 +605,7 @@ Try to create a new contact person with a same name to
     [Arguments]     ${account}
     Open Contacts
     Click To Create New Contact From Main Page
-    Add Mandatory Contact Data      Paavo   Pesusieni   12345678noreply@teliacompany.com
+    Add Mandatory Contact Data      Paavo   Pesusieni   12345678noreply@teliacompany.com    location=Main Page
     Add Account For Contact Person  ${account}
     Save New Contact Person And Expect Error    duplicate record
 

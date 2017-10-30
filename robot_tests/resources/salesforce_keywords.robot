@@ -39,12 +39,13 @@ Add Mandatory Contact Data
     ...         ${email}=${DEFAULT_EMAIL}
     ...         ${phone_number}=${DEFAULT_PHONE}
     ...         ${salutation}=${DEFAULT_SALUTATION}
+    ...         ${location}=Customer Page
     ${name}=            Create Unique Name      Contact Person
     ${email}=           Create Unique Email     ${email}
     ${first_name}=      Set Variable If    '${first_name}' == '${EMPTY}'    Test        ${first_name}
     ${last_name}=       Set Variable If     '${last_name}' == '${EMPTY}'    ${name}     ${last_name}
     Set Test Variable   ${TEST_CONTACT_PERSON_LAST_NAME}    ${last_name}
-    Fill Mandatory Contact Person Values
+    Run Keyword     Fill Mandatory Contact Person Values from ${location}
     ...    ${first_name}
     ...    ${TEST_CONTACT_PERSON_LAST_NAME}
     ...    ${salutation}
@@ -339,7 +340,7 @@ Contact Person Information Should Be Correct
 
 Contact Person List Should Have
     [Arguments]         ${name}     ${email}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //tr[./th/a[text()='${name}'] and ./td[text()='${email}']]
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //tr[./th/a[contains(text(),'${name}')] and ./td[text()='${email}']]
 
 Correct Quick Actions Should Be Visible
     ${frame}=   Get Account Tab Iframe Xpath    Open Opportunities
@@ -555,7 +556,7 @@ Fill Mandatory Classification
     # Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible          ${CLASSIF_DESCRIPTION_FIELD}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Text                             ${CLASSIF_DESCRIPTION_FIELD}    ${OPPO_DESCRIPTION}
 
-Fill Mandatory Contact Person Values
+Fill Mandatory Contact Person Values from Customer Page
     [Documentation]     Sets the test variable TEST_CONTACT_PERSON_FULL_NAME
     [Arguments]
     ...    ${firstname}
@@ -573,6 +574,25 @@ Fill Mandatory Contact Person Values
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Mobile          ${phone_number}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Email           ${email}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Business Card Title     ${DEFAULT_BUSINESS_CARD_TITLE}
+
+Fill Mandatory Contact Person Values from Main Page
+    [Documentation]     Sets the test variable TEST_CONTACT_PERSON_FULL_NAME
+    [Arguments]
+    ...    ${firstname}
+    ...    ${lastname}
+    ...    ${salutation}=${DEFAULT_SALUTATION}
+    ...    ${email}=${DEFAULT_EMAIL}
+    ...    ${phone_number}=${DEFAULT_PHONE}
+    ...     ${sales_role}=Business Contact
+    Set Test Variable   ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute     First Name      ${salutation}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute     Sales Role      ${sales_role}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      First Name      ${firstname}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Last Name       ${lastname}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Phone           ${phone_number}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Mobile          ${phone_number}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Email           ${email}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Business Card Title     ${DEFAULT_BUSINESS_CARD_TITLE}
 
 Fill Mandatory Opportunity Information
     [Arguments]
@@ -1126,6 +1146,7 @@ Verify That Contact Person Information is Correct
     Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Address Should Be Correct        ${postal_code} ${city}
 
 Verify That Description And WIG Areas Are Correct
+    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='Glory']/following-sibling::td//img[@title='Checked']
 
