@@ -94,9 +94,10 @@ def process(output_file, keyword_name, measurement, env, dryrun=False):
     result = ExecutionResult(output_file)
     times = KeywordTimes(output_file, keyword_name)
     result.visit(times)
-    s = sorted(times.keywords.values(), lambda a, b: b[1] - a[1])
+    # s = sorted(times.keywords.values(), lambda a, b: b[1] - a[1]) # Sort by execution time
+    s = sorted(times.keywords.values(), key=lambda a: int(a[0].split()[-1]))    # Sort by execution order
     for k, d, ut, stat, tc in s:
-        print str(d).rjust(15) + ' | ' + str(ut).rjust(14) + ' | ' + stat.rjust(6) + ' | "%s"' % k + " / {0}".format(str(tc))
+        print str(d).rjust(15) + ' | ' + str(ut).rjust(14) + ' | ' + stat.rjust(6) + ' | "{0}" / {1}'.format(k, str(tc))
         # Skip data export when running tests etc.
         if not dryrun:
             requests.post(influx_write,
