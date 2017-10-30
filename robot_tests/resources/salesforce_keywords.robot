@@ -259,6 +259,7 @@ Click New Item For Account
     ...     Element Should Be Visible     //span[@class='optionLabel' and text()='${type}']
     Run Keyword If       ${status}      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //span[@class='optionLabel' and text()='${type}']
     Run Keyword Unless   ${status}      Click New Item For Account From Dropdown    ${type}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${QUICKACTIONFIELD}]     10s
 
 Click New Item For Account From Dropdown
     [Arguments]     ${type}
