@@ -4,7 +4,7 @@
         <fullName>contact_outbound_message</fullName>
         <apiVersion>39.0</apiVersion>
         <description>send all contact fields to an endpoint</description>
-        <endpointUrl>https://emily.extra.sonera.fi:62100/SFOutboundContactService</endpointUrl>
+        <endpointUrl>https://quartet.extra.sonera.fi:63100/SFOutboundContactService</endpointUrl>
         <fields>AccountId</fields>
         <fields>AssistantName</fields>
         <fields>AssistantPhone</fields>

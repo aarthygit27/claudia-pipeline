@@ -15,5 +15,5 @@
         <members>Contact.contact_outbound_message</members>
         <name>WorkflowOutboundMessage</name>
     </types>
-    <version>39.0</version>
+    <version>40.0</version>
 </Package>
