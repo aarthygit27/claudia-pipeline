@@ -137,6 +137,12 @@ Assign Opportunity To Me
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     10s     1s      Click Element   //input[@value='Assign To Me']
     Verify That Owner Has Changed   ${owner}    Opportunity
 
+Assign Task To B2B Digisales
+    Go To Account       ${TASK_NAME}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Assigned To     B2B Digisales   ${TRUE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
+
 Cancel Edit
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       //input[@value='Cancel']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element is Visible   ${EDIT_BUTTON}      15s
@@ -698,9 +704,12 @@ Go to Today page and check that there is link to team's opportunity queue
     # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     10s     0.5s    Dismiss Alert
 
 Input Value For Attribute
-    [Arguments]     ${field}    ${value}
-    Wait Until Page Contains Element    //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
-    Input Text      //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']   ${value}
+    [Arguments]     ${field}    ${value}    ${filter_hidden}=${FALSE}
+    ${xpath}=   Set Variable If     ${filter_hidden}
+    ...     //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input'][not(@type='hidden')]
+    ...     //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
+    Wait Until Page Contains Element    ${xpath}
+    Input Text      ${xpath}   ${value}
 
 Input Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}
@@ -762,6 +771,7 @@ Login Page Should Be Open
 Logout From Salesforce
     Click Element       id=userNavButton
     Click Element       xpath=${LOGOUT_BUTTON}
+    Run Keyword And Ignore Error    Dismiss Alert
     Login Page Should Be Open
 
 Navigate To App
