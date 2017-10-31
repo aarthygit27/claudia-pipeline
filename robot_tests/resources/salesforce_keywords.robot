@@ -1121,9 +1121,9 @@ Update Win Probability
 
 Verify That Activity Cannot Be Linked to Group Account
     Click Feed Button
-    Run Keyword And Expect Error    ElementNotInteractableException*   Click Create Contact Person Button
-    Run Keyword And Expect Error    ElementNotInteractableException*   Click New Opportunity (Details Tab)
-    Run Keyword And Expect Error    ElementNotInteractableException*   Click Create Event Button
+    Run Keyword And Expect Error    ElementNotInteractableException*   Click New Item For Account      New Contact
+    Run Keyword And Expect Error    ElementNotInteractableException*   Click New Item For Account      New Opportunity
+    Run Keyword And Expect Error    ElementNotInteractableException*   Click New Item For Account      New Event
 
 Verify That Business Customer Is Terminated
     [Documentation]     Searches for a business customer and checks if the status is set
