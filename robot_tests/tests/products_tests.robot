@@ -228,13 +228,13 @@ Verify Sales Case from Multibella to contain correct data
     MUBE Verify That Case Attributes Are Populated Correctly
 
 # TODO
-Verify All The Information Of Product Order
-    Naming is correct (finnish)
-    Structure is correct (parent as the offering, options/vas/included services as child)
-    Business rules are correct (including mandatory, default products)
-    Charasteristics (attributes) are correct
-    Charasteristics values are correct
-    Prices are correct
+# Verify All The Information Of Product Order
+#     Naming is correct (finnish)
+#     Structure is correct (parent as the offering, options/vas/included services as child)
+#     Business rules are correct (including mandatory, default products)
+#     Charasteristics (attributes) are correct
+#     Charasteristics values are correct
+#     Prices are correct
 
 Availability Check Test Case
     [Arguments]     ${postal_code}=${EMPTY}
