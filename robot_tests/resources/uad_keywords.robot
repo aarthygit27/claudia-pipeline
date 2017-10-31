@@ -9,7 +9,7 @@ ${SEARCH_BUTTON}            HEADER_SEARC_BUTTON
 ${NEXT_BUTTON}              INTPAG_NEXT_BUTTON
 ${CLEAR_BUTTON}             HEADER_CLEAR_BUTTON
 ${UAD_USERNAME}             F11685
-${UAD_PASSWORD}             Lr@i4P#yR
+${UAD_PASSWORD}             Wonder25
 ${UAD_USERNAME_FIELD}       gwt-uid-3
 ${UAD_PASSWORD_FIELD}       gwt-uid-5
 
