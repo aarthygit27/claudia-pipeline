@@ -10,7 +10,7 @@ ET.register_namespace("", "http://soap.sforce.com/2006/04/metadata")
 rs_location = "endpoint_for_contact_outbound_message.remoteSite"
 endpoint_for_contact_outbound_message_remotesite = "https://emily.extra.sonera.fi:62100"
 
-path = os.path.join(PROJECT_ROOT, "endpoints/remoteSiteSettings/" + rs_location)
+path = os.path.join(PROJECT_ROOT, "endpoints", "remoteSiteSettings", rs_location)
 parsed_file = ET.parse(path)
 root = parsed_file.getroot()
 a = root.find("{http://soap.sforce.com/2006/04/metadata}" + "url")
@@ -23,7 +23,7 @@ rs_location = "GESB_AC.remoteSite"
 endpoint_for_gesb_ac_remotesite = "https://emily.extra.sonera.fi:62503"
 element_type = "url"
 
-path = os.path.join(PROJECT_ROOT, "endpoints/remoteSiteSettings/" + rs_location)
+path = os.path.join(PROJECT_ROOT, "endpoints", "remoteSiteSettings", rs_location)
 parsed_file = ET.parse(path)
 root = parsed_file.getroot()
 a = root.find("{http://soap.sforce.com/2006/04/metadata}" + element_type)
@@ -36,7 +36,7 @@ rs_location = "GESB_AV.remoteSite"
 endpoint_for_gesb_av_remotesite = "https://emily.extra.sonera.fi:62502"
 element_type = "url"
 
-path = os.path.join(PROJECT_ROOT, "endpoints/remoteSiteSettings/" + rs_location)
+path = os.path.join(PROJECT_ROOT, "endpoints", "remoteSiteSettings", rs_location)
 parsed_file = ET.parse(path)
 root = parsed_file.getroot()
 a = root.find("{http://soap.sforce.com/2006/04/metadata}" + element_type)
@@ -49,7 +49,7 @@ rs_location = "Contact.workflow"
 contact_workflow = "https://emily.extra.sonera.fi:62100/SFOutboundContactService"
 element_type = "endpointUrl"
 
-path = os.path.join(PROJECT_ROOT, "endpoints/workflows/" + rs_location)
+path = os.path.join(PROJECT_ROOT, "endpoints", "workflows", rs_location)
 parsed_file = ET.parse(path)
 root = parsed_file.getroot()
 a = root.find("{http://soap.sforce.com/2006/04/metadata}outboundMessages").find('{http://soap.sforce.com/2006/04/metadata}endpointUrl')
