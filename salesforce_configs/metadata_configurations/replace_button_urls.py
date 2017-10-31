@@ -9,6 +9,7 @@ sys.path.append(PROJECT_ROOT)
 oppo = "Opportunity.object"
 fileToUpdate = os.path.join(PROJECT_ROOT, "endpoints", "objects", oppo)
 textToSearch = "http://glock.stadi.sonera.fi"
+textToSearch2 = "http://donald.stadi.sonera.fi"
 textToReplace = "http://emily.stadi.sonera.fi"
 
 
@@ -17,6 +18,7 @@ filedata = f.read()
 f.close()
 
 newdata = filedata.replace(textToSearch, textToReplace)
+newdata = filedata.replace(textToSearch2, textToReplace)
 
 f = open(fileToUpdate,'w')
 f.write(newdata)
@@ -28,6 +30,7 @@ f.close()
 order = "Order.object"
 fileToUpdate = os.path.join(PROJECT_ROOT, "endpoints", "objects", order)
 textToSearch = "http://glock.stadi.sonera.fi"
+textToSearch2 = "http://donald.stadi.sonera.fi"
 textToReplace = "http://emily.stadi.sonera.fi"
 
 
@@ -36,6 +39,7 @@ filedata = f.read()
 f.close()
 
 newdata = filedata.replace(textToSearch, textToReplace)
+newdata = filedata.replace(textToSearch2, textToReplace)
 
 f = open(fileToUpdate,'w')
 f.write(newdata)
