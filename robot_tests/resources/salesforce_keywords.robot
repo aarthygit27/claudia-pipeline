@@ -1133,7 +1133,7 @@ Verify That Business Customer Is Terminated
     Wait Until Keyword Succeeds    10 min    30 s    Customer Details Page Should Contain    ${NEW_CUSTOMER_NAME}    ${busines_id}    Status      Terminated
 
 Verify That Create Contact Person Button Is Not Visible
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Not Visible    ${CREATE_CP_BUTTON}    10 s
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Not Visible    ${CREATE_CP_BUTTON}    20 s
 
 Verify That Contact Person Information is Correct
     [Arguments]         ${name}=Test ${TEST_CONTACT_PERSON_LAST_NAME}

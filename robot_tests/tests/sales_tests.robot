@@ -273,7 +273,6 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Open just created opportunity and update Win probability, add Competitor and Partner
     Add Solution Area With Quick Action
     Verify That Values Are Visible In Opportunity Layout
-    # Open Details View At Opportunity
     Open Details View At Opportunity
     Click CPQ At Opportunity View
     Add modelled product and unmodelled product to cart (CPQ)
