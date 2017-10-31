@@ -498,6 +498,11 @@ Enter mandatory (invalid) information and verify cp was not saved
     Click Create Contact Person Button
     Verify That Error Message Is Displayed
 
+Expand Item If Necessary
+    [Arguments]     ${item}
+    ${visible}=      Run Keyword And Return Status    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //div/a[text()='${item}']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       //div[@class='feeditemsummary']/p[text()='${item}']
+
 Extract MuBe CaseID From Opportunity
     Sleep   2       The browser needs to catch its breath or it will complain about a JavaScript error
     Reload Page
@@ -654,6 +659,8 @@ Go To Event
     ...                 need to be selected from an account. For other cases `Go to Account` should be used.
     [Arguments]     ${event}=${TEST_EVENT_SUBJECT}
     Log         Going to ${event}
+    Open Details Tab At Account View
+    Expand Item If Necessary    ${event}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //div/a[text()='${event}']
     ${frame}=       Get Account Tab Iframe Xpath    ${event}
     Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //h2[@class='pageDescription' and contains(text(),'${event}')]      20s
