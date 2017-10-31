@@ -278,7 +278,6 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Add modelled product and unmodelled product to cart (CPQ)
     Update Sales Type and Prices For unmodelled Product (CPQ)
     Click View Quote (CPQ)
-    # 10. Create Quote. Press Review Record and add Contact and Quote email text.
     Press Review Record and add Contact and Quote email text
     # Click Create Order (CPQ)
     # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
@@ -441,7 +440,6 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Go To Account   ${OPPORTUNITY_NAME}
-    Verify That Quality Rating Field Does Not Exist
     Set Opportunity Stage And Save      Negotiate and Close
     Go To Account   ${TASK_NAME}
     Verify That Quality Rating Field Exists

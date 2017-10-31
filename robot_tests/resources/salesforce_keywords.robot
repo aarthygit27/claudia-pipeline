@@ -29,6 +29,7 @@ Add Contact Person To Product Order
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button Again If There Are Multiple Contact Persons
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      20s
 
 Add Mandatory Contact Data
     [Documentation]    Fill mandatory contact person data with given or generated data. Sets lastname of created contact
@@ -283,6 +284,7 @@ Click Save Button Again If There Are Multiple Contact Persons
     Run Keyword And Ignore Error    Run Keywords    Wait Until Page Contains Element    //input[@title="Save"]      AND
     ...    Click Save Button
 
+
 Click To Create New Contact From Main Page
     [Documentation]     Clicks the button when the "Contacts" tab is open
     Run Inside Iframe   ${IFRAME}           Click Element   ${NEW_CONTACT_BUTTON}
@@ -390,8 +392,7 @@ Create New Opportunity For Customer
     ...             ${days}=1
     ...             ${expect_error}=${FALSE}
     Open Details Tab At Account View
-    # Click Feed Button
-    # Click New Opportunity (Details Tab)
+    Click Feed Button
     Click New Item For Account      New Opportunity
     ${variable_exists}=    Run Keyword And Return Status     Variable Should Exist     ${PRODUCT}
     Run Keyword Unless    ${variable_exists}    Set Test Variable   ${PRODUCT}      ${EMPTY}
@@ -857,14 +858,10 @@ Opportunity Should be Unassigned
 
 Rate Opportunity
     [Arguments]     ${rating}
-    Capture Page Screenshot
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${EDIT_BUTTON}      10s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Mouse Over      //td[contains(@id,'Pricebook')]
-    Capture Page Screenshot
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
-    Capture Page Screenshot
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select Value For Attribute      Quality Rating      ${rating}
-    Capture Page Screenshot
     Save Opportunity
 
 Save (Ignore Alert) Button Should Be Visible
@@ -885,7 +882,7 @@ Save Opportunity
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
     Run Keyword If      ${expect_error}     Verify That Error Messages Are Shown
-    ...     ELSE    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Element Is Visible   //div[@class='listHoverLinks']    10 s
+    ...     ELSE    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Element Is Visible   //div[@class='listHoverLinks']    30 s
 
 Search And Verify Account Is Found
     [Arguments]     ${target_account}   ${type}=${EMPTY}
