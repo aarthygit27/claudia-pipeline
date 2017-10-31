@@ -13,7 +13,10 @@ env = sys.argv[1].lower()
 
 conf = ConfigSectionMap(env)
 
-with open("build.properties", 'w') as f:
+build_properties = os.path.join(PROJECT_ROOT, "build.properties")
+print build_properties
+
+with open(build_properties, 'w') as f:
     f.write("sf.username = {0}\n".format(conf["username"]))
     f.write("sf.password = {0}{1}\n".format(conf["password"], conf["token"]))
     f.write("sf.serverurl = https://test.salesforce.com\n")
