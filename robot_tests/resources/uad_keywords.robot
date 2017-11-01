@@ -52,7 +52,8 @@ UAD Log in
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
 UAD Open Browser And Go To Login Page
-    Open Browser And Go To Login Page    ${UAD_PAGE}
+    Open Browser     ${UAD_PAGE}
+    Maximize Browser Window
 
 UAD Page Should Be Open
     Wait Until Page Contains Element        ${SEARCH_FIELD}
