@@ -14,7 +14,6 @@ env = sys.argv[1].lower()
 conf = ConfigSectionMap(env)
 
 build_properties = os.path.join(PROJECT_ROOT, "build.properties")
-print build_properties
 
 with open(build_properties, 'w') as f:
     f.write("sf.username = {0}\n".format(conf["username"]))
