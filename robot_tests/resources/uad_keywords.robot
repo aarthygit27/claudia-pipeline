@@ -51,7 +51,7 @@ UAD Log in
     Click Element       //span[text()='Kirjaudu sisään']
     Capture Page Screenshot
     Sleep       2
-    Press ESC On    //div[contains(@class,'v-Notification error')]"
+    Press ESC On    //div[contains(@class,'v-Notification error')]
     Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
