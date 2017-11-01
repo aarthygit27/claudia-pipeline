@@ -81,9 +81,17 @@ Prolonged Input Text
     [Documentation]    Setting input in crm with fast speed causes random special chars to appear in the input field.
     ...    We try to fix this by slowing selenium down when inputing text.
     ...    We return speed to normal after the text has been inputed.
+    Run Keyword With Delay      ${speed}    Input Text      ${locator}      ${text}
+    # ${old_speed_value}=    Set Selenium Speed    ${speed}
+    # Input Text    ${locator}    ${text}
+    # [Teardown]    Set Selenium Speed    ${old_speed_value}
+
+Run Keyword With Delay
+    [Arguments]     ${speed}    ${keyword}      @{args}
     ${old_speed_value}=    Set Selenium Speed    ${speed}
-    Input Text    ${locator}    ${text}
+    ${ret}=     Run Keyword    ${keyword}    @{args}
     [Teardown]    Set Selenium Speed    ${old_speed_value}
+    [Return]        ${ret}
 
 Run Inside Iframe
     [Arguments]     ${frame}    ${keyword}      @{args}

@@ -487,7 +487,7 @@ Edit Event Description and WIG Areas
 Edit Opportunity
     Open Details View At Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}      20s
 
 Enter mandatory information and save new contact
     [Arguments]     ${first_name}=${EMPTY}
@@ -828,7 +828,7 @@ Open Dashboard Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard    right
 
 Open Details Tab At Account View
-    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Details
+    Wait Until Keyword Succeeds    60s    1s     Click Account Tab Button And It Should Stay Open      Details
 
 Open Details View At Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${ACCOUNT_DETAILS}
@@ -1045,8 +1045,13 @@ Try To Create New Opportunity And It Should Fail
     Verify That Error Message Is Displayed
 
 Try To Save Opportunity And Expect Errors
+    [Documentation]     Click the save button, then sleep a moment so the page loads the "Saving..." button and then wait until
+    ...                 the save button is visible again. This way we ensure that if we try to save multiple times in a short
+    ...                 period, it will not recognize the old error messages as the current ones.
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
+    Sleep       0.5
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}       10s
     Verify That Error Messages Are Shown
 
 Type Account Name
@@ -1292,7 +1297,6 @@ Verify That Quality Rating Field Does Not Exist
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible   //td[.//span[text()='Quality Rating']]      10s
 
 Verify That Quality Rating Field Exists
-    Click Details Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[.//span[text()='Quality Rating']]      10s
 
 Verify That Quality Rating Has Correct Values
