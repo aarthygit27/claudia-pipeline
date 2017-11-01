@@ -50,6 +50,8 @@ UAD Log in
     Sleep       2
     Click Element       //span[text()='Kirjaudu sisään']
     Capture Page Screenshot
+    Press ESC On    ${UAD_PASSWORD_FIELD}
+    Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
 UAD Open Browser And Go To Login Page

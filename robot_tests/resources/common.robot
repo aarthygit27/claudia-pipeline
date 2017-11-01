@@ -72,6 +72,10 @@ Press Enter On
     [Arguments]     ${locator}
     Press Key       ${locator}      \\13
 
+Press ESC On
+    [Arguments]     ${locator}
+    Press Key       ${locator}      \\27
+
 Press Tab On
     [Arguments]     ${locator}
     Press Key       ${locator}      \\9
