@@ -40,10 +40,15 @@ UAD Go to Page And Log in
 
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
+    Capture Page Screenshot
     Run Keyword With Delay      1s      Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
+    Capture Page Screenshot
     Run Keyword With Delay      1s      Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
+    Capture Page Screenshot
     Click Element       ${UAD_PASSWORD_FIELD}
+    Capture Page Screenshot
     Click Element       //span[text()='Kirjaudu sisään']
+    Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
 UAD Open Browser And Go To Login Page
