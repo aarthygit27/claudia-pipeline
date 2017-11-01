@@ -41,6 +41,7 @@ UAD Go to Page And Log in
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
     Capture Page Screenshot
+    Sleep   2
     Run Keyword With Delay      3s      Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
     Capture Page Screenshot
     Run Keyword With Delay      3s      Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
@@ -49,9 +50,6 @@ UAD Log in
     Capture Page Screenshot
     Sleep       2
     Click Element       //span[text()='Kirjaudu sisään']
-    Capture Page Screenshot
-    Sleep       2
-    Press ESC On    //div[contains(@class,'v-Notification error')]
     Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
