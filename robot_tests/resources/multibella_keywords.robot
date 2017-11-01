@@ -395,9 +395,8 @@ MUBE Open All Cases Page
 
 MUBE Open Browser And Go To CRM Login Page
     [Documentation]    Open browser and goes to ${MUBE_SERVER}
-    Run Keyword If      '${BEHIND_PROXY}'=='True'   Open Browser And Go To Login Page (Proxy)   ${MUBE_SERVER}
-    ...     ELSE    Wait Until Keyword Succeeds    30 s     5 s    Open Browser    ${MUBE_SERVER}    ${BROWSER}
-    Maximize Browser Window
+    Open Browser And Go To Login Page   ${MUBE_SERVER}
+
 
 MUBE Open Browser And Login As CM User
     MUBE Open Browser And Go To CRM Login Page

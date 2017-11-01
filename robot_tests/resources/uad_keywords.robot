@@ -41,21 +41,18 @@ UAD Go to Page And Log in
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
     Capture Page Screenshot
-    Sleep   2
-    Run Keyword With Delay      3s      Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
+    Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
     Capture Page Screenshot
-    Run Keyword With Delay      3s      Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
+    Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
+    # Capture Page Screenshot
+    Run Keyword With Delay      1s      Click Element       ${UAD_PASSWORD_FIELD}
     Capture Page Screenshot
-    Click Element       ${UAD_PASSWORD_FIELD}
-    Capture Page Screenshot
-    Sleep       2
     Click Element       //span[text()='Kirjaudu sisään']
     Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
 UAD Open Browser And Go To Login Page
-    Open Browser    ${UAD_PAGE}
-    Maximize Browser Window
+    Open Browser And Go To Login Page    ${UAD_PAGE}
 
 UAD Page Should Be Open
     Wait Until Page Contains Element        ${SEARCH_FIELD}

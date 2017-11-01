@@ -54,9 +54,9 @@ Logout From All Systems and Close Browser
     Close Browser
 
 Open Browser And Go To Login Page
-    Run Keyword If      '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)
-    ...     ELSE        Open Browser        ${LOGIN_PAGE}       ${BROWSER}
-    Wait Until Page Contains Element     id=username
+    [Arguments]     ${page}=${LOGIN_PAGE}
+    Run Keyword If      '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)     ${page}
+    ...     ELSE        Open Browser        ${page}       ${BROWSER}
     Run Keyword If      '${BEHIND_PROXY}'=='True'   Set Window Size     ${1920}     ${1080}
     ...     ELSE        Maximize Browser Window
 
