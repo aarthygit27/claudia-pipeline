@@ -49,6 +49,8 @@ UAD Log in
     Capture Page Screenshot
     Click Element       //span[text()='Kirjaudu sisään']
     Capture Page Screenshot
+    ${ret}=     Run Keyword And Return Status       Wait until Element Is Visible   //div[@class='gwt-HTML']
+    Run Keyword If      ${ret}      Click Element       //span[text()='Kirjaudu sisään']
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
 UAD Open Browser And Go To Login Page
