@@ -191,7 +191,7 @@ Create Product Order And Verify It Was Created
     Log To Console      ${\n} Product: ${PRODUCT}
     Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
-    Verify That Opportunity Is Found With Search
+    Verify That Opportunity Is Found With Search And Go To Opportunity
     Create CPQ
     Verify Sales Case from Multibella to contain correct data
 

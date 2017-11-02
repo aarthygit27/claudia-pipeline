@@ -61,7 +61,7 @@ Create Product Order
     Log To Console      ${\n} Product: ${PRODUCT}
     Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
-    Verify That Opportunity Is Found With Search
+    Verify That Opportunity Is Found With Search And Go To Opportunity
     Add Price Book For Opportunity
     Run Keyword     Create CPQ ${product_amount}
 

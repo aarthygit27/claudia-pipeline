@@ -86,7 +86,7 @@ Sales Process: Create opportunity from Account
     Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found In Todays Page
-    Verify That Opportunity Is Found With Search
+    Verify That Opportunity Is Found With Search And Go To Opportunity
     Verify That Opportunity is Found From My All Open Opportunities
 
 Opportunity: Closing active opportunity as cancelled
@@ -492,7 +492,7 @@ Close active opportunity
     Login to Salesforce
     Go to Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
-    Verify That Opportunity Is Found With Search
+    Verify That Opportunity Is Found With Search And Go To Opportunity
     Set Opportunity Stage And Save      ${stage}    expect_error=${TRUE}
     Verify That Error Messages Are Shown
     Fill Close Reason And Comment And Save

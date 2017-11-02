@@ -1251,7 +1251,7 @@ Verify That Opportunity Is Found In Todays Page
     Open Todays Page
     Run Inside Iframe    ${IFRAME}      Wait Until Page Contains Element    //div[@id='chatter']//a[@title='${OPPORTUNITY_NAME}']    20 s
 
-Verify That Opportunity Is Found With Search
+Verify That Opportunity Is Found With Search And Go To Opportunity
     Close All Tabs
     Go to Account        ${OPPORTUNITY_NAME}
     Run Inside Iframe    ${ACCOUNT_FRAME}       Wait until Page Contains Element    //h2[contains(text(),'${OPPORTUNITY_NAME}')]
