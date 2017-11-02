@@ -52,7 +52,7 @@ UAD Log in
     # Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
     # Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
     # Just typing the password leaves a stupid "blabla connection is not secure" error open on top of the login button. Clicking somewhere closes that.
-    Run Keyword With Delay      1s      Click Element       //img
+    Run Keyword With Delay      1s      Press Tab On    ${UAD_PASSWORD_FIELD}
     Click Element       //span[text()='Kirjaudu sisään']
     Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
