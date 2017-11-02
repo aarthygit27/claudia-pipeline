@@ -40,20 +40,12 @@ UAD Go to Page And Log in
 
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
-    Sleep       10s
-    Capture Page Screenshot
     Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
-    Capture Page Screenshot
     Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
-    Capture Page Screenshot
     # Just typing the password leaves a stupid "blabla connection is not secure" error open on top of the login button. Clicking somewhere closes that.
-    Capture Page Screenshot
     Run Keyword With Delay      1s      Click Element       ${UAD_PASSWORD_FIELD}
-    Capture Page Screenshot
     Click Element       //span[text()='Kirjaudu sisään']
-    Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
-    Sleep       5s
 
 UAD Open Browser And Go To Login Page
     Open Browser     ${UAD_PAGE}
