@@ -40,8 +40,15 @@ UAD Go to Page And Log in
 
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
-    Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
-    Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
+    :FOR     ${i}   IN      F  1  1  6  8  5
+    \   Press Key   ${UAD_USERNAME_FIELD}   ${i}
+    \   Sleep   0.5
+
+    :FOR     ${i}   IN      W  o  n  d  e  r  2  5
+    \   Press Key   ${UAD_PASSWORD_FIELD}   ${i}
+    \   Sleep   0.5
+    # Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
+    # Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
     # Just typing the password leaves a stupid "blabla connection is not secure" error open on top of the login button. Clicking somewhere closes that.
     Run Keyword With Delay      1s      Click Element       ${UAD_PASSWORD_FIELD}
     Click Element       //span[text()='Kirjaudu sisään']
