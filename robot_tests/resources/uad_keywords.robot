@@ -47,6 +47,7 @@ UAD Log in
     Run Keyword With Delay      1s      Click Element       ${UAD_PASSWORD_FIELD}
     Click Element       //span[text()='Kirjaudu sisään']
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
+    Sleep       5s
 
 UAD Open Browser And Go To Login Page
     Open Browser     ${UAD_PAGE}
