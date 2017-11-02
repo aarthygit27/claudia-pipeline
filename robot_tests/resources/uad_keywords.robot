@@ -40,14 +40,18 @@ UAD Go to Page And Log in
 
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
-    :FOR     ${i}   IN      F  1  1  6  8  5
-    \   Press Key   ${UAD_USERNAME_FIELD}   ${i}
-    \   Sleep   0.5
+    Click Element       ${UAD_USERNAME_FIELD}
+    Execute Javascript      document.getElementById("${UAD_USERNAME_FIELD}").value= "${UAD_USERNAME}";
+    Click Element       ${UAD_PASSWORD_FIELD}
+    Execute Javascript      document.getElementById("${UAD_PASSWORD_FIELD}").value= "${UAD_PASSWORD}";
+    # :FOR     ${i}   IN      F  1  1  6  8  5
+    # \   Press Key   ${UAD_USERNAME_FIELD}   ${i}
+    # \   Sleep   0.5
 
-    Capture Page Screenshot
-    :FOR     ${i}   IN      W  o  n  d  e  r  2  5
-    \   Press Key   ${UAD_PASSWORD_FIELD}   ${i}
-    \   Sleep   0.5
+    # Capture Page Screenshot
+    # :FOR     ${i}   IN      W  o  n  d  e  r  2  5
+    # \   Press Key   ${UAD_PASSWORD_FIELD}   ${i}
+    # \   Sleep   0.5
     Capture Page Screenshot
     # Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
     # Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
