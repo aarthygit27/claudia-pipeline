@@ -40,6 +40,7 @@ UAD Go to Page And Log in
 
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
+    Sleep    30s
     # Click Element       ${UAD_USERNAME_FIELD}
     # Execute Javascript      document.getElementById("${UAD_USERNAME_FIELD}").value= "${UAD_USERNAME}";
     # Click Element       ${UAD_PASSWORD_FIELD}
