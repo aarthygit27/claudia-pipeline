@@ -623,9 +623,9 @@ MUBE Verify That Contact Person Information Is Updated
     MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      ${OLD_PHONE}        ${NEW_PHONE}
     MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}            ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
     MUBE Check History Old And New Value For Contact Person Attribute    Gender                 ${EMPTY}            ${DEFAULT_GENDER}
-    MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${NEW_3RD_PARTY_CONTACT}
-    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             ${EMPTY}            ${NEW_SALES_ROLE}
-    MUBE Check History Old And New Value For Contact Person Attribute    SMS                    PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
+    MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${DEFAULT_3RD_PARTY_CONTACT_UPDATED}
+    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             ${EMPTY}            ${DEFAULT_SALES_ROLE_UPDATED}
+    MUBE Check History Old And New Value For Contact Person Attribute    SMS                    PermitByDefault     ${DEFAULT_MARKETING_SMS_PERMISSION_UPDATED}
 
 MUBE Verify That Contact Person From Tellu Is Updated
     Sleep    30 s    Wait For All Contact Person Changes to be applied.

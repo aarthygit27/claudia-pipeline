@@ -1039,6 +1039,11 @@ Show More
     ${xpath}=   Set Variable    //div[.//h3[text()='${page}'] and contains(@class,'listRelatedObject')]//a[starts-with(text(),'Show')]
     Wait Until Keyword Succeeds     10s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${xpath}
 
+Submit Quote For Approval
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@class='pbHeader']//input[@value='Submit for Approval']   30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='pbHeader']//input[@value='Submit for Approval']
+    Dismiss Alert
+
 Try To Create New Opportunity And It Should Fail
     Open Details Tab At Account View
     Create New Opportunity For Customer     expect_error=${TRUE}
@@ -1071,15 +1076,12 @@ Update Contact Person In Salesforce
     Set Test Variable   ${OLD_EMAIL}
     Set Test Variable   ${OLD_PHONE}
     Set Test Variable   ${NEW_EMAIL}
-    Set Test Variable   ${NEW_SALES_ROLE}                   Business Contact
-    Set Test Variable   ${NEW_MARKETING_SMS_PERMISSION}     Permit
-    Set Test Variable   ${NEW_3RD_PARTY_CONTACT}            Yes
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Email   ${NEW_EMAIL}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Phone   ${NEW_PHONE}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Business Card Title    ${business_card_title}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Gender              1 - ${DEFAULT_GENDER.lower()}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Sales Role          ${NEW_SALES_ROLE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Marketing - SMS     ${NEW_MARKETING_SMS_PERMISSION.upper()}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Sales Role          ${DEFAULT_SALES_ROLE_UPDATED}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Marketing - SMS     ${DEFAULT_MARKETING_SMS_PERMISSION_UPDATED.upper()}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Checkbox     //td[./label[text()='3rd Party Contact']]/following-sibling::td//input
     Sleep    2
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button

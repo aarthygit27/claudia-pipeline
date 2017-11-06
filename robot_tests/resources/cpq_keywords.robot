@@ -145,6 +145,10 @@ Recognize Product Needs Additional Information (CPQ)
     ${s}=   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Wait Until Element is Visible    ${xpath}   30s
     [Return]    ${s}
 
+Return To Quote (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //p[text()='Return to Quote']   30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //p[text()='Return to Quote']
+
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
     Search For Product (CPQ)    ${target_product}
