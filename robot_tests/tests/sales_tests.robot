@@ -448,6 +448,7 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
 
 UAD Login Test
     [Tags]      uad_asdf
+    [Setup]     No Operation
     Login To UAD
 
 
