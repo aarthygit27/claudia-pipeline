@@ -547,16 +547,14 @@ Fill Event Data
     [Documentation]     Enter following data: Subject, Event Type, Reason, set Start and End Date in future
     [Arguments]     ${contact_person}=${DEFAULT_TEST_CONTACT}
     ...             ${account}=${DEFAULT_TEST_ACCOUNT}
-    ...             ${type}=Meeting
-    ...             ${reason}=New Customer
+    ...             ${type}=${DEFAULT_EVENT_TYPE}
+    ...             ${reason}=${DEFAULT_EVENT_REASON}
     ${subject}=     Create Unique Name      Test Event Subject
     ${start_date}=      Get Date From Future    1
     ${end_date}=        Get Date From Future    2
-    Set Test Variable   ${EVENT_TYPE}       ${type}
-    Set Test Variable   ${EVENT_REASON}     ${reason}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Subject      ${subject}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Event Type   ${EVENT_TYPE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Reason       ${EVENT_REASON}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Event Type   ${type}
+    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Reason       ${reason}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Start    ${start_date}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      End      ${end_date}
     Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_CONTACT_PERSON_FIELD}       ${contact_person}
@@ -1200,10 +1198,12 @@ Verify That Error Messages Are Shown
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_COMMENT_FIELD}/div[@class='errorMsg']
 
 Verify That Event Has Correct Data
+    [Arguments]     ${type}=${DEFAULT_EVENT_TYPE}
+    ...             ${reason}=${DEFAULT_EVENT_REASON}
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}        Wait Until Page Contains Element    //td[text()='Subject']/following-sibling::td/div[text()='${TEST_EVENT_SUBJECT}']    15s
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Event Type']/following-sibling::td/div     ${EVENT_TYPE}
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Reason']/following-sibling::td/div         ${EVENT_REASON}
+    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Event Type']/following-sibling::td/div     ${type}
+    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Reason']/following-sibling::td/div         ${reason}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Related To']/following-sibling::td/div     ${DEFAULT_TEST_ACCOUNT}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Name']/following-sibling::td/div           ${DEFAULT_TEST_CONTACT}
 

@@ -33,4 +33,6 @@ ${DEFAULT_TEST_ACCOUNT_CITY}                Vantaa
 ${DEFAULT_SALES_ROLE_UPDATED}               Business Contact
 ${DEFAULT_MARKETING_SMS_PERMISSION_UPDATED}  Permit
 ${DEFAULT_3RD_PARTY_CONTACT_UPDATED}        Yes
+${DEFAULT_EVENT_TYPE}                       Meeting
+${DEFAULT_EVENT_REASON}                     New Customer
 
