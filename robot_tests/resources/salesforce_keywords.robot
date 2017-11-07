@@ -308,7 +308,8 @@ Close All Specific Tabs
     Should Be Equal As Integers     ${current}      ${0}
 
 Close All Tabs
-    Click Element   //div[@class='x-tab-tabmenu-right']
+    ${menu_open}=   Run Keyword And Return Status   Page Should Contain Element     //div[contains(@class,'x-tab-tabmenu-right') and contains(@class,'x-tab-tabmenu-show')]
+    Run Keyword Unless      ${menu_open}    Click Element   //div[@class='x-tab-tabmenu-right']
     Click Element   //span[text()='Close all primary tabs']
     Run Keyword And Ignore Error    Discard Changes
 
@@ -1233,7 +1234,9 @@ Verify That Opportunity is Found From My All Open Opportunities
     ${first_letter}=       Set Variable    ${OPPORTUNITY_NAME[0].upper()}
     Run Inside Iframe   ${IFRAME}   Click Element   //a/span[text()='${first_letter}']
     Run Inside Iframe   ${IFRAME}   Wait For Load
-    Run Keyword And Ignore Error    Run Inside Iframe   ${IFRAME}   Click Element   //a[./img[@class='first']]
+    # Ensure we're on the first page
+    Run Inside Iframe   ${IFRAME}   Input Text      //input[@class='pageInput']     1
+    Run Inside Iframe   ${IFRAME}   Press Enter On  //input[@class='pageInput']
     ${pages}=   Run Inside Iframe   ${IFRAME}   Execute Javascript      return Number(document.evaluate("//div[@class='paginator']//span[@class='right']/input", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getAttribute("maxlength"));
     :FOR   ${i}  IN RANGE   ${pages}
     \   ${opportunity_found}=      Run Keyword And Return Status       Run Inside Iframe    ${IFRAME}   Page Should Contain Element     //span[text()='${OPPORTUNITY_NAME}']
