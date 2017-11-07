@@ -101,6 +101,9 @@ TellU Open Contact Person Editor And Verify
     Click Element    ${TELLU_CONTACT_PERSON_LINK}
     Wait Until Keyword Succeeds    5s    1s     Select Window    ${TELLU_EDIT_CONTACT_PERSON_PAGE_TITLE}
 
+TellU Refresh Search
+    Click Element   ${TELLU_REFRESH_SEARCH_BUTTON}
+
 TellU Search Contact Person By Attribute
     [Arguments]    ${attribute}     ${value}
     Wait Until Element Is Visible   //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input
@@ -109,17 +112,17 @@ TellU Search Contact Person By Attribute
     Click Element    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}
     Wait Until Element Is Visible    ${TELLU_SEARCH_RESULT_PAGE_HEADER}    30 s
 
-TellU Search Result Page Should Contain Contact Person With Name
-    [Arguments]    ${contact_person_last_name}
-    Wait Until Page Contains Element    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}      10s
+TellU Show All Contact Person In Search Results
+    Wait Until Page Contains Element    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}      60s
     Unselect Checkbox    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}
+    Sleep   10
     #TODO: this is only needed when there is a lot of contact persons. Fix this to be used on when needed.
     Run Keyword And Ignore Error    Click Element    ${TELLU_CONTACT_PERSON_SELECT_ALL_BUTTON}
-    TellU Page Should Contain Contact Person Last Name    ${contact_person_last_name}
+    Sleep   5
 
 TellU Page Should Contain Contact Person Last Name
     [Arguments]    ${contact_person_last_name}
-    Wait Until Page Contains Element    //tr[./td/div[contains(text(),'Search Result')]]/following-sibling::tr//p[text()='${contact_person_last_name}']     10s
+    Wait Until Page Contains Element    //tr//p[text()='${contact_person_last_name}']     60s
 
 TellU Select Contact Person
     [Arguments]    ${contact_person_last_name}

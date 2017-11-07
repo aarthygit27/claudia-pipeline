@@ -328,6 +328,7 @@ Create in SalesForce and in MultiBella a new Contact Person
     Go To Salesforce and Login
     Create New Contact Person For Customer
     Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
+    Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
     MUBE Logout CRM
@@ -359,8 +360,6 @@ Sales Process: Update Sales Plan of an Account which you are not owner
 
 Create/Update new Contact Person in TellU
     [Tags]      BQA-119
-    # 1. Create a new Contact Person in TellU with all data populated
-    # 2. Update existing Contact Person in TellU, use several attributes
     Create And Update Contact Person In TellU
     Contact Person Should Be Updated In MultiBella
     Close Browser
@@ -575,8 +574,13 @@ Contact Persons Should Be Visible in TellU
     TellU Go to Login Page And Login
     TellU Open Contact Person Editor
     TellU Search Contact Person By Attribute    Customer Name    ${DEFAULT_TEST_ACCOUNT}
-    TellU Search Result Page Should Contain Contact Person With Name    ${FIRST_CONTACT_PERSON}
-    TellU Search Result Page Should Contain Contact Person With Name    ${SECOND_CONTACT_PERSON}
+    TellU Show All Contact Person In Search Results
+    Wait Until Keyword Succeeds     5min    5s      Contact Persons Should Appear In TellU
+
+Contact Persons Should Appear In TellU
+    TellU Page Should Contain Contact Person Last Name    ${FIRST_CONTACT_PERSON}
+    TellU Page Should Contain Contact Person Last Name    ${SECOND_CONTACT_PERSON}
+    [Teardown]      TellU Refresh Search
 
 Create And Update Contact Person In TellU
     TellU Go to Login Page And Login

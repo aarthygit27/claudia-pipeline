@@ -434,7 +434,7 @@ MUBE Save Contact Person
     MUBE Wait For Load
     ${unvalidated_address}=     Run Keyword And Return Status   Element Should Be Visible    ${ADDRESS_VALIDATION_MODAL_YES_BUTTON}
     ${update_button}=           Run Keyword And Return Status   Element Should Be Visible    //a[contains(text(), 'Update')]
-    Run Keyword Unless     ${unvalidated_address} or ${update_button}   Fail
+    Run Keyword Unless     ${unvalidated_address} or ${update_button}   Run Keywords    Capture Page Screenshot     AND     Fail
 
 MUBE Search And Select Customer With Name
     [Arguments]    ${partial_name}
