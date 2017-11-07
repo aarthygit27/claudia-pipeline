@@ -450,6 +450,7 @@ UAD Login Test
     [Tags]      uad_asdf
     [Setup]     No Operation
     Login To UAD
+    [Teardown]  No Operation
 
 
 *** Keywords ***
@@ -539,7 +540,7 @@ Wait Until Contact Person Is Found In MultiBella
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Log to Console    ${status}
-    ${ret}=     Set Variable      FAILED
+    ${passed}=     Set Variable      FAILED
     ${new_close_reason}=        Set Variable If         '${status}'=='Won'
     ...     01 Relationship     09 Customer Postponed
     Close active Opportunity    ${stage}    ${status}       ${original_stage}
