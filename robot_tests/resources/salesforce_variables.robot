@@ -3,7 +3,7 @@ ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${IFRAME}                                   //iframe
 ${NAVIGATORTAB}                             //li[contains(@id, 'navigatortab__scc-pt')]
-${LOGOUT_BUTTON}                            //div[@id='userNav-menuItems']//a[text()='Logout']
+${LOGOUT_BUTTON}                            //a[@title='Logout']
 ${LOOKUP_SEARCH_FIELD}                      id=lksrch
 ${LOOKUP_SEARCH_GO_BUTTON}                  //input[@title='Go!']
 
