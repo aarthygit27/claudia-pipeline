@@ -447,9 +447,10 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Verify That Quality Rating Field Exists
 
 UAD Login Test
-    [Tags]      uad_asdf
+    [Tags]      uad_asdf    wip
     [Setup]     No Operation
-    Login To UAD
+    UAD Open Browser And Go To Login Page
+    UAD Log in
     [Teardown]  No Operation
 
 
