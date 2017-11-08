@@ -70,7 +70,7 @@ Update Contact Person in SalesForce
     [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
     ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
     ...         Close Tabs And Logout
-    Go To Salesforce and Login      Sales Admin User
+    Go To Salesforce and Login
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct

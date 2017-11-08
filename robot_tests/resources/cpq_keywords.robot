@@ -37,7 +37,6 @@ Click CPQ At Opportunity View
 
 Click CPQ At Quote View
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${QUOTE_CPQ_BUTTON}    30 seconds
-    Capture Page Screenshot
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${QUOTE_CPQ_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SHOPPING_CART}    30s
 
