@@ -53,8 +53,8 @@ Click Create Quote (CPQ)
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_QUOTE}
 
 Click Next (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //*[text()='Next']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   //*[text()='Next']
 
 Click Save Order (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SAVE_ORDER_BUTTON}    30 seconds
@@ -131,6 +131,19 @@ Fill Required Information For Microsoft Office 365
     ${email}=       Create Unique Email
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisäsähköpostiosoite')]]/following-sibling::div//input      ${email}
+
+Handle Credit Score (CPQ)
+    [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
+    ${success}=     Set Variable    (normalize-space()='Credit Score Check Passed' and @msg='Success')
+    ${failure}=     Set Variable    (normalize-space()='Credit Score Not Acceptable' and @msg='Warning')
+    ${xpath}=   Set Variable    //div[${success} or ${failure}]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    30s
+    ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${success}]
+    Run Keyword If      ${credit_score_passed}      Click Next (CPQ)
+    Run Keyword If      ${credit_score_passed}      Click View Quote And Go Back To CPQ
+    Run Keyword If      ${credit_score_passed}      Return From Keyword
+    Return To Quote (CPQ)
+    Click CPQ At Opportunity View
 
 Load More Products (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       //a[contains(text(),'Load More')]    20s

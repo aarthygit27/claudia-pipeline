@@ -214,7 +214,7 @@ Create CPQ
     Click Next (CPQ)
     Select Sales Type For Order (CPQ)
     Click Next (CPQ)
-    Click View Quote And Go Back To CPQ
+    Handle Credit Score (CPQ)
     Click Create Order (CPQ)
     # Click View Record (CPQ)
     # Click Create Assets (CPQ)
