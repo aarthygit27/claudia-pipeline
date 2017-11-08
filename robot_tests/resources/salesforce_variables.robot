@@ -25,6 +25,7 @@ ${NEW_OPPORTUNITY_BUTTON}                   //input[contains(@title,'New Opportu
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
 ${OPPORTUNITY_SAVE_BUTTON}                  //h2[contains(text(), 'Opportunity Edit')]/../following-sibling::td//input[@title='Save']
 ${OPPORTUNITY_CPQ_BUTTON}                   //h2[contains(text(), 'Opportunity Detail')]/../following-sibling::td//input[@title='CPQ']
+${QUOTE_CPQ_BUTTON}                         //h2[contains(text(), 'Quote Detail')]/../following-sibling::td//input[@title='CPQ']
 ${OPPO_EDIT_TITLE}                          //h1[contains(text(),'Opportunity Edit')]
 
 # ${OPPO_INFO_OPPO_NAME_FIELD}                //label[contains(text(), 'Opportunity Name')]/../following-sibling::*//input

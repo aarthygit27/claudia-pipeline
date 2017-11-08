@@ -6,6 +6,7 @@ Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robo
 
 *** Variables ***
 ${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
+${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
 
 *** Keywords ***
 
@@ -32,7 +33,13 @@ Add Random Product To Cart (CPQ)
 Click CPQ At Opportunity View
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPORTUNITY_CPQ_BUTTON}    30 seconds
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${OPPORTUNITY_CPQ_BUTTON}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']    30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SHOPPING_CART}    30s
+
+Click CPQ At Quote View
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${QUOTE_CPQ_BUTTON}    30 seconds
+    Capture Page Screenshot
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${QUOTE_CPQ_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SHOPPING_CART}    30s
 
 Click Create Assets (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ASSETS}    30 seconds
@@ -143,7 +150,7 @@ Handle Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
-    Click CPQ At Opportunity View
+    Click CPQ At Quote View
 
 Load More Products (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       //a[contains(text(),'Load More')]    20s
