@@ -67,12 +67,16 @@ Sales Admin: Change Account owner
 
 Update Contact Person in SalesForce
     [Tags]      BQA-117     BQA-109
-    Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
+    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
+    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
+    ...         Close Tabs And Logout
     Go To Salesforce and Login      Sales Admin User
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct
     Update Contact Person in Salesforce
+    Close Tabs And Logout
+    Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Information Is Updated
     TellU Go to Login Page And Login
@@ -172,8 +176,10 @@ Sales Process: Create/update Sales Plan
 
 Contact: Update contact
     [Tags]      BQA-23
+    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
+    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
+    ...         Close Tabs And Logout
     Go To Salesforce and Login
-    Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct
