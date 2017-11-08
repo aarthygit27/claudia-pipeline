@@ -1329,7 +1329,7 @@ Verify That Sales Plan Update History Is Correct
 
 Verify That Sales Role Is Updated
     [Arguments]         ${role}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //td[.//span[text()[contains(.,'Sales Role')]]]/following-sibling::td/div[text()='${role}']
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element     //td[.//span[text()[contains(.,'Sales Role')]]]/following-sibling::td/div[text()='${role}']    20s
 
 Verify That Updated Values Are Visible In Sales Plan
     ${frame}=           Get Account Tab Iframe Xpath    Sales Plan
