@@ -188,7 +188,7 @@ MUBE Create New Business Customer With Language
     MUBE Wait For Load
     # For some reason address input field data is cleared if the planets and the galaxy aren't aligned. So we must try again.
     ${status}=    Run Keyword And Return Status    MUBE Click Address Validation Modal Yes Button
-    Run Keyword Unless    ${status}    MUBE Fill In Address Again And Finish Creation
+    Run Keyword If    ${status}    MUBE Fill In Address Again And Finish Creation
     MUBE Verify That Customer Order Status Is Set To Finished
 
 MUBE Create New Contact Person For Business Customer
@@ -239,6 +239,7 @@ MUBE Fill Address Information With Address Type
     Run Keyword If    '${address_type}' == 'PO Box'    MUBE Set Form Input And Press Enter    Address    PO Box Number    347
 
 MUBE Fill In Address Again And Finish Creation
+    MUBE Wait For Load
     MUBE Fill In Address Information
     MUBE Fill In Address Information    Visiting Address
     MUBE Click Blue Button    Create Customer
