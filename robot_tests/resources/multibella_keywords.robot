@@ -360,7 +360,7 @@ MUBE Handle Login
     Wait Until Page Contains Element    ${MUBE_LOGIN_FIELD}
     Run Keyword And Ignore Error    Set Global Variable    ${USED_USERNAME}    ${username}
     Run Keyword And Ignore Error    Set Global Variable    ${USED_PASSWORD}    ${password}
-    MUBE Prolonged Input Text    ${MUBE_LOGIN_FIELD}    ${used_username}
+    Prolonged Input Text    ${MUBE_LOGIN_FIELD}    ${used_username}
     Input Password    ${MUBE_PASSWORD_FIELD}    ${used_password}
     Submit Form    _58_fm
     MUBE Wait For Load
@@ -418,15 +418,6 @@ MUBE Open Tab
     ${xpath}=    Set Variable    //div[contains(@class, 'tab')]/a[contains(text(), '${title}')]
     MUBE Click Element With Javascript    ${xpath}
     Wait Until Element Is Visible    //div[contains(@class, "selected")]/a[contains(text(), "${title}")]    5 s
-
-MUBE Prolonged Input Text
-    [Arguments]    ${locator}    ${text}
-    [Documentation]    Setting input in crm with fast speed causes random special chars to appear in the input field.
-    ...    We try to fix this by slowing selenium down when inputing text.
-    ...    We return speed to normal after the text has been inputed.
-    ${old_speed_value}=    Set Selenium Speed    1.3 seconds
-    Input Text    ${locator}    ${text}
-    [Teardown]    Set Selenium Speed    ${old_speed_value}
 
 MUBE Save Contact Person
     Run Keyword And Ignore Error    Click Visible Element    ${CP_SAVE_BUTTON}
@@ -511,7 +502,7 @@ MUBE Set Filter Input
     [Arguments]    ${title}    ${value}
     ${xpath}=    Set Variable    xpath=//div[@class = 'field' and ./label[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), translate("${TITLE}", 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))]]//input
     Wait Until Page Contains Element    ${xpath}
-    MUBE Prolonged Input Text    ${xpath}    ${value}
+    Prolonged Input Text    ${xpath}    ${value}
 
 MUBE Set Filter Select
     [Arguments]    ${title}    ${value}
@@ -527,8 +518,8 @@ MUBE Set Form Input
     Wait Until Element Is Visible    ${xpath}
     Click Element    ${xpath}
     MUBE Wait For Load
-    MUBE Prolonged Input Text    ${xpath}    ${value}
-    Press Key    ${xpath}    \\9
+    Prolonged Input Text    ${xpath}    ${value}
+    Press Tab On    ${xpath}
     MUBE Wait For Load
 
 MUBE Set Form Input And Press Enter
@@ -540,7 +531,7 @@ MUBE Set Form Input And Press Enter
     Wait Until Element Is Visible    ${xpath}
     Click Element    ${xpath}
     MUBE Wait For Load
-    MUBE Prolonged Input Text    ${xpath}    ${value}
+    Prolonged Input Text    ${xpath}    ${value}
     Press Enter On    ${xpath}
     MUBE Wait For Load
 
