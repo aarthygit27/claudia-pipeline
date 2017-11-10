@@ -77,6 +77,19 @@ Add Price Book For Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Save Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']       20S
 
+Add Product To Opportunity
+    [Arguments]     ${product_name}=ADSL-modeemi
+    Open Details View At Opportunity
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //input[@value='Add Product']   10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Add Product']
+    ${frame}=       Wait Until Keyword Succeeds     10s     1s      Get Opportunity Iframe Xpath    ${OPPORTUNITY_NAME}
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element   //input[../../following-sibling::td[.//span[text()='${product_name}']]]      10s
+    Run Inside Iframe   ${frame}    Click Element   //input[../../following-sibling::td[.//span[text()='${product_name}']]]
+    Run Inside Iframe   ${frame}    Click Element   //input[@value='Select']
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //input[contains(@id,'Quantity')]   10s
+    Run Inside Iframe   ${frame}    Input Text    //input[contains(@id,'Quantity')]   1
+    Run Inside Iframe   ${frame}    Click Save Button
+
 Add Quote Email Text To Product Order
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      20s
     Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
