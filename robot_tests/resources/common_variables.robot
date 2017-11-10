@@ -22,7 +22,7 @@ ${DEFAULT_COUNTRY_UPDATED}                  Sweden
 ${DEFAULT_BUSINESS_CARD_TITLE}              Chief of Chiefs
 ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}      Slave of Slaves
 ${DEFAULT_GENDER}                           Male
-${DEFAULT_TEST_ACCOUNT}                     Juleco
+${DEFAULT_TEST_ACCOUNT}                     Gavetec Oy
 ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}         2030101-1
 ${DEFAULT_TEST_ACCOUNT_CUSTOMER_ID}         1041691273
 ${DEFAULT_TEST_ACCOUNT_AIDA_ID}             951878
