@@ -7,6 +7,8 @@ Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robo
 *** Variables ***
 ${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
 ${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
+${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
+${CREDIT_SCORE_FAILURE}     (normalize-space()='Credit Score Not Acceptable' and @msg='Warning')
 
 *** Keywords ***
 
@@ -61,6 +63,11 @@ Click Create Quote (CPQ)
 Click Next (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   //*[text()='Next']
+
+Click Next After Successful Credit Score (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    Credit Score Validation_nextBtn      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   Credit Score Validation_nextBtn
+
 
 Click Save Order (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SAVE_ORDER_BUTTON}    30 seconds
@@ -140,12 +147,10 @@ Fill Required Information For Microsoft Office 365
 
 Handle Credit Score (CPQ)
     [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
-    ${success}=     Set Variable    (normalize-space()='Credit Score Check Passed' and @msg='Success')
-    ${failure}=     Set Variable    (normalize-space()='Credit Score Not Acceptable' and @msg='Warning')
-    ${xpath}=   Set Variable    //div[${success} or ${failure}]
+    ${xpath}=   Set Variable    //div[${CREDIT_SCORE_SUCCESS} or ${CREDIT_SCORE_FAILURE}]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    30s
-    ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${success}]
-    Run Keyword If      ${credit_score_passed}      Click Next (CPQ)
+    ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
+    Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
