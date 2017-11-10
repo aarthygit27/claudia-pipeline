@@ -451,13 +451,6 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Go To Account   ${TASK_NAME}
     Verify That Quality Rating Field Exists
 
-UAD Login Test
-    [Tags]      uad_asdf    wip
-    [Setup]     No Operation
-    UAD Open Browser And Go To Login Page
-    UAD Log in
-    [Teardown]  No Operation
-
 
 *** Keywords ***
 
@@ -500,6 +493,7 @@ Close active opportunity
     Go to Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
     Verify That Opportunity Is Found With Search And Go To Opportunity
+    Add Product To Opportunity
     Set Opportunity Stage And Save      ${stage}    expect_error=${TRUE}
     Verify That Error Messages Are Shown
     Fill Close Reason And Comment And Save
