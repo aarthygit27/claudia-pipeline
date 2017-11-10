@@ -3,6 +3,8 @@ Resource            ${PROJECTROOT}${/}resources${/}salesforce_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}multibella_keywords.robot
 
 #Suite Setup         Open Browser And Go To Login Page
+Suite Teardown      Close All Browsers
+
 Test Setup          Run Keywords    Open Browser And Go To Login Page    AND    Go to Salesforce And Login
 Test Teardown       Close Browser
 
