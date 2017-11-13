@@ -28,8 +28,8 @@ Create Unique Phone Number
 
 Create Unique Name
     [Arguments]     ${prefix}
-    ${numbers}=     Generate Random String    8    [NUMBERS]
-    ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${numbers}      ${prefix} ${numbers}
+    ${timestamp}=   Get Current Date    result_format=%Y%m%d-%H%M%S
+    ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${timestamp}      ${prefix} ${timestamp}
     [Return]        ${name}
 
 Get Date From Future
