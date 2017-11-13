@@ -145,6 +145,11 @@ App Should Be Open
     ${app_open}=        App Is Open     ${app_name}
     Should Be True      ${app_open}
 
+Approve Quote
+    Open Browser And Go to Login Page
+    Go To Salesforce And Login      B2B DigisalesManager
+    Open Chatter
+
 Assign Opportunity To Me
     [Arguments]     ${owner}=B2B DigiSales
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     10s     1s      Click Element   //input[@value='Assign To Me']
@@ -775,6 +780,9 @@ Login to Salesforce as Sales Admin User
 
 Login To Salesforce as Product Manager
     Login To Salesforce     ${PRODUCT_MANAGER_USER}     ${PASSWORD}
+
+Login To Salesforce as B2B DigisalesManager
+    Login To Salesforce     ${B2B_DIGISALES_MANAGER}    ${PASSWORD}
 
 Login Page Should Be Open
     Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE}
