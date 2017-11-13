@@ -38,14 +38,15 @@ class RestWrapper(object):
             for line in lines:
                 line = line.strip()
                 try:
-                    firstname, lastname, alias, email, profile, role, aboutme = [x.strip() for x in line.split(",")]
+                    firstname, lastname, alias, email, profile, role, aboutme, parentrole = [x.strip() for x in line.split(",")]
                     json_data = {"FirstName" : firstname,
                                 "LastName": lastname,
                                 "Alias": alias,
                                 "Email": email,
                                 "Profile": profile,
                                 "Role": role,
-                                "AboutMe": aboutme}
+                                "AboutMe": aboutme,
+                                "ParentRole": parentrole}
                     wiki_users[alias] = json_data
                 except ValueError:
                     print "Unable to split line: \'", line, "\'. Ignoring the line."
@@ -61,7 +62,6 @@ class RestWrapper(object):
             alias = u["Alias"]
             ids[alias] = i
         return ids
-
 
     def _generate_new_user_data(self, user_info, profile_id, role_id, environment):
         '''
@@ -92,7 +92,6 @@ class RestWrapper(object):
         new_user["UserPermissionsSupportUser"] = 1  # Change the top banner to be Telia purple instead of blue
 
         return json.dumps(new_user)
-
 
     def _get_permission_set_id(self):
         url ="/query/?q=select+Id,name+from+permissionset+where+name+=+'Sales_Console'"
@@ -132,12 +131,12 @@ class RestWrapper(object):
             r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+From+Profile+WHERE+Name+=+'Standard+User'", headers=self._headers)
         return r.json()["records"][0]["Id"]
 
-    def get_user_role_id_from_salesforce(self, name):
+    def get_user_role_id_from_salesforce(self, name, parent_role_id):
         '''
         This method should only be called when the "role" is filled in the Wiki list
         '''
         name =  name.strip().replace(" ", "+")
-        r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+From+UserRole+WHERE+Name+=+'{0}'".format(name), headers=self._headers)
+        r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+From+UserRole+WHERE+Name+=+'{0}'+AND+ParentRoleId='{1}'".format(name, parent_role_id), headers=self._headers)
         try:
             return r.json()["records"][0]["Id"]
         except:
@@ -166,7 +165,6 @@ class RestWrapper(object):
                 self.set_permission_set_rights(user_info["Alias"], id)
             # Creating a user with REST API doesn't send account creation email immediately. Reset password to send email
             self.reset_user_password(id)
-
         return r
 
     def get_all_user_info_from_salesforce(self, output, wiki_users=None):
@@ -231,6 +229,11 @@ class RestWrapper(object):
     def reset_user_password(self, user_id):
         r = self._session.delete(self._rest_base + "/sobjects/User/{0}/password".format(user_id) , headers=self._headers)
         return r
+
+    def get_parent_role_id(self, parent_role):
+        parent_role =  parent_role.strip().replace(" ", "+")
+        r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+FROM+UserRole+WHERE+Name='{0}'".format(parent_role), headers=self._headers)
+        return r.json()["records"][0]["Id"]
 
     # def _parse_integrations_from_wiki_output(self, output):
     #     '''

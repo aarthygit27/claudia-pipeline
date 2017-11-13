@@ -67,7 +67,8 @@ if __name__ == "__main__":
     for u in sorted(wiki_users):
         profile_id = rw.get_profile_id_from_salesforce(wiki_users[u]["Profile"])
         if wiki_users[u]["Role"]:
-            role_id = rw.get_user_role_id_from_salesforce(wiki_users[u]["Role"])
+            parent_role_id = rw.get_parent_role_id(wiki_users[u]["ParentRole"])
+            role_id = rw.get_user_role_id_from_salesforce(wiki_users[u]["Role"], parent_role_id)
         else:
             role_id = None
         if u.lower() not in current_users:
