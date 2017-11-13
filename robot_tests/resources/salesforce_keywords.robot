@@ -146,9 +146,13 @@ App Should Be Open
     Should Be True      ${app_open}
 
 Approve Quote
-    Open Browser And Go to Login Page
-    Go To Salesforce And Login      B2B DigisalesManager
-    Open Chatter
+    Reload page
+    ${xpath}=       Set Variable    //div[@class='feeditembody' and .//span[text()='${OPPORTUNITY_NAME}']]//span[text()='Request has been approved by another approver.' or text()='Request approved.']
+    ${already_approved}=    Run Keyword And Return Status       Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element     ${xpath}
+    Run Keyword If      ${already_approved}     Return From Keyword
+    Run Inside Iframe   ${IFRAME}   Click Element   //div[@class='feeditembody' and .//span[text()='${OPPORTUNITY_NAME}']]//input[@value='Approve']
+    Run Inside Iframe   ${IFRAME}   Wait Until Element Is Visible   //div[contains(@id,'overlay_buttons')]//input[@value='OK']      10s
+    Run Inside Iframe   ${IFRAME}   Click Element   //div[contains(@id,'overlay_buttons')]//input[@value='OK']
 
 Assign Opportunity To Me
     [Arguments]     ${owner}=B2B DigiSales
@@ -674,7 +678,7 @@ Go to Account
     [Arguments]    ${target_account}    ${type}=${EMPTY}
     Log     Going to '${target_account}'
     Wait Until Keyword Succeeds     45s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
-    Select Account    ${target_account}
+    Select Account    ${target_account}     ${type}
     Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds    20s      1s      Close Search Tab
     # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
@@ -740,6 +744,12 @@ Log Error Message
     Log    ${error_msg}
     Capture Page Screenshot
     Set Test Variable    ${ERROR_MESSAGE}    ${error_msg}
+
+Login As Digisales Manager And Approve Quote
+    Go To Salesforce And Login      B2B DigisalesManager
+    Open Chatter
+    Wait Until Keyword Succeeds     1min    1s      Approve Quote
+    [Teardown]      Close Tabs And Logout
 
 Login to Salesforce
     [Arguments]         ${username}=${B2B_DIGISALES_USER}
@@ -972,8 +982,8 @@ Search (Setup)
 #     # [Teardown]      Run Keywords      Log to console     ${kw_passed}    AND    Run Keyword If   '${kw_passed}'=='${FALSE}'     Close Browser
 
 Select Account
-    [Arguments]         ${account_name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    //a[text()='${account_name}']
+    [Arguments]         ${account_name}     ${type}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    //div[contains(@id,'${type}')]//a[text()='${account_name}']
     Account Should Be Open    ${account_name}
 
 Select Account Type
@@ -1063,6 +1073,7 @@ Show More
 Submit Quote For Approval
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@class='pbHeader']//input[@value='Submit for Approval']   30s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='pbHeader']//input[@value='Submit for Approval']
+    Sleep   3
     Dismiss Alert
 
 Try To Create New Opportunity And It Should Fail

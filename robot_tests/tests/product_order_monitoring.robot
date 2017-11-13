@@ -74,6 +74,7 @@ Create CPQ Single
     Select Sales Type For Order (CPQ)
     Click Next (CPQ)
     Handle Credit Score (CPQ)
+    Click CPQ At Quote View
     Click Create Order (CPQ)
 
 Create CPQ Multiple
@@ -84,6 +85,7 @@ Create CPQ Multiple
     Select Sales Type For Order (CPQ)
     Click Next (CPQ)
     Handle Credit Score (CPQ)
+    Click CPQ At Quote View
     Click Create Order (CPQ)
 
 Add 50 Products To Order

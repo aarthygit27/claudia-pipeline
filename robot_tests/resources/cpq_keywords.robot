@@ -8,7 +8,7 @@ Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robo
 ${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
 ${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
 ${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
-${CREDIT_SCORE_FAILURE}     (normalize-space()='Credit Score Not Acceptable' and @msg='Warning')
+${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
 
 *** Keywords ***
 
@@ -154,7 +154,7 @@ Handle Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
-    Wait Until Keyword Succeeds     1min    1s      Click CPQ At Quote View
+    # Wait Until Keyword Succeeds     1min    1s      Click CPQ At Quote View
 
 Load More Products (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       //a[contains(text(),'Load More')]    20s

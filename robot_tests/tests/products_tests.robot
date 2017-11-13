@@ -218,10 +218,13 @@ Create CPQ
     Click Next (CPQ)
     Handle Credit Score (CPQ)
     Submit Quote For Approval
-    Approve Quote
+    Close Tabs And Logout
+    Login As Digisales Manager And Approve Quote
+    Go To Salesforce And Login
+    Go To Account   ${OPPORTUNITY_NAME}     Quote
+    Click CPQ At Quote View
     Click Create Order (CPQ)
-    # Click View Record (CPQ)
-    # Click Create Assets (CPQ)
+    Click Create Order (CPQ)    # Quote Approved for Submittal
     Add Contact Person To Product Order    ${DEFAULT_TEST_CONTACT}
     Submit Order To Delivery (CPQ)
     Wait Until Keyword Succeeds    60 s    5 s    Extract MuBe CaseID From Opportunity
