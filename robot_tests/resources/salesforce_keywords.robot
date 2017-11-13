@@ -500,8 +500,9 @@ Edit Event Description and WIG Areas
 
 Edit Opportunity
     Open Details View At Opportunity
+    Sleep   2   The page has already loaded so the edit button is visible, but if we click to too quickly, it won't recognize the click
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}      15s
 
 Enter mandatory information and save new contact
     [Arguments]     ${first_name}=${EMPTY}
@@ -1042,7 +1043,7 @@ Send Quote Email To Customer
 
 Set Opportunity Stage And Save
     [Arguments]     ${stage}    ${expect_error}=${FALSE}
-    Edit Opportunity
+    Wait Until Keyword Succeeds     30s     1s      Edit Opportunity
     Change Stage to         ${stage}
     Save Opportunity    ${expect_error}
 
