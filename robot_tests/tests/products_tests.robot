@@ -224,7 +224,7 @@ Create CPQ
     Go To Account   ${OPPORTUNITY_NAME}     Quote
     Click CPQ At Quote View
     Click Create Order (CPQ)
-    Click Create Order (CPQ)    # Quote Approved for Submittal
+    Click Create Order After Credit Score Check (CPQ)    # Quote Approved for Submittal
     Add Contact Person To Product Order    ${DEFAULT_TEST_CONTACT}
     Submit Order To Delivery (CPQ)
     Wait Until Keyword Succeeds    60 s    5 s    Extract MuBe CaseID From Opportunity
