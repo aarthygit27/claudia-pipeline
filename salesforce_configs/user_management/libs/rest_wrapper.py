@@ -88,7 +88,8 @@ class RestWrapper(object):
         new_user["telia_user_ID__c"] = user_info["Alias"]
         
         # Other fields
-        new_user["UserPreferencesLightningExperiencePreferred"] = 0
+        new_user["UserPreferencesLightningExperiencePreferred"] = 0     # Change away from lightning view as default
+        new_user["UserPermissionsSupportUser"] = 1  # Change the top banner to be Telia purple instead of blue
 
         return json.dumps(new_user)
 
