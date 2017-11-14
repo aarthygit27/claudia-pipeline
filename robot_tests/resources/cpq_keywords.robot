@@ -9,6 +9,8 @@ ${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(te
 ${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
 ${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
 ${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
+${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
+${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
 
 *** Keywords ***
 
@@ -125,23 +127,23 @@ Fill Required Information For Telia Sopiva Pro L
     ...         10s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
 
 Fill Required Information For Telia Yritysinternet
-    ${xpath}=   Set Variable   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
+    ${xpath}=   Set Variable   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element
     ...     ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']    10s
     Log     BQA-1821 test case ends here
     ${visible}=     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Element Should Be Visible   ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']
-    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//span[text()='Telia Yritysinternet']
-    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//a[text()[contains(.,'Product Configuration')]]
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ATTRIBUTE_EDIT_WINDOW}//span[text()='Telia Yritysinternet']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ATTRIBUTE_EDIT_WINDOW}//a[text()[contains(.,'Product Configuration')]]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Select From List By Value   ${xpath}//select    1
 
 Fill Required Information For Telia Yritysinternet Langaton
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//select    1
+    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
 
 Fill Required Information For Telia Yritysinternet Plus
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//select    1
+    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
 
 Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
@@ -159,7 +161,6 @@ Handle Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
-    # Wait Until Keyword Succeeds     1min    1s      Click CPQ At Quote View
 
 Load More Products (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       //a[contains(text(),'Load More')]    20s
@@ -219,8 +220,8 @@ Select Sales Type For Order (CPQ)
 
 Set Prices For Unmodelled Product (CPQ)
     [Arguments]     ${product}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='DataNet Multi']/following-sibling::td[1]/input     50      # one time total
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='DataNet Multi']/following-sibling::td[2]/input     50      # recurring total
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='${product}']/following-sibling::td[1]/input     50      # one time total
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='${product}']/following-sibling::td[2]/input     50      # recurring total
 
 Submit Order To Delivery (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}
