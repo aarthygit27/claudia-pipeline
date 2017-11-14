@@ -230,7 +230,7 @@ class RestWrapper(object):
         r = self._session.delete(self._rest_base + "/sobjects/User/{0}/password".format(user_id) , headers=self._headers)
         return r
 
-    def get_parent_role_id(self, parent_role):
+    def get_parent_role_id(self, parent_role="SME DigiSales"):
         parent_role =  parent_role.strip().replace(" ", "+")
         r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+FROM+UserRole+WHERE+Name='{0}'".format(parent_role), headers=self._headers)
         return r.json()["records"][0]["Id"]

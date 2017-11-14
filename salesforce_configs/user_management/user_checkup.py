@@ -30,12 +30,17 @@ if __name__ == "__main__":
 
     try:
         profile, role = sys.argv[6].split("-")
-        parent_role = sys.argv[7]
-        parent_role_id = rw.get_parent_role_id(parent_role)
-        role_id = rw.get_user_role_id_from_salesforce(role, parent_role_id)
     except ValueError:
         profile = sys.argv[6]
         role_id = None
+
+    if role_id:
+        try:
+            parent_role = sys.argv[7]
+        except ValueError:
+            parent_role = "SME DigiSales"
+            parent_role_id = rw.get_parent_role_id(parent_role)
+        role_id = rw.get_user_role_id_from_salesforce(role, parent_role_id)
 
 
     output = rw.get_all_users_from_salesforce()
