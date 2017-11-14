@@ -21,7 +21,7 @@ Single Product Monitor: Telia Maksupääte
     [Tags]      single_product
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Set Test Variable           ${PRODUCT}      Telia Maksupääte
-    Create Product Order        ${PRODUCT}     Single
+    Create Product Order        ${PRODUCT}      Single
 
 Single Product Monitor: Telia Verkkotunnuspalvelu
     [Tags]      single_product

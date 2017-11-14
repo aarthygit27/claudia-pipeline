@@ -7,9 +7,11 @@ Suite Teardown      Close All Browsers
 
 Test Setup          Run Keywords    Open Browser And Go To Login Page    AND    Go to Salesforce And Login
 Test Teardown       Close Browser
-
 Test Template       Create Product Order And Verify It Was Created
+Test Timeout        8 minutes
+
 Force Tags          products
+
 *** Variables ***
 
 ${MUBE_CASE_ID}     1323424
