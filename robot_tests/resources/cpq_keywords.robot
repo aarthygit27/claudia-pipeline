@@ -158,7 +158,7 @@ Handle Credit Score (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    30s
     ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
     Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
-    Run Keyword If      ${credit_score_passed}      Click View Quote And Go Back To CPQ
+    Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
 
@@ -172,7 +172,7 @@ Load More Products (CPQ)
 
 Recognize Product Needs Additional Information (CPQ)
     ${xpath}=   Set Variable    //h2[contains(text(),'Required attribute missing')]
-    ${s}=   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Wait Until Element is Visible    ${xpath}   30s
+    ${s}=    Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}   Wait Until Element is Visible    ${xpath}   30s
     [Return]    ${s}
 
 Return To Quote (CPQ)
