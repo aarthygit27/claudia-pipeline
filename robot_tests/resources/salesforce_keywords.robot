@@ -28,8 +28,8 @@ Add Contact Person To Product Order
     Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button Again If There Are Multiple Contact Persons
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      20s
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword With Delay      1s      Click Save Button Again If There Are Multiple Contact Persons
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      30s
 
 Add Mandatory Contact Data
     [Documentation]    Fill mandatory contact person data with given or generated data. Sets lastname of created contact
