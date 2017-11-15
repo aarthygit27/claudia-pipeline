@@ -56,10 +56,9 @@ class RestWrapper(object):
         except ValueError:  # Unable to retrieve anything from wiki
             raise ValueError(output)
 
-    def _get_all_user_ids(self, output, wiki_users=None):
+    def _get_all_user_ids(self, output):
         ids = {}
         for u in output["records"]:
-            name = u["Name"]
             i = u["Id"]
             alias = u["Alias"]
             ids[alias] = i
@@ -169,13 +168,13 @@ class RestWrapper(object):
             self.reset_user_password(id)
         return r
 
-    def get_all_user_info_from_salesforce(self, output, wiki_users=None):
+    def get_all_user_info_from_salesforce(self, output):
         '''
         @param: output: a JSON object from get_all_users_from_salesforce()
         '''
-        info = self._get_all_user_ids(output, wiki_users)
+        info = self._get_all_user_ids(output)
         users = {}
-        for i in info:  # i = alias, info[i]
+        for i in info:  # i = alias, info[i] = correct Salesforce user ID
             users[i.encode("utf-8")] = self.get_user_info_from_salesforce(info[i])
         return users
  

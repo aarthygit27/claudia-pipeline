@@ -31,17 +31,14 @@ if __name__ == "__main__":
     rw = RestWrapper(session_id, server_url, env)
     wiki_users = rw.get_users_from_wiki(wiki["username"], wiki["password"], correct_list)
     output = rw.get_all_users_from_salesforce()
-    salesforce_users = rw.get_all_user_info_from_salesforce(output, wiki_users)
+    salesforce_users = rw.get_all_user_info_from_salesforce(output)
 
     if len(wiki_users) == 0:
         sys.exit("Unable to parse any users. Aborting")
 
     # These users cannot be changed via REST API. Test Automation user is skipped to ensure we always have one usable account to use
-    # Rainer Sipronius is default user
-    # Tom Sjöberg is portal admin
-    # skip_users = ["Integration User", "Security User", "Chatter Expert", "Test Automation", "Rainer Sipronius", "Tom Sjöberg", "Anna Vierinen"]
-    # Test automation, Rainer Sipronius, Anna Vierinen, Security User, Integration User
-    skip_users = ["fbl11955", " siprora1", "vierian1", "sec", "integ"]
+    # Test automation, Rainer Sipronius, Security User, Integration User
+    skip_users = ["fbl11955", " siprora1", "sec", "integ"]
     
     # Add the users from Wiki to skipped users. Transform all users to lower case to avoid typos in names in either list
     skip_users = skip_users + wiki_users.keys()
