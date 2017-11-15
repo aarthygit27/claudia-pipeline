@@ -38,7 +38,8 @@ Single Product Monitor: DataNet Multi
 Create And Order With Many Products
     [Tags]      multiple_products
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Create Product Order        10 Products     Multiple
+    Set Test Variable           ${PRODUCT}      50 Products
+    Create Product Order        ${PRODUCT}      Multiple
 
 Open Different Tabs And Check Their Loading Times
     [Tags]      view_page_load
