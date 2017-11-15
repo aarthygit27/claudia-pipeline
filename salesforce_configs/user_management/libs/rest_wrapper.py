@@ -38,15 +38,17 @@ class RestWrapper(object):
             for line in lines:
                 line = line.strip()
                 try:
-                    firstname, lastname, alias, email, profile, role, aboutme, parentrole = [x.strip() for x in line.split(",")]
+                    firstname, lastname, alias, email, profile, parent_role, role, manager, aboutme = [x.strip() for x in line.split(",")]
                     json_data = {"FirstName" : firstname,
                                 "LastName": lastname,
                                 "Alias": alias,
                                 "Email": email,
                                 "Profile": profile,
+                                "ParentRole": parent_role,
                                 "Role": role,
-                                "AboutMe": aboutme,
-                                "ParentRole": parentrole}
+                                "Manager": manager,
+                                "AboutMe": aboutme
+                                }
                     wiki_users[alias] = json_data
                 except ValueError:
                     print "Unable to split line: \'", line, "\'. Ignoring the line."
