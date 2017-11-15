@@ -184,6 +184,12 @@ Change Stage To
     [Arguments]     ${stage}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
 
+Check If Quote Needs Approval
+    Reload Page
+    ${ret}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}
+    ...     Wait Until Page Contains Element    //td[text()='Approval Status']/following-sibling::td//div[text()='Not Needed' or text()='Approved']     20s
+    [Return]    ${ret}
+
 Check that contact has been saved and can be found under proper Account
     ${contact_person_name}=    Set Variable
     ...    //span[contains(text(), 'Name')]/following-sibling::span[contains(text(), '${TEST_CONTACT_PERSON_LAST_NAME}')]

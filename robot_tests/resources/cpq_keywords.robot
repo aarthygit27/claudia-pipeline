@@ -216,7 +216,8 @@ Select Sales Type For Order (CPQ)
     ${length}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Execute Javascript
     ...     return document.evaluate("count(//tr//select[contains(@class,'slds-select slds-required')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
     :FOR   ${i}     IN RANGE    ${length}
-    \   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+1}]//select[contains(@class,'slds-select slds-required')]      New Money-New Services
+    \   Wait Until Keyword Succeeds     10s     1s
+    ...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+1}]//select[contains(@class,'slds-select slds-required')]      New Money-New Services
 
 Set Prices For Unmodelled Product (CPQ)
     [Arguments]     ${product}

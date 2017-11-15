@@ -219,11 +219,7 @@ Create CPQ
     Select Sales Type For Order (CPQ)
     Click Next (CPQ)
     Handle Credit Score (CPQ)
-    Submit Quote For Approval
-    Close Tabs And Logout
-    Login As Digisales Manager And Approve Quote
-    Go To Salesforce And Login
-    Go To Account   ${OPPORTUNITY_NAME}     Quote
+    Check If Quote Needs To Be Approved And Approve If Necessary
     Click CPQ At Quote View
     Click Create Order (CPQ)
     Click Create Order After Credit Score Check (CPQ)    # Quote Approved for Submittal
@@ -232,19 +228,19 @@ Create CPQ
     Wait Until Keyword Succeeds    2min    5 s    Extract MuBe CaseID From Opportunity
     Close Browser
 
+Check If Quote Needs To Be Approved And Approve If Necessary
+    ${approval_not_needed}=     Check If Quote Needs Approval
+    Run Keyword If      ${approval_not_needed}      Return From Keyword
+    Submit Quote For Approval
+    Close Tabs And Logout
+    Login As Digisales Manager And Approve Quote
+    Go To Salesforce And Login
+    Go To Account   ${OPPORTUNITY_NAME}     Quote
+
 Verify Sales Case from Multibella to contain correct data
     MUBE Open Browser And Login As CM User
     MUBE Verify That Case Exists in MuBe
     MUBE Verify That Case Attributes Are Populated Correctly
-
-# TODO
-# Verify All The Information Of Product Order
-#     Naming is correct (finnish)
-#     Structure is correct (parent as the offering, options/vas/included services as child)
-#     Business rules are correct (including mandatory, default products)
-#     Charasteristics (attributes) are correct
-#     Charasteristics values are correct
-#     Prices are correct
 
 Availability Check Test Case
     [Arguments]     ${postal_code}=${EMPTY}
