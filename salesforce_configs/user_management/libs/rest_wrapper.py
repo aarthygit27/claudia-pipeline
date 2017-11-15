@@ -64,7 +64,7 @@ class RestWrapper(object):
             ids[alias] = i
         return ids
 
-    def _generate_new_user_data(self, user_info, profile_id, role_id, environment):
+    def _generate_new_user_data(self, user_info, profile_id, role_id, manager, environment):
         '''
         Create a json object to be used as the REST call body when creating a new user
         '''
@@ -79,6 +79,8 @@ class RestWrapper(object):
         new_user["AboutMe"] = user_info["AboutMe"]
         if role_id:
             new_user["UserRoleId"] = role_id
+        if manager:
+            new_user["ManagerId"] = manager
 
         # Other required fields
         new_user["EmailEncodingKey"] = "ISO-8859-1"
@@ -137,7 +139,10 @@ class RestWrapper(object):
         This method should only be called when the "role" is filled in the Wiki list
         '''
         name =  name.strip().replace(" ", "+")
-        r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+From+UserRole+WHERE+Name+=+'{0}'+AND+ParentRoleId='{1}'".format(name, parent_role_id), headers=self._headers)
+        query = "/query/?q=SELECT+Id+From+UserRole+WHERE+Name+=+'{0}'".format(name)
+        if parent_role_id:
+            query += "+AND+ParentRoleId='{0}'".format(parent_role_id)
+        r = self._session.get(self._rest_base + query, headers=self._headers)
         try:
             return r.json()["records"][0]["Id"]
         except:
@@ -154,8 +159,8 @@ class RestWrapper(object):
         # headers["X-SFDC-Session"] = self._session_id  # Bulk API needs the session id in the header
         r = self._session.patch(self._rest_base + "/sobjects/user/{0}".format(user_id), headers=self._headers, data=json.dumps(data))
 
-    def create_new_user_to_salesforce(self, user_info, profile_id, role_id, environment):
-        user = self._generate_new_user_data(user_info, profile_id, role_id, environment)
+    def create_new_user_to_salesforce(self, user_info, profile_id, role_id, manager, environment):
+        user = self._generate_new_user_data(user_info, profile_id, role_id, manager, environment)
         r = self._session.post(self._rest_base + "/sobjects/User", headers=self._headers, data=user)
         if r.status_code != 201:
             print "Failed to create new user {0} ({1} {2}): {3}".format(user_info["Alias"], user_info["FirstName"], user_info["LastName"], r.text)
@@ -231,7 +236,9 @@ class RestWrapper(object):
         r = self._session.delete(self._rest_base + "/sobjects/User/{0}/password".format(user_id) , headers=self._headers)
         return r
 
-    def get_parent_role_id(self, parent_role="SME DigiSales"):
+    def get_parent_role_id(self, parent_role):
+        if not parent_role:
+            return None
         parent_role =  parent_role.strip().replace(" ", "+")
         r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+FROM+UserRole+WHERE+Name='{0}'".format(parent_role), headers=self._headers)
         return r.json()["records"][0]["Id"]
