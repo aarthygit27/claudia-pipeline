@@ -111,6 +111,14 @@ Close Missing Information Popup (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[@class='slds-modal__container']   10s
 
+Fill Additional Attributes For Telia Yritysinternet (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Palvelutaso')]]]//select   A8h
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Dynaamiset julkiset IP-osoitteet')]]]//select      1-36 kpl
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Toimitus')]]]//select      Toimitus arkisin 16:00-20:00
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
+
 Fill Missing Required Information
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
     Wait Until Keyword Succeeds     30s     1s      Run Keyword     Fill Required Information For ${PRODUCT}
@@ -241,6 +249,12 @@ Verify That Product In Cart Is Correct
     ${product_in_cart}=    Set Variable
     ...    //div[contains(@class, 'cpq-cart-item-title')]//div[contains(text(), '${target_product}')]
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
+
+Wait Until Additional Attributes Are Updated (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
+    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
+    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']   20s
 
 Wait Until Filled Information Is Recognized (CPQ)
     # Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible

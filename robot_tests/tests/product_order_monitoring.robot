@@ -35,6 +35,11 @@ Single Product Monitor: DataNet Multi
     Set Test Variable           ${PRODUCT}      DataNet Multi
     Create Product Order        ${PRODUCT}      Single
 
+Single Product Monitor: Yritysinternet with extra fields
+    [Tags]      single_product      addiotional_attributes
+    Set Test Variable           ${DEFAULT_TEST_ACCOUNT}     Petvi-Tex Oy
+    Create Product Order        ${PRODUCT}      Single      ${TRUE}
+
 Create And Order With Many Products
     [Tags]      multiple_products
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
@@ -58,19 +63,21 @@ Open Different Tabs And Check Their Loading Times
 
 *** Keywords ***
 Create Product Order
-    [Arguments]         ${test_product}    ${product_amount}
+    [Arguments]         ${test_product}    ${product_amount}    ${extra_fields}=${FALSE}
     Log To Console      ${\n} Product: ${PRODUCT}
     Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found With Search And Go To Opportunity
     Add Price Book For Opportunity
-    Run Keyword     Create CPQ ${product_amount}
+    Run Keyword     Create CPQ ${product_amount}    ${extra_fields}
 
 Create CPQ Single
+    [Arguments]     ${extra_fields}
     Open Details View At Opportunity
     Click CPQ At Opportunity View
     Search And Add Product To Cart (CPQ)    ${PRODUCT}
     Fill Missing Required Information If Needed (CPQ)
+    Run Keyword If      ${extra_fields}     Fill Additional Attributes
     Click Next (CPQ)
     Select Sales Type For Order (CPQ)
     Click Next (CPQ)
@@ -79,6 +86,7 @@ Create CPQ Single
     Click Create Order (CPQ)
 
 Create CPQ Multiple
+    [Arguments]     ${extra_fields}
     Open Details View At Opportunity
     Click CPQ At Opportunity View
     Add 50 Products To Order
@@ -117,3 +125,11 @@ Select All Contacts View
 
 Select All Opportunities View
     Select Correct View Type    All Opportunities
+
+Fill Additional Attributes
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
+    Fill Required Information For Telia Yritysinternet
+    Fill Additional Attributes For Telia Yritysinternet (CPQ)
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Filled Information Is Recognized (CPQ)
+    Close Missing Information Popup (CPQ)
+    [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${CLOSE_BUTTON}
