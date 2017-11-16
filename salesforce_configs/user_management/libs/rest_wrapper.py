@@ -31,7 +31,6 @@ class RestWrapper(object):
         try:
             m = re.search("CDATA\[(.*?)\]", output)
             s = m.group(1)
-            # FirstName,LastName,Alias,Email,Role,AboutMe
             lines = s.split("\\n")
             lines = lines[1:]   # Remove the header line
             wiki_users = {}
@@ -91,8 +90,7 @@ class RestWrapper(object):
         new_user["telia_user_ID__c"] = user_info["Alias"]
         
         # Other fields
-        new_user["UserPreferencesLightningExperiencePreferred"] = 0     # Change away from lightning view as default
-        new_user["UserPermissionsSupportUser"] = 1  # Change the top banner to be Telia purple instead of blue
+        self.add_other_fields_to_user(new_user)
 
         return json.dumps(new_user)
 
@@ -115,6 +113,10 @@ class RestWrapper(object):
         body = {"PermissionSetLicenseId": license_id, "AssigneeId": user_id}
         r = self._session.post(self._rest_base + "/sobjects/PermissionSetLicenseAssign", headers=self._headers, data=json.dumps(body))
         return r
+
+    def add_other_fields_to_user(self, user):
+        user["UserPreferencesLightningExperiencePreferred"] = 0     # Change away from lightning view as default
+        user["UserPermissionsSupportUser"] = 1  # Change the top banner to be Telia purple instead of blue
 
     def get_all_users_from_salesforce(self):
         r = self._session.get(self._rest_base + "/query/?q=SELECT+Name,Id,Alias+FROM+User", headers=self._headers)

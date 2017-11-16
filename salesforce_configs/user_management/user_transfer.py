@@ -88,12 +88,16 @@ if __name__ == "__main__":
                     "LastName" : wiki_users[u]["LastName"],
                     "Username": username,
                     "Email" : wiki_users[u]["Email"],
-                    "telia_user_ID__c": wiki_users[u]["Alias"],
-                    "UserPreferencesLightningExperiencePreferred": 0
+                    "telia_user_ID__c": wiki_users[u]["Alias"]
                     }
+
+            rw.add_other_fields_to_user(data)
 
             if role_id:
                 data["UserRoleId"] = role_id
+
+            if manager:
+                data["ManagerId"] = manager
 
             # Store old info for future use. Update user data
             old_info = rw.get_user_info_from_salesforce(id)
