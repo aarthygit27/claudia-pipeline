@@ -529,7 +529,7 @@ Create Child Account
 
 Contact Person Should Be Found In MIT UAD
     [Arguments]     ${customer_id}=${MUBE_CUSTOMER_ID}
-    Wait Until Keyword Succeeds     5m     10s      UAD Verify That Contact Person Is Found For Customer        ${customer_id}
+    Wait Until Keyword Succeeds     10m     10s      UAD Verify That Contact Person Is Found For Customer        ${customer_id}
 
 Wait Until Contact Person Is Found In MultiBella
     [Documentation]     The parameter indicates how many contact persons with the same last name should be in MUBE.
