@@ -35,7 +35,7 @@ Single Product Monitor: DataNet Multi
     Set Test Variable           ${PRODUCT}      DataNet Multi
     Create Product Order        ${PRODUCT}      Single
 
-Single Product Monitor: Yritysinternet with extra fields
+Single Product Monitor: Yritysinternet with additonal attributes
     [Tags]      single_product      additional_attributes
     Set Test Variable           ${DEFAULT_TEST_ACCOUNT}     Petvi-Tex Oy
     Set Test Variable           ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}     0917380-5
@@ -129,8 +129,6 @@ Select All Opportunities View
 
 Fill Additional Attributes
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
-    Fill Required Information For Telia Yritysinternet
     Fill Additional Attributes For Telia Yritysinternet (CPQ)
-    Wait Until Keyword Succeeds     30s     1s      Wait Until Filled Information Is Recognized (CPQ)
     Close Missing Information Popup (CPQ)
     [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${CLOSE_BUTTON}
