@@ -18,19 +18,19 @@ Single Product Monitor: Telia Yritysinternet
     Create Product Order        ${PRODUCT}      Single
 
 Single Product Monitor: Telia Maksupääte
-    [Tags]      single_product
+    [Tags]      single_product      maksupääte
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Set Test Variable           ${PRODUCT}      Telia Maksupääte
     Create Product Order        ${PRODUCT}      Single
 
 Single Product Monitor: Telia Verkkotunnuspalvelu
-    [Tags]      single_product
+    [Tags]      single_product      verkkotunnuspalvelu
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Set Test Variable           ${PRODUCT}      Telia Verkkotunnuspalvelu
     Create Product Order        ${PRODUCT}      Single
 
 Single Product Monitor: DataNet Multi
-    [Tags]      single_product
+    [Tags]      single_product      datanet
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Set Test Variable           ${PRODUCT}      DataNet Multi
     Create Product Order        ${PRODUCT}      Single
