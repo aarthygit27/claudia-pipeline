@@ -38,6 +38,7 @@ Single Product Monitor: DataNet Multi
 Single Product Monitor: Yritysinternet with extra fields
     [Tags]      single_product      addiotional_attributes
     Set Test Variable           ${DEFAULT_TEST_ACCOUNT}     Petvi-Tex Oy
+    Set Test Variable           ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}     0917380-5
     Create Product Order        ${PRODUCT}      Single      ${TRUE}
 
 Create And Order With Many Products
