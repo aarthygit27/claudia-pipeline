@@ -224,7 +224,7 @@ Click Availability Check Button
     ${frame}=       Get Account Tab Iframe Xpath    Dashboard
     Run Inside Iframe   ${frame}    Click Element     //button[text()[contains(.,'Availability check')]]
     ${frame}=       Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element        AddressDetails        30s
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element        Address Details        30s
 
 Click Bottom Save Button
     Click Element   ${BOTTOM_SAVE_BUTTON}
@@ -560,12 +560,15 @@ Fill Account Name
 Fill Address Validation Information And Click Next
     [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
     ${frame}=       Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    PostalCode      10s
-    Run Inside Iframe   ${frame}    Input Text   PostalCode     ${postal_code}
-    Run Inside Iframe   ${frame}    Input Text   City           ${city}
-    Run Inside Iframe   ${frame}    Input Text   Street         ${address}
-    Run Inside Iframe   ${frame}    Input Text   Building       ${street_number}
-    Run Inside Iframe   ${frame}    Click Element   AddressDetails_nextBtn
+    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    postalCodeCityForAddressA      10s
+    Run Inside Iframe   ${frame}    Prolonged Input Text   postalCodeCityForAddressA     ${postal_code}
+    # Run Inside Iframe   ${frame}    Input Text   City           ${city}
+    Run Inside Iframe   ${frame}    Prolonged Input Text   AddressA         ${address} ${street_number}
+    # Run Inside Iframe   ${frame}    Input Text   Building       ${street_number}
+    Sleep   2
+    Run Inside Iframe   ${frame}    Press Enter On      AddressA
+    Run Inside Iframe   ${frame}    Click Element   Address Details_nextBtn
+    [Teardown]      Run Keyword And Ignore Error    Wait Until Keyword Succeeds     10s     1s      Dismiss Alert
 
 Fill Close Reason And Comment And Save
     [Documentation]     Fill the mandatory close reason and comment. Fields are only available when the stage is not "analyse prospect"
