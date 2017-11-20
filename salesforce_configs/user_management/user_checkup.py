@@ -17,7 +17,7 @@ if __name__ == "__main__":
     '''
     Update or create a single user
     '''
-    if len(sys.argv) != 7: sys.exit("Usage: python user_transfer.py <environment> <tcad> <email> <profile[-role]>")
+    if not (7 <= len(sys.argv) <= 9): sys.exit("Usage: python user_checkup.py <environment> <tcad> <firstname> <lastname> <email> <profile[-role]> [parent_role] [manager]")
     env = sys.argv[1].lower()
     tcad = sys.argv[2]
     firstname = sys.argv[3]
@@ -32,16 +32,20 @@ if __name__ == "__main__":
         profile, role = sys.argv[6].split("-")
     except ValueError:
         profile = sys.argv[6]
-        role_id = None
+        role = None
 
-    if role_id:
+    if role:
         try:
             parent_role = sys.argv[7]
-        except ValueError:
-            parent_role = "SME DigiSales"
             parent_role_id = rw.get_parent_role_id(parent_role)
+        except (ValueError,IndexError):
+            parent_role_id = None
         role_id = rw.get_user_role_id_from_salesforce(role, parent_role_id)
 
+    try:
+        manager = sys.argv[8]
+    except:
+        manager = None
 
     output = rw.get_all_users_from_salesforce()
     salesforce_users = rw.get_all_user_info_from_salesforce(output)
@@ -93,5 +97,4 @@ if __name__ == "__main__":
         new_user["AboutMe"] = ""
         new_user["Profile"] = profile
 
-        rw.create_new_user_to_salesforce(new_user, profile_id, role_id, env)
-
+        rw.create_new_user_to_salesforce(new_user, profile_id, role_id, manager, env)
