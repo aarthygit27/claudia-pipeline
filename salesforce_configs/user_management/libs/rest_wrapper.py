@@ -34,7 +34,9 @@ class RestWrapper(object):
             lines = s.split("\\n")
             lines = lines[1:]   # Remove the header line
             wiki_users = {}
+            line_number = 0
             for line in lines:
+                line_number += 1
                 line = line.strip()
                 try:
                     firstname, lastname, alias, email, profile, parent_role, role, manager, aboutme = [x.strip() for x in line.split(",")]
@@ -50,7 +52,7 @@ class RestWrapper(object):
                                 }
                     wiki_users[alias] = json_data
                 except ValueError:
-                    print "Unable to split line: \'", line, "\'. Ignoring the line."
+                    print "Unable to split line number {0}: \'{1}\'. Ignoring the line.".format(line_number, line)
             return wiki_users
         except ValueError:  # Unable to retrieve anything from wiki
             raise ValueError(output)
@@ -143,7 +145,10 @@ class RestWrapper(object):
         name =  name.strip().replace(" ", "+")
         query = "/query/?q=SELECT+Id+From+UserRole+WHERE+Name+=+'{0}'".format(name)
         if parent_role_id:
-            query += "+AND+ParentRoleId='{0}'".format(parent_role_id)
+            query += "+AND+("
+            for role in parent_role_id:
+                query += "ParentRoleId='{0}'+OR+".format(role)
+            query = query[:-4] + ")"  # strip the last OR and add a ')'
         r = self._session.get(self._rest_base + query, headers=self._headers)
         try:
             return r.json()["records"][0]["Id"]
@@ -243,7 +248,7 @@ class RestWrapper(object):
             return None
         parent_role =  parent_role.strip().replace(" ", "+")
         r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+FROM+UserRole+WHERE+Name='{0}'".format(parent_role), headers=self._headers)
-        return r.json()["records"][0]["Id"]
+        return [x["Id"] for x in r.json()["records"]]
 
     # def _parse_integrations_from_wiki_output(self, output):
     #     '''
