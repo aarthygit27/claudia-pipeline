@@ -251,8 +251,10 @@ Verify That Product In Cart Is Correct
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
 
 Wait Until Additional Attributes Are Updated (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
-    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    [Documentation]     If we wait to see the spinner, Robot will probably complain about StaleElementException
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
+    # ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    Sleep   0.5
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']   20s
 
