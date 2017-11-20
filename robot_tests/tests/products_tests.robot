@@ -3,11 +3,15 @@ Resource            ${PROJECTROOT}${/}resources${/}salesforce_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}multibella_keywords.robot
 
 #Suite Setup         Open Browser And Go To Login Page
+Suite Teardown      Close All Browsers
+
 Test Setup          Run Keywords    Open Browser And Go To Login Page    AND    Go to Salesforce And Login
 Test Teardown       Close Browser
-
 Test Template       Create Product Order And Verify It Was Created
+Test Timeout        8 minutes
+
 Force Tags          products
+
 *** Variables ***
 
 ${MUBE_CASE_ID}     1323424
@@ -27,6 +31,7 @@ ${MUBE_CASE_ID}     1323424
 
 Test Salesforce Address Validation And Availability Check
     [Tags]      BQA-10      BQA-1842    smoke
+    [Timeout]   10 minutes
     [Template]     Availability Check Test Case
     00510   Helsinki    Telekatu            1
     00580   Helsinki    Tuulensuunkuja      3
@@ -191,7 +196,7 @@ Create Product Order And Verify It Was Created
     Log To Console      ${\n} Product: ${PRODUCT}
     Go To Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
-    Verify That Opportunity Is Found With Search
+    Verify That Opportunity Is Found With Search And Go To Opportunity
     Create CPQ
     Verify Sales Case from Multibella to contain correct data
 
@@ -213,28 +218,29 @@ Create CPQ
     Click Next (CPQ)
     Select Sales Type For Order (CPQ)
     Click Next (CPQ)
-    Click View Quote And Go Back To CPQ
+    Handle Credit Score (CPQ)
+    Check If Quote Needs To Be Approved And Approve If Necessary
+    Click CPQ At Quote View
     Click Create Order (CPQ)
-    # Click View Record (CPQ)
-    # Click Create Assets (CPQ)
+    Click Create Order After Credit Score Check (CPQ)    # Quote Approved for Submittal
     Add Contact Person To Product Order    ${DEFAULT_TEST_CONTACT}
     Submit Order To Delivery (CPQ)
-    Wait Until Keyword Succeeds    60 s    5 s    Extract MuBe CaseID From Opportunity
+    Wait Until Keyword Succeeds    2min    5 s    Extract MuBe CaseID From Opportunity
     Close Browser
+
+Check If Quote Needs To Be Approved And Approve If Necessary
+    ${approval_not_needed}=     Check If Quote Needs Approval
+    Run Keyword If      ${approval_not_needed}      Return From Keyword
+    Submit Quote For Approval
+    Close Tabs And Logout
+    Login As Digisales Manager And Approve Quote
+    Go To Salesforce And Login
+    Go To Account   ${OPPORTUNITY_NAME}     Quote
 
 Verify Sales Case from Multibella to contain correct data
     MUBE Open Browser And Login As CM User
     MUBE Verify That Case Exists in MuBe
     MUBE Verify That Case Attributes Are Populated Correctly
-
-# TODO
-# Verify All The Information Of Product Order
-#     Naming is correct (finnish)
-#     Structure is correct (parent as the offering, options/vas/included services as child)
-#     Business rules are correct (including mandatory, default products)
-#     Charasteristics (attributes) are correct
-#     Charasteristics values are correct
-#     Prices are correct
 
 Availability Check Test Case
     [Arguments]     ${postal_code}=${EMPTY}

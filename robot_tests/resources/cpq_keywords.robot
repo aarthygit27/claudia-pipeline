@@ -6,6 +6,11 @@ Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robo
 
 *** Variables ***
 ${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
+${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
+${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
+${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
+${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
+${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
 
 *** Keywords ***
 
@@ -32,7 +37,12 @@ Add Random Product To Cart (CPQ)
 Click CPQ At Opportunity View
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPORTUNITY_CPQ_BUTTON}    30 seconds
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${OPPORTUNITY_CPQ_BUTTON}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']    30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SHOPPING_CART}    30s
+
+Click CPQ At Quote View
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${QUOTE_CPQ_BUTTON}    30 seconds
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${QUOTE_CPQ_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SHOPPING_CART}    30s
 
 Click Create Assets (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ASSETS}    30 seconds
@@ -47,14 +57,24 @@ Click Create Order (CPQ)
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_ORDER}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${CPQ_CREATE_ORDER}     1 min
 
+Click Create Order After Credit Score Check (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    id=Create Order    30 seconds
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       id=Create Order
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      30s
+
 Click Create Quote (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_QUOTE}    30 seconds
     Wait Until Keyword Succeeds    20 s    3 s
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_QUOTE}
 
 Click Next (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //*[text()='Next']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   //*[text()='Next']
+
+Click Next After Successful Credit Score (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    Credit Score Validation_nextBtn      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   Credit Score Validation_nextBtn
+
 
 Click Save Order (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SAVE_ORDER_BUTTON}    30 seconds
@@ -91,6 +111,14 @@ Close Missing Information Popup (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         //div[@class='slds-modal__container']   10s
 
+Fill Additional Attributes For Telia Yritysinternet (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Palvelutaso')]]]//select   A8h
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Dynaamiset julkiset IP-osoitteet')]]]//select      1-36 kpl
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Toimitus')]]]//select      Toimitus arkisin 16:00-20:00
+    Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
+
 Fill Missing Required Information
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
     Wait Until Keyword Succeeds     30s     1s      Run Keyword     Fill Required Information For ${PRODUCT}
@@ -107,23 +135,23 @@ Fill Required Information For Telia Sopiva Pro L
     ...         10s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
 
 Fill Required Information For Telia Yritysinternet
-    ${xpath}=   Set Variable   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
+    ${xpath}=   Set Variable   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element
     ...     ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']    10s
     Log     BQA-1821 test case ends here
     ${visible}=     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Element Should Be Visible   ${xpath}//label[text()[contains(.,'Liittymän nopeus')]]/abbr[@title='required']
-    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//span[text()='Telia Yritysinternet']
-    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@id='cpq-lineitem-details-modal-content']//a[text()[contains(.,'Product Configuration')]]
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ATTRIBUTE_EDIT_WINDOW}//span[text()='Telia Yritysinternet']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ATTRIBUTE_EDIT_WINDOW}//a[text()[contains(.,'Product Configuration')]]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Select From List By Value   ${xpath}//select    1
 
 Fill Required Information For Telia Yritysinternet Langaton
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//select    1
+    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
 
 Fill Required Information For Telia Yritysinternet Plus
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   //div[@id='cpq-lineitem-details-modal-content']//div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]//select    1
+    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
 
 Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
@@ -131,6 +159,16 @@ Fill Required Information For Microsoft Office 365
     ${email}=       Create Unique Email
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisäsähköpostiosoite')]]/following-sibling::div//input      ${email}
+
+Handle Credit Score (CPQ)
+    [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
+    ${xpath}=   Set Variable    //div[${CREDIT_SCORE_SUCCESS} or ${CREDIT_SCORE_FAILURE}]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    30s
+    ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
+    Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
+    Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
+    Run Keyword If      ${credit_score_passed}      Return From Keyword
+    Return To Quote (CPQ)
 
 Load More Products (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       //a[contains(text(),'Load More')]    20s
@@ -142,8 +180,12 @@ Load More Products (CPQ)
 
 Recognize Product Needs Additional Information (CPQ)
     ${xpath}=   Set Variable    //h2[contains(text(),'Required attribute missing')]
-    ${s}=   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Wait Until Element is Visible    ${xpath}   30s
+    ${s}=    Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}   Wait Until Element is Visible    ${xpath}   30s
     [Return]    ${s}
+
+Return To Quote (CPQ)
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //p[text()='Return to Quote']   30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //p[text()='Return to Quote']
 
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
@@ -182,12 +224,13 @@ Select Sales Type For Order (CPQ)
     ${length}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Execute Javascript
     ...     return document.evaluate("count(//tr//select[contains(@class,'slds-select slds-required')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
     :FOR   ${i}     IN RANGE    ${length}
-    \   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+1}]//select[contains(@class,'slds-select slds-required')]      New Money-New Services
+    \   Wait Until Keyword Succeeds     10s     1s
+    ...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+1}]//select[contains(@class,'slds-select slds-required')]      New Money-New Services
 
 Set Prices For Unmodelled Product (CPQ)
     [Arguments]     ${product}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='DataNet Multi']/following-sibling::td[1]/input     50      # one time total
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='DataNet Multi']/following-sibling::td[2]/input     50      # recurring total
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='${product}']/following-sibling::td[1]/input     50      # one time total
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='${product}']/following-sibling::td[2]/input     50      # recurring total
 
 Submit Order To Delivery (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}
@@ -206,6 +249,14 @@ Verify That Product In Cart Is Correct
     ${product_in_cart}=    Set Variable
     ...    //div[contains(@class, 'cpq-cart-item-title')]//div[contains(text(), '${target_product}')]
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${product_in_cart}    20 s
+
+Wait Until Additional Attributes Are Updated (CPQ)
+    [Documentation]     If we wait to see the spinner, Robot will probably complain about StaleElementException
+    # Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible
+    # ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']
+    Sleep   0.5
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
+    ...         //div[contains(@class,'slds-modal')]//div[@class='modal-content-position modal-spinner-position']   20s
 
 Wait Until Filled Information Is Recognized (CPQ)
     # Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible

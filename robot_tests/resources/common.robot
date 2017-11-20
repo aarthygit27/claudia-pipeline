@@ -28,8 +28,8 @@ Create Unique Phone Number
 
 Create Unique Name
     [Arguments]     ${prefix}
-    ${numbers}=     Generate Random String    8    [NUMBERS]
-    ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${numbers}      ${prefix} ${numbers}
+    ${timestamp}=   Get Current Date    result_format=%Y%m%d-%H%M%S
+    ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${timestamp}      ${prefix} ${timestamp}
     [Return]        ${name}
 
 Get Date From Future
@@ -54,9 +54,9 @@ Logout From All Systems and Close Browser
     Close Browser
 
 Open Browser And Go To Login Page
-    Run Keyword If      '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)
-    ...     ELSE        Open Browser        ${LOGIN_PAGE}       ${BROWSER}
-    Wait Until Page Contains Element     id=username
+    [Arguments]     ${page}=${LOGIN_PAGE}
+    Run Keyword If      '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)     ${page}
+    ...     ELSE        Open Browser        ${page}       ${BROWSER}
     Run Keyword If      '${BEHIND_PROXY}'=='True'   Set Window Size     ${1920}     ${1080}
     ...     ELSE        Maximize Browser Window
 
@@ -72,6 +72,10 @@ Press Enter On
     [Arguments]     ${locator}
     Press Key       ${locator}      \\13
 
+Press ESC On
+    [Arguments]     ${locator}
+    Press Key       ${locator}      \\27
+
 Press Tab On
     [Arguments]     ${locator}
     Press Key       ${locator}      \\9
@@ -81,9 +85,17 @@ Prolonged Input Text
     [Documentation]    Setting input in crm with fast speed causes random special chars to appear in the input field.
     ...    We try to fix this by slowing selenium down when inputing text.
     ...    We return speed to normal after the text has been inputed.
+    Run Keyword With Delay      ${speed}    Input Text      ${locator}      ${text}
+    # ${old_speed_value}=    Set Selenium Speed    ${speed}
+    # Input Text    ${locator}    ${text}
+    # [Teardown]    Set Selenium Speed    ${old_speed_value}
+
+Run Keyword With Delay
+    [Arguments]     ${speed}    ${keyword}      @{args}
     ${old_speed_value}=    Set Selenium Speed    ${speed}
-    Input Text    ${locator}    ${text}
+    ${ret}=     Run Keyword    ${keyword}    @{args}
     [Teardown]    Set Selenium Speed    ${old_speed_value}
+    [Return]        ${ret}
 
 Run Inside Iframe
     [Arguments]     ${frame}    ${keyword}      @{args}

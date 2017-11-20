@@ -67,12 +67,16 @@ Sales Admin: Change Account owner
 
 Update Contact Person in SalesForce
     [Tags]      BQA-117     BQA-109
-    Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
-    Go To Salesforce and Login      Sales Admin User
+    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
+    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
+    ...         Close Tabs And Logout
+    Go To Salesforce and Login
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct
     Update Contact Person in Salesforce
+    Close Tabs And Logout
+    Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Information Is Updated
     TellU Go to Login Page And Login
@@ -86,7 +90,7 @@ Sales Process: Create opportunity from Account
     Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found In Todays Page
-    Verify That Opportunity Is Found With Search
+    Verify That Opportunity Is Found With Search And Go To Opportunity
     Verify That Opportunity is Found From My All Open Opportunities
 
 Opportunity: Closing active opportunity as cancelled
@@ -172,8 +176,10 @@ Sales Process: Create/update Sales Plan
 
 Contact: Update contact
     [Tags]      BQA-23
+    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
+    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
+    ...         Close Tabs And Logout
     Go To Salesforce and Login
-    Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
     Go to Account    ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Verify That Contact Person Information is Correct
@@ -273,13 +279,11 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     Open just created opportunity and update Win probability, add Competitor and Partner
     Add Solution Area With Quick Action
     Verify That Values Are Visible In Opportunity Layout
-    # Open Details View At Opportunity
     Open Details View At Opportunity
     Click CPQ At Opportunity View
     Add modelled product and unmodelled product to cart (CPQ)
     Update Sales Type and Prices For unmodelled Product (CPQ)
     Click View Quote (CPQ)
-    # 10. Create Quote. Press Review Record and add Contact and Quote email text.
     Press Review Record and add Contact and Quote email text
     # Click Create Order (CPQ)
     # 11. Preview Quote via Preview button and then Submit Quote to customer by pressing Send Quote Email buttons. Quote email is sent to Contact visible in Quote.
@@ -330,6 +334,7 @@ Create in SalesForce and in MultiBella a new Contact Person
     Go To Salesforce and Login
     Create New Contact Person For Customer
     Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
+    Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
     MUBE Logout CRM
@@ -361,8 +366,6 @@ Sales Process: Update Sales Plan of an Account which you are not owner
 
 Create/Update new Contact Person in TellU
     [Tags]      BQA-119
-    # 1. Create a new Contact Person in TellU with all data populated
-    # 2. Update existing Contact Person in TellU, use several attributes
     Create And Update Contact Person In TellU
     Contact Person Should Be Updated In MultiBella
     Close Browser
@@ -422,15 +425,17 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     # ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
     # ...         Create New Opportunity For Customer                     AND
     # ...         Create New Task For Customer                            AND
+    # ...         Assign Task To B2B Digisales                            AND
     # ...         Logout From Salesforce
     # 15. Set the status to closed. Save.
     # 16. Set a random quality rating. Save.
     # 17. Create own task and check that there is no Quality rating visible
     # 18. Close own task without setting rating value
     Set Test Variable   ${OPPORTUNITY_NAME}     Opportunity 62852916
-    Set Test Variable   ${TASK_NAME}    Task 93257960
+    Set Test Variable   ${TASK_NAME}    Task 19997940
     Go To Salesforce and Login
     Go To Account   ${OPPORTUNITY_NAME}
+    Click Details Button
     Verify That Quality Rating Field Exists
     # Assign Opportunity To Me
     Verify That Quality Rating Has Correct Values
@@ -442,10 +447,10 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Go To Account   ${OPPORTUNITY_NAME}
-    Verify That Quality Rating Field Does Not Exist
     Set Opportunity Stage And Save      Negotiate and Close
     Go To Account   ${TASK_NAME}
     Verify That Quality Rating Field Exists
+
 
 *** Keywords ***
 
@@ -487,7 +492,8 @@ Close active opportunity
     Login to Salesforce
     Go to Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer   days=5    stage=${original_stage}
-    Verify That Opportunity Is Found With Search
+    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Add Product To Opportunity
     Set Opportunity Stage And Save      ${stage}    expect_error=${TRUE}
     Verify That Error Messages Are Shown
     Fill Close Reason And Comment And Save
@@ -523,7 +529,7 @@ Create Child Account
 
 Contact Person Should Be Found In MIT UAD
     [Arguments]     ${customer_id}=${MUBE_CUSTOMER_ID}
-    Wait Until Keyword Succeeds     5m     10s      UAD Verify That Contact Person Is Found For Customer        ${customer_id}
+    Wait Until Keyword Succeeds     10m     10s      UAD Verify That Contact Person Is Found For Customer        ${customer_id}
 
 Wait Until Contact Person Is Found In MultiBella
     [Documentation]     The parameter indicates how many contact persons with the same last name should be in MUBE.
@@ -534,7 +540,7 @@ Wait Until Contact Person Is Found In MultiBella
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Log to Console    ${status}
-    ${ret}=     Set Variable      FAILED
+    ${passed}=     Set Variable      FAILED
     ${new_close_reason}=        Set Variable If         '${status}'=='Won'
     ...     01 Relationship     09 Customer Postponed
     Close active Opportunity    ${stage}    ${status}       ${original_stage}
@@ -568,8 +574,13 @@ Contact Persons Should Be Visible in TellU
     TellU Go to Login Page And Login
     TellU Open Contact Person Editor
     TellU Search Contact Person By Attribute    Customer Name    ${DEFAULT_TEST_ACCOUNT}
-    TellU Search Result Page Should Contain Contact Person With Name    ${FIRST_CONTACT_PERSON}
-    TellU Search Result Page Should Contain Contact Person With Name    ${SECOND_CONTACT_PERSON}
+    TellU Show All Contact Person In Search Results
+    Wait Until Keyword Succeeds     5min    5s      Contact Persons Should Appear In TellU
+
+Contact Persons Should Appear In TellU
+    TellU Page Should Contain Contact Person Last Name    ${FIRST_CONTACT_PERSON}
+    TellU Page Should Contain Contact Person Last Name    ${SECOND_CONTACT_PERSON}
+    [Teardown]      TellU Refresh Search
 
 Create And Update Contact Person In TellU
     TellU Go to Login Page And Login

@@ -145,6 +145,16 @@ class SeleniumExtensions(object):
         return " ".join(filter(lambda x: len(x)>0, items))
 
 
+    def getOpportunityIframeXpath(self, oppo_name):
+        xpath = "//li[.//span[contains(text(),'{0}')] and not(contains(@id,'navigatortab'))]".format(oppo_name)
+        js = "return document.evaluate(\"{0}\", document, null, XPathResult.ANY_TYPE, null).iterateNext().id;".format(xpath)
+        id = self._selenium2lib.execute_javascript(js)
+        div_id = id.split("__")[1]
+        xpath = "//div[@id='{0}']//iframe".format(div_id)
+        js = "return document.evaluate(\"{0}\", document, null, XPathResult.ANY_TYPE, null).iterateNext();".format(xpath)
+        iframe = self._selenium2lib.execute_javascript(js)
+        return iframe
+
     @property
     def using_java(self):
         return "_element_find" not in dir(self._selenium2lib)

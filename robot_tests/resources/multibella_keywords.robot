@@ -188,7 +188,7 @@ MUBE Create New Business Customer With Language
     MUBE Wait For Load
     # For some reason address input field data is cleared if the planets and the galaxy aren't aligned. So we must try again.
     ${status}=    Run Keyword And Return Status    MUBE Click Address Validation Modal Yes Button
-    Run Keyword Unless    ${status}    MUBE Fill In Address Again And Finish Creation
+    Run Keyword If    ${status}    MUBE Fill In Address Again And Finish Creation
     MUBE Verify That Customer Order Status Is Set To Finished
 
 MUBE Create New Contact Person For Business Customer
@@ -239,6 +239,7 @@ MUBE Fill Address Information With Address Type
     Run Keyword If    '${address_type}' == 'PO Box'    MUBE Set Form Input And Press Enter    Address    PO Box Number    347
 
 MUBE Fill In Address Again And Finish Creation
+    MUBE Wait For Load
     MUBE Fill In Address Information
     MUBE Fill In Address Information    Visiting Address
     MUBE Click Blue Button    Create Customer
@@ -360,7 +361,7 @@ MUBE Handle Login
     Wait Until Page Contains Element    ${MUBE_LOGIN_FIELD}
     Run Keyword And Ignore Error    Set Global Variable    ${USED_USERNAME}    ${username}
     Run Keyword And Ignore Error    Set Global Variable    ${USED_PASSWORD}    ${password}
-    MUBE Prolonged Input Text    ${MUBE_LOGIN_FIELD}    ${used_username}
+    Prolonged Input Text    ${MUBE_LOGIN_FIELD}    ${used_username}
     Input Password    ${MUBE_PASSWORD_FIELD}    ${used_password}
     Submit Form    _58_fm
     MUBE Wait For Load
@@ -395,9 +396,8 @@ MUBE Open All Cases Page
 
 MUBE Open Browser And Go To CRM Login Page
     [Documentation]    Open browser and goes to ${MUBE_SERVER}
-    Run Keyword If      '${BEHIND_PROXY}'=='True'   Open Browser And Go To Login Page (Proxy)   ${MUBE_SERVER}
-    ...     ELSE    Wait Until Keyword Succeeds    30 s     5 s    Open Browser    ${MUBE_SERVER}    ${BROWSER}
-    Maximize Browser Window
+    Open Browser And Go To Login Page   ${MUBE_SERVER}
+
 
 MUBE Open Browser And Login As CM User
     MUBE Open Browser And Go To CRM Login Page
@@ -420,22 +420,13 @@ MUBE Open Tab
     MUBE Click Element With Javascript    ${xpath}
     Wait Until Element Is Visible    //div[contains(@class, "selected")]/a[contains(text(), "${title}")]    5 s
 
-MUBE Prolonged Input Text
-    [Arguments]    ${locator}    ${text}
-    [Documentation]    Setting input in crm with fast speed causes random special chars to appear in the input field.
-    ...    We try to fix this by slowing selenium down when inputing text.
-    ...    We return speed to normal after the text has been inputed.
-    ${old_speed_value}=    Set Selenium Speed    1.3 seconds
-    Input Text    ${locator}    ${text}
-    [Teardown]    Set Selenium Speed    ${old_speed_value}
-
 MUBE Save Contact Person
     Run Keyword And Ignore Error    Click Visible Element    ${CP_SAVE_BUTTON}
     Sleep   2
     MUBE Wait For Load
     ${unvalidated_address}=     Run Keyword And Return Status   Element Should Be Visible    ${ADDRESS_VALIDATION_MODAL_YES_BUTTON}
     ${update_button}=           Run Keyword And Return Status   Element Should Be Visible    //a[contains(text(), 'Update')]
-    Run Keyword Unless     ${unvalidated_address} or ${update_button}   Fail
+    Run Keyword Unless     ${unvalidated_address} or ${update_button}   Run Keywords    Capture Page Screenshot     AND     Fail
 
 MUBE Search And Select Customer With Name
     [Arguments]    ${partial_name}
@@ -512,7 +503,7 @@ MUBE Set Filter Input
     [Arguments]    ${title}    ${value}
     ${xpath}=    Set Variable    xpath=//div[@class = 'field' and ./label[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), translate("${TITLE}", 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))]]//input
     Wait Until Page Contains Element    ${xpath}
-    MUBE Prolonged Input Text    ${xpath}    ${value}
+    Prolonged Input Text    ${xpath}    ${value}
 
 MUBE Set Filter Select
     [Arguments]    ${title}    ${value}
@@ -528,8 +519,8 @@ MUBE Set Form Input
     Wait Until Element Is Visible    ${xpath}
     Click Element    ${xpath}
     MUBE Wait For Load
-    MUBE Prolonged Input Text    ${xpath}    ${value}
-    Press Key    ${xpath}    \\9
+    Prolonged Input Text    ${xpath}    ${value}
+    Press Tab On    ${xpath}
     MUBE Wait For Load
 
 MUBE Set Form Input And Press Enter
@@ -541,7 +532,7 @@ MUBE Set Form Input And Press Enter
     Wait Until Element Is Visible    ${xpath}
     Click Element    ${xpath}
     MUBE Wait For Load
-    MUBE Prolonged Input Text    ${xpath}    ${value}
+    Prolonged Input Text    ${xpath}    ${value}
     Press Enter On    ${xpath}
     MUBE Wait For Load
 
@@ -612,7 +603,7 @@ MUBE Verify That Case Attributes Are Populated Correctly
     MUBE Check History Old And New Value For Attribute    Contact Person    ${EMPTY}    ${DEFAULT_TEST_CONTACT}
     # MUBE Check History Old And New Value For Attribute    Contact Person Phone    ${EMPTY}    +358888888
     MUBE Check History Old And New Value For Attribute    External system    ${EMPTY}    B2BSELFCARE
-    MUBE Check History Old And New Value For Attribute    Group    ${EMPTY}    Delivery team [TSF]
+    MUBE Check History Old And New Value For Attribute    Group    ${EMPTY}    Key Service Desk [TSF]
     MUBE Check History Description Value Should Not Be Empty
 
 MUBE Verify That Contact Person Information Is Updated
@@ -624,9 +615,9 @@ MUBE Verify That Contact Person Information Is Updated
     MUBE Check History Old And New Value For Contact Person Attribute    Main Phone Number      ${OLD_PHONE}        ${NEW_PHONE}
     MUBE Check History Old And New Value For Contact Person Attribute    Business Card Title    ${EMPTY}            ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
     MUBE Check History Old And New Value For Contact Person Attribute    Gender                 ${EMPTY}            ${DEFAULT_GENDER}
-    MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${NEW_3RD_PARTY_CONTACT}
-    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             ${EMPTY}            ${NEW_SALES_ROLE}
-    MUBE Check History Old And New Value For Contact Person Attribute    SMS                    PermitByDefault     ${NEW_MARKETING_SMS_PERMISSION}
+    MUBE Check History Old And New Value For Contact Person Attribute    3rd Party              ${EMPTY}            ${DEFAULT_3RD_PARTY_CONTACT_UPDATED}
+    MUBE Check History Old And New Value For Contact Person Attribute    Sales Role             ${EMPTY}            ${DEFAULT_SALES_ROLE_UPDATED}
+    MUBE Check History Old And New Value For Contact Person Attribute    SMS                    PermitByDefault     ${DEFAULT_MARKETING_SMS_PERMISSION_UPDATED}
 
 MUBE Verify That Contact Person From Tellu Is Updated
     Sleep    30 s    Wait For All Contact Person Changes to be applied.

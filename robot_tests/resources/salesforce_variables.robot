@@ -3,7 +3,7 @@ ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${IFRAME}                                   //iframe
 ${NAVIGATORTAB}                             //li[contains(@id, 'navigatortab__scc-pt')]
-${LOGOUT_BUTTON}                            //div[@id='userNav-menuItems']//a[text()='Logout']
+${LOGOUT_BUTTON}                            //a[@title='Logout']
 ${LOOKUP_SEARCH_FIELD}                      id=lksrch
 ${LOOKUP_SEARCH_GO_BUTTON}                  //input[@title='Go!']
 
@@ -13,6 +13,7 @@ ${CUSTOMER_CARE_USER}                       custcare@teliacompany.com.preprod
 ${SALES_ADMIN_USER}                         saleadm@teliacompany.com.preprod
 ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.preprod
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
+${B2B_DIGISALES_MANAGER}                    digimngr@teliacompany.com.preprod
 ${PASSWORD}                                 PahaPassu5
 
 # QUICKACTIONFIELD is an invalid xpath on its own. Needs to be completed with another `]` after the variable has been put
@@ -25,6 +26,7 @@ ${NEW_OPPORTUNITY_BUTTON}                   //input[contains(@title,'New Opportu
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
 ${OPPORTUNITY_SAVE_BUTTON}                  //h2[contains(text(), 'Opportunity Edit')]/../following-sibling::td//input[@title='Save']
 ${OPPORTUNITY_CPQ_BUTTON}                   //h2[contains(text(), 'Opportunity Detail')]/../following-sibling::td//input[@title='CPQ']
+${QUOTE_CPQ_BUTTON}                         //h2[contains(text(), 'Quote Detail')]/../following-sibling::td//input[@title='CPQ']
 ${OPPO_EDIT_TITLE}                          //h1[contains(text(),'Opportunity Edit')]
 
 # ${OPPO_INFO_OPPO_NAME_FIELD}                //label[contains(text(), 'Opportunity Name')]/../following-sibling::*//input

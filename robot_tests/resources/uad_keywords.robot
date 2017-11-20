@@ -10,8 +10,8 @@ ${NEXT_BUTTON}              INTPAG_NEXT_BUTTON
 ${CLEAR_BUTTON}             HEADER_CLEAR_BUTTON
 ${UAD_USERNAME}             F11685
 ${UAD_PASSWORD}             Wonder25
-${UAD_USERNAME_FIELD}       gwt-uid-3
-${UAD_PASSWORD_FIELD}       gwt-uid-5
+${UAD_USERNAME_FIELD}       //input[@type='text']
+${UAD_PASSWORD_FIELD}       //input[contains(@type,'password')]
 
 
 *** Keywords ***
@@ -38,15 +38,44 @@ UAD Go to Page And Log in
     Go To               ${UAD_PAGE}
     UAD Log In
 
+Login To UAD
+    Open Browser    url=http://ua001colossus.ddc.teliasonera.net:8082/uad_b2b/    browser=ff
+    Wait Until Page Contains Element    xpath=//input[@type='text']    timeout=10seconds
+    Input Text       xpath=//input[@type='text']                  ${UAD_USERNAME}
+    Set Log Level    level=NONE
+    Input Text       xpath=//input[contains(@type,'password')]    ${UAD_PASSWORD}
+    Set Log Level    level=DEBUG
+    Click Element    xpath=//div[contains(@role,'button')]
+    # Sleep    10 seconds
+    Wait Until Page Contains Element    ${SEARCH_FIELD}     20s
+    Capture Page Screenshot
+    Close Browser
+
 UAD Log in
     Wait Until Page Contains Element    ${UAD_USERNAME_FIELD}      10s
+    # Click Element       ${UAD_USERNAME_FIELD}
+    # Execute Javascript      document.getElementById("${UAD_USERNAME_FIELD}").value= "${UAD_USERNAME}";
+    # Click Element       ${UAD_PASSWORD_FIELD}
+    # Execute Javascript      document.getElementById("${UAD_PASSWORD_FIELD}").value= "${UAD_PASSWORD}";
+    # :FOR     ${i}   IN      F  1  1  6  8  5
+    # \   Press Key   ${UAD_USERNAME_FIELD}   ${i}
+    # \   Sleep   0.5
+
+    # Capture Page Screenshot
+    # :FOR     ${i}   IN      W  o  n  d  e  r  2  5
+    # \   Press Key   ${UAD_PASSWORD_FIELD}   ${i}
+    # \   Sleep   0.5
+    Capture Page Screenshot
     Input Text          ${UAD_USERNAME_FIELD}   ${UAD_USERNAME}
     Input password      ${UAD_PASSWORD_FIELD}   ${UAD_PASSWORD}
+    # Just typing the password leaves a stupid "blabla connection is not secure" error open on top of the login button. Clicking somewhere closes that.
+    Run Keyword With Delay      1s      Press Tab On    ${UAD_PASSWORD_FIELD}
     Click Element       //span[text()='Kirjaudu sisään']
+    Capture Page Screenshot
     Wait Until Page Contains Element    ${SEARCH_FIELD}     10s
 
 UAD Open Browser And Go To Login Page
-    Open Browser    ${UAD_PAGE}
+    Open Browser     ${UAD_PAGE}
     Maximize Browser Window
 
 UAD Page Should Be Open
