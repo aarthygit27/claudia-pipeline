@@ -621,7 +621,7 @@ Try to create a new contact person with a same name to
     Save New Contact Person And Expect Error    duplicate record
 
 User sees a list of Contact Persons and can save with the same name
-    Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     12345678noreply@teliacompany.com
+    Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     ${DEFAULT_TEST_CONTACT_EMAIL}
     Save (Ignore Alert) Button Should Be Visible
 
 Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
