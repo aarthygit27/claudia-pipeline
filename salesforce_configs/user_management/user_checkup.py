@@ -43,7 +43,7 @@ if __name__ == "__main__":
         role_id = rw.get_user_role_id_from_salesforce(role, parent_role_id)
 
     try:
-        manager = sys.argv[8]
+        manager = rw.get_user_id_from_salesforce(sys.argv[8])
     except:
         manager = None
 
@@ -71,6 +71,9 @@ if __name__ == "__main__":
 
         if role_id:
             data["UserRoleId"] = role_id
+
+        if manager:
+            data["ManagerId"] = manager
 
         # Store old info for future use. Update user data
         old_info = rw.get_user_info_from_salesforce(id)
