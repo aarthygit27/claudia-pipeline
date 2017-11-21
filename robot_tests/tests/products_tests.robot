@@ -253,8 +253,6 @@ Availability Check Test Case
     Open Dashboard Tab At Account View
     Click Availability Check Button
     Fill Address Validation Information And Click Next     ${postal_code}      ${city}     ${address}      ${street_number}
-    Wait Until Address Validation Results Page Has Loaded
-    Addresses Should Be Available           ${postal_code}      ${city}     ${address}      ${street_number}
-    Select First Address and Verify Products Are Found
+    Verify That Products Are Found
     ${passed}=      Set Variable        PASSED
     [Teardown]      Log to Console      ${passed}

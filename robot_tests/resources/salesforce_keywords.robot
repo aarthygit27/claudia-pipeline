@@ -127,11 +127,11 @@ Add Solution Area With Quick Action
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Wait Until Page Contains Element     //h4[text()='Success']      20s
     Reload Page
 
-Addresses Should Be Available
-    [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
-    ${frame}=       Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}        Wait Until Page Contains Element
-    ...     //tr[.//td[text()='${address}']/following-sibling::td[text()='${street_number}']/following-sibling::td[text()='${postal_code}']/following-sibling::td[text()='${city}']]
+# Addresses Should Be Available
+#     [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
+#     ${frame}=       Get Account Tab Iframe Xpath    Availability
+#     Run Inside Iframe   ${frame}        Wait Until Page Contains Element
+#     ...     //tr[.//td[text()='${address}']/following-sibling::td[text()='${street_number}']/following-sibling::td[text()='${postal_code}']/following-sibling::td[text()='${city}']]
 
 App Is Open
     [Arguments]         ${app_name}
@@ -561,14 +561,15 @@ Fill Address Validation Information And Click Next
     [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
     ${frame}=       Get Account Tab Iframe Xpath    Availability
     Run Inside Iframe   ${frame}    Wait Until Element Is Visible    postalCodeCityForAddressA      10s
-    Run Inside Iframe   ${frame}    Prolonged Input Text   postalCodeCityForAddressA     ${postal_code}
+    Run Inside Iframe   ${frame}    Input Text   postalCodeCityForAddressA     ${city}
+    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   //input[@id='postalCodeCityForAddressA']/following-sibling::ul[contains(@style,'display: block')]   10s
+    Run Inside Iframe   ${frame}    Click Element   //input[@id='postalCodeCityForAddressA']/following-sibling::ul//a[@role='menuitem' and text()='${city.upper()}']
     # Run Inside Iframe   ${frame}    Input Text   City           ${city}
-    Run Inside Iframe   ${frame}    Prolonged Input Text   AddressA         ${address} ${street_number}
+    Run Inside Iframe   ${frame}    Input Text   AddressA         ${address}
     # Run Inside Iframe   ${frame}    Input Text   Building       ${street_number}
-    Sleep   2
-    Run Inside Iframe   ${frame}    Press Enter On      AddressA
+    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   //input[@id='AddressA']/following-sibling::ul[contains(@style,'display: block')]   10s
+    Run Inside Iframe   ${frame}    Click Element   //input[@id='AddressA']/following-sibling::ul//a[@role='menuitem' and text()='${address} ${street_number}']
     Run Inside Iframe   ${frame}    Click Element   Address Details_nextBtn
-    [Teardown]      Run Keyword And Ignore Error    Wait Until Keyword Succeeds     10s     1s      Dismiss Alert
 
 Fill Close Reason And Comment And Save
     [Documentation]     Fill the mandatory close reason and comment. Fields are only available when the stage is not "analyse prospect"
@@ -1014,12 +1015,12 @@ Select Correct Tab Type
     Click Element       xpath=//ul[@class='x-menu-list']//span[text()='${tab}']
     Wait For Load
 
-Select First Address and Verify Products Are Found
-    ${frame}=       Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Click Element   //button[text()='Select']
-    Run Inside Iframe   ${frame}    Click Element   List of Available Addresses_nextBtn
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h1[contains(text(),'List of Available Products')]     20s
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //table/tbody//td[contains(text(),'Telia Yritysinternet')]
+# Select First Address and Verify Products Are Found
+#     ${frame}=       Get Account Tab Iframe Xpath    Availability
+#     Run Inside Iframe   ${frame}    Click Element   //button[text()='Select']
+#     Run Inside Iframe   ${frame}    Click Element   List of Available Addresses_nextBtn
+#     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h1[contains(text(),'List of Available Products')]     20s
+#     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //table/tbody//td[contains(text(),'Telia Yritysinternet')]
 
 Select New Opportunity Window And Validate Title
     Select Window       main
@@ -1256,7 +1257,7 @@ Verify That Event Is Created
 Verify That Opportunity Cannot Be Updated
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${EDIT_BUTTON}
 
-Verify That opportunity Close Reason And Date Has Been Changed
+Verify That Opportunity Close Reason And Date Has Been Changed
     [Arguments]     ${days}     ${reason}
     ${date}=     Get Date From Future   ${days}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Reason']/following-sibling::td/div[text()='${reason}']
@@ -1339,6 +1340,10 @@ Verify That Owner Has Changed
     [Arguments]         ${owner}    ${type}=Account
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[text()='${type} Owner']/following-sibling::td//a[contains(text(),'${owner}')]      20s
 
+Verify That Products Are Found
+    ${frame}=           Get Account Tab Iframe Xpath    Availability
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h1[normalize-space()='List of products available']    10s
+
 Verify That Quality Rating Field Does Not Exist
     Click Details Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible       ${EDIT_BUTTON}      10s
@@ -1406,9 +1411,9 @@ Wait For Load
     # @class='waitingSearchDiv'
     Wait Until Keyword Succeeds    5 min   0.5 s    Element Should Not Be Visible     //div/div/span[text()='Loading...']
 
-Wait Until Address Validation Results Page Has Loaded
-    ${frame}=       Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //label[text()[contains(.,'Available Addresses')]]      30s
+# Wait Until Address Validation Results Page Has Loaded
+#     ${frame}=       Get Account Tab Iframe Xpath    Availability
+#     Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //label[text()[contains(.,'Available Addresses')]]      30s
 
 Wait Until Contact Person Is Found In Salesforce
     [Arguments]     ${contact_person_name}
