@@ -28,6 +28,7 @@ class RestWrapper(object):
         return ""
 
     def _parse_users_from_wiki_output(self, output, first, last):
+        # first and last are line numbers, NOT indexes
         try:
             m = re.search("CDATA\[(.*?)\]", output)
             s = m.group(1)
@@ -36,7 +37,7 @@ class RestWrapper(object):
             if last == 0:
                 last = len(lines)
             wiki_users = {}
-            for i in range(first,last):
+            for i in range(first-1,last):
                 line = lines[i].strip()
                 try:
                     firstname, lastname, alias, email, profile, parent_role, role, manager, aboutme = [x.strip() for x in line.split(",")]
@@ -249,6 +250,47 @@ class RestWrapper(object):
         parent_role =  parent_role.strip().replace(" ", "+")
         r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+FROM+UserRole+WHERE+Name='{0}'".format(parent_role), headers=self._headers)
         return [x["Id"] for x in r.json()["records"]]
+
+    def activate_existing_user(self, user_info, salesforce_id, profile_id, role_id, manager, environment, instance):
+        username = self.generate_new_username(user_info["Alias"], environment)
+        data = {"IsActive" : 1,
+                "ProfileId" : profile_id,
+                "FirstName" : user_info["FirstName"],
+                "LastName" : user_info["LastName"],
+                "Username": username,
+                "Email" : user_info["Email"],
+                "telia_user_ID__c": user_info["Alias"]
+                }
+
+        self.add_other_fields_to_user(data)
+
+        if role_id:
+            data["UserRoleId"] = role_id
+
+        if manager:
+            data["ManagerId"] = manager
+
+        # Store old info for future use. Update user data
+        old_info = self.get_user_info_from_salesforce(salesforce_id)
+        self.update_user(salesforce_id, data)
+        new_info = self.get_user_info_from_salesforce(salesforce_id)
+
+        if old_info["IsActive"] != new_info["IsActive"]:
+            send_notification_email(username, user_info["Email"], instance)
+
+        if not new_info["IsActive"]:
+            print "User '{0}' ({1} {2}) was supposed be activated, but was deactive".format(user_info["Alias"], user_info["FirstName"], user_info["LastName"])
+            return
+
+        # Check whether anything has been changed from the users
+        print "User {0} ({1} {2}) activated.".format(user_info["Alias"], user_info["FirstName"], user_info["LastName"])
+        if user_info["Profile"] not in ["Chatter Free User", "Chatter External User"]:
+            rights_changed = self.set_permission_set_rights(user_info["Alias"], salesforce_id)
+        else:
+            rights_changed = False
+        changed = "UPDATED" if (self.user_data_updated(old_info, new_info) or rights_changed) else "UNCHANGED"
+        print "...", changed
+
 
     # def _parse_integrations_from_wiki_output(self, output):
     #     '''
