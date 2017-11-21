@@ -62,6 +62,9 @@ if __name__ == "__main__":
     current_users = map(lambda x: x.lower(), salesforce_users.keys())
 
     for u in sorted(wiki_users):
+        # Never update the test automation user with a script
+        if u.lower() == "fbl11955":
+            continue
         profile_id = rw.get_profile_id_from_salesforce(wiki_users[u]["Profile"])
         # Find the user's manager if possible
         if wiki_users[u]["Manager"]:
