@@ -27,17 +27,17 @@ class RestWrapper(object):
             return re.search("https:\/\/(.*?)\.salesforce", server_url).group(1)
         return ""
 
-    def _parse_users_from_wiki_output(self, output):
+    def _parse_users_from_wiki_output(self, output, first, last):
         try:
             m = re.search("CDATA\[(.*?)\]", output)
             s = m.group(1)
             lines = s.split("\\n")
             lines = lines[1:]   # Remove the header line
+            if last == 0:
+                last = len(lines)
             wiki_users = {}
-            line_number = 0
-            for line in lines:
-                line_number += 1
-                line = line.strip()
+            for i in range(first,last):
+                line = lines[i].strip()
                 try:
                     firstname, lastname, alias, email, profile, parent_role, role, manager, aboutme = [x.strip() for x in line.split(",")]
                     json_data = {"FirstName" : firstname,
@@ -52,7 +52,7 @@ class RestWrapper(object):
                                 }
                     wiki_users[alias] = json_data
                 except ValueError:
-                    print "Unable to split line number {0}: \'{1}\'. Ignoring the line.".format(line_number, line)
+                    print "Unable to split line number {0}: \'{1}\'. Ignoring the line.".format(i+1, line)
             return wiki_users
         except ValueError:  # Unable to retrieve anything from wiki
             raise ValueError(output)
@@ -190,11 +190,11 @@ class RestWrapper(object):
             users[i.encode("utf-8")] = self.get_user_info_from_salesforce(info[i])
         return users
  
-    def get_users_from_wiki(self, username, password, correct_list):
+    def get_users_from_wiki(self, username, password, correct_list, first=0, last=0):
         r = self._session.get("http://wiki.intra.sonera.fi/rest/api/content/{0}?expand=body.storage".format(correct_list), auth=(username, password))
         if r.status_code != 200:
             raise RuntimeError("Failed to get users from Wiki. Status code: {0}. Output: {1}".format(r.status_code, r.text.encode("utf-8")))
-        return self._parse_users_from_wiki_output(r.text.encode("utf-8"))
+        return self._parse_users_from_wiki_output(r.text.encode("utf-8"), first, last)
 
     def generate_new_username(self, alias, environment):
         return alias + "@teliacompany.com." + environment
