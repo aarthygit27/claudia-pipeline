@@ -25,7 +25,7 @@ ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${EMPTY}
 Contact: Add new contact (valid data)
     [Tags]    add_new_contact    BQA-1
     Go To Salesforce and Login
-    Create New Contact Person For Customer
+    Create New Contact Person For Customer From Quick Action
     Check that contact has been saved and can be found under proper Account
 
 # Contact: Add new contact (invalid data)
@@ -150,7 +150,7 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     [Tags]    BQA-1840      smoke
     [Documentation]     The beginning of the test is the same as Contact: Add new contact (valid data) test case (BQA-1)
     Go To Salesforce and Login
-    Create New Contact Person For Customer
+    Create New Contact Person For Customer From Quick Action
     Check that contact has been saved and can be found under proper Account
     MUBE Open Browser And Login As CM User
     MUBE Open Customers Page
@@ -331,7 +331,7 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
 Create in SalesForce and in MultiBella a new Contact Person
     [Tags]      BQA-118
     Go To Salesforce and Login
-    Create New Contact Person For Customer
+    Create New Contact Person For Customer From Quick Action
     Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
     Close Browser
     MUBE Open Browser And Login As CM User
@@ -408,8 +408,8 @@ Opportunity: Pick opportunity from queue
 Create a Contact Person in SalesForce with the same name as new to same Customer
     [Tags]      BQA-52
     Go To Salesforce and Login
-    Create New Contact Person For Customer
-    Create New Contact Person For Customer      last_name=${TEST_CONTACT_PERSON_LAST_NAME}
+    Create New Contact Person For Customer From Quick Action
+    Create New Contact Person For Customer From Quick Action      last_name=${TEST_CONTACT_PERSON_LAST_NAME}
     Close Tabs And Logout
     Close Browser
     MUBE Open Browser And Login As CM User

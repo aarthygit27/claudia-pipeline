@@ -398,7 +398,7 @@ Create New Account
     Run Keyword If      '${parent}'!='${EMPTY}'     Fill Parent Account Name    ${parent}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
 
-Create New Contact Person For Customer
+Create New Contact Person For Customer From Quick Action
     [Arguments]     ${customer}=${DEFAULT_TEST_ACCOUNT}
     ...             ${first_name}=${EMPTY}
     ...             ${last_name}=${EMPTY}
