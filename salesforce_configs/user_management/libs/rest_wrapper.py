@@ -34,10 +34,14 @@ class RestWrapper(object):
             s = m.group(1)
             lines = s.split("\\n")
             lines = lines[1:]   # Remove the header line
-            if last == 0:
+            
+            first = 1 if first < 1 else first   # Set "first" to be 1 at minimum
+            if (last <= 0) or (last > len(lines)):  # Error prevention
                 last = len(lines)
+            step = 1 if first <= last else -1
+            
             wiki_users = {}
-            for i in range(first-1,last):
+            for i in range(first-1, last, step):
                 line = lines[i].strip()
                 try:
                     firstname, lastname, alias, email, profile, parent_role, role, manager, aboutme = [x.strip() for x in line.split(",")]
