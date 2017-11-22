@@ -1280,7 +1280,8 @@ Verify That Opportunity is Found From My All Open Opportunities
     # Ensure we're on the first page
     Run Inside Iframe   ${IFRAME}   Input Text      //input[@class='pageInput']     1
     Run Inside Iframe   ${IFRAME}   Press Enter On  //input[@class='pageInput']
-    ${pages}=   Run Inside Iframe   ${IFRAME}   Execute Javascript      return Number(document.evaluate("//div[@class='paginator']//span[@class='right']/input", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.getAttribute("maxlength"));
+    ${js}=      Set Variable    return Number(document.evaluate("//div[@class='paginator']//span[@class='right']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.slice(-1));
+    ${pages}=   Run Inside Iframe   ${IFRAME}   Execute Javascript      ${js}
     :FOR   ${i}  IN RANGE   ${pages}
     \   ${opportunity_found}=      Run Keyword And Return Status       Run Inside Iframe    ${IFRAME}   Page Should Contain Element     //span[text()='${OPPORTUNITY_NAME}']
     \   Run Keyword If      ${opportunity_found}   Exit For Loop
