@@ -14,7 +14,6 @@ Test Teardown       Logout From All Systems and Close Browser
 Force Tags          sales
 
 *** Variables ***
-${MUBE_CUSTOMER_ID}                         2030101-1   # Juleco
 ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${EMPTY}    # 1916290
 ${CONTACT_PERSON_NAME}                      ${EMPTY}    # Test Contact Person 77590434
 ${PRODUCT}                                  ${EMPTY}    # required for creating Opportunities
@@ -40,7 +39,7 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     [Tags]      add_new_contact     BQA-53      BQA-108      BQA-1835    smoke
     [Documentation]     Entry Conditions: MultiBella userIntegrations are open
     MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     MUBE Logout CRM
     UAD Open Browser And Go To Login Page
     UAD Go to Page And Log in
@@ -336,7 +335,7 @@ Create in SalesForce and in MultiBella a new Contact Person
     Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
     Close Browser
     MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     MUBE Logout CRM
     Set Test Variable   ${SECOND_CONTACT_PERSON}    ${TEST_CONTACT_PERSON_LAST_NAME}
     Contact Persons Should Be Visible in TellU
@@ -463,7 +462,7 @@ Check If Contact Person Exists And Create New One If Not
     Run Keyword If      ${cp_exists}    Return From Keyword
     Close Browser
     MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     MUBE Logout CRM
     Close Browser
     Open Browser And Go To Login Page
@@ -528,7 +527,7 @@ Create Child Account
     Create New Account      Billing     Test Account    ${TEST_GROUP_ACCOUNT_NAME}
 
 Contact Person Should Be Found In MIT UAD
-    [Arguments]     ${customer_id}=${MUBE_CUSTOMER_ID}
+    [Arguments]     ${customer_id}=${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     Wait Until Keyword Succeeds     10m     10s      UAD Verify That Contact Person Is Found For Customer        ${customer_id}
 
 Wait Until Contact Person Is Found In MultiBella
@@ -574,10 +573,12 @@ Contact Persons Should Be Visible in TellU
     TellU Go to Login Page And Login
     TellU Open Contact Person Editor
     TellU Search Contact Person By Attribute    Customer Name    ${DEFAULT_TEST_ACCOUNT}
-    TellU Show All Contact Person In Search Results
-    Wait Until Keyword Succeeds     10min    5s      Contact Persons Should Appear In TellU
+    # Run Keyword With Delay      2s      TellU Show All Contact Person In Search Results
+    Wait Until Keyword Succeeds     2min    5s      Contact Persons Should Appear In TellU
 
 Contact Persons Should Appear In TellU
+    Run Keyword And Ignore Error    TellU Show All Contact Person In Search Results
+    Run Keyword And Ignore Error    Dismiss Alert
     TellU Page Should Contain Contact Person Last Name    ${FIRST_CONTACT_PERSON}
     TellU Page Should Contain Contact Person Last Name    ${SECOND_CONTACT_PERSON}
     [Teardown]      TellU Refresh Search

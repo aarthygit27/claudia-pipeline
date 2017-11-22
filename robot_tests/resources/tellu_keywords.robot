@@ -113,7 +113,7 @@ TellU Search Contact Person By Attribute
     Wait Until Element Is Visible    ${TELLU_SEARCH_RESULT_PAGE_HEADER}    30 s
 
 TellU Show All Contact Person In Search Results
-    Wait Until Page Contains Element    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}      60s
+    Wait Until Page Contains Element    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}      30s
     Unselect Checkbox    ${TELLU_SHOW_ONLY_CONTACT_PERSON_WITH_SALES_ROLE_CHECKBOX}
     Sleep   10
     #TODO: this is only needed when there is a lot of contact persons. Fix this to be used on when needed.
@@ -122,7 +122,7 @@ TellU Show All Contact Person In Search Results
 
 TellU Page Should Contain Contact Person Last Name
     [Arguments]    ${contact_person_last_name}
-    Wait Until Page Contains Element    //tr//p[text()='${contact_person_last_name}']     60s
+    Wait Until Page Contains Element    //tr//p[text()='${contact_person_last_name}']     40s
 
 TellU Select Contact Person
     [Arguments]    ${contact_person_last_name}
