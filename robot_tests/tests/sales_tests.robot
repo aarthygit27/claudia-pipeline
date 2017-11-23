@@ -244,7 +244,7 @@ Quick actions: create Customer Call
     Verify That Event Is Created
     Go To Event
     Edit Event Description and WIG Areas
-    Verify That Event Has Correct Data      Customer Call
+    Verify That Event Has Correct Data      Customer Call   Booking
     Verify That Description And WIG Areas Are Correct
     Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
