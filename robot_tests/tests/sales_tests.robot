@@ -514,12 +514,10 @@ Create Test Account With Admin User
     Close Tabs And Logout
 
 Ensure Contact Person Information Is Reset To Default
-    Open Browser And Go To Login Page
     Login to Salesforce And Close All Tabs
     Go To Account       ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Update Contact Person in Salesforce     ${DEFAULT_PHONE}      ${DEFAULT_BUSINESS_CARD_TITLE}
-    Close Browser
 
 Create Child Account
     Close All Tabs

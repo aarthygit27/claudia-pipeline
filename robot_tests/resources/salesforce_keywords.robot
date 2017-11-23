@@ -1182,6 +1182,7 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Customer_Business_Goals')]     Sales plan customer business goals
     Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Customer_Business_Challenges')]     Sales plan customer business challenges
     Run Inside Iframe   ${frame}    Click Element   //button[text()='Save' and not(contains(@id,'saveList'))]
+    # TODO: 23.11.2017 Error during Javascript remoting. Something needs to be done about it
     Run Inside Iframe   ${frame}    Wait Until Element Is Not Visible       //button[text()='Save' and not(contains(@id,'saveList'))]   20s
     Set Test Variable   ${SALES_PLAN_DESCRIPTION}       ${rand_string}
 
