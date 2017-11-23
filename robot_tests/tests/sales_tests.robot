@@ -373,7 +373,7 @@ Create/Update new Contact Person in TellU
 Test Contact person double check works ok in Claudia
     [Tags]      BQA-2335
     Go to Salesforce and Login
-    Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}
+    Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
     User sees a list of Contact Persons and can save with the same name
 
 Opportunity Cards
@@ -409,7 +409,9 @@ Create a Contact Person in SalesForce with the same name as new to same Customer
     [Tags]      BQA-52
     Go To Salesforce and Login
     Create New Contact Person For Customer From Quick Action
-    Create New Contact Person For Customer From Quick Action      last_name=${TEST_CONTACT_PERSON_LAST_NAME}
+    Close All Tabs
+    Try to create a new contact person with a same name to      ${DEFAULT_TEST_ACCOUNT}     last_name=${TEST_CONTACT_PERSON_LAST_NAME}
+    Save Duplicate Contact Person
     Close Tabs And Logout
     Close Browser
     MUBE Open Browser And Login As CM User
@@ -612,14 +614,6 @@ Contact Person Should Be Updated In Salesforce
     ...     apartment_door=${DEFAULT_PO_BOX}
     ...     postal_code=${DEFAULT_POSTAL_CODE_UPDATED}
     ...     city=${DEFAULT_CITY_UPDATED}
-
-Try to create a new contact person with a same name to
-    [Arguments]     ${account}
-    Open Contacts
-    Click To Create New Contact From Main Page
-    Add Mandatory Contact Data      Paavo   Pesusieni   12345678noreply@teliacompany.com    location=Main Page
-    Add Account For Contact Person  ${account}
-    Save New Contact Person And Expect Error    duplicate record
 
 User sees a list of Contact Persons and can save with the same name
     Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     ${DEFAULT_TEST_CONTACT_EMAIL}
