@@ -574,7 +574,7 @@ Contact Persons Should Be Visible in TellU
     TellU Open Contact Person Editor
     TellU Search Contact Person By Attribute    Customer Name    ${DEFAULT_TEST_ACCOUNT}
     # Run Keyword With Delay      2s      TellU Show All Contact Person In Search Results
-    Wait Until Keyword Succeeds     2min    5s      Contact Persons Should Appear In TellU
+    Wait Until Keyword Succeeds     15min    5s      Contact Persons Should Appear In TellU
 
 Contact Persons Should Appear In TellU
     Run Keyword And Ignore Error    TellU Show All Contact Person In Search Results
