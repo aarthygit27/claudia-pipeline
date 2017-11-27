@@ -464,9 +464,10 @@ Create New Opportunity From Main Page
     Verify That Opportunity Is Saved And Data Is Correct
 
 Create New Sales Plan If Inactive
+    [Documentation]     test variable NO_SALES_PLAN must be set before calling this keyword
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
     ${active}=    Run Keyword And Return Status   Run Inside Iframe   ${frame}    Element Should Be Visible     //span[text()='Active']
-    Return From Keyword If      ${active}
+    Run Keyword Unless      ${NO_SALES_PLAN}    Return From Keyword If      ${active}
     Run Inside Iframe   ${frame}        Click Element       //button[text()='Create new']
     Run Keyword And Ignore Error        Dismiss Alert
     Sleep           1s      Page needs to reload
@@ -913,7 +914,8 @@ Open Opportunities
 Open Sales Plan Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Sales Plan
     ${frame}=   Get Account Tab Iframe Xpath    Sales Plan
-    Run Keyword And Ignore Error    Run Inside Iframe   ${frame}    Click element   //div[@id='saveSalesplanModal']/div[@class='slds-modal__container']//button[contains(text(),'Not now')]
+    ${NO_SALES_PLAN}=   Run Keyword and Return Status    Run Inside Iframe   ${frame}    Click element   //div[@id='saveSalesplanModal']/div[@class='slds-modal__container']//button[contains(text(),'Not now')]
+    Set Test Variable    ${NO_SALES_PLAN}
 
 Open Todays Page
     Select Correct Tab Type     Today
@@ -1178,10 +1180,10 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     Run Inside Iframe   ${frame}    Click Element   //button[@title='Edit this Field']
     ${rand_string}=     Create Unique Name          Sales plan description
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //textarea[contains(@id,'Description')]     10s
-    Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Description')]     ${rand_string}
-    Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Customer_Business_Goals')]     Sales plan customer business goals
-    Run Inside Iframe   ${frame}    Input Text      //textarea[contains(@id,'Customer_Business_Challenges')]     Sales plan customer business challenges
-    Run Inside Iframe   ${frame}    Click Element   //button[text()='Save' and not(contains(@id,'saveList'))]
+    Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Description')]     ${rand_string}
+    Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Goals')]     Sales plan customer business goals
+    Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Challenges')]     Sales plan customer business challenges
+    Run Inside Iframe   ${frame}    Run Keyword With Delay      0.5s    Click Element   //button[text()='Save' and not(contains(@id,'saveList'))]
     # TODO: 23.11.2017 Error during Javascript remoting. Something needs to be done about it
     Run Inside Iframe   ${frame}    Wait Until Element Is Not Visible       //button[text()='Save' and not(contains(@id,'saveList'))]   20s
     Set Test Variable   ${SALES_PLAN_DESCRIPTION}       ${rand_string}
