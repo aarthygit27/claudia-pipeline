@@ -246,7 +246,10 @@ Quick actions: create Customer Call
     Edit Event Description and WIG Areas
     Verify That Event Has Correct Data      Customer Call   Booking
     Verify That Description And WIG Areas Are Correct
-    Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
+    # It will become unnecessarily troublesome to create logic for the update test
+    # to check whether the event is a customer call or meeting, so just don't put
+    # customer calls available for update tests
+    # Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
 Meeting/Customer Call: Update meeting to Done
     [Tags]      BQA-21
