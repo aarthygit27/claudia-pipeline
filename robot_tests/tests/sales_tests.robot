@@ -41,6 +41,7 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     MUBE Open Browser And Login As CM User
     MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     MUBE Logout CRM
+    Close Browser
     UAD Open Browser And Go To Login Page
     UAD Go to Page And Log in
     Contact Person Should Be Found In MIT UAD
@@ -118,7 +119,7 @@ Opportunity: Closing active opportunity as won
 
 Sales Admin: Change Account owner for Group Account
     [Tags]      BQA-5    wip
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_GROUP_ACCOUNT_NAME}
     Change Account Owner    Sales Admin
@@ -129,14 +130,14 @@ Sales Admin: Change Account owner for Group Account
 
 Sales Admin: Remove Account owner
     [Tags]      BQA-7   wip
-    Create Test Account With Admin User     Billing
+    [Setup]     Create Test Account With Admin User     Billing
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_ACCOUNT_NAME}
     # TODO
 
 Sales Admin: Add new owner for Group Account
     [Tags]      BQA-9    wip
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_GROUP_ACCOUNT_NAME}
     Change Account Owner    Sales Admin
@@ -152,10 +153,13 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     Go To Salesforce and Login
     Create New Contact Person For Customer From Quick Action
     Check that contact has been saved and can be found under proper Account
+    Close Tabs And Logout
+    Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Open Customers Page
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella
+    Close Browser
     UAD Open Browser And Go To Login Page
     UAD Go to Page And Log In
     Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
@@ -190,7 +194,7 @@ Contact: Update contact
 
 Opportunity: Check that opportunity cannot be created for a Group Account
     [Tags]      BQA-40
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That User Cannot Create New Opportunity
@@ -345,7 +349,7 @@ Create in SalesForce and in MultiBella a new Contact Person
 
 Try to create Opportunity/Contact Person/or activity linked to Group in SalesForce
     [Tags]      BQA-107
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That Activity Cannot Be Linked to Group Account
@@ -507,7 +511,7 @@ Close active opportunity
 Create Test Account With Admin User
     [Arguments]     ${type}
     ${credentials}=     Config Section Map    preprod
-    Go To Salesforce
+    Open Browser And Go To Login Page
     Login To Salesforce     &{credentials}[username]     &{credentials}[password]
     Go To Sales Application And Close All Tabs
     Open Accounts
