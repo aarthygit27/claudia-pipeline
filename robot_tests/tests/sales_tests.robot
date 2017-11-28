@@ -433,7 +433,7 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
     ...         Create New Opportunity For Customer                     AND
     ...         Create New Task For Customer                            AND
-    # ...         Assign Task To      B2B Digisales                       AND
+    ...         Assign Task To      B2B Digisales                       AND
     ...         Logout From Salesforce
     # 15. Set the status to closed. Save.
     # 16. Set a random quality rating. Save.
