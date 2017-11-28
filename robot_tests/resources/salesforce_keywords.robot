@@ -159,10 +159,11 @@ Assign Opportunity To Me
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     10s     1s      Click Element   //input[@value='Assign To Me']
     Verify That Owner Has Changed   ${owner}    Opportunity
 
-Assign Task To B2B Digisales
+Assign Task To
+    [Arguments]     ${user}
     Go To Account       ${TASK_NAME}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Assigned To     B2B Digisales   ${TRUE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Assigned To     ${user}   ${TRUE}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
 
 Cancel Edit

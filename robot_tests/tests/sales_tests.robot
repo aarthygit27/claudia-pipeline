@@ -428,24 +428,24 @@ Create a Contact Person in SalesForce with the same name as new to same Customer
 
 Enable Sales Person to rate Opportunity and Task Source Data Quality
     [Tags]      BQA-2182    wip
-    # [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
-    # ...         Go To Salesforce and Login      Customer Care User      AND
-    # ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
-    # ...         Create New Opportunity For Customer                     AND
-    # ...         Create New Task For Customer                            AND
-    # ...         Assign Task To B2B Digisales                            AND
-    # ...         Logout From Salesforce
+    [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
+    ...         Go To Salesforce and Login      Customer Care User      AND
+    ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
+    ...         Create New Opportunity For Customer                     AND
+    ...         Create New Task For Customer                            AND
+    # ...         Assign Task To      B2B Digisales                       AND
+    ...         Logout From Salesforce
     # 15. Set the status to closed. Save.
     # 16. Set a random quality rating. Save.
     # 17. Create own task and check that there is no Quality rating visible
     # 18. Close own task without setting rating value
-    Set Test Variable   ${OPPORTUNITY_NAME}     Opportunity 62852916
-    Set Test Variable   ${TASK_NAME}    Task 19997940
+    # Set Test Variable   ${OPPORTUNITY_NAME}     Opportunity 62852916
+    # Set Test Variable   ${TASK_NAME}    Task 19997940
     Go To Salesforce and Login
     Go To Account   ${OPPORTUNITY_NAME}
     Click Details Button
     Verify That Quality Rating Field Exists
-    # Assign Opportunity To Me
+    Assign Opportunity To Me
     Verify That Quality Rating Has Correct Values
     Rate Opportunity    Excellent
     Rate Opportunity    --None--
