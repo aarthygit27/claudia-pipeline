@@ -559,12 +559,14 @@ Update Closed Opportunity Test Case
     [Teardown]      Run Keywords        Log to Console      ${passed}   AND     Logout From All Systems And Close Browser
 
 Create New Event If Necessary
+    [Arguments]     ${type}=${DEFAULT_EVENT_TYPE}
+    ...             ${reason}=${DEFAULT_EVENT_REASON}
     ${event_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Set Test Variable       ${TEST_EVENT_SUBJECT}   ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Return From Keyword
     Open Details Tab At Account View
     Click New Item For Account    New Event
-    Fill Event Data     type=Customer Call    reason=Booking
+    Fill Event Data     type=${type}    reason=${reason}
     Click Create Event Button
     Verify That Event Is Created
 
