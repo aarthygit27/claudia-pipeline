@@ -107,7 +107,7 @@ TellU Refresh Search
 TellU Search Contact Person By Attribute
     [Arguments]    ${attribute}     ${value}
     Wait Until Element Is Visible   //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input
-    Prolonged Input Text            //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input    ${value}
+    Prolonged Input Text            //td/label[contains(text(), "${attribute}")]/../following-sibling::td/div/input    ${value.replace("-", "%")}
     Wait Until Element Is Visible   ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}    10 s
     Click Element    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}
     Wait Until Element Is Visible    ${TELLU_SEARCH_RESULT_PAGE_HEADER}    30 s
