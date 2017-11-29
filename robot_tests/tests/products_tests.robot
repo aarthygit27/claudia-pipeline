@@ -80,7 +80,7 @@ Spotify for Business
 Devices Phones
     [Tags]      BQA-62
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia Palvelulaite Motorola Moto Z Black     Telia Palvelulaite
+    Telia Palvelulaite Motorola Moto Z Black     Muu tuote
 
 Control Subscriptions
     [Tags]      BQA-63
