@@ -163,7 +163,7 @@ Fill Required Information For Microsoft Office 365
 Handle Credit Score (CPQ)
     [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
     ${xpath}=   Set Variable    //div[${CREDIT_SCORE_SUCCESS} or ${CREDIT_SCORE_FAILURE}]
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
     ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
     Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ

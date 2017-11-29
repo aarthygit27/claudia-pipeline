@@ -78,7 +78,7 @@ Spotify for Business
     Spotify Business Single Location     Mobiilin muut lisäpalvelut
 
 Devices Phones
-    [Tags]      BQA-62    wip    no-product-yet
+    [Tags]      BQA-62
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Palvelulaite Motorola Moto Z Black     Telia Palvelulaite
 
@@ -108,25 +108,25 @@ Telia Puheväylä
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Puheväylä    Telia Puheväylä
 
-Käyttötuki (DataInfo)
-    [Tags]      BQA-84    wip    no-product-yet
-    [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Käyttötuki (DataInfo)    Käyttötuki (DataInfo)
+# Käyttötuki (DataInfo)
+#     [Tags]      BQA-84    wip    no-product-yet
+#     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
+#     Telia Käyttötuki    Käyttötuki (DataInfo)
 
 Käyttötuki
-    [Tags]      BQA-85
+    [Tags]      BQA-84      BQA-85
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Käyttötuki    Muu tuote
 
 Web Contact Center
-    [Tags]      BQA-86    wip
+    [Tags]      BQA-86
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Kontakti L    Telia Kontakti
 
 Palvelunumerot
-    [Tags]      BQA-87    wip    no-product-yet
+    [Tags]      BQA-87
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Palvelunumerot    Palvelunumerot
+    Telia palvelunumero    Palvelunumerot
 
 Yritystietoturva
     [Tags]      BQA-88
@@ -159,9 +159,9 @@ Devices Tablets
     iPad Air 2 32GB WiFi + Cellular Kulta Telia Laitesopimus    Muu tuote
 
 Devices Laptops
-    [Tags]      BQA-94    wip    no-product-yet
+    [Tags]      BQA-94
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Lenovo L460 LTE Heti Valmis Musta    Devices Laptops
+    Telia Palvelulaite Lenovo ThinkPad L460 i5-6200U / 14" FHD / 8GB / 256SSD / W10P    Telia Palvelulaite
 
 Yritysinternet Langaton
     [Tags]      BQA-95
