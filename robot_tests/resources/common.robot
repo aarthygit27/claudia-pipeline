@@ -30,6 +30,9 @@ Create Unique Name
     [Arguments]     ${prefix}
     ${timestamp}=   Get Current Date    result_format=%Y%m%d-%H%M%S
     ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${timestamp}      ${prefix} ${timestamp}
+    ${length}=      Get Length      ${name}
+    # The search does not work if the name is too long. Cut characters to fit the timestamp. The timestamp takes 16 characters.
+    ${name}=        Set Variable If     ${length} > 100     ${name[:70]} ${timestamp}   ${name}
     [Return]        ${name}
 
 Get Date From Future
