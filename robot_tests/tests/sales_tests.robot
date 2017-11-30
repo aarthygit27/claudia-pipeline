@@ -459,6 +459,14 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Go To Account   ${TASK_NAME}
     Verify That Quality Rating Field Exists
 
+UI: 360 view of customer
+    [Tags]      BQA-12      wip
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Basic Account Information Is Visible On Top Bar
+    Profile Attributes Should Be Visible On Left Sidebar
+
+
 
 *** Keywords ***
 
@@ -635,3 +643,15 @@ Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
     Change Stage To     Closed Not Won
     Try To Save Opportunity And Expect Errors
     Cancel Edit
+
+Basic Account Information Is Visible On Top Bar
+    Expand Top Bar If Necessary
+    Top Bar Should Have     Account Name
+    Top Bar Should Have     Phone
+    Top Bar Should Have     Business Segment
+    Top Bar Should Have     Business ID
+    Top Bar Should Have     Account Owner
+    Top Bar Should Have     Opportunities Open
+    Top Bar Should Have     Telia Customer ID
+    Top Bar Should Have     Legal Status
+    Click Element   ${COLLAPSE_TOP_BAR}

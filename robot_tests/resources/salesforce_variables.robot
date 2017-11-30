@@ -12,6 +12,9 @@ ${LEFT_SIDEBAR_IFRAME}                      //div[contains(@class,'x-panel')]//i
 ${ACCOUNT_FRAME}                            //div[contains(@id,'scc-pt')]${IFRAME}
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
 
+${TOP_BAR}                                  //div[contains(@class,'workspace_context')]//table
+${EXPAND_TOP_BAR}                           //div[contains(@class,'x-layout-mini-north') and not(contains(@class,'custom-logo'))]
+${COLLAPSE_TOP_BAR}                         //div[contains(@class,'x-layout-split-north') and not(contains(@id,'ServiceDesk'))]
 
 ### Credentials
 ${CUSTOMER_CARE_USER}                       custcare@teliacompany.com.preprod

@@ -560,6 +560,14 @@ Expand Item If Necessary
     ${visible}=      Run Keyword And Return Status    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //div/a[text()='${item}']
     Run Keyword Unless      ${visible}      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       //div[@class='feeditemsummary']/p[text()='${item}']
 
+Expand Top Bar If Necessary
+    ${top_bar_visible}=     Run Keyword And Return Status   Wait Until Element Is Visible   ${TOP_BAR}
+    Run Keyword If      ${top_bar_visible}      Return From Keyword
+    Wait Until Page Contains Element    ${EXPAND_TOP_BAR}   10s
+    Mouse Over      ${EXPAND_TOP_BAR}
+    Click Element   ${EXPAND_TOP_BAR}
+    Wait Until Page Contains Element    ${TOP_BAR}
+
 Extract MuBe CaseID From Opportunity
     Sleep   2       The browser needs to catch its breath or it will complain about a JavaScript error
     Reload Page
@@ -928,6 +936,9 @@ Opportunity Should be Unassigned
     Click Details Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //td[text()='Opportunity Owner']/following-sibling::td//a[contains(text(),'GESB Integration')]      10s
 
+Profile Attributes Should Be Visible On Left Sidebar
+    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //div[text()='Profile']     10s
+
 Rate Opportunity
     [Arguments]     ${rating}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${EDIT_BUTTON}      10s
@@ -1110,6 +1121,10 @@ Submit Quote For Approval
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='pbHeader']//input[@value='Submit for Approval']
     Sleep   3
     Dismiss Alert
+
+Top Bar Should Have
+    [Arguments]     ${field}
+    Page Should Contain Element     ${TOP_BAR}//div[@class='wc_label' and text()='${field}']
 
 Try to create a new contact person with a same name to
     [Arguments]     ${account}
