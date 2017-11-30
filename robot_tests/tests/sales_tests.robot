@@ -215,13 +215,17 @@ Sales Admin: Update closed opportunity
     Closed Won          Won         Negotiate and Close
 
 Quick actions: Create task
-    [Tags]      BQA-16      wip
+    [Tags]      BQA-16
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Item For Account    New Task
     Fill Task Data
     Click Create Contact Person Button      # The same xapth for contact person creation and task creation
+    Verify That Task Is Created
+    Close All Tabs
+    Open Todays Page
+    Created Task Should Be Visible
 
 Quick actions: create Meeting
     [Tags]      BQA-17

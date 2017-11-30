@@ -490,6 +490,9 @@ Create New Task For Customer
 Created Contact Person Should Be Open
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${TEST_CONTACT_PERSON_FULL_NAME}')]    10 seconds
 
+Created Task Should Be Visible
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    //span[text()='${TASK_SUBJECT}']
+
 Customer Details Page Should Contain
     [Documentation]     Searches the customer and goes to its page. Goes to Details tab and clicks
     ...                 the small details button. Then checks if "${text}" is in "${field}" field.
@@ -704,6 +707,7 @@ Fill Task Data
     ${end_date}=        Get Date From Future    2
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Subject     ${subject}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Due Date    ${end_date}
+    Set Test Variable   ${TASK_SUBJECT}     ${subject}
 
 
 Filter Opportunities By
@@ -1466,6 +1470,10 @@ Verify That Updated Values Are Visible In Sales Plan
 Verify That User Cannot Create New Opportunity
     Click Feed Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Not Contain Element     //span[text()='New Opportunity']
+
+Verify That Task Is Created
+    [Arguments]     ${task}=${TASK_SUBJECT}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[.//a[contains(text(),'${task}')]]/a[text()='created a task.']    10s
 
 Verify That Values Are Visible In Opportunity Layout
     [Arguments]     ${product}=Devices
