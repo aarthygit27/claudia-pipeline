@@ -501,6 +501,9 @@ Customer Details Page Should Contain
     Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //span[contains(text(),'Business ID')]/../following-sibling::td/div[text()='${busines_id}']
     Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //td[text()='${field}']/following-sibling::td/div[text()='${text}']
 
+Customer Story Should Be Visible On The Right Sidebar
+    Run Inside Iframe   ${RIGHT_SIDEBAR_IFRAME}     Wait Until Page Contains Element    //div[text()='Customer Story']
+
 Discard Changes
     Click Element   xpath=//div[contains(@class,'x-window') and contains(@class, 'x-resizable-pinned')]//button[text()="Don't Save"]
 
@@ -696,6 +699,13 @@ Fill Parent Account Name
     [Arguments]     ${parent}=${EMPTY}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc3    ${parent}
 
+Fill Task Data
+    ${subject}=     Create Unique Name      Test Task Subject
+    ${end_date}=        Get Date From Future    2
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Subject     ${subject}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Due Date    ${end_date}
+
+
 Filter Opportunities By
     [Arguments]     ${field}    ${order}=desc
     Run Inside Iframe   ${IFRAME}    Click Element      //div[@title='${field}']
@@ -843,6 +853,13 @@ Logout From Salesforce
     Run Keyword And Ignore Error    Dismiss Alert
     Login Page Should Be Open
 
+Main Frame Should Have Correct Info
+    ${frame}=   Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //article//span[text()='Solution']
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //article//span[text()='Contacts']
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //article//span[text()='Contracts']
+    Run Inside Iframe   ${frame}    Element Should Be Visible   flyout-Popover
+
 Navigate To App
     [Documentation]     Called from 'Go To Application' keyword.
     [Arguments]         ${app_name}
@@ -937,7 +954,11 @@ Opportunity Should be Unassigned
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //td[text()='Opportunity Owner']/following-sibling::td//a[contains(text(),'GESB Integration')]      10s
 
 Profile Attributes Should Be Visible On Left Sidebar
-    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //div[text()='Profile']     10s
+    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //div[text()='Profile']
+    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Characteristics']
+    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Customer Challenges']
+    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Goals']
+    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Needs']
 
 Rate Opportunity
     [Arguments]     ${rating}
@@ -946,6 +967,9 @@ Rate Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select Value For Attribute      Quality Rating      ${rating}
     Save Opportunity
+
+Recommended Offerings Should Be Visible On the Right Sidebar
+    Run Inside Iframe   ${RIGHT_SIDEBAR_IFRAME}     Wait Until Page Contains Element    //div[text()='Recommended Offerings']
 
 Save Duplicate Contact Person
     Save (Ignore Alert) Button Should Be Visible

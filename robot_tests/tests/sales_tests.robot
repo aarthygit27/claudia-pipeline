@@ -214,6 +214,15 @@ Sales Admin: Update closed opportunity
     Closed Not Won      Not Won
     Closed Won          Won         Negotiate and Close
 
+Quick actions: Create task
+    [Tags]      BQA-16      wip
+    Go To Salesforce and Login
+    Go to Account       ${DEFAULT_TEST_ACCOUNT}
+    Open Details Tab At Account View
+    Click New Item For Account    New Task
+    Fill Task Data
+    Click Create Contact Person Button      # The same xapth for contact person creation and task creation
+
 Quick actions: create Meeting
     [Tags]      BQA-17
     Go To Salesforce and Login
@@ -465,6 +474,12 @@ UI: 360 view of customer
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Basic Account Information Is Visible On Top Bar
     Profile Attributes Should Be Visible On Left Sidebar
+    Customer Story Should Be Visible On The Right Sidebar
+    Recommended Offerings Should Be Visible On the Right Sidebar
+    Open Dashboard Tab At Account View
+    Main Frame Should Have Correct Info
+    Open Sales Plan Tab At Account View
+    Open Details Tab At Account View
 
 
 
