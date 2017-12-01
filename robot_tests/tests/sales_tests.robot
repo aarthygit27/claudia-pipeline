@@ -473,7 +473,7 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Verify That Quality Rating Field Exists
 
 UI: 360 view of customer
-    [Tags]      BQA-12      wip
+    [Tags]      BQA-12
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Basic Account Information Is Visible On Top Bar
@@ -494,7 +494,7 @@ Check Attributes/Business Account are named right in SalesForce UI
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right in SalesForce UI
-    [Tags]      BQA-101     wip
+    [Tags]      BQA-101
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_CONTACT}
     Click Details Button
