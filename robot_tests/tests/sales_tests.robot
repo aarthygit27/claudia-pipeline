@@ -485,6 +485,13 @@ UI: 360 view of customer
     Open Sales Plan Tab At Account View
     Open Details Tab At Account View
 
+Check Attributes/Business Account are named right in Sales Force UI
+    [Tags]      BQA-100     wip
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Open Details Tab At Account View
+    Click Details Button
+    Verify That Business Account Attributes Are Named Right
 
 
 *** Keywords ***

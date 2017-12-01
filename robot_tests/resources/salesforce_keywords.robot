@@ -1263,6 +1263,46 @@ Verify That Activity Cannot Be Linked to Group Account
     Wait Until Keyword Succeeds     5s      1s      Run Keyword And Expect Error    WebDriverException*   Click New Item For Account      New Opportunity
     Wait Until Keyword Succeeds     5s      1s      Run Keyword And Expect Error    WebDriverException*   Click New Item For Account      New Event
 
+Verify That Business Account Attributes Are Named Right
+    Verify That Business Account Contains Attribute     Account ID
+    Verify That Business Account Contains Attribute     Account Record Type
+    Verify That Business Account Contains Attribute     Account Owner
+    Verify That Business Account Contains Attribute     Business ID
+    Verify That Business Account Contains Attribute     Account Name
+    Verify That Business Account Contains Attribute     Telia Customer ID
+    Verify That Business Account Contains Attribute     Marketing Name
+    Verify That Business Account Contains Attribute     AIDA ID
+    Verify That Business Account Contains Attribute     Phone
+    Verify That Business Account Contains Attribute     VAT Code
+    Verify That Business Account Contains Attribute     Website
+    Verify That Business Account Contains Attribute     Registered Association ID
+    Verify That Business Account Contains Attribute     Contact Preferences
+    Verify That Business Account Contains Attribute     Group Name
+    Verify That Business Account Contains Attribute     Next Opportunity Due
+    Verify That Business Account Contains Attribute     Group ID
+    Verify That Business Account Contains Attribute     Opportunities Open
+    Verify That Business Account Contains Attribute     Parent Account
+    Verify That Business Account Contains Attribute     Last Contacted Date
+    Verify That Business Account Contains Attribute     Days Uncontacted
+    Verify That Business Account Contains Attribute     Marketing Restriction
+    Verify That Business Account Contains Attribute     Company Form
+    Verify That Business Account Contains Attribute     Legal Status
+    Verify That Business Account Contains Attribute     Tax Activity
+    Verify That Business Account Contains Attribute     Status Reason
+    Verify That Business Account Contains Attribute     Bankruptcy Process Status
+    Verify That Business Account Contains Attribute     Business Segment
+    Verify That Business Account Contains Attribute     Street Address
+    Verify That Business Account Contains Attribute     Postal Code
+    Verify That Business Account Contains Attribute     City
+    Verify That Business Account Contains Attribute     Country
+    Verify That Business Account Contains Attribute     Main Mailing Address
+    Verify That Business Account Contains Attribute     Visiting Address
+    Verify That Business Account Contains Attribute     Multibella System ID
+
+Verify That Business Account Contains Attribute
+    [Arguments]     ${attribute}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[contains(@class,'labelCol') and (text()='${attribute}' or ./span[contains(text(),'${attribute}')])]
+
 Verify That Business Customer Is Terminated
     [Documentation]     Searches for a business customer and checks if the status is set
     ...                 to "Terminated". Keyword assumes that the "NEW_CUSTOMER_NAME" suite
