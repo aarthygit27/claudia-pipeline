@@ -485,13 +485,20 @@ UI: 360 view of customer
     Open Sales Plan Tab At Account View
     Open Details Tab At Account View
 
-Check Attributes/Business Account are named right in Sales Force UI
-    [Tags]      BQA-100     wip
+Check Attributes/Business Account are named right in SalesForce UI
+    [Tags]      BQA-100
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click Details Button
     Verify That Business Account Attributes Are Named Right
+
+Check Attributes/Contact Person are named right in SalesForce UI
+    [Tags]      BQA-101     wip
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_CONTACT}
+    Click Details Button
+    Verify That Contact Person Attributes Are Named Right
 
 
 *** Keywords ***
@@ -683,37 +690,59 @@ Basic Account Information Is Visible On Top Bar
     Click Element   ${COLLAPSE_TOP_BAR}
 
 Verify That Business Account Attributes Are Named Right
-    Verify That Business Account Contains Attribute     Account ID
-    Verify That Business Account Contains Attribute     Account Record Type
-    Verify That Business Account Contains Attribute     Account Owner
-    Verify That Business Account Contains Attribute     Business ID
-    Verify That Business Account Contains Attribute     Account Name
-    Verify That Business Account Contains Attribute     Telia Customer ID
-    Verify That Business Account Contains Attribute     Marketing Name
-    Verify That Business Account Contains Attribute     AIDA ID
-    Verify That Business Account Contains Attribute     Phone
-    Verify That Business Account Contains Attribute     VAT Code
-    Verify That Business Account Contains Attribute     Website
-    Verify That Business Account Contains Attribute     Registered Association ID
-    Verify That Business Account Contains Attribute     Contact Preferences
-    Verify That Business Account Contains Attribute     Group Name
-    Verify That Business Account Contains Attribute     Next Opportunity Due
-    Verify That Business Account Contains Attribute     Group ID
-    Verify That Business Account Contains Attribute     Opportunities Open
-    Verify That Business Account Contains Attribute     Parent Account
-    Verify That Business Account Contains Attribute     Last Contacted Date
-    Verify That Business Account Contains Attribute     Days Uncontacted
-    Verify That Business Account Contains Attribute     Marketing Restriction
-    Verify That Business Account Contains Attribute     Company Form
-    Verify That Business Account Contains Attribute     Legal Status
-    Verify That Business Account Contains Attribute     Tax Activity
-    Verify That Business Account Contains Attribute     Status Reason
-    Verify That Business Account Contains Attribute     Bankruptcy Process Status
-    Verify That Business Account Contains Attribute     Business Segment
-    Verify That Business Account Contains Attribute     Street Address
-    Verify That Business Account Contains Attribute     Postal Code
-    Verify That Business Account Contains Attribute     City
-    Verify That Business Account Contains Attribute     Country
-    Verify That Business Account Contains Attribute     Main Mailing Address
-    Verify That Business Account Contains Attribute     Visiting Address
-    Verify That Business Account Contains Attribute     Multibella System ID
+    Verify That Record Contains Attribute     Account ID
+    Verify That Record Contains Attribute     Account Record Type
+    Verify That Record Contains Attribute     Account Owner
+    Verify That Record Contains Attribute     Business ID
+    Verify That Record Contains Attribute     Account Name
+    Verify That Record Contains Attribute     Telia Customer ID
+    Verify That Record Contains Attribute     Marketing Name
+    Verify That Record Contains Attribute     AIDA ID
+    Verify That Record Contains Attribute     Phone
+    Verify That Record Contains Attribute     VAT Code
+    Verify That Record Contains Attribute     Website
+    Verify That Record Contains Attribute     Registered Association ID
+    Verify That Record Contains Attribute     Contact Preferences
+    Verify That Record Contains Attribute     Group Name
+    Verify That Record Contains Attribute     Next Opportunity Due
+    Verify That Record Contains Attribute     Group ID
+    Verify That Record Contains Attribute     Opportunities Open
+    Verify That Record Contains Attribute     Parent Account
+    Verify That Record Contains Attribute     Last Contacted Date
+    Verify That Record Contains Attribute     Days Uncontacted
+    Verify That Record Contains Attribute     Marketing Restriction
+    Verify That Record Contains Attribute     Company Form
+    Verify That Record Contains Attribute     Legal Status
+    Verify That Record Contains Attribute     Tax Activity
+    Verify That Record Contains Attribute     Status Reason
+    Verify That Record Contains Attribute     Bankruptcy Process Status
+    Verify That Record Contains Attribute     Business Segment
+    Verify That Record Contains Attribute     Street Address
+    Verify That Record Contains Attribute     Postal Code
+    Verify That Record Contains Attribute     City
+    Verify That Record Contains Attribute     Country
+    Verify That Record Contains Attribute     Main Mailing Address
+    Verify That Record Contains Attribute     Visiting Address
+    Verify That Record Contains Attribute     Multibella System ID
+
+Verify That Contact Person Attributes Are Named Right
+    Verify That Record Contains Attribute     Contact ID
+    Verify That Record Contains Attribute     Preferred Contact Channel
+    Verify That Record Contains Attribute     Contact Owner
+    Verify That Record Contains Attribute     Language
+    Verify That Record Contains Attribute     Name
+    Verify That Record Contains Attribute     Mobile
+    Verify That Record Contains Attribute     Account Name
+    Verify That Record Contains Attribute     External Phone
+    Verify That Record Contains Attribute     Phone
+    Verify That Record Contains Attribute     Business Card Title
+    Verify That Record Contains Attribute     Email
+    Verify That Record Contains Attribute     Gender
+    Verify That Record Contains Attribute     Birthdate
+    Verify That Record Contains Attribute     Status
+    Verify That Record Contains Attribute     3rd Party Contact
+    Verify That Record Contains Attribute     Sales Role
+    Verify That Record Contains Attribute     Office Name
+    Verify That Record Contains Attribute     Address
+    Verify That Record Contains Attribute     External Address
+    Verify That Record Contains Attribute     Multibella System ID

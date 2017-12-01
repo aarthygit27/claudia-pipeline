@@ -1263,7 +1263,7 @@ Verify That Activity Cannot Be Linked to Group Account
     Wait Until Keyword Succeeds     5s      1s      Run Keyword And Expect Error    WebDriverException*   Click New Item For Account      New Opportunity
     Wait Until Keyword Succeeds     5s      1s      Run Keyword And Expect Error    WebDriverException*   Click New Item For Account      New Event
 
-Verify That Business Account Contains Attribute
+Verify That Record Contains Attribute
     [Arguments]     ${attribute}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[contains(@class,'labelCol') and (text()='${attribute}' or ./span[contains(text(),'${attribute}')])]
 
