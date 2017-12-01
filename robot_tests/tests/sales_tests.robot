@@ -500,6 +500,12 @@ Check Attributes/Contact Person are named right in SalesForce UI
     Click Details Button
     Verify That Contact Person Attributes Are Named Right
 
+Check attributes in Global search list views
+    [Tags]      BQA-1830
+    Go To Salesforce And Login
+    Go to Account   ${DEFAULT_TEST_ACCOUNT}     Account
+    Go to Account   ${DEFAULT_TEST_CONTACT}     Contact
+
 
 *** Keywords ***
 
