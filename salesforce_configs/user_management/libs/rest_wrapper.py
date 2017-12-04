@@ -263,16 +263,12 @@ class RestWrapper(object):
                 "LastName" : user_info["LastName"],
                 "Username": username,
                 "Email" : user_info["Email"],
-                "telia_user_ID__c": user_info["Alias"]
+                "telia_user_ID__c": user_info["Alias"],
+                "ManagerId": manager,
+                "UserRoleId": role_id
                 }
 
         self.add_other_fields_to_user(data)
-
-        if role_id:
-            data["UserRoleId"] = role_id
-
-        if manager:
-            data["ManagerId"] = manager
 
         # Store old info for future use. Update user data
         old_info = self.get_user_info_from_salesforce(salesforce_id)
