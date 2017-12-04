@@ -1055,6 +1055,11 @@ Search (Setup)
 #     [Teardown]      Select Window     main
 #     # [Teardown]      Run Keywords      Log to console     ${kw_passed}    AND    Run Keyword If   '${kw_passed}'=='${FALSE}'     Close Browser
 
+Search Result Should Contain Field
+    [Arguments]     ${result}   ${type}     ${expected_field}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element
+    ...     //div[@id='${type}']//th[./a[text()='${result}']]/following-sibling::td[text()='${expected_field}' or ./a[text()='${expected_field}']]      10s
+
 Select Account
     [Arguments]         ${account_name}     ${type}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    //div[contains(@id,'${type}')]//a[text()='${account_name}']

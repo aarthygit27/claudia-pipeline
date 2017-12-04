@@ -503,8 +503,11 @@ Check Attributes/Contact Person are named right in SalesForce UI
 Check attributes in Global search list views
     [Tags]      BQA-1830
     Go To Salesforce And Login
-    Go to Account   ${DEFAULT_TEST_ACCOUNT}     Account
-    Go to Account   ${DEFAULT_TEST_CONTACT}     Contact
+    Search And Verify Account Is Found      ${DEFAULT_TEST_ACCOUNT}     Account
+    Search Result Should Contain Field      ${DEFAULT_TEST_ACCOUNT}     Account     ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
+    Search And Verify Account Is Found      ${DEFAULT_TEST_CONTACT}     Contact
+    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_ACCOUNT}
+    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_CONTACT_EMAIL}
 
 
 *** Keywords ***
