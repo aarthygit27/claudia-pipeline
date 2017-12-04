@@ -50,6 +50,8 @@ if __name__ == "__main__":
         except (ValueError,IndexError):
             parent_role_id = None
         role_id = rw.get_user_role_id_from_salesforce(role, parent_role_id)
+    else:
+        role_id = None
 
     try:
         manager = rw.get_user_id_from_salesforce(sys.argv[8])
