@@ -9,7 +9,6 @@ sys.path.append(CONFIG_PATH)
 
 from libs.login import get_sessionId_and_serverUrl
 from libs.rest_wrapper import RestWrapper
-from libs.send_email import send_notification_email
 
 import config_parser
 from config_parser import ConfigSectionMap

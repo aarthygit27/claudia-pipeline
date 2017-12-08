@@ -5,6 +5,7 @@ import re, json, copy
 from http_adapter import TLS1_2HttpAdapter
 import requests
 import xml.etree.ElementTree as ET
+from libs.send_email import send_notification_email
 
 class RestWrapper(object):
 
