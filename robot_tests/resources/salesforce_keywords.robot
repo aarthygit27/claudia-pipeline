@@ -1227,6 +1227,7 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //button[@title='Edit this Field']      10s
     Run Inside Iframe   ${frame}    Click Element   //button[@title='Edit this Field']
+    Sleep   3
     ${rand_string}=     Create Unique Name          Sales plan description
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //textarea[contains(@id,'Description')]     10s
     Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Description')]     ${rand_string}
