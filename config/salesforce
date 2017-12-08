@@ -25,7 +25,7 @@ instance: test
 [int]
 username: fbl11955@teliacompany.com.int
 password: K23!kUTr41S
-token: pXEJGE95fF5qEnw1cFlRYg4E
+token: sOZUMPPVmAYRrTpvN1xa8FJE
 instance: test
 
 [sint]
@@ -42,7 +42,7 @@ instance: test
 
 [prod]
 username: fbl11955@teliacompany.com
-password: Trt1e!!gXCxw34!822
+password: Trt1e!!gXCxw34!82244
 token: 41R1cliteZeOH6Eqyn3A1iGqo
 instance: prod
 
