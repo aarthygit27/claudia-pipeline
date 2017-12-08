@@ -7,6 +7,14 @@ ${LOGOUT_BUTTON}                            //a[@title='Logout']
 ${LOOKUP_SEARCH_FIELD}                      id=lksrch
 ${LOOKUP_SEARCH_GO_BUTTON}                  //input[@title='Go!']
 
+${RIGHT_SIDEBAR_IFRAME}                     //div[contains(@class,'x-panel')]//iframe[contains(@src,'Right')]
+${LEFT_SIDEBAR_IFRAME}                      //div[contains(@class,'x-panel')]//iframe[contains(@src,'Left')]
+${ACCOUNT_FRAME}                            //div[contains(@id,'scc-pt')]${IFRAME}
+${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
+
+${TOP_BAR}                                  //div[contains(@class,'workspace_context')]//table
+${EXPAND_TOP_BAR}                           //div[contains(@class,'x-layout-mini-north') and not(contains(@class,'custom-logo'))]
+${COLLAPSE_TOP_BAR}                         //div[contains(@class,'x-layout-split-north') and not(contains(@id,'ServiceDesk'))]
 
 ### Credentials
 ${CUSTOMER_CARE_USER}                       custcare@teliacompany.com.preprod
@@ -23,7 +31,6 @@ ${INPUT_OR_TEXTAREA}                        //*[(local-name()='input' or local-n
 
 
 ${NEW_OPPORTUNITY_BUTTON}                   //input[contains(@title,'New Opportunity')]
-${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
 ${OPPORTUNITY_SAVE_BUTTON}                  //h2[contains(text(), 'Opportunity Edit')]/../following-sibling::td//input[@title='Save']
 ${OPPORTUNITY_CPQ_BUTTON}                   //h2[contains(text(), 'Opportunity Detail')]/../following-sibling::td//input[@title='CPQ']
 ${QUOTE_CPQ_BUTTON}                         //h2[contains(text(), 'Quote Detail')]/../following-sibling::td//input[@title='CPQ']
@@ -38,7 +45,6 @@ ${CLASSIF_ACCOUNT_NAME_FILLED}              //label[contains(text(), 'Account Na
 ${CLOSE_REASON_FIELD}                       //label[contains(text(),'Close Reason')]/../following-sibling::td
 ${CLOSE_COMMENT_FIELD}                      //label[text()='Close Comment']/../following-sibling::td
 
-${ACCOUNT_FRAME}                            //div[contains(@id,'scc-pt')]${IFRAME}
 ${NEW_ACCOUNT_BUTTON}                       //input[contains(@title,'New Account')]
 ${NEW_CONTACT_BUTTON}                       //input[contains(@title,'New Contact')]
 ${MORE_DROPDOWN_AT_DETAILS}                 //span[@class='optionLabel' and contains(text(), 'More')]/following-sibling::span[@class='arrowIcon']

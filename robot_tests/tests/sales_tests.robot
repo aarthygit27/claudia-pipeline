@@ -14,7 +14,6 @@ Test Teardown       Logout From All Systems and Close Browser
 Force Tags          sales
 
 *** Variables ***
-${MUBE_CUSTOMER_ID}                         2030101-1   # Juleco
 ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${EMPTY}    # 1916290
 ${CONTACT_PERSON_NAME}                      ${EMPTY}    # Test Contact Person 77590434
 ${PRODUCT}                                  ${EMPTY}    # required for creating Opportunities
@@ -26,7 +25,7 @@ ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${EMPTY}
 Contact: Add new contact (valid data)
     [Tags]    add_new_contact    BQA-1
     Go To Salesforce and Login
-    Create New Contact Person For Customer
+    Create New Contact Person For Customer From Quick Action
     Check that contact has been saved and can be found under proper Account
 
 # Contact: Add new contact (invalid data)
@@ -40,8 +39,9 @@ Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
     [Tags]      add_new_contact     BQA-53      BQA-108      BQA-1835    smoke
     [Documentation]     Entry Conditions: MultiBella userIntegrations are open
     MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     MUBE Logout CRM
+    Close Browser
     UAD Open Browser And Go To Login Page
     UAD Go to Page And Log in
     Contact Person Should Be Found In MIT UAD
@@ -119,7 +119,7 @@ Opportunity: Closing active opportunity as won
 
 Sales Admin: Change Account owner for Group Account
     [Tags]      BQA-5    wip
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_GROUP_ACCOUNT_NAME}
     Change Account Owner    Sales Admin
@@ -130,14 +130,14 @@ Sales Admin: Change Account owner for Group Account
 
 Sales Admin: Remove Account owner
     [Tags]      BQA-7   wip
-    Create Test Account With Admin User     Billing
+    [Setup]     Create Test Account With Admin User     Billing
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_ACCOUNT_NAME}
     # TODO
 
 Sales Admin: Add new owner for Group Account
     [Tags]      BQA-9    wip
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login      Sales Admin User
     Go to Account   ${TEST_GROUP_ACCOUNT_NAME}
     Change Account Owner    Sales Admin
@@ -151,12 +151,15 @@ Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
     [Tags]    BQA-1840      smoke
     [Documentation]     The beginning of the test is the same as Contact: Add new contact (valid data) test case (BQA-1)
     Go To Salesforce and Login
-    Create New Contact Person For Customer
+    Create New Contact Person For Customer From Quick Action
     Check that contact has been saved and can be found under proper Account
+    Close Tabs And Logout
+    Close Browser
     MUBE Open Browser And Login As CM User
     MUBE Open Customers Page
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella
+    Close Browser
     UAD Open Browser And Go To Login Page
     UAD Go to Page And Log In
     Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
@@ -191,7 +194,7 @@ Contact: Update contact
 
 Opportunity: Check that opportunity cannot be created for a Group Account
     [Tags]      BQA-40
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That User Cannot Create New Opportunity
@@ -210,6 +213,19 @@ Sales Admin: Update closed opportunity
     Closed Lost         Lost
     Closed Not Won      Not Won
     Closed Won          Won         Negotiate and Close
+
+Quick actions: Create task
+    [Tags]      BQA-16
+    Go To Salesforce and Login
+    Go to Account       ${DEFAULT_TEST_ACCOUNT}
+    Open Details Tab At Account View
+    Click New Item For Account    New Task
+    Fill Task Data
+    Click Create Contact Person Button      # The same xapth for contact person creation and task creation
+    Verify That Task Is Created
+    Close All Tabs
+    Open Todays Page
+    Created Task Should Be Visible
 
 Quick actions: create Meeting
     [Tags]      BQA-17
@@ -245,9 +261,12 @@ Quick actions: create Customer Call
     Verify That Event Is Created
     Go To Event
     Edit Event Description and WIG Areas
-    Verify That Event Has Correct Data
+    Verify That Event Has Correct Data      Customer Call   Booking
     Verify That Description And WIG Areas Are Correct
-    Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
+    # It will become unnecessarily troublesome to create logic for the update test
+    # to check whether the event is a customer call or meeting, so just don't put
+    # customer calls available for update tests
+    # Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
 Meeting/Customer Call: Update meeting to Done
     [Tags]      BQA-21
@@ -332,18 +351,18 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
 Create in SalesForce and in MultiBella a new Contact Person
     [Tags]      BQA-118
     Go To Salesforce and Login
-    Create New Contact Person For Customer
+    Create New Contact Person For Customer From Quick Action
     Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
     Close Browser
     MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     MUBE Logout CRM
     Set Test Variable   ${SECOND_CONTACT_PERSON}    ${TEST_CONTACT_PERSON_LAST_NAME}
     Contact Persons Should Be Visible in TellU
 
 Try to create Opportunity/Contact Person/or activity linked to Group in SalesForce
     [Tags]      BQA-107
-    Create Test Account With Admin User     Group
+    [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That Activity Cannot Be Linked to Group Account
@@ -374,7 +393,7 @@ Create/Update new Contact Person in TellU
 Test Contact person double check works ok in Claudia
     [Tags]      BQA-2335
     Go to Salesforce and Login
-    Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}
+    Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
     User sees a list of Contact Persons and can save with the same name
 
 Opportunity Cards
@@ -409,8 +428,10 @@ Opportunity: Pick opportunity from queue
 Create a Contact Person in SalesForce with the same name as new to same Customer
     [Tags]      BQA-52
     Go To Salesforce and Login
-    Create New Contact Person For Customer
-    Create New Contact Person For Customer      last_name=${TEST_CONTACT_PERSON_LAST_NAME}
+    Create New Contact Person For Customer From Quick Action
+    Close All Tabs
+    Try to create a new contact person with a same name to      ${DEFAULT_TEST_ACCOUNT}     last_name=${TEST_CONTACT_PERSON_LAST_NAME}
+    Save Duplicate Contact Person
     Close Tabs And Logout
     Close Browser
     MUBE Open Browser And Login As CM User
@@ -420,24 +441,24 @@ Create a Contact Person in SalesForce with the same name as new to same Customer
 
 Enable Sales Person to rate Opportunity and Task Source Data Quality
     [Tags]      BQA-2182    wip
-    # [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
-    # ...         Go To Salesforce and Login      Customer Care User      AND
-    # ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
-    # ...         Create New Opportunity For Customer                     AND
-    # ...         Create New Task For Customer                            AND
-    # ...         Assign Task To B2B Digisales                            AND
-    # ...         Logout From Salesforce
+    [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
+    ...         Go To Salesforce and Login      Customer Care User      AND
+    ...         Go to Account    ${DEFAULT_TEST_ACCOUNT}                AND
+    ...         Create New Opportunity For Customer                     AND
+    ...         Create New Task For Customer                            AND
+    ...         Assign Task To      B2B Digisales                       AND
+    ...         Logout From Salesforce
     # 15. Set the status to closed. Save.
     # 16. Set a random quality rating. Save.
     # 17. Create own task and check that there is no Quality rating visible
     # 18. Close own task without setting rating value
-    Set Test Variable   ${OPPORTUNITY_NAME}     Opportunity 62852916
-    Set Test Variable   ${TASK_NAME}    Task 19997940
+    # Set Test Variable   ${OPPORTUNITY_NAME}     Opportunity 62852916
+    # Set Test Variable   ${TASK_NAME}    Task 19997940
     Go To Salesforce and Login
     Go To Account   ${OPPORTUNITY_NAME}
     Click Details Button
     Verify That Quality Rating Field Exists
-    # Assign Opportunity To Me
+    Assign Opportunity To Me
     Verify That Quality Rating Has Correct Values
     Rate Opportunity    Excellent
     Rate Opportunity    --None--
@@ -451,6 +472,43 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Go To Account   ${TASK_NAME}
     Verify That Quality Rating Field Exists
 
+UI: 360 view of customer
+    [Tags]      BQA-12
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Basic Account Information Is Visible On Top Bar
+    Profile Attributes Should Be Visible On Left Sidebar
+    Customer Story Should Be Visible On The Right Sidebar
+    Recommended Offerings Should Be Visible On the Right Sidebar
+    Open Dashboard Tab At Account View
+    Main Frame Should Have Correct Info
+    Open Sales Plan Tab At Account View
+    Open Details Tab At Account View
+
+Check Attributes/Business Account are named right in SalesForce UI
+    [Tags]      BQA-100
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Open Details Tab At Account View
+    Click Details Button
+    Verify That Business Account Attributes Are Named Right
+
+Check Attributes/Contact Person are named right in SalesForce UI
+    [Tags]      BQA-101
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_CONTACT}
+    Click Details Button
+    Verify That Contact Person Attributes Are Named Right
+
+Check attributes in Global search list views
+    [Tags]      BQA-1830
+    Go To Salesforce And Login
+    Search And Verify Account Is Found      ${DEFAULT_TEST_ACCOUNT}     Account
+    Search Result Should Contain Field      ${DEFAULT_TEST_ACCOUNT}     Account     ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
+    Search And Verify Account Is Found      ${DEFAULT_TEST_CONTACT}     Contact
+    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_ACCOUNT}
+    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_CONTACT_EMAIL}
+
 
 *** Keywords ***
 
@@ -463,7 +521,7 @@ Check If Contact Person Exists And Create New One If Not
     Run Keyword If      ${cp_exists}    Return From Keyword
     Close Browser
     MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${MUBE_CUSTOMER_ID}
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     MUBE Logout CRM
     Close Browser
     Open Browser And Go To Login Page
@@ -503,7 +561,7 @@ Close active opportunity
 Create Test Account With Admin User
     [Arguments]     ${type}
     ${credentials}=     Config Section Map    preprod
-    Go To Salesforce
+    Open Browser And Go To Login Page
     Login To Salesforce     &{credentials}[username]     &{credentials}[password]
     Go To Sales Application And Close All Tabs
     Open Accounts
@@ -513,12 +571,10 @@ Create Test Account With Admin User
     Close Tabs And Logout
 
 Ensure Contact Person Information Is Reset To Default
-    Open Browser And Go To Login Page
     Login to Salesforce And Close All Tabs
     Go To Account       ${CONTACT_PERSON_NAME}
     Click Contact Person Details
     Update Contact Person in Salesforce     ${DEFAULT_PHONE}      ${DEFAULT_BUSINESS_CARD_TITLE}
-    Close Browser
 
 Create Child Account
     Close All Tabs
@@ -528,7 +584,7 @@ Create Child Account
     Create New Account      Billing     Test Account    ${TEST_GROUP_ACCOUNT_NAME}
 
 Contact Person Should Be Found In MIT UAD
-    [Arguments]     ${customer_id}=${MUBE_CUSTOMER_ID}
+    [Arguments]     ${customer_id}=${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
     Wait Until Keyword Succeeds     10m     10s      UAD Verify That Contact Person Is Found For Customer        ${customer_id}
 
 Wait Until Contact Person Is Found In MultiBella
@@ -553,12 +609,14 @@ Update Closed Opportunity Test Case
     [Teardown]      Run Keywords        Log to Console      ${passed}   AND     Logout From All Systems And Close Browser
 
 Create New Event If Necessary
+    [Arguments]     ${type}=${DEFAULT_EVENT_TYPE}
+    ...             ${reason}=${DEFAULT_EVENT_REASON}
     ${event_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Set Test Variable       ${TEST_EVENT_SUBJECT}   ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Return From Keyword
     Open Details Tab At Account View
     Click New Item For Account    New Event
-    Fill Event Data     type=Customer Call    reason=Booking
+    Fill Event Data     type=${type}    reason=${reason}
     Click Create Event Button
     Verify That Event Is Created
 
@@ -574,10 +632,12 @@ Contact Persons Should Be Visible in TellU
     TellU Go to Login Page And Login
     TellU Open Contact Person Editor
     TellU Search Contact Person By Attribute    Customer Name    ${DEFAULT_TEST_ACCOUNT}
-    TellU Show All Contact Person In Search Results
-    Wait Until Keyword Succeeds     5min    5s      Contact Persons Should Appear In TellU
+    # Run Keyword With Delay      2s      TellU Show All Contact Person In Search Results
+    Wait Until Keyword Succeeds     15min    5s      Contact Persons Should Appear In TellU
 
 Contact Persons Should Appear In TellU
+    Run Keyword And Ignore Error    TellU Show All Contact Person In Search Results
+    Run Keyword And Ignore Error    Dismiss Alert
     TellU Page Should Contain Contact Person Last Name    ${FIRST_CONTACT_PERSON}
     TellU Page Should Contain Contact Person Last Name    ${SECOND_CONTACT_PERSON}
     [Teardown]      TellU Refresh Search
@@ -612,16 +672,8 @@ Contact Person Should Be Updated In Salesforce
     ...     postal_code=${DEFAULT_POSTAL_CODE_UPDATED}
     ...     city=${DEFAULT_CITY_UPDATED}
 
-Try to create a new contact person with a same name to
-    [Arguments]     ${account}
-    Open Contacts
-    Click To Create New Contact From Main Page
-    Add Mandatory Contact Data      Paavo   Pesusieni   12345678noreply@teliacompany.com    location=Main Page
-    Add Account For Contact Person  ${account}
-    Save New Contact Person And Expect Error    duplicate record
-
 User sees a list of Contact Persons and can save with the same name
-    Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     12345678noreply@teliacompany.com
+    Contact Person List Should Have     ${DEFAULT_TEST_CONTACT}     ${DEFAULT_TEST_CONTACT_EMAIL}
     Save (Ignore Alert) Button Should Be Visible
 
 Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
@@ -633,3 +685,73 @@ Try to save opportunity as Closed Won / Closed Lost / Closed Not Won
     Change Stage To     Closed Not Won
     Try To Save Opportunity And Expect Errors
     Cancel Edit
+
+Basic Account Information Is Visible On Top Bar
+    Expand Top Bar If Necessary
+    Top Bar Should Have     Account Name
+    Top Bar Should Have     Phone
+    Top Bar Should Have     Business Segment
+    Top Bar Should Have     Business ID
+    Top Bar Should Have     Account Owner
+    Top Bar Should Have     Opportunities Open
+    Top Bar Should Have     Telia Customer ID
+    Top Bar Should Have     Legal Status
+    Click Element   ${COLLAPSE_TOP_BAR}
+
+Verify That Business Account Attributes Are Named Right
+    Verify That Record Contains Attribute     Account ID
+    Verify That Record Contains Attribute     Account Record Type
+    Verify That Record Contains Attribute     Account Owner
+    Verify That Record Contains Attribute     Business ID
+    Verify That Record Contains Attribute     Account Name
+    Verify That Record Contains Attribute     Telia Customer ID
+    Verify That Record Contains Attribute     Marketing Name
+    Verify That Record Contains Attribute     AIDA ID
+    Verify That Record Contains Attribute     Phone
+    Verify That Record Contains Attribute     VAT Code
+    Verify That Record Contains Attribute     Website
+    Verify That Record Contains Attribute     Registered Association ID
+    Verify That Record Contains Attribute     Contact Preferences
+    Verify That Record Contains Attribute     Group Name
+    Verify That Record Contains Attribute     Next Opportunity Due
+    Verify That Record Contains Attribute     Group ID
+    Verify That Record Contains Attribute     Opportunities Open
+    Verify That Record Contains Attribute     Parent Account
+    Verify That Record Contains Attribute     Last Contacted Date
+    Verify That Record Contains Attribute     Days Uncontacted
+    Verify That Record Contains Attribute     Marketing Restriction
+    Verify That Record Contains Attribute     Company Form
+    Verify That Record Contains Attribute     Legal Status
+    Verify That Record Contains Attribute     Tax Activity
+    Verify That Record Contains Attribute     Status Reason
+    Verify That Record Contains Attribute     Bankruptcy Process Status
+    Verify That Record Contains Attribute     Business Segment
+    Verify That Record Contains Attribute     Street Address
+    Verify That Record Contains Attribute     Postal Code
+    Verify That Record Contains Attribute     City
+    Verify That Record Contains Attribute     Country
+    Verify That Record Contains Attribute     Main Mailing Address
+    Verify That Record Contains Attribute     Visiting Address
+    Verify That Record Contains Attribute     Multibella System ID
+
+Verify That Contact Person Attributes Are Named Right
+    Verify That Record Contains Attribute     Contact ID
+    Verify That Record Contains Attribute     Preferred Contact Channel
+    Verify That Record Contains Attribute     Contact Owner
+    Verify That Record Contains Attribute     Language
+    Verify That Record Contains Attribute     Name
+    Verify That Record Contains Attribute     Mobile
+    Verify That Record Contains Attribute     Account Name
+    Verify That Record Contains Attribute     External Phone
+    Verify That Record Contains Attribute     Phone
+    Verify That Record Contains Attribute     Business Card Title
+    Verify That Record Contains Attribute     Email
+    Verify That Record Contains Attribute     Gender
+    Verify That Record Contains Attribute     Birthdate
+    Verify That Record Contains Attribute     Status
+    Verify That Record Contains Attribute     3rd Party Contact
+    Verify That Record Contains Attribute     Sales Role
+    Verify That Record Contains Attribute     Office Name
+    Verify That Record Contains Attribute     Address
+    Verify That Record Contains Attribute     External Address
+    Verify That Record Contains Attribute     Multibella System ID

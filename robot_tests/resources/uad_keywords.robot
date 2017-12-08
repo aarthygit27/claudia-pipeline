@@ -76,7 +76,8 @@ UAD Log in
 
 UAD Open Browser And Go To Login Page
     Open Browser     ${UAD_PAGE}
-    Maximize Browser Window
+    Run Keyword If      '${BEHIND_PROXY}'=='True'   Set Window Size     ${1920}     ${1080}
+    ...     ELSE        Maximize Browser Window
 
 UAD Page Should Be Open
     Wait Until Page Contains Element        ${SEARCH_FIELD}

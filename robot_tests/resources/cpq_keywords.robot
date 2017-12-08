@@ -92,7 +92,8 @@ Click View Record (CPQ)
 Click View Quote (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        View Quote      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     30s     1s     Click Element    View Quote
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        //td[@id='topButtonRow']//input[@title='CPQ']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //h1[@class='pageType' and text()='Quote']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[@id='topButtonRow']//input[@title='CPQ']
 
 Click View Quote And Go Back To CPQ
     Click View Quote (CPQ)
@@ -151,7 +152,7 @@ Fill Required Information For Telia Yritysinternet Langaton
 
 Fill Required Information For Telia Yritysinternet Plus
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
+    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//div[./label[text()[contains(.,'Liittymän nopeus')]]]//select    1
 
 Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
@@ -163,7 +164,7 @@ Fill Required Information For Microsoft Office 365
 Handle Credit Score (CPQ)
     [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
     ${xpath}=   Set Variable    //div[${CREDIT_SCORE_SUCCESS} or ${CREDIT_SCORE_FAILURE}]
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
     ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
     Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ

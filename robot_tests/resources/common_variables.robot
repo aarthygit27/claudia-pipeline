@@ -3,6 +3,7 @@ ${BEHIND_PROXY}             False
 
 # Default input values
 ${DEFAULT_TEST_CONTACT}                     Paavo Pesusieni
+${DEFAULT_TEST_CONTACT_EMAIL}               jaska.jokunen@teliacompany.com
 ${DEFAULT_STREET_NAME}                      Aleksis Kiven katu
 ${DEFAULT_STREET_NUMBER}                    25
 ${DEFAULT_STAIRCASE}                        A
