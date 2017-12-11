@@ -17,7 +17,7 @@ ${DEFAULT_PHONE}                            +3588881234
 ${DEFAULT_EMAIL}                            noreply@teliasonera.com
 ${DEFAULT_LANGUAGE}                         Finnish
 ${DEFAULT_LANGUAGE_UPDATED}                 Swedish
-${DEFAULT_SALUTATION}                       Mr.
+${DEFAULT_SALUTATION}                       --None--
 ${DEFAULT_COUNTRY}                          Finland
 ${DEFAULT_COUNTRY_UPDATED}                  Sweden
 ${DEFAULT_BUSINESS_CARD_TITLE}              Chief of Chiefs
