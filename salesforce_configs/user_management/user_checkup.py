@@ -12,6 +12,15 @@ from libs.send_email import send_notification_email
 import config_parser
 from config_parser import ConfigSectionMap
 
+def generate_user_info_dictionary(firstname,lastname,tcad,email,profile):
+    user_info = {}
+    user_info["FirstName"] = firstname
+    user_info["LastName"] = lastname
+    user_info["Alias"] = tcad
+    user_info["Email"] = email
+    user_info["AboutMe"] = ""
+    user_info["Profile"] = profile
+    return user_info
 
 if __name__ == "__main__":
     '''
@@ -41,9 +50,11 @@ if __name__ == "__main__":
         except (ValueError,IndexError):
             parent_role_id = None
         role_id = rw.get_user_role_id_from_salesforce(role, parent_role_id)
+    else:
+        role_id = None
 
     try:
-        manager = sys.argv[8]
+        manager = rw.get_user_id_from_salesforce(sys.argv[8])
     except:
         manager = None
 
@@ -52,49 +63,11 @@ if __name__ == "__main__":
 
     profile_id = rw.get_profile_id_from_salesforce(profile)
 
+    user_info = generate_user_info_dictionary(firstname, lastname, tcad, email, profile)
+
     # User data update
     if tcad in salesforce_users.keys():
-        
-        username = rw.generate_new_username(tcad, env)
-        id = salesforce_users[tcad]["Id"]
-
-        data = {"IsActive" : 1,
-                "FirstName" : firstname,
-                "LastName" : lastname,
-                "Username": username,
-                "Email" : email,
-                "telia_user_ID__c": tcad,
-                "UserPreferencesLightningExperiencePreferred": 0}
-
-        if profile != "System Administrator":
-            data["ProfileId"] = profile_id
-
-        if role_id:
-            data["UserRoleId"] = role_id
-
-        # Store old info for future use. Update user data
-        old_info = rw.get_user_info_from_salesforce(id)
-        rw.update_user(id, data)
-        new_info = rw.get_user_info_from_salesforce(id)
-
-        if old_info["IsActive"] != new_info["IsActive"]:
-            send_notification_email(username, email, salesforce["instance"])
-
-        print "User {0} ({1} {2}) activated.".format(tcad, firstname, lastname)
-        if profile not in ["Chatter Free User", "Chatter External User"]:
-            rights_changed = rw.set_permission_set_rights(tcad, id)
-        else:
-            rights_changed = False
-        changed = "UPDATED" if (rw.user_data_updated(old_info, new_info) or rights_changed) else "UNCHANGED"
-        print "...", changed
+        rw.activate_existing_user(user_info, salesforce_users[tcad]["Id"], profile_id, role_id, manager, env, salesforce["instance"])
     # Create new user
     else:
-        new_user = {}
-        new_user["FirstName"] = firstname
-        new_user["LastName"] = lastname
-        new_user["Alias"] = tcad
-        new_user["Email"] = email
-        new_user["AboutMe"] = ""
-        new_user["Profile"] = profile
-
-        rw.create_new_user_to_salesforce(new_user, profile_id, role_id, manager, env)
+        rw.create_new_user_to_salesforce(user_info, profile_id, role_id, manager, env)
