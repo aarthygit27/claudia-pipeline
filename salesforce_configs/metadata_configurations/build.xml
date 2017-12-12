@@ -36,7 +36,7 @@
 
     <!-- Retrieves one Change Set from Salesforce. Declare the exact name of the Change Set to be retrieved in "packageNames"  -->
     <target name="retrieveChangeSet">  <mkdir dir="changeSet" />
-      <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" retrieveTarget="changeSet" singlePackage="false" packageNames="${sf.changeSet}" />
+      <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" retrieveTarget="changeSet" singlePackage="false" packageNames="${changeSet_name}" />
     </target> 
 
 
