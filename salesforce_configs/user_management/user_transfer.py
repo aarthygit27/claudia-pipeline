@@ -9,6 +9,7 @@ sys.path.append(CONFIG_PATH)
 
 from libs.login import get_sessionId_and_serverUrl
 from libs.rest_wrapper import RestWrapper
+from libs.send_email import send_password_clarification_email
 
 import config_parser
 from config_parser import ConfigSectionMap
@@ -59,6 +60,7 @@ if __name__ == "__main__":
 
     # Create a list with all Salesforce users in lower case to prevent typo errors
     current_users = map(lambda x: x.lower(), salesforce_users.keys())
+    updated_users = []
 
     for u in sorted(wiki_users):
         # Never update the test automation user with a script
@@ -79,7 +81,13 @@ if __name__ == "__main__":
 
         if u.lower() not in current_users:
             # If the user is in Wiki, but not in Salesforce, create the user
-            rw.create_new_user_to_salesforce(wiki_users[u], profile_id, role_id, manager, env)
+            r = rw.create_new_user_to_salesforce(wiki_users[u], profile_id, role_id, manager, env)
+            updated = r.status_code != 201
         else:
             # If the user is also in salesforce, ensure their account is activated
-            rw.activate_existing_user(wiki_users[u], salesforce_users[u]["Id"], profile_id, role_id, manager, env, salesforce["instance"])
+            updated = rw.activate_existing_user(wiki_users[u], salesforce_users[u]["Id"], profile_id, role_id, manager, env, salesforce["instance"])
+        # If the user was created or changed, append the email for the list if the email is not in the list already
+        if updated and wiki_users[u]["Email"] not in updated_users:
+            updated_users.append(wiki_users[u]["Email"])
+
+    send_password_clarification_email(updated_users, env, sys.argv[2])

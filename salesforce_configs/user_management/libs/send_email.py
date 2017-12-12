@@ -30,17 +30,19 @@ def send_notification_email(username, recipient, instance):
 
 def send_password_clarification_email(recipients, env, wiki_list):
     from_address = "noreply@teliacompany.com"
-    subject = "Salesforce sanbox refreshed"
+    subject = "Salesforce {0} sandbox refreshed".format(env.upper())
     text = "Hi,\n" +\
-    "{0} sanbox was just refreshed. ".format(env.upper()) +\
+    "{0} sandbox was just refreshed. ".format(env.upper()) +\
     "You are listed in http://wiki.intra.sonera.fi/pages/viewpage.action?spaceKey=BD&title=List+of+{0}+users ".format(wiki_list) +\
     "which caused your user to be either activated (1) or created (2) in which case you received one of the following emails: \n\n" +\
-    "1) Change your email address. The refresh takes data from production environment and adds \"@example.com\" at the end of your email address. " +\
-    "The automated script changes your email to the correct format and Salesforce sends you an automatic email to verify the email change. Verify your " +\
+    "1) Change your email address. Sandbox was refreshed an the refresh takes data from production environment, so if you have a user in production" +\
+    "your user is automatically created to the sandbox and \"@example.com\" is added at the end of your email address. " +\
+    "The automated script changes your email to the correct format and Salesforce sends you an automatic email to verify the change. Verify your " +\
     "account from the email sent from Salesforce to activate your user in the {0} sandbox.\n\n".format(env.upper()) +\
     "2) Reset your password. If a user is created by automation, Salesforce doesn't send an automatic email to notify the user. To notify users they have " +\
     "a user for the sandbox, we need to reset their password so that Salesforce sends a notification to finish resetting the password.\n\n" +\
-    "If you received no email, then do nothing and we apologize for the spam. :)\n\n" +\
+    "If you received no email, then do nothing and we apologize for the spam.\n\n" +\
+    "In case you are still facing issues accessing the environments, please contact Aleksi Simell (aleksi.simell@teliacompany.com).\n\n" +\
     "Sincerely,\n" +\
     "System Team"
 
@@ -53,4 +55,4 @@ def send_password_clarification_email(recipients, env, wiki_list):
     s.quit()
 
 if __name__ == '__main__':
-    send_password_clarification_email(["aleksi.simell@teliacompany.com", "jukka.pajunen@teliacompany.com"], "preprod", "test")
+    send_password_clarification_email(["aleksi.simell@teliacompany.com"], "preprod", "test")

@@ -291,6 +291,8 @@ class RestWrapper(object):
             rights_changed = False
         changed = "UPDATED" if (self.user_data_updated(old_info, new_info) or rights_changed) else "UNCHANGED"
         print "...", changed
+        # Return True if user was updated, False otherwise
+        return changed == "UPDATED"
 
 
     # def _parse_integrations_from_wiki_output(self, output):
