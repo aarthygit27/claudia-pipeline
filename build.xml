@@ -1,13 +1,17 @@
 <project name="CI-pipeline" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
 
     <!-- Creates new folder for Change Set which is retrieved with salesforce_configs/metadata_configurations/build.xml and copies that folder to the root folder - this helps with version controlling of Change Sets -->
-    <target name="RelocateChangeSetAndDeleteRest">
-      <mkdir dir="changeSet" />
-      <copydir src="salesforce_configs/metadata_configurations/changeSet"
-           dest="changeSet"/>
-      <delete dir="${user.dir}/">
-        <include name="src/workflows/Quote.workflow"/>
-      </delete>
+    <target   name="RelocateChangeSetAndDeleteRest">
+      <mkdir  dir="changeSet" />
+      <copy todir="changeSet" >
+        <fileset dir="salesforce_configs/metadata_configurations/changeSet"/>
+      </copy>
+      <delete dir="salesforce_configs" />
+      <delete dir="config" />
+      <delete file=".gitignore"/>
+      <delete file="build.xml"/>
+      <delete file="jira_to_influx.py"/>
+      <delete file="README.md"/>
     </target>
 
 </project>
