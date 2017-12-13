@@ -50,12 +50,12 @@ Liikkuva Netti Pro
 Microsoft Office 365
     [Tags]      BQA-56
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Microsoft Office 365    Microsoft Office 365
+    Microsoft Office 365    Microsoft Office 365    # product is "null" in MUBE
 
-Kodin Netti yrityksille
-    [Tags]      BQA-57    wip    no-product-yet
+Telia Yhteys kotiin yrityksille
+    [Tags]      BQA-57
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Kodin Netti yrityksille    Kodin Netti yrityksille
+    Telia Yhteys kotiin yrityksille    Kodin Netti yrityksille
 
 Maksupääte
     [Tags]      BQA-58
@@ -104,9 +104,9 @@ Sonera Talous
     Telia Taloushallinto M-paketti     Muu tuote
 
 Telia Puheväylä
-    [Tags]      BQA-83    wip    no-product-yet
+    [Tags]      BQA-83
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia Puheväylä    Telia Puheväylä
+    Telia Puheväylä (200 puheyhteyttä)    Telia Puheväylä
 
 # Käyttötuki (DataInfo)
 #     [Tags]      BQA-84    wip    no-product-yet
@@ -229,6 +229,8 @@ Create CPQ
     Close Browser
 
 Check If Quote Needs To Be Approved And Approve If Necessary
+    ${quote_page_open}=     Quote Should Be Open
+    Run Keyword Unless  ${quote_page_open}      Go To Account   ${OPPORTUNITY_NAME}     Quote
     ${approval_not_needed}=     Check If Quote Needs Approval
     Run Keyword If      ${approval_not_needed}      Return From Keyword
     Submit Quote For Approval

@@ -965,6 +965,10 @@ Profile Attributes Should Be Visible On Left Sidebar
     Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Goals']
     Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Needs']
 
+Quote Should Be Open
+    [Arguments]     ${quote_name}=${OPPORTUNITY_NAME}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[./h2[@class='pageDescription' and contains(text(),'${quote_name}')]]/h1[contains(text(),'Quote')]
+
 Rate Opportunity
     [Arguments]     ${rating}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${EDIT_BUTTON}      10s
