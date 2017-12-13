@@ -91,7 +91,7 @@ Control Subscriptions
 Liikkuva Yritysverkko
     [Tags]      BQA-80
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia Liikkuva Yritysverkko    Liikkuva Yritysverkko
+    Telia Liikkuva Yritysverkko    Liikkuva Yritysverkko    # product is "null" in MUBE
 
 Yritys WLAN
     [Tags]      BQA-81
@@ -126,7 +126,7 @@ Web Contact Center
 Palvelunumerot
     [Tags]      BQA-87
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia palvelunumero    Palvelunumerot
+    Telia Palvelunumero    Palvelunumerot
 
 Yritystietoturva
     [Tags]      BQA-88
