@@ -187,6 +187,7 @@ Change Stage To
 
 Check If Quote Needs Approval
     Reload Page
+    Sleep   5
     ${ret}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}
     ...     Wait Until Page Contains Element    //td[text()='Approval Status']/following-sibling::td//div[text()='Not Needed' or text()='Approved']     20s
     [Return]    ${ret}
