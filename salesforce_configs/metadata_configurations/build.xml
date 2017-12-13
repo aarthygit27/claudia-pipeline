@@ -1,4 +1,4 @@
-<project name="Sample usage of Salesforce Ant tasks" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+<project name="CI-pipeline" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
 
     <property file="build.properties"/>
     <property environment="env"/>
@@ -35,10 +35,20 @@
     </target>
 
     <!-- Retrieves one Change Set from Salesforce. Declare the exact name of the Change Set to be retrieved in "packageNames"  -->
-    <target name="retrieveChangeSet">  <mkdir dir="changeSet" />
-      <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" retrieveTarget="changeSet" singlePackage="false" packageNames="${changeSet_name}" />
+    <target name="retrieveChangeSet"> 
+      <ant useNativeBasedir="true" />
+      <mkdir dir="changeSet" />
+      <sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" retrieveTarget="changeSet" singlePackage="false" packageNames="TFA-133"/>
     </target> 
 
+
+    <target name="RelocateChangeSetAndDeleteRest">
+      <copydir src="${src}/resources"
+           dest="${dist}"/>
+      <delete dir="${user.dir}/">
+        <include name="src/workflows/Quote.workflow"/>
+      </delete>
+    </target>
 
     <!-- Test out deploy and retrieve verbs for package 'mypkg' -->
     <!-- If you wan't to actually deploy stuff, remove checkOnly="true"-->
