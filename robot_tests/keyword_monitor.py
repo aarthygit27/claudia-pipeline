@@ -101,7 +101,8 @@ def process(output_file, keyword_name, measurement, env, dryrun=False):
         # Skip data export when running tests etc.
         if not dryrun:
             requests.post(influx_write,
-                    data= measurement + ",keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) + ",startTime=" + str(ut) + ",status=\"" + stat + "\",sandbox=\"" + env + "\",platform=\"" + system + "\",testCase=\"" + str(tc) + "\"",
+                    data= measurement + ",keyword=\"" + keyword_name.replace(" ", "\ ") + "\" keyword=\"" + keyword_name + "\",elapsedTime=" + str(d) +\
+                     ",startTime=" + str(ut) + ",status=\"" + stat + "\",sandbox=\"" + env + "\",platform=\"" + system + "\",testCase=\"" + str(tc) + "\"",
                     auth=HTTPBasicAuth(influx_user, influx_passwd))
             time.sleep(0.1)     # Ensure we get a different timestamp
     return s
