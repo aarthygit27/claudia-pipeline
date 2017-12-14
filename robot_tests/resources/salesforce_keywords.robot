@@ -224,7 +224,7 @@ Click Add New Contact Via Dropdown
 
 Click Availability Check Button
     ${frame}=       Get Account Tab Iframe Xpath    Dashboard
-    Run Inside Iframe   ${frame}    Click Element     //button[text()[contains(.,'Availability check')]]
+    Run Inside Iframe   ${frame}    Wait Until Keyword Succeeds     10s     1s      Click Element     //button[text()[contains(.,'Availability check')]]
     ${frame}=       Get Account Tab Iframe Xpath    Availability
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element        Address Details        30s
 
