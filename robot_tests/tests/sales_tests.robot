@@ -35,88 +35,6 @@ Contact: Add new contact (valid data)
 #     Open Details and choose New Contact from More tab
 #     Enter mandatory (invalid) information and verify cp was not saved
 
-Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
-    [Tags]      add_new_contact     BQA-53      BQA-108      BQA-1835    smoke
-    [Documentation]     Entry Conditions: MultiBella userIntegrations are open
-    MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
-    MUBE Logout CRM
-    Close Browser
-    UAD Open Browser And Go To Login Page
-    UAD Go to Page And Log in
-    Contact Person Should Be Found In MIT UAD
-    Close Browser
-    Open Browser And Go To Login Page
-    Login to Salesforce And Close All Tabs
-    Wait Until Account Is In Salesforce And Go To Account
-    Click Contact Person Details
-    Verify That Contact Person Information Is Correct
-    Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
-    Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
-    Set Suite Variable    ${TEST_CONTACT_PERSON_LAST_NAME}
-
-Sales Admin: Change Account owner
-    [Tags]      BQA-8
-    [Documentation]     Change the owner of ${DEFAULT_TEST_ACCOUNT} to Sales admin. Then revert the changes.
-    Go To Salesforce and Login      Sales Admin User
-    Go To Account   ${DEFAULT_TEST_ACCOUNT}
-    Change Account Owner    Sales Admin
-    Verify that Owner Has Changed   Sales Admin
-    [Teardown]  Run Keywords    Revert Account Owner Back To GESB Integration   AND
-    ...                         Logout From All Systems and Close Browser
-
-Update Contact Person in SalesForce
-    [Tags]      BQA-117     BQA-109
-    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
-    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
-    ...         Close Tabs And Logout
-    Go To Salesforce and Login
-    Go to Account    ${CONTACT_PERSON_NAME}
-    Click Contact Person Details
-    Verify That Contact Person Information is Correct
-    Update Contact Person in Salesforce
-    Close Tabs And Logout
-    Close Browser
-    MUBE Open Browser And Login As CM User
-    MUBE Verify That Contact Person Information Is Updated
-    TellU Go to Login Page And Login
-    TellU Open Contact Person Editor
-    TellU Search Contact Person By Attribute    Last Name   ${TEST_CONTACT_PERSON_LAST_NAME}
-    TellU Verify That Contact Person Is Updated
-
-Sales Process: Create opportunity from Account
-    [Tags]      BQA-27
-    Go To Salesforce and Login
-    Go To Account   ${DEFAULT_TEST_ACCOUNT}
-    Create New Opportunity For Customer
-    Verify That Opportunity Is Found In Todays Page
-    Verify That Opportunity Is Found With Search And Go To Opportunity
-    Verify That Opportunity is Found From My All Open Opportunities
-
-Opportunity: Closing active opportunity as cancelled
-    [Tags]      BQA-42
-    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Template]      Close active opportunity
-    Cancelled    Cancelled
-
-Opportunity: Closing active opportunity as lost
-    [Tags]      BQA-43
-    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Template]      Close active opportunity
-    Closed Lost    Lost
-
-Opportunity: Closing active opportunity as not won
-    [Tags]      BQA-44
-    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Template]      Close active opportunity
-    Closed Not Won    Not Won
-
-Opportunity: Closing active opportunity as won
-    [Tags]      BQA-45      BQA-46
-    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
-    [Template]      Close active opportunity
-    Closed Won    Won    Negotiate and Close
-
 Sales Admin: Change Account owner for Group Account
     [Tags]      BQA-5    wip
     [Setup]     Create Test Account With Admin User     Group
@@ -135,6 +53,16 @@ Sales Admin: Remove Account owner
     Go to Account   ${TEST_ACCOUNT_NAME}
     # TODO
 
+Sales Admin: Change Account owner
+    [Tags]      BQA-8
+    [Documentation]     Change the owner of ${DEFAULT_TEST_ACCOUNT} to Sales admin. Then revert the changes.
+    Go To Salesforce and Login      Sales Admin User
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    Change Account Owner    Sales Admin
+    Verify that Owner Has Changed   Sales Admin
+    [Teardown]  Run Keywords    Revert Account Owner Back To GESB Integration   AND
+    ...                         Logout From All Systems and Close Browser
+
 Sales Admin: Add new owner for Group Account
     [Tags]      BQA-9    wip
     [Setup]     Create Test Account With Admin User     Group
@@ -147,72 +75,18 @@ Sales Admin: Add new owner for Group Account
     # TODO: voiko accountilla olla yksi owner?
     [Teardown]      Pause Execution
 
-Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
-    [Tags]    BQA-1840      smoke
-    [Documentation]     The beginning of the test is the same as Contact: Add new contact (valid data) test case (BQA-1)
-    Go To Salesforce and Login
-    Create New Contact Person For Customer From Quick Action
-    Check that contact has been saved and can be found under proper Account
-    Close Tabs And Logout
-    Close Browser
-    MUBE Open Browser And Login As CM User
-    MUBE Open Customers Page
-    MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
-    Wait Until Contact Person Is Found In MultiBella
-    Close Browser
-    UAD Open Browser And Go To Login Page
-    UAD Go to Page And Log In
-    Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
-
-Sales Process: Create/update Sales Plan
-    [Tags]      BQA-24      wip
-    Go to Salesforce and Login
+UI: 360 view of customer
+    [Tags]      BQA-12
+    Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Basic Account Information Is Visible On Top Bar
+    Profile Attributes Should Be Visible On Left Sidebar
+    Customer Story Should Be Visible On The Right Sidebar
+    Recommended Offerings Should Be Visible On the Right Sidebar
+    Open Dashboard Tab At Account View
+    Main Frame Should Have Correct Info
     Open Sales Plan Tab At Account View
-    Create New Sales Plan If Inactive
-    Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
-    Add Solution Area and update Solution Sub Area data
-    Go to other view and then back to Sales Plan
-    Verify that updated values are visible in Sales Plan
-    # Todo: Verify when testing starts in PREPROD whether things not showing in Sales Plan is a bug or just missing
-    # functionality in PREPROD.
-
-Contact: Update contact
-    [Tags]      BQA-23
-    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
-    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
-    ...         Close Tabs And Logout
-    Go To Salesforce and Login
-    Go to Account    ${CONTACT_PERSON_NAME}
-    Click Contact Person Details
-    Verify That Contact Person Information is Correct
-    Click Edit Contact Person
-    Update Contact Person Sales Role        Business Contact
-    Verify That Sales Role Is Updated       Business Contact
-    MUBE Open Browser And Login As CM User
-    MUBE Verify That Contact Person Sales Role Is Updated
-
-Opportunity: Check that opportunity cannot be created for a Group Account
-    [Tags]      BQA-40
-    [Setup]     Create Test Account With Admin User     Group
-    Go To Salesforce and Login
-    Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
-    Verify That User Cannot Create New Opportunity
-
-Opportunity: Check that opportunity cannot be created for Account with passive legal status
-    [Tags]      BQA-41
-    Go To Salesforce and Login
-    Go to Account       ${TEST_PASSIVE_ACCOUNT}
-    Try To Create New Opportunity And It Should Fail
-
-Sales Admin: Update closed opportunity
-    [Tags]      BQA-70
-    [Setup]     No Operation
-    [Template]      Update Closed Opportunity Test Case
-    Cancelled           Cancelled
-    Closed Lost         Lost
-    Closed Not Won      Not Won
-    Closed Won          Won         Negotiate and Close
+    Open Details Tab At Account View
 
 Quick actions: Create task
     [Tags]      BQA-16
@@ -242,14 +116,6 @@ Quick actions: create Meeting
     Verify That Description And WIG Areas Are Correct
     Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
-Quick actions: create Opportunity from Account (Feed) by Customer Care user
-    [Tags]      BQA-19
-    Go To Salesforce and Login      Customer Care User
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Create New Opportunity For Customer
-    # todo: 4. Close date is automatically give two days ahead.
-    Opportunity Should be Unassigned
-
 Quick actions: create Customer Call
     [Tags]      BQA-18
     Go To Salesforce and Login
@@ -268,6 +134,14 @@ Quick actions: create Customer Call
     # customer calls available for update tests
     # Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
+Quick actions: create Opportunity from Account (Feed) by Customer Care user
+    [Tags]      BQA-19
+    Go To Salesforce and Login      Customer Care User
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    # todo: 4. Close date is automatically give two days ahead.
+    Opportunity Should be Unassigned
+
 Meeting/Customer Call: Update meeting to Done
     [Tags]      BQA-21
     Go To Salesforce and Login
@@ -278,17 +152,51 @@ Meeting/Customer Call: Update meeting to Done
     Add Meeting Outcome and Save
     Verify That Event Has Correct Data
 
-# Contact persons added address can not saved without City populated
-#     [Tags]      BQA-1809    wip
-#     Go To Salesforce and Login
-#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
-#     Open Details and choose New Contact from More tab
-#     Enter mandatory information and save new contact    salutation=--None--
-#     Check that contact has been saved and can be found under proper Account
-#     # Basically BQA-1 until this point
-#     Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
-#     Edit Contact Person's Added Address
-#     # Todo: test once address is editable
+Contact: Update contact
+    [Tags]      BQA-23
+    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
+    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
+    ...         Close Tabs And Logout
+    Go To Salesforce and Login
+    Go to Account    ${CONTACT_PERSON_NAME}
+    Click Contact Person Details
+    Verify That Contact Person Information is Correct
+    Click Edit Contact Person
+    Update Contact Person Sales Role        Business Contact
+    Verify That Sales Role Is Updated       Business Contact
+    MUBE Open Browser And Login As CM User
+    MUBE Verify That Contact Person Sales Role Is Updated
+
+Sales Process: Create/update Sales Plan
+    [Tags]      BQA-24      wip
+    Go to Salesforce and Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Open Sales Plan Tab At Account View
+    Create New Sales Plan If Inactive
+    Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
+    Add Solution Area and update Solution Sub Area data
+    Go to other view and then back to Sales Plan
+    Verify that updated values are visible in Sales Plan
+    # Todo: Verify when testing starts in PREPROD whether things not showing in Sales Plan is a bug or just missing
+    # functionality in PREPROD.
+
+Sales Process: Update Sales Plan of an Account which you are not owner
+    [Tags]      BQA-25
+    Go to Salesforce and Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Open Sales Plan Tab At Account View
+    Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
+    Open Active Sales Plan
+    Verify That Sales Plan Update History Is Correct
+
+Sales Process: Create opportunity from Account
+    [Tags]      BQA-27
+    Go To Salesforce and Login
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    Verify That Opportunity Is Found In Todays Page
+    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Verify That Opportunity is Found From My All Open Opportunities
 
 Sales Process: E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
     [Tags]      BQA-33      wip
@@ -337,77 +245,6 @@ Sales Process: E2E opportunity process incl. modelled and unmodelled products & 
     # todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
     Log     Todo: 19. Check that Continuation opportunity is created based on rules and is visible in My Opportunities.
 
-# Opportunity: Check that Account can be changed for an active opportunity
-#     [Tags]      BQA-39      wip
-#     # 1. Go to open opportunity
-#     # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
-#     # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
-#     Go To Salesforce and Login
-#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
-#     Create New Opportunity For Customer
-#     # Todo: This requires lookup search and probably won't finish this
-#     [Teardown]      Pause Execution
-
-Create in SalesForce and in MultiBella a new Contact Person
-    [Tags]      BQA-118
-    Go To Salesforce and Login
-    Create New Contact Person For Customer From Quick Action
-    Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
-    Close Browser
-    MUBE Open Browser And Login As CM User
-    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
-    MUBE Logout CRM
-    Set Test Variable   ${SECOND_CONTACT_PERSON}    ${TEST_CONTACT_PERSON_LAST_NAME}
-    Contact Persons Should Be Visible in TellU
-
-Try to create Opportunity/Contact Person/or activity linked to Group in SalesForce
-    [Tags]      BQA-107
-    [Setup]     Create Test Account With Admin User     Group
-    Go To Salesforce and Login
-    Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
-    Verify That Activity Cannot Be Linked to Group Account
-
-Sales Process: Update Sales Plan of an Account which you are not owner
-    [Tags]      BQA-25
-    Go to Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Sales Plan Tab At Account View
-    Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
-    Open Active Sales Plan
-    Verify That Sales Plan Update History Is Correct
-
-# CP's added address can be removed and change
-#     [Tags]      BQA-1810    wip
-#     Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
-#     Go to Salesforce and Login
-#     Go to Account    ${CONTACT_PERSON_NAME}
-#     # Todo: editable address (same as BQA-1809)
-
-Create/Update new Contact Person in TellU
-    [Tags]      BQA-119
-    Create And Update Contact Person In TellU
-    Contact Person Should Be Updated In MultiBella
-    Close Browser
-    Contact Person Should Be Updated In Salesforce
-
-Test Contact person double check works ok in Claudia
-    [Tags]      BQA-2335
-    Go to Salesforce and Login
-    Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
-    User sees a list of Contact Persons and can save with the same name
-
-Opportunity Cards
-    [Tags]      BQA-2194    wip
-    Go to Salesforce and Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Create New Opportunity For Customer
-    Open Open Opportunities Tab At Account View
-    Correct Quick Actions Should Be Visible
-    # todo: 5: Update the record through Update quick action.
-    # todo: 6: Create a new event through the quick action
-    # todo: 7: Create a new task through the quick action
-    # todo: 8: Close the opportunity through the quick action.
-
 Opportunity: Pick opportunity from queue
     [Tags]      BQA-37
     [Setup]     Run Keywords    Open Browser And Go To Login Page       AND
@@ -425,6 +262,54 @@ Opportunity: Pick opportunity from queue
     Set Opportunity Stage And Save      Prepare Solution Proposal
     Verify That Opportunity is Found From My All Open Opportunities
 
+# Opportunity: Check that Account can be changed for an active opportunity
+#     [Tags]      BQA-39      wip
+#     # 1. Go to open opportunity
+#     # 2. Change Account for this opportunity and save. Opportunity is now linked to new Account.
+#     # 3. Go to Opportunity - My Opportunities and check that updated opportunity is linked with new Account.
+#     Go To Salesforce and Login
+#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+#     Create New Opportunity For Customer
+#     # Todo: This requires lookup search and probably won't finish this
+#     [Teardown]      Pause Execution
+
+Opportunity: Check that opportunity cannot be created for a Group Account
+    [Tags]      BQA-40
+    [Setup]     Create Test Account With Admin User     Group
+    Go To Salesforce and Login
+    Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
+    Verify That User Cannot Create New Opportunity
+
+Opportunity: Check that opportunity cannot be created for Account with passive legal status
+    [Tags]      BQA-41
+    Go To Salesforce and Login
+    Go to Account       ${TEST_PASSIVE_ACCOUNT}
+    Try To Create New Opportunity And It Should Fail
+
+Opportunity: Closing active opportunity as cancelled
+    [Tags]      BQA-42
+    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
+    [Template]      Close active opportunity
+    Cancelled    Cancelled
+
+Opportunity: Closing active opportunity as lost
+    [Tags]      BQA-43
+    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
+    [Template]      Close active opportunity
+    Closed Lost    Lost
+
+Opportunity: Closing active opportunity as not won
+    [Tags]      BQA-44
+    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
+    [Template]      Close active opportunity
+    Closed Not Won    Not Won
+
+Opportunity: Closing active opportunity as won
+    [Tags]      BQA-45      BQA-46
+    [Documentation]     Entry conditions: Sales user is logged in to Salesforce
+    [Template]      Close active opportunity
+    Closed Won    Won    Negotiate and Close
+
 Create a Contact Person in SalesForce with the same name as new to same Customer
     [Tags]      BQA-52
     Go To Salesforce and Login
@@ -438,6 +323,140 @@ Create a Contact Person in SalesForce with the same name as new to same Customer
     MUBE Open Customers Page
     MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
     Wait Until Contact Person Is Found In MultiBella    2
+
+Create Contact Person In MultiBella And Verify It Appears In MIT And Salesforce
+    [Tags]      add_new_contact     BQA-53      BQA-108      BQA-1835    smoke
+    [Documentation]     Entry Conditions: MultiBella userIntegrations are open
+    MUBE Open Browser And Login As CM User
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
+    MUBE Logout CRM
+    Close Browser
+    UAD Open Browser And Go To Login Page
+    UAD Go to Page And Log in
+    Contact Person Should Be Found In MIT UAD
+    Close Browser
+    Open Browser And Go To Login Page
+    Login to Salesforce And Close All Tabs
+    Wait Until Account Is In Salesforce And Go To Account
+    Click Contact Person Details
+    Verify That Contact Person Information Is Correct
+    Set Suite Variable    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    ${CONTACT_PERSON_CRM_ID}
+    Set Suite Variable    ${CONTACT_PERSON_NAME}    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+    Set Suite Variable    ${TEST_CONTACT_PERSON_LAST_NAME}
+
+Sales Admin: Update closed opportunity
+    [Tags]      BQA-70
+    [Setup]     No Operation
+    [Template]      Update Closed Opportunity Test Case
+    Cancelled           Cancelled
+    Closed Lost         Lost
+    Closed Not Won      Not Won
+    Closed Won          Won         Negotiate and Close
+
+Check Attributes/Business Account are named right in SalesForce UI
+    [Tags]      BQA-100
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_ACCOUNT}
+    Open Details Tab At Account View
+    Click Details Button
+    Verify That Business Account Attributes Are Named Right
+
+Check Attributes/Contact Person are named right in SalesForce UI
+    [Tags]      BQA-101
+    Go To Salesforce And Login
+    Go to Account    ${DEFAULT_TEST_CONTACT}
+    Click Details Button
+    Verify That Contact Person Attributes Are Named Right
+
+Try to create Opportunity/Contact Person/or activity linked to Group in SalesForce
+    [Tags]      BQA-107
+    [Setup]     Create Test Account With Admin User     Group
+    Go To Salesforce and Login
+    Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
+    Verify That Activity Cannot Be Linked to Group Account
+
+Update Contact Person in SalesForce
+    [Tags]      BQA-117     BQA-109
+    [Setup]     Run Keywords    Open Browser And Go To Login Page   AND
+    ...         Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}    AND
+    ...         Close Tabs And Logout
+    Go To Salesforce and Login
+    Go to Account    ${CONTACT_PERSON_NAME}
+    Click Contact Person Details
+    Verify That Contact Person Information is Correct
+    Update Contact Person in Salesforce
+    Close Tabs And Logout
+    Close Browser
+    MUBE Open Browser And Login As CM User
+    MUBE Verify That Contact Person Information Is Updated
+    TellU Go to Login Page And Login
+    TellU Open Contact Person Editor
+    TellU Search Contact Person By Attribute    Last Name   ${TEST_CONTACT_PERSON_LAST_NAME}
+    TellU Verify That Contact Person Is Updated
+
+Create in SalesForce and in MultiBella a new Contact Person
+    [Tags]      BQA-118
+    Go To Salesforce and Login
+    Create New Contact Person For Customer From Quick Action
+    Set Test Variable   ${FIRST_CONTACT_PERSON}     ${TEST_CONTACT_PERSON_LAST_NAME}
+    Close Browser
+    MUBE Open Browser And Login As CM User
+    MUBE Create New Contact Person For Business Customer    ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
+    MUBE Logout CRM
+    Set Test Variable   ${SECOND_CONTACT_PERSON}    ${TEST_CONTACT_PERSON_LAST_NAME}
+    Contact Persons Should Be Visible in TellU
+
+Create/Update new Contact Person in TellU
+    [Tags]      BQA-119
+    Create And Update Contact Person In TellU
+    Contact Person Should Be Updated In MultiBella
+    Close Browser
+    Contact Person Should Be Updated In Salesforce
+
+# Contact persons added address can not saved without City populated
+#     [Tags]      BQA-1809    wip
+#     Go To Salesforce and Login
+#     Go to Account    ${DEFAULT_TEST_ACCOUNT}
+#     Open Details and choose New Contact from More tab
+#     Enter mandatory information and save new contact    salutation=--None--
+#     Check that contact has been saved and can be found under proper Account
+#     # Basically BQA-1 until this point
+#     Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
+#     Edit Contact Person's Added Address
+#     # Todo: test once address is editable
+
+# CP's added address can be removed and change
+#     [Tags]      BQA-1810    wip
+#     Check If Contact Person Exists And Create New One If Not    ${CONTACT_PERSON_CRM_ID_FOR_UPDATE_TEST}
+#     Go to Salesforce and Login
+#     Go to Account    ${CONTACT_PERSON_NAME}
+#     # Todo: editable address (same as BQA-1809)
+
+Check attributes in Global search list views
+    [Tags]      BQA-1830
+    Go To Salesforce And Login
+    Search And Verify Account Is Found      ${DEFAULT_TEST_ACCOUNT}     Account
+    Search Result Should Contain Field      ${DEFAULT_TEST_ACCOUNT}     Account     ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
+    Search And Verify Account Is Found      ${DEFAULT_TEST_CONTACT}     Contact
+    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_ACCOUNT}
+    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_CONTACT_EMAIL}
+
+Add New Contact In Salesforce And Verify It Appears In MUBE And MIT
+    [Tags]    BQA-1840      smoke
+    [Documentation]     The beginning of the test is the same as Contact: Add new contact (valid data) test case (BQA-1)
+    Go To Salesforce and Login
+    Create New Contact Person For Customer From Quick Action
+    Check that contact has been saved and can be found under proper Account
+    Close Tabs And Logout
+    Close Browser
+    MUBE Open Browser And Login As CM User
+    MUBE Open Customers Page
+    MUBE Search and Select Customer With Name    ${DEFAULT_TEST_ACCOUNT}
+    Wait Until Contact Person Is Found In MultiBella
+    Close Browser
+    UAD Open Browser And Go To Login Page
+    UAD Go to Page And Log In
+    Contact Person Should Be Found In MIT UAD   ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
 
 Enable Sales Person to rate Opportunity and Task Source Data Quality
     [Tags]      BQA-2182    wip
@@ -472,42 +491,24 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Go To Account   ${TASK_NAME}
     Verify That Quality Rating Field Exists
 
-UI: 360 view of customer
-    [Tags]      BQA-12
-    Go To Salesforce And Login
+Opportunity Cards
+    [Tags]      BQA-2194    wip
+    Go to Salesforce and Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Basic Account Information Is Visible On Top Bar
-    Profile Attributes Should Be Visible On Left Sidebar
-    Customer Story Should Be Visible On The Right Sidebar
-    Recommended Offerings Should Be Visible On the Right Sidebar
-    Open Dashboard Tab At Account View
-    Main Frame Should Have Correct Info
-    Open Sales Plan Tab At Account View
-    Open Details Tab At Account View
+    Create New Opportunity For Customer
+    Open Open Opportunities Tab At Account View
+    Correct Quick Actions Should Be Visible
+    # todo: 5: Update the record through Update quick action.
+    # todo: 6: Create a new event through the quick action
+    # todo: 7: Create a new task through the quick action
+    # todo: 8: Close the opportunity through the quick action.
 
-Check Attributes/Business Account are named right in SalesForce UI
-    [Tags]      BQA-100
-    Go To Salesforce And Login
-    Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Details Tab At Account View
-    Click Details Button
-    Verify That Business Account Attributes Are Named Right
+Test Contact person double check works ok in Claudia
+    [Tags]      BQA-2335
+    Go to Salesforce and Login
+    Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
+    User sees a list of Contact Persons and can save with the same name
 
-Check Attributes/Contact Person are named right in SalesForce UI
-    [Tags]      BQA-101
-    Go To Salesforce And Login
-    Go to Account    ${DEFAULT_TEST_CONTACT}
-    Click Details Button
-    Verify That Contact Person Attributes Are Named Right
-
-Check attributes in Global search list views
-    [Tags]      BQA-1830
-    Go To Salesforce And Login
-    Search And Verify Account Is Found      ${DEFAULT_TEST_ACCOUNT}     Account
-    Search Result Should Contain Field      ${DEFAULT_TEST_ACCOUNT}     Account     ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}
-    Search And Verify Account Is Found      ${DEFAULT_TEST_CONTACT}     Contact
-    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_ACCOUNT}
-    Search Result Should Contain Field      ${DEFAULT_TEST_CONTACT}     Contact     ${DEFAULT_TEST_CONTACT_EMAIL}
 
 
 *** Keywords ***
