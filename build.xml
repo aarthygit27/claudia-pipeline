@@ -4,7 +4,7 @@
     <target   name="RelocateChangeSetAndDeleteRest">
       <mkdir  dir="changeSet" />
       <copy todir="changeSet" >
-        <fileset dir="salesforce_configs/metadata_configurations/changeSet"/>
+        <fileset dir="salesforce_configs/metadata_configurations/changeSet/${changeSet_name}"/>
       </copy>
       <delete dir="salesforce_configs" />
       <delete dir="config" />
