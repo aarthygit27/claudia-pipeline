@@ -1440,7 +1440,8 @@ Verify That Owner Has Changed
 
 Verify That Products Are Found
     ${frame}=           Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h1[normalize-space()='List of products available']    10s
+    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h1[normalize-space()='List of products available']    20s
+    Run Inside Iframe   ${frame}    Page Should Contain Element     //ng-form[@id='Product List']//table//tr
 
 Verify That Quality Rating Field Does Not Exist
     Click Details Button
