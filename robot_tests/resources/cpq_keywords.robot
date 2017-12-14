@@ -131,6 +131,10 @@ Fill Missing Required Information If Needed (CPQ)
     ${s}=   Recognize Product Needs Additional Information (CPQ)
     Run Keyword if    ${s}      Fill Missing Required Information
 
+Fill Required Information For Telia Cid
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
+    ...         10s     1s      Input Text      ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input    1
+
 Fill Required Information For Telia Sopiva Pro L
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         10s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
