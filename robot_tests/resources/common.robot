@@ -32,6 +32,7 @@ Create Unique Name
     ${name}=        Set Variable If  '${prefix}'=='${EMPTY}'     ${timestamp}      ${prefix} ${timestamp}
     ${length}=      Get Length      ${name}
     # The search does not work if the name is too long. Cut characters to fit the timestamp. The timestamp takes 16 characters.
+    # For example 'Telia Palvelulaite Lenovo ThinkPad L460 i5-6200U / 14" FHD / 8GB / 256SSD / W10P Opportunity <timestamp>' is too long
     ${name}=        Set Variable If     ${length} > 100     ${name[:70]} ${timestamp}   ${name}
     [Return]        ${name}
 
@@ -60,8 +61,9 @@ Open Browser And Go To Login Page
     [Arguments]     ${page}=${LOGIN_PAGE}
     Run Keyword If      '${BEHIND_PROXY}'=='True'     Open Browser And Go To Login Page (Proxy)     ${page}
     ...     ELSE        Open Browser        ${page}       ${BROWSER}
-    Run Keyword If      '${BEHIND_PROXY}'=='True'   Set Window Size     ${1920}     ${1080}
-    ...     ELSE        Maximize Browser Window
+    # Run Keyword If      '${BEHIND_PROXY}'=='True'   Set Window Size     ${1920}     ${1080}
+    # ...     ELSE        Maximize Browser Window
+    Maximize Browser Window
 
 Open Browser And Go To Login Page (Proxy)
     [Arguments]     ${page}=${LOGIN_PAGE}
