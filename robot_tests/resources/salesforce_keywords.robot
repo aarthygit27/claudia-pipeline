@@ -840,6 +840,7 @@ Login To Salesforce as Customer Care User
 
 Login to Salesforce as Sales Admin User
     Login To Salesforce     ${SALES_ADMIN_USER}         ${PASSWORD}
+    Go To Sales Application And Close All Tabs
 
 Login To Salesforce as Product Manager
     Login To Salesforce     ${PRODUCT_MANAGER_USER}     ${PASSWORD}
