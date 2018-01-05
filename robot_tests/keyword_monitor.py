@@ -38,7 +38,7 @@ class KeywordTimes(ResultVisitor):
 
     Example:
 
-    python libs\result_exporter\KeywordTimes.py output.xml "Customer Search Is Complete"
+    python keyword_monitor.py output.xml preprod -k "Customer Search Is Complete"
 
     Code is based on https://gist.github.com/Tattoo/6208942.
 
