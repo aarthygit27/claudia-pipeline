@@ -82,7 +82,7 @@ if __name__ == "__main__":
         if u.lower() not in current_users:
             # If the user is in Wiki, but not in Salesforce, create the user
             r = rw.create_new_user_to_salesforce(wiki_users[u], profile_id, role_id, manager, env)
-            updated = r.status_code != 201
+            updated = r.status_code == 201
         else:
             # If the user is also in salesforce, ensure their account is activated
             updated = rw.activate_existing_user(wiki_users[u], salesforce_users[u]["Id"], profile_id, role_id, manager, env, salesforce["instance"])
