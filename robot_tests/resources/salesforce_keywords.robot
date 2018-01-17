@@ -666,7 +666,7 @@ Fill Mandatory Contact Person Values from Main Page
     ...    ${phone_number}=${DEFAULT_PHONE}
     ...     ${sales_role}=Business Contact
     Set Test Variable   ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute     First Name      ${salutation}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute     Salutation      ${salutation}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute     Sales Role      ${sales_role}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      First Name      ${firstname}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Last Name       ${lastname}
