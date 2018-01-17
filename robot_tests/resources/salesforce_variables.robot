@@ -22,7 +22,7 @@ ${SALES_ADMIN_USER}                         saleadm@teliacompany.com.preprod
 ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.preprod
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.preprod
 ${B2B_DIGISALES_MANAGER}                    digimngr@teliacompany.com.preprod
-${PASSWORD}                                 PahaPassu5
+${PASSWORD}                                 PahaPassu1
 
 # QUICKACTIONFIELD is an invalid xpath on its own. Needs to be completed with another `]` after the variable has been put
 ${ACTIVETEMPLATE_FIELD}                     //div[contains(@class,'activeTemplate')]
