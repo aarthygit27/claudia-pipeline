@@ -13,7 +13,7 @@ import config_parser
 from config_parser import ConfigSectionMap
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4: sys.exit("Usage: python user_creation.py <environment> test/development [firstrow]-[lastrow]")
+    if len(sys.argv) != 4: sys.exit("Usage: python user_creation.py <environment> test/development/int [firstrow]-[lastrow]")
     env = sys.argv[1].lower()
     if sys.argv[2].lower() == "test":
         correct_list = 62789322 # list of test users

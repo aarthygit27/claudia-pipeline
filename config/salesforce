@@ -1,19 +1,19 @@
 [systeam]
 username: fbl11955@teliacompany.com.systeam
-password: Cp4r2P7hT2T4!332!2rRtn
-token: n2EurYWO1OCVtv3WGYZPIl81
+password: Cp4r2P7hT2T4!332!2rRtnE
+token: DphkUcHkIGv1VDZYhxfGzhVdn
 instance: test
 
 [preprod]
 username: fbl11955@teliacompany.com.preprod
-password: Cp4r2P7hT2T4
+password: Cp4r2P7hT2T4S
 token: RiYzELiGddmoYb778Ulo1M0u
 instance: test
 
 [test]
 username: fbl11955@teliacompany.com.test
 password: Trt1e!!gXCxw34!822
-token: 0qE0Dw9I9q9YrA99g9TnesTM0
+token: viNx9DjGVogqV88Q5dKBrZD9F
 instance: test
 
 [dev]
