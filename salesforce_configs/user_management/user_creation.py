@@ -13,14 +13,16 @@ import config_parser
 from config_parser import ConfigSectionMap
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4: sys.exit("Usage: python user_creation.py <environment> test/development [firstrow]-[lastrow]")
+    if len(sys.argv) != 4: sys.exit("Usage: python user_creation.py <environment> test/development/int [firstrow]-[lastrow]")
     env = sys.argv[1].lower()
-    if sys.argv[2] == "test":
+    if sys.argv[2].lower() == "test":
         correct_list = 62789322 # list of test users
-    elif sys.argv[2] == "development":
+    elif sys.argv[2].lower() == "development":
         correct_list = 64292580 # list of development users
+    elif sys.argv[2].lower() == "int":
+        correct_list = 68715658 # list of INT users
     else:
-        sys.exit("Invalid list of users: Use either 'test' or 'development'")
+        sys.exit("Invalid list of users. Use one of the following: 'test', 'development' or 'int'")
 
     first, last = sys.argv[3].split("-")
     first = int(first) if first else 1
