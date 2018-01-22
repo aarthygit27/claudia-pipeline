@@ -24,7 +24,7 @@ if __name__ == "__main__":
     elif sys.argv[2].lower() == "int":
         correct_list = 68715658 # list of INT users
     else:
-        sys.exit("Invalid list of users: Use either 'test' or 'development'")
+        sys.exit("Invalid list of users. Use one of the following: 'test', 'development' or 'int'")
     salesforce = ConfigSectionMap(env)
     wiki = ConfigSectionMap("wiki")
 
