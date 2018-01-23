@@ -35,7 +35,7 @@ def send_password_clarification_email(recipients, env, wiki_list):
     "{0} sandbox was just refreshed. ".format(env.upper()) +\
     "You are listed in http://wiki.intra.sonera.fi/pages/viewpage.action?spaceKey=BD&title=List+of+{0}+users ".format(wiki_list) +\
     "which caused your user to be either activated (1) or created (2) in which case you received one of the following emails: \n\n" +\
-    "1) Change your email address. Sandbox was refreshed an the refresh takes data from production environment, so if you have a user in production" +\
+    "1) Change your email address. Sandbox was refreshed and the refresh takes data from production environment, so if you have a user in production" +\
     "your user is automatically created to the sandbox and \"@example.com\" is added at the end of your email address. " +\
     "The automated script changes your email to the correct format and Salesforce sends you an automatic email to verify the change. Verify your " +\
     "account from the email sent from Salesforce to activate your user in the {0} sandbox.\n\n".format(env.upper()) +\
