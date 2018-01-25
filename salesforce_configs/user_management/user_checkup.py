@@ -2,12 +2,14 @@ import os, sys
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 CONFIG_PATH = os.path.realpath(os.path.join(PROJECT_ROOT, "..", "..", "config"))
+LIBS_PATH = os.path.realpath(os.path.join(PROJECT_ROOT, "..", "libs"))
 sys.path.append(PROJECT_ROOT)
 sys.path.append(CONFIG_PATH)
+sys.path.append(LIBS_PATH)
 
-from libs.login import get_sessionId_and_serverUrl
-from libs.rest_wrapper import RestWrapper
-from libs.send_email import send_notification_email
+from login import get_sessionId_and_serverUrl
+from rest_wrapper import RestWrapper
+from send_email import send_notification_email
 
 import config_parser
 from config_parser import ConfigSectionMap
