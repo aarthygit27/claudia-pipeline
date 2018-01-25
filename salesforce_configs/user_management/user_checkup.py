@@ -36,7 +36,7 @@ if __name__ == "__main__":
     email = sys.argv[5]
 
     salesforce = ConfigSectionMap(env)
-    session_id, server_url = get_sessionId_and_serverUrl(salesforce["instance"], PROJECT_ROOT, salesforce["username"], salesforce["password"] + salesforce["token"])
+    session_id, server_url = get_sessionId_and_serverUrl(salesforce["instance"], LIBS_PATH, salesforce["username"], salesforce["password"] + salesforce["token"])
     rw = RestWrapper(session_id, server_url, env)
 
     try:

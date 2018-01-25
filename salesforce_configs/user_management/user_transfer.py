@@ -30,7 +30,7 @@ if __name__ == "__main__":
     salesforce = ConfigSectionMap(env)
     wiki = ConfigSectionMap("wiki")
 
-    session_id, server_url = get_sessionId_and_serverUrl(salesforce["instance"], PROJECT_ROOT, salesforce["username"], salesforce["password"] + salesforce["token"])
+    session_id, server_url = get_sessionId_and_serverUrl(salesforce["instance"], LIBS_PATH, salesforce["username"], salesforce["password"] + salesforce["token"])
 
     rw = RestWrapper(session_id, server_url, env)
     wiki_users = rw.get_users_from_wiki(wiki["username"], wiki["password"], correct_list)

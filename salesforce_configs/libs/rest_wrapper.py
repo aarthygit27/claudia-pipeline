@@ -295,6 +295,39 @@ class RestWrapper(object):
         return changed == "UPDATED"
 
 
+    def get_auth_providers(self):
+        r = self._session.get(self._rest_base + "/query/?q=SELECT+Id,FriendlyName+FROM+authprovider", headers=self._headers)
+        providers = {}
+        for provider in r.json()["records"]:
+            providers[provider["FriendlyName"]] = provider["Id"]
+        return providers
+
+    def set_authorization_url(self, provider, url):
+        data = {"AuthorizeUrl" : url}
+        r = self._session.patch(self._rest_base + "/sobjects/AuthProvider/" + provider, headers=self._headers, data=json.dumps(data))
+        return r
+
+    def set_static_auth_provider_attributes(self, provider, url):
+        self._set_token_url(provider, url)
+        self._set_consumer_key(provider)
+        # self._set_consumer_secret(provider)
+
+    def _set_token_url(self, provider, url):
+        x = "https://api-garden{0}.teliacompany.com/oauth/client_credential/accesstoken".format(url)
+        data = {"TokenUrl": x}
+        r = self._session.patch(self._rest_base + "/sobjects/AuthProvider/" + provider, headers=self._headers, data=json.dumps(data))
+        return r
+
+    def _set_consumer_key(self, provider):
+        data = {"ConsumerKey": "GYLrGvMFl20HuozAfEv0A2RA77pLcAyr"}
+        r = self._session.patch(self._rest_base + "/sobjects/AuthProvider/" + provider, headers=self._headers, data=json.dumps(data))
+        return r
+
+    def _set_consumer_secret(self, provider):
+        data = {"ConsumerSecret": "xyz"}
+        r = self._session.patch(self._rest_base + "/sobjects/AuthProvider/" + provider, headers=self._headers, data=json.dumps(data))
+        return r
+
     # def _parse_integrations_from_wiki_output(self, output):
     #     '''
     #     Parses the XML from the integration setup page. Returns a
