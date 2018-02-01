@@ -1,0 +1,32 @@
+<project name="LOL" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+    <taskdef uri="antlib:com.salesforce" resource="com/salesforce/antlib.xml" classpath="lib/ant-salesforce.jar"/>
+
+    <property environment="env"/>
+    <property name="sf.username"      value="fbl11955@teliacompany.com.preprod"/> <!-- ${env.SFDC_USERNAME} -->
+    <property name="sf.password"      value="Cp4r2P7hT2T4MI0aLzbijmHcC8kCqKDAfnNoe"/> <!-- ${env.SFDC_PASSWORD} -->
+    <property name="sf.serverurl"     value="test.salesforce.com"/> <!-- ${env.SFDC_URL} -->
+    <property name="sf.maxPoll"       value="500"/>
+    <property name="sf.maxWaitMillis" value="3000"/>
+    <property name="test.level"       value="RunLocalTests"/> <!-- NoTestRun -->
+    <property name="check.only"       value="true"/>	  <!-- false -->
+    <property name="log.type"         value="None"/>
+
+	<target name="test">
+
+	  <!-- Removal of conflicting items - end -->
+		
+      <sf:deploy
+          username       = "${sf.username}"
+          password       = "${sf.password}"
+          serverurl      = "${sf.serverurl}"
+          deployRoot     = "src"
+          singlePackage  = "true"
+          maxPoll        = "${sf.maxPoll}"
+          pollWaitMillis = "${sf.maxWaitMillis}"
+          testLevel      = "${test.level}"
+          checkOnly      = "${check.only}"
+          logType        = "${log.type}"
+          ignoreWarnings = "true" />
+    </target>
+	
+</project>
