@@ -27,27 +27,22 @@ with open("files_to_exclude.txt", "r") as exclude_file:
 exclude_set.insert(0, 'src/package.xml')
 print exclude_set
 # git ls-files > files_to_include.txt
-include_file = open('files_to_include.txt', 'r')
 buildfile = open("buildfile_deletesrc.xml", 'r')
 temp = buildfile.readlines()
+buildfile.close()
 
-
+# Insert all files not included in exclude_set inside the <delete> tag
+include_file = open('files_to_include.txt', 'r')
 for line in include_file:
   if line.rstrip() not in exclude_set:
     if 'src' in line:
         line = line.rstrip()
         temp.insert(17, '        <include name="' + line + '"/>\n')
-
+include_file.close()
 #for line in temp:
     #print(line)
-buildfile.close()
 # ----- new list done.
 
 # ----- Writes new list file to buildfile_deletesrc.xml
-buildfile = open("buildfile_deletesrc.xml", 'w')
-
-for line in temp:
-    #print(line)
-    buildfile.write(line)
-buildfile.close()
-# ----- Writing done to buildfile_deletesrc.xml
+with open("buildfile_deletesrc.xml", 'w') as buildfile:
+    buildfile.writelines(temp)
