@@ -321,7 +321,6 @@ class RestWrapper(object):
         return r
 
     def _set_consumer_key(self, provider):
-        # TODO: The consumer key is not the same for each auth. provider. The required auth. provider should be get first from somewhere
         data = {"ConsumerKey": "GYLrGvMFl20HuozAfEv0A2RA77pLcAyr"}
         r = self._session.patch(self._rest_base + "/sobjects/AuthProvider/" + provider, headers=self._headers, data=json.dumps(data))
         return r
