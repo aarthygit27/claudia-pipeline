@@ -12,7 +12,7 @@ from rest_wrapper import RestWrapper
 import config_parser
 from config_parser import ConfigSectionMap
 
-URLS = {"preprod": "-uat", "test": "-test", "dev": "-test", "prod": "", "int": "-test", "upg": "-test"}
+URLS = {"preprod": "-uat", "test": "-test", "dev": "-test", "prod": "", "int": "-test"}
 
 def main(env):
     salesforce = ConfigSectionMap(env)
