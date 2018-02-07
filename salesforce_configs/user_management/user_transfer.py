@@ -17,16 +17,19 @@ import config_parser
 from config_parser import ConfigSectionMap
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3: sys.exit("Usage: python user_transfer.py <environment> test/development/int")
+    if len(sys.argv) != 3: sys.exit("Usage: python user_transfer.py <environment> test/development/int/common")
     env = sys.argv[1].lower()
-    if sys.argv[2].lower() == "test":
+    l = sys.argv[2].lower()
+    if l == "test":
         correct_list = 62789322 # list of test users
-    elif sys.argv[2].lower() == "development":
+    elif l == "development":
         correct_list = 64292580 # list of development users
-    elif sys.argv[2].lower() == "int":
+    elif l == "int":
         correct_list = 68715658 # list of INT users
+    elif l == "common":
+        correct_list = 68723261 # list of common users
     else:
-        sys.exit("Invalid list of users. Use one of the following: 'test', 'development' or 'int'")
+        sys.exit("Invalid list of users. Use one of the following: 'test', 'development', 'int', or 'common'")
     salesforce = ConfigSectionMap(env)
     wiki = ConfigSectionMap("wiki")
 
