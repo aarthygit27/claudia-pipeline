@@ -17,14 +17,9 @@ buildfile.close()
 # Inserts cleared buildfile_deletesrc file and new exceptions from files_to_exclude.txt to temp list
 # Only lines starting with "src" is added, because there might be some irrelevant files also
 # git diff --name-only HEAD~1 > files_to_exclude.txt
-exclude_set = []
-with open("files_to_exclude.txt", "r") as exclude_file:
-    for line in exclude_file:
-        line = line.rstrip()
-        exclude_set.append(line)
-        if ("src/classes" in line) or ("src/pages" in line):
-            exclude_set.append(line+"-meta.xml")
-exclude_set.insert(0, 'src/package.xml')
+exclude_file = open('files_to_exclude.txt', 'r')
+exclude_set = map(lambda x: x.rstrip(), exclude_file.readlines())
+exclude_set.insert(1, 'src/package.xml')
 print exclude_set
 # git ls-files > files_to_include.txt
 include_file = open('files_to_include.txt', 'r')
@@ -35,8 +30,8 @@ temp = buildfile.readlines()
 for line in include_file:
   if line.rstrip() not in exclude_set:
     if 'src' in line:
-        line = line.rstrip()
-        temp.insert(17, '        <include name="' + line + '"/>\n')
+      line = line.rstrip()
+      temp.insert(17, '        <include name="' + line + '"/>\n')
 
 #for line in temp:
     #print(line)
