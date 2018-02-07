@@ -51,19 +51,21 @@ if __name__ == "__main__":
     skip_users = skip_users + wiki_users.keys()
     skip_users = map(lambda x: x.lower(), skip_users)
 
-    for u in sorted(salesforce_users):
-        if u.lower() not in skip_users:
-            # If the user is in Salesforce, but not in Wiki, deactivate the user
-            id = salesforce_users[u]["Id"]
-            tmp = salesforce_users[u]["Username"]
-            username = tmp if u.endswith(".deactivated") else tmp + ".deactivated"
-            data = {"IsActive" : 0,
-                    "Username" : username}
-            rw.update_user(id, data)
-            if rw.get_user_info_from_salesforce(id)["IsActive"]:
-                print "User '{0}' ({1}) was supposed be deactivated, but was active".format(u, salesforce_users[u]["Name"].encode("utf-8"))
-                continue
-            print "User {0} ({1}) deactivated.".format(u, salesforce_users[u]["Name"].encode("utf-8"))
+    # Never deactivate users if the common test user list is run
+    if l != "common":
+        for u in sorted(salesforce_users):
+            if u.lower() not in skip_users:
+                # If the user is in Salesforce, but not in Wiki, deactivate the user
+                id = salesforce_users[u]["Id"]
+                tmp = salesforce_users[u]["Username"]
+                username = tmp if u.endswith(".deactivated") else tmp + ".deactivated"
+                data = {"IsActive" : 0,
+                        "Username" : username}
+                rw.update_user(id, data)
+                if rw.get_user_info_from_salesforce(id)["IsActive"]:
+                    print "User '{0}' ({1}) was supposed be deactivated, but was active".format(u, salesforce_users[u]["Name"].encode("utf-8"))
+                    continue
+                print "User {0} ({1}) deactivated.".format(u, salesforce_users[u]["Name"].encode("utf-8"))
 
     # Create a list with all Salesforce users in lower case to prevent typo errors
     current_users = map(lambda x: x.lower(), salesforce_users.keys())
