@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+		<members>SendQuoteConfirmationEmailController</members>
+		<members>SendQuoteConfirmationEmailControllerTest</members>
+		<members>SendOrderConfirmationEmailController</members>
+		<members>SendOrderConfirmationEmailControllerTest</members>
+		<members>CreateOrderAndSyncQuoteController</members>
+		<members>CreateOrderAndSyncQuoteControllerTest</members>
+		<members>TestDataFactory</members>
+		<members>TS_PostProcessor</members>
+		<members>TS_PreProcessor</members>
+		<members>FYRCalculationsHandler</members>
+		<members>SalesTodayPageControllerTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+		<members>SyncQuote</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>Opportunity-en_US</members>
+        <members>Quote-en_US</members>
+        <name>CustomObjectTranslation</name>
+    </types>
+    <types>
+		<members>Quote-Quote Layout</members>
+		<members>Opportunity-Normal Opportunity Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>PricingRulesFlow-5</members>
+        <name>Flow</name>
+    </types>
+	<types>
+        <members>PricingRulesFlow</members>
+        <name>FlowDefinition</name>
+    </types>
+	<types>
+		<members>Opportunity.telia_SyncedQuote__c</members>
+		<members>Quote.telia_IsSyncingFlag__c</members>
+		<members>Quote.telia_IsSyncing__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>bulk_hard_delete</members>
+        <members>Case_Feed</members>
+        <members>Manage_Articles</members>
+        <members>Sales_Console</members>
+        <members>Splunk_User</members>
+        <name>PermissionSet</name>
+    </types>
+
+    <types>
+		<members>Analytics Cloud Integration User</members>
+		<members>Analytics Cloud Security User</members>
+		<members>B2B DigiSales</members>
+		<members>Chatter External User</members>
+		<members>Chatter Free User</members>
+		<members>Chatter Moderator User</members>
+		<members>ContractManager</members>
+		<members>Customer Care</members>
+		<members>Customer Community Plus User</members>
+		<members>Customer Community User</members>
+		<members>High Volume Customer Portal User</members>
+		<members>Integration User GESB</members>
+		<members>MarketingProfile</members>
+        <name>Profile</name>
+    </types>
+    <types>
+		<members>B2B_DigiSales</members>
+		<members>B2B_DigiSales/contact_outbound_message_error</members>
+		<members>B2B_DigiSales/Cover_Letter_For_Order_Summary_English</members>
+		<members>B2B_DigiSales/Cover_Letter_For_Order_Summary_Finnish</members>
+		<members>B2B_DigiSales/Cover_Letter_For_Order_Summary_Swedish</members>
+		<members>B2B_DigiSales/Cover_Letter_For_Quote_Summary_English</members>
+		<members>B2B_DigiSales/Cover_Letter_For_Quote_Summary_Finnish</members>
+		<members>B2B_DigiSales/Cover_Letter_For_Quote_Summary_Swedish</members>
+		<members>B2B_DigiSales/Editable_Meeting_Request_Email</members>
+		<members>B2B_DigiSales/Editable_Thank_You_For_The_Meeting</members>
+		<members>B2B_DigiSales/Meeting_Request_Email_Finnish</members>
+		<members>B2B_DigiSales/Thank_You_For_The_Meeting_Finnish</members>
+        <name>EmailTemplate</name>
+    </types>
+    <types>
+		<members>Telia</members>
+		<members>Telia/facebook</members>
+		<members>Telia/linkedin</members>
+		<members>Telia/pebbleheader</members>
+		<members>Telia/TeliaAppLogo</members>
+		<members>Telia/telia_letterhead_header</members>
+		<members>Telia/telia_yritysasiakaspalvelu</members>
+		<members>Telia/telia_yritysportaali</members>
+		<members>Telia/twitter</members>
+		<members>Telia/youtube</members>
+        <name>Document</name>
+    </types>
+    <version>40.0</version>
+</Package>
