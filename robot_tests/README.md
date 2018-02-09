@@ -27,6 +27,7 @@ Before the tests are run ensure that the `DEFAULT_TEST_ACCOUNT` has the followin
 - Mobile: `+3588881234`
 - Email: `9876543210noreply@teliacompany.com`
 - Gender: `0 - not known`
+- Sales Role: `Business Contact`
 
 ## Jenkins
 
