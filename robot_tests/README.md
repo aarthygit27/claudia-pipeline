@@ -20,6 +20,14 @@ Tests are divided by JIRA ticket business area. When a new test is added, add a 
 jobs when they aren't finished yet. Once the test is finished, remove the `wip` tag from the robot file and add `AUTO` label for
 the JIRA Test Case Template ticket.
 
+Before the tests are run ensure that the `DEFAULT_TEST_ACCOUNT` has the following contact person:
+- Name: `Paavo Pesusieni`
+- Business Card Title: `Sponge of sponges`
+- Language: `Finnish`
+- Mobile: `+3588881234`
+- Email: `9876543210noreply@teliacompany.com`
+- Gender: `0 - not known`
+
 ## Jenkins
 
 https://jenkins.verso.sonera.fi/
