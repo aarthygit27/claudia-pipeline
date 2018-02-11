@@ -13,7 +13,7 @@ instance: test
 [test]
 username: fbl11955@teliacompany.com.test
 password: Trt1e!!gXCxw34!822
-token: viNx9DjGVogqV88Q5dKBrZD9F
+token: XKhMyfayS48qV2RQ2IfuQNIV
 instance: test
 
 [dev]
@@ -25,7 +25,7 @@ instance: test
 [int]
 username: fbl11955@teliacompany.com.int
 password: K23!kUTr41S
-token: sOZUMPPVmAYRrTpvN1xa8FJE
+token: cvbUf022ccJem8PBybmamMSyY
 instance: test
 
 [sint]
@@ -40,11 +40,17 @@ password: Trt1e!!gXCxw34!822
 token: PlPbjOvWtJI1IMcCqNWPOYX4
 instance: test
 
+[upg]
+username: fbl11955@teliacompany.com.upg
+password: Trt1e!!gXCxw34!822
+token: 5VVrhmnZDY115wKmn52JSw5G
+instance: test
+
 [prod]
 username: fbl11955@teliacompany.com
 password: Trt1e!!gXCxw34!82244
 token: 41R1cliteZeOH6Eqyn3A1iGqo
-instance: prod
+instance: login
 
 [wiki]
 username: fbl11955
