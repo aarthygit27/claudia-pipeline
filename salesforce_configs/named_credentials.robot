@@ -6,7 +6,7 @@ Suite Teardown          Close Browser
 
 *** Variables ***
 ${USERNAME}             fbl11955@teliacompany.com.preprod
-${PASSWORD}             Cp4r2P7hT2T4
+${PASSWORD}             Cp4r2P7hT2T4S
 ${AddressValidation}    https://emily.extra.sonera.fi:62502/Adapters/Global/AddressValidation/Service/ValidateAddressService.serviceagent/ValidateAddressPortTypeEndpoint1
 ${AvailabilityCheck}    https://emily.extra.sonera.fi:62503/Adapters/Global/AvailabilityCheck/Service/AvailabilityCheckService.serviceagent/AvailabilityCheckPortTypeEndpoint1
 ${CaseManagement}       https://emily.extra.sonera.fi:62501/Adapters/B2BSelfcare/CRMCaseManagementCommon-service0.serviceagent/CRMCaseManagementCommonEndpoint0
