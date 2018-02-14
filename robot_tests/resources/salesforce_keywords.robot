@@ -315,10 +315,11 @@ Click Next Button
     Run Inside Iframe   ${IFRAME}       Click Element   //a[text()[contains(.,'Next')]]
 
 Click Save Button
+    Wait until Element Is Enabled     //input[@title="Save"]
     Click Element       //input[@title="Save"]
     # Using "Wait until Element Is Visible" causes stale elements. Instead, we need to wait until Edit button does not have "dipslay: none;"
-    Wait Until Page Does Not Contain Element
-    ...    //.[contains(text(), 'Order Detail')]/../following-sibling::td//input[@title="Edit" and @style="display: none;"]    10 s
+    #Wait Until Page Does Not Contain Element
+    #...    //.[contains(text(), 'Order Detail')]/../following-sibling::td//input[@title="Edit" and @style="display: none;"]    10 s
 
 Click Save Button Again If There Are Multiple Contact Persons
     # If there are multiple contact persons with the same name. Clicking the save button once brings a dropdown menu to choose the correct person.
