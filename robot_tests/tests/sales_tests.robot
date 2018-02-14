@@ -23,7 +23,7 @@ ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${EMPTY}
 *** Test Cases ***
 
 Contact: Add new contact (valid data)
-    [Tags]    add_new_contact    BQA-1
+    [Tags]    add_new_contact    BQA-1  sanity_check
     Go To Salesforce and Login
     Create New Contact Person For Customer From Quick Action
     Check that contact has been saved and can be found under proper Account
@@ -76,7 +76,7 @@ Sales Admin: Add new owner for Group Account
     [Teardown]      Pause Execution
 
 UI: 360 view of customer
-    [Tags]      BQA-12
+    [Tags]      BQA-12   sanity_check
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Basic Account Information Is Visible On Top Bar
@@ -89,7 +89,7 @@ UI: 360 view of customer
     Open Details Tab At Account View
 
 Quick actions: Create task
-    [Tags]      BQA-16
+    [Tags]      BQA-16   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
@@ -102,7 +102,7 @@ Quick actions: Create task
     Created Task Should Be Visible
 
 Quick actions: create Meeting
-    [Tags]      BQA-17
+    [Tags]      BQA-17   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
@@ -117,7 +117,7 @@ Quick actions: create Meeting
     Set Suite Variable      ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}       ${TEST_EVENT_SUBJECT}
 
 Quick actions: create Customer Call
-    [Tags]      BQA-18
+    [Tags]      BQA-18   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
@@ -143,7 +143,7 @@ Quick actions: create Opportunity from Account (Feed) by Customer Care user
     Opportunity Should be Unassigned
 
 Meeting/Customer Call: Update meeting to Done
-    [Tags]      BQA-21
+    [Tags]      BQA-21   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Event If Necessary
@@ -190,7 +190,7 @@ Sales Process: Update Sales Plan of an Account which you are not owner
     Verify That Sales Plan Update History Is Correct
 
 Sales Process: Create opportunity from Account
-    [Tags]      BQA-27
+    [Tags]      BQA-27   sanity_check
     Go To Salesforce and Login
     Go To Account   ${DEFAULT_TEST_ACCOUNT}
     Create New Opportunity For Customer
@@ -274,38 +274,38 @@ Opportunity: Pick opportunity from queue
 #     [Teardown]      Pause Execution
 
 Opportunity: Check that opportunity cannot be created for a Group Account
-    [Tags]      BQA-40
+    [Tags]      BQA-40   sanity_check
     [Setup]     Create Test Account With Admin User     Group
     Go To Salesforce and Login
     Go To Account   ${TEST_GROUP_ACCOUNT_NAME}
     Verify That User Cannot Create New Opportunity
 
 Opportunity: Check that opportunity cannot be created for Account with passive legal status
-    [Tags]      BQA-41
+    [Tags]      BQA-41   sanity_check
     Go To Salesforce and Login
     Go to Account       ${TEST_PASSIVE_ACCOUNT}
     Try To Create New Opportunity And It Should Fail
 
 Opportunity: Closing active opportunity as cancelled
-    [Tags]      BQA-42
+    [Tags]      BQA-42   sanity_check
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
     [Template]      Close active opportunity
     Cancelled    Cancelled
 
 Opportunity: Closing active opportunity as lost
-    [Tags]      BQA-43
+    [Tags]      BQA-43   sanity_check
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
     [Template]      Close active opportunity
     Closed Lost    Lost
 
 Opportunity: Closing active opportunity as not won
-    [Tags]      BQA-44
+    [Tags]      BQA-44   sanity_check
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
     [Template]      Close active opportunity
     Closed Not Won    Not Won
 
 Opportunity: Closing active opportunity as won
-    [Tags]      BQA-45      BQA-46
+    [Tags]      BQA-45      BQA-46  sanity_check
     [Documentation]     Entry conditions: Sales user is logged in to Salesforce
     [Template]      Close active opportunity
     Closed Won    Won    Negotiate and Close
@@ -354,7 +354,7 @@ Sales Admin: Update closed opportunity
     Closed Won          Won         Negotiate and Close
 
 Check Attributes/Business Account are named right in SalesForce UI
-    [Tags]      BQA-100
+    [Tags]      BQA-100   sanity_check
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
@@ -362,7 +362,7 @@ Check Attributes/Business Account are named right in SalesForce UI
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right in SalesForce UI
-    [Tags]      BQA-101
+    [Tags]      BQA-101   sanity_check
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_CONTACT}
     Click Details Button
