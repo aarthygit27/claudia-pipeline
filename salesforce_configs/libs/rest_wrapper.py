@@ -12,7 +12,10 @@ class RestWrapper(object):
     def __init__(self, session_id="", server="", env=""):
         self._session_id = session_id
         self._server = self._parse_server_name(server)
-        self._url = "https://telia-claudia--{0}.{1}.my.salesforce.com".format(env, self._server)
+        if env == "dev":
+            self._url = "https://{0}.salesforce.com".format(self._server)
+        else:
+            self._url = "https://telia-claudia--{0}.{1}.my.salesforce.com".format(env, self._server)
         self._headers = {"Authorization" : "Bearer {0}".format(self._session_id),
                         "Content-Type": "application/json; charset=UTF-8"}
 
