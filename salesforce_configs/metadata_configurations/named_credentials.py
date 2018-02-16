@@ -23,6 +23,9 @@ def main(env):
     rw = RestWrapper(session_id, server_url, env)
 
     named_credentials = rw.get_named_credentials()
+    print rw.set_named_credential(named_credentials["AddressValidation"], ADDRESS_VALIDATION).json()
+    print rw.set_named_credential(named_credentials["AvailabilityCheck"], AVAILABILITY_CHECK).json()
+    print rw.set_named_credential(named_credentials["CaseManagement"], CASE_MANAGEMENT).json()
 
 if __name__ == '__main__':
     main(sys.argv[1].lower())
