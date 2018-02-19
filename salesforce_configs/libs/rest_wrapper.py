@@ -334,18 +334,6 @@ class RestWrapper(object):
         r = self._session.patch(self._rest_base + "/sobjects/AuthProvider/" + provider, headers=self._headers, data=json.dumps(data))
         return r
 
-    def get_named_credentials(self):
-        r = self._session.get(self._rest_base + "/query/?q=SELECT+Id,Endpoint,MasterLabel+FROM+NamedCredential", headers=self._headers)
-        named_credentials = {}
-        for c in r.json()["records"]:
-            named_credentials[c["MasterLabel"]] = c["Id"]
-        return named_credentials
-
-    def set_named_credential(self, credential_id, endpoint):
-        data = {"Endpoint" : endpoint}
-        r = self._session.patch(self._rest_base + "/sobjects/NamedCredential/" + credential_id, headers=self._headers, data=json.dumps(data))
-        return r
-
     # def _parse_integrations_from_wiki_output(self, output):
     #     '''
     #     Parses the XML from the integration setup page. Returns a
