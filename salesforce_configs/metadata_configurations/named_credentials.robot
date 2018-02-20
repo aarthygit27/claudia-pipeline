@@ -6,7 +6,7 @@ Suite Teardown          Close Browser
 
 *** Variables ***
 ${PROJECTROOT}          ${EXECDIR}${/}..${/}..${/}robot_tests
-${ENVIRONMENT}          systeam
+${ENVIRONMENT}          preprod
 ${AddressValidation}    https://emily.extra.sonera.fi:62502/Adapters/Global/AddressValidation/Service/ValidateAddressService.serviceagent/ValidateAddressPortTypeEndpoint1
 ${AvailabilityCheck}    https://emily.extra.sonera.fi:62503/Adapters/Global/AvailabilityCheck/Service/AvailabilityCheckService.serviceagent/AvailabilityCheckPortTypeEndpoint1
 ${CaseManagement}       https://emily.extra.sonera.fi:62501/Adapters/B2BSelfcare/CRMCaseManagementCommon-service0.serviceagent/CRMCaseManagementCommonEndpoint0
