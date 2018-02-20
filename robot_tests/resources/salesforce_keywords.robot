@@ -136,7 +136,7 @@ Add Solution Area With Quick Action
 App Is Open
     [Arguments]         ${app_name}
     Click Element       id=tsidButton
-    ${app_open}=        Run Keyword and Return Status   Element Should Not Be Visible   xpath=//a[@class='menuButtonMenuLink' and contains(text(),'${app_name}')]
+    ${app_open}=        Run Keyword and Return Status   Element Should Not Be Visible   xpath=//a[@class='menuButtonMenuLink' and text()='${app_name}']
     Click Element       id=tsidButton   # Close Menu
     [Return]            ${app_open}
 
