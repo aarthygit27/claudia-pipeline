@@ -1,5 +1,5 @@
 *** Settings ***
-Resource                 salesforce_keywords.robot
+Resource                salesforce_keywords.robot
 
 Suite Setup             Open Browser And Go To Login Page
 Suite Teardown          Close Browser
@@ -16,11 +16,6 @@ ${AV_USER}              salesforce
 ${AV_PASS}              niunau/987
 ${CM_USER}              b2bselfcare
 ${CM_PASS}              passu99
-# ${BEHIND_PROXY}         False
-# ${LOGIN_PAGE}           https://test.salesforce.com
-# ${BROWSER}              Firefox
-# ${LOGOUT_BUTTON}        //div[@id='userNav-menuItems']//a[text()='Logout']
-
 
 *** Test Cases ***
 Change Named Credentials
