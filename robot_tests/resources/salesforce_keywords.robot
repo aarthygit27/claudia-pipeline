@@ -849,6 +849,12 @@ Login To Salesforce as Product Manager
 Login To Salesforce as B2B DigisalesManager
     Login To Salesforce     ${B2B_DIGISALES_MANAGER}    ${PASSWORD}
 
+Login To Salesforce As System Administrator
+    [Arguments]     ${env}
+    Import Library      config_parser
+    ${credentials}=     Config Section Map    ${env}
+    Login To Salesforce     &{credentials}[username]     &{credentials}[password]
+
 Login Page Should Be Open
     Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE}
     Wait Until Element Is Visible        id=username     10 seconds
