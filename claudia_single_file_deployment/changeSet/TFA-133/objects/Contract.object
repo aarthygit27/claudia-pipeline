@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>ContractDatestamp__c</fullName>
+        <externalId>false</externalId>
+        <formula>Today()</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ContractDatestamp</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Second_Signed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Customer Second Signed Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Second_Signed_Title__c</fullName>
+        <externalId>false</externalId>
+        <formula>Customer_Second_Signed_by__r.Title</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Second Signed Title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Second_Signed_by__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Customer Second Signed By</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Contact.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.AccountId</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Contracts</relationshipLabel>
+        <relationshipName>Contracts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>On_Going_Agreement__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates a perpetual agreement without specified end date.</inlineHelpText>
+        <label>Ongoing Agreement</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Record_Type_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>RecordType.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Record Type Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Signatories_Required__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Note: For registered associations two authorized signatories are required.</inlineHelpText>
+        <label>Signatories Required</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Single Authorized Signatory</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Two Authorized Signatories</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Template_Provider__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If Client Template is selected, upload the 3rd party document to the Notes and Attachments section. Upload both the .doc version and the scanned signed copy.</inlineHelpText>
+        <label>Template Used</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Telia Template</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Client Template</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <recordTypes>
+        <fullName>Power_of_Attorney_Client_to_Telia</fullName>
+        <active>true</active>
+        <label>Power of Attorney (Client-to-Telia)</label>
+        <picklistValues>
+            <picklist>Signatories_Required__c</picklist>
+            <values>
+                <fullName>Single Authorized Signatory</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Two Authorized Signatories</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Approval Process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Signed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Template_Provider__c</picklist>
+            <values>
+                <fullName>Client Template</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Telia Template</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__AutoRenewObjectCreation__c</picklist>
+            <values>
+                <fullName>Opportunity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quote</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ExpirationReason__c</picklist>
+            <values>
+                <fullName>Does not want to renew</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moving to M2M</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RenewalNotificationTerm__c</picklist>
+            <values>
+                <fullName>Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Months</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__TerminationReason__c</picklist>
+            <values>
+                <fullName>Customer Not Compliance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Termination without Cause</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__TerminationType__c</picklist>
+            <values>
+                <fullName>With Cause</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Without Cause</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <validationRules>
+        <fullName>PoA_Cannot_Have_Perpetual_And_Term</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.DeveloperName = &quot;Power_of_Attorney_Client_to_Telia&quot; &amp;&amp; On_Going_Agreement__c = True &amp;&amp; NOT(ISBLANK(ContractTerm))</errorConditionFormula>
+        <errorMessage>Agreement defined as ongoing cannot have a fixed Contract Term. Please review validity period selections.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PoA_Must_Choose_Perpetual_or_Term_Rule</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.DeveloperName = &quot;Power_of_Attorney_Client_to_Telia&quot; &amp;&amp; On_Going_Agreement__c = False &amp;&amp; ISBLANK(ContractTerm)</errorConditionFormula>
+        <errorMessage>Please fill in the Contract Term or select Ongoing Agreement for agreements with no defined end date.</errorMessage>
+    </validationRules>
+</CustomObject>

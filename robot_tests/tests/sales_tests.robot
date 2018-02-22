@@ -4,8 +4,6 @@ Resource            ${PROJECTROOT}${/}resources${/}multibella_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}uad_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}tellu_keywords.robot
 
-Library             config_parser
-
 # Suite Setup         Open Browser And Go To Login Page
 Suite Teardown      Close All Browsers
 
@@ -569,9 +567,8 @@ Close active opportunity
 
 Create Test Account With Admin User
     [Arguments]     ${type}
-    ${credentials}=     Config Section Map    preprod
     Open Browser And Go To Login Page
-    Login To Salesforce     &{credentials}[username]     &{credentials}[password]
+    Login to Salesforce as System Administrator
     Go To Sales Application And Close All Tabs
     Open Accounts
     Create New Account      Group   Test Group Account

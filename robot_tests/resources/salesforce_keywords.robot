@@ -136,7 +136,7 @@ Add Solution Area With Quick Action
 App Is Open
     [Arguments]         ${app_name}
     Click Element       id=tsidButton
-    ${app_open}=        Run Keyword and Return Status   Element Should Not Be Visible   xpath=//a[@class='menuButtonMenuLink' and contains(text(),'${app_name}')]
+    ${app_open}=        Run Keyword and Return Status   Element Should Not Be Visible   xpath=//a[@class='menuButtonMenuLink' and text()='${app_name}']
     Click Element       id=tsidButton   # Close Menu
     [Return]            ${app_open}
 
@@ -848,6 +848,12 @@ Login To Salesforce as Product Manager
 
 Login To Salesforce as B2B DigisalesManager
     Login To Salesforce     ${B2B_DIGISALES_MANAGER}    ${PASSWORD}
+
+Login To Salesforce As System Administrator
+    [Arguments]     ${env}
+    Import Library      config_parser
+    ${credentials}=     Config Section Map    ${env}
+    Login To Salesforce     &{credentials}[username]     &{credentials}[password]
 
 Login Page Should Be Open
     Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE}

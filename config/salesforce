@@ -13,12 +13,12 @@ instance: test
 [test]
 username: fbl11955@teliacompany.com.test
 password: Trt1e!!gXCxw34!822
-token: XKhMyfayS48qV2RQ2IfuQNIV
+token: qUab0vLX8SePpnzkkSfgvQev
 instance: test
 
 [dev]
 username: fbl11955@teliacompany.com.dev
-password: K4dRR2!!fGt12
+password: K4dRR2!!fGt12i
 token: DvuCzcVpXrl6z8YxgOjKh8XA
 instance: test
 
