@@ -498,10 +498,18 @@ Opportunity Cards
     Create New Opportunity For Customer
     Open Open Opportunities Tab At Account View
     Correct Quick Actions Should Be Visible
+    #under work: step 5
+    Update The Record Through Update Quick Action
+    ## TODO: Verify That Opportunity Is Saved And Data Is Correct
     # todo: 5: Update the record through Update quick action.
     # todo: 6: Create a new event through the quick action
+    Open Open Opportunities Tab At Account View
+    Run Inside Iframe   ${frame}   Click Element  //ul[@class='actions']/li//span[text()='Create Event']
     # todo: 7: Create a new task through the quick action
+    Open Open Opportunities Tab At Account View
+    Run Inside Iframe   ${frame}   Click Element  //ul[@class='actions']/li//span[text()='Create Task']
     # todo: 8: Close the opportunity through the quick action.
+    Open Open Opportunities Tab At Account View
 
 Test Contact person double check works ok in Claudia
     [Tags]      BQA-2335
@@ -594,6 +602,7 @@ Wait Until Contact Person Is Found In MultiBella
     Wait Until Keyword Succeeds     15 minutes   15 seconds
     ...     MUBE Contact Person Should Be Found X Times      ${TEST_CONTACT_PERSON_LAST_NAME}   ${times}
 
+
 Update Closed Opportunity Test Case
     [Arguments]     ${stage}    ${status}   ${original_stage}=Analyse Prospect
     Log to Console    ${status}
@@ -608,6 +617,13 @@ Update Closed Opportunity Test Case
     Verify That opportunity Close Reason And Date Has Been Changed      2     ${new_close_reason}
     ${passed}=      Set Variable        PASSED
     [Teardown]      Run Keywords        Log to Console      ${passed}   AND     Logout From All Systems And Close Browser
+
+Update The Record Through Update Quick Action
+    Sleep   10
+    ${frame}=   Get Account Tab Iframe Xpath    Open Opportunities
+    Run Inside Iframe   ${frame}   Click Element  //ul[@class='actions']/li//span[text()='Update']
+    ${frame}=   Get Account Tab Iframe Xpath    Update
+    Run inside Iframe   ${frame}   Click Button  Submit
 
 Create New Event If Necessary
     [Arguments]     ${type}=${DEFAULT_EVENT_TYPE}
