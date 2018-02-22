@@ -99,6 +99,7 @@ Add Quote Email Text To Product Order
 
 Add Solution Area and update Solution Sub Area data
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
+    Run Inside Iframe   ${frame}        Wait Until Page Contains Element    addSolutionAreasButton      20s
     Run Inside Iframe   ${frame}        Click Element       addSolutionAreasButton
     Run Inside Iframe   ${frame}        Wait Until Page Contains Element
     ...     //table[@id='solutionAreaListBuilder']//input[@type='checkbox']/../../following-sibling::th/div     10s
@@ -1246,9 +1247,11 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Description')]     ${rand_string}
     Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Goals')]     Sales plan customer business goals
     Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Challenges')]     Sales plan customer business challenges
+    #Pause Execution
     Run Inside Iframe   ${frame}    Run Keyword With Delay      0.5s    Click Element   //button[text()='Save' and not(contains(@id,'saveList'))]
     # TODO: 23.11.2017 Error during Javascript remoting. Something needs to be done about it
-    Run Inside Iframe   ${frame}    Wait Until Element Is Not Visible       //button[text()='Save' and not(contains(@id,'saveList'))]   20s
+    ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
+    #Run Inside Iframe   ${frame}    Wait Until Element Is Not Visible       //button[text()='Save' and not(contains(@id,'saveList'))]   20s
     Set Test Variable   ${SALES_PLAN_DESCRIPTION}       ${rand_string}
 
 Update meeting status to Done and Save
