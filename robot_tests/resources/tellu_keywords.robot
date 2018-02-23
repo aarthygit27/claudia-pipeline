@@ -19,7 +19,7 @@ TellU Create New Contact Person
     Prolonged Input Text    ${TELLU_BUSINESS_ID_FIELD}    ${customer_business_id}
     Wait Until Element Is Visible    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}
     Click Element           ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}
-    Wait Until Element Is Visible    ${TELLU_CREATE_NEW_CONTACT_PERSON_BUTTON}    30 s
+    Wait Until Element Is Visible    ${TELLU_CREATE_NEW_CONTACT_PERSON_BUTTON}    120 s
     Click Element           ${TELLU_CREATE_NEW_CONTACT_PERSON_BUTTON}
     Wait Until Element Is Visible    ${TELLU_FIRST_NAME_FIELD}    30 s
     Prolonged Input Text    ${TELLU_FIRST_NAME_FIELD}               Test
@@ -39,7 +39,7 @@ TellU Create New Contact Person
     Prolonged Input Text    ${TELLU_OFFICIAL_NAME_FIELD}            Official Name
     Click Element           ${TELLU_UPDATE_CONTACT_PERSON_BUTTON}
     Confirm Action
-    Wait Until Element Is Visible    css=ul.customValidationError    30 s
+    Wait Until Element Is Visible    css=ul.customValidationError    120 s
     Element Should Contain    css=ul.customValidationError    Data updated successfully to CRM
     Set Test Variable       ${TEST_CONTACT_PERSON_LAST_NAME}    ${name}
     Set Test Variable       ${TEST_CONTACT_PERSON_EMAIL}        ${email}
@@ -131,7 +131,7 @@ TellU Select Contact Person
     Prolonged Input Text    ${TELLU_CONTACT_PERSON_LAST_NAME_FIELD}    ${contact_person_last_name}
     Wait Until Element Is Visible    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}    10 s
     Click Element    ${TELLU_CONTACT_PERSON_SEARCH_BUTTON}
-    Wait Until Keyword Succeeds    30 s    5 s    Element Should Contain    ${TELLU_CONTACT_PERSON_RESULT_LAST_NAME_FIELD}    ${contact_person_last_name}
+    Wait Until Keyword Succeeds    120 s    5 s    Element Should Contain    ${TELLU_CONTACT_PERSON_RESULT_LAST_NAME_FIELD}    ${contact_person_last_name}
 
 TellU Verify That Contact Person Is Updated
     [Arguments]     ${contact_person_last_name}=${TEST_CONTACT_PERSON_LAST_NAME}
