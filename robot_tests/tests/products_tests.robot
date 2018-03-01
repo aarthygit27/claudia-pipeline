@@ -21,6 +21,7 @@ ${MUBE_CASE_ID}     1323424
 # MuBe Case Test
 #     [Documentation]    Entry conditions: Yritysinternet configured in Product Catalog
 #     [Tags]      MUBE
+
 #     Verify That Case Exists in Multibella
 
 # Parameterized Product Order
@@ -40,7 +41,7 @@ Test Salesforce Address Validation And Availability Check
 Sopiva Pro
     [Tags]      BQA-54
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia Sopiva Pro L   Telia Sopiva Pro
+    Telia Sopiva Pro L   Telia Sopiva Pro    #todo: fix - fails on radio button click.
 
 Liikkuva Netti Pro
     [Tags]      BQA-55
@@ -55,7 +56,7 @@ Microsoft Office 365
 Telia Yhteys kotiin yrityksille
     [Tags]      BQA-57
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia Yhteys kotiin yrityksille    Kodin Netti yrityksille
+    Telia Yhteys kotiin yrityksille    Kodin Netti yrityksille   # product is only "Kodin Netti" in MUBE
 
 Maksupääte
     [Tags]      BQA-58
@@ -217,7 +218,7 @@ Create CPQ
     Fill Missing Required Information If Needed (CPQ)
     Click Next (CPQ)
     Select Sales Type For Order (CPQ)
-    Click Next (CPQ)
+    Click Next (CPQ) Button
     Handle Credit Score (CPQ)
     Check If Quote Needs To Be Approved And Approve If Necessary
     Click CPQ At Quote View
