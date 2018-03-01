@@ -202,7 +202,7 @@ Recognize Product Needs Additional Information (CPQ)
 Return To Quote (CPQ)
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //p[text()='Return to Quote']   30s
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //[text()='View Quote']   30s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Button    Back To CPQ
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Button    Back to CPQ
 
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
