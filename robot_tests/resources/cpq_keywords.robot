@@ -7,10 +7,14 @@ Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robo
 *** Variables ***
 ${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
 ${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
-${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
-${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
+#${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
+${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed')
+#${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
+${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted')
 ${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
 ${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
+#${CREDIT_SCORE_NEXT_BUTTON}  /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
+${CREDIT_SCORE_NEXT_BUTTON}  //child[18]//button
 
 *** Keywords ***
 
@@ -70,6 +74,9 @@ Click Create Quote (CPQ)
 Click Next (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   //*[text()='Next']
+
+Click Next (CPQ) Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     30s     1s    Click Button  Next
 
 Click Next After Successful Credit Score (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    Credit Score Validation_nextBtn      20s
@@ -168,10 +175,13 @@ Fill Required Information For Microsoft Office 365
 
 Handle Credit Score (CPQ)
     [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
-    ${xpath}=   Set Variable    //div[${CREDIT_SCORE_SUCCESS} or ${CREDIT_SCORE_FAILURE}]
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
-    ${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
-    Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
+    Run Keyword And Ignore Error  Wait Until Keyword Succeeds   60s   3s   Page Should Contain   Credit Score Check Passed
+    #${xpath}=   Set Variable    //div[${CREDIT_SCORE_SUCCESS} or ${CREDIT_SCORE_FAILURE}]
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
+    #${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
+    ${credit_score_passed}=   Run Keyword And Return Status  Page Should Contain  Credit Score Check Passed
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     60s     3s    Click Element   xpath: /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
+    #Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
@@ -190,8 +200,9 @@ Recognize Product Needs Additional Information (CPQ)
     [Return]    ${s}
 
 Return To Quote (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //p[text()='Return to Quote']   30s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //p[text()='Return to Quote']
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //p[text()='Return to Quote']   30s
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //[text()='View Quote']   30s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Button    Back To CPQ
 
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
@@ -223,15 +234,19 @@ Search For Product (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Enter On                          ${CPQ_SEARCH_FIELD}
 
 Select Sales Type For Order (CPQ)
-    ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
+    #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
+    ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@ng-model,'p.SalesType')]      10s
     # All products do not need a sales type
     Return From Keyword If    not ${status}
-    ...     AND         Return From Keyword
+    ...     AND         Return From
+    #...     return document.evaluate("count(//tr//select[contains(@class,'slds-select slds-required')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
     ${length}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Execute Javascript
-    ...     return document.evaluate("count(//tr//select[contains(@class,'slds-select slds-required')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
+    ...     return document.evaluate("count(//tr//select[contains(@ng-model,'p.SalesType')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
     :FOR   ${i}     IN RANGE    ${length}
     \   Wait Until Keyword Succeeds     10s     1s
-    ...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+1}]//select[contains(@class,'slds-select slds-required')]      New Money-New Services
+    ...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+2}]/td[8]//select[contains(@ng-model,'p.SalesType')]      New Money-New Services
+    #...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+2}]//select[contains(@class,'slds-select slds-required')]      New Money-New Services
+
 
 Set Prices For Unmodelled Product (CPQ)
     [Arguments]     ${product}
