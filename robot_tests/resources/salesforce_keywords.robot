@@ -350,6 +350,11 @@ Close All Tabs
     Click Element   //span[text()='Close all primary tabs']
     Run Keyword And Ignore Error    Discard Changes
 
+Close Tab That Contains Text
+    [Arguments]     ${tab_text}
+    Mouse Over      xpath=${NAVIGATORTAB}
+    Click Element  //span[contains(text(), ${tab_text})]/../../../../../a[@class='x-tab-strip-close']
+
 Close First Tab
     Mouse Over      xpath=${NAVIGATORTAB}
     Click Element   xpath=${NAVIGATORTAB}/a[@class='x-tab-strip-close']
@@ -578,7 +583,7 @@ Expand Top Bar If Necessary
     Wait Until Page Contains Element    ${TOP_BAR}
 
 Extract MuBe CaseID From Opportunity
-    Sleep   2       The browser needs to catch its breath or it will complain about a JavaScript error
+    Sleep   5       The browser needs to catch its breath or it will complain about a JavaScript error. longer wait helps?
     Reload Page
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*     5 seconds
     ${mube_id}=    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get Text    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*
@@ -734,8 +739,9 @@ Go to Account
     Log     Going to '${target_account}'
     Wait Until Keyword Succeeds     45s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}     ${type}
-    Sleep   2       The page might load too quickly and it can appear as the search tab would be closed even though it isn't
-    Wait Until Keyword Succeeds    20s      1s      Close Search Tab
+    Sleep   3      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
+    Wait Until Keyword Succeeds   20s   1s   Close First Tab
+    #Run Keyword And Ignore Error   Wait Until Keyword Succeeds   20s   1s   Close Tab That Contains Text  Search: Gavetec Oy
     # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
 
 Go To Event
@@ -1164,7 +1170,7 @@ Show More
     Wait Until Keyword Succeeds     10s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${xpath}
 
 Submit Quote For Approval
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@class='pbHeader']//input[@value='Submit for Approval']   30s
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@class='pbHeader']//input[@value='Submit for Approval']   30s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='pbHeader']//input[@value='Submit for Approval']
     Sleep   3
     Dismiss Alert
@@ -1247,7 +1253,6 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Description')]     ${rand_string}
     Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Goals')]     Sales plan customer business goals
     Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Challenges')]     Sales plan customer business challenges
-    #Pause Execution
     Run Inside Iframe   ${frame}    Run Keyword With Delay      0.5s    Click Element   //button[text()='Save' and not(contains(@id,'saveList'))]
     # TODO: 23.11.2017 Error during Javascript remoting. Something needs to be done about it
     ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
