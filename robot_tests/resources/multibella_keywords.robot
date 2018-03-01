@@ -22,11 +22,11 @@ ${KEYWORD_RETRY}                1 sec
 ${KEYWORD_WAIT}                 1 min
 ${LOADING_ANIMATION}            //div[contains(@class, 'loading-animation')]
 ${MUBE_CUSTOMER_USERNAME}       tas-cm1-1
-${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324x2y
+${MUBE_CUSTOMER_PASSWORD}       5AW8w5Y5nYY11232324x2yx
 ${MUBE_ADMIN_USERNAME}          tas-cim-adm2
-${MUBE_ADMIN_PASSWORD}          9XwHVkDt3FgT5511232449R
+${MUBE_ADMIN_PASSWORD}          9XwHVkDt3FgT5511232449Rx
 ${MUBE_CIM_USER}                tas-cim2
-${MUBE_CIM_PASSWORD}            9XwHVkDt3dXy251123251733p
+${MUBE_CIM_PASSWORD}            9XwHVkDt3dXy251123251733px
 ${POSTAL_CODE_FIELD}            //td[contains(text(), "Postal Code")]/following-sibling::td/div/input
 ${DIV_CONTAINING_ALL_CASES_TEXT}    xpath=//div[@class='block-title']/a[contains(text(), 'All cases')]
 ${CASE_LINK}                    //td/a/span
@@ -601,7 +601,7 @@ MUBE Verify That Case Attributes Are Populated Correctly
     MUBE Check History Old And New Value For Attribute    Title    ${EMPTY}    ${PRODUCT}
     MUBE Check History Old And New Value For Attribute    Product 1    ${EMPTY}    ${PRODUCT_TYPE}
     MUBE Check History Old And New Value For Attribute    Contact Person    ${EMPTY}    ${DEFAULT_TEST_CONTACT}
-    # MUBE Check History Old And New Value For Attribute    Contact Person Phone    ${EMPTY}    +358888888
+    MUBE Check History Old And New Value For Attribute    Contact Person Phone    ${EMPTY}    +3588881234
     MUBE Check History Old And New Value For Attribute    External system    ${EMPTY}    B2BSELFCARE
     MUBE Check History Old And New Value For Attribute    Group    ${EMPTY}    Key Service Desk [TSF]
     MUBE Check History Description Value Should Not Be Empty
