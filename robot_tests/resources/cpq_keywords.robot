@@ -237,11 +237,14 @@ Select Sales Type For Order (CPQ)
     #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
     ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@ng-model,'p.SalesType')]      10s
     # All products do not need a sales type
+    Pause Execution
     Return From Keyword If    not ${status}
     ...     AND         Return From
     #...     return document.evaluate("count(//tr//select[contains(@class,'slds-select slds-required')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
     ${length}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Execute Javascript
     ...     return document.evaluate("count(//tr//select[contains(@ng-model,'p.SalesType')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
+    Run Keyword If  '${length}'=='1'  Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //select[contains(@ng-model,'p.SalesType')]     New Money-New Services
+    Run Keyword If  '${length}'=='1'   Return From Keyword
     :FOR   ${i}     IN RANGE    ${length}
     \   Wait Until Keyword Succeeds     10s     1s
     ...     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //tr[${i+2}]/td[8]//select[contains(@ng-model,'p.SalesType')]      New Money-New Services
