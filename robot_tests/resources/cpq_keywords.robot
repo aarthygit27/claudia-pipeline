@@ -170,8 +170,8 @@ Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input      1
     ${email}=       Create Unique Email
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Input Text   //label[text()[contains(.,'Lisäsähköpostiosoite')]]/following-sibling::div//input      ${email}
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
+    #...         20s   1s    Input Text   //label[text()[contains(.,'Lisäsähköpostiosoite')]]/following-sibling::div//input      ${email}
 
 Handle Credit Score (CPQ)
     [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
