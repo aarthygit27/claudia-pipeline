@@ -737,7 +737,7 @@ Go to Account
     [Documentation]    This keyword works also with contact person and other parameters which can be searched at main search
     [Arguments]    ${target_account}    ${type}=${EMPTY}
     Log     Going to '${target_account}'
-    Wait Until Keyword Succeeds     45s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
+    Wait Until Keyword Succeeds     90s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}     ${type}
     Sleep   3      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds   20s   1s   Close First Tab
