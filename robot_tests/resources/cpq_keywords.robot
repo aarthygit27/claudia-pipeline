@@ -235,7 +235,9 @@ Search For Product (CPQ)
 
 Select Sales Type For Order (CPQ)
     #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
-    ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@ng-model,'p.SalesType')]      10s
+    #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@ng-model,'p.SalesType')]      10s
+    ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    //select[contains(@ng-model,'p.SalesType')]      60s
+    ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //select[contains(@ng-model,'p.SalesType')]      60s
     # All products do not need a sales type
     Return From Keyword If    not ${status}
     ...     AND         Return From
