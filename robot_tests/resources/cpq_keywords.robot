@@ -180,7 +180,7 @@ Handle Credit Score (CPQ)
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
     #${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
     ${credit_score_passed}=   Run Keyword And Return Status  Page Should Contain  Credit Score Check Passed
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     60s     3s    Click Element   xpath: /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     60s     3s    Click Element   ${CREDIT_SCORE_NEXT_BUTTON}
     #Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
     Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
