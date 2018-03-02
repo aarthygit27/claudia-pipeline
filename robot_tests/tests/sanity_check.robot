@@ -26,7 +26,7 @@ Sanity Check - Maksupääte
     Telia Maksupääte    Maksupäätepalvelu
 
 Sanity Check - Verkkotunnuspalvelu
-    [Tags]      BQA-59
+    [Tags]      sanity_check
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Verkkotunnuspalvelu    Verkkotunnuspalvelu
 
