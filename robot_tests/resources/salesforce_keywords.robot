@@ -589,7 +589,7 @@ Extract MuBe CaseID From Opportunity
     ${mube_id}=    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get Text    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*
     Should Not Be Empty    ${mube_id}
     ${length}=     Get Length    ${mube_id}
-    Should Not Be True    '${length}' == '1'  # length is 1 if ID field is empty
+    Should Not Be True    '${length}' == '1'   Mube CaseID is empty  # length is 1 if ID field is empty
     Set Test Variable    ${MUBE_CASE_ID}    ${mube_id}
 
 Fill Account Name
