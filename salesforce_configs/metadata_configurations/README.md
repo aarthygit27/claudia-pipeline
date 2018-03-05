@@ -1,0 +1,20 @@
+# Replace Endpoints
+
+1. create a build file
+`python create_build_properties.py <environment>`
+2. Run the `retrieveEndpoints` target to get the current endpoints from Salesforce to local machine
+`ant -verbose retrieveEndpoints`
+3. Replace endpoints of the local metadata files
+`python replace_endpoints.py`
+4. Replace buttons of the local metadata files
+`python replace_button_urls.py`
+5. Deploy the changed endpoints to Salesforce
+`ant deployEndpoints`
+
+# Change auth. providers
+
+1. Run `python change_auth_providers.py <environment>`
+
+Script changes authorization url, token url, and consumer key. However, consumer key needs to be changed still manually (situation 5.3.2018).
+
+2. Change consumer key + consumer secret (https://deveo.verso.sonera.fi/TS/projects/b2x-digisales/wiki/Integrations)
