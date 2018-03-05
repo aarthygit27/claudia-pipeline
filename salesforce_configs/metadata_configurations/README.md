@@ -18,3 +18,10 @@
 Script changes authorization url, token url, and consumer key. However, consumer key needs to be changed still manually (situation 5.3.2018).
 
 2. Change consumer key + consumer secret (https://deveo.verso.sonera.fi/TS/projects/b2x-digisales/wiki/Integrations)
+
+# Named credentials
+
+Named credentials **cannot** be changed with REST API, so Robot Framework implementation required.
+
+1. Run `robot named_credentials.robot`
+2. Check the final screenshot to see if the named credentials are set correctly.
