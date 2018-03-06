@@ -117,7 +117,7 @@ Close Missing Information Popup (CPQ)
     Run Keyword If      not ${hidden}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
-    ...         //div[@class='slds-modal__container']   10s
+    ...         //div[@class='slds-modal__container']   15s
 
 Fill Additional Attributes For Telia Yritysinternet (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Palvelutaso')]]]//select   A8h
