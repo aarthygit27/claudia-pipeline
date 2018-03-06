@@ -392,7 +392,7 @@ MUBE Logout CRM
 MUBE Open All Cases Page
     [Documentation]    Open Cases > All Cases
     Go To    ${ALL_CASES_PAGE}
-    Wait Until Page Contains Element    ${DIV_CONTAINING_ALL_CASES_TEXT}
+    Wait Until Page Contains Element    ${DIV_CONTAINING_ALL_CASES_TEXT}   20s
 
 MUBE Open Browser And Go To CRM Login Page
     [Documentation]    Open browser and goes to ${MUBE_SERVER}
