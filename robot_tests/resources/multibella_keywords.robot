@@ -365,7 +365,7 @@ MUBE Handle Login
     Input Password    ${MUBE_PASSWORD_FIELD}    ${used_password}
     Submit Form    _58_fm
     MUBE Wait For Load
-    Wait Until Page Does Not Contain Element    ${MUBE_LOGIN_FIELD}     10s
+    Wait Until Page Does Not Contain Element    ${MUBE_LOGIN_FIELD}     20s
     Element Should Not Be Visible    ${MUBE_PASSWORD_FIELD}
 
 MUBE In Context Of Customer Choose From Menu "Contact Person"
