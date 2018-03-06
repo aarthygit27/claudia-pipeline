@@ -583,7 +583,7 @@ Expand Top Bar If Necessary
     Wait Until Page Contains Element    ${TOP_BAR}
 
 Extract MuBe CaseID From Opportunity
-    Sleep   5       The browser needs to catch its breath or it will complain about a JavaScript error. longer wait helps?
+    Sleep   10s       The browser needs to catch its breath or it will complain about a JavaScript error. longer wait helps?
     Reload Page
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*     5 seconds
     ${mube_id}=    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get Text    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*
@@ -609,7 +609,7 @@ Fill Address Validation Information And Click Next
     # Run Inside Iframe   ${frame}    Input Text   City           ${city}
     Run Inside Iframe   ${frame}    Input Text   AddressA         ${address}
     # Run Inside Iframe   ${frame}    Input Text   Building       ${street_number}
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   //input[@id='AddressA']/following-sibling::ul[contains(@style,'display: block')]   10s
+    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   //input[@id='AddressA']/following-sibling::ul[contains(@style,'display: block')]   20s
     Run Inside Iframe   ${frame}    Click Element   //input[@id='AddressA']/following-sibling::ul//a[@role='menuitem' and text()='${address} ${street_number}']
     Run Inside Iframe   ${frame}    Click Element   Address Details_nextBtn
 
@@ -739,9 +739,9 @@ Go to Account
     Log     Going to '${target_account}'
     Wait Until Keyword Succeeds     90s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}     ${type}
-    Sleep   3      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
-    Wait Until Keyword Succeeds   20s   1s   Close First Tab
-    #Run Keyword And Ignore Error   Wait Until Keyword Succeeds   20s   1s   Close Tab That Contains Text  Search: Gavetec Oy
+    Sleep   10s      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
+    Wait Until Keyword Succeeds   20s   1s   Close Search Tab
+    #Run Keyword And Ignore Error   Wait Until Keyword Succeeds   20s   1s   Close Tab That Contains Text  Search:
     # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
 
 Go To Event
