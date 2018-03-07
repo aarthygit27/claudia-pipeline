@@ -819,7 +819,7 @@ Login to Salesforce
     Input Text          id=username         ${username}
     Input Password      id=password         ${password}
     Click Element       id=Login
-    Wait Until Page Contains Element   xpath=${LOGOUT_BUTTON}    15 seconds
+    Wait Until Page Contains Element   xpath=${LOGOUT_BUTTON}    30 seconds
 
 Login to Salesforce And Go To Sales Application
     Login to Salesforce
@@ -1083,6 +1083,7 @@ Search Result Should Contain Field
 Select Account
     [Arguments]         ${account_name}     ${type}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    //div[contains(@id,'${type}')]//a[text()='${account_name}']
+    Sleep   10
     Account Should Be Open    ${account_name}
 
 Select Account Type
