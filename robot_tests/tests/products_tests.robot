@@ -8,7 +8,7 @@ Suite Teardown      Close All Browsers
 Test Setup          Run Keywords    Open Browser And Go To Login Page    AND    Go to Salesforce And Login
 Test Teardown       Close Browser
 Test Template       Create Product Order And Verify It Was Created
-Test Timeout        12 minutes
+Test Timeout        20 minutes
 
 Force Tags          products
 
