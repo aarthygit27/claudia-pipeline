@@ -736,6 +736,7 @@ Get Account Tab Iframe Xpath
 Go to Account
     [Documentation]    This keyword works also with contact person and other parameters which can be searched at main search
     [Arguments]    ${target_account}    ${type}=${EMPTY}
+    Close All Tabs
     Log     Going to '${target_account}'
     Wait Until Keyword Succeeds     90s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}     ${type}
