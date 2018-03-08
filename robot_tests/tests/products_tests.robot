@@ -226,7 +226,7 @@ Create CPQ
     Click Create Order After Credit Score Check (CPQ)    # Quote Approved for Submittal
     Add Contact Person To Product Order    ${DEFAULT_TEST_CONTACT}
     Submit Order To Delivery (CPQ)
-    Wait Until Keyword Succeeds    2min    5 s    Extract MuBe CaseID From Opportunity
+    Wait Until Keyword Succeeds    5min    5 s    Extract MuBe CaseID From Opportunity
     Close Browser
 
 Check If Quote Needs To Be Approved And Approve If Necessary
