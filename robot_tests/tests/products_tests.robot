@@ -8,7 +8,7 @@ Suite Teardown      Close All Browsers
 Test Setup          Run Keywords    Open Browser And Go To Login Page    AND    Go to Salesforce And Login
 Test Teardown       Close Browser
 Test Template       Create Product Order And Verify It Was Created
-Test Timeout        12 minutes
+Test Timeout        20 minutes
 
 Force Tags          products
 
@@ -226,7 +226,7 @@ Create CPQ
     Click Create Order After Credit Score Check (CPQ)    # Quote Approved for Submittal
     Add Contact Person To Product Order    ${DEFAULT_TEST_CONTACT}
     Submit Order To Delivery (CPQ)
-    Wait Until Keyword Succeeds    2min    5 s    Extract MuBe CaseID From Opportunity
+    Wait Until Keyword Succeeds    5min    5 s    Extract MuBe CaseID From Opportunity
     Close Browser
 
 Check If Quote Needs To Be Approved And Approve If Necessary

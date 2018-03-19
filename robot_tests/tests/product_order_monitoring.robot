@@ -76,7 +76,7 @@ Create CPQ Single
     Run Keyword If      ${extra_fields}     Fill Additional Attributes
     Click Next (CPQ)
     Select Sales Type For Order (CPQ)
-    Click Next (CPQ)
+    Click Next (CPQ) Button
     Handle Credit Score (CPQ)
     Click CPQ At Quote View
     Click Create Order (CPQ)
@@ -88,7 +88,7 @@ Create CPQ Multiple
     Add 50 Products To Order
     Click Next (CPQ)
     Select Sales Type For Order (CPQ)
-    Click Next (CPQ)
+    Click Next (CPQ) Button
     Handle Credit Score (CPQ)
     Click CPQ At Quote View
     Click Create Order (CPQ)

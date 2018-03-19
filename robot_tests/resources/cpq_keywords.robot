@@ -45,6 +45,7 @@ Click CPQ At Opportunity View
 
 Click CPQ At Quote View
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${QUOTE_CPQ_BUTTON}    30 seconds
+    Sleep  3   Too fast clicking cpq button trigger java script error
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${QUOTE_CPQ_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SHOPPING_CART}    30s
 
@@ -114,6 +115,7 @@ Close Missing Information Popup (CPQ)
     # For some strange reason clicking the "close" can result in another load and the close button needs to be pressed a second time
     ${hidden}=     Run Keyword and Return Status       Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
     ...         ${CLOSE_BUTTON}      5s
+    Sleep  5
     Run Keyword If      not ${hidden}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
