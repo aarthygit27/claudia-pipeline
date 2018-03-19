@@ -38,5 +38,9 @@ def main(env):
     rw.set_authorization_url(providers["CreditScoring"], u)
     rw.set_static_auth_provider_attributes(providers["CreditScoring"], url)
 
+    u = "https://api-garden{0}.teliacompany.com/v1/finland/ecmdocument/document".format(url)
+    rw.set_authorization_url(providers["ECMIntegration"], u)
+    rw.set_static_auth_provider_attributes(providers["ECMIntegration"], url)
+
 if __name__ == '__main__':
     main(sys.argv[1].lower())
