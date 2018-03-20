@@ -8,6 +8,8 @@
       </copy>
       <delete dir="salesforce_configs" />
       <delete dir="config" />
+      <delete dir="claudia_single_file_deployement" />
+      <delete dir="robot_tests" />
       <delete file=".gitignore"/>
       <delete file="build.xml"/>
       <delete file="jira_to_influx.py"/>
