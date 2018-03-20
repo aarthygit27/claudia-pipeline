@@ -1,5 +1,5 @@
 *** Settings ***
-Resource                salesforce_keywords.robot
+Resource                ${EXECDIR}${/}..${/}..${/}robot_tests${/}resources${/}salesforce_keywords.robot
 
 Suite Setup             Open Browser And Go To Login Page
 Suite Teardown          Close Browser
