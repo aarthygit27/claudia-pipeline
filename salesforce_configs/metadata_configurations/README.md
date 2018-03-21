@@ -21,7 +21,8 @@ Script changes authorization url, token url, and consumer key. However, consumer
 
 # Named credentials
 
-Named credentials **cannot** be changed with REST API, so Robot Framework implementation required.
+Named credentials **cannot** be changed with REST API, so Robot Framework implementation required. `config_parser` and `robot_tests` must be appended to
+pythonpath before running.
 
-1. Run `robot named_credentials.robot`
+1. Run `robot -P ../../robot_tests -P ../../config named_credentials.robot`
 2. Check the final screenshot to see if the named credentials are set correctly.
