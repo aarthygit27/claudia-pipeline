@@ -18,7 +18,7 @@ filedata = f.read()
 f.close()
 
 newdata = filedata.replace(textToSearch, textToReplace)
-newdata = filedata.replace(textToSearch2, textToReplace)
+newdata = newdata.replace(textToSearch2, textToReplace)
 
 f = open(fileToUpdate,'w')
 f.write(newdata)
@@ -39,7 +39,7 @@ filedata = f.read()
 f.close()
 
 newdata = filedata.replace(textToSearch, textToReplace)
-newdata = filedata.replace(textToSearch2, textToReplace)
+newdata = newdata.replace(textToSearch2, textToReplace)
 
 f = open(fileToUpdate,'w')
 f.write(newdata)
