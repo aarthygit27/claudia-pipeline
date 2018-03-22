@@ -1,8 +1,7 @@
-*** Settings ***
-Resource                ${EXECDIR}${/}..${/}..${/}robot_tests${/}resources${/}salesforce_keywords.robot
-
-Suite Setup             Open Browser And Go To Login Page
-Suite Teardown          Close Browser
+*** Settings***
+Documentation           Sets the named credentials of the given environment. By default they are set for PREPROD.
+...                     ${AddressValidation}, ${AvailabilityCheck}, and ${CaseManagement} if wanted to run for
+...                     a different environment.
 
 *** Variables ***
 ${PROJECTROOT}          ${EXECDIR}${/}..${/}..${/}robot_tests
@@ -19,6 +18,8 @@ ${CM_PASS}              passu99
 
 *** Test Cases ***
 Change Named Credentials
+    [Setup]     Run Keywords    Import Resource     ${PROJECTROOT}${/}resources${/}salesforce_keywords.robot    AND
+    ...                         Open Browser And Go To Login Page
     Login to Salesforce As System Administrator     ${ENVIRONMENT}
     Run Keyword And Ignore Error        Dismiss Mobile Phone Registration
     Go To Application       Sales
@@ -32,6 +33,7 @@ Change Named Credentials
     Set CaseManagement
     Sleep   1
     Capture Page Screenshot     # In order to check the named credentials are actually set
+    [Teardown]  Close Browser
 
 
 *** Keywords ***
