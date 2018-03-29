@@ -11,8 +11,10 @@ ${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Ca
 ${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed')
 #${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
 ${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted')
-${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
-${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
+#${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
+${ATTRIBUTE_EDIT_WINDOW}    //div[@id='js-cpq-lineitem-details-modal-content']
+#${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
+${REQUIRED_ATTRIBUTE}       //div[@class='cpq-item-base-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
 #${CREDIT_SCORE_NEXT_BUTTON}  /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
 ${CREDIT_SCORE_NEXT_BUTTON}  //child[18]//button
 
@@ -130,7 +132,8 @@ Fill Additional Attributes For Telia Yritysinternet (CPQ)
     Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
 
 Fill Missing Required Information
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //button[@title='Details']
     Wait Until Keyword Succeeds     30s     1s      Run Keyword     Fill Required Information For ${PRODUCT}
     Wait Until Keyword Succeeds     30s     1s      Wait Until Filled Information Is Recognized (CPQ)
     Close Missing Information Popup (CPQ)
@@ -223,11 +226,12 @@ Select Exact Product
     ...     return document.evaluate("count(//div[@layout-name='cpq-product-list']//p)", document, null, XPathResult.ANY_TYPE, null).numberValue;
     :FOR   ${i}     IN RANGE    ${length}
     \    ${exact_product}=    Run Keyword And Return Status    Run Inside Iframe    ${OPPORTUNITY_FRAME}
-    ...    Element Text Should Be    //div[@layout-name='cpq-product-list']/ng-include/div/div[@index='${i}']//p[normalize-space()='${target_product}']     ${target_product}
+    ...    Element Text Should Be    //div[@layout-name='cpq-product-list']//div[@index='${i}']//p[normalize-space()='${target_product}']     ${target_product}
     \    Exit For Loop If    ${exact_product}
     Run Keyword If    ${exact_product}    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s    Click Element
-    ...    //div[@layout-name='cpq-product-list']/ng-include/div/div[@index='${i}']//p[normalize-space()='${target_product}']/../../following-sibling::div//button[contains(text(),'Add to Cart')]
+    ...    //div[@layout-name='cpq-product-list']//div[@index='${i}']//p[normalize-space()='${target_product}']/../../following-sibling::div//button[contains(text(),'Add to Cart')]
     ...     ELSE    Fail    ${target_product} not found from search results
+    #...    //div[@layout-name='cpq-product-list']/ng-include/div/div[@index='${i}']//p[normalize-space()='${target_product}']/../../following-sibling::div//button[contains(text(),'Add to Cart')]
 
 Search For Product (CPQ)
     [Arguments]     ${target_product}
@@ -260,7 +264,7 @@ Set Prices For Unmodelled Product (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='${product}']/following-sibling::td[2]/input     50      # recurring total
 
 Submit Order To Delivery (CPQ)
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}    30s
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${SUBMIT_ORDER_TO_DELIVERY}
     Wait Until Keyword Succeeds    20 s    1 s    Confirm Action
 
