@@ -1427,6 +1427,7 @@ Verify That Opportunity Is Not Found From Open Opportunities
     Open Opportunities
     Run Inside Iframe   ${IFRAME}   Wait For Load
     Select Correct View Type     My All Open Opportunities
+    Run Inside Iframe   ${IFRAME}  Run Keyword And Ignore Error  Click Element  ${LIST_VIEW}
     Filter Opportunities By    Close Date
     Run Inside Iframe   ${IFRAME}   Page Should Not Contain Element    //td/div/a/span[text()='${OPPORTUNITY_NAME}']
 
