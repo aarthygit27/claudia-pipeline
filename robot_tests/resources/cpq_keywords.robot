@@ -5,18 +5,19 @@ Resource                ${PROJECTROOT}${/}resources${/}common.robot
 Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robot
 
 *** Variables ***
-${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
-${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
+${CLOSE_BUTTON}              //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
+${SHOPPING_CART}             //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
 #${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
-${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed')
+${CREDIT_SCORE_SUCCESS}      (normalize-space()='Credit Score Check Passed')
 #${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
-${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted')
+${CREDIT_SCORE_FAILURE}      (contains(normalize-space(),'Credit Score Not Accepted')
 #${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
-${ATTRIBUTE_EDIT_WINDOW}    //div[@id='js-cpq-lineitem-details-modal-content']
+${ATTRIBUTE_EDIT_WINDOW}     //div[@id='js-cpq-lineitem-details-modal-content']
 #${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
-${REQUIRED_ATTRIBUTE}       //div[@class='cpq-item-base-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
-#${CREDIT_SCORE_NEXT_BUTTON}  /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
+${REQUIRED_ATTRIBUTE}        //div[@class='cpq-item-base-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
+#${CREDIT_SCORE_NEXT_BUTTON} /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
 ${CREDIT_SCORE_NEXT_BUTTON}  //child[18]//button
+${CREATE_ORDER_BUTTON}       //ng-include/div/div/ng-include/div/div[4]/button
 
 *** Keywords ***
 
@@ -65,9 +66,19 @@ Click Create Order (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${CPQ_CREATE_ORDER}     1 min
 
 Click Create Order After Credit Score Check (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    id=Create Order    30 seconds
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       id=Create Order
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      30s
+    Reload Page
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_BUTTON}    30 seconds
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}     Click Element  ${CPQ_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CREATE_ORDER_BUTTON}    60 seconds
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element      ${CREATE_ORDER_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_BUTTON}       90s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${VIEW_BUTTON}
+    Sleep   5
+    #For some reason need to click view button twice...ignoring errors if not needed.
+    Run Keyword And Ignore Error   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_BUTTON}       90s
+    Run Keyword And Ignore Error  Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${VIEW_BUTTON}
+
+
 
 Click Create Quote (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_QUOTE}    30 seconds
@@ -121,7 +132,7 @@ Close Missing Information Popup (CPQ)
     Run Keyword If      not ${hidden}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
-    ...         //div[@class='slds-modal__container']   15s
+    ...         //div[@class='slds-modal__container']   60s
 
 Fill Additional Attributes For Telia Yritysinternet (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Palvelutaso')]]]//select   A8h
@@ -174,6 +185,7 @@ Fill Required Information For Telia Yritysinternet Plus
 Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input      1
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Key  //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input   \\09
     ${email}=       Create Unique Email
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     #...         20s   1s    Input Text   //label[text()[contains(.,'Lisäsähköpostiosoite')]]/following-sibling::div//input      ${email}
@@ -240,8 +252,6 @@ Search For Product (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Enter On                          ${CPQ_SEARCH_FIELD}
 
 Select Sales Type For Order (CPQ)
-    #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
-    #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@ng-model,'p.SalesType')]      10s
     ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    //select[contains(@ng-model,'p.SalesType')]      60s
     ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //select[contains(@ng-model,'p.SalesType')]      60s
     # All products do not need a sales type
