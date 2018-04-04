@@ -46,7 +46,6 @@ def send_password_clarification_email(recipients, env, wiki_list):
     "If you had a user in production, your password in the sandbox is the same as in production. If you didn't have a user in production, you need to " +\
     "create a password with the password reset link as described in (2).\n\n" +\
     "In case you are still facing issues accessing the environments, please contact Vesa Mattila (vesa.mattila@teliacompany.com) and Aleksi Simell (aleksi.simell@teliacompany.com).\n\n" +\
-    "NOTE! You can go test that your credentials work, but actual TESTING BEGINS AT THE BEGINNING OF APRIL.\n\n" +\
     "Best regards,\n" +\
     "System Team"
 
