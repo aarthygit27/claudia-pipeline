@@ -160,8 +160,12 @@ Fill Required Information For Telia Cid
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Tab On    ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input
 
 Fill Required Information For Telia Sopiva Pro L
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         10s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
+    Run Inside Iframe  ${OPPORTUNITY_FRAME}  Wait Until Element Is Enabled  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']
+    #There's overlapping elements(not always...), workaround: send space key press to element
+    Run Inside Iframe  ${OPPORTUNITY_FRAME}   Press Key  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']  \\32
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
+    #...         60s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
+    #...         10s   1s    Click Element   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']
 
 Fill Required Information For Telia Yritysinternet
     ${xpath}=   Set Variable   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}
@@ -185,6 +189,7 @@ Fill Required Information For Telia Yritysinternet Plus
 Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input      1
+    #press tab
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Key  //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input   \\09
     ${email}=       Create Unique Email
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
