@@ -740,7 +740,7 @@ Go to Account
     [Arguments]    ${target_account}    ${type}=${EMPTY}
     Close All Tabs
     Log     Going to '${target_account}'
-    Wait Until Keyword Succeeds     90s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
+    Wait Until Keyword Succeeds     240s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}     ${type}
     Sleep   10s      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds   20s   1s   Close Search Tab
