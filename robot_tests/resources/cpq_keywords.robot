@@ -60,13 +60,16 @@ Click Create Assets (CPQ)
     ...    Page Should Not Contain Element    ${CPQ_CREATE_ASSETS}
 
 Click Create Order (CPQ)
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ORDER}    30 seconds
+    Capture Page Screenshot   shot6.png
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ORDER}    60 seconds
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    ${CPQ_CREATE_ORDER}    10 seconds
+    Capture Page Screenshot   shot7.png
     Wait Until Keyword Succeeds    20 s    3 s
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_ORDER}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${CPQ_CREATE_ORDER}     1 min
 
 Click Create Order After Credit Score Check (CPQ)
-    Press ESC On   *
+    Press ESC On   //*
     Sleep   10s
     Capture Page Screenshot   shot1.png
     Reload Page
