@@ -72,6 +72,7 @@ Click Create Order After Credit Score Check (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CREATE_ORDER_BUTTON}    60 seconds
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element      ${CREATE_ORDER_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_BUTTON}       90s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    ${VIEW_BUTTON}    20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${VIEW_BUTTON}
     Sleep   5
     #For some reason need to click view button twice...ignoring errors if not needed.

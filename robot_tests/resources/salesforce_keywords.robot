@@ -26,6 +26,7 @@ Add Contact Person To Product Order
     [Arguments]    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}    60s
     Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Wait Until Element Is Enabled  //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
     Run Inside Iframe   ${ACCOUNT_FRAME}  Wait Until Page Contains Element  //input[@title='Save']   60s
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
@@ -739,7 +740,7 @@ Go to Account
     [Arguments]    ${target_account}    ${type}=${EMPTY}
     Close All Tabs
     Log     Going to '${target_account}'
-    Wait Until Keyword Succeeds     90s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
+    Wait Until Keyword Succeeds     240s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}     ${type}
     Sleep   10s      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds   20s   1s   Close Search Tab
