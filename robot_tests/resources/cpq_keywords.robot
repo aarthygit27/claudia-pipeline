@@ -66,6 +66,8 @@ Click Create Order (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${CPQ_CREATE_ORDER}     1 min
 
 Click Create Order After Credit Score Check (CPQ)
+    Press ESC On   *
+    Sleep   10s
     Capture Page Screenshot   shot1.png
     Reload Page
     Capture Page Screenshot   shot2.png
