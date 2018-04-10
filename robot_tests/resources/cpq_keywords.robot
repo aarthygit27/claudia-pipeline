@@ -81,8 +81,11 @@ Click Create Order After Credit Score Check (CPQ)
     Capture Page Screenshot   shot4.png
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CREATE_ORDER_BUTTON}    60 seconds
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Focus  ${CREATE_ORDER_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled   ${CREATE_ORDER_BUTTON}    60 seconds
     Capture Page Screenshot   shot5.png
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element      ${CREATE_ORDER_BUTTON}
+    Sleep  10
+    Capture Page Screenshot   shot7.png
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_BUTTON}       90s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    ${VIEW_BUTTON}    20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${VIEW_BUTTON}
