@@ -954,6 +954,7 @@ Open just created opportunity and update Win probability, add Competitor and Par
     Save Opportunity
 
 Open Open Opportunities Tab At Account View
+
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
 
 Open Opportunities
