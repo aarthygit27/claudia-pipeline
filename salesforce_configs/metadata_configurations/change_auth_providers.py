@@ -43,5 +43,18 @@ def main(env):
     rw.set_authorization_url(providers["ECMIntegration"], u)
     rw.set_static_auth_provider_attributes(providers["ECMIntegration"], url)
 
+    u = url_base + "/billingaccountmanagement/billingaccount"
+    rw.set_authorization_url(providers["BillingAccount"], u)
+    rw.set_static_auth_provider_attributes(providers["BillingAccount"], url)
+
+    u = url_base + "/billingAccountService"
+    rw.set_authorization_url(providers["BillingAccountService"], u)
+    rw.set_static_auth_provider_attributes(providers["BillingAccountService"], url)
+
+    u = url_base + "/customeraccountmanagement/customer"
+    rw.set_authorization_url(providers["Customer"], u)
+    rw.set_static_auth_provider_attributes(providers["Customer"], url)
+
+
 if __name__ == '__main__':
     main(sys.argv[1].lower())
