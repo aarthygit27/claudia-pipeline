@@ -61,7 +61,9 @@ ${LIST_VIEW}                                //a[@title='View List']
 ${BOTTOM_SAVE_BUTTON}                       //td[@id='bottomButtonRow']/input[@title='Save']
 ${ACCOUNT_NAME_LOOKUP}                      //img[contains(@title,'Account Name')]
 ${EDIT_BUTTON}                              //*[@title='Edit']
-${VIEW_BUTTON}                              //*[@title='View']
+#${VIEW_BUTTON}                              //*[@title='View']
+#todo: this is a bug in naming, to be fixed.
+${VIEW_BUTTON}                              //*[@title='CPQViewRecord']
 ${SEARCH_TAB}                               //li[contains(@class,'x-tab-strip-closable setupTab')]
 ${CPQ_BUTTON}                               //input[@title='CPQ']
 
