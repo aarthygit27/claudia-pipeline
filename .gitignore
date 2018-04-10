@@ -18,3 +18,5 @@ debug.log
 salesforce_configs/metadata_configurations/endpoints/*
 salesforce_configs/metadata_configurations/retrieveEndpointOutput/*
 salesforce_configs/metadata_configurations/build.properties
+salesforce_configs/product_migration/*.csv
+salesforce_configs/product_migration/Parsed_files/*.csv
