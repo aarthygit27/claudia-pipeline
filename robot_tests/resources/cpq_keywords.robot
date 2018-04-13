@@ -175,7 +175,6 @@ Fill Required Information For Telia Cid
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Tab On    ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input
 
 Fill Required Information For Telia Sopiva Pro L
-   Pause Execution
     Run Inside Iframe  ${OPPORTUNITY_FRAME}  Wait Until Element Is Enabled  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']
     #There's overlapping elements(not always...), workaround: send space key press to element
     Run Inside Iframe  ${OPPORTUNITY_FRAME}   Press Key  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']  \\32
