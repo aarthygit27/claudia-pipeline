@@ -14,7 +14,7 @@ ${CREDIT_SCORE_FAILURE}      (contains(normalize-space(),'Credit Score Not Accep
 #${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
 ${ATTRIBUTE_EDIT_WINDOW}     //div[@id='js-cpq-lineitem-details-modal-content']
 #${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
-${REQUIRED_ATTRIBUTE}        //div[@class='cpq-item-bPausease-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
+${REQUIRED_ATTRIBUTE}        //div[@class='cpq-item-base-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
 #${CREDIT_SCORE_NEXT_BUTTON} /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
 ${CREDIT_SCORE_NEXT_BUTTON}  //button[contains(., 'Next')]
 ${CREATE_ORDER_BUTTON}       //ng-include/div/div/ng-include/div/div[4]/button
@@ -175,6 +175,7 @@ Fill Required Information For Telia Cid
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Tab On    ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input
 
 Fill Required Information For Telia Sopiva Pro L
+   Pause Execution
     Run Inside Iframe  ${OPPORTUNITY_FRAME}  Wait Until Element Is Enabled  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']
     #There's overlapping elements(not always...), workaround: send space key press to element
     Run Inside Iframe  ${OPPORTUNITY_FRAME}   Press Key  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']  \\32
@@ -198,8 +199,9 @@ Fill Required Information For Telia Yritysinternet Langaton
     ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
 
 Fill Required Information For Telia Yritysinternet Plus
+    Pause Execution
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//div[./label[text()[contains(.,'Liittymän nopeus')]]]//select    1
+    #...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//div[./label[text()[contains(.,'Liittymän nopeus')]]]//select    1
 
 
 
