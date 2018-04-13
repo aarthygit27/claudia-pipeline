@@ -14,9 +14,9 @@ ${CREDIT_SCORE_FAILURE}      (contains(normalize-space(),'Credit Score Not Accep
 #${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
 ${ATTRIBUTE_EDIT_WINDOW}     //div[@id='js-cpq-lineitem-details-modal-content']
 #${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
-${REQUIRED_ATTRIBUTE}        //div[@class='cpq-item-base-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
+${REQUIRED_ATTRIBUTE}        //div[@class='cpq-item-bPausease-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
 #${CREDIT_SCORE_NEXT_BUTTON} /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
-${CREDIT_SCORE_NEXT_BUTTON}  //child[18]//button
+${CREDIT_SCORE_NEXT_BUTTON}  //button[contains(., 'Next')]
 ${CREATE_ORDER_BUTTON}       //ng-include/div/div/ng-include/div/div[4]/button
 
 *** Keywords ***
@@ -60,10 +60,8 @@ Click Create Assets (CPQ)
     ...    Page Should Not Contain Element    ${CPQ_CREATE_ASSETS}
 
 Click Create Order (CPQ)
-    Capture Page Screenshot   shot6.png
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ORDER}    60 seconds
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    ${CPQ_CREATE_ORDER}    10 seconds
-    Capture Page Screenshot   shot7.png
     Wait Until Keyword Succeeds    20 s    3 s
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_ORDER}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${CPQ_CREATE_ORDER}     1 min
@@ -71,22 +69,16 @@ Click Create Order (CPQ)
 Click Create Order After Credit Score Check (CPQ)
     Press ESC On   //*
     Sleep   10s
-    Capture Page Screenshot   shot1.png
     Reload Page
-    Capture Page Screenshot   shot2.png
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_BUTTON}    30 seconds
-    Capture Page Screenshot   shot3.png
     Run Inside Iframe   ${OPPORTUNITY_FRAME}     Focus   ${CPQ_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}     Click Element  ${CPQ_BUTTON}
     Run Keyword And Ignore Error  Run Inside Iframe   ${OPPORTUNITY_FRAME}   Click Element  ${CPQ_BUTTON}
-    Capture Page Screenshot   shot4.png
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CREATE_ORDER_BUTTON}    60 seconds
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Focus  ${CREATE_ORDER_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled   ${CREATE_ORDER_BUTTON}    60 seconds
-    Capture Page Screenshot   shot5.png
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element      ${CREATE_ORDER_BUTTON}
     Sleep  10
-    Capture Page Screenshot   shot7.png
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_BUTTON}       90s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    ${VIEW_BUTTON}    20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${VIEW_BUTTON}
@@ -104,6 +96,7 @@ Click Create Quote (CPQ)
 
 Click Next (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    //*[text()='Next']      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   //*[text()='Next']
 
 Click Next (CPQ) Button
@@ -227,8 +220,12 @@ Handle Credit Score (CPQ)
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
     #${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
     ${credit_score_passed}=   Run Keyword And Return Status  Page Should Contain  Credit Score Check Passed
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     60s     3s    Click Element   ${CREDIT_SCORE_NEXT_BUTTON}
-    #Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
+    #Sleep   10s
+    #Page contains several next buttons, not all are visible. we want second Next button here.
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}   Wait Until Page Contains    Next
+    @{element_list}    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get WebElements   ${ CREDIT_SCORE_NEXT_BUTTON}
+    ${second_elem}  Get From List  ${element_list}  1
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}   Run Keyword And Ignore Error   Click Element  ${second_elem}
     Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
