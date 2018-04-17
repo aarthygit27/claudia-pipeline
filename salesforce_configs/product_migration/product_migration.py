@@ -2,47 +2,24 @@ import csv, os, json
 
 DEST_DIR = os.path.join("Parsed_files", "new_products")
 
-def fix_json(line):
-    fixed = []
-    n = 0
-    x = len(line)
-    while n < x:
-        l = line[n].decode("latin1")
-        if l.startswith("{\"") or l.startswith("[{"):
-            try:
-                json.loads(l)
-                fixed.append(line[n])
-                n += 1
-            except ValueError:
-                print "'" + line[n].decode("latin1") + "'", type(line[n])
-                line[n] += line.pop(n+1)
-                x = len(line)
-        else:
-            fixed.append(line[n])
-            n += 1
-    return fixed
-
 def write_data(filename, header, data):
     if not os.path.exists(DEST_DIR):
         os.makedirs(DEST_DIR)
-
     dest = os.path.join(DEST_DIR, filename)
-    with open(dest, "w") as f:
-        f.write(",".join(map(lambda x: "\""+x+"\"",header)) + "\n")
-        for row in data:
-            f.write(",".join(map(lambda x: "\""+x+"\"",row)) + "\n")
 
-def get_ids(filename, i=0, ignore_json=False):
+    with open(dest, "wb") as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for row in data:
+            writer.writerow(row)
+
+
+def get_ids(filename, i=0):
     data = []
-    lines = []
     with open(filename + ".csv" , "rb") as f:
         reader = csv.reader(f, delimiter=",", quotechar="\"")
         for row in reader:
-            lines.append(row)
-    for line in lines:
-        if not ignore_json:
-            line = fix_json(line)
-        data.append(line[i])
+            data.append(row[i])
     return list(set(data))
 
 def handle(filename, products, i, ignore_json=False):
@@ -54,8 +31,6 @@ def handle(filename, products, i, ignore_json=False):
             lines.append(row)
     header = lines.pop(0)   # Remove header from lines
     for line in lines:
-        if not ignore_json:
-            line = fix_json(line)
         if line[i] in products: # reference ID to product
             data.append(line)
 
@@ -101,7 +76,8 @@ def main():
     # print attribute_categories
     handle("vlocityattributecategory", attribute_categories, 0)
 
-    attribute_categories = get_ids(os.path.join(DEST_DIR, "attributeassignments2"), 19) # VLOCITY_CMT__ATTRIBUTEID__C
+    attributes = get_ids(os.path.join(DEST_DIR, "attributeassignments2"), 19) # VLOCITY_CMT__ATTRIBUTEID__C
+    print attributes
     # attributes = ['a0G5800000hmmNGEAY', 'a0G5800000hmmOnEAI', 'a0G3E0000031UIFUA2', 'a0G5800000hmmOpEAI', 'a0G5800000hmmR2EAI', 'a0G3E0000031UIAUA2', 'a0G5800000hmmPnEAI', 'a0G5800000hmmOEEAY', 'a0G5800000hmmR8EAI', 'a0G5800000hmmR3EAI', 'a0G5800000hmmP3EAI', 'a0G3E0000031UJ0UAM', 'a0G5800000hmmRHEAY', 'a0G5800000hmmQrEAI', 'a0G5800000hmmQuEAI', 'a0G3E0000031UIOUA2', 'a0G5800000hmmPtEAI', 'a0G3E0000031UI8UAM', 'a0G5800000hmmPjEAI', 'a0G5800000hmmPNEAY', 'a0G5800000hmmQdEAI', 'a0G5800000hmmOsEAI', 'a0G3E0000031UJ8UAM', 'a0G3E0000031UIkUAM', 'a0G3E0000031UIvUAM', 'a0G5800000hmmRAEAY', 'a0G5800000hmmNiEAI', 'a0G5800000hmmPlEAI', 'a0G5800000hmmPcEAI', 'a0G3E0000031UILUA2', 'a0G5800000hmmQbEAI', 'a0G5800000hmmOvEAI', 'a0G5800000hmmN3EAI', 'a0G5800000hmmOeEAI', 'a0G5800000hmmO8EAI', 'a0G5800000hmmRJEAY', 'a0G5800000hmmQNEAY', 'a0G3E0000031UI9UAM', 'a0G3E0000031UI2UAM', 'a0G3E0000031UJ2UAM', 'a0G5800000hmmQwEAI', 'a0G3E0000031UIxUAM', 'a0G3E0000031UJ3UAM', 'a0G3E0000031UIcUAM', 'a0G3E0000031UJ5UAM', 'a0G5800000hmmQMEAY', 'a0G3E0000031UJGUA2', 'a0G3E0000031UINUA2', 'a0G3E0000031UI1UAM', 'a0G5800000hmmRMEAY', 'a0G5800000hmmR1EAI', 'a0G5800000hmmQKEAY', 'a0G5800000hmmO5EAI', 'a0G5800000hmmP2EAI', 'a0G3E0000031UIJUA2', 'a0G5800000hmmQQEAY', 'a0G3E0000031UIHUA2', 'a0G3E0000031UIDUA2', 'a0G3E0000031UIBUA2', 'a0G3E0000031UIQUA2', 'a0G5800000hmmQoEAI', 'a0G5800000hmmODEAY', 'a0G5800000hmmQpEAI', 'a0G5800000hmmQzEAI', 'a0G5800000hmmNnEAI', 'a0G5800000hmmNHEAY', 'a0G5800000hmmPfEAI', 'a0G3E0000031UIyUAM', 'a0G3E0000031UJ4UAM', 'a0G5800000hmmQlEAI', 'a0G5800000hmmPBEAY', 'a0G3E0000031UIrUAM', 'a0G5800000hmmPWEAY', 'a0G5800000hmmPUEAY', 'a0G5800000hmmOmEAI', 'a0G3E0000031UIiUAM', 'a0G5800000hmmNsEAI', 'a0G5800000hmmPhEAI', 'a0G3E0000031UIqUAM', 'a0G3E0000031UIbUAM', 'a0G5800000hmmQtEAI', 'a0G5800000hmmQUEAY', 'a0G5800000hmmQvEAI', 'a0G5800000hmmObEAI', 'a0G5800000hmmRBEAY', 'a0G3E0000031UJHUA2', 'a0G5800000hmmN2EAI', 'a0G5800000hmmQhEAI', 'a0G5800000hmmNZEAY', 'a0G5800000hmmP5EAI', 'a0G3E0000031UJBUA2', 'a0G5800000hmmQnEAI', 'a0G5800000hmmOZEAY', 'a0G5800000hmmN8EAI', 'a0G5800000hmmQeEAI', 'a0G5800000hmmNuEAI', 'a0G3E0000031UITUA2', 'a0G5800000hmmPqEAI', 'a0G5800000hmmQTEAY', 'a0G5800000hmmPvEAI', 'a0G5800000hmmR0EAI', 'a0G5800000hmmPQEAY', 'a0G3E0000031UI6UAM', 'a0G5800000hmmQWEAY', 'a0G5800000hmmQYEAY', 'a0G3E0000031UJ9UAM', 'a0G5800000hmmQqEAI', 'a0G5800000hmmQBEAY', 'a0G5800000hmmRNEAY', 'a0G3E0000031UIKUA2', 'a0G5800000hmmNqEAI', 'a0G5800000hmmO4EAI', 'a0G5800000hmmR6EAI', 'a0G3E0000031UJDUA2', 'a0G5800000hmmNLEAY', 'a0G5800000hmmQCEAY', 'a0G3E0000031UIuUAM', 'a0G3E0000031UIEUA2', 'a0G3E0000031UIsUAM', 'a0G5800000hmmPoEAI', 'a0G3E0000031UI7UAM', 'a0G3E0000031UISUA2', 'a0G3E0000031UIYUA2', 'a0G5800000hmmRCEAY', 'a0G5800000hmmOqEAI', 'a0G3E0000031UJIUA2', 'a0G5800000hmmONEAY', 'a0G5800000hmmQREAY', 'a0G5800000hmmQ5EAI', 'a0G5800000hmmQ0EAI', 'a0G5800000hmmOCEAY', 'a0G5800000hmmQfEAI', 'a0G5800000hmmPHEAY', 'a0G5800000hmmQmEAI', 'a0G3E0000031UIaUAM', 'a0G5800000hmmRKEAY', 'a0G3E0000031UJCUA2', 'a0G3E0000031UJAUA2', 'a0G5800000hmmPkEAI', 'a0G3E0000031UJ6UAM', 'a0G3E0000031UIMUA2', 'a0G5800000hmmOKEAY', 'a0G3E0000031UICUA2', 'a0G3E0000031UIXUA2', 'a0G5800000hmmREEAY', 'a0G3E0000031UIwUAM', 'a0G5800000hmmQ2EAI', 'a0G5800000hmmPgEAI', 'a0G5800000hmmOoEAI', 'a0G5800000hmmOBEAY', 'a0G5800000hmmN4EAI', 'a0G5800000hmmPbEAI', 'a0G5800000hmmOHEAY', 'a0G5800000hmmPVEAY', 'a0G5800000hmmQxEAI', 'a0G3E0000031UIlUAM', 'a0G3E0000031UIpUAM', 'a0G5800000hmmQcEAI', 'a0G5800000hmmRGEAY', 'a0G5800000hmmR4EAI', 'a0G5800000hmmQDEAY', 'a0G5800000hmmNREAY', 'a0G5800000hmmR9EAI', 'a0G3E0000031UIIUA2', 'a0G5800000hmmQZEAY', 'a0G5800000hmmR5EAI', 'a0G5800000hmmR7EAI', 'a0G3E0000031UI4UAM', 'a0G3E0000031UIeUAM', 'a0G5800000hmmPIEAY', 'a0G5800000hmmRDEAY', 'a0G3E0000031UItUAM', 'a0G3E0000031UIgUAM', 'a0G5800000hmmQOEAY', 'a0G5800000hmmQaEAI', 'a0G5800000hmmNmEAI', 'a0G5800000hmmQjEAI', 'a0G3E0000031UIPUA2', 'a0G3E0000031UJ7UAM', 'a0G5800000hmmNBEAY', 'a0G5800000hmmQPEAY', 'a0G5800000hmmPrEAI', 'a0G5800000hmmRLEAY', 'a0G3E0000031UIfUAM', 'a0G5800000hmmQsEAI', 'a0G5800000hmmNdEAI', 'a0G5800000hmmPmEAI', 'a0G5800000hmmRFEAY', 'a0G5800000hmmRIEAY', 'a0G5800000hmmQXEAY', 'a0G3E0000031UI5UAM', 'a0G5800000hmmQkEAI', 'a0G3E0000031UI3UAM', 'a0G3E0000031UIWUA2', 'a0G3E0000031UJFUA2', 'a0G5800000hmmP4EAI', 'a0G5800000hmmQyEAI', 'a0G5800000hmmNvEAI', 'a0G5800000hmmQiEAI', 'a0G3E0000031UImUAM']
     # print attributes
     handle("vlocityattribute", attributes, 0)
