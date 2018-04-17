@@ -1,11 +1,12 @@
 import csv, os, json
 
-DEST_DIR = os.path.join("Parsed_files", "new_products")
+NEW_PRODUCTS_DEST_DIR = os.path.join("Parsed_files", "new_products")
+EXISTING_PRODUCTS_DEST_DIR = os.path.join("Parsed_files", "existing_products")
 
 def write_data(filename, header, data):
-    if not os.path.exists(DEST_DIR):
-        os.makedirs(DEST_DIR)
-    dest = os.path.join(DEST_DIR, filename)
+    if not os.path.exists(NEW_PRODUCTS_DEST_DIR):
+        os.makedirs(NEW_PRODUCTS_DEST_DIR)
+    dest = os.path.join(NEW_PRODUCTS_DEST_DIR, filename)
 
     with open(dest, "wb") as f:
         writer = csv.writer(f)
@@ -51,18 +52,23 @@ def main():
 
     # Pricebookentry must be done before Pricebook
     handle("pricebookentry", products, 3)   # PRODUCT2ID
-    pricebooks = get_ids(os.path.join(DEST_DIR, "pricebookentry2"), 2)
+    pricebooks = get_ids(os.path.join(NEW_PRODUCTS_DEST_DIR, "pricebookentry2"), 2)
     handle("pricebook", pricebooks, 0)
 
-    attribute_categories = get_ids(os.path.join(DEST_DIR, "attributeassignments2"), 12) # VLOCITY_CMT__ATTRIBUTECATEGORYID__C
+    attribute_categories = get_ids(os.path.join(NEW_PRODUCTS_DEST_DIR, "attributeassignments2"), 12) # VLOCITY_CMT__ATTRIBUTECATEGORYID__C
     handle("vlocityattributecategory", attribute_categories, 0)
 
-    attributes = get_ids(os.path.join(DEST_DIR, "attributeassignments2"), 19) # VLOCITY_CMT__ATTRIBUTEID__C
+    attributes = get_ids(os.path.join(NEW_PRODUCTS_DEST_DIR, "attributeassignments2"), 19) # VLOCITY_CMT__ATTRIBUTEID__C
     handle("vlocityattribute", attributes, 0)
 
-    entity_filters = get_ids(os.path.join(DEST_DIR, "productconfigurationprocedures2"), 12) # VLOCITY_CMT__ENTITYFILTERID__C
+    entity_filters = get_ids(os.path.join(NEW_PRODUCTS_DEST_DIR, "productconfigurationprocedures2"), 12) # VLOCITY_CMT__ENTITYFILTERID__C
     handle("vlocityentityfilter", entity_filters, 0)
+    handle("vlocityentityfiltercondition", entity_filters, 9)   # VLOCITY_CMT__ENTITYFILTERID__C
+    handle("vlocityrulefilter", entity_filters, 9)   # VLOCITY_CMT__ENTITYFILTERID__C
 
+    vlocity_rules = get_ids(os.path.join(NEW_PRODUCTS_DEST_DIR, "vlocityrulefilter2"), 8) # VLOCITY_CMT__RULEID__C
+    handle("vlocityrule", vlocity_rules, 0)
+    handle("vlocityruleaction", vlocity_rules, 8)   # VLOCITY_CMT__RULEID__C
 
 if __name__ == '__main__':
     main()
