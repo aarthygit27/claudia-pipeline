@@ -19,23 +19,25 @@ def get_ids(filename, i=0):
     data = []
     with open(filename + ".csv" , "rb") as f:
         reader = csv.reader(f, delimiter=",", quotechar="\"")
+        reader.next()   # skip the header
         for row in reader:
             data.append(row[i])
     return list(set(data))
+
 
 def handle(filename, products, i, j=-1):
     data = []
     lines = []
     with open(filename + ".csv" , "rb") as f:
         reader = csv.reader(f, delimiter=",", quotechar="\"")
+        header = reader.next()
         for row in reader:
             lines.append(row)
-    header = lines.pop(0)   # Remove header from lines
     for line in lines:
         if line[i] in products or (j!=-1 and line[j] in products): # reference ID to product
             data.append(line)
-
     write_data(filename + "2.csv", header, data)
+
 
 def main():
     solution_areas = get_ids("products_new", 32) # TELIA_SUB_SOLUTION_AREA__C
