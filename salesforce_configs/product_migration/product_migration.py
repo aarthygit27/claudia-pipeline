@@ -1,5 +1,6 @@
 import csv, os, json
 
+SOURCE_DIR = "from_int"
 NEW_PRODUCTS_DEST_DIR = os.path.join("Parsed_files", "new_products")
 EXISTING_PRODUCTS_DEST_DIR = os.path.join("Parsed_files", "existing_products")
 
@@ -17,7 +18,7 @@ def write_data(filename, header, data):
 
 def get_ids(filename, i=0):
     data = []
-    with open(filename + ".csv" , "rb") as f:
+    with open(filename + ".csv", "rb") as f:
         reader = csv.reader(f, delimiter=",", quotechar="\"")
         reader.next()   # skip the header
         for row in reader:
@@ -25,10 +26,10 @@ def get_ids(filename, i=0):
     return list(set(data))
 
 
-def handle(filename, products, i, j=-1):
+def handle(filename, products, i, j=-1, source_dir=SOURCE_DIR):
     data = []
     lines = []
-    with open(filename + ".csv" , "rb") as f:
+    with open(os.path.join(source_dir, filename + ".csv"), "rb") as f:
         reader = csv.reader(f, delimiter=",", quotechar="\"")
         header = reader.next()
         for row in reader:
