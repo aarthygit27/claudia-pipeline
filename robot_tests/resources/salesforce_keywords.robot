@@ -24,9 +24,11 @@ Add Competitor And Partner
 
 Add Contact Person To Product Order
     [Arguments]    ${test_cp}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}    60s
     Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Wait Until Element Is Enabled  //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
+    Run Inside Iframe   ${ACCOUNT_FRAME}  Wait Until Page Contains Element  //input[@title='Save']   60s
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword With Delay      1s      Click Save Button Again If There Are Multiple Contact Persons
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      30s
@@ -738,7 +740,7 @@ Go to Account
     [Arguments]    ${target_account}    ${type}=${EMPTY}
     Close All Tabs
     Log     Going to '${target_account}'
-    Wait Until Keyword Succeeds     90s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
+    Wait Until Keyword Succeeds     240s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
     Select Account    ${target_account}     ${type}
     Sleep   10s      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
     Wait Until Keyword Succeeds   20s   1s   Close Search Tab
@@ -952,6 +954,7 @@ Open just created opportunity and update Win probability, add Competitor and Par
     Save Opportunity
 
 Open Open Opportunities Tab At Account View
+
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
 
 Open Opportunities
@@ -1427,6 +1430,7 @@ Verify That Opportunity Is Not Found From Open Opportunities
     Open Opportunities
     Run Inside Iframe   ${IFRAME}   Wait For Load
     Select Correct View Type     My All Open Opportunities
+    Run Inside Iframe   ${IFRAME}  Run Keyword And Ignore Error  Click Element  ${LIST_VIEW}
     Filter Opportunities By    Close Date
     Run Inside Iframe   ${IFRAME}   Page Should Not Contain Element    //td/div/a/span[text()='${OPPORTUNITY_NAME}']
 

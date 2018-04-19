@@ -57,10 +57,15 @@ ${NEW_OPPORTUNITY_AT_MORE_DROPDOWN}         ul//span[contains(text(), 'New Oppor
 ${ACCOUNT_DETAILS}                          //a[@title='Details']
 ${FIELD_DETAIL}                             //h2[contains(text(),'Detail')]
 ${ACCOUNT_FEED}                             //a[@title='Feed']
+${LIST_VIEW}                                //a[@title='View List']
 ${BOTTOM_SAVE_BUTTON}                       //td[@id='bottomButtonRow']/input[@title='Save']
 ${ACCOUNT_NAME_LOOKUP}                      //img[contains(@title,'Account Name')]
-${EDIT_BUTTON}                              //input[@title='Edit']
+${EDIT_BUTTON}                              //*[@title='Edit']
+#${VIEW_BUTTON}                              //*[@title='View']
+#todo: this is a bug in naming, to be fixed.
+${VIEW_BUTTON}                              //*[@title='CPQViewRecord']
 ${SEARCH_TAB}                               //li[contains(@class,'x-tab-strip-closable setupTab')]
+${CPQ_BUTTON}                               //input[@title='CPQ']
 
 # Add new contact person fields/paths
 ${CONTACT_PERSON_TITLE_DROPDOWN}            //select[@title='Salutation']

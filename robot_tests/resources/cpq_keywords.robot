@@ -5,16 +5,19 @@ Resource                ${PROJECTROOT}${/}resources${/}common.robot
 Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robot
 
 *** Variables ***
-${CLOSE_BUTTON}         //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
-${SHOPPING_CART}        //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
+${CLOSE_BUTTON}              //div[contains(@class,'slds-modal')]//button[contains(text(),'Close')]
+${SHOPPING_CART}             //div[contains(@class,'cpq-product-cart')]//a[text()='Cart']
 #${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed' and @msg='Success')
-${CREDIT_SCORE_SUCCESS}     (normalize-space()='Credit Score Check Passed')
+${CREDIT_SCORE_SUCCESS}      (normalize-space()='Credit Score Check Passed')
 #${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted') and @msg='Warning')
-${CREDIT_SCORE_FAILURE}     (contains(normalize-space(),'Credit Score Not Accepted')
-${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
-${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
-#${CREDIT_SCORE_NEXT_BUTTON}  /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
-${CREDIT_SCORE_NEXT_BUTTON}  //child[18]//button
+${CREDIT_SCORE_FAILURE}      (contains(normalize-space(),'Credit Score Not Accepted')
+#${ATTRIBUTE_EDIT_WINDOW}    //div[@id='cpq-lineitem-details-modal-content']
+${ATTRIBUTE_EDIT_WINDOW}     //div[@id='js-cpq-lineitem-details-modal-content']
+#${REQUIRED_ATTRIBUTE}       //div[@class='cpq-cart-item-root-product-details']/div[contains(@class,'cpq-cart-item-root-product-cfg-attr')]
+${REQUIRED_ATTRIBUTE}        //div[@class='cpq-item-base-product-details']/div[contains(@class,'cpq-item-base-product-cfg-attr')]
+#${CREDIT_SCORE_NEXT_BUTTON} /html/body/span/div/span/div/ng-view/bptree/div/accordion/div/child[18]/div/div[2]/div/form/div[2]/div[2]/button
+${CREDIT_SCORE_NEXT_BUTTON}  //button[contains(., 'Next')]
+${CREATE_ORDER_BUTTON}       //ng-include/div/div/ng-include/div/div[4]/button
 
 *** Keywords ***
 
@@ -57,15 +60,34 @@ Click Create Assets (CPQ)
     ...    Page Should Not Contain Element    ${CPQ_CREATE_ASSETS}
 
 Click Create Order (CPQ)
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ORDER}    30 seconds
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_ORDER}    60 seconds
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    ${CPQ_CREATE_ORDER}    10 seconds
     Wait Until Keyword Succeeds    20 s    3 s
     ...    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CPQ_CREATE_ORDER}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${CPQ_CREATE_ORDER}     1 min
 
 Click Create Order After Credit Score Check (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    id=Create Order    30 seconds
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       id=Create Order
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      30s
+    Press ESC On   //*
+    Sleep   10s
+    Reload Page
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_BUTTON}    30 seconds
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}     Focus   ${CPQ_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}     Click Element  ${CPQ_BUTTON}
+    Run Keyword And Ignore Error  Run Inside Iframe   ${OPPORTUNITY_FRAME}   Click Element  ${CPQ_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CREATE_ORDER_BUTTON}    60 seconds
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Focus  ${CREATE_ORDER_BUTTON}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled   ${CREATE_ORDER_BUTTON}    60 seconds
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element      ${CREATE_ORDER_BUTTON}
+    Sleep  10
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_BUTTON}       90s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    ${VIEW_BUTTON}    20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${VIEW_BUTTON}
+    Sleep   5
+    #For some reason need to click view button twice...ignoring errors if not needed.
+    Run Keyword And Ignore Error   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${VIEW_BUTTON}       90s
+    Run Keyword And Ignore Error  Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${VIEW_BUTTON}
+
+
 
 Click Create Quote (CPQ)
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CPQ_CREATE_QUOTE}    30 seconds
@@ -74,6 +96,7 @@ Click Create Quote (CPQ)
 
 Click Next (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //*[text()='Next']      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    //*[text()='Next']      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s      Click Element   //*[text()='Next']
 
 Click Next (CPQ) Button
@@ -99,6 +122,7 @@ Click View Record (CPQ)
 
 Click View Quote (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        View Quote      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled        View Quote      20s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     30s     1s     Click Element    View Quote
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //h1[@class='pageType' and text()='Quote']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[@id='topButtonRow']//input[@title='CPQ']
@@ -119,7 +143,7 @@ Close Missing Information Popup (CPQ)
     Run Keyword If      not ${hidden}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible
-    ...         //div[@class='slds-modal__container']   15s
+    ...         //div[@class='slds-modal__container']   60s
 
 Fill Additional Attributes For Telia Yritysinternet (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   ${ATTRIBUTE_EDIT_WINDOW}//div[./label[text()[contains(.,'Palvelutaso')]]]//select   A8h
@@ -130,7 +154,8 @@ Fill Additional Attributes For Telia Yritysinternet (CPQ)
     Wait Until Keyword Succeeds     30s     1s      Wait Until Additional Attributes Are Updated (CPQ)
 
 Fill Missing Required Information
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='cpq-cart-item-root-product']//button[@title='Details']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //button[@title='Details']
     Wait Until Keyword Succeeds     30s     1s      Run Keyword     Fill Required Information For ${PRODUCT}
     Wait Until Keyword Succeeds     30s     1s      Wait Until Filled Information Is Recognized (CPQ)
     Close Missing Information Popup (CPQ)
@@ -140,14 +165,22 @@ Fill Missing Required Information If Needed (CPQ)
     ${s}=   Recognize Product Needs Additional Information (CPQ)
     Run Keyword if    ${s}      Fill Missing Required Information
 
+Fill Required Information For Telia Koneliittymä Plus
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
+    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
+
 Fill Required Information For Telia Cid
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         10s     1s      Input Text      ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input    1
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Tab On    ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input
 
 Fill Required Information For Telia Sopiva Pro L
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         10s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
+    Run Inside Iframe  ${OPPORTUNITY_FRAME}  Wait Until Element Is Enabled  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']
+    #There's overlapping elements(not always...), workaround: send space key press to element
+    Run Inside Iframe  ${OPPORTUNITY_FRAME}   Press Key  ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']  \\32
+    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
+    #...         60s   1s    Click Element   //div[contains(@class,'slds-modal')]//input[@type='radio' and @value='1']
+    #...         10s   1s    Click Element   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//input[@type='radio' and @value='1']
 
 Fill Required Information For Telia Yritysinternet
     ${xpath}=   Set Variable   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}
@@ -165,12 +198,18 @@ Fill Required Information For Telia Yritysinternet Langaton
     ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//select    1
 
 Fill Required Information For Telia Yritysinternet Plus
+    Pause Execution
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
-    ...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//div[./label[text()[contains(.,'Liittymän nopeus')]]]//select    1
+    #...         20s   1s    Select From List By Value   ${ATTRIBUTE_EDIT_WINDOW}${REQUIRED_ATTRIBUTE}//div[./label[text()[contains(.,'Liittymän nopeus')]]]//select    1
+
+
+
 
 Fill Required Information For Microsoft Office 365
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Input Text   //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input      1
+    #press tab
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Key  //label[text()[contains(.,'Lisenssien määrä')]]/following-sibling::div//input   \\09
     ${email}=       Create Unique Email
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     #...         20s   1s    Input Text   //label[text()[contains(.,'Lisäsähköpostiosoite')]]/following-sibling::div//input      ${email}
@@ -182,8 +221,12 @@ Handle Credit Score (CPQ)
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
     #${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
     ${credit_score_passed}=   Run Keyword And Return Status  Page Should Contain  Credit Score Check Passed
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     60s     3s    Click Element   ${CREDIT_SCORE_NEXT_BUTTON}
-    #Run Keyword If      ${credit_score_passed}      Click Next After Successful Credit Score (CPQ)
+    #Sleep   10s
+    #Page contains several next buttons, not all are visible. we want second Next button here.
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}   Wait Until Page Contains    Next
+    @{element_list}    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get WebElements   ${ CREDIT_SCORE_NEXT_BUTTON}
+    ${second_elem}  Get From List  ${element_list}  1
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}   Run Keyword And Ignore Error   Click Element  ${second_elem}
     Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
     Run Keyword If      ${credit_score_passed}      Return From Keyword
     Return To Quote (CPQ)
@@ -223,11 +266,12 @@ Select Exact Product
     ...     return document.evaluate("count(//div[@layout-name='cpq-product-list']//p)", document, null, XPathResult.ANY_TYPE, null).numberValue;
     :FOR   ${i}     IN RANGE    ${length}
     \    ${exact_product}=    Run Keyword And Return Status    Run Inside Iframe    ${OPPORTUNITY_FRAME}
-    ...    Element Text Should Be    //div[@layout-name='cpq-product-list']/ng-include/div/div[@index='${i}']//p[normalize-space()='${target_product}']     ${target_product}
+    ...    Element Text Should Be    //div[@layout-name='cpq-product-list']//div[@index='${i}']//p[normalize-space()='${target_product}']     ${target_product}
     \    Exit For Loop If    ${exact_product}
     Run Keyword If    ${exact_product}    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     20s     1s    Click Element
-    ...    //div[@layout-name='cpq-product-list']/ng-include/div/div[@index='${i}']//p[normalize-space()='${target_product}']/../../following-sibling::div//button[contains(text(),'Add to Cart')]
+    ...    //div[@layout-name='cpq-product-list']//div[@index='${i}']//p[normalize-space()='${target_product}']/../../following-sibling::div//button[contains(text(),'Add to Cart')]
     ...     ELSE    Fail    ${target_product} not found from search results
+    #...    //div[@layout-name='cpq-product-list']/ng-include/div/div[@index='${i}']//p[normalize-space()='${target_product}']/../../following-sibling::div//button[contains(text(),'Add to Cart')]
 
 Search For Product (CPQ)
     [Arguments]     ${target_product}
@@ -236,8 +280,6 @@ Search For Product (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Press Enter On                          ${CPQ_SEARCH_FIELD}
 
 Select Sales Type For Order (CPQ)
-    #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@class,'slds-select slds-required')]      10s
-    #${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //select[contains(@ng-model,'p.SalesType')]      10s
     ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled    //select[contains(@ng-model,'p.SalesType')]      60s
     ${status}=      Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //select[contains(@ng-model,'p.SalesType')]      60s
     # All products do not need a sales type
@@ -260,7 +302,7 @@ Set Prices For Unmodelled Product (CPQ)
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      //td[text()='${product}']/following-sibling::td[2]/input     50      # recurring total
 
 Submit Order To Delivery (CPQ)
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${SUBMIT_ORDER_TO_DELIVERY}    30s
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${SUBMIT_ORDER_TO_DELIVERY}
     Wait Until Keyword Succeeds    20 s    1 s    Confirm Action
 
