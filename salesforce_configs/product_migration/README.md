@@ -4,4 +4,4 @@
 2. Split products files to new products and products that already exists in the target environment. Name the files `products_new.csv` and `products_existing.csv`.
 3. Name the product file from the target environment `products_preprod.csv`.
 4. Run `python product_migration.py`.
-5. Use Data Loader to load the data to target environment
+5. Use Data Loader to load the data to target environment according to the instructions in the product deployment guide.
