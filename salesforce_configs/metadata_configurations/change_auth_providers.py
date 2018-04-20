@@ -55,6 +55,10 @@ def main(env):
     rw.set_authorization_url(providers["Customer"], u)
     rw.set_static_auth_provider_attributes(providers["Customer"], url)
 
+    u = url_base + "/ULMUserManagement/createCompanyUser"
+    rw.set_authorization_url(providers["CreateUserToULM"], u)
+    rw.set_static_auth_provider_attributes(providers["CreateUserToULM"], url)
+
 
 if __name__ == '__main__':
     main(sys.argv[1].lower())
