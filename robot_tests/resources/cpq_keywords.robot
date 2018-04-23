@@ -41,6 +41,17 @@ Add Random Product To Cart (CPQ)
     ${target_product}=      Run Inside Iframe    ${OPPORTUNITY_FRAME}       Add Random Product To Cart
     Wait Until Product Appears In Cart (CPQ)        ${target_product}
 
+Check If Quote Needs To Be Approved And Approve If Necessary
+    ${quote_page_open}=     Quote Should Be Open
+    Run Keyword Unless  ${quote_page_open}      Go To Account   ${OPPORTUNITY_NAME}     Quote
+    ${approval_not_needed}=     Check If Quote Needs Approval
+    Run Keyword If      ${approval_not_needed}      Return From Keyword
+    Submit Quote For Approval
+    Close Tabs And Logout
+    Login As Digisales Manager And Approve Quote
+    Go To Salesforce And Login
+    Go To Account   ${OPPORTUNITY_NAME}     Quote
+
 Click CPQ At Opportunity View
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPORTUNITY_CPQ_BUTTON}    30 seconds
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${OPPORTUNITY_CPQ_BUTTON}
