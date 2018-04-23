@@ -1448,7 +1448,10 @@ Verify That Opportunity Status Has Been Changed
     [Arguments]     ${stage}    ${status}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Stage']/following-sibling::td/div[text()='${stage}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Opportunity Status']/following-sibling::td/div[text()='${status}']
-    ${date}=     Get Date From Future    5
+    #if sales admin closes opportunity closed day should not be automatically updated to today.
+    ${day_off}  Set Variable If  '${stage}'=='Closed Won'   5
+    ${day_off}  Set Variable If  '${stage}'!='Closed Won'   0
+    ${date}=     Get Date From Future    ${day_off}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Should Not Be Visible       ${EDIT_BUTTON}
 
