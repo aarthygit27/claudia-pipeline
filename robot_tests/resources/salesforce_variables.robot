@@ -18,7 +18,7 @@ ${COLLAPSE_TOP_BAR}                         //div[contains(@class,'x-layout-spli
 
 ### Credentials
 ${TEST_ENVIRONMENT}                         preprod
-${TEST_ENVIRONMENT}                         int
+#${TEST_ENVIRONMENT}                         int
 ${CUSTOMER_CARE_USER}                       custcare@teliacompany.com.${TEST_ENVIRONMENT}
 ${SALES_ADMIN_USER}                         saleadm@teliacompany.com.${TEST_ENVIRONMENT}
 ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.${TEST_ENVIRONMENT}
