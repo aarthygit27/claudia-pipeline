@@ -14,6 +14,7 @@ def write_data(filename, header, data, dest_dir):
         writer.writerow(header)
         for row in data:
             writer.writerow(row)
+    print filename[:-5], "-", len(data)
 
 
 def get_ids(filename, i=0):
@@ -40,7 +41,24 @@ def handle(filename, products, i, j=-1, source_dir=SOURCE_DIR, dest_dir=NEW_PROD
     write_data(filename + "2.csv", header, data, dest_dir)
 
 
-
+def append_to_file(filename, source_dir=EXISTING_PRODUCTS_DEST_DIR, dest_dir=EXISTING_PRODUCTS_DEST_DIR):
+    # Read two files from source_dir and source_dir/hashed. Compare the IDs and add only unique ID rows
+    # to be written into the file. Finally rewrite source_dir/filename (by default. You may also write the
+    # file to a new location).
+    lines = []
+    with open(os.path.join(source_dir, filename + ".csv"), "rb") as f:
+        reader = csv.reader(f, delimiter=",", quotechar="\"")
+        header = reader.next()
+        for row in reader:
+            lines.append(row)
+    i = [x[0] for x in lines]
+    with open(os.path.join(source_dir, "hashed", filename + ".csv"), "rb") as f:
+        reader = csv.reader(f, delimiter=",", quotechar="\"")
+        header = reader.next()
+        for row in reader:
+            if row[0] not in i:
+                lines.append(row)
+    write_data(filename + ".csv", header, lines, dest_dir)
 
 
 ###################################################################################################
@@ -100,8 +118,25 @@ def write_hashed_products_file(source_products, target_products):
             if h == product2[56]:   # PRODUCT_HASH__C
                 product[0] = product2[0]    # Replace source Ids with target Ids
                 break
-    write_data("products_hashed.csv", header, source, ".")
+    write_data("products_hashed.csv", header, source, ".")  # Write file to current folder
 
+
+def append_hashed_products_to_existing_products():
+    append_to_file("attributeassignments2")
+    append_to_file("mastersolutionarea2")
+    append_to_file("offerings2")
+    append_to_file("pricebook2")
+    append_to_file("pricebookentry2")
+    append_to_file("productchilditem2")
+    append_to_file("productconfigurationprocedures2")
+    append_to_file("productrelationship2")
+    append_to_file("vlocityattribute2")
+    append_to_file("vlocityattributecategory2")
+    append_to_file("vlocityentityfilter2")
+    append_to_file("vlocityentityfiltercondition2")
+    append_to_file("vlocityrule2")
+    append_to_file("vlocityruleaction2")
+    append_to_file("vlocityrulefilter2")
 
 
 ###################################################################################################
@@ -110,12 +145,20 @@ def write_hashed_products_file(source_products, target_products):
 
 def main():
     # NEW PRODUCTS
+    print "--- NEW PRODUCTS ---"
     write_files_from_products("products_new")
 
     # EXISTING PRODUCTS
+    print "--- EXISTING PRODUCTS ---"
     write_files_from_products("products_existing", dest_dir=EXISTING_PRODUCTS_DEST_DIR)
-
+    print "-------------------------"
     write_hashed_products_file("products_existing", "products_preprod")
+    print "-------------------------"
+    write_files_from_products("products_hashed", "from_preprod", os.path.join(EXISTING_PRODUCTS_DEST_DIR, "hashed"))
+    print "--- EXISTING PRODUCTS AFTER ADDING HASHED VALUES ---"
+    append_hashed_products_to_existing_products()
+
+
 
 
 if __name__ == '__main__':
