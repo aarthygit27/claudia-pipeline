@@ -24,24 +24,8 @@ def main(env):
     url_base = "https://api-garden{0}.teliacompany.com/v1/finland".format(url)
 
     u = url_base + "/resourceavailability/availabilityofall"
-    rw.set_authorization_url(providers["ManualAvailabilityB2O"], u)
-    rw.set_static_auth_provider_attributes(providers["ManualAvailabilityB2O"], url)
-
-    u = url_base + "/productorder"
-    rw.set_authorization_url(providers["SendOrderToSAP"], u)
-    rw.set_static_auth_provider_attributes(providers["SendOrderToSAP"], url)
-
-    u = url_base + "/resourceavailability/availabilityofall"
     rw.set_authorization_url(providers["AvailabilityCheckB2O"], u)
     rw.set_static_auth_provider_attributes(providers["AvailabilityCheckB2O"], url)
-
-    u = url_base + "/creditscore"
-    rw.set_authorization_url(providers["CreditScoring"], u)
-    rw.set_static_auth_provider_attributes(providers["CreditScoring"], url)
-
-    u = url_base + "/ecmdocument/document"
-    rw.set_authorization_url(providers["ECMIntegration"], u)
-    rw.set_static_auth_provider_attributes(providers["ECMIntegration"], url)
 
     u = url_base + "/billingaccountmanagement/billingaccount"
     rw.set_authorization_url(providers["BillingAccount"], u)
@@ -51,13 +35,39 @@ def main(env):
     rw.set_authorization_url(providers["BillingAccountService"], u)
     rw.set_static_auth_provider_attributes(providers["BillingAccountService"], url)
 
+    u = url_base + "/BPNAccountManagement/createBPN"
+    rw.set_authorization_url(providers["CreateBPNIntegration"], u)
+    rw.set_static_auth_provider_attributes(providers["CreateBPNIntegration"], url)
+
+    # Endpoint not ready yet
+    # u = url_base + "/ULMUserManagement/createCompanyUser"
+    # rw.set_authorization_url(providers["CreateUserToULM"], u)
+    # rw.set_static_auth_provider_attributes(providers["CreateUserToULM"], url)
+
+    u = url_base + "/creditscore"
+    rw.set_authorization_url(providers["CreditScoring"], u)
+    rw.set_static_auth_provider_attributes(providers["CreditScoring"], url)
+
     u = url_base + "/customeraccountmanagement/customer"
     rw.set_authorization_url(providers["Customer"], u)
     rw.set_static_auth_provider_attributes(providers["Customer"], url)
 
-    u = url_base + "/ULMUserManagement/createCompanyUser"
-    rw.set_authorization_url(providers["CreateUserToULM"], u)
-    rw.set_static_auth_provider_attributes(providers["CreateUserToULM"], url)
+    # Endpoint not ready yet
+    # u = url_base + "/service/order"
+    # rw.set_authorization_url(providers["DDMOrder"], u)
+    # rw.set_static_auth_provider_attributes(providers["DDMOrder"], url)
+
+    u = url_base + "/ecmdocument/document"
+    rw.set_authorization_url(providers["ECMIntegration"], u)
+    rw.set_static_auth_provider_attributes(providers["ECMIntegration"], url)
+
+    u = url_base + "/resourceavailability/availabilityofall"
+    rw.set_authorization_url(providers["ManualAvailabilityB2O"], u)
+    rw.set_static_auth_provider_attributes(providers["ManualAvailabilityB2O"], url)
+
+    u = url_base + "/productorder"
+    rw.set_authorization_url(providers["SendOrderToSAP"], u)
+    rw.set_static_auth_provider_attributes(providers["SendOrderToSAP"], url)
 
 
 if __name__ == '__main__':
