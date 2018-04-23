@@ -1448,7 +1448,7 @@ Verify That Opportunity Status Has Been Changed
     [Arguments]     ${stage}    ${status}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Stage']/following-sibling::td/div[text()='${stage}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Opportunity Status']/following-sibling::td/div[text()='${status}']
-    ${date}=     Get Date From Future    0
+    ${date}=     Get Date From Future    5
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Should Not Be Visible       ${EDIT_BUTTON}
 
