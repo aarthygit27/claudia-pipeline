@@ -66,6 +66,17 @@ ${EDIT_BUTTON}                              //*[@title='Edit']
 ${VIEW_BUTTON}                              //*[@title='View']
 ${SEARCH_TAB}                               //li[contains(@class,'x-tab-strip-closable setupTab')]
 ${CPQ_BUTTON}                               //input[@title='CPQ']
+${ADD_ATTTACHMENT_BUTTON}                   //*[@title='Add Attachment']
+${ATTACHMENT_NAME}                          //input[@id='name']
+${ATTACHMENT_FILE}                          //input[@id='files']
+${ATTACHMENT_DESCRIPTION}                   //textarea[@id='description']
+${DOCUMENT_STATUS}                          //select[@id='Document_Stage']
+${DOCUMENT_TYPE}                           //select[@id='type']
+${CREATE_ATTACHMENT}                       //div[@id='create_attachment_document']
+${SELECT_BUTTON}                           //button[contains(text(), 'Select')]
+${SEND_DOCUMENTS_BUTTON}                   //*[@title='Send Documents to ECM']
+${UPLOAD_DOCUMENTS_BUTTON}                  //*[@title='Send Selected Documents to ECM']
+
 
 # Add new contact person fields/paths
 ${CONTACT_PERSON_TITLE_DROPDOWN}            //select[@title='Salutation']
