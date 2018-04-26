@@ -39,10 +39,9 @@ def main(env):
     rw.set_authorization_url(providers["CreateBPNIntegration"], u)
     rw.set_static_auth_provider_attributes(providers["CreateBPNIntegration"], url)
 
-    # Endpoint not ready yet
-    # u = url_base + "/ULMUserManagement/createCompanyUser"
-    # rw.set_authorization_url(providers["CreateUserToULM"], u)
-    # rw.set_static_auth_provider_attributes(providers["CreateUserToULM"], url)
+    u = url_base + "/ULMUserManagement/createCompanyUser"
+    rw.set_authorization_url(providers["CreateUserToULM"], u)
+    rw.set_static_auth_provider_attributes(providers["CreateUserToULM"], url)
 
     u = url_base + "/creditscore"
     rw.set_authorization_url(providers["CreditScoring"], u)
@@ -51,11 +50,6 @@ def main(env):
     u = url_base + "/customeraccountmanagement/customer"
     rw.set_authorization_url(providers["Customer"], u)
     rw.set_static_auth_provider_attributes(providers["Customer"], url)
-
-    # Endpoint not ready yet
-    # u = url_base + "/service/order"
-    # rw.set_authorization_url(providers["DDMOrder"], u)
-    # rw.set_static_auth_provider_attributes(providers["DDMOrder"], url)
 
     u = url_base + "/ecmdocument/document"
     rw.set_authorization_url(providers["ECMIntegration"], u)
