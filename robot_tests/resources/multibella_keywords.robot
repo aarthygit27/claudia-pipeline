@@ -600,7 +600,7 @@ MUBE Verify That Case Attributes Are Populated Correctly
     MUBE Check History Old And New Value For Attribute    Actual Reason    ${EMPTY}    New subscription / service
     MUBE Check History Old And New Value For Attribute    Title    ${EMPTY}    ${PRODUCT}
     MUBE Check History Old And New Value For Attribute    Product 1    ${EMPTY}    ${PRODUCT_TYPE}
-    MUBE Check History Old And New Value For Attribute    Contact Person    ${EMPTY}    ${DEFAULT_TEST_CONTACT}
+    #MUBE Check History Old And New Value For Attribute    Contact Person    ${EMPTY}    ${DEFAULT_TEST_CONTACT}
     MUBE Check History Old And New Value For Attribute    Contact Person Phone    ${EMPTY}    +3588881234
     MUBE Check History Old And New Value For Attribute    External system    ${EMPTY}    B2BSELFCARE
     MUBE Check History Old And New Value For Attribute    Group    ${EMPTY}    Key Service Desk [TSF]
