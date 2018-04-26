@@ -200,6 +200,8 @@ Check that contact has been saved and can be found under proper Account
     ...    //span[contains(text(), 'Name')]/following-sibling::span[contains(text(), '${TEST_CONTACT_PERSON_LAST_NAME}')]
     ${contact_person_name_related_to_account}=    Set Variable
     ...    ${contact_person_name}/../following-sibling::li/span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${DEFAULT_TEST_ACCOUNT}')]
+    #todo:  reloading is temporary fix - something wrong with feed update. will be removed.
+    Reload Page
     Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${contact_person_name_related_to_account}
 
 Click Account Tab Button And It Should Stay Open
