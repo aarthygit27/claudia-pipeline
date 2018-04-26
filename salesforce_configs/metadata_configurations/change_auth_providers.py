@@ -69,6 +69,14 @@ def main(env):
     rw.set_authorization_url(providers["ManualAvailabilityB2O"], u)
     rw.set_static_auth_provider_attributes(providers["ManualAvailabilityB2O"], url)
 
+    u = url_base + "/service/billing"
+    rw.set_authorization_url(providers["OMBillingCallout"], u)
+    rw.set_static_auth_provider_attributes(providers["OMBillingCallout"], url)
+
+    u = url_base + "/service/order"
+    rw.set_authorization_url(providers["OMFulfilmentCallout"], u)
+    rw.set_static_auth_provider_attributes(providers["OMFulfilmentCallout"], url)
+
     u = url_base + "/productorder"
     rw.set_authorization_url(providers["SendOrderToSAP"], u)
     rw.set_static_auth_provider_attributes(providers["SendOrderToSAP"], url)
