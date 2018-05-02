@@ -36,4 +36,13 @@ https://jenkins.verso.sonera.fi/
 Jobs are run in b2b-digisales/Tests. Smoke tests and sales tests are automatically run once a day. Performance monitoring tests are
 run once every 20 minutes and they need the `monitor@teliacompany.com.preprod` user to be available in PREPROD.
 
+## Prerequisites for development
+1. Install Python 2.7.13
+2. Add Python to PATH
+3. Run `pip install robotframework`
+4. Run `pip install selenium==3.8.0`
+5. Run `pip instlal robotframework-seleniumlibrary`
+6. Download Firefox ESR
+7. Download geckodriver 0.17.0 and place it to PATH.
+
 **REMEMBER TO TAKE ALL SCHEDULED RUNS OFF DURING SANDBOX REFRESH**
