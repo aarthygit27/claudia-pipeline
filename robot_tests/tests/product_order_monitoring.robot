@@ -10,6 +10,7 @@ Force Tags          Performance
 
 *** Variables ***
 ${PRODUCT}          Telia Yritysinternet
+${PERFORMANCE_TIMEOUT}      60 seconds
 
 *** Test Cases ***
 Single Product Monitor: Telia Yritysinternet
@@ -109,7 +110,7 @@ Reset View To Default
 
 Open The Correct Page And Select View All
     [Arguments]     ${page}     ${default}=${EMPTY}
-    Run Keyword     Open ${page}
+    Run Keyword     Open ${page}    ${PERFORMANCE_TIMEOUT}
     Run Keyword Unless      '${default}'=='${EMPTY}'    Run Keyword     Select All ${page} View
     Run Keyword Unless      '${default}'=='${EMPTY}'    Reset View To Default   ${default}
 

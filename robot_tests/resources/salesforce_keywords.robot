@@ -894,8 +894,9 @@ Navigate To App
     Wait Until Keyword Succeeds     10s     1s      App Should Be Open      ${app_name}
 
 Open Accounts
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Accounts
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   ${NEW_ACCOUNT_BUTTON}   20 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   ${NEW_ACCOUNT_BUTTON}   ${timeout}
 
 Open Active Sales Plan
     Open Details Tab At Account View
@@ -912,28 +913,34 @@ Open Active Sales Plan
     Wait Until Page Contains Element    ${frame}    10s
 
 Open Activities
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Activities
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Task']   20 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Task']   ${timeout}
 
 Open Calendar For Sales Console
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Calendar For Sales Console
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //div[@class='bCalendar']   20 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //div[@class='bCalendar']   ${timeout}
 
 Open Cases
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Cases
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Case']   20 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Case']   ${timeout}
 
 Open Chatter
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Chatter
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    publishereditablearea   20 seconds
+    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    publishereditablearea   ${timeout}
 
 Open Contacts
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Contacts
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    ${NEW_CONTACT_BUTTON}   20 seconds
+    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    ${NEW_CONTACT_BUTTON}   ${timeout}
 
 Open Dashboards
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Dashboards
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //img[@title='Dashboards']   20 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //img[@title='Dashboards']   ${timeout}
 
 Open Dashboard Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard    right
@@ -945,8 +952,9 @@ Open Details View At Opportunity
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${ACCOUNT_DETAILS}
 
 Open Ideas
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Ideas
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Idea']   20 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Idea']   ${timeout}
 
 Open just created opportunity and update Win probability, add Competitor and Partner
     Go To Account   ${OPPORTUNITY_NAME}
@@ -960,8 +968,9 @@ Open Open Opportunities Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
 
 Open Opportunities
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Opportunities
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    20 seconds
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    ${timeout}
 
 Open Sales Plan Tab At Account View
     Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Sales Plan
@@ -970,8 +979,9 @@ Open Sales Plan Tab At Account View
     Set Test Variable    ${NO_SALES_PLAN}
 
 Open Todays Page
+    [Arguments]     ${timeout}=20 seconds
     Select Correct Tab Type     Today
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter
+    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter     ${timeout}
 
 Opportunity Should be Unassigned
     [Arguments]     ${opport_name}=${OPPORTUNITY_NAME}
