@@ -55,11 +55,11 @@ def main(env):
     rw.set_authorization_url(providers["ECMIntegration"], u)
     rw.set_static_auth_provider_attributes(providers["ECMIntegration"], url)
 
-    # u = url_base + "/BPNAccountManagement/getCustomer"
-    # rw.set_authorization_url(providers["GetBPNIntegration"], u)
-    # rw.set_static_auth_provider_attributes(providers["GetBPNIntegration"], url)
+    u = url_base + "/BPNAccountManagement/getCustomer"
+    rw.set_authorization_url(providers["GetBPNIntegration"], u)
+    rw.set_static_auth_provider_attributes(providers["GetBPNIntegration"], url)
 
-    u = url_base + "/resourceavailability/availabilityofall"
+    u = url_base + "/manualavailabilitycheck/availabilitycheck"
     rw.set_authorization_url(providers["ManualAvailabilityB2O"], u)
     rw.set_static_auth_provider_attributes(providers["ManualAvailabilityB2O"], url)
 
