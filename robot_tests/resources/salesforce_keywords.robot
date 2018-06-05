@@ -188,6 +188,39 @@ Change Stage To
     [Arguments]     ${stage}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
 
+Check For Mandatory B2O Opportunity Attributes
+    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
+    ...             ${opportunity_name}=${OPPORTUNITY_NAME}
+    ...             ${opportunity_description}=${B2O_OPPORTUNITY_DESCRIPTION}
+    ...             ${opportunity_stage}=${B2O_OPPORTUNITY_STAGE}
+    ...             ${opportunity_priority}=${B2O_OPPORTUNITY_PRIORITY}
+    ...             ${opportunity_close_date}=${OPPORTUNITY_CLOSE_DATE}
+    ...             ${opportunity_solution_area}=${B2O_OPPORTUNITY_SOLUTION_AREA}
+    Go To Account   ${OPPORTUNITY_NAME}
+    Click Details Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp4_ileinner']/a[text()='${account_name}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp3_ileinner' and text()='${opportunity_name}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp14_ileinner' and text()='${opportunity_description}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp11_ileinner' and text()='${opportunity_stage}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='00N5800000CZHUG_ileinner' and text()='${opportunity_priority}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp9_ileinner' and text()='${opportunity_close_date}']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='00N5800000DL5Wa_ileinner' and text()='${opportunity_solution_area}']
+
+Check For Correct Today Page Content
+    [Arguments]     ${username}
+    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //p[contains(text(),'${username}')]      10s
+    ${date}=    Get Current Date In Verbal Format
+    Log To Console      ${date}
+    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //h1[contains(text(),'${date}')]      10s
+    #Limit not working?
+    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //h1[@class='slds-page-header__title' and contains(text(), 'task')]   limit=2      10s
+    ${count}=    Run Inside Iframe   ${IFRAME}    Get Element Count     //h1[@class='slds-page-header__title' and contains(text(), 'task')]
+    Log To Console  ${count}
+    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     id=chatter     10s
+    #Add checking based on closing order
+    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //span[@class='slds-text-heading--small' and contains(text(), 'Activities')]    10s
+    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //span[@class='slds-text-heading--small' and contains(text(), 'Opportunities')]    10s
+
 Check If Quote Needs Approval
     Reload Page
     Sleep   5
@@ -381,6 +414,14 @@ Close Tabs And Logout
     Close All Tabs
     Logout From Salesforce
 
+Close Opportunity Check For Errors And Edit If Needed
+    [Arguments]     ${opportunity_name}=${OPPORTUNITY_NAME}
+    ...             ${close_reason}=08 Other
+    Go To Account   ${opportunity_name}
+    Click Details Button
+    Set Opportunity Stage And Save      Closed Lost     ${TRUE}
+    Fill Close Reason And Comment And Save
+
 Contact Person Email Should Be Correct
     [Arguments]         ${email}
     Page Should Contain Element     //td[text()='Email']/following-sibling::td/div/a[contains(text(),'${email}')]
@@ -438,6 +479,52 @@ Create New Contact Person For Customer From Quick Action
     Open Details Tab At Account View
     Click New Item For Account      New Contact
     Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
+
+Create New B2O Opportunity For Customer
+    [Arguments]     ${account}
+    Go To Account   ${account}
+    Sleep   5
+    Click Details Button
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${NEW_OPPORTUNITY_BUTTON}
+    ${frame}=   Get Account Tab Iframe Xpath    Select Opportunity Record Type
+    Run Inside Iframe   ${frame}    Click Element   //input[@title='Continue']
+    Fill Mandatory B2O Opportunity information
+
+Create New Contact Person For Account And Verify Outbound Status
+    [Arguments]     ${customer}=${DEFAULT_TEST_ACCOUNT}
+    ...             ${first_name}=${EMPTY}
+    ...             ${last_name}=${EMPTY}
+    ...             ${email}=${DEFAULT_EMAIL}
+    ...             ${phone_number}=${DEFAULT_PHONE}
+    ...             ${salutation_index}=0
+    ${name}=            Create Unique Name      Contact Person
+    ${email}=           Create Unique Email     ${email}
+    ${first_name}=      Set Variable If    '${first_name}' == '${EMPTY}'    Test        ${first_name}
+    ${last_name}=       Set Variable If     '${last_name}' == '${EMPTY}'    ${name}     ${last_name}
+    Set Test Variable   ${TEST_CONTACT_PERSON_LAST_NAME}    ${last_name}
+    Go To Account   ${customer}
+    Click Details Button
+    Click New Item For Account From Details View   New Contact
+    ${select_conctact_frame}=   Get Account Tab Iframe Xpath    Select Contact Record Type
+    Run Inside Iframe   ${select_conctact_frame}    Click Element   //input[@title='Continue']
+    #Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}   Main Page
+    ${new_contact_frame}=   Get Account Tab Iframe Xpath    New Contact
+    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="name_firstcon2"]    ${first_name}
+    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="name_lastcon2"]    ${last_name}
+    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="con15"]    ${email}
+    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="00N5800000COfP6"]    ${phone_number}
+    Run Inside Iframe   ${new_contact_frame}    Select From List By Index       //select[@id="name_salutationcon2"]    ${salutation_index}
+    Run Inside Iframe   ${new_contact_frame}    Click Element       //input[@title='Save']
+    Go To Account       ${first_name} ${last_name}
+    Click Details Button
+    ${contact_frame}=   Get Account Tab Iframe Xpath    ${first_name} ${last_name}
+    ${outbound_status} =    Run Inside Iframe   ${contact_frame}    Get Text      //div[@id='00N5800000CZIlj_ileinner']
+    Log To Console  ${outbound_status}
+    Run Keyword If      '${outbound_status}'!='OK'     Run Keywords     Log To Console   Outbound communication check in progress, waiting...   AND
+    ...     Sleep    20s    AND
+    ...     Reload Page     AND
+    ...     Run Inside Iframe   ${contact_frame}    Wait Until Page Contains Element    //div[@id='00N5800000CZIlj_ileinner']   AND
+    ...     Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZIlj_ileinner']   OK
 
 Create New Contract For Customer
     [Arguments]     ${status}=Signed
@@ -666,6 +753,34 @@ Fill Mandatory Contact Person Values from Customer Page
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Mobile          ${phone_number}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Email           ${email}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Business Card Title     ${DEFAULT_BUSINESS_CARD_TITLE}
+
+Fill Mandatory B2O Opportunity information
+    [Arguments]
+    ...    ${opport_name}=${EMPTY}
+    ...    ${stage}=Analyse Prospect
+    ...    ${days}=1
+    ...    ${description}=Test B2O Opportunity
+    ...    ${priority}=Normal
+    ...    ${solution_area}=B2O Other services
+    Set Test Variable    ${B2O_OPPORTUNITY_DESCRIPTION}      ${description}
+    Set Test Variable    ${B2O_OPPORTUNITY_STAGE}      ${stage}
+    Set Test Variable    ${B2O_OPPORTUNITY_PRIORITY}      ${priority}
+    Set Test Variable    ${B2O_OPPORTUNITY_SOLUTION_AREA}      ${solution_area}
+    ${name}=    Set Variable If    '${PRODUCT}'=='${EMPTY}'   Opportunity     ${PRODUCT} Opportunity
+    ${name}=    Create Unique Name    ${name}
+    ${opport_name}=
+    ...    Set Variable If    '${opport_name}' == '${EMPTY}'    ${name}    ${opport_name}
+    Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
+    ${date}=    Get Date From Future    ${days}
+    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
+    ${frame}=   Get Account Tab Iframe Xpath    New Opportunity
+    Run Inside Iframe   ${frame}        Input Text                        //input[@id='opp3']     ${OPPORTUNITY_NAME}
+    Run Inside Iframe   ${frame}        Input Text                        //textarea[@id='opp14']     ${description}
+    Run Inside Iframe   ${frame}        Select From List By Value         //select[@id='opp11']     ${stage}
+    Run Inside Iframe   ${frame}        Select From List By Value         //select[@id='00N5800000CZHUG']     ${priority}
+    Run Inside Iframe   ${frame}        Input Text                        //input[@id='opp9']     ${date}
+    Run Inside Iframe   ${frame}        Select From List By Value         //select[@id='00N5800000DL5Wa']     ${solution_area}
+    Run Inside Iframe   ${frame}        Click Element      //input[@title='Save']
 
 Fill Mandatory Contact Person Values from Main Page
     [Documentation]     Sets the test variable TEST_CONTACT_PERSON_FULL_NAME
@@ -1300,6 +1415,26 @@ Update Opportunity Close Date And Close Reason
 Update Win Probability
     [Arguments]     ${probability}=50%
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select Value For Attribute      Win Probability %     ${probability}
+
+Verify Correct Contact Name
+    [Arguments]     ${contact_name}
+    ${frame}=   Get Account Tab Iframe Xpath    ${contact_name}
+    Sleep   5s
+    ${contact_name}=    Run Inside Iframe   ${frame}    Get Text    //h2[@class='topName']
+    Should Be Equal     ${contact_name}   ${DEFAULT_TEST_CONTACT}
+    Run Inside Iframe   ${frame}    Click Link      //a[@title='Details']
+
+Verify Contact Details At Account
+    [Arguments]     ${account_name}   ${contact_name}   ${sales_role}   ${updated_contact_title}
+    ${account_frame}=   Get Account Tab Iframe Xpath    ${account_name}
+    ${related_contact_sales_role}=  Run Inside Iframe   ${account_frame}     Get Text     //*[@id="0015800000iwve9_RelatedAccountContactRelationList_body"]/table/tbody/tr[2]/td[5]
+    Should Be Equal     ${related_contact_sales_role}   ${sales_role}
+    Run Keyword If   '${related_contact_sales_role}'=='${sales_role}'    Run Inside Iframe  ${account_frame}    Click Element      //a[text()='${contact_name}']
+    Sleep   5
+    ${contact_frame}=   Get Account Tab Iframe Xpath    ${contact_name}
+    Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZHaC_ileinner']   ${related_contact_sales_role}
+    Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZImP_ileinner']   ${updated_contact_title}
+    Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZIlj_ileinner']   OK
 
 Verify That Activity Cannot Be Linked to Group Account
     Click Feed Button

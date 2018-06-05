@@ -165,6 +165,24 @@ Contact: Update contact
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Sales Role Is Updated
 
+Contact: Update contact (B2O)
+    [Tags]      BQA-2667    wipcomplete     B2O
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Go to Account      ${DEFAULT_TEST_CONTACT}
+    Verify Correct Contact Name     ${DEFAULT_TEST_CONTACT}
+    Click Edit Contact Person
+    ${frame}=   Get Account Tab Iframe Xpath    ${DEFAULT_TEST_CONTACT}
+    ${random_number}=   Evaluate    str(random.randint(0, 100))   modules=random, sys
+    Log To Console      ${random_number}
+    Run Inside Iframe   ${frame}    Select From List By Index   //select[@id='00N5800000CZImP']     ${random_number}
+    ${updated_contact_title}=   Run Inside Iframe   ${frame}   Get text  //select[@id='00N5800000CZImP']/option[${random_number}+1]
+    Log To Console      ${updated_contact_title}
+    Update Contact Person Sales Role    ${DEFAULT_SALES_ROLE_UPDATED}
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    Click Details Button
+    Verify Contact Details At Account   ${DEFAULT_TEST_ACCOUNT}      ${DEFAULT_TEST_CONTACT}     ${DEFAULT_SALES_ROLE_UPDATED}      ${updated_contact_title}
+
 Sales Process: Create/update Sales Plan
     [Tags]      BQA-24      wip
     Go to Salesforce and Login
@@ -515,7 +533,59 @@ Test Contact person double check works ok in Claudia
     Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
     User sees a list of Contact Persons and can save with the same name
 
+Opportunity: Closing opportunity as Lost
+    [Tags]      BQA-2647    B2O     wipcomplete
+    Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    Close Opportunity Check For Errors And Edit If Needed
+    Verify That Opportunity Status Has Been Changed     Closed Lost     Lost
+    Verify That Opportunity Is Not Found From Open Opportunities
 
+Opportunity: Closing active B2O opportunity as cancelled 
+    [Tags]      BQA-2648    B2O     wipcomplete
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Add Product To Opportunity
+    Set Opportunity Stage And Save      Cancelled    expect_error=${TRUE}
+    Verify That Error Messages Are Shown
+    Fill Close Reason And Comment And Save
+    Verify That Opportunity Status Has Been Changed      Cancelled      Cancelled
+    Verify That Opportunity Is Not Found From Open Opportunities
+
+Opportunity: Check opportunity attributes
+    [Tags]      BQA-2652    wipcomplete     B2O
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    Check For Mandatory B2O Opportunity Attributes
+
+Sales Process: Create opportunity from Account (B2O)
+    [Tags]      BQA-2663    B2O     wipcomplete
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    Verify That Opportunity Is Found In Todays Page
+    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Verify That Opportunity is Found From My All Open Opportunities
+
+UI: Today page review - Sales user
+    [Tags]      BQA-2687   B2O   wipcomplete
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Open Todays Page
+    Check For Correct Today Page Content    B2O
+
+Contact: Add new contact
+    [Tags]      BQA-2688    wipcomplete     B2O
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Create New Contact Person For Account And Verify Outbound Status
+    Verify That Create Contact Person Button Is Not Visible
+    Verify That Error Message Is Not Displayed
+    Check that contact has been saved and can be found under proper Account
 
 *** Keywords ***
 

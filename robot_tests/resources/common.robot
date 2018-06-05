@@ -46,6 +46,10 @@ Get Date From Future
     ${converted_date}=    Set Variable    ${converted_date.day}.${converted_date.month}.${converted_date.year}
     [Return]    ${converted_date}
 
+Get Current Date In Verbal Format
+    ${current_date}=     Evaluate   time.strftime("%a, %B %#d, %Y.", time.localtime())     time
+    [Return]    ${current_date}
+
 Logout From All Systems
     [Documentation]     General logout keyword for test teardowns
     ${salesforce_open}=     Run Keyword And Return Status       Location Should Contain     salesforce.com
