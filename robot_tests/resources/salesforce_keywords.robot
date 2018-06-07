@@ -767,7 +767,7 @@ Fill Mandatory B2O Opportunity information
     [Arguments]
     ...    ${opport_name}=${EMPTY}
     ...    ${stage}=Analyse Prospect
-    ...    ${days}=1
+    ...    ${days}=5
     ...    ${description}=Test B2O Opportunity
     ...    ${priority}=Normal
     ...    ${solution_area}=B2O Other services
@@ -1605,8 +1605,12 @@ Verify That Opportunity Status Has Been Changed
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Stage']/following-sibling::td/div[text()='${stage}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Opportunity Status']/following-sibling::td/div[text()='${status}']
     #if sales admin closes opportunity closed day should not be automatically updated to today.
-    ${day_off}  Set Variable If  '${stage}'=='Closed Won'   5
-    ${day_off}  Set Variable If  '${stage}'!='Closed Won'   0
+    ${day_off} =    Run Keyword If    '${stage}'=='Closed Won'
+    ...  Set variable    5
+    ...  ELSE    
+    ...  Set variable    0
+    #${day_off}  Set Variable If  '${stage}'=='Closed Won'   5
+    #${day_off}  Set Variable If  '${stage}'!='Closed Won'   0
     ${date}=     Get Date From Future    ${day_off}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Should Not Be Visible       ${EDIT_BUTTON}

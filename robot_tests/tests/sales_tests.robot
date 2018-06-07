@@ -166,7 +166,7 @@ Contact: Update contact
     MUBE Verify That Contact Person Sales Role Is Updated
 
 Contact: Update contact (B2O)
-    [Tags]      BQA-2667    wipcomplete     B2O
+    [Tags]      BQA-2667     B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Go to Account      ${DEFAULT_TEST_CONTACT}
@@ -534,13 +534,10 @@ Test Contact person double check works ok in Claudia
     User sees a list of Contact Persons and can save with the same name
 
 Opportunity: Closing opportunity as Won
-    [Tags]      BQA-2646    B2O     wip
+    [Tags]      BQA-2646    B2O
     Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
-    #Close Opportunity Check For Errors And Edit If Needed   Closed Won   won_check=${TRUE}
-    #Verify That Opportunity Status Has Been Changed     Closed Won     Won
-    #Verify That Opportunity Is Not Found From Open Opportunities
     Verify That Opportunity Is Found With Search And Go To Opportunity
     Add Product To Opportunity
     Set Opportunity Stage And Save      Closed Won    expect_error=${TRUE}
@@ -591,11 +588,25 @@ Sales Process: Update Sales Plan of an Account which you are not owner (B2O)
     [Tags]      BQA-2665    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Close All Tabs
-    Go to Account    Hiiri Oy
+    Go to Account    ${DEFAULT_TEST_B2O_ACCOUNT}
     Open Sales Plan Tab At Account View
     Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
     Open Active Sales Plan
     Verify That Sales Plan Update History Is Correct    B2O User
+
+Quick actions: Create task (B2O)
+    [Tags]      BQA-2674    B2O
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Close All Tabs
+    Go to Account       ${DEFAULT_TEST_B2O_ACCOUNT}
+    Open Details Tab At Account View
+    Click New Item For Account    New Task
+    Fill Task Data
+    Click Create Contact Person Button      # The same xapth for contact person creation and task creation
+    Verify That Task Is Created
+    Close All Tabs
+    Open Todays Page
+    Created Task Should Be Visible
 
 UI: Today page review - Sales user
     [Tags]      BQA-2687   B2O
