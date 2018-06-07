@@ -533,8 +533,24 @@ Test Contact person double check works ok in Claudia
     Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
     User sees a list of Contact Persons and can save with the same name
 
+Opportunity: Closing opportunity as Won
+    [Tags]      BQA-2646    B2O     wip
+    Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    #Close Opportunity Check For Errors And Edit If Needed   Closed Won   won_check=${TRUE}
+    #Verify That Opportunity Status Has Been Changed     Closed Won     Won
+    #Verify That Opportunity Is Not Found From Open Opportunities
+    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Add Product To Opportunity
+    Set Opportunity Stage And Save      Closed Won    expect_error=${TRUE}
+    Verify That Error Messages Are Shown
+    Fill Close Reason And Comment And Save
+    Verify That Opportunity Status Has Been Changed      Closed Won      Won
+    Verify That Opportunity Is Not Found From Open Opportunities
+
 Opportunity: Closing opportunity as Lost
-    [Tags]      BQA-2647    B2O     wipcomplete
+    [Tags]      BQA-2647    B2O
     Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
@@ -543,7 +559,7 @@ Opportunity: Closing opportunity as Lost
     Verify That Opportunity Is Not Found From Open Opportunities
 
 Opportunity: Closing active B2O opportunity as cancelled 
-    [Tags]      BQA-2648    B2O     wipcomplete
+    [Tags]      BQA-2648    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
     Verify That Opportunity Is Found With Search And Go To Opportunity
@@ -555,14 +571,14 @@ Opportunity: Closing active B2O opportunity as cancelled
     Verify That Opportunity Is Not Found From Open Opportunities
 
 Opportunity: Check opportunity attributes
-    [Tags]      BQA-2652    wipcomplete     B2O
+    [Tags]      BQA-2652    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
     Check For Mandatory B2O Opportunity Attributes
 
 Sales Process: Create opportunity from Account (B2O)
-    [Tags]      BQA-2663    B2O     wipcomplete
+    [Tags]      BQA-2663    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Go To Account   ${DEFAULT_TEST_ACCOUNT}
@@ -571,15 +587,25 @@ Sales Process: Create opportunity from Account (B2O)
     Verify That Opportunity Is Found With Search And Go To Opportunity
     Verify That Opportunity is Found From My All Open Opportunities
 
+Sales Process: Update Sales Plan of an Account which you are not owner (B2O)
+    [Tags]      BQA-2665    B2O
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Close All Tabs
+    Go to Account    Hiiri Oy
+    Open Sales Plan Tab At Account View
+    Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
+    Open Active Sales Plan
+    Verify That Sales Plan Update History Is Correct    B2O User
+
 UI: Today page review - Sales user
-    [Tags]      BQA-2687   B2O   wipcomplete
+    [Tags]      BQA-2687   B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Open Todays Page
     Check For Correct Today Page Content    B2O
 
 Contact: Add new contact
-    [Tags]      BQA-2688    wipcomplete     B2O
+    [Tags]      BQA-2688    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Create New Contact Person For Account And Verify Outbound Status

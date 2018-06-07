@@ -221,6 +221,12 @@ Check For Correct Today Page Content
     Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //span[@class='slds-text-heading--small' and contains(text(), 'Activities')]    10s
     Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //span[@class='slds-text-heading--small' and contains(text(), 'Opportunities')]    10s
 
+Check For Closing Opportunity As Won Without Opportunity Products
+    #[Arguments]     ${opportunity_name}
+    ${frame}=       Get Account Tab Iframe Xpath    ${OPPORTUNITY_NAME}
+    Log To Console      ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element   //br[text()[contains('It is not possible to close Opportunity')]]
+
 Check If Quote Needs Approval
     Reload Page
     Sleep   5
@@ -415,11 +421,14 @@ Close Tabs And Logout
     Logout From Salesforce
 
 Close Opportunity Check For Errors And Edit If Needed
-    [Arguments]     ${opportunity_name}=${OPPORTUNITY_NAME}
+    [Arguments]     ${opportunity_stage}=Closed Lost
+    ...             ${won_check}=${FALSE}
+    ...             ${opportunity_name}=${OPPORTUNITY_NAME}
     ...             ${close_reason}=08 Other
     Go To Account   ${opportunity_name}
     Click Details Button
-    Set Opportunity Stage And Save      Closed Lost     ${TRUE}
+    Set Opportunity Stage And Save      ${opportunity_stage}     ${TRUE}
+    Run Keyword If      ${won_check}==${TRUE}   Check For Closing Opportunity As Won Without Opportunity Products
     Fill Close Reason And Comment And Save
 
 Contact Person Email Should Be Correct
