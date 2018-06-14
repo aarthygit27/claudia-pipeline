@@ -12,7 +12,7 @@ from rest_wrapper import RestWrapper
 import config_parser
 from config_parser import ConfigSectionMap
 
-URLS = {"preprod": "-uat", "test": "-test", "dev": "-test", "prod": "", "int": "-test"}
+URLS = {"preprod": "-uat", "dev": "-test", "prod": ""}
 
 def main(env):
     salesforce = ConfigSectionMap(env)
@@ -20,6 +20,8 @@ def main(env):
     session_id, server_url = get_sessionId_and_serverUrl(salesforce["instance"], LIBS_PATH, salesforce["username"], salesforce["password"] + salesforce["token"])
     rw = RestWrapper(session_id, server_url, env)
     providers = rw.get_auth_providers()
+    if env not in ["preprod", "prod"]:  # All others except preprod and prod end urls with "-test"
+        env = "dev"
     url = URLS[env]
     url_base = "https://api-garden{0}.teliacompany.com/v1/finland".format(url)
 
