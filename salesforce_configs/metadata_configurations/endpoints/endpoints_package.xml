@@ -15,5 +15,19 @@
         <members>Order</members>
         <name>CustomObject</name>
     </types>
+    <types>
+        <members>*</members>
+        <name>AuthProvider</name>
+    </types>
+    <types>
+        <members>AddressValidation</members>
+        <members>AvailabilityCheck</members>
+        <members>CaseManagement</members>
+        <name>NamedCredential</name>
+    </types>
+    <types>
+        <members>Contact.wf_rule_contact_outbound_message</members>
+        <name>WorkflowRule</name>
+    </types>
     <version>40.0</version>
 </Package>

@@ -1,0 +1,66 @@
+[preprod]
+contact_outbound_message_remotesite: https://emily.extra.sonera.fi:62100
+gesb_ac_remotesite: https://emily.extra.sonera.fi:62503
+gesb_av_remotesite: https://emily.extra.sonera.fi:62502
+contact_workflow: https://emily.extra.sonera.fi:62100/SFOutboundContactService
+addressvalidation_named_credential: https://emily.extra.sonera.fi:62502/Adapters/Global/AddressValidation/Service/ValidateAddressService.serviceagent/ValidateAddressPortTypeEndpoint1
+availabilitycheck_named_credential: https://emily.extra.sonera.fi:62503/Adapters/Global/AvailabilityCheck/Service/AvailabilityCheckService.serviceagent/AvailabilityCheckPortTypeEndpoint1
+casemanagement_named_credential: https://emily.extra.sonera.fi:62501/Adapters/B2BSelfcare/CRMCaseManagementCommon-service0.serviceagent/CRMCaseManagementCommonEndpoint0
+AvailabilityCheckB2O_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/resourceavailability/availabilityofall
+BillingAccount_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/billingaccountmanagement/billingaccount
+BillingAccountService_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/billingAccountService
+CreateBPNIntegration_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/BPNAccountManagement/createBPN
+CreateUserToULM_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/ULMUserManagement/createCompanyUser
+CreditScoring_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/creditscore
+Customer_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/customeraccountmanagement/customer
+ECMIntegration_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/ecmdocument/document
+GetBPNIntegration_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/BPNAccountManagement/getCustomer
+ManualAvailabilityB2O_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/manualavailabilitycheck/availabilitycheck
+OMBillingCallout_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/service/billing
+OMFulfilmentCallout_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/int/service/order
+SendOrderToSAP_auth_provider: https://api-garden-uat.teliacompany.com/v1/finland/productorder
+
+[int]
+contact_outbound_message_remotesite: https://artan.extra.sonera.fi:61100
+gesb_ac_remotesite: https://artan.extra.sonera.fi:61503
+gesb_av_remotesite: https://artan.extra.sonera.fi:61502
+contact_workflow: https://artan.extra.sonera.fi:61100/SFOutboundContactService
+contact_workflow: https://emily.extra.sonera.fi:62100/SFOutboundContactService
+addressvalidation_named_credential: https://emily.extra.sonera.fi:62502/Adapters/Global/AddressValidation/Service/ValidateAddressService.serviceagent/ValidateAddressPortTypeEndpoint1
+availabilitycheck_named_credential: https://artan.extra.sonera.fi:61503/Adapters/Global/AvailabilityCheck/Service/AvailabilityCheckService.serviceagent/AvailabilityCheckPortTypeEndpoint1
+casemanagement_named_credential: https://artan.extra.sonera.fi:61501/Adapters/B2BSelfcare/CRMCaseManagementCommon-service0.serviceagent/CRMCaseManagementCommonEndpoint0
+AvailabilityCheckB2O_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/resourceavailability/availabilityofall
+BillingAccount_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/billingaccountmanagement/billingaccount
+BillingAccountService_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/billingAccountService
+CreateBPNIntegration_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/BPNAccountManagement/createBPN
+CreateUserToULM_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/ULMUserManagement/createCompanyUser
+CreditScoring_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/creditscore
+Customer_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/customeraccountmanagement/customer
+ECMIntegration_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/ecmdocument/document
+GetBPNIntegration_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/BPNAccountManagement/getCustomer
+ManualAvailabilityB2O_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/manualavailabilitycheck/availabilitycheck
+OMBillingCallout_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/service/billing
+OMFulfilmentCallout_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/int/service/order
+SendOrderToSAP_auth_provider: https://api-garden-test.teliacompany.com/v1/finland/productorder
+
+[dev]
+contact_outbound_message_remotesite: https://ENDPOINT.REMOVED
+gesb_ac_remotesite: https://ENDPOINT.REMOVED
+gesb_av_remotesite: https://ENDPOINT.REMOVED
+contact_workflow: https://ENDPOINT.REMOVED
+contact_workflow: https://emily.extra.sonera.fi:62100/SFOutboundContactService
+addressvalidation_named_credential: https://emily.extra.sonera.fi:62502/Adapters/Global/AddressValidation/Service/ValidateAddressService.serviceagent/ValidateAddressPortTypeEndpoint1
+availabilitycheck_named_credential: https://ENDPOINT.REMOVED
+casemanagement_named_credential: https://emily.extra.sonera.fi:62501/Adapters/B2BSelfcare/CRMCaseManagementCommon-service0.serviceagent/CRMCaseManagementCommonEndpoint0
+AvailabilityCheckB2O_auth_provider:
+BillingAccount_auth_provider:
+BillingAccountService_auth_provider:
+CreateBPNIntegration_auth_provider:
+CreditScoring_auth_provider:
+Customer_auth_provider:
+ECMIntegration_auth_provider:
+GetBPNIntegration_auth_provider:
+ManualAvailabilityB2O_auth_provider:
+OMBillingCallout_auth_provider:
+OMFulfilmentCallout_auth_provider:
+SendOrderToSAP_auth_provider:

@@ -5,7 +5,12 @@
 2. Run the `retrieveEndpoints` target to get the current endpoints from Salesforce to local machine
 `ant -verbose retrieveEndpoints`
 3. Replace endpoints of the local metadata files
-`python replace_endpoints.py`
+`python replace_endpoints.py <environment>`
+    Running this scripts changes the following endpoints:
+    - Named Credentials. Passwords are **not** set with this as they are not retrieved with metadata API
+    - Remote site settings
+    - Contact workflow
+    - Contact workflow rule
 4. Replace buttons of the local metadata files
 `python replace_button_urls.py`
 5. Deploy the changed endpoints to Salesforce
