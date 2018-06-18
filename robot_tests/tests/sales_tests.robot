@@ -165,24 +165,6 @@ Contact: Update contact
     MUBE Open Browser And Login As CM User
     MUBE Verify That Contact Person Sales Role Is Updated
 
-Contact: Update contact (B2O)
-    [Tags]      BQA-2667     B2O
-    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
-    Go To Sales Application And Close All Tabs
-    Go to Account      ${DEFAULT_TEST_CONTACT}
-    Verify Correct Contact Name     ${DEFAULT_TEST_CONTACT}
-    Click Edit Contact Person
-    ${frame}=   Get Account Tab Iframe Xpath    ${DEFAULT_TEST_CONTACT}
-    ${random_number}=   Evaluate    str(random.randint(0, 100))   modules=random, sys
-    Log To Console      ${random_number}
-    Run Inside Iframe   ${frame}    Select From List By Index   //select[@id='00N5800000CZImP']     ${random_number}
-    ${updated_contact_title}=   Run Inside Iframe   ${frame}   Get text  //select[@id='00N5800000CZImP']/option[${random_number}+1]
-    Log To Console      ${updated_contact_title}
-    Update Contact Person Sales Role    ${DEFAULT_SALES_ROLE_UPDATED}
-    Go To Account   ${DEFAULT_TEST_ACCOUNT}
-    Click Details Button
-    Verify Contact Details At Account   ${DEFAULT_TEST_ACCOUNT}      ${DEFAULT_TEST_CONTACT}     ${DEFAULT_SALES_ROLE_UPDATED}      ${updated_contact_title}
-
 Sales Process: Create/update Sales Plan
     [Tags]      BQA-24      wip
     Go to Salesforce and Login
@@ -594,6 +576,24 @@ Sales Process: Update Sales Plan of an Account which you are not owner (B2O)
     Open Active Sales Plan
     Verify That Sales Plan Update History Is Correct    B2O User
 
+Contact: Update contact (B2O)
+    [Tags]      BQA-2667     B2O
+    Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Go to Account      ${DEFAULT_TEST_CONTACT}
+    Verify Correct Contact Name     ${DEFAULT_TEST_CONTACT}
+    Click Edit Contact Person
+    ${frame}=   Get Account Tab Iframe Xpath    ${DEFAULT_TEST_CONTACT}
+    ${random_number}=   Evaluate    str(random.randint(0, 100))   modules=random, sys
+    Log To Console      ${random_number}
+    Run Inside Iframe   ${frame}    Select From List By Index   //select[@id='00N5800000CZImP']     ${random_number}
+    ${updated_contact_title}=   Run Inside Iframe   ${frame}   Get text  //select[@id='00N5800000CZImP']/option[${random_number}+1]
+    Log To Console      ${updated_contact_title}
+    Update Contact Person Sales Role    ${DEFAULT_SALES_ROLE_UPDATED}
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    Click Details Button
+    Verify Contact Details At Account   ${DEFAULT_TEST_ACCOUNT}      ${DEFAULT_TEST_CONTACT}     ${DEFAULT_SALES_ROLE_UPDATED}      ${updated_contact_title}
+
 Quick actions: Create task (B2O)
     [Tags]      BQA-2674    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
@@ -623,6 +623,11 @@ Contact: Add new contact
     Verify That Create Contact Person Button Is Not Visible
     Verify That Error Message Is Not Displayed
     Check that contact has been saved and can be found under proper Account
+
+Availability query 1
+    [Tags]      BQA-3672    B2O     wip
+    Initiate Availability Query
+    Fill Address Validation Information And Click Next      37600   Valkeakoski   Peiponkuja   3
 
 *** Keywords ***
 

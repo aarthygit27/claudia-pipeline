@@ -24,7 +24,7 @@ ${DEFAULT_BUSINESS_CARD_TITLE}              Chief of Chiefs
 ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}      Slave of Slaves
 ${DEFAULT_GENDER}                           Male
 ${DEFAULT_TEST_ACCOUNT}                     Gavetec Oy
-${DEFAULT_TEST_B2O_ACCOUNT}                 Hiiri Oy
+${DEFAULT_TEST_B2O_ACCOUNT}                 Elisa Oyj – B2O Customer
 # ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}         2030101-1     # Juleco
 ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}         0750491-4       # Gavetec Oy
 ${DEFAULT_TEST_ACCOUNT_CUSTOMER_ID}         1041691273

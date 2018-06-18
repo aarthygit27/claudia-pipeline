@@ -169,6 +169,12 @@ Assign Task To
     Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Assigned To     ${user}   ${TRUE}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
 
+Initiate Availability Query
+    Go to Salesforce and Login      B2O User
+    Go to Account    ${DEFAULT_TEST_B2O_ACCOUNT}
+    Open Dashboard Tab At Account View
+    Click Availability Check Button
+
 Cancel Edit
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       //input[@value='Cancel']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element is Visible   ${EDIT_BUTTON}      15s
@@ -985,6 +991,9 @@ Login To Salesforce as Product Manager
 Login To Salesforce as B2B DigisalesManager
     Login To Salesforce     ${B2B_DIGISALES_MANAGER}    ${PASSWORD}
 
+Login To Salesforce as B2O User
+    Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+
 Login To Salesforce As System Administrator
     [Arguments]     ${env}
     Import Library      config_parser
@@ -1235,6 +1244,7 @@ Select Account Type
 
 Select Correct View Type
     [Arguments]         ${type}
+#    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //select[contains(@title, 'View:')]     ${type}
     Run Inside Iframe   ${IFRAME}    Select From List By Label   //select[contains(@title, 'View:')]     ${type}
     Run Inside Iframe   ${IFRAME}    Wait For Load
 
