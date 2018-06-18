@@ -46,6 +46,13 @@ Get Date From Future
     ${converted_date}=    Set Variable    ${converted_date.day}.${converted_date.month}.${converted_date.year}
     [Return]    ${converted_date}
 
+Get Date With Dashes
+    [Arguments]    ${days}
+    ${date}=    Get Current Date
+    ${date_in_future}=    Add Time To Date    ${date}    ${days} days
+    ${converted_date}=    Convert Date    ${date_in_future}      result_format=%d-%m-%Y
+    [Return]    ${converted_date}
+
 Get Current Date In Verbal Format
     ${current_date}=     Evaluate   time.strftime("%a, %B %#d, %Y.", time.localtime())     time
     [Return]    ${current_date}

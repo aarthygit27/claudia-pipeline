@@ -570,7 +570,7 @@ Sales Process: Update Sales Plan of an Account which you are not owner (B2O)
     [Tags]      BQA-2665    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Close All Tabs
-    Go to Account    ${DEFAULT_TEST_B2O_ACCOUNT}
+    Go to Account    ${DEFAULT_B2O_TEST_ACCOUNT}
     Open Sales Plan Tab At Account View
     Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
     Open Active Sales Plan
@@ -598,7 +598,7 @@ Quick actions: Create task (B2O)
     [Tags]      BQA-2674    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Close All Tabs
-    Go to Account       ${DEFAULT_TEST_B2O_ACCOUNT}
+    Go to Account       ${DEFAULT_B2O_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Item For Account    New Task
     Fill Task Data
@@ -607,6 +607,14 @@ Quick actions: Create task (B2O)
     Close All Tabs
     Open Todays Page
     Created Task Should Be Visible
+
+Guided process: New Account Owner
+    [Tags]      BQA-2677    B2O     wip
+    Go to Salesforce and Login      B2O User
+    Go to Account    ${DEFAULT_B2O_TEST_ACCOUNT}
+    Open Dashboard Tab At Account View
+    Create New Account Owner From Dashboard And Check That The Values Are Correct
+    Check For Updated Event Data
 
 UI: Today page review - Sales user
     [Tags]      BQA-2687   B2O
@@ -626,8 +634,10 @@ Contact: Add new contact
 
 Availability query 1
     [Tags]      BQA-3672    B2O     wip
+    Go to Salesforce and Login      B2O User
+    Go to Account    ${DEFAULT_B2O_TEST_ACCOUNT}
     Initiate Availability Query
-    Fill Address Validation Information And Click Next      37600   Valkeakoski   Peiponkuja   3
+    # Address Validation Information And Click Next      37600   Valkeakoski   Peiponkuja   3
 
 *** Keywords ***
 
