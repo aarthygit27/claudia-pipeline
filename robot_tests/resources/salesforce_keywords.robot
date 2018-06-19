@@ -235,8 +235,21 @@ Check For Updated Event Data
     Go to Account   ${EVENT_SUBJECT}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Text Should Be     id=evt5_ileinner     ${EVENT_SUBJECT}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Text Should Be     id=evt3_ileinner     ${DEFAULT_B2O_TEST_ACCOUNT}
-    #${start_date}=     Evaluate   ${EVENT_START_DATE}.replace('-', '.')
-    #Log To Console ${start_date}
+    @{start_date_data} =  Split String    ${EVENT_START_DATE}   -
+    @{end_date_data} =  Split String      ${EVENT_END_DATE}   -
+    Set Test Variable    ${CONVERTED_START_DATE}     ${EMPTY}
+    Set Test Variable    ${CONVERTED_END_DATE}       ${EMPTY}
+    :FOR    ${i}    IN RANGE    0    2
+    \    ${start_date_item}=    Replace String    @{start_date_data}[${i}]    0    ${EMPTY}
+    \    ${end_date_item}=    Replace String    @{end_date_data}[${i}]    0    ${EMPTY}
+    \    ${CONVERTED_START_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_START_DATE}   ${start_date_item}
+    \    ${CONVERTED_END_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_END_DATE}   ${end_date_item}
+    ${CONVERTED_START_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_START_DATE}   @{start_date_data}[${2}]
+    ${CONVERTED_START_DATE}=      Replace String      ${CONVERTED_START_DATE}    .      ${EMPTY}      count=1
+    ${CONVERTED_END_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_END_DATE}   @{end_date_data}[${2}]
+    ${CONVERTED_END_DATE}=      Replace String      ${CONVERTED_END_DATE}    .      ${EMPTY}      count=1
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Contain      id=StartDateTime_ileinner   ${CONVERTED_START_DATE}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Contain      id=EndDateTime_ileinner   ${CONVERTED_END_DATE}
 
 Check If Quote Needs Approval
     Reload Page
@@ -493,6 +506,7 @@ Create New Account Owner From Dashboard And Check That The Values Are Correct
     Run Inside Iframe   ${new_account_frame}    Wait Until Element Is Visible        id=Display Account Information_nextBtn     20s
     Run Inside Iframe   ${new_account_frame}    Click Element                        id=Display Account Information_nextBtn
     Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Select Contact_nextBtn     20s
+    Sleep   10
     Run Inside Iframe   ${new_account_frame}    Click Element                        id=Select Contact_nextBtn
     Fill Contact And Event Information In New Account Owner Guided Process
     Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=contactThankYouEmail

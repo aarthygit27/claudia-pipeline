@@ -609,7 +609,8 @@ Quick actions: Create task (B2O)
     Created Task Should Be Visible
 
 Guided process: New Account Owner
-    [Tags]      BQA-2677    B2O     wip
+    #Random ElementNotInteractableException errors
+    [Tags]      BQA-2677    B2O
     Go to Salesforce and Login      B2O User
     Go to Account    ${DEFAULT_B2O_TEST_ACCOUNT}
     Open Dashboard Tab At Account View
