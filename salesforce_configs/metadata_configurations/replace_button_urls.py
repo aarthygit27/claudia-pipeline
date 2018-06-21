@@ -5,47 +5,46 @@ PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(PROJECT_ROOT)
 
 
+BUTTON_URLS = {"prod": "http://glock.stadi.sonera.fi",
+                "int": "http://kovalainen.stadi.sonera.fi",
+                "preprod": "http://kovalainen.stadi.sonera.fi",
+                "devbase": "http://sutil.stadi.sonera.fi"}
+
 def main(env):
+
+    if env not in BUTTON_URLS.keys():
+        env = "devbase"
+
+    text_to_replace = BUTTON_URLS[env]
 
     ########## REPLACE OPPORTUNITY BUTTON URL ENDPOINTS ###############
     oppo = "Opportunity.object"
     fileToUpdate = os.path.join(PROJECT_ROOT, "endpoints", "objects", oppo)
-    textToSearch = "http://glock.stadi.sonera.fi"   # prod
-    textToSearch2 = "http://sutil.stadi.sonera.fi"  # dev/test
-    textToReplace = "http://kovalainen.stadi.sonera.fi" # int/preprod
 
+    with open(fileToUpdate,'r') as f:
+        filedata = f.read()
 
-    f = open(fileToUpdate,'r')
-    filedata = f.read()
-    f.close()
+    for key in BUTTON_URLS.keys():
+        filedata = filedata.replace(BUTTON_URLS[key], text_to_replace)
 
-    newdata = filedata.replace(textToSearch, textToReplace)
-    newdata = newdata.replace(textToSearch2, textToReplace)
+    with open(fileToUpdate,'w') as f:
+        f.write(filedata)
 
-    f = open(fileToUpdate,'w')
-    f.write(newdata)
-    f.close()
     #------------------------------------------------------------#
 
 
     ########## REPLACE ORDER BUTTON URL ENDPOINTS ###############
     order = "Order.object"
     fileToUpdate = os.path.join(PROJECT_ROOT, "endpoints", "objects", order)
-    textToSearch = "http://glock.stadi.sonera.fi"   # prod
-    textToSearch2 = "http://sutil.stadi.sonera.fi"  # dev/test
-    textToReplace = "http://kovalainen.stadi.sonera.fi" # int/preprod
 
+    with open(fileToUpdate,'r') as f:
+        filedata = f.read()
 
-    f = open(fileToUpdate,'r')
-    filedata = f.read()
-    f.close()
+    for key in BUTTON_URLS.keys():
+        filedata = filedata.replace(BUTTON_URLS[key], text_to_replace)
 
-    newdata = filedata.replace(textToSearch, textToReplace)
-    newdata = newdata.replace(textToSearch2, textToReplace)
-
-    f = open(fileToUpdate,'w')
-    f.write(newdata)
-    f.close()
+    with open(fileToUpdate,'w') as f:
+        f.write(filedata)
     #------------------------------------------------------------#
 
 if __name__ == '__main__':
