@@ -311,8 +311,6 @@ class RestWrapper(object):
         return r
 
     def set_static_auth_provider_attributes(self, provider, url):
-        # These are same for each auth. provider. If some of these change to be different in some auth. providers
-        # it needs to be called separately.
         self._set_token_url(provider, url)
         self._set_consumer_key(provider)
         # self._set_consumer_secret(provider)   # Cannot be set with REST API
