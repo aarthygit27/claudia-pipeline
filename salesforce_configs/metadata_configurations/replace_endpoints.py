@@ -123,11 +123,19 @@ def main(env):
                         "OMBillingCallout", "OMFulfilmentCallout", "SendOrderToSAP"]
 
     element_type = "authorizeUrl"
+    token_url = "tokenUrl"
+
+    urls = {"preprod": "-uat", "dev": "-test", "prod": ""}
+    if env not in ["preprod", "prod"]:
+        env = "dev"
+    token = "https://api-garden{0}.teliacompany.com/oauth/client_credential/accesstoken".format(urls[env])
+
     for ap in auth_providers:
         rs_location = ap + ".authprovider"
         x = ap.replace("_", "").lower() + "_auth_provider"
         path = os.path.join(PROJECT_ROOT, "endpoints", "authproviders", rs_location)
         change_endpoint(path, rs_location, element_type, endpoints[x])
+        change_endpoint(path, rs_location, token_url, token)
 
         parsed_file = ET.parse(path)
         root = parsed_file.getroot()
