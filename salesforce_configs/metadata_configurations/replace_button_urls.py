@@ -5,10 +5,11 @@ PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(PROJECT_ROOT)
 
 
-BUTTON_URLS = {"prod": "http://glock.stadi.sonera.fi",
-                "int": "http://kovalainen.stadi.sonera.fi",
-                "preprod": "http://kovalainen.stadi.sonera.fi",
-                "devbase": "http://sutil.stadi.sonera.fi"}
+BUTTON_URLS = {"prod": "http://glock.stadi.sonera.fi:8081",
+                "prod2": "http://control.stadi.sonera.fi",
+                "int": "http://kovalainen.stadi.sonera.fi:8081",
+                "preprod": "http://kovalainen.stadi.sonera.fi:8081",
+                "devbase": "http://sutil.stadi.sonera.fi:8081"}
 
 def main(env):
 
