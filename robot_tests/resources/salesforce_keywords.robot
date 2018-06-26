@@ -232,6 +232,7 @@ Check For Closing Opportunity As Won Without Opportunity Products
     Run Inside Iframe    ${frame}    Wait Until Page Contains Element   //br[text()[contains('It is not possible to close Opportunity')]]
 
 Check For Updated Event Data
+    #Logic need updating for even 10th days (10,20, 30)...
     Go to Account   ${EVENT_SUBJECT}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Text Should Be     id=evt5_ileinner     ${EVENT_SUBJECT}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Element Text Should Be     id=evt3_ileinner     ${DEFAULT_B2O_TEST_ACCOUNT}

@@ -624,6 +624,19 @@ UI: Today page review - Sales user
     Open Todays Page
     Check For Correct Today Page Content    B2O
 
+UI: 360 view of customer (B2O)
+    [Tags]      BQA-2678   B2O
+    Go To Salesforce And Login      B2O User
+    Go to Account    ${DEFAULT_B2O_TEST_ACCOUNT}
+    Basic B2O Account Information Is Visible On Top Bar
+    Profile Attributes Should Be Visible On Left Sidebar
+    Customer Story Should Be Visible On The Right Sidebar
+    Recommended Offerings Should Be Visible On the Right Sidebar
+    Open Dashboard Tab At Account View
+    Main Frame Should Have Correct Info
+    Open Sales Plan Tab At Account View
+    Open Details Tab At Account View
+
 Contact: Add new contact
     [Tags]      BQA-2688    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
@@ -833,6 +846,12 @@ Basic Account Information Is Visible On Top Bar
     Top Bar Should Have     Opportunities Open
     Top Bar Should Have     Telia Customer ID
     Top Bar Should Have     Legal Status
+    Click Element   ${COLLAPSE_TOP_BAR}
+
+Basic B2O Account Information Is Visible On Top Bar
+    Expand Top Bar If Necessary
+    Top Bar Should Have     Account Name
+    Top Bar Should Have     Account Owner
     Click Element   ${COLLAPSE_TOP_BAR}
 
 Verify That Business Account Attributes Are Named Right
