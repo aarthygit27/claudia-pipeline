@@ -28,7 +28,7 @@ if __name__ == "__main__":
     '''
     Update or create a single user
     '''
-    if not (7 <= len(sys.argv) <= 9): sys.exit("Usage: python user_checkup.py <environment> <tcad> <firstname> <lastname> <email> <profile[-role]> [parent_role] [manager]")
+    if not (7 <= len(sys.argv) <= 9): sys.exit("Usage: python user_activation_single.py <environment> <tcad> <firstname> <lastname> <email> <profile[-role]> [parent_role] [manager]")
     env = sys.argv[1].lower()
     tcad = sys.argv[2]
     firstname = sys.argv[3]

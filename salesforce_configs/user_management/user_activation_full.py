@@ -17,7 +17,7 @@ import config_parser
 from config_parser import ConfigSectionMap
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3: sys.exit("Usage: python user_transfer.py <environment> test/development/int/common")
+    if len(sys.argv) != 3: sys.exit("Usage: python user_activation_full.py <environment> test/development/int/common")
     env = sys.argv[1].lower()
     l = sys.argv[2].lower()
     if l == "test":
