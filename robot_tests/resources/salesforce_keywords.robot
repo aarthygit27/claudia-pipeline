@@ -266,7 +266,7 @@ Check that contact has been saved and can be found under proper Account
     ...    ${contact_person_name}/../following-sibling::li/span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${DEFAULT_TEST_ACCOUNT}')]
     #todo:  reloading is temporary fix - something wrong with feed update. will be removed.
     Reload Page
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${contact_person_name_related_to_account}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${contact_person_name_related_to_account}      15s
 
 Click Account Tab Button And It Should Stay Open
     [Arguments]     ${tab}      ${direction}=left
@@ -500,7 +500,7 @@ Create New Account Owner From Dashboard And Check That The Values Are Correct
     Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountName     20s
     Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountName
     Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountBusinessId     20s
-    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountBusinessId 
+    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountBusinessId
     Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountTeliaCustomerID     20s
     Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountTeliaCustomerID
     Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Display Account Information_nextBtn     20s
@@ -509,13 +509,55 @@ Create New Account Owner From Dashboard And Check That The Values Are Correct
     Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Select Contact_nextBtn     20s
     Sleep   10
     Run Inside Iframe   ${new_account_frame}    Click Element                        id=Select Contact_nextBtn
-    Fill Contact And Event Information In New Account Owner Guided Process
+    Fill Contact Information In New Account Owner Guided Process    New account owner
+    Fill Event Information In Guided Process                        New account owner
+    Run Inside Iframe   ${new_account_frame}    Click Element   Validate Contact & Create Event_nextBtn
     Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=contactThankYouEmail
     Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=sendThankYouEmail
     Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Send Thank You Email_nextBtn     20s
     Run Inside Iframe   ${new_account_frame}    Click Element                        id=Send Thank You Email_nextBtn
 
-Create New Contact Person For Customer From Details Page
+Create New Prospect Account From Dashboard And Check That The Values Are Correct
+    [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
+    ...             ${busines_id}=${DEFAULT_B2O_TEST_ACCOUNT_BUSINESS_ID}
+    ...             ${customer_id}=${DEFAULT_B2O_TEST_ACCOUNT_CUSTOMER_ID}
+    ${dashboard_frame}=   Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe   ${dashboard_frame}    Click Element   //button[text()='New Prospect Account']
+    ${new_account_frame}=   Get Account Tab Iframe Xpath    New prospect account
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountName     20s
+    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountName
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountBusinessId     20s
+    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountBusinessId
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountTeliaCustomerID     20s
+    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountTeliaCustomerID
+    Run Inside Iframe   ${new_account_frame}    Select Checkbox   id=wantsToContinue
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Display Account Information_nextBtn     20s
+    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Display Account Information_nextBtn
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=numberOfLocations     20s
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=businessChallenges     20s
+    Run Inside Iframe   ${new_account_frame}    Select Checkbox   id=createOpportunity
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=opportunityDescInput     20s
+    ${name}=    Create Unique Name    Opportunity
+    Run Inside Iframe   ${new_account_frame}    Input Text                           id=opportunityDescInput     ${name}
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Account Profile_nextBtn     20s
+    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Account Profile_nextBtn
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=createContact     20s
+    Sleep   10s
+    Run Inside Iframe   ${new_account_frame}    Select Checkbox                      id=createContact
+    Fill Contact Information In New Account Owner Guided Process                     New prospect account
+    Run Inside Iframe   ${new_account_frame}    Unselect Checkbox                    id=createContact
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=CreateEvent     20s
+    Sleep   10s
+    Run Inside Iframe   ${new_account_frame}    Select Checkbox                      id=CreateEvent
+    Fill Event Information In Guided Process                                         New prospect account
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Create Contact & Create Event_nextBtn     20s
+    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Create Contact & Create Event_nextBtn
+    Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=contactThankYouEmail
+    Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=sendThankYouEmail
+    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Send Thank You Email_nextBtn     20s
+    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Send Thank You Email_nextBtn
+
+Create New Contact Person For Customer From Details page
     [Arguments]     ${customer}=${DEFAULT_TEST_ACCOUNT}
     ...             ${first_name}=${EMPTY}
     ...             ${last_name}=${EMPTY}
@@ -580,7 +622,7 @@ Create New Contact Person For Account And Verify Outbound Status
     ${outbound_status} =    Run Inside Iframe   ${contact_frame}    Get Text      //div[@id='00N5800000CZIlj_ileinner']
     Log To Console  ${outbound_status}
     Run Keyword If      '${outbound_status}'!='OK'     Run Keywords     Log To Console   Outbound communication check in progress, waiting...   AND
-    ...     Sleep    20s    AND
+    ...     Sleep    60s    AND
     ...     Reload Page     AND
     ...     Run Inside Iframe   ${contact_frame}    Wait Until Page Contains Element    //div[@id='00N5800000CZIlj_ileinner']   AND
     ...     Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZIlj_ileinner']   OK
@@ -833,12 +875,12 @@ Fill Mandatory B2O Opportunity information
     ${date}=    Get Date From Future    ${days}
     Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
     ${frame}=   Get Account Tab Iframe Xpath    New Opportunity
-    Run Inside Iframe   ${frame}        Input Text                        //input[@id='opp3']     ${OPPORTUNITY_NAME}
-    Run Inside Iframe   ${frame}        Input Text                        //textarea[@id='opp14']     ${description}
-    Run Inside Iframe   ${frame}        Select From List By Value         //select[@id='opp11']     ${stage}
-    Run Inside Iframe   ${frame}        Select From List By Value         //select[@id='00N5800000CZHUG']     ${priority}
-    Run Inside Iframe   ${frame}        Input Text                        //input[@id='opp9']     ${date}
-    Run Inside Iframe   ${frame}        Select From List By Value         //select[@id='00N5800000DL5Wa']     ${solution_area}
+    Run Inside Iframe   ${frame}        Input Text                        id=opp3     ${OPPORTUNITY_NAME}
+    Run Inside Iframe   ${frame}        Input Text                        id=opp14     ${description}
+    Run Inside Iframe   ${frame}        Select From List By Value         id=opp11     ${stage}
+    Run Inside Iframe   ${frame}        Select From List By Value         id=00N5800000CZHUG     ${priority}
+    Run Inside Iframe   ${frame}        Input Text                        id=opp9     ${date}
+    Run Inside Iframe   ${frame}        Select From List By Value         id=00N5800000DL5Wa     ${solution_area}
     Run Inside Iframe   ${frame}        Click Element      //input[@title='Save']
 
 Fill Mandatory Contact Person Values from Main Page
@@ -877,36 +919,40 @@ Fill Mandatory Opportunity Information
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Close Date   ${OPPORTUNITY_CLOSE_DATE}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Press Tab On                           ${OPPO_INFO_CLOSE_DATE_FIELD}
 
-Fill Contact And Event Information In New Account Owner Guided Process
-    [Arguments]     ${first_name}=${EMPTY}
-    ...         ${last_name}=${EMPTY}
-    ...         ${email}=${DEFAULT_EMAIL}
-    ...         ${phone_number}=${DEFAULT_PHONE}
-    ...         ${business_card_title}=${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
-    ...         ${event_subject}=${EMPTY}
-    ...         ${start_days}=5
-    ...         ${end_days}=10
+Fill Contact Information In New Account Owner Guided Process
+    [Arguments]     ${frame_tab}
+    ...             ${first_name}=${EMPTY}
+    ...             ${last_name}=${EMPTY}
+    ...             ${email}=${DEFAULT_EMAIL}
+    ...             ${phone_number}=${DEFAULT_PHONE}
+    ...             ${business_card_title}=${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
     ${name}=            Create Unique Name      Contact Person
     ${email}=           Create Unique Email     ${email}
     ${first_name}=      Set Variable If    '${first_name}' == '${EMPTY}'    Test        ${first_name}
     ${last_name}=       Set Variable If     '${last_name}' == '${EMPTY}'    ${name}     ${last_name}
     ${event_subject}=    Catenate   ${name}     Event
-    Set Test Variable   ${EVENT_SUBJECT}     ${event_subject}
-    ${frame}=   Get Account Tab Iframe Xpath    New account owner
-    Run Inside Iframe   ${frame}    Input text   id=contactFirstName    ${first_name}
-    Run Inside Iframe   ${frame}    Input text   id=contactLastName     ${last_name}
+    Set Suite Variable   ${EVENT_SUBJECT}     ${event_subject}
+    ${frame}=   Get Account Tab Iframe Xpath    ${frame_tab}
+    Run Keyword If      '${frame_tab}'=='New account owner'    Run Inside Iframe   ${frame}    Input text   id=contactFirstName    ${first_name}
+    Run Keyword If      '${frame_tab}'=='New account owner'    Run Inside Iframe   ${frame}    Input text   id=contactLastName     ${last_name}
     Run Inside Iframe   ${frame}    Input text   id=contactMobile       ${phone_number}
     Run Inside Iframe   ${frame}    Input text   id=contactEmail        ${email}
     Run Inside Iframe   ${frame}    Input text   id=contactBusinessCardTitle    ${business_card_title}
+
+Fill Event Information In Guided Process
+    [Arguments]     ${frame_tab}
+    ...             ${event_subject}=${EVENT_SUBJECT}
+    ...             ${start_days}=5
+    ...             ${end_days}=10
+    ${frame}=   Get Account Tab Iframe Xpath    ${frame_tab}
     Run Inside Iframe   ${frame}    Select Checkbox   id=CreateEvent
     Run Inside Iframe   ${frame}    Input Text   id=subject     ${event_subject}
     ${start_date}=    Get Date With Dashes    ${start_days}
     Set Test Variable   ${EVENT_START_DATE}     ${start_date}
     Run Inside Iframe   ${frame}    Input Text   id=Date/Time (Local) 1     ${start_date}
-    ${end_date}=    Get Date With Dashes    ${end_days} 
+    ${end_date}=    Get Date With Dashes    ${end_days}
     Set Test Variable   ${EVENT_END_DATE}     ${end_date}
     Run Inside Iframe   ${frame}    Input Text   id=Date/Time (Local) 2     ${end_date}
-    Run Inside Iframe   ${frame}    Click Element   Validate Contact & Create Event_nextBtn
 
 Fill Opportunity Account name
     [Documentation]     Deprecated

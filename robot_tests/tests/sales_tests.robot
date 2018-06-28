@@ -537,7 +537,7 @@ Opportunity: Closing opportunity as Lost
     Verify That Opportunity Status Has Been Changed     Closed Lost     Lost
     Verify That Opportunity Is Not Found From Open Opportunities
 
-Opportunity: Closing active B2O opportunity as cancelled 
+Opportunity: Closing active B2O opportunity as cancelled
     [Tags]      BQA-2648    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
@@ -607,6 +607,14 @@ Quick actions: Create task (B2O)
     Close All Tabs
     Open Todays Page
     Created Task Should Be Visible
+
+Guided process: New Prospect Account
+    [Tags]      BQA-2676    B2O
+    Go to Salesforce and Login      B2O User
+    Go to Account    ${DEFAULT_B2O_TEST_ACCOUNT}
+    Open Dashboard Tab At Account View
+    Create New Prospect Account From Dashboard And Check That The Values Are Correct
+    Check For Updated Event Data
 
 Guided process: New Account Owner
     #Random ElementNotInteractableException errors
