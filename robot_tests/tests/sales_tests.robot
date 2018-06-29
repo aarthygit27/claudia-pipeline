@@ -33,6 +33,12 @@ Contact: Add new contact (valid data)
 #     Open Details and choose New Contact from More tab
 #     Enter mandatory (invalid) information and verify cp was not saved
 
+UI: Today page review - Sales user
+    [Tags]      BQA-3
+    Go to Salesforce and Login
+    Open Todays Page
+    Check For Correct Today Page Content    B2B
+
 Sales Admin: Change Account owner for Group Account
     [Tags]      BQA-5    wip
     [Setup]     Create Test Account With Admin User     Group
