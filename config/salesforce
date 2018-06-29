@@ -28,18 +28,6 @@ password: K23!kUTr41Sj
 token: cvbUf022ccJem8PBybmamMSyY
 instance: test
 
-[sint]
-username: fbl11955@teliacompany.com.sint
-password: Trt1e!!gXCxw34!822
-token: OKAmaHcPIupw2cPcyFnGu1yn
-instance: test
-
-[spreprod]
-username: fbl11955@teliacompany.com.spreprod
-password: Trt1e!!gXCxw34!822
-token: PlPbjOvWtJI1IMcCqNWPOYX4
-instance: test
-
 [upg]
 username: fbl11955@teliacompany.com.upg
 password: Trt1e!!gXCxw34!822
