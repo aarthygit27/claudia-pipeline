@@ -6,8 +6,8 @@ instance: test
 
 [preprod]
 username: fbl11955@teliacompany.com.preprod
-password: Cp4r2P7hT2T4S
-token: ntwkNJoywmpIb0hJiaV5TFhR
+password: Cp4r2P7hT2T4Sr
+token: CbtYgvshSBC8a1nsJt5F2OnWw
 instance: test
 
 [test]
@@ -48,9 +48,15 @@ instance: test
 
 [prod]
 username: fbl11955@teliacompany.com
-password: Trt1e!!gXCxw34!82244a
-token: fwqEQGl5ytRSrBBrrtgkZXshH
+password: Trt1e!!gXCxw34!82244aW
+token: UXZYgQbKKs3j3bqvMdkE3cZv
 instance: login
+
+[devbase]
+username: fbl11955@teliacompany.com.devbase
+password: K4dRR2!!fGt12iS
+token: z5WEeuy0vXwGVzpmUYB2YD2V3
+instance: test
 
 [wiki]
 username: fbl11955
