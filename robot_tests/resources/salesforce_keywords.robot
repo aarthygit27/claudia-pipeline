@@ -192,6 +192,19 @@ Change Stage To
     [Arguments]     ${stage}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
 
+Check For Correct Dashboard Data
+    [Arguments]     ${main_dashboard}
+    ...             ${sales_team_test_name}
+    ...             ${manager_dashboard}=Operator Sales Manager Dashboard
+    ...             ${team_dashboard}=My Operator Sales Dashboard
+    ...             ${team_view_dashboard}=Operator Team View Dashboard
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@class='bPageTitle']/div/div[@class='content']/h1[text()='${main_dashboard}']
+    Run Inside Iframe       ${IFRAME}   Click Element   id=x-auto-2
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${manager_dashboard}']    10s
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_dashboard}']       10s
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_view_dashboard}']  10s
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //span[@class='dashboardRowLabelWithPics' and text()='${sales_team_test_name}']  10s
+
 Check For Mandatory B2O Opportunity Attributes
     [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
     ...             ${opportunity_name}=${OPPORTUNITY_NAME}

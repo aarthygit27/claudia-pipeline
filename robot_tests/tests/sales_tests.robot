@@ -521,6 +521,13 @@ Test Contact person double check works ok in Claudia
     Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
     User sees a list of Contact Persons and can save with the same name
 
+Manager user: UI - Dashboard view
+    [Tags]      BQA-2643    B2O
+    Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Go To Sales Application And Close All Tabs
+    Open Dashboards
+    Check For Correct Dashboard Data    Operator Sales Manager Dashboard    B2O User
+
 Opportunity: Closing opportunity as Won
     [Tags]      BQA-2646    B2O
     Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
