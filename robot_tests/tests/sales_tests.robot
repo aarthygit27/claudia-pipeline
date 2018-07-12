@@ -5,10 +5,10 @@ Resource            ${PROJECTROOT}${/}resources${/}uad_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}tellu_keywords.robot
 
 # Suite Setup         Open Browser And Go To Login Page
-#Suite Teardown      Close All Browsers
+Suite Teardown      Close All Browsers
 
 Test Setup          Open Browser And Go To Login Page
-#Test Teardown       Logout From All Systems and Close Browser
+Test Teardown       Logout From All Systems and Close Browser
 Force Tags          sales
 
 *** Variables ***
