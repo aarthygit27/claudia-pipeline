@@ -5,10 +5,10 @@ Resource            ${PROJECTROOT}${/}resources${/}uad_keywords.robot
 Resource            ${PROJECTROOT}${/}resources${/}tellu_keywords.robot
 
 # Suite Setup         Open Browser And Go To Login Page
-Suite Teardown      Close All Browsers
+#Suite Teardown      Close All Browsers
 
 Test Setup          Open Browser And Go To Login Page
-Test Teardown       Logout From All Systems and Close Browser
+#Test Teardown       Logout From All Systems and Close Browser
 Force Tags          sales
 
 *** Variables ***
@@ -520,6 +520,16 @@ Test Contact person double check works ok in Claudia
     Go to Salesforce and Login
     Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
     User sees a list of Contact Persons and can save with the same name
+
+Sales Admin: Reassign opportunity to another owner
+    [Tags]      BQA-2633    B2O
+    Login To Salesforce     ${SALES_ADMIN_USER}        ${PASSWORD}
+    Go To Sales Application And Close All Tabs
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Change Opportunity Owner    B2O User
+    Verify Opportunity Owner    B2O User    ${OPPORTUNITY_NAME}
 
 Manager user: UI - Dashboard view
     [Tags]      BQA-2643    B2O

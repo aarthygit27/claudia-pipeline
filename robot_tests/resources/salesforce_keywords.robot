@@ -188,6 +188,16 @@ Change Account Owner
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait For Load
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${FIELD_DETAIL}     20s
 
+Change Opportunity Owner
+    [Arguments]     ${owner}
+    Run Keyword And Ignore Error    Click Details Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='opp1_ileinner']/a[text()='[Change]']     10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element                       //div[@id='opp1_ileinner']/a[text()='[Change]']
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    id=newOwn   10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text                          id=newOwn   ${owner}
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[@id='bottomButtonRow']/input[@title='Save']    10s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element                       //td[@id='bottomButtonRow']/input[@title='Save']
+
 Change Stage To
     [Arguments]     ${stage}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
@@ -598,6 +608,7 @@ Create New B2O Opportunity For Customer
     [Arguments]     ${account}
     Go To Account   ${account}
     Sleep   5
+    Open Details Tab At Account View
     Click Details Button
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${NEW_OPPORTUNITY_BUTTON}
     ${frame}=   Get Account Tab Iframe Xpath    Select Opportunity Record Type
@@ -1588,6 +1599,13 @@ Verify Contact Details At Account
     Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZHaC_ileinner']   ${related_contact_sales_role}
     Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZImP_ileinner']   ${updated_contact_title}
     Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZIlj_ileinner']   OK
+
+Verify Opportunity Owner
+    [Arguments]     ${owner}
+    ...             ${opportunity}
+    Go To Account   ${opportunity}
+    Click Details Button
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //div[@id='opp1_ileinner']/span/a[text()='${owner}']
 
 Verify That Activity Cannot Be Linked to Group Account
     Click Feed Button
