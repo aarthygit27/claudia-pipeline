@@ -202,6 +202,14 @@ Change Stage To
     [Arguments]     ${stage}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
 
+Check For Lightning Force And Switch Back To Sales Console
+    ${url}=     Get Location
+    ${contains}=  Evaluate  'lightning' in '${url}'
+    Run Keyword If  ${contains}
+    ...     Go To   https://cs80.salesforce.com/console
+    #...     Log To Console  derp
+    #Go To   https://cs80.salesforce.com/console
+
 Check For Correct Dashboard Data
     [Arguments]     ${main_dashboard}
     ...             ${sales_team_test_name}
@@ -1099,6 +1107,8 @@ Login to Salesforce
     Input Text          id=username         ${username}
     Input Password      id=password         ${password}
     Click Element       id=Login
+    Sleep   10s
+    Check For Lightning Force And Switch Back To Sales Console
     Wait Until Page Contains Element   xpath=${LOGOUT_BUTTON}    30 seconds
 
 Login to Salesforce And Go To Sales Application
@@ -1590,8 +1600,12 @@ Verify Correct Contact Name
 
 Verify Contact Details At Account
     [Arguments]     ${account_name}   ${contact_name}   ${sales_role}   ${updated_contact_title}
+    Go To Account   ${account_name}
+    Click Details Button
     ${account_frame}=   Get Account Tab Iframe Xpath    ${account_name}
-    ${related_contact_sales_role}=  Run Inside Iframe   ${account_frame}     Get Text     //*[@id="0015800000iwve9_RelatedAccountContactRelationList_body"]/table/tbody/tr[2]/td[5]
+    ${related_contact_sales_role}=  Run Inside Iframe   ${account_frame}     Get Text     //*[@id="0015800000iwve9_RelatedAccountContactRelationList_body"]/table/tbody/tr[2]/td[6]
+    Log To Console  ${related_contact_sales_role}
+    Log To Console  ${sales_role}
     Should Be Equal     ${related_contact_sales_role}   ${sales_role}
     Run Keyword If   '${related_contact_sales_role}'=='${sales_role}'    Run Inside Iframe  ${account_frame}    Click Element      //a[text()='${contact_name}']
     Sleep   5

@@ -611,10 +611,10 @@ Contact: Update contact (B2O)
     Log To Console      ${random_number}
     Run Inside Iframe   ${frame}    Select From List By Index   //select[@id='00N5800000CZImP']     ${random_number}
     ${updated_contact_title}=   Run Inside Iframe   ${frame}   Get text  //select[@id='00N5800000CZImP']/option[${random_number}+1]
-    Log To Console      ${updated_contact_title}
     Update Contact Person Sales Role    ${DEFAULT_SALES_ROLE_UPDATED}
-    Go To Account   ${DEFAULT_TEST_ACCOUNT}
-    Click Details Button
+    #Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    #Click Details Button
+    Log To Console      ${updated_contact_title}
     Verify Contact Details At Account   ${DEFAULT_TEST_ACCOUNT}      ${DEFAULT_TEST_CONTACT}     ${DEFAULT_SALES_ROLE_UPDATED}      ${updated_contact_title}
 
 Quick actions: Create task (B2O)
