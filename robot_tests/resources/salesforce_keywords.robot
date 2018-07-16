@@ -224,14 +224,14 @@ Check For Correct Dashboard Data
     Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //span[@class='dashboardRowLabelWithPics' and text()='${sales_team_test_name}']  10s
 
 Check For Mandatory B2O Opportunity Attributes
-    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
+    [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
     ...             ${opportunity_name}=${OPPORTUNITY_NAME}
     ...             ${opportunity_description}=${B2O_OPPORTUNITY_DESCRIPTION}
     ...             ${opportunity_stage}=${B2O_OPPORTUNITY_STAGE}
     ...             ${opportunity_priority}=${B2O_OPPORTUNITY_PRIORITY}
     ...             ${opportunity_close_date}=${OPPORTUNITY_CLOSE_DATE}
     ...             ${opportunity_solution_area}=${B2O_OPPORTUNITY_SOLUTION_AREA}
-    Go To Account   ${OPPORTUNITY_NAME}
+    Go To Account   ${opportunity_name}
     Click Details Button
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp4_ileinner']/a[text()='${account_name}']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp3_ileinner' and text()='${opportunity_name}']
@@ -1752,10 +1752,11 @@ Verify That Opportunity Is Found In Todays Page
     Run Inside Iframe    ${IFRAME}      Wait Until Page Contains Element    //div[@id='chatter']//a[@title='${OPPORTUNITY_NAME}']    20 s
 
 Verify That Opportunity Is Found With Search And Go To Opportunity
+    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
     Close All Tabs
     Go to Account        ${OPPORTUNITY_NAME}
     Run Inside Iframe    ${ACCOUNT_FRAME}       Wait until Page Contains Element    //h2[contains(text(),'${OPPORTUNITY_NAME}')]
-    Verify That Opportunity Is Saved And Data Is Correct
+    Verify That Opportunity Is Saved And Data Is Correct    ${account_name}
 
 Verify That Opportunity Is Not Found From Open Opportunities
     Close All Tabs
@@ -1767,9 +1768,10 @@ Verify That Opportunity Is Not Found From Open Opportunities
     Run Inside Iframe   ${IFRAME}   Page Should Not Contain Element    //td/div/a/span[text()='${OPPORTUNITY_NAME}']
 
 Verify That Opportunity Is Saved And Data Is Correct
+    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
     ${oppo_name}=    Set Variable       //a[text()='${OPPORTUNITY_NAME}']
     ${opportunity_name_related_to_account}=    Set Variable
-    ...    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${DEFAULT_TEST_ACCOUNT}')]
+    ...    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${account_name}')]
     ${opportunity_close_date_related_to_account}=    Set Variable
     ...    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Close Date:')]/following-sibling::span[contains(text(), '${OPPORTUNITY_CLOSE_DATE}')]
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element   ${oppo_name}

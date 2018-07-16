@@ -542,8 +542,8 @@ Opportunity: Closing opportunity as Won
     [Tags]      BQA-2646    B2O
     Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
-    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
-    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Create New B2O Opportunity For Customer     ${DEFAULT_B2O_TEST_ACCOUNT}
+    Verify That Opportunity Is Found With Search And Go To Opportunity      ${DEFAULT_B2O_TEST_ACCOUNT}
     Add Product To Opportunity
     Set Opportunity Stage And Save      Closed Won    expect_error=${TRUE}
     Verify That Error Messages Are Shown
@@ -555,7 +555,7 @@ Opportunity: Closing opportunity as Lost
     [Tags]      BQA-2647    B2O
     Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
-    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    Create New B2O Opportunity For Customer     ${DEFAULT_B2O_TEST_ACCOUNT}
     Close Opportunity Check For Errors And Edit If Needed
     Verify That Opportunity Status Has Been Changed     Closed Lost     Lost
     Verify That Opportunity Is Not Found From Open Opportunities
@@ -563,8 +563,8 @@ Opportunity: Closing opportunity as Lost
 Opportunity: Closing active B2O opportunity as cancelled
     [Tags]      BQA-2648    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
-    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
-    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Create New B2O Opportunity For Customer     ${DEFAULT_B2O_TEST_ACCOUNT}
+    Verify That Opportunity Is Found With Search And Go To Opportunity      ${DEFAULT_B2O_TEST_ACCOUNT}
     Add Product To Opportunity
     Set Opportunity Stage And Save      Cancelled    expect_error=${TRUE}
     Verify That Error Messages Are Shown
@@ -576,7 +576,7 @@ Opportunity: Check opportunity attributes
     [Tags]      BQA-2652    B2O
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
-    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    Create New B2O Opportunity For Customer     ${DEFAULT_B2O_TEST_ACCOUNT}
     Check For Mandatory B2O Opportunity Attributes
 
 Sales Process: Create opportunity from Account (B2O)
@@ -584,9 +584,9 @@ Sales Process: Create opportunity from Account (B2O)
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Go To Sales Application And Close All Tabs
     Go To Account   ${DEFAULT_TEST_ACCOUNT}
-    Create New B2O Opportunity For Customer     ${DEFAULT_TEST_ACCOUNT}
+    Create New B2O Opportunity For Customer     ${DEFAULT_B2O_TEST_ACCOUNT}
     Verify That Opportunity Is Found In Todays Page
-    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Verify That Opportunity Is Found With Search And Go To Opportunity      ${DEFAULT_B2O_TEST_ACCOUNT}
     Verify That Opportunity is Found From My All Open Opportunities
 
 Sales Process: Update Sales Plan of an Account which you are not owner (B2O)
