@@ -521,6 +521,11 @@ Test Contact person double check works ok in Claudia
     Try to create a new contact person with a same name to     ${DEFAULT_TEST_ACCOUNT}      Paavo   Pesusieni   ${DEFAULT_TEST_CONTACT_EMAIL}
     User sees a list of Contact Persons and can save with the same name
 
+Case category Lists and reports correct validations
+    [Tags]      BQA-4741    wip
+    Go to Salesforce and Login
+    Open Cases
+
 Sales Admin: Reassign opportunity to another owner
     [Tags]      BQA-2633    B2O
     Login To Salesforce     ${SALES_ADMIN_USER}        ${PASSWORD}

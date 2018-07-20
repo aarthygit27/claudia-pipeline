@@ -203,12 +203,11 @@ Change Stage To
     Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
 
 Check For Lightning Force And Switch Back To Sales Console
+    Sleep   15s
     ${url}=     Get Location
     ${contains}=  Evaluate  'lightning' in '${url}'
     Run Keyword If  ${contains}
     ...     Go To   https://cs80.salesforce.com/console
-    #...     Log To Console  derp
-    #Go To   https://cs80.salesforce.com/console
 
 Check For Correct Dashboard Data
     [Arguments]     ${main_dashboard}
@@ -217,11 +216,12 @@ Check For Correct Dashboard Data
     ...             ${team_dashboard}=My Operator Sales Dashboard
     ...             ${team_view_dashboard}=Operator Team View Dashboard
     Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@class='bPageTitle']/div/div[@class='content']/h1[text()='${main_dashboard}']
+    Run Inside Iframe       ${IFRAME}   Wait Until Page Contains Element   id=x-auto-2      15s
     Run Inside Iframe       ${IFRAME}   Click Element   id=x-auto-2
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${manager_dashboard}']    10s
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_dashboard}']       10s
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_view_dashboard}']  10s
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //span[@class='dashboardRowLabelWithPics' and text()='${sales_team_test_name}']  10s
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${manager_dashboard}']    15s
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_dashboard}']       15s
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_view_dashboard}']  15s
+    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //span[@class='dashboardRowLabelWithPics' and text()='${sales_team_test_name}']  15s
 
 Check For Mandatory B2O Opportunity Attributes
     [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
@@ -521,6 +521,12 @@ Create New Account
     Run Keyword If      '${parent}'!='${EMPTY}'     Fill Parent Account Name    ${parent}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
 
+Create New Case
+    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
+    ...             ${category}=
+    Run Inside Iframe   ${IFRAME}    Click Element   //input[@value='New Case']
+
+
 Create New Account Owner From Dashboard And Check That The Values Are Correct
     [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
     ...             ${busines_id}=${DEFAULT_B2O_TEST_ACCOUNT_BUSINESS_ID}
@@ -723,7 +729,7 @@ Created Contact Person Should Be Open
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${TEST_CONTACT_PERSON_FULL_NAME}')]    10 seconds
 
 Created Task Should Be Visible
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    //span[text()='${TASK_SUBJECT}']
+    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    //span[text()='${TASK_SUBJECT}']   15s
 
 Customer Details Page Should Contain
     [Documentation]     Searches the customer and goes to its page. Goes to Details tab and clicks
@@ -1107,7 +1113,6 @@ Login to Salesforce
     Input Text          id=username         ${username}
     Input Password      id=password         ${password}
     Click Element       id=Login
-    Sleep   10s
     Check For Lightning Force And Switch Back To Sales Console
     Wait Until Page Contains Element   xpath=${LOGOUT_BUTTON}    30 seconds
 
@@ -1847,7 +1852,7 @@ Verify That User Cannot Create New Opportunity
 
 Verify That Task Is Created
     [Arguments]     ${task}=${TASK_SUBJECT}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[.//a[contains(text(),'${task}')]]/a[text()='created a task.']    10s
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[.//a[contains(text(),'${task}')]]/a[text()='created a task.']    15s
 
 Verify That Values Are Visible In Opportunity Layout
     [Arguments]     ${product}=Devices
