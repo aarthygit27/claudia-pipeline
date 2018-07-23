@@ -34,16 +34,15 @@ class RestWrapper(object):
     def _parse_users_from_wiki_output(self, output, first, last):
         # first and last are line numbers, NOT indexes
         try:
-            m = re.search("CDATA\[(.*?)\]", output)
-            s = m.group(1)
-            lines = s.split("\\n")
+            m = re.findall("CDATA\[(.*?)\]", output)
+            lines = m[-1].split("\\n")
             lines = lines[1:]   # Remove the header line
             
             first = 1 if first < 1 else first   # Set "first" to be 1 at minimum
             if (last <= 0) or (last > len(lines)):  # Error prevention
                 last = len(lines)
             step = 1 if first <= last else -1
-            
+
             wiki_users = {}
             for i in range(first-1, last, step):
                 line = lines[i].strip()
@@ -147,7 +146,7 @@ class RestWrapper(object):
             r = self._session.get(self._rest_base + "/query/?q=SELECT+Id+From+Profile+WHERE+Name+=+'Standard+User'", headers=self._headers)
         return r.json()["records"][0]["Id"]
 
-    def get_user_role_id_from_salesforce(self, name, parent_role_id):
+    def get_user_role_id_from_salesforce(self, name, parent_role_id=None):
         '''
         This method should only be called when the "role" is filled in the Wiki list
         '''

@@ -51,7 +51,7 @@ if __name__ == "__main__":
             parent_role_id = rw.get_parent_role_id(parent_role)
         except (ValueError,IndexError):
             parent_role_id = None
-        role_id = rw.get_user_role_id_from_salesforce(role, parent_role_id)
+        role_id = rw.get_user_role_id_from_salesforce(role)
     else:
         role_id = None
 

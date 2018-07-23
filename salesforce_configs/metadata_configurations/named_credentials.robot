@@ -3,7 +3,6 @@ Documentation           Sets the named credentials of the given environment. By 
 ...                     ${AddressValidation}, ${AvailabilityCheck}, and ${CaseManagement} if wanted to run for
 ...                     a different environment.
 
-
 *** Variables ***
 ${PROJECTROOT}          ${EXECDIR}${/}..${/}..${/}robot_tests
 ${ENVIRONMENT}          preprod

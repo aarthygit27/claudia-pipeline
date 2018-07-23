@@ -45,8 +45,8 @@ def send_password_clarification_email(recipients, env, wiki_list):
     "Your username in {0} sandbox is in [tcad]@teliacompany.com.{1} format, e.g. abc1234@teliacompany.com.{1}.\n\n".format(env.upper(), env.lower()) +\
     "If you had a user in production, your password in the sandbox is the same as in production. If you didn't have a user in production, you need to " +\
     "create a password with the password reset link as described in (2).\n\n" +\
-    "In case you are still facing issues accessing the environments, please contact Aleksi Simell (aleksi.simell@teliacompany.com).\n\n" +\
-    "Sincerely,\n" +\
+    "In case you are still facing issues accessing the environments, please contact Vesa Mattila (vesa.mattila@teliacompany.com) and Aleksi Simell (aleksi.simell@teliacompany.com).\n\n" +\
+    "Best regards,\n" +\
     "System Team"
 
     msg = MIMEText(text)
