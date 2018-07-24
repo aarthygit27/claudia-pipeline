@@ -525,6 +525,8 @@ Case category Lists and reports correct validations
     [Tags]      BQA-4741    wip
     Go to Salesforce and Login
     Open Cases
+    Create New Case
+    Check If Case Was Created
 
 Sales Admin: Reassign opportunity to another owner
     [Tags]      BQA-2633    B2O

@@ -262,6 +262,12 @@ Check For Closing Opportunity As Won Without Opportunity Products
     Log To Console      ${OPPORTUNITY_NAME}
     Run Inside Iframe    ${frame}    Wait Until Page Contains Element   //br[text()[contains('It is not possible to close Opportunity')]]
 
+Check If Case Was Created
+    [Arguments]     ${case_category}=Lists and reports
+    Go To Account   ${CASE_SUBJECT}
+    Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //div[contains(text(),'${CASE_SUBJECT}')]
+    #Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //span[contains(text(),'${case_category}')]
+
 Check For Updated Event Data
     #Logic need updating for even 10th days (10,20, 30)...
     Go to Account   ${EVENT_SUBJECT}
@@ -523,9 +529,8 @@ Create New Account
 
 Create New Case
     [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
-    ...             ${category}=
-    Run Inside Iframe   ${IFRAME}    Click Element   //input[@value='New Case']
-
+    Run Inside Iframe   ${IFRAME}    Click Element   //input[@title='New Case']
+    Fill In Mandatory Case Information And Check For Correct Fields
 
 Create New Account Owner From Dashboard And Check That The Values Are Correct
     [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
@@ -956,6 +961,39 @@ Fill Mandatory Opportunity Information
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Quick Action Value For Attribute    Stage        ${stage}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Close Date   ${OPPORTUNITY_CLOSE_DATE}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Press Tab On                           ${OPPO_INFO_CLOSE_DATE_FIELD}
+
+Fill In Mandatory Case Information And Check For Correct Fields
+    [Arguments]     ${account_name}=Elisa Appelsiini Oy
+    ...             ${category}=Lists and reports
+    ...             ${subject}=Default test case subject
+    ...             ${product_group}=Mobile
+    ...             ${available_reports}=Other
+    ...             ${email}=${DEFAULT_EMAIL}
+    ...             ${chargeable}=Yes
+    ...             ${chargeable_mobile_num}=0123456789
+    ...             ${non-chargeable_reason}=Pricing decision
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Wait Until Page Contains Element    id=cas4     20S
+    ${subject}=    Create Unique Name    test case subject
+    Set Test Variable   ${CASE_SUBJECT}     ${subject}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=cas4     ${account_name}
+    #Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Index           id=cas4_lkid     2
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000CZNtn     ${category}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=cas14     ${subject}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Element Should Be Disabled          id=00N5800000DYlhy
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000DYliL     ${product_group}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Element Should Be Enabled           id=00N5800000DYlhy
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000DYlhy     ${available_reports}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Element Should Be Enabled           id=00N5800000DYliN
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYliN     ${subject}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYli7     ${email}
+    ${start_date}=   Get Date From Future  1
+    ${ending_date}=  Run Keyword   Get Date From Future  28
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYli9     ${start_date}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYliW     ${ending_date}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000DYli4     ${chargeable}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYliF     ${chargeable_mobile_num}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N250000012Ra1     ${non-chargeable_reason}
+    Run Inside Iframe   ${ACCOUNT_FRAME}   Click Element                       //input[@value='Save & Close']
 
 Fill Contact Information In New Account Owner Guided Process
     [Arguments]     ${frame_tab}
