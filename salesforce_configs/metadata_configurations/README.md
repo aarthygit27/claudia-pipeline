@@ -11,12 +11,13 @@
     - Remote site settings
     - Contact workflow
     - Contact workflow rule
+    - Auth. providers. Consumer key and secret are not configured.
 4. Replace buttons of the local metadata files
 `python replace_button_urls.py`
 5. Deploy the changed endpoints to Salesforce
 `ant deployEndpoints`
 
-# Change auth. providers
+# Change auth. providers (deprecated)
 
 1. Run `python change_auth_providers.py <environment>`
 
@@ -24,7 +25,7 @@ Script changes authorization url, token url, and consumer key. However, consumer
 
 2. Change consumer key + consumer secret (https://deveo.verso.sonera.fi/TS/projects/b2x-digisales/wiki/Integrations)
 
-# Named credentials
+# Named credentials (deprecated)
 
 Named credentials **cannot** be changed with REST API, so Robot Framework implementation required. `config_parser` and `robot_tests` must be appended to
 pythonpath before running.
