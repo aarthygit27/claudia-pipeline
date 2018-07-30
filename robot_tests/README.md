@@ -41,7 +41,8 @@ run once every 20 minutes and they need the `monitor@teliacompany.com.preprod` u
 2. Add Python to PATH
 3. Run `pip install robotframework`
 4. Run `pip install selenium==3.8.0`
-5. Run `pip instlal robotframework-seleniumlibrary`
+5. Run `pip install robotframework-seleniumlibrary`
+    - Tests are not guaranteed to work with the latest seleniumlibrary. If they do not work, please install selenium2library `pip install robotframework-selenium2library==3.0.0`
 6. Download Firefox ESR
 7. Download geckodriver 0.17.0 and place it to PATH.
 
