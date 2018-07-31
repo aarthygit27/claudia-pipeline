@@ -912,6 +912,7 @@ Fill Mandatory B2O Opportunity information
     Set Test Variable    ${B2O_OPPORTUNITY_SOLUTION_AREA}      ${solution_area}
     ${name}=    Set Variable If    '${PRODUCT}'=='${EMPTY}'   Opportunity     ${PRODUCT} Opportunity
     ${name}=    Create Unique Name    ${name}
+    Set Test Variable    ${OPPORTUNITY_NAME}    ${name}
     ${opport_name}=
     ...    Set Variable If    '${opport_name}' == '${EMPTY}'    ${name}    ${opport_name}
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
@@ -1342,6 +1343,19 @@ Rate Opportunity
 Recommended Offerings Should Be Visible On the Right Sidebar
     Run Inside Iframe   ${RIGHT_SIDEBAR_IFRAME}     Wait Until Page Contains Element    //div[text()='Recommended Offerings']
 
+Run Through Sales Plan Guided Process And Update Fields
+    ${guided_frame}=   Get Account Tab Iframe Xpath    Update sales plan
+    Run Inside Iframe   ${guided_frame}     Wait Until Page Contains Element    id=NumberofLocations
+    ${random}=   Get Random Int
+    Run Inside Iframe   ${guided_frame}     Input Text                          id=NumberofLocations            ${random}
+    ${random}=   Get Random Int
+    Run Inside Iframe   ${guided_frame}     Input Text                          id=EmployeesInCustomerService   ${random}
+    ${random}=   Get Random Int
+    Run Inside Iframe   ${guided_frame}     Input Text                          id=NumberofEmployees            ${random}
+    ${random}=   Get Random Int
+    Run Inside Iframe   ${guided_frame}     Input Text                          id=MobileEmployees              ${random}
+    Run Inside Iframe   ${guided_frame}     Click Element                       id=Account_nextBtn
+
 Save Duplicate Contact Person
     Save (Ignore Alert) Button Should Be Visible
     Save New Contact Person
@@ -1628,6 +1642,13 @@ Update Opportunity Close Date And Close Reason
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Value For Attribute       Close Date     ${date}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select Value For Attribute      Close Reason     ${reason}
     Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Bottom Save Button
+
+Update Sales Plan From Account
+    Open Dashboard Tab At Account View
+    ${dashboard_frame}=   Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe   ${dashboard_frame}    Click Element   //button[text()='Update Sales Plan']
+    Sleep   15s
+    Run Through Sales Plan Guided Process And Update Fields
 
 Update Win Probability
     [Arguments]     ${probability}=50%
