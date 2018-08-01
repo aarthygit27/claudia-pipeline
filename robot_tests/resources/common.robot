@@ -57,6 +57,12 @@ Get Current Date In Verbal Format
     ${current_date}=     Evaluate   time.strftime("%a, %B %#d, %Y.", time.localtime())     time
     [Return]    ${current_date}
 
+Get Random Int
+    [Arguments]     ${number_from}=0
+    ...             ${number_to}=99
+    ${random}=   Evaluate    random.randint(${number_from}, ${number_to})   random
+    [Return]  ${random}
+
 Logout From All Systems
     [Documentation]     General logout keyword for test teardowns
     ${salesforce_open}=     Run Keyword And Return Status       Location Should Contain     salesforce.com

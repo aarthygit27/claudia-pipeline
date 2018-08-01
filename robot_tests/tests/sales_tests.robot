@@ -34,7 +34,7 @@ Contact: Add new contact (valid data)
 #     Enter mandatory (invalid) information and verify cp was not saved
 
 UI: Today page review - Sales user
-    [Tags]      BQA-3
+    [Tags]      BQA-3   B2O
     Go to Salesforce and Login
     Open Todays Page
     Check For Correct Today Page Content    B2B
@@ -495,6 +495,12 @@ Enable Sales Person to rate Opportunity and Task Source Data Quality
     Go To Account   ${TASK_NAME}
     Verify That Quality Rating Field Exists
 
+Guided Sales Plan Creation Process
+    [Tags]      BQA-2192    wip
+    Go to Salesforce and Login
+    Go To Account   ${DEFAULT_TEST_ACCOUNT}
+    Update Sales Plan From Account
+
 Opportunity Cards
     [Tags]      BQA-2194    wip
     Go to Salesforce and Login
@@ -522,11 +528,20 @@ Test Contact person double check works ok in Claudia
     User sees a list of Contact Persons and can save with the same name
 
 Case category Lists and reports correct validations
-    [Tags]      BQA-4741    wip
+    [Tags]      BQA-4741    B2O
     Go to Salesforce and Login
     Open Cases
     Create New Case
     Check If Case Was Created
+
+Sales Admin: Update closed opportunity
+    [Tags]      BQA-2631    B2O     wip
+    [Setup]     No Operation
+    [Template]      Update Closed Opportunity Test Case
+    Cancelled           Cancelled
+    Closed Lost         Lost
+    Closed Not Won      Not Won
+    Closed Won          Won         Negotiate and Close
 
 Sales Admin: Reassign opportunity to another owner
     [Tags]      BQA-2633    B2O
