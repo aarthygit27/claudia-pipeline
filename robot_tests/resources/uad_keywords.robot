@@ -9,7 +9,7 @@ ${SEARCH_BUTTON}            HEADER_SEARC_BUTTON
 ${NEXT_BUTTON}              INTPAG_NEXT_BUTTON
 ${CLEAR_BUTTON}             HEADER_CLEAR_BUTTON
 ${UAD_USERNAME}             F11685
-${UAD_PASSWORD}             Laundry21
+${UAD_PASSWORD}             Laundry22
 ${UAD_USERNAME_FIELD}       //input[@type='text']
 ${UAD_PASSWORD_FIELD}       //input[contains(@type,'password')]
 
