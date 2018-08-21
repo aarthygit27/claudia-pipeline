@@ -203,6 +203,11 @@ Fill Required Information For Telia Yritysinternet
     Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ATTRIBUTE_EDIT_WINDOW}//a[text()[contains(.,'Product Configuration')]]
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Select From List By Value   ${xpath}//select    1
+    ${visible}=     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Keyword And Return Status   Element Should Be Visible   ${xpath}//label[text()[contains(.,'Sopimusaika')]]/abbr[@title='required']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ATTRIBUTE_EDIT_WINDOW}//span[text()='Telia Yritysinternet']
+    Run Keyword Unless      ${visible}      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ATTRIBUTE_EDIT_WINDOW}//a[text()[contains(.,'Product Configuration')]]
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
+    ...         20s   1s    Select From List By Value   ${xpath}//select    1
 
 Fill Required Information For Telia Yritysinternet Langaton
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
