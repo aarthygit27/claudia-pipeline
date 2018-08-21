@@ -169,6 +169,7 @@ Fill Missing Required Information
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //button[@title='Details']
     Wait Until Keyword Succeeds     30s     1s      Run Keyword     Fill Required Information For ${PRODUCT}
     Wait Until Keyword Succeeds     30s     1s      Wait Until Filled Information Is Recognized (CPQ)
+    Sleep   5
     Close Missing Information Popup (CPQ)
     [Teardown]      Run Keyword And Ignore Error      Run Inside Iframe    ${OPPORTUNITY_FRAME}     Click Element   ${CLOSE_BUTTON}
 
