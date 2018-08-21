@@ -145,7 +145,7 @@ Click View Quote And Go Back To CPQ
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${CPQ_CREATE_ORDER}     15s
 
 Close Missing Information Popup (CPQ)
-    sleep 5
+    Sleep 5
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds
     ...         20s   1s    Click Element   ${CLOSE_BUTTON}
     # For some strange reason clicking the "close" can result in another load and the close button needs to be pressed a second time
