@@ -23,7 +23,8 @@ ${DEFAULT_COUNTRY_UPDATED}                  Sweden
 ${DEFAULT_BUSINESS_CARD_TITLE}              Chief of Chiefs
 ${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}      Slave of Slaves
 ${DEFAULT_GENDER}                           Male
-${DEFAULT_TEST_ACCOUNT}                     Gavetec Oy
+#${DEFAULT_TEST_ACCOUNT}                     Gavetec Oy
+${DEFAULT_TEST_ACCOUNT}                     Aacon Oy
 ${DEFAULT_B2O_TEST_ACCOUNT}                 Elisa Oyj – B2O Customer
 # ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}         2030101-1     # Juleco
 ${DEFAULT_TEST_ACCOUNT_BUSINESS_ID}         0750491-4       # Gavetec Oy
@@ -39,5 +40,5 @@ ${DEFAULT_SALES_ROLE_UPDATED}               Business Contact
 ${DEFAULT_MARKETING_SMS_PERMISSION_UPDATED}  Permit
 ${DEFAULT_3RD_PARTY_CONTACT_UPDATED}        Yes
 ${DEFAULT_EVENT_TYPE}                       Meeting
-${DEFAULT_EVENT_REASON}                     New Customer
+${DEFAULT_EVENT_REASON}                     New Customer / Contact
 

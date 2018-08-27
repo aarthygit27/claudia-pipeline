@@ -1622,14 +1622,15 @@ Update Description, Customer Business Goals, and Customer Business Challenges fi
     #Run Inside Iframe   ${frame}    Wait Until Element Is Not Visible       //button[text()='Save' and not(contains(@id,'saveList'))]   20s
     Set Test Variable   ${SALES_PLAN_DESCRIPTION}       ${rand_string}
 
-Update meeting status to Done and Save
-    [Documentation]     An Error is expected from this keyword. The meeting outcome is not yet set so it should complain about it.
+Update meeting status to Done
+   # [Documentation]     An Error is expected from this keyword. The meeting outcome is not yet set so it should complain about it.
+    [Documentation]     The validation for meeting outcome is not expected, hence updating the script
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}    Click Edit Button
     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
     Run Inside Iframe   ${frame}    Select Value For Attribute      Meeting Status    Done
-    Run Inside Iframe   ${frame}    Click Bottom Save Button
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[@class='errorMsg' and text()[contains(.,'Please select a value in the Meeting Outcome field')]]   10s
+    #Run Inside Iframe   ${frame}    Click Bottom Save Button
+    #Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[@class='errorMsg' and text()[contains(.,'Please select a value in the Meeting Outcome field')]]   10s #updated per DEO-53 Meeting outcome not mandotory
 
 Update Opportunity Close Date And Close Reason
     [Arguments]     ${days}=2       ${reason}=09 Customer Postponed
@@ -1727,7 +1728,7 @@ Verify That Contact Person Information is Correct
 Verify That Description And WIG Areas Are Correct
     ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
     Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='Glory']/following-sibling::td//img[@title='Checked']
+    Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='DaaS']/following-sibling::td//img[@title='Checked']
 
 Verify That Error Message Is Not Displayed
     [Documentation]    Uses detailed field message xpath as default,

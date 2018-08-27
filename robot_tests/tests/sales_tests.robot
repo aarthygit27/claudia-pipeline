@@ -111,7 +111,7 @@ Quick actions: create Meeting
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Item For Account    New Event
-    Fill Event data     type=Meeting    reason=New Customer
+    Fill Event data     type=Meeting    reason=New Customer / Contact #updated per DEO-53
     Click Create Event Button
     Verify That Event Is Created
     Go To Event
@@ -126,12 +126,12 @@ Quick actions: create Customer Call
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Item For Account    New Event
-    Fill Event Data     type=Customer Call    reason=Booking
+    Fill Event Data     type=Customer Call    reason=Solution Design
     Click Create Event Button
     Verify That Event Is Created
     Go To Event
     Edit Event Description and WIG Areas
-    Verify That Event Has Correct Data      Customer Call   Booking
+    Verify That Event Has Correct Data      Customer Call   Solution Design
     Verify That Description And WIG Areas Are Correct
     # It will become unnecessarily troublesome to create logic for the update test
     # to check whether the event is a customer call or meeting, so just don't put
@@ -152,7 +152,7 @@ Meeting/Customer Call: Update meeting to Done
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Create New Event If Necessary
     Go To Event
-    Update meeting status to Done and Save
+    Update meeting status to Done
     Add Meeting Outcome and Save
     Verify That Event Has Correct Data
 
