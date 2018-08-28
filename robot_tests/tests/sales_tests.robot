@@ -757,7 +757,7 @@ Close active opportunity
 Create Test Account With Admin User
     [Arguments]     ${type}
     Open Browser And Go To Login Page
-    Login to Salesforce as System Administrator   preprod
+    Login to Salesforce as System Administrator   merge
     Go To Sales Application And Close All Tabs
     Open Accounts
     Create New Account      Group   Test Group Account
@@ -946,8 +946,8 @@ Verify That Business Account Attributes Are Named Right
 Verify That Contact Person Attributes Are Named Right
     Verify That Record Contains Attribute     Contact ID
     Verify That Record Contains Attribute     Preferred Contact Channel
-    Verify That Record Contains Attribute     Contact Owner
-    Verify That Record Contains Attribute     Language
+    #Verify That Record Contains Attribute     Contact Owner   -- updated per Bug BQA-6127
+    Verify That Record Contains Attribute     Communication Language
     Verify That Record Contains Attribute     Name
     Verify That Record Contains Attribute     Mobile
     Verify That Record Contains Attribute     Account Name
@@ -963,4 +963,4 @@ Verify That Contact Person Attributes Are Named Right
     Verify That Record Contains Attribute     Office Name
     Verify That Record Contains Attribute     Address
     Verify That Record Contains Attribute     External Address
-    Verify That Record Contains Attribute     Multibella System ID
+    #Verify That Record Contains Attribute     Multibella System ID -- updated per Bug BQA-6127
