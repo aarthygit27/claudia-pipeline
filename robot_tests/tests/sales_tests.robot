@@ -105,13 +105,13 @@ Quick actions: Create task
     Open Todays Page
     Created Task Should Be Visible
 
-Quick actions: create Meeting
+Quick actions: create Meeting #updated per DEO-53
     [Tags]      BQA-17   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
     Open Details Tab At Account View
     Click New Item For Account    New Event
-    Fill Event data     type=Meeting    reason=New Customer / Contact #updated per DEO-53
+    Fill Event data     type=Meeting    reason=New Customer / Contact
     Click Create Event Button
     Verify That Event Is Created
     Go To Event

@@ -112,5 +112,5 @@ ${SAVE_ORDER_BUTTON}                        //.[contains(text(), 'Order Detail')
 ${NEW_EVENT_CONTACT_PERSON_FIELD}           //div[contains(@class,'activeTemplate')]//input[@title='Name' and contains(@id,'evt')]
 ${NEW_EVENT_ACCOUNT_FIELD}                  //div[contains(@class,'activeTemplate')]//input[@title='Related To' and contains(@id,'evt')]
 # ${NEW_EVENT_DESCRIPTION_FIELD}              //div[contains(@class,'activeTemplate')]//td[./label[text()='Description']]/following-sibling::td/textarea
-${NEW_EVENT_WIG_GLORY_FIELD}                //td[./label[text()='DaaS']]/following-sibling::td/input #DEO-53 WIG Area remaned into Focus Areas and list updated
+${NEW_EVENT_WIG_GLORY_FIELD}                //td[./label[text()='DaaS']]/following-sibling::td/input
 # ${NEW_TASK_DUE_DATE_FIELD}                  //div[contains(@class,'activeTemplate')]//div[./label[text()='Due Date']]/following-sibling::div//input
