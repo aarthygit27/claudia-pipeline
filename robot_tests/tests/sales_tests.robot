@@ -899,12 +899,14 @@ Basic Account Information Is Visible On Top Bar
     Top Bar Should Have     Opportunities Open
     Top Bar Should Have     Telia Customer ID
     Top Bar Should Have     Legal Status
-    Click Element   ${COLLAPSE_TOP_BAR}
+    Mouse Over      ${EXPAND_TOP_BAR}
+    Click Element   ${EXPAND_TOP_BAR_HOVER}
 
 Basic B2O Account Information Is Visible On Top Bar
     Expand Top Bar If Necessary
     Top Bar Should Have     Account Name
     Top Bar Should Have     Account Owner
+    Mouse Over      ${COLLAPSE_TOP_BAR}
     Click Element   ${COLLAPSE_TOP_BAR}
 
 Verify That Business Account Attributes Are Named Right

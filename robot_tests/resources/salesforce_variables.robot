@@ -13,9 +13,12 @@ ${ACCOUNT_FRAME}                            //div[contains(@id,'scc-pt')]${IFRAM
 ${OPPORTUNITY_FRAME}                        //div[contains(@id,'scc-st')]${IFRAME}
 
 ${TOP_BAR}                                  //div[contains(@class,'workspace_context')]//table
-${EXPAND_TOP_BAR}                           //div[contains(@class,'x-layout-mini-north') and not(contains(@class,'custom-logo'))]
-${COLLAPSE_TOP_BAR}                         //div[contains(@class,'x-layout-split-north') and not(contains(@id,'ServiceDesk'))]
-
+#${EXPAND_TOP_BAR}                           //div[contains(@class,'x-layout-mini x-layout-mini-north x-layout-mini-over') and not(contains(@class,'custom-logo'))]
+${EXPAND_TOP_BAR}                           //div[contains(@class,'x-layout-mini x-layout-mini-north')]
+${EXPAND_TOP_BAR_HOVER}                     //div[contains(@class,'x-layout-mini x-layout-mini-north x-layout-mini-over')]
+#${COLLAPSE_TOP_BAR}                         //div[contains(@class,'x-layout-mini x-layout-mini-north x-layout-mini-over') and not(contains(@id,'ServiceDesk'))]
+#${COLLAPSE_TOP_BAR}                          //div[contains(@class,'x-layout-split-north') and not(contains(@id,'ServiceDesk'))]
+#${COLLAPSE_TOP_BAR_HOVER}                    //div[contains(@class,'x-layout-split-north') and not(contains(@id,'ServiceDesk'))]
 ### Credentials
 #${TEST_ENVIRONMENT}                         preprod
 ${TEST_ENVIRONMENT}                         merge
@@ -27,6 +30,11 @@ ${B2B_DIGISALES_MANAGER}                    digimngr@teliacompany.com.${TEST_ENV
 ${B2O_DIGISALES_USER}                       b2ouser@teliacompany.com.preprod
 ${PASSWORD}                                 PahaPassu2
 ${PASSWORD2}                                PahaPassu1
+
+#API Tests- APIgee Integration
+${TEST_ENV}                                 test
+${UAT_ENV}                                  uat
+
 
 # QUICKACTIONFIELD is an invalid xpath on its own. Needs to be completed with another `]` after the variable has been put
 ${ACTIVETEMPLATE_FIELD}                     //div[contains(@class,'activeTemplate')]

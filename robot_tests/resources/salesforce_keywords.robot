@@ -814,7 +814,9 @@ Expand Top Bar If Necessary
     Run Keyword If      ${top_bar_visible}      Return From Keyword
     Wait Until Page Contains Element    ${EXPAND_TOP_BAR}   10s
     Mouse Over      ${EXPAND_TOP_BAR}
-    Click Element   ${EXPAND_TOP_BAR}
+    Click Element   ${EXPAND_TOP_BAR_HOVER}
+#    Set Focus To Element    ${EXPAND_TOP_BAR_HOVER}
+#    Simulate Event    ${EXPAND_TOP_BAR_HOVER}  Click
     Wait Until Page Contains Element    ${TOP_BAR}
 
 Extract MuBe CaseID From Opportunity

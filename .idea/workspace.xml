@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b287452c-1c33-4bba-887c-1c010e12bf7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot_tests/tests/sales_tests.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/tests/sales_tests.robot" afterDir="false" />
     </list>
@@ -16,90 +18,51 @@
     <session id="407572207">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="robot" value="9" />
+          <entry key="py" value="2" />
+          <entry key="robot" value="19" />
+          <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Robot file" value="8" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="Python" value="2" />
+          <entry key="Robot file" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="robot" value="365" />
+          <entry key="py" value="1461" />
+          <entry key="robot" value="930" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Robot file" value="363" />
+          <entry key="Python" value="1461" />
+          <entry key="Robot file" value="928" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
-              <caret line="114" column="100" selection-start-line="114" selection-start-column="100" selection-end-line="114" selection-end-column="100" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="210" column="58" lean-forward="true" selection-start-line="210" selection-start-column="58" selection-end-line="210" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/tests/sanity_check.robot">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_tests.robot">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/resources/common.robot">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="38" column="20" selection-start-line="38" selection-end-line="38" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/resources/common_variables.robot">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="47">
-              <caret line="4" column="59" lean-forward="true" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="59" />
+            <state relative-caret-position="593">
+              <caret line="30" column="54" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -107,8 +70,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="780" column="79" selection-start-line="780" selection-start-column="54" selection-end-line="780" selection-end-column="79" />
+            <state relative-caret-position="8484">
+              <caret line="560" selection-start-line="560" selection-end-line="560" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="315" column="50" lean-forward="true" selection-start-line="315" selection-start-column="50" selection-end-line="315" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_tests.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="349">
+              <caret line="95" column="23" lean-forward="true" selection-start-line="95" selection-start-column="23" selection-end-line="95" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/robot_tests/tests/products_tests.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="483">
+              <caret line="53" column="24" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -117,25 +107,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Wait Until Keyword Succeeds</find>
-      <find>Wait Until Filled Information Is Recognized (CPQ)</find>
-      <find>Fill Event data</find>
-      <find>TEST_EVENT_SUBJECT</find>
-      <find>//td[text()='Glory']</find>
-      <find>reason</find>
-      <find>${reason}</find>
-      <find>Verify That Event Has Correct Data</find>
-      <find>Go To Salesforce and Login</find>
-      <find>DEFAULT_TEST_ACCOUNT</find>
-      <find>TEST_GROUP_ACCOUNT_NAME</find>
-      <find>WIG</find>
-      <find>Verify That Description And WIG Areas Are Correct</find>
-      <find>sanity_check</find>
-      <find>GROUP_ACCOUNT_NAME</find>
-      <find>Update meeting status to Done and Save</find>
-      <find>Close Missing Information Popup (CPQ</find>
-      <find>Update meet ting statuso Done and Save</find>
-      <find>Get Date From Future</find>
       <find>TEST_PASSIVE_ACCOUNT</find>
       <find>Add Meeting Outcome and Save</find>
       <find>BQA-40</find>
@@ -145,8 +116,27 @@
       <find>DEFAULT_TEST_CONTACT</find>
       <find>Verify That Contact Person Attributes Are Named Right</find>
       <find>Edit Event Description and WIG Areas</find>
-      <find>NEW_EVENT_WIG_GLORY_FIELD</find>
       <find>BQA-17</find>
+      <find>Verify That Business Account Attributes Are Named Right</find>
+      <find>NEW_EVENT_WIG_GLORY_FIELD</find>
+      <find>Basic Account Information Is Visible On Top Bar</find>
+      <find>Expand Top Bar If Necessary</find>
+      <find>//div[contains(@class,'x-layout-mini x-layout-mini-north x-layout-mini-over') and not(contains(@class,'custom-logo'))]</find>
+      <find>authorization</find>
+      <find>Fill Mandatory Opportunity Information</find>
+      <find>Create New Opportunity For Customer</find>
+      <find>Create Unique Name</find>
+      <find>OPPORTUNITY_NAME</find>
+      <find>date</find>
+      <find>ngsf_ddm</find>
+      <find>isoformat</find>
+      <find>Update Request ULM</find>
+      <find>iso</find>
+      <find>ulmUserId</find>
+      <find>Microsoft Office 365</find>
+      <find>Select Sales Type For Order (CPQ)</find>
+      <find>SalesType</find>
+      <find>sanity_check</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -156,19 +146,22 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/robot_tests/resources/common_variables.robot" />
-        <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sanity_check.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords_lib.py" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" />
+        <option value="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_tests.robot" />
-        <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2359" />
-    <option name="y" value="51" />
-    <option name="width" value="1022" />
-    <option name="height" value="718" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1920" />
+    <option name="width" value="1680" />
+    <option name="height" value="1032" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -236,10 +229,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1911" y="-9" width="1698" height="1068" extended-state="6" />
+    <frame x="1920" y="0" width="1680" height="1032" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17565112" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -262,27 +255,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/common.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="38" column="20" selection-start-line="38" selection-end-line="38" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/tests/sanity_check.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="210" column="58" lean-forward="true" selection-start-line="210" selection-start-column="58" selection-end-line="210" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/common_variables.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="47">
@@ -290,24 +262,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot">
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/oauth.txt.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="780" column="79" selection-start-line="780" selection-start-column="54" selection-end-line="780" selection-end-column="79" />
+        <state>
+          <caret selection-end-line="3" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_tests.robot">
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_lib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="40" />
+        <state relative-caret-position="252">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/common.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" column="50" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="14" column="45" lean-forward="true" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="182" column="8" selection-start-line="182" selection-start-column="8" selection-end-line="182" selection-end-column="8" />
+          <folding>
+            <marker date="1536741171067" expanded="true" signature="4891:5047" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/API_tests.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="35" column="22" lean-forward="true" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-13302" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/sanity_check.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/products_tests.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="53" column="24" selection-start-line="53" selection-start-column="4" selection-end-line="53" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8484">
+          <caret line="560" selection-start-line="560" selection-end-line="560" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="114" column="100" selection-start-line="114" selection-start-column="100" selection-end-line="114" selection-end-column="100" />
+        <state relative-caret-position="593">
+          <caret line="30" column="54" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="315" column="50" lean-forward="true" selection-start-line="315" selection-start-column="50" selection-end-line="315" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_tests.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="95" column="23" lean-forward="true" selection-start-line="95" selection-start-column="23" selection-end-line="95" selection-end-column="23" />
         </state>
       </provider>
     </entry>
