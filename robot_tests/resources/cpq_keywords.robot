@@ -308,8 +308,8 @@ Select Sales Type For Order (CPQ)
     Return From Keyword If    not ${status}
     ...     AND         Return From
     #...     return document.evaluate("count(//tr//select[contains(@class,'slds-select slds-required')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
+   ${length}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Execute Javascript
     ...     return document.evaluate("count(//tr//select[contains(@ng-model,'p.SalesType')])", document, null, XPathResult.ANY_TYPE, null).numberValue;
-    ${length}=      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Execute Javascript
     Run Keyword If  '${length}'=='1'  Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Label   //select[contains(@ng-model,'p.SalesType')]     New Money-New Services
     Run Keyword If  '${length}'=='1'   Return From Keyword
     :FOR   ${i}     IN RANGE    ${length}

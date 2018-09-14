@@ -1,6 +1,7 @@
 *** Variables ***
 ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
+${LOGIN_PAGE_merge}                         https://telia-fi--merge.my.salesforce.com/
 ${IFRAME}                                   //iframe
 ${NAVIGATORTAB}                             //li[contains(@id, 'navigatortab__scc-pt')]
 ${LOGOUT_BUTTON}                            //a[@title='Logout']

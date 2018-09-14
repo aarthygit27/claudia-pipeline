@@ -11,22 +11,22 @@ Test Timeout        15 minutes
 
 *** Test Cases ***
 Sanity Check - Microsoft Office 365
-    [Tags]      sanity_check
+    [Tags]      sanity_check_error
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Microsoft Office 365    Microsoft Office 365
 
 Sanity Check - Telia Yhteys kotiin yrityksille
-    [Tags]       sanity_check
+    [Tags]       sanity_check_error
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Yhteys kotiin yrityksille    Kodin Netti yrityksille
 
 Sanity Check - Maksupääte
-    [Tags]         sanity_check
+    [Tags]         sanity_check_error
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Maksupääte    Maksupäätepalvelu
 
 Sanity Check - Verkkotunnuspalvelu
-    [Tags]      sanity_check 
+    [Tags]      sanity_check_error
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
     Telia Verkkotunnuspalvelu    Verkkotunnuspalvelu
 

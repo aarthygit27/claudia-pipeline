@@ -1206,11 +1206,16 @@ Login Page Should Be Open
     Wait Until Element Is Visible        id=username     10 seconds
     Wait Until Element Is Visible        id=password     10 seconds
 
+Logout Page Should Be Open
+    Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE_${TEST_ENVIRONMENT}}
+    Wait Until Element Is Visible        id=username     10 seconds
+    Wait Until Element Is Visible        id=password     10 seconds
+
 Logout From Salesforce
     Click Element       id=userNavButton
     Click Element       xpath=${LOGOUT_BUTTON}
     Run Keyword And Ignore Error    Dismiss Alert
-    Login Page Should Be Open
+    Logout Page Should Be Open
 
 Main Frame Should Have Correct Info
     ${frame}=   Get Account Tab Iframe Xpath    Dashboard
