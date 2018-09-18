@@ -80,7 +80,7 @@ Sales Admin: Add new owner for Group Account
     [Teardown]      Pause Execution
 
 UI: 360 view of customer
-    [Tags]      BQA-12   sanity_check_error
+    [Tags]      BQA-12   error_sanity_check
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
     Basic Account Information Is Visible On Top Bar
