@@ -23,7 +23,7 @@ Sanity Check - Telia Yhteys kotiin yrityksille
 Sanity Check - Maksupääte
     [Tags]         sanity_check_error
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia Maksupääte    Maksupäätepalvelu
+    Muutos Telia Maksupääte    Maksupäätepalvelu
 
 Sanity Check - Verkkotunnuspalvelu
     [Tags]      sanity_check_error

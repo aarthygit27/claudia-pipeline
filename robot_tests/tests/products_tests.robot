@@ -31,7 +31,7 @@ ${MUBE_CASE_ID}     1323424
 #     ${PRODUCT}
 
 Test Salesforce Address Validation And Availability Check
-    [Tags]      BQA-10      BQA-1842    smoke
+    [Tags]      BQA-10      BQA-1842    smoke1
     [Timeout]   10 minutes
     [Template]     Availability Check Test Case
     00510   Helsinki    Telekatu            1
@@ -61,7 +61,7 @@ Telia Yhteys kotiin yrityksille
 Maksupääte
     [Tags]      BQA-58
     [Documentation]    First parameter parameter is detailed product type, second parameter is common product name (title)
-    Telia Maksupääte    Maksupäätepalvelu
+    Muutos Telia Maksupääte    Maksupäätepalvelu
 
 Verkkotunnuspalvelu
     [Tags]      BQA-59

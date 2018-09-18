@@ -238,19 +238,21 @@ Fill Required Information For Microsoft Office 365
 
 Handle Credit Score (CPQ)
     [Documentation]     Wait until either a success message or error message is visible and then either click "next" or "return to quote"
-    Run Keyword And Ignore Error  Wait Until Keyword Succeeds   60s   3s   Page Should Contain   Credit Score Check Passed
+    #17.9 Run Keyword And Ignore Error  Wait Until Keyword Succeeds   60s   3s   Page Should Contain   Credit Score Check Passed
     #${xpath}=   Set Variable    //div[${CREDIT_SCORE_SUCCESS} or ${CREDIT_SCORE_FAILURE}]
     #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   ${xpath}    60s
     #${credit_score_passed}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}     Element Should Be Visible   //div[${CREDIT_SCORE_SUCCESS}]
-    ${credit_score_passed}=   Run Keyword And Return Status  Page Should Contain  Credit Score Check Passed
+    #17.9 ${credit_score_passed}=   Run Keyword And Return Status  Page Should Contain  Credit Score Check Passed
     #Sleep   10s
     #Page contains several next buttons, not all are visible. we want second Next button here.
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}   Wait Until Page Contains    Next
-    @{element_list}    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get WebElements   ${ CREDIT_SCORE_NEXT_BUTTON}
-    ${second_elem}  Get From List  ${element_list}  1
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}   Run Keyword And Ignore Error   Click Element  ${second_elem}
-    Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
-    Run Keyword If      ${credit_score_passed}      Return From Keyword
+    #17.9 Run Inside Iframe   ${OPPORTUNITY_FRAME}   Wait Until Page Contains    Next
+    #17.9 @{element_list}    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get WebElements   ${ CREDIT_SCORE_NEXT_BUTTON}
+    #17.9 ${second_elem}  Get From List  ${element_list}  1
+    #17.9 Run Inside Iframe   ${OPPORTUNITY_FRAME}   Run Keyword And Ignore Error   Click Element  ${second_elem}
+    #17.9Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
+    #17.9Run Keyword If      ${credit_score_passed}      Return From Keyword
+    Click View Quote (CPQ)  # And Go Back To CPQ
+    Return From Keyword
     Return To Quote (CPQ)
 
 Load More Products (CPQ)
