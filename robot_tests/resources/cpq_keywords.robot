@@ -132,8 +132,8 @@ Click View Record (CPQ)
     # Wait Until Keyword Succeeds    5 s     1 s      Select Window    new
 
 Click View Quote (CPQ)
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        View Quote      20s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled        View Quote      20s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        View Quote      40s
+    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Enabled        View Quote      40s
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     30s     1s     Click Element    View Quote
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //h1[@class='pageType' and text()='Quote']
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[@id='topButtonRow']//input[@title='CPQ']
@@ -251,7 +251,7 @@ Handle Credit Score (CPQ)
     #17.9 Run Inside Iframe   ${OPPORTUNITY_FRAME}   Run Keyword And Ignore Error   Click Element  ${second_elem}
     #17.9Run Keyword If      ${credit_score_passed}      Click View Quote (CPQ)  # And Go Back To CPQ
     #17.9Run Keyword If      ${credit_score_passed}      Return From Keyword
-    Click View Quote (CPQ)  # And Go Back To CPQ
+    Click View Quote (CPQ)  #Wait Until Page Contains Element    //a[contains(text(),'View Quote')]  60s
     Return From Keyword
     Return To Quote (CPQ)
 
@@ -276,7 +276,7 @@ Return To Quote (CPQ)
 Search And Add Product To Cart (CPQ)
     [Arguments]    ${target_product}=${PRODUCT}     ${nth}=1
     Search For Product (CPQ)    ${target_product}
-    Wait Until Keyword Succeeds     30s    1s   Select Exact Product                    ${target_product}
+    Wait Until Keyword Succeeds     50s    1s   Select Exact Product                    ${target_product}
     Wait Until Product Appears In Cart (CPQ)      ${target_product}     ${nth}
 
 Select Exact Product

@@ -685,7 +685,7 @@ Create New Contract For Customer
 Create New Opportunity For Customer
     [Arguments]     ${opport_name}=${EMPTY}
     ...             ${stage}=Analyse Prospect
-    ...             ${days}=1
+    ...             ${days}=2
     ...             ${expect_error}=${FALSE}
     Open Details Tab At Account View
     Click Feed Button
@@ -1848,7 +1848,7 @@ Verify That Opportunity Is Saved And Data Is Correct
     ...    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Close Date:')]/following-sibling::span[contains(text(), '${OPPORTUNITY_CLOSE_DATE}')]
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element   ${oppo_name}
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element   ${opportunity_name_related_to_account}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element        ${opportunity_close_date_related_to_account}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${opportunity_close_date_related_to_account}
 
 Verify That Opportunity Status Has Been Changed
     [Arguments]     ${stage}    ${status}

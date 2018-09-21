@@ -31,7 +31,7 @@ ${MUBE_CASE_ID}     1323424
 #     ${PRODUCT}
 
 Test Salesforce Address Validation And Availability Check
-    [Tags]      BQA-10      BQA-1842    smoke1
+    [Tags]      BQA-10      BQA-1842    smoke
     [Timeout]   10 minutes
     [Template]     Availability Check Test Case
     00510   Helsinki    Telekatu            1

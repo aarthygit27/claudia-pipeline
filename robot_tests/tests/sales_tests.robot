@@ -419,12 +419,15 @@ Create/Update new Contact Person in TellU
 
 # Contact persons added address can not saved without City populated
 #     [Tags]      BQA-1809    wip
+#    Go To Salesforce and Login
+#    Create New Contact Person For Customer From Quick Action
+#    Check that contact has been saved and can be found under proper Account
 #     Go To Salesforce and Login
 #     Go to Account    ${DEFAULT_TEST_ACCOUNT}
 #     Open Details and choose New Contact from More tab
 #     Enter mandatory information and save new contact    salutation=--None--
 #     Check that contact has been saved and can be found under proper Account
-#     # Basically BQA-1 until this point
+     # Basically BQA-1 until this point
 #     Go To Account    Test ${TEST_CONTACT_PERSON_LAST_NAME}
 #     Edit Contact Person's Added Address
 #     # Todo: test once address is editable
