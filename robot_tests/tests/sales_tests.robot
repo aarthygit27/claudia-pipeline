@@ -96,7 +96,7 @@ Quick actions: Create task
     [Tags]      BQA-16   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click New Item For Account    New Task
     Fill Task Data
     Click Create Contact Person Button      # The same xapth for contact person creation and task creation
