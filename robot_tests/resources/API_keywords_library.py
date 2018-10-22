@@ -24,7 +24,7 @@ def API_authenticate():
     base64Key = 'R1lMckd2TUZsMjBIdW96QWZFdjBBMlJBNzdwTGNBeXI6WlQ2aHR0YzlNYzZVZUZPWg=='
     print 'base64Key'
     global token_json
-    token_url = "http://api-garden-test.teliacompany.com/oauth/client_credential/accesstoken?grant_type=client_credentials"
+    token_url = "https://api-garden-test.teliacompany.com:443/oauth/client_credential/accesstoken?grant_type=client_credentials"
     payload = {'grant_type': 'client_credentials', 'Authorization':"Basic "+ base64Key}
     headers = {}
     client_id = 'GYLrGvMFl20HuozAfEv0A2RA77pLcAyr'
@@ -49,7 +49,7 @@ def API_authenticate_ulm():
     base64Key = 'MHRHa3AwQXFBWTFiaUJ5THZlUWdud3J1S1NLYVRPV0E6dFFmMkdoNHdvN3pKY3pPQg=='
     print 'base64Key'
     global token_json_ulm
-    token_url = "http://api-garden-test.teliacompany.com/oauth/client_credential/accesstoken?grant_type=client_credentials"
+    token_url = "https://api-garden-test.teliacompany.com:443/oauth/client_credential/accesstoken?grant_type=client_credentials"
     payload = {'grant_type': 'client_credentials', 'Authorization':"Basic "+ base64Key}
     headers = {}
     client_id = '0tGkp0AqAY1biByLveQgnwruKSKaTOWA'
@@ -74,7 +74,7 @@ def API_authenticate_ngsf_ddm():
     base64Key = 'SEQ4Q0VUeXQyS25nalV3bmYyV2pCa3puZ3dlV0xHb0s6VE1mMElKaW5aQWd3NU9FdA=='
     print 'base64Key'
     global token_json_ngsf_ddm
-    token_url = "http://api-garden-uat.teliacompany.com/oauth/client_credential/accesstoken?grant_type=client_credentials"
+    token_url = "https://api-garden-uat.teliacompany.com:443/oauth/client_credential/accesstoken?grant_type=client_credentials"
     payload = {'grant_type': 'client_credentials', 'Authorization':"Basic "+ base64Key}
     headers = {}
     client_id = 'XVwNexDnaLZgFcRvJmWz90UTYKbtGGWO'
@@ -96,7 +96,7 @@ def API_authenticate_ngsf_ddm():
     return access_token_response.status_code
 
 def API_get_credit_scoring():
-    url = "https://api-garden-test.teliacompany.com/v1/finland/creditscore"
+    url = "https://api-garden-test.teliacompany.com:443/v1/finland/creditscore"
 	
     jsonni = {"creditScoreRequest":{"inquirer":"B2B DigiSales", "originalInquiringSystem":"Claudia", "usage":"1", "businessId":"2299480-0", "language":"en", "appliedAmount":0, "version":"3", "productCategory":"BroadbandLowRisk"}, "header":{"sender":{"name":"PH10097", "id":123}, "timestamp": dt.datetime.now().isoformat()}}
     headers = {'Content-Type':'application/json', 'Authorization': 'Bearer ' + token_json['access_token'], 'traceId': uuid.uuid4().hex}
@@ -111,7 +111,7 @@ def API_get_credit_scoring():
 
 
 def Create_new_user_existing_company_ULM():
-    url = "https://api-garden-test.teliacompany.com/v1/finland/ULMUserManagement/createCompanyUser"
+    url = "https://api-garden-test.teliacompany.com:443/v1/finland/ULMUserManagement/createCompanyUser"
     global  ulm_parsed_response
     global ulm_user_id
     jsonni = {
@@ -183,7 +183,7 @@ def Create_new_user_existing_company_ULM():
         return r.status_code
 
 def Update_request_ulm():
-    url = "https://api-garden-test.teliacompany.com/v1/finland/ULMUserManagement/updateCompanyUser"
+    url = "https://api-garden-test.teliacompany.com:443/v1/finland/ULMUserManagement/updateCompanyUser"
     jsonni = {
     "requestInfo":{
         "actionDate": "1518817660660",
@@ -253,7 +253,7 @@ def Update_request_ulm():
         return r.status_code
 
 def Create_service_order_DDM():
-    url = "https://api-garden-uat.teliacompany.com/v1/finland/service/order"
+    url = "https://api-garden-uat.teliacompany.com:443/v1/finland/service/order"
     jsonni = {
   "serviceOrderRequest": {
     "serviceOrder": [
@@ -1182,7 +1182,7 @@ def Create_service_order_DDM():
         return r.status_code
 
 def Create_service_order_NGSF():
-    url = "https://api-garden-uat.teliacompany.com/v1/finland/service/order"
+    url = "https://api-garden-uat.teliacompany.com:443/v1/finland/service/order"
     jsonni = {
   "serviceOrderRequest": {
     "serviceOrder": [{
