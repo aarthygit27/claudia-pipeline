@@ -90,7 +90,7 @@ UI: 360 view of customer
     Open Dashboard Tab At Account View
     Main Frame Should Have Correct Info
     Open Sales Plan Tab At Account View
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
 
 Quick actions: Create task
     [Tags]      BQA-16   sanity_check
@@ -109,7 +109,7 @@ Quick actions: create Meeting #updated per DEO-53
     [Tags]      BQA-17   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click New Item For Account    New Event
     Fill Event data     type=Meeting    reason=New Customer / Contact
     Click Create Event Button
@@ -124,7 +124,7 @@ Quick actions: create Customer Call
     [Tags]      BQA-18   sanity_check
     Go To Salesforce and Login
     Go to Account       ${DEFAULT_TEST_ACCOUNT}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click New Item For Account    New Event
     Fill Event Data     type=Customer Call    reason=Solution Design
     Click Create Event Button
@@ -361,7 +361,7 @@ Check Attributes/Business Account are named right in SalesForce UI
     [Tags]      BQA-100   sanity_check
     Go To Salesforce And Login
     Go to Account    ${DEFAULT_TEST_ACCOUNT}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click Details Button
     Verify That Business Account Attributes Are Named Right
 
@@ -647,7 +647,7 @@ Quick actions: Create task (B2O)
     Login to Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
     Close All Tabs
     Go to Account       ${DEFAULT_B2O_TEST_ACCOUNT}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click New Item For Account    New Task
     Fill Task Data
     Click Create Contact Person Button      # The same xapth for contact person creation and task creation
@@ -691,7 +691,7 @@ UI: 360 view of customer (B2O)
     Open Dashboard Tab At Account View
     Main Frame Should Have Correct Info
     Open Sales Plan Tab At Account View
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
 
 Contact: Add new contact
     [Tags]      BQA-2688    B2O
@@ -820,7 +820,7 @@ Create New Event If Necessary
     ${event_exists}=    Run Keyword And Return Status    Should Not Be Empty    ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Set Test Variable       ${TEST_EVENT_SUBJECT}   ${TEST_EVENT_SUBJECT_FOR_UPDATE_TEST}
     Run Keyword If    ${event_exists}    Return From Keyword
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click New Item For Account    New Event
     Fill Event Data     type=${type}    reason=${reason}
     Click Create Event Button
