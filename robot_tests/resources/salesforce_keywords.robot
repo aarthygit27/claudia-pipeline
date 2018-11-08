@@ -691,7 +691,7 @@ Create New Opportunity For Customer
     ...             ${stage}=Analyse Prospect
     ...             ${days}=2
     ...             ${expect_error}=${FALSE}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click Feed Button
     Click New Item For Account      New Opportunity
     ${variable_exists}=    Run Keyword And Return Status     Variable Should Exist     ${PRODUCT}
@@ -1567,7 +1567,7 @@ Try to create a new contact person with a same name to
     Save New Contact Person And Expect Error    duplicate record
 
 Try To Create New Opportunity And It Should Fail
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Create New Opportunity For Customer     expect_error=${TRUE}
     Verify That Error Message Is Displayed
 
