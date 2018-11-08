@@ -311,10 +311,14 @@ Click Account Tab Button And It Should Stay Open
     ...                 tab so we need to wait for a moment to see if the tab stays active
     # Small resolutions have small arrows to navigate to different tabs
     Run Keyword And Ignore Error    Click Element   //div[contains(@class,'x-tab-scroller-${direction}')]
-    Click Element    //span[@class='tabText' and contains(text(), '${tab}')]
-    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
+#    Click Element    //span[@class='tabText' and contains(text(), '${tab}')]
+    Wait Until Page Contains Element   //a[@title='${tab}']     10s
+    Click Element    //a[@title='${tab}']
+#    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
+    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and  //a[@title='${tab}']
     Sleep    2
-    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
+#    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
+    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and //a[@title='${tab}']
 
 Click Add New Contact
     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${MORE_DROPDOWN_AT_DETAILS}
@@ -1084,7 +1088,7 @@ Go To Event
     ...                 need to be selected from an account. For other cases `Go to Account` should be used.
     [Arguments]     ${event}=${TEST_EVENT_SUBJECT}
     Log         Going to ${event}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Expand Item If Necessary    ${event}
     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //div/a[text()='${event}']
     ${frame}=       Get Account Tab Iframe Xpath    ${event}
