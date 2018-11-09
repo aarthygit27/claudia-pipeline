@@ -29,7 +29,7 @@ ${PRODUCT_MANAGER_USER}                     prodman@teliacompany.com.${TEST_ENVI
 ${B2B_DIGISALES_USER}                       b2bdigi@teliacompany.com.${TEST_ENVIRONMENT}
 ${B2B_DIGISALES_MANAGER}                    digimngr@teliacompany.com.${TEST_ENVIRONMENT}
 ${B2O_DIGISALES_USER}                       b2ouser@teliacompany.com.preprod
-${PASSWORD}                                 PahaPassu2
+${PASSWORD}                                 PahaPassu1
 ${PASSWORD2}                                PahaPassu1
 
 #API Tests- APIgee Integration
