@@ -312,8 +312,8 @@ Click Account Tab Button And It Should Stay Open
     # Small resolutions have small arrows to navigate to different tabs
     Run Keyword And Ignore Error    Click Element   //div[contains(@class,'x-tab-scroller-${direction}')]
 #    Click Element    //span[@class='tabText' and contains(text(), '${tab}')]
-    Wait Until Page Contains Element   //a[@title='${tab}']     10s
-    Click Element    //a[@title='${tab}']
+#9.11    Wait Until Page Contains Element   //a[@title='${tab}']     10s
+#9.11    Click Element    //a[@title='${tab}']
 #    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
     Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and  //a[@title='${tab}']
     Sleep    2
@@ -623,7 +623,7 @@ Create New Contact Person For Customer From Quick Action
     ...             ${phone_number}=${DEFAULT_PHONE}
     ...             ${salutation}=${DEFAULT_SALUTATION}
     Go To Account   ${customer}
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Click New Item For Account      New Contact
     Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
 
@@ -1792,7 +1792,7 @@ Verify That Opportunity Close Reason And Date Has Been Changed
 Verify That Opportunity Creation Succeeded
     Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     60 s
     Reload Page
-    Open Details Tab At Account View
+#    Open Details Tab At Account View
     Verify That Opportunity Is Saved And Data Is Correct
 
 Verify That Opportunity is Found From My All Open Opportunities
