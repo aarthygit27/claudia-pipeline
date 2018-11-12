@@ -255,921 +255,636 @@ def Update_request_ulm():
 def Create_service_order_DDM():
     url = "https://api-garden-uat.teliacompany.com:443/v1/finland/service/order"
     jsonni = {
-  "serviceOrderRequest": {
-    "serviceOrder": [
-      {
-        "serviceOrderItem": [
-          {
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "name": "TS_prod_H_DataCenter"
-              },
-              "id": "8025E000000HdV9QAK",
-              "description": "PS-HDC",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV9QAK"
-              }
+   "serviceOrderRequest":{
+      "serviceOrder":[
+         {
+            "serviceOrderItem":[
+               {
+                  "service":{
+                     "serviceState":"INACTIVE"
+                  },
+                  "requestedStartDate":"2018-07-30",
+                  "requestedCompletionDate":"2018-07-30",
+                  "product":{
+                     "productSpecification":{
+                        "productSpecCharacteristic":[
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"1"
+                                 }
+                              ],
+                              "name":"Quantity"
+                           }
+                        ],
+                        "name":"TS_prod_H_DataCenter"
+                     },
+                     "id":"80258000007SmvxAAC",
+                     "description":"PS-HDC",
+                     "commercialId":"HDC058779",
+                     "assetId":"02i5800000H3CddAAF"
+                  },
+                  "individual":[
+                     {
+                        "systemIdentification":{
+                           "name":"CLAUDIA",
+                           "id":""
+                        },
+                        "partyRole":{
+                           "partyRoleCategory":{
+                              "categoryName":""
+                           },
+                           "name":"PRIMARY_CONTACT"
+                        },
+                        "partyId":"0035800000ohlBlAAI",
+                        "organizationIdentification":{
+                           "id":"3001188943"
+                        },
+                        "individualName":[
+                           {
+                              "givenNames":"Tuomas",
+                              "formattedName":"Tuomas Partanen",
+                              "familyNames":"Partanen"
+                           }
+                        ],
+                        "contactMedium":[
+                           {
+                              "telephoneNumber":[
+                                 {
+                                    "type":"Mobile",
+                                    "phoneNumber":"+358504801753"
+                                 }
+                              ],
+                              "emailContact":[
+                                 {
+                                    "eMailAddress":"tuomas.partanen@teliacompany.com"
+                                 }
+                              ]
+                           }
+                        ]
+                     },
+                     {
+                        "systemIdentification":{
+                           "name":"CLAUDIA",
+                           "id":""
+                        },
+                        "partyRole":{
+                           "partyRoleCategory":{
+                              "categoryName":""
+                           },
+                           "name":"DELIVERY_CONTACT"
+                        },
+                        "partyId":"0035800000ohlBlAAI",
+                        "organizationIdentification":{
+                           "id":"3001188943"
+                        },
+                        "individualName":[
+                           {
+                              "givenNames":"Tuomas",
+                              "formattedName":"Tuomas Partanen",
+                              "familyNames":"Partanen"
+                           }
+                        ],
+                        "contactMedium":[
+                           {
+                              "telephoneNumber":[
+                                 {
+                                    "type":"Mobile",
+                                    "phoneNumber":"+358504801753"
+                                 }
+                              ],
+                              "emailContact":[
+                                 {
+                                    "eMailAddress":"tuomas.partanen@teliacompany.com"
+                                 }
+                              ]
+                           }
+                        ]
+                     }
+                  ],
+                  "action":"ADD"
+               },
+               {
+                  "serviceOrderItemRelationship":[
+                     {
+                        "type":"INCLUDED_BY",
+                        "id":"80258000007SmvxAAC"
+                     }
+                  ],
+                  "service":{
+                     "serviceState":"INACTIVE"
+                  },
+                  "requestedStartDate":"2018-07-30",
+                  "requestedCompletionDate":"2018-07-30",
+                  "product":{
+                     "productSpecification":{
+                        "productSpecCharacteristic":[
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"1"
+                                 }
+                              ],
+                              "name":"Quantity"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"Standard"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_PDUdefault"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"false"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_Energyprovider"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"Compartment 1"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_Secureroom"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"false"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_Cabinetreservation"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"6,5 kW"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_powercoolingcapacity52RU"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"false"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_CabinetClassified"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"Primary"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_purpose"
+                           }
+                        ],
+                        "name":"TS_prod_HDC_Cabinet52RU"
+                     },
+                     "id":"80258000007SmvwAAC",
+                     "description":"PS-Cabinet 52 RU",
+                     "commercialId":"RACK058780",
+                     "assetId":"02i5800000H3CdeAAF"
+                  },
+                  "note":{
+                     "text":""
+                  },
+                  "individual":[
+                     {
+                        "systemIdentification":{
+                           "name":"CLAUDIA",
+                           "id":""
+                        },
+                        "partyRole":{
+                           "partyRoleCategory":{
+                              "categoryName":""
+                           },
+                           "name":"PRIMARY_CONTACT"
+                        },
+                        "partyId":"0035800000ohlBlAAI",
+                        "organizationIdentification":{
+                           "id":"3001188943"
+                        },
+                        "individualName":[
+                           {
+                              "givenNames":"Tuomas",
+                              "formattedName":"Tuomas Partanen",
+                              "familyNames":"Partanen"
+                           }
+                        ],
+                        "contactMedium":[
+                           {
+                              "telephoneNumber":[
+                                 {
+                                    "type":"Mobile",
+                                    "phoneNumber":"+358504801753"
+                                 }
+                              ],
+                              "emailContact":[
+                                 {
+                                    "eMailAddress":"tuomas.partanen@teliacompany.com"
+                                 }
+                              ]
+                           }
+                        ]
+                     },
+                     {
+                        "systemIdentification":{
+                           "name":"CLAUDIA",
+                           "id":""
+                        },
+                        "partyRole":{
+                           "partyRoleCategory":{
+                              "categoryName":""
+                           },
+                           "name":"DELIVERY_CONTACT"
+                        },
+                        "partyId":"0035800000ohlBlAAI",
+                        "organizationIdentification":{
+                           "id":"3001188943"
+                        },
+                        "individualName":[
+                           {
+                              "givenNames":"Tuomas",
+                              "formattedName":"Tuomas Partanen",
+                              "familyNames":"Partanen"
+                           }
+                        ],
+                        "contactMedium":[
+                           {
+                              "telephoneNumber":[
+                                 {
+                                    "type":"Mobile",
+                                    "phoneNumber":"+358504801753"
+                                 }
+                              ],
+                              "emailContact":[
+                                 {
+                                    "eMailAddress":"tuomas.partanen@teliacompany.com"
+                                 }
+                              ]
+                           }
+                        ]
+                     }
+                  ],
+                  "action":"ADD"
+               },
+               {
+                  "serviceOrderItemRelationship":[
+                     {
+                        "type":"INCLUDED_BY",
+                        "id":"80258000007SmvxAAC"
+                     }
+                  ],
+                  "service":{
+                     "serviceState":"INACTIVE"
+                  },
+                  "requestedStartDate":"2018-07-30",
+                  "requestedCompletionDate":"2018-07-30",
+                  "product":{
+                     "productSpecification":{
+                        "productSpecCharacteristic":[
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"1"
+                                 }
+                              ],
+                              "name":"Quantity"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"Standard"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_12PDUtype"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"false"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_Energyprovider"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"Compartment 1"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_Secureroom"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"false"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_Cabinetreservation"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"1,6 kW"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_powercoolingcapacity12RU"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"false"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_CabinetClassified"
+                           },
+                           {
+                              "productSpecCharacteristicValue":[
+                                 {
+                                    "value":"Primary"
+                                 }
+                              ],
+                              "name":"TS_char_HDC_purpose"
+                           }
+                        ],
+                        "name":"TS_prod_HDC_Cabinet12RU"
+                     },
+                     "id":"80258000007SmvvAAC",
+                     "description":"PS-Cabinet 12 RU",
+                     "commercialId":"RACK058781",
+                     "assetId":"02i5800000H3CdfAAF"
+                  },
+                  "note":{
+                     "text":""
+                  },
+                  "individual":[
+                     {
+                        "systemIdentification":{
+                           "name":"CLAUDIA",
+                           "id":""
+                        },
+                        "partyRole":{
+                           "partyRoleCategory":{
+                              "categoryName":""
+                           },
+                           "name":"PRIMARY_CONTACT"
+                        },
+                        "partyId":"0035800000ohlBlAAI",
+                        "organizationIdentification":{
+                           "id":"3001188943"
+                        },
+                        "individualName":[
+                           {
+                              "givenNames":"Tuomas",
+                              "formattedName":"Tuomas Partanen",
+                              "familyNames":"Partanen"
+                           }
+                        ],
+                        "contactMedium":[
+                           {
+                              "telephoneNumber":[
+                                 {
+                                    "type":"Mobile",
+                                    "phoneNumber":"+358504801753"
+                                 }
+                              ],
+                              "emailContact":[
+                                 {
+                                    "eMailAddress":"tuomas.partanen@teliacompany.com"
+                                 }
+                              ]
+                           }
+                        ]
+                     },
+                     {
+                        "systemIdentification":{
+                           "name":"CLAUDIA",
+                           "id":""
+                        },
+                        "partyRole":{
+                           "partyRoleCategory":{
+                              "categoryName":""
+                           },
+                           "name":"DELIVERY_CONTACT"
+                        },
+                        "partyId":"0035800000ohlBlAAI",
+                        "organizationIdentification":{
+                           "id":"3001188943"
+                        },
+                        "individualName":[
+                           {
+                              "givenNames":"Tuomas",
+                              "formattedName":"Tuomas Partanen",
+                              "familyNames":"Partanen"
+                           }
+                        ],
+                        "contactMedium":[
+                           {
+                              "telephoneNumber":[
+                                 {
+                                    "type":"Mobile",
+                                    "phoneNumber":"+358504801753"
+                                 }
+                              ],
+                              "emailContact":[
+                                 {
+                                    "eMailAddress":"tuomas.partanen@teliacompany.com"
+                                 }
+                              ]
+                           }
+                        ]
+                     }
+                  ],
+                  "action":"ADD"
+               }
             ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Transferprovider"
+            "organization":[
+               {
+                  "systemIdentification":{
+                     "name":"AIDA",
+                     "id":"1510196"
                   },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_Secureroom"
+                  "place":[
+                     {
+                        "address":{
+                           "streetName":"ELIMÄENKATU 8",
+                           "postcode":"00510",
+                           "locality":"HELSINKI",
+                           "format":"PHYSICAL",
+                           "countryCode":"FI"
+                        }
+                     }
+                  ],
+                  "partyRole":{
+                     "name":"SUBSCRIBER"
                   },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Cabinetreservation"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity12RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity52RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_CabinetClassified"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_ClassifiedSpace"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_PDUdefault"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cab52assetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cab52commercialid"
-                      }
-                    ]
+                  "partyId":"0015800000io3MJAAY",
+                  "organizationName":[
+                     {
+                        "tradingName":"Test Customer Multibella BAC"
+                     }
+                  ],
+                  "businessIdIdentification":{
+                     "businessId":"6661025-8"
                   }
-                ],
-                "name": "TS_prod_HDC_Cabinet52RU_B2O"
-              },
-              "id": "8025E000000HdV6QAK",
-              "description": "PS-Cabinet 52 RU-B2O",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV6QAK"
-              }
+               }
             ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_12PDUtype"
+            "orderDate":"2018-06-27T05:53:59Z",
+            "individual":[
+               {
+                  "systemIdentification":{
+                     "name":"AIDA",
+                     "id":"1510196"
                   },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "Perus"
-                      }
-                    ],
-                    "name": "TS_char_HDC_52PDUtype"
+                  "partyRole":{
+                     "partyRoleCategory":{
+                        "categoryName":"OrderCreator"
+                     },
+                     "name":"EMPLOYEE"
                   },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_PDUdefault"
+                  "partyId":"0035800000ohlBlAAI",
+                  "organizationIdentification":{
+                     "id":"3001188943"
                   },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "pdu52assetid"
-                      }
-                    ]
+                  "individualName":[
+                     {
+                        "givenNames":"Tuomas",
+                        "formattedName":"Tuomas Partanen",
+                        "familyNames":"Partanen"
+                     }
+                  ],
+                  "contactMedium":[
+                     {
+                        "telephoneNumber":[
+                           {
+                              "type":"Mobile",
+                              "phoneNumber":"+358504801753"
+                           }
+                        ],
+                        "emailContact":[
+                           {
+                              "eMailAddress":"tuomas.partanen@teliacompany.com"
+                           }
+                        ]
+                     }
+                  ]
+               },
+               {
+                  "systemIdentification":{
+                     "name":"CLAUDIA",
+                     "id":""
                   },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "pdu52commercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_add52PDU"
-              },
-              "id": "8025E000000HdVAQA0",
-              "description": "PS-Additional PDU for 52 RU",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV6QAK"
-              }
+                  "partyRole":{
+                     "partyRoleCategory":{
+                        "categoryName":""
+                     },
+                     "name":"SALES_PERSON"
+                  },
+                  "partyId":"00558000001umjIAAQ",
+                  "organizationIdentification":{
+                     "id":"TELIA"
+                  },
+                  "individualName":[
+                     {
+                        "givenNames":"Tuomas",
+                        "formattedName":"Tuomas Partanen",
+                        "familyNames":"Partanen"
+                     }
+                  ],
+                  "contactMedium":[
+                     {
+                        "telephoneNumber":[
+                           {
+                              "type":"Mobile",
+                              "phoneNumber":"+358 504801753"
+                           }
+                        ],
+                        "emailContact":[
+                           {
+                              "eMailAddress":"tuomas.partanen@teliacompany.com"
+                           }
+                        ]
+                     }
+                  ]
+               }
             ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "powerassetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "powercommercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_AddPowerFeeds"
-              },
-              "id": "8025E000000HdV1QAK",
-              "description": "PS-Additional power feeds, 400 VAC, 3-phase 16A, 32A (A2 + B2)",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV6QAK"
-              }
-            ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "ODF 1 24k, takana"
-                      }
-                    ],
-                    "name": "TS_char_HDC_fiberconnection"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "fibreassetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "fibrecommercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_FibreOpticConnection"
-              },
-              "id": "8025E000000HdV8QAK",
-              "description": "PS-Fibre-optic conn, 24 fibres",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV6QAK"
-              }
-            ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": ""
-                      }
-                    ],
-                    "name": "TS_char_HDC_cabinetB"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cablingassetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cablingcommercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_CablingFibres24SM"
-              },
-              "id": "8025E000000HdUzQAK",
-              "description": "PS-Cabling, 24 fibres, SM",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV9QAK"
-              }
-            ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Transferprovider"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "Palotila 1"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Secureroom"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Cabinetreservation"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "1,6 kW"
-                      }
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity12RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": ""
-                      }
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity52RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_CabinetClassified"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_ClassifiedSpace"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_PDUdefault"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cab12assetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cab12commercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_Cabinet12RU"
-              },
-              "id": "8025E000000HdV2QAK",
-              "description": "PS-Cabinet 12 RU",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV2QAK"
-              }
-            ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": ""
-                      }
-                    ],
-                    "name": "TS_char_HDC_cabinetB"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "neteassetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "netcommercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_NetworkODFconnection"
-              },
-              "id": "8025E000000HdV0QAK",
-              "description": "PS-In-house cabling between cabinets in the same data hall",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV9QAK"
-              }
-            ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Transferprovider"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "Palotila 1"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Secureroom"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Cabinetreservation"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity12RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "6,5 kW"
-                      }
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity52RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_CabinetClassified"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_ClassifiedSpace"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "Perus"
-                      }
-                    ],
-                    "name": "TS_char_HDC_PDUdefault"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cusassetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "cuscommercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_Customercabinet"
-              },
-              "id": "8025E000000HdV3QAK",
-              "description": "PS-HDC_CustomerCabinet",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV3QAK"
-              }
-            ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_12PDUtype"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_52PDUtype"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "Vaiheittain"
-                      }
-                    ],
-                    "name": "TS_char_HDC_PDUdefault"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "pduxassetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "pduxcommercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_PDU"
-              },
-              "id": "8025E000000HdV5QAK",
-              "description": "PS-PDU",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          },
-          {
-            "serviceOrderItemRelationship": [
-              {
-                "type": "INCLUDED_BY",
-                "id": "8025E000000HdV9QAK"
-              }
-            ],
-            "service": {
-              "serviceState": "INACTIVE"
-            },
-            "requestedStartDate": "2018-01-19",
-            "requestedCompletionDate": "2018-01-19",
-            "product": {
-              "productSpecification": {
-                "productSpecCharacteristic": [
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Transferprovider"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_Secureroom"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_Cabinetreservation"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity12RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_powercoolingcapacity52RU"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_CabinetClassified"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "false"
-                      }
-                    ],
-                    "name": "TS_char_HDC_ClassifiedSpace"
-                  },
-                  {
-                    "productSpecCharacteristicValue": [
-                      {}
-                    ],
-                    "name": "TS_char_HDC_PDUdefault"
-                  },
-                  {
-                    "name": "TS_char_HDC_AssetId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "hallassetid"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "TS_char_HDC_CommercialId",
-                    "productSpecCharacteristicValue": [
-                      {
-                        "value": "hallcommercialid"
-                      }
-                    ]
-                  }
-                ],
-                "name": "TS_prod_HDC_DedicatedDataHall"
-              },
-              "id": "8025E000000HdV7QAK",
-              "description": "PS-Dedicated data hall",
-              "assetId": "8025E000000HdV6QAKSS",
-              "commercialId": "8025E000s00HdV6QAKSS",
-              "dateofAction": "2018-01-19"
-            },
-            "note": {
-              "text": ""
-            },
-            "action": "Add"
-          }
-        ],
-        "organization": [
-          {
-            "systemIdentification": {
-              "name": "AIDA",
-              "id": "002512014"
-            },
-            "place": [
-              {
-                "address": {
-                  "streetName": "Teollisuuskatu 15",
-                  "postcode": "00510",
-                  "locality": "Helsinki",
-                  "format": "PHYSICAL",
-                  "countryCode": "FI"
-                }
-              }
-            ],
-            "partyRole": {
-              "name": "SUBSCRIBER"
-            },
-            "partyId": "0015E00000Eo5CrQAJ",
-            "organizationName": [
-              {
-                "tradingName": "TestAccount"
-              }
-            ],
-            "businessIdIdentification": {
-              "businessId": "TestBusinessId"
-            }
-          }
-        ],
-        "orderDate": dt.datetime.now().isoformat(),
-        "individual": [
-          {
-            "systemIdentification": {
-              "name": "CLAUDIA"
-            },
-            "partyRole": {
-              "partyRoleCategory": {
-                "categoryName": "OrderCreator"
-              },
-              "name": "EMPLOYEE"
-            },
-            "partyId": "0055E000002CJgiQAG",
-            "organizationIdentification": {
-              "id": "Accenture"
-            },
-            "individualName": [
-              {
-                "givenNames": "Heimo",
-                "familyNames": "Tiihonen",
-                "formattedName": "Heimo Tiihonen"
-              }
-            ],
-            "contactMedium": [
-              {
-                "phoneNumber": [
-                  {
-                    "type": "PHONE",
-                    "phoneNumber": "+35811111111"
-                  }
-                ],
-                "emailContact": [
-                  {
-                    "eMailAddress": "vinitha.menon@teliacompany.com"
-                  }
-                ]
-              }
+            "externalId":"318062705193",
+            "characteristic":[
+               {
+                  "name":"TS_CUSTOMER_ID",
+                  "characteristicValue":[
+                     {
+                        "value":"3001188943"
+                     }
+                  ]
+               },
+               {
+                  "name":"cpPreferredLanguage",
+                  "characteristicValue":[
+                     {
+                        "value":"Finnish"
+                     }
+                  ]
+               },
+               {
+                  "name":"contractId",
+                  "characteristicValue":[
+                     {
+                        "value":""
+                     }
+                  ]
+               },
+               {
+                  "name":"contractStartDate",
+                  "characteristicValue":[
+                     {
+                        "value":""
+                     }
+                  ]
+               },
+               {
+                  "name":"contractEndDate",
+                  "characteristicValue":[
+                     {
+                        "value":""
+                     }
+                  ]
+               },
+               {
+                  "name":"contractSLA",
+                  "characteristicValue":[
+                     {
+                        "value":"Standard"
+                     }
+                  ]
+               }
             ]
-          }
-        ],
-        "externalId": "8015E0000002R5DQAU",
-        "characteristic": [
-          {
-            "name": "TS_CUSTOMER_ID",
-            "characteristicValue": [
-              {
-                "value": "00558000001vbsRAAQ"
-              }
-            ]
-          },
-          {
-            "name": "cpPreferredLanguage",
-            "characteristicValue": [
-              {
-                "value": "Finnish"
-              }
-            ]
-          },
-          {
-            "name": "contractId",
-            "characteristicValue": [
-              {
-                "value": "8005E000000XF9AQAW"
-              }
-            ]
-          },
-          {
-            "name": "contractStartDate",
-            "characteristicValue": [
-              {
-                "value": ""
-              }
-            ]
-          },
-          {
-            "name": "contractEndDate",
-            "characteristicValue": [
-              {
-                "value": ""
-              }
-            ]
-          },
-          {
-            "name": "contractSLA",
-            "characteristicValue": [
-              {
-                "value": "Standard"
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "header": {
-      "timestamp": dt.datetime.now().isoformat(),
-      "sender": {
-        "systemId": "CLAUDIA"
-      },
-      "receiver": [
-        {
-          "systemId": "DDM"
-        }
+         }
       ],
-      "operation": "CREATE",
-      "messageId": "CLAUDIA-8015E0000002R5DQAU"
+      "header":{
+         "timestamp":"2018-06-27T05:53:59Z",
+         "sender":{
+            "systemId":"CLAUDIA"
+         },
+         "receiver":[
+            {
+               "systemId":"DDM"
+            }
+         ],
+         "operation":"CREATE",
+         "messageId":"CLAUDIA-801580000030BfmAAE"
+      }
+   }
     }
-  }
-}
+
+
     headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token_json_ngsf_ddm['access_token'],
                'traceId': uuid.uuid4().hex}
     # headers = {}
