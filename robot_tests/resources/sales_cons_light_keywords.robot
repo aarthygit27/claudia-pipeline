@@ -1,7 +1,7 @@
 *** Settings ***
-Resource                ${PROJECTROOT}${/}resources${/}common.robot
-Resource                ${PROJECTROOT}${/}resources${/}cpq_keywords.robot
-Resource                ${PROJECTROOT}${/}resources${/}sales_cons_light_variables.robot
+Resource            ${PROJECTROOT}${/}resources${/}common.robot
+Resource            ${PROJECTROOT}${/}resources${/}cpq_keywords.robot
+Resource            ${PROJECTROOT}${/}resources${/}sales_cons_light_variables.robot
 
 *** Keywords ***
 
@@ -272,8 +272,6 @@ Filter Opportunities By
     Sleep   5s
     Run Keyword If  ${Count} > 1  Click Element     xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
-
-
 Go to Contacts
     Wait Until Element is Visible       ${SALES_CONSOLE_MENU}       20 seconds
     Click Element                       ${SALES_CONSOLE_MENU}
@@ -282,7 +280,7 @@ Go to Contacts
     Close All Tabs
     #Wait Until Page Contains element        xpath=${TABS_OPENED}//a[contains(@title, 'Contacts)]     30S
 
-Create New Contact and Validate
+Create New Master Contact and Validate
     Sleep       10s
     Click Element                           ${NEW_CONTACT}
     Wait Until Element is Visible           //span[text()='Master']    20s
@@ -321,4 +319,33 @@ Validate Contact Details
     Wait Until Page Contains Element    ${element}${email}
     Close All Tabs
 
+Create New NP Contact and Validate
+    Sleep       10s
+    Click Element                           ${NEW_CONTACT}
+    Wait Until Element is Visible           //span[text()='Non-person']    20s
+    Click Element                           //span[text()='Non-person']
+    click element                           //span[text()='Next']
+    Wait Until Element is Visible           ${CONTACT_INFO}               20 seconds
+    Input Text              xpath=${MOBILE_NUM}         ${NP_CONTACT_MOBILE}
+    Input Text              xpath=${FIRST_NAME}         ${NP_CONTACT_FIRSTNAME}
+    Input Text              xpath=${LAST_NAME}          ${NP_CONTACT_LASTNAME}
+    Select from Autopopulate List       ${ACCOUNT_NAME}         ${NP_CONTACT_ACCOUNTNAME}
+    Input Text              xpath=${PRIMARY_EMAIL}          ${NP_CONTACT_EMAIL}
+    Click Element                           ${SAVE_BUTTON}
+    Sleep       10s
+    Validate NP Contact Details    ${CONTACT_DETAILS}
 
+Validate NP Contact Details
+    [Arguments]     ${element}
+                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='Non-person ${NP_CONTACT_FIRSTNAME} ${NP_CONTACT_LASTNAME}']
+                    ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${NP_CONTACT_ACCOUNTNAME}']
+                    ${mobile_number}=    Set Variable      //span[text()='Mobile']//following::span//span[text()='${NP_CONTACT_MOBILE}']
+                    ${email}=    Set Variable      //span[text()='Email']//following::a[text()='${NP_CONTACT_EMAIL}']
+    Wait Until Page Contains Element            //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
+    Click element           //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Sleep       10s
+    Wait Until Page Contains Element   ${element}${contact_name}
+    Wait Until Page Contains Element    ${element}${account_name}
+    Wait Until Page Contains Element    ${element}${mobile_number}
+    Wait Until Page Contains Element    ${element}${email}
+    Close All Tabs

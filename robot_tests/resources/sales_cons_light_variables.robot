@@ -14,6 +14,8 @@ ${TABS_OPENED}                              //*[@class='tabBarItems slds-grid']
 ${NEW_ITEM_POPUP}                           //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}                         //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
 ${SUCCESS_MESSAGE}                         //div[@class='forceVisualMessageQueue']//div[@class='toastContainer slds-notify_container slds-is-relative']
+
+#New Opportunity
 ${OPPORTUNITY_NAME}                         TestOpportunity
 ${ACCOUNT_RELATED}                         //span[text()='Related']//parent::a
 ${RELATED_OPPORTUNITY}                     //*[@class='primaryField']
@@ -27,6 +29,8 @@ ${OPPORTUNITIES}                            //*[@id="navMenuList"]/div/ul/li[4]/
 ${HOME}                                     //*[@id="oneHeader"]/div[3]/div/div[1]/div[2]/a
 ${SELECT_LIST_VIEW}                         //*[@id="navMenuList"]/div/ul/li[4]/div/a
 ${NEW_CONTACT}                              //*[@id='split-left']/div/div/div/div/div[1]/div[1]/div[2]/ul/li[1]/a/div
+
+#NEW CONTACT - MASTER
 ${CONTACT_ACCOUNTNAME}                      Aktia Fondbolag Ab
 ${CONTACT_FIRSTNAME}                        TESTFIVE
 ${CONTACT_LASTNAME}                         CONTACTFIVE
@@ -40,3 +44,10 @@ ${PRIMARY_EMAIL}                            //input[@type='email']
 ${SAVE_BUTTON}                              //button[@title="Save"]
 ${CONTACT_INFO}                             //span[text()='Contact Information']
 ${CONTACT_DETAILS}                          //section[@class='tabs__content active uiTab']
+
+#NEW CONTACT - Non-person
+${NP_CONTACT_ACCOUNTNAME}                   Aktia Fondbolag Ab
+${NP_CONTACT_FIRSTNAME}                     NPTEST5
+${NP_CONTACT_LASTNAME}                      NPCONTACT5
+${NP_CONTACT_EMAIL}                         nptest5@email.com
+${NP_CONTACT_MOBILE}                        +358888123455
