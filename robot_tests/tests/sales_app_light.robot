@@ -18,7 +18,3 @@ Lightning: Add new contact - Master
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact and Validate
-
-
-
-
