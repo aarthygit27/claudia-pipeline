@@ -8,15 +8,16 @@ ${LIGHTNING_TEST_ACCOUNT}                   Ambea Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}                           //img[@class='icon noicon']
-${SEARCH_SALESFORCE}                        //*[@title='Search Salesforce' or @title='Search Opportunities and more']
-${TABLE_HEADER}                             //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${SEARCH_SALESFORCE}                        //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
+#//*[@title='Search Salesforce' or @title='Search Opportunities and more']
+${TABLE_HEADER}                             //div[@data-aura-class='forceSearchResultsRegion']//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${TABS_OPENED}                              //*[@class='tabBarItems slds-grid']
 ${NEW_ITEM_POPUP}                           //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}                         //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
-${SUCCESS_MESSAGE}                         //div[@class='forceVisualMessageQueue']//div[@class='toastContainer slds-notify_container slds-is-relative']
+${SUCCESS_MESSAGE}                          //div[@class='forceVisualMessageQueue']//div[@class='toastContainer slds-notify_container slds-is-relative']
 
 #New Opportunity
-${OPPORTUNITY_NAME}                         TestOpportunity
+${OPPORTUNITY_NAME}                         TestOpportunity1
 ${ACCOUNT_RELATED}                         //span[text()='Related']//parent::a
 ${RELATED_OPPORTUNITY}                     //*[@class='primaryField']
 ${OPPORTUNITYNAME_TAB}                     //*[@id='primaryField']
@@ -24,18 +25,19 @@ ${OPPORTUNITIES_SECTION}                   //li//span[text()='Opportunities']
 ${SEARCH_INPUT}                            //input[@name='search-input']
 ${RESULTS_TABLE}                            //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SALES_CONSOLE_MENU}                       //*[@title='Show Navigation Menu']
-${CONTACTS}                                 //*[@id='navMenuList']/div/ul/li[3]/div/a/span[1]/lightning-icon
+${CONTACTS}                                 //div[@class="slds-context-bar__primary navLeft"]//span//span[text()="Contacts"]
+#//*[@id='navMenuList']/div/ul/li[3]/div/a/span[1]/lightning-icon
 ${OPPORTUNITIES}                            //*[@id="navMenuList"]/div/ul/li[4]/div/a
 ${HOME}                                     //*[@id="oneHeader"]/div[3]/div/div[1]/div[2]/a
 ${SELECT_LIST_VIEW}                         //*[@id="navMenuList"]/div/ul/li[4]/div/a
 ${NEW_CONTACT}                              //*[@id='split-left']/div/div/div/div/div[1]/div[1]/div[2]/ul/li[1]/a/div
 
 #NEW CONTACT - MASTER
-${CONTACT_ACCOUNTNAME}                      Aktia Fondbolag Ab
-${CONTACT_FIRSTNAME}                        TESTFIVE
-${CONTACT_LASTNAME}                         CONTACTFIVE
-${CONTACT_EMAIL}                            noreply@teliasonera.com
-${CONTACT_MOBILE}                            +3588881235
+${CONTACT_ACCOUNTNAME}                      Aacon Oy
+${CONTACT_FIRSTNAME}                        TEST1
+${CONTACT_LASTNAME}                         CONTACT1
+${CONTACT_EMAIL}                            master1@email.com
+${CONTACT_MOBILE}                            +358998877661
 ${MOBILE_NUM}                               //input[@class=' input' and @type='tel']
 ${FIRST_NAME}                               //input[@placeholder='First Name']
 ${LAST_NAME}                                //input[@placeholder='Last Name']
@@ -51,3 +53,22 @@ ${NP_CONTACT_FIRSTNAME}                     NPTEST5
 ${NP_CONTACT_LASTNAME}                      NPCONTACT5
 ${NP_CONTACT_EMAIL}                         nptest5@email.com
 ${NP_CONTACT_MOBILE}                        +358888123455
+
+#NEW CONTACT FROM ACCOUNTS PAGE
+${AP_CONTACT_ACCOUNTNAME}                   Gavetec Oy
+${AP_NEW_CONTACT}                           //div[@title="New Contact"]
+${AP_CONTACT_FIRSTNAME}                     APTEST10
+${AP_CONTACT_LASTNAME}                      APCONTACT10
+${AP_CONTACT_EMAIL}                         aptest10@email.com
+${AP_CONTACT_MOBILE}                        +358888123457
+
+${APP_LAUNCHER}                             //*[contains(@class,'slds-icon-waffle')]
+#//button[contains(@class,'salesforceIdentityAppLauncherHeader')]
+${SALES_CONSOLE_LINK}                       //*[@id="visibleDescription_07p58000000POLIAA4"]
+${SALES_APP_NAME}                           //*[contains(@class,'appName')]//span[text()='Sales Console']
+${ACCOUNTS}                                 //span[text()="Accounts"]
+${SEARCH_CONTACTS}                          //*[@title='Search Contacts and more']
+${AP_SAVE_BUTTON}                           //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]
+${AP_MOBILE_NUM}                            //span[contains(text(),'Mobile')]/../following-sibling::input[@class=" input" and @type="tel"]
+#${AP_TEL_NUM}                               //input[@class=' input' and @type='tel']
+${AP_SAVE_BUTTON}                           //div[@class="modal-footer slds-modal__footer"]//span[contains(text(),"Save")]

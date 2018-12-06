@@ -1,7 +1,7 @@
 *** Settings ***
-Resource            ${PROJECTROOT}${/}resources${/}common.robot
-Resource            ${PROJECTROOT}${/}resources${/}cpq_keywords.robot
-Resource            ${PROJECTROOT}${/}resources${/}sales_cons_light_variables.robot
+Resource            ../resources/common.robot
+#Resource            ../resources/cpq_keywords.robot
+Resource            ../resources/sales_cons_light_variables.robot
 
 *** Keywords ***
 
@@ -23,6 +23,7 @@ Login To Salesforce Lightning And Close All Tabs
     [Arguments]     ${user}=Digisales Lightning User
     Run Keyword     Login to Salesforce as ${user}
     Run Keyword and Ignore Error    Wait For Load
+    Go to Lightning Sales Console
     Close All Tabs
     Reset to Home Tab
 
@@ -38,7 +39,7 @@ Login to Salesforce Lightning
     Input Password      id=password         ${password}
     Click Element       id=Login
     Check For Lightning Force
-    Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    30 seconds
+    Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    60 seconds
 
 
 Check For Lightning Force
@@ -54,7 +55,7 @@ Switch to Lightning
     Click Element       xpath=${SWITCH_TO_LIGHTNING}
 
 Go to Account
-    [Arguments]    ${target_account}    ${type}=${EMPTY}
+    [Arguments]    ${target_account}   ${type}=${EMPTY}
     Close All Tabs
     Log     Going to '${target_account}'
     #Wait Until Keyword Succeeds     240s     5s
@@ -71,7 +72,7 @@ Go to Account
 
 
 Search And Select the Account
-    [Arguments]     ${target_account}   ${type}=${EMPTY}
+    [Arguments]     ${target_account}  ${type}=${EMPTY}
     Search Salesforce    ${target_account}
     #Searched Item Should Be Visible    ${target_account}    ${type}
     Select Account    ${target_account}     ${type}
@@ -199,7 +200,7 @@ Close All Tabs
     ${current}=   Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
     ${closed}=      Evaluate        ${original}-${current}
     Log             Closed ${closed} tabs
-    Should Be Equal As Integers     ${current}    0
+    #Should Be Equal As Integers     ${current}    0
 
 Close Tab
     Click Element   xpath=${TABS_OPENED}//div[contains(@class,'close')]
@@ -241,9 +242,9 @@ Open Opportunities
 Reset to Home Tab
     [Arguments]     ${timeout}=20 seconds
     Close All Tabs
-    Sleep       10s
+    Sleep       5s
     Select Correct Tab Type     ${HOME}
-    Sleep       10s
+    Sleep       5s
 
 Select Correct Tab Type
     [Arguments]         ${tab}
@@ -273,12 +274,15 @@ Filter Opportunities By
     Run Keyword If  ${Count} > 1  Click Element     xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
 Go to Contacts
-    Wait Until Element is Visible       ${SALES_CONSOLE_MENU}       20 seconds
-    Click Element                       ${SALES_CONSOLE_MENU}
-    Wait Until Element is Visible           ${CONTACTS}                 20 seconds
-    Click Element           ${CONTACTS}
+    Go to Sales Console
+    Wait Until Element is Visible       ${CONTACTS}                 20 seconds
+    Click Element                       ${CONTACTS}
     Close All Tabs
     #Wait Until Page Contains element        xpath=${TABS_OPENED}//a[contains(@title, 'Contacts)]     30S
+
+Go to Sales Console
+    Wait Until Element is Visible       ${SALES_CONSOLE_MENU}       20 seconds
+    Click Element                       ${SALES_CONSOLE_MENU}
 
 Create New Master Contact and Validate
     Sleep       10s
@@ -297,43 +301,43 @@ Create New Master Contact and Validate
     Validate Contact Details    ${CONTACT_DETAILS}
 
 Select from Autopopulate List
-    [Arguments]         ${field}            ${value}
-    Input Text              xpath=${field}          ${value}
+    [Arguments]                     ${field}            ${value}
+    Input Text                      xpath=${field}          ${value}
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
     Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']
-    Click Element           //div[contains(@class,'primaryLabel') and @title='${value}']
+    Click Element                   //div[contains(@class,'primaryLabel') and @title='${value}']
 
 
 Validate Contact Details
     [Arguments]     ${element}
                     ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${CONTACT_FIRSTNAME} ${CONTACT_LASTNAME}']
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${CONTACT_ACCOUNTNAME}']
-                    ${mobile_number}=    Set Variable      //span[text()='Mobile']//following::span//span[text()='${CONTACT_MOBILE}']
-                    ${email}=    Set Variable      //span[text()='Primary eMail']//following::a[text()='${CONTACT_EMAIL}']
-    Wait Until Page Contains Element            //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
-    Click element           //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Sleep       10s
-    Wait Until Page Contains Element   ${element}${contact_name}
+                    ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${CONTACT_MOBILE}']
+                    ${email}=    Set Variable               //span[text()='Primary eMail']//following::a[text()='${CONTACT_EMAIL}']
+    Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
+    Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Sleep                               5s
+    Wait Until Page Contains Element    ${element}${contact_name}
     Wait Until Page Contains Element    ${element}${account_name}
     Wait Until Page Contains Element    ${element}${mobile_number}
     Wait Until Page Contains Element    ${element}${email}
     Close All Tabs
 
 Create New NP Contact and Validate
-    Sleep       10s
+    Sleep                                   10s
     Click Element                           ${NEW_CONTACT}
     Wait Until Element is Visible           //span[text()='Non-person']    20s
     Click Element                           //span[text()='Non-person']
     click element                           //span[text()='Next']
-    Wait Until Element is Visible           ${CONTACT_INFO}               20 seconds
-    Input Text              xpath=${MOBILE_NUM}         ${NP_CONTACT_MOBILE}
-    Input Text              xpath=${FIRST_NAME}         ${NP_CONTACT_FIRSTNAME}
-    Input Text              xpath=${LAST_NAME}          ${NP_CONTACT_LASTNAME}
-    Select from Autopopulate List       ${ACCOUNT_NAME}         ${NP_CONTACT_ACCOUNTNAME}
-    Input Text              xpath=${PRIMARY_EMAIL}          ${NP_CONTACT_EMAIL}
+    Wait Until Element is Visible           ${CONTACT_INFO}                 20 seconds
+    Input Text                              xpath=${MOBILE_NUM}             ${NP_CONTACT_MOBILE}
+    Input Text                              xpath=${FIRST_NAME}             ${NP_CONTACT_FIRSTNAME}
+    Input Text                              xpath=${LAST_NAME}              ${NP_CONTACT_LASTNAME}
+    Select from Autopopulate List           ${ACCOUNT_NAME}                 ${NP_CONTACT_ACCOUNTNAME}
+    Input Text                              xpath=${PRIMARY_EMAIL}          ${NP_CONTACT_EMAIL}
     Click Element                           ${SAVE_BUTTON}
-    Sleep       10s
-    Validate NP Contact Details    ${CONTACT_DETAILS}
+    Sleep                                   10s
+    Validate NP Contact Details             ${CONTACT_DETAILS}
 
 Validate NP Contact Details
     [Arguments]     ${element}
@@ -343,9 +347,49 @@ Validate NP Contact Details
                     ${email}=    Set Variable      //span[text()='Email']//following::a[text()='${NP_CONTACT_EMAIL}']
     Wait Until Page Contains Element            //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     Click element           //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Sleep       10s
-    Wait Until Page Contains Element   ${element}${contact_name}
+    Sleep                   10s
+    Wait Until Page Contains Element    ${element}${contact_name}
     Wait Until Page Contains Element    ${element}${account_name}
     Wait Until Page Contains Element    ${element}${mobile_number}
     Wait Until Page Contains Element    ${element}${email}
     Close All Tabs
+
+Create New Contact for Account and Validate
+    click element           ${AP_NEW_CONTACT}
+    sleep                   2s
+    Input Text              xpath=${AP_MOBILE_NUM}         ${AP_CONTACT_MOBILE}
+    Input Text              xpath=${FIRST_NAME}         ${AP_CONTACT_FIRSTNAME}
+    Input Text              xpath=${LAST_NAME}          ${AP_CONTACT_LASTNAME}
+    Input Text              xpath=${PRIMARY_EMAIL}          ${AP_CONTACT_EMAIL}
+    Click Element           xpath=${AP_SAVE_BUTTON}
+    Sleep                   2s
+    Validate AP Contact Details    ${CONTACT_DETAILS}
+
+Validate AP Contact Details
+    Reset to Home Tab
+    #Go to Contacts
+    Go To Account   ${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}  ${SEARCH_SALESFORCE}
+    [Arguments]     ${element}
+                    ${contact_name}=        Set Variable        //span[text()='Name']//following::span//span[text()='${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}']
+                    ${account_name}=        Set Variable        //span[text()='Account Name']//following::a[text()='${AP_CONTACT_ACCOUNTNAME}']
+                    ${mobile_number}=       Set Variable        //span[text()='Mobile']//following::span//span[text()='${AP_CONTACT_MOBILE}']
+                    ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_CONTACT_EMAIL}']
+    Wait Until Page Contains Element        //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
+    Click element                           //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Sleep       5s
+    Wait Until Page Contains Element    ${element}${contact_name}
+    Wait Until Page Contains Element    ${element}${account_name}
+    Wait Until Page Contains Element    ${element}${mobile_number}
+    Wait Until Page Contains Element    ${element}${email}
+    Close All Tabs
+
+Go to Lightning Sales Console
+    ${IsElementVisible}=  Run Keyword And Return Status    Element Should Be Visible   ${SALES_APP_NAME}  20s
+    run keyword unless  ${IsElementVisible}  Switch to Lightning Sales Console
+
+Switch to Lightning Sales Console
+    wait until page contains element        ${APP_LAUNCHER}             15s
+    click element                           ${APP_LAUNCHER}
+    wait until page contains element        ${SALES_CONSOLE_LINK}       15s
+    click element                           ${SALES_CONSOLE_LINK}
+    wait until element is visible           ${SALES_APP_NAME}           15s
