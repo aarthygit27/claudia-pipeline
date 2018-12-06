@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Suite description
-Resource            ${PROJECTROOT}${/}resources${/}sales_cons_light_keywords.robot
-
+Resource            ../resources/sales_cons_light_keywords.robot
+Resource            ../resources/sales_cons_light_variables.robot
 
 Test Setup          Open Browser And Go To Login Page
 Test Teardown       Logout From All Systems and Close Browser
@@ -20,4 +20,20 @@ Lightning: Add new contact - Master
     [Tags]
     Go To Salesforce and Login into Lightning
     Go to Contacts
-    Create New Contact and Validate
+    Create New Master Contact and Validate
+
+Lightning: Add new contact - Non Person
+    [Tags]
+    Go To Salesforce and Login into Lightning
+    Go to Contacts
+    Create New NP Contact and Validate
+
+Lightning: Add new contact from accounts page
+    [Tags]
+    Go To Salesforce and Login into Lightning
+    Go To Account  ${AP_CONTACT_ACCOUNTNAME}
+    Create New Contact for Account and Validate
+
+
+
+
