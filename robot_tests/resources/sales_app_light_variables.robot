@@ -50,4 +50,3 @@ ${ACCOUNT_NAME_VALUE}                       Aktia Fondbolag Ab
 ${MASTER_PHONE_NUM_VALUE}                   +358968372101
 ${MASTER_PRIMARY_EMAIL_VALUE}               saprimary@telia.com
 ${MASTER_EMAIL_VALUE}                       saemail@telia.com
-

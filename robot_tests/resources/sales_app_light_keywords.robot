@@ -279,3 +279,52 @@ Validate Contact Details
     #Wait Until Page Contains Element    ${element}${email}
 
 
+Go to Contacts
+    Wait Until Element is Visible       ${CONTACTS_TAB}     10s
+    Click Element                       ${CONTACTS_TAB}
+    Wait Until Page Contains element    ${CONTACTS_ICON}    10S
+
+Create New Master Contact and Validate
+    Wait Until Element is Visible       ${NEW_BUTTON}       10s
+    Click Element                       ${NEW_BUTTON}
+    Wait Until Element is Visible       ${MASTER}           10s
+    Click Element                       ${MASTER}
+    click Element                       ${NEXT}
+    Wait Until Element is Visible       ${CONTACT_INFO}     10s
+    Input Text                          xpath=${MASTER_MOBILE_NUM_FIELD}        ${MASTER_MOBILE_NUM_VALUE}
+    Input Text                          xpath=${MASTER_FIRST_NAME_FIELD}        ${MASTER_FIRST_NAME_VALUE}
+    Input Text                          ${MASTER_LAST_NAME_FIELD}               ${MASTER_LAST_NAME_VALUE}
+    Input Text                          ${MASTER_PHONE_NUM_FIELD}               ${MASTER_PHONE_NUM_VALUE}
+    Input Text                          ${MASTER_PRIMARY_EMAIL_FIELD}           ${MASTER_PRIMARY_EMAIL_VALUE}
+    #Input Text                          ${MASTER_EMAIL_FIELD}                   ${MASTER_EMAIL_VALUE}
+    Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}                   ${ACCOUNT_NAME_VALUE}
+    Click Element                       ${SAVE_BUTTON}
+    Sleep                               10s
+    Validate Contact Details            ${CONTACT_DETAILS}
+
+Select from Autopopulate List
+    [Arguments]                             ${field}            ${value}
+    Input Text                              xpath=${field}          ${value}
+    Wait until page contains element        //div[contains(@class,'primaryLabel') and @title='${value}']
+    Click Element                           //div[contains(@class,'primaryLabel') and @title='${value}']
+
+Validate Contact Details
+    [Arguments]     ${element}
+                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME_VALUE} ${MASTER_LAST_NAME_VALUE}']
+                    ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${ACCOUNT_NAME_VALUE}']
+                    ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM_VALUE}']
+                    ${phone_number}=    Set Variable       //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM_VALUE}']
+                    ${primary_email}=   Set Variable       //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL_VALUE}']
+                    #${email}=           Set Variable       //span[text()='Email']//following::a[text()='${MASTER_EMAIL_VALUE}']
+    Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         10s
+    #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Sleep                               5s
+    #Validation
+    Wait Until Page Contains Element    ${element}${contact_name}
+    Wait Until Page Contains Element    ${element}${account_name}
+    Wait Until Page Contains Element    ${element}${mobile_number}
+    Wait Until Page Contains Element    ${element}${phone_number}
+    Wait Until Page Contains Element    ${element}${primary_email}
+    #Wait Until Page Contains Element    ${element}${email}
+
+

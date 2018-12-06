@@ -16,7 +16,6 @@ Lightning: Create opportunity from Account
     Verify That Opportunity Is Found With Search And Go To Opportunity
     Verify That Opportunity is Found From My All Open Opportunities
 
-
 Lightning: Add new contact - Master
     [Tags]
     Go To Salesforce and Login into Lightning
