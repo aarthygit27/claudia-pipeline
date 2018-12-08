@@ -240,16 +240,16 @@ Create New Master Contact and Validate
     Click Element                       ${MASTER}
     click Element                       ${NEXT}
     Wait Until Element is Visible       ${CONTACT_INFO}     10s
-    Input Text                          xpath=${MASTER_MOBILE_NUM_FIELD}        ${MASTER_MOBILE_NUM_VALUE}
-    Input Text                          xpath=${MASTER_FIRST_NAME_FIELD}        ${MASTER_FIRST_NAME_VALUE}
-    Input Text                          ${MASTER_LAST_NAME_FIELD}               ${MASTER_LAST_NAME_VALUE}
-    Input Text                          ${MASTER_PHONE_NUM_FIELD}               ${MASTER_PHONE_NUM_VALUE}
-    Input Text                          ${MASTER_PRIMARY_EMAIL_FIELD}           ${MASTER_PRIMARY_EMAIL_VALUE}
-    #Input Text                          ${MASTER_EMAIL_FIELD}                   ${MASTER_EMAIL_VALUE}
-    Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}                   ${ACCOUNT_NAME_VALUE}
+    Input Text                          ${MASTER_MOBILE_NUM_FIELD}        ${MASTER_MOBILE_NUM}
+    Input Text                          ${MASTER_FIRST_NAME_FIELD}        ${MASTER_FIRST_NAME}
+    Input Text                          ${MASTER_LAST_NAME_FIELD}         ${MASTER_LAST_NAME}
+    Input Text                          ${MASTER_PHONE_NUM_FIELD}         ${MASTER_PHONE_NUM}
+    Input Text                          ${MASTER_PRIMARY_EMAIL_FIELD}     ${MASTER_PRIMARY_EMAIL}
+    #Input Text                          ${MASTER_EMAIL_FIELD}             ${MASTER_EMAIL}
+    Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${MASTER_ACCOUNT_NAME}
     Click Element                       ${SAVE_BUTTON}
     Sleep                               10s
-    Validate Contact Details            ${CONTACT_DETAILS}
+    Validate Master Contact Details     ${CONTACT_DETAILS}
 
 Select from Autopopulate List
     [Arguments]                             ${field}            ${value}
@@ -257,7 +257,7 @@ Select from Autopopulate List
     Wait until page contains element        //div[contains(@class,'primaryLabel') and @title='${value}']
     Click Element                           //div[contains(@class,'primaryLabel') and @title='${value}']
 
-Validate Contact Details
+Validate Master Contact Details
     [Arguments]     ${element}
                     ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME_VALUE} ${MASTER_LAST_NAME_VALUE}']
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${ACCOUNT_NAME_VALUE}']
@@ -276,4 +276,35 @@ Validate Contact Details
     Wait Until Page Contains Element    ${element}${primary_email}
     #Wait Until Page Contains Element    ${element}${email}
 
+Create New NP Contact and Validate
+    Click Visible Element               ${NEW_BUTTON}
+    Click Visible Element               ${NON-PERSON}
+    click Element                       ${NEXT}
+    Wait Until Element is Visible       ${CONTACT_INFO}     10s
+    Input Text                          ${MASTER_MOBILE_NUM_FIELD}        ${NP_MOBILE_NUM}
+    Input Text                          ${MASTER_FIRST_NAME_FIELD}        ${NP_FIRST_NAME}
+    Input Text                          ${MASTER_LAST_NAME_FIELD}         ${NP_LAST_NAME}
+    Input Text                          ${NP_EMAIL_FIELD}                 ${NP_EMAIL}
+    #Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${NP_ACCOUNT_NAME}
+    Input Text                           ${ACCOUNT_NAME_FIELD}            ${NP_ACCOUNT_NAME}
+    Sleep  2s
+    Press Enter On                      ${ACCOUNT_NAME_FIELD}
+    Click Visible Element               //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${NP_ACCOUNT_NAME}']
+    Press Enter On                      ${SAVE_BUTTON}
+    Validate NP Contact Details         ${CONTACT_DETAILS}
+
+Validate NP Contact Details
+    [Arguments]     ${element}
+                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}']
+                    ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${NP_ACCOUNT_NAME}']
+                    ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${NP_MOBILE_NUM}']
+                    ${email}=           Set Variable       //span[text()='Email']//following::a[text()='${NP_EMAIL}']
+    Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         10s
+    #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    #Sleep                               5s
+    #Validation
+    Wait Until Page Contains Element    ${element}${contact_name}
+    Wait Until Page Contains Element    ${element}${account_name}
+    Wait Until Page Contains Element    ${element}${mobile_number}
+    Wait Until Page Contains Element    ${element}${email}
 

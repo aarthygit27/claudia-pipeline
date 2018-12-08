@@ -4,7 +4,7 @@ Resource            ../resources/sales_app_light_keywords.robot
 
 
 Test Setup          Open Browser And Go To Login Page
-Test Teardown       Logout From All Systems and Close Browser
+#Test Teardown       Logout From All Systems and Close Browser
 
 *** Test Cases ***
 
@@ -21,3 +21,9 @@ Lightning: Add new contact - Master
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact and Validate
+
+Lightning: Add new contact - Non person
+    [Tags]
+    Go To Salesforce and Login into Lightning
+    Go to Contacts
+    Create New NP Contact and Validate
