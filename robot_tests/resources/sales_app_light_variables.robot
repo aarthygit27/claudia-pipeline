@@ -31,6 +31,7 @@ ${CONTACTS_TAB}                             //div[@class='bBottom']//a[@title='C
 ${CONTACTS_ICON}                            //div[@class="slds-grid"]//nav[@role="navigation"]//span[contains(text(),'Contacts')]
 ${NEW_BUTTON}                               //div[@class="slds-truncate" and @title="New"]
 ${MASTER}                                   //span[contains(text(),'Master')]
+${NON-PERSON}                               //span[contains(text(),'Non-person')]
 ${NEXT}                                     //span[contains(text(),'Next')]
 ${CONTACT_INFO}                             //span[text()='Contact Information']
 ${MASTER_MOBILE_NUM_FIELD}                  //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
@@ -40,13 +41,35 @@ ${ACCOUNT_NAME_FIELD}                       //input[@title='Search Accounts']
 ${MASTER_PHONE_NUM_FIELD}                   //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_PRIMARY_EMAIL_FIELD}               //span[contains(text(),'Primary eMail')]/../following-sibling::input[@type='email']
 ${MASTER_EMAIL_FIELD}                       //div[@id='email']
-${SAVE_BUTTON}                              //button[@title='Save']
+${SAVE_BUTTON}                              //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
 ${CONTACT_DETAILS}                          //section[@class='tabs__content active uiTab']
 
-${MASTER_MOBILE_NUM_VALUE}                  +358999888001
-${MASTER_FIRST_NAME_VALUE}                  SATEST
-${MASTER_LAST_NAME_VALUE}                   SACONTACT
-${ACCOUNT_NAME_VALUE}                       Aktia Fondbolag Ab
-${MASTER_PHONE_NUM_VALUE}                   +358968372101
-${MASTER_PRIMARY_EMAIL_VALUE}               saprimary@telia.com
-${MASTER_EMAIL_VALUE}                       saemail@telia.com
+${MASTER_MOBILE_NUM}                        +358999888001
+${MASTER_FIRST_NAME}                        SATEST
+${MASTER_LAST_NAME}                         SACONTACT
+${MASTER_ACCOUNT_NAME}                      Aktia Fondbolag Ab
+${MASTER_PHONE_NUM}                         +358968372101
+${MASTER_PRIMARY_EMAIL}                     saprimary@telia.com
+${MASTER_EMAIL}                             saemail@telia.com
+
+${NP_EMAIL_FIELD}                           //input[@type='email']
+${NP_MOBILE_NUM}                            +358999888111
+${NP_FIRST_NAME}                            SANPTEST
+${NP_LAST_NAME}                             SANPCONTACT
+${NP_ACCOUNT_NAME}                          Gavetec Oy
+${NP_PHONE_NUM}                             +358968372111
+${NP_EMAIL}                                 sanpemail@telia.com
+
+${AP_ACCOUNT_NAME}                          Ambea Oy
+${AP_NEW_CONTACT}                           //div[@title="New Contact"]
+${AP_CONTACT_FIRSTNAME}                     SAAPFN
+${AP_CONTACT_LASTNAME}                      SAAPLN
+${AP_CONTACT_EMAIL}                         saap@email.com
+${AP_CONTACT_MOBILE}                        +358888123021
+${AP_MOBILE_FIELD}                          //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
+${AP_SAVE_BUTTON}                           //div[@class="modal-footer slds-modal__footer"]//span[contains(text(),"Save")]
+
+
+
+
+

@@ -27,3 +27,9 @@ Lightning: Add new contact - Non person
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New NP Contact and Validate
+
+Lightning: Add new contact from Accounts Page
+    [Tags]
+    Go To Salesforce and Login into Lightning
+    Go to Account  ${AP_ACCOUNT_NAME}
+    Create New Contact for Account and Validate

@@ -308,3 +308,30 @@ Validate NP Contact Details
     Wait Until Page Contains Element    ${element}${mobile_number}
     Wait Until Page Contains Element    ${element}${email}
 
+Create New Contact for Account and Validate
+    click element           ${AP_NEW_CONTACT}
+    sleep                   2s
+    Input Text              ${AP_MOBILE_FIELD}              ${AP_CONTACT_MOBILE}
+    Input Text              ${MASTER_FIRST_NAME_FIELD}      ${AP_CONTACT_FIRSTNAME}
+    Input Text              ${MASTER_LAST_NAME_FIELD}       ${AP_CONTACT_LASTNAME}
+    Input Text              ${MASTER_PRIMARY_EMAIL_FIELD}   ${AP_CONTACT_EMAIL}
+    Click Element           ${AP_SAVE_BUTTON}
+    Sleep                   2s
+    Validate AP Contact Details    ${CONTACT_DETAILS}
+
+Validate AP Contact Details
+    #Go to Contacts
+    Go To Account   ${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}  ${SEARCH_SALESFORCE}
+    [Arguments]     ${element}
+                    ${contact_name}=        Set Variable        //span[text()='Name']//following::span//span[text()='${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}']
+                    ${account_name}=        Set Variable        //span[text()='Account Name']//following::a[text()='${AP_ACCOUNT_NAME}']
+                    ${mobile_number}=       Set Variable        //span[text()='Mobile']//following::span//span[@class="uiOutputPhone" and text()='${AP_CONTACT_MOBILE}']
+                    ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_CONTACT_EMAIL}']
+    #Click Visible Element                   //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Wait Until Page Contains Element    ${element}${contact_name}
+    Wait Until Page Contains Element    ${element}${account_name}
+    Wait Until Page Contains Element    ${element}${mobile_number}
+    Wait Until Page Contains Element    ${element}${email}
+
+
+
