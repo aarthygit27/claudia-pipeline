@@ -64,16 +64,16 @@ Reset to Home
     Click Element     ${SALES_APP_HOME}
     Sleep       10s
 
-Go to Account
-    [Arguments]    ${target_account}    ${type}=${EMPTY}
-    Log     Going to '${target_account}'
-    Search And Select the Account    ${target_account}     ${type}
+Go to Entity
+    [Arguments]    ${target}    ${type}=${EMPTY}
+    Log     Going to '${target}'
+    Search And Select the Entity    ${target}     ${type}
     Sleep   10s      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
 
-Search And Select the Account
-    [Arguments]     ${target_account}   ${type}=${EMPTY}
-    Search Salesforce    ${target_account}
-    Select Account    ${target_account}     ${type}
+Search And Select the Entity
+    [Arguments]     ${target}   ${type}=${EMPTY}
+    Search Salesforce    ${target}
+    Select Entity    ${target}     ${type}
 
 Search Salesforce
     [Arguments]         ${item}
@@ -81,19 +81,20 @@ Search Salesforce
     Input Text          xpath=${SEARCH_SALESFORCE}      ${item}
     Sleep   5s
     Press Key       xpath=${SEARCH_SALESFORCE}     \\13
-    Sleep   10s
+    Sleep   5s
     Wait Until Page Contains element        xpath=${SEARCH_RESULTS}     30S
 
-Select Account
-    [Arguments]         ${account_name}     ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${account_name}']
-    Click Element       ${TABLE_HEADER}[@title='${account_name}']
+Select Entity
+    [Arguments]         ${target_name}     ${type}
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   15s
+    Click Element       ${TABLE_HEADER}[@title='${target_name}']
+    #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
-    Account Should Be Open    ${account_name}
+    Entity Should Be Open    ${target_name}
 
-Account Should Be Open
-    [Arguments]         ${account_name}
-    Wait Until Page Contains element            ${ACCOUNT_HEADER}//*[text()='${account_name}']
+Entity Should Be Open
+    [Arguments]         ${target_name}
+    Wait Until Page Contains element            ${ENTITY_HEADER}//*[text()='${target_name}']
 
 Create New Opportunity For Customer
     [Arguments]     ${opport_name}=${OPPORTUNITY_NAME}
@@ -180,7 +181,7 @@ Verify That Opportunity Is Saved And Data Is Correct
 
 Verify That Opportunity Is Found With Search And Go To Opportunity
     [Arguments]     ${account_name}=${LIGHTNING_TEST_ACCOUNT}
-    Go to Account        ${OPPORTUNITY_NAME}
+    Go to Entity        ${OPPORTUNITY_NAME}
     Wait until Page Contains Element    ${OPPORTUNITY_PAGE}//*[text()='${OPPORTUNITY_NAME}']     15s
     Verify That Opportunity Is Saved And Data Is Correct    ${OPPORTUNITY_PAGE}
 
@@ -229,15 +230,12 @@ Filter Opportunities By
     Run Keyword If  ${Count} > 1  Click Element     xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
 Go to Contacts
-    Wait Until Element is Visible       ${CONTACTS_TAB}     10s
-    Click Element                       ${CONTACTS_TAB}
+    Click Visible Element               ${CONTACTS_TAB}
     Wait Until Page Contains element    ${CONTACTS_ICON}    10S
 
-Create New Master Contact and Validate
-    Wait Until Element is Visible       ${NEW_BUTTON}       10s
-    Click Element                       ${NEW_BUTTON}
-    Wait Until Element is Visible       ${MASTER}           10s
-    Click Element                       ${MASTER}
+Create New Master Contact
+    Click Visible Element               ${NEW_BUTTON}
+    Click Visible Element               ${MASTER}
     click Element                       ${NEXT}
     Wait Until Element is Visible       ${CONTACT_INFO}     10s
     Input Text                          ${MASTER_MOBILE_NUM_FIELD}        ${MASTER_MOBILE_NUM}
@@ -248,8 +246,8 @@ Create New Master Contact and Validate
     #Input Text                          ${MASTER_EMAIL_FIELD}             ${MASTER_EMAIL}
     Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${MASTER_ACCOUNT_NAME}
     Click Element                       ${SAVE_BUTTON}
-    Sleep                               10s
-    Validate Master Contact Details     ${CONTACT_DETAILS}
+    Sleep                               5s
+    #Validate Master Contact Details     ${CONTACT_DETAILS}
 
 Select from Autopopulate List
     [Arguments]                             ${field}            ${value}
@@ -259,24 +257,27 @@ Select from Autopopulate List
 
 Validate Master Contact Details
     [Arguments]     ${element}
-                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME_VALUE} ${MASTER_LAST_NAME_VALUE}']
-                    ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${ACCOUNT_NAME_VALUE}']
-                    ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM_VALUE}']
-                    ${phone_number}=    Set Variable       //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM_VALUE}']
-                    ${primary_email}=   Set Variable       //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL_VALUE}']
-                    #${email}=           Set Variable       //span[text()='Email']//following::a[text()='${MASTER_EMAIL_VALUE}']
-    Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         10s
-    #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
+                    ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${MASTER_ACCOUNT_NAME}']
+                    ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM}']
+                    ${phone_number}=    Set Variable       //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM}']
+                    ${primary_email}=   Set Variable       //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
+                    #${email}=           Set Variable       //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
+    Go to Entity   ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
+    Click Visible element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep                               5s
-    #Validation
+    Validate Contact Details   ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${primary_email}
+    #Wait Until Page Contains Element    ${element}${phone_number}
+    #Wait Until Page Contains Element    ${element}${email}
+
+Validate Contact Details
+    [Arguments]  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
     Wait Until Page Contains Element    ${element}${contact_name}
     Wait Until Page Contains Element    ${element}${account_name}
     Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${phone_number}
-    Wait Until Page Contains Element    ${element}${primary_email}
-    #Wait Until Page Contains Element    ${element}${email}
+    Wait Until Page Contains Element    ${element}${email}
 
-Create New NP Contact and Validate
+Create New NP Contact
     Click Visible Element               ${NEW_BUTTON}
     Click Visible Element               ${NON-PERSON}
     click Element                       ${NEXT}
@@ -290,8 +291,8 @@ Create New NP Contact and Validate
     Sleep  2s
     Press Enter On                      ${ACCOUNT_NAME_FIELD}
     Click Visible Element               //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${NP_ACCOUNT_NAME}']
-    Press Enter On                      ${SAVE_BUTTON}
-    Validate NP Contact Details         ${CONTACT_DETAILS}
+    #Press Enter On                      ${SAVE_BUTTON}
+    #Validate NP Contact Details         ${CONTACT_DETAILS}
 
 Validate NP Contact Details
     [Arguments]     ${element}
@@ -299,16 +300,11 @@ Validate NP Contact Details
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${NP_ACCOUNT_NAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${NP_MOBILE_NUM}']
                     ${email}=           Set Variable       //span[text()='Email']//following::a[text()='${NP_EMAIL}']
-    Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         10s
-    #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    #Sleep                               5s
-    #Validation
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${email}
+    Go to Entity   Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}
+    Click Visible Element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Validate Contact Details  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
 
-Create New Contact for Account and Validate
+Create New Contact for Account
     click element           ${AP_NEW_CONTACT}
     sleep                   2s
     Input Text              ${AP_MOBILE_FIELD}              ${AP_CONTACT_MOBILE}
@@ -317,21 +313,17 @@ Create New Contact for Account and Validate
     Input Text              ${MASTER_PRIMARY_EMAIL_FIELD}   ${AP_CONTACT_EMAIL}
     Click Element           ${AP_SAVE_BUTTON}
     Sleep                   2s
-    Validate AP Contact Details    ${CONTACT_DETAILS}
+    #Validate AP Contact Details    ${CONTACT_DETAILS}
 
 Validate AP Contact Details
-    #Go to Contacts
-    Go To Account   ${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}  ${SEARCH_SALESFORCE}
+    Go To Entity   ${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}  ${SEARCH_SALESFORCE}
     [Arguments]     ${element}
                     ${contact_name}=        Set Variable        //span[text()='Name']//following::span//span[text()='${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}']
                     ${account_name}=        Set Variable        //span[text()='Account Name']//following::a[text()='${AP_ACCOUNT_NAME}']
                     ${mobile_number}=       Set Variable        //span[text()='Mobile']//following::span//span[@class="uiOutputPhone" and text()='${AP_CONTACT_MOBILE}']
                     ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_CONTACT_EMAIL}']
-    #Click Visible Element                   //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${email}
+    #Click Visible Element               //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Validate Contact Details  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
 
 
 
