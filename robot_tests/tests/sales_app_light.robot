@@ -11,25 +11,34 @@ Test Setup          Open Browser And Go To Login Page
 Lightning: Create opportunity from Account
     [Tags]
     Go To Salesforce and Login into Lightning
-    Go To Account   ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found With Search And Go To Opportunity
     Verify That Opportunity is Found From My All Open Opportunities
 
 Lightning: Add new contact - Master
-    [Tags]
+    [Tags]  BQA-8396
     Go To Salesforce and Login into Lightning
     Go to Contacts
-    Create New Master Contact and Validate
+    Create New Master Contact
+    Validate Master Contact Details     ${CONTACT_DETAILS}
 
 Lightning: Add new contact - Non person
-    [Tags]
+    [Tags]  BQA-8395
     Go To Salesforce and Login into Lightning
     Go to Contacts
-    Create New NP Contact and Validate
+    Create New NP Contact
+    Validate NP Contact Details         ${CONTACT_DETAILS}
 
 Lightning: Add new contact from Accounts Page
-    [Tags]
+    [Tags]  BQA-8394
     Go To Salesforce and Login into Lightning
-    Go to Account  ${AP_ACCOUNT_NAME}
-    Create New Contact for Account and Validate
+    Go to Entity  ${AP_ACCOUNT_NAME}
+    Create New Contact for Account
+    Validate AP Contact Details    ${CONTACT_DETAILS}
+
+
+
+
+
+
