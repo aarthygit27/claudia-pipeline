@@ -97,14 +97,15 @@ Entity Should Be Open
     Wait Until Page Contains element            ${ENTITY_HEADER}//*[text()='${target_name}']
 
 Create New Opportunity For Customer
-    [Arguments]     ${opport_name}=${OPPORTUNITY_NAME}
+    [Arguments]     ${opport_name}=${EMPTY}
     ...             ${stage}=Analyse Prospect
     ...             ${days}=1
     ...             ${expect_error}=${FALSE}
     Click New Item For Account      New Opportunity
-    Fill Mandatory Opportunity Information      ${opport_name}    ${stage}    ${days}
+    Fill Mandatory Opportunity Information      ${stage}    ${days}
     Fill Mandatory Classification
     Click Save Button
+    Sleep           5s
     Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
 
 Click New Item For Account
@@ -115,9 +116,9 @@ Click New Item For Account
 
 Fill Mandatory Opportunity Information
     [Arguments]
-    ...    ${opport_name}=${OPPORTUNITY_NAME}
     ...    ${stage}=Analyse Prospect
     ...    ${days}=1
+           ${opport_name}=  Run Keyword        Create Unique Name          TestOpportunity
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
     Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
@@ -150,10 +151,12 @@ Click Save Button
 
 
 Verify That Opportunity Creation Succeeded
-    Sleep       10s
-    Click element       ${ACCOUNT_RELATED}
+    Wait Until Element Is Visible       ${ACCOUNT_RELATED}      20s
+    Click element       xpath=${ACCOUNT_RELATED}
+    ${status}=      Run Keyword And Return Status      Element Should Be Visible     //span[@title='Account Team Members']
+    Run Keyword If       ${status}     Run Keyword With Delay      0.5s    Click Element   xpath=${ACCOUNT_RELATED}
     Sleep       5s
-    Scroll Page To Location         0       500
+    Scroll Page To Location         0       450
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
 
@@ -166,12 +169,10 @@ Scroll Page To Location
 Verify That Opportunity Is Saved And Data Is Correct
     [Arguments]     ${element}
     ...             ${account_name}=${LIGHTNING_TEST_ACCOUNT}
-    ...             ${days}=1
-                    ${date}=    Get Date From Future    ${days}
                     ${oppo_name}=    Set Variable       //*[text()='${OPPORTUNITY_NAME}']
                     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
-                    ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${date}']
-
+                    ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
+    sleep       5s
     Wait Until Page Contains Element   ${element}${oppo_name}       20s
     Run keyword and ignore error        Click element       ${element}${oppo_name}
     Sleep       10s
@@ -324,6 +325,4 @@ Validate AP Contact Details
                     ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_CONTACT_EMAIL}']
     #Click Visible Element               //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Validate Contact Details  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
-
-
 
