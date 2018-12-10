@@ -235,6 +235,13 @@ Go to Contacts
     Wait Until Page Contains element    ${CONTACTS_ICON}    10S
 
 Create New Master Contact
+    ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
+    ${email_id}=    Run Keyword     Create Unique Email         ${DEFAULT_EMAIL}
+    ${mobile_num}=  Run Keyword     Create Unique Mobile Number
+    Set Test Variable    ${MASTER_FIRST_NAME}       Mas ${first_name}
+    Set Test Variable    ${MASTER_LAST_NAME}        Test ${first_name}
+    Set Test Variable    ${MASTER_PRIMARY_EMAIL}    ${email_id}
+    Set Test Variable    ${MASTER_MOBILE_NUM}       ${mobile_num}
     Click Visible Element               ${NEW_BUTTON}
     Click Visible Element               ${MASTER}
     click Element                       ${NEXT}
@@ -252,7 +259,7 @@ Create New Master Contact
 
 Select from Autopopulate List
     [Arguments]                             ${field}            ${value}
-    Input Text                              xpath=${field}          ${value}
+    Input Text                              xpath=${field}      ${value}
     Wait until page contains element        //div[contains(@class,'primaryLabel') and @title='${value}']
     Click Element                           //div[contains(@class,'primaryLabel') and @title='${value}']
 
@@ -279,21 +286,27 @@ Validate Contact Details
     Wait Until Page Contains Element    ${element}${email}
 
 Create New NP Contact
+    ${first_name}=  Run Keyword         Create Unique Name          ${EMPTY}
+    ${email_id}=    Run Keyword         Create Unique Email         ${DEFAULT_EMAIL}
+    ${mobile_num}=  Run Keyword         Create Unique Mobile Number
+    Set Test Variable                   ${NP_FIRST_NAME}            NP ${first_name}
+    Set Test Variable                   ${NP_LAST_NAME}             Test ${first_name}
+    Set Test Variable                   ${NP_EMAIL}                 ${email_id}
+    Set Test Variable                   ${NP_MOBILE_NUM}            ${mobile_num}
     Click Visible Element               ${NEW_BUTTON}
     Click Visible Element               ${NON-PERSON}
     click Element                       ${NEXT}
-    Wait Until Element is Visible       ${CONTACT_INFO}     10s
-    Input Text                          ${MASTER_MOBILE_NUM_FIELD}        ${NP_MOBILE_NUM}
-    Input Text                          ${MASTER_FIRST_NAME_FIELD}        ${NP_FIRST_NAME}
-    Input Text                          ${MASTER_LAST_NAME_FIELD}         ${NP_LAST_NAME}
-    Input Text                          ${NP_EMAIL_FIELD}                 ${NP_EMAIL}
+    Wait Until Element is Visible       ${CONTACT_INFO}             10s
+    Input Text                          ${MASTER_MOBILE_NUM_FIELD}  ${NP_MOBILE_NUM}
+    Input Text                          ${MASTER_FIRST_NAME_FIELD}  ${NP_FIRST_NAME}
+    Input Text                          ${MASTER_LAST_NAME_FIELD}   ${NP_LAST_NAME}
+    Input Text                          ${NP_EMAIL_FIELD}           ${NP_EMAIL}
     #Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${NP_ACCOUNT_NAME}
     Input Text                           ${ACCOUNT_NAME_FIELD}            ${NP_ACCOUNT_NAME}
     Sleep  2s
     Press Enter On                      ${ACCOUNT_NAME_FIELD}
     Click Visible Element               //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${NP_ACCOUNT_NAME}']
-    #Press Enter On                      ${SAVE_BUTTON}
-    #Validate NP Contact Details         ${CONTACT_DETAILS}
+    Press Enter On                      ${SAVE_BUTTON}
 
 Validate NP Contact Details
     [Arguments]     ${element}
@@ -306,23 +319,32 @@ Validate NP Contact Details
     Validate Contact Details  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
 
 Create New Contact for Account
+    ${first_name}=  Run Keyword         Create Unique Name          ${EMPTY}
+    ${email_id}=    Run Keyword         Create Unique Email         ${DEFAULT_EMAIL}
+    ${mobile_num}=  Run Keyword         Create Unique Mobile Number
+    Set Test Variable                   ${AP_FIRST_NAME}            AP ${first_name}
+    Set Test Variable                   ${AP_LAST_NAME}             Test ${first_name}
+    Set Test Variable                   ${AP_EMAIL}                 ${email_id}
+    Set Test Variable                   ${AP_MOBILE_NUM}            ${mobile_num}
     click element           ${AP_NEW_CONTACT}
     sleep                   2s
-    Input Text              ${AP_MOBILE_FIELD}              ${AP_CONTACT_MOBILE}
-    Input Text              ${MASTER_FIRST_NAME_FIELD}      ${AP_CONTACT_FIRSTNAME}
-    Input Text              ${MASTER_LAST_NAME_FIELD}       ${AP_CONTACT_LASTNAME}
-    Input Text              ${MASTER_PRIMARY_EMAIL_FIELD}   ${AP_CONTACT_EMAIL}
+    Input Text              ${AP_MOBILE_FIELD}              ${AP_MOBILE_NUM}
+    Input Text              ${MASTER_FIRST_NAME_FIELD}      ${AP_FIRST_NAME}
+    Input Text              ${MASTER_LAST_NAME_FIELD}       ${AP_LAST_NAME}
+    Input Text              ${MASTER_PRIMARY_EMAIL_FIELD}   ${AP_EMAIL}
     Click Element           ${AP_SAVE_BUTTON}
     Sleep                   2s
-    #Validate AP Contact Details    ${CONTACT_DETAILS}
 
 Validate AP Contact Details
-    Go To Entity   ${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}  ${SEARCH_SALESFORCE}
+    Go To Entity   ${AP_FIRST_NAME} ${AP_LAST_NAME}  ${SEARCH_SALESFORCE}
     [Arguments]     ${element}
-                    ${contact_name}=        Set Variable        //span[text()='Name']//following::span//span[text()='${AP_CONTACT_FIRSTNAME} ${AP_CONTACT_LASTNAME}']
+                    ${contact_name}=        Set Variable        //span[text()='Name']//following::span//span[text()='${AP_FIRST_NAME} ${AP_LAST_NAME}']
                     ${account_name}=        Set Variable        //span[text()='Account Name']//following::a[text()='${AP_ACCOUNT_NAME}']
-                    ${mobile_number}=       Set Variable        //span[text()='Mobile']//following::span//span[@class="uiOutputPhone" and text()='${AP_CONTACT_MOBILE}']
-                    ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_CONTACT_EMAIL}']
+                    ${mobile_number}=       Set Variable        //span[text()='Mobile']//following::span//span[@class="uiOutputPhone" and text()='${AP_MOBILE_NUM}']
+                    ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_EMAIL}']
     #Click Visible Element               //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Validate Contact Details  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
 
+Create Unique Mobile Number
+    ${numbers}=     Generate Random String    6    [NUMBERS]
+    [Return]        +358888${numbers}

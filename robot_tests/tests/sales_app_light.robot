@@ -35,7 +35,7 @@ Lightning: Add new contact from Accounts Page
     Go To Salesforce and Login into Lightning
     Go to Entity  ${AP_ACCOUNT_NAME}
     Create New Contact for Account
-    Validate AP Contact Details    ${CONTACT_DETAILS}
+    Validate AP Contact Details         ${CONTACT_DETAILS}
 
 
 

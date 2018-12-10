@@ -15,6 +15,10 @@ ${SALES_APP_HOME}                           //a[@title='Home']
 #${SEARCH_SALESFORCE}                        //*[@title='Search Salesforce' or @title='Search Opportunities and more']
 ${SEARCH_SALESFORCE}                        //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
 ${SEARCH_RESULTS}                           //div[contains(@class,'forceSearchScopesList')]//*[text()='Search Results']
+${TABLE_HEADER}                             //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+#//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${ENTITY_HEADER}                            //header[@class='forceHighlightsPanel']
+${OPPORTUNITY_NAME}                         TestOpportunity3
 ${TABLE_HEADER}                             //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ACCOUNT_HEADER}                           //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}                           //div[@class='modal-container slds-modal__container']
@@ -43,28 +47,29 @@ ${MASTER_EMAIL_FIELD}                       //div[@id='email']
 ${SAVE_BUTTON}                              //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
 ${CONTACT_DETAILS}                          //section[@class='tabs__content active uiTab']
 
-${MASTER_MOBILE_NUM}                        +358999888001
-${MASTER_FIRST_NAME}                        SATEST
-${MASTER_LAST_NAME}                         SACONTACT
+${DEFAULT_EMAIL}                            d@email.com
+#${MASTER_MOBILE_NUM}                        +358999888001
+#${MASTER_FIRST_NAME}                        SATEST
+#${MASTER_LAST_NAME}                         SACONTACT
 ${MASTER_ACCOUNT_NAME}                      Aktia Fondbolag Ab
 ${MASTER_PHONE_NUM}                         +358968372101
-${MASTER_PRIMARY_EMAIL}                     saprimary@telia.com
+#${MASTER_PRIMARY_EMAIL}                     saprimary@telia.com
 ${MASTER_EMAIL}                             saemail@telia.com
 
 ${NP_EMAIL_FIELD}                           //input[@type='email']
-${NP_MOBILE_NUM}                            +358999888111
-${NP_FIRST_NAME}                            SANPTEST
-${NP_LAST_NAME}                             SANPCONTACT
+#${NP_MOBILE_NUM}                            +358999888111
+#${NP_FIRST_NAME}                            SANPTEST
+#${NP_LAST_NAME}                             SANPCONTACT
 ${NP_ACCOUNT_NAME}                          Gavetec Oy
 ${NP_PHONE_NUM}                             +358968372111
-${NP_EMAIL}                                 sanpemail@telia.com
+#${NP_EMAIL}                                 sanpemail@telia.com
 
 ${AP_ACCOUNT_NAME}                          Ambea Oy
 ${AP_NEW_CONTACT}                           //div[@title="New Contact"]
-${AP_CONTACT_FIRSTNAME}                     SAAPFN
-${AP_CONTACT_LASTNAME}                      SAAPLN
-${AP_CONTACT_EMAIL}                         saap@email.com
-${AP_CONTACT_MOBILE}                        +358888123021
+#${AP_CONTACT_FIRSTNAME}                     SAAPFN
+#${AP_CONTACT_LASTNAME}                      SAAPLN
+#${AP_CONTACT_EMAIL}                         saap@email.com
+#${AP_CONTACT_MOBILE}                        +358888123021
 ${AP_MOBILE_FIELD}                          //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
 ${AP_SAVE_BUTTON}                           //div[@class="modal-footer slds-modal__footer"]//span[contains(text(),"Save")]
 
