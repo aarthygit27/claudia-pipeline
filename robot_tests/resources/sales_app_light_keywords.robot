@@ -108,7 +108,7 @@ Create New Opportunity For Customer
     Fill Mandatory Classification
     Click Save Button
     Sleep           5s
-    Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'      Validate Error      PASSIVEACCOUNT
+    Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'      Validate Opportunity cannot be created     PASSIVEACCOUNT
     ...    ELSE         Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
 
 
@@ -155,6 +155,7 @@ Click Save Button
 
 
 Verify That Opportunity Creation Succeeded
+    Sleep       5s
     Wait Until Element Is Visible       ${ACCOUNT_RELATED}      20s
     Click element       xpath=${ACCOUNT_RELATED}
     ${status}=      Run Keyword And Return Status      Element Should Be Visible     //span[@title='Account Team Members']
@@ -354,6 +355,7 @@ Create Unique Mobile Number
     [Return]        +358888${numbers}
 
 
-Validate Error
+Validate Opportunity cannot be created
     [Arguments]     ${case}
-    Wait Until Element is Visible           ${NEW_ITEM_POPUP}//*[text()='Account is either not a Business Account or Legal Status is not Active! Please review the Account information.']
+    Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'      Wait Until Element is Visible           ${NEW_ITEM_POPUP}//*[text()='Account is either not a Business Account or Legal Status is not Active! Please review the Account information.']
+    ...     ELSE        element should not be visible       //a[@title='New Opportunity' or @title='New']

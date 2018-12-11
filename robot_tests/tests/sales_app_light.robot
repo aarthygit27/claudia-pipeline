@@ -43,5 +43,9 @@ Negative - Validate Opportunity cannot be created for Passive account
     Go To Entity   ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer         PASSIVEACCOUNT
 
-
+Negative - Validate Opportunity cannot be created for Group account
+    [Tags]
+    Go To Salesforce and Login into Lightning
+    Go To Entity   ${GROUP_TEST_ACCOUNT}
+    Validate Opportunity cannot be created     GROUPACCOUNT
 
