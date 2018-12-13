@@ -28,6 +28,8 @@ ${RELATED_OPPORTUNITY}                      //*[@class='primaryField']
 ${OPPORTUNITY_PAGE}                         //*[contains(@class,'slds-page-header')]
 ${RESULTS_TABLE}                            //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SEARCH_INPUT}                             //input[@name='search-input']
+${PASSIVE_TEST_ACCOUNT}                      Airmec Oy
+${GROUP_TEST_ACCOUNT}                        Atria
 
 #CONTACTS
 ${CONTACTS_TAB}                             //div[@class='bBottom']//a[@title='Contacts']

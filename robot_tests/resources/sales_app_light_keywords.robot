@@ -96,8 +96,10 @@ Entity Should Be Open
     [Arguments]         ${target_name}
     Wait Until Page Contains element            ${ENTITY_HEADER}//*[text()='${target_name}']
 
+#${Case} ---- ActiveStatus or PassiveStatus of Account
 Create New Opportunity For Customer
-    [Arguments]     ${opport_name}=${EMPTY}
+    [Arguments]                  ${Case}
+    ...             ${opport_name}=${EMPTY}
     ...             ${stage}=Analyse Prospect
     ...             ${days}=1
     ...             ${expect_error}=${FALSE}
@@ -106,7 +108,9 @@ Create New Opportunity For Customer
     Fill Mandatory Classification
     Click Save Button
     Sleep           5s
-    Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
+    Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'      Validate Opportunity cannot be created     PASSIVEACCOUNT
+    ...    ELSE         Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
+
 
 Click New Item For Account
     [Arguments]     ${type}
@@ -151,6 +155,7 @@ Click Save Button
 
 
 Verify That Opportunity Creation Succeeded
+    Sleep       5s
     Wait Until Element Is Visible       ${ACCOUNT_RELATED}      20s
     Click element       xpath=${ACCOUNT_RELATED}
     ${status}=      Run Keyword And Return Status      Element Should Be Visible     //span[@title='Account Team Members']
@@ -348,6 +353,11 @@ Create Unique Mobile Number
     ${numbers}=     Generate Random String    6    [NUMBERS]
     [Return]        +358888${numbers}
 
+
+Validate Opportunity cannot be created
+    [Arguments]     ${case}
+    Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'      Wait Until Element is Visible           ${NEW_ITEM_POPUP}//*[text()='Account is either not a Business Account or Legal Status is not Active! Please review the Account information.']
+    ...     ELSE        element should not be visible       //a[@title='New Opportunity' or @title='New']
 Cancel Opportunity
     [Arguments]       ${opportunity}
     Edit Opportunity  ${opportunity}
