@@ -73,7 +73,8 @@ ${AP_NEW_CONTACT}                           //div[@title="New Contact"]
 ${AP_MOBILE_FIELD}                          //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
 ${AP_SAVE_BUTTON}                           //div[@class="modal-footer slds-modal__footer"]//span[contains(text(),"Save")]
 
-
-
+#OPPORTUNITY
+${EDIT_STAGE_BUTTON}                        //button[@title="Edit Stage"]
+${OPPORTUNITY_CANCELLED}                    //span[text()='Opportunity Status']/../following::span[text()='Cancelled']
 
 

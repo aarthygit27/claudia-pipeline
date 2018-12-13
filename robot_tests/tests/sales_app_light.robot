@@ -37,8 +37,23 @@ Lightning: Add new contact from Accounts Page
     Create New Contact for Account
     Validate AP Contact Details         ${CONTACT_DETAILS}
 
+Closing active opportunity as cancelled
+    [Tags]  BQA-8465
+    Go To Salesforce and Login into Lightning
+    Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    #Verify That Opportunity is Found From My All Open Opportunities
+    Cancel Opportunity  ${OPPORTUNITY_NAME}
+    Validate Opportunity Details  ${OPPORTUNITY_NAME}  Cancelled
+    #Verify That Opportunity is Not Found From My All Open Opportunities
 
-
+Closing active opportunity as lost
+    [Tags]  BQA-8466
+    Go To Salesforce and Login into Lightning
+    Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer
+    Cancel Opportunity  ${OPPORTUNITY_NAME}
+    Validate Opportunity Details  ${OPPORTUNITY_NAME}  Closed Lost
 
 
 

@@ -259,9 +259,8 @@ Create New Master Contact
 
 Select from Autopopulate List
     [Arguments]                             ${field}            ${value}
-    Input Text                              xpath=${field}      ${value}
-    Wait until page contains element        //div[contains(@class,'primaryLabel') and @title='${value}']
-    Click Element                           //div[contains(@class,'primaryLabel') and @title='${value}']
+    Input Text                              ${field}            ${value}
+    Click Visible Element                   //div[contains(@class,'primaryLabel') and @title='${value}']
 
 Validate Master Contact Details
     [Arguments]     ${element}
@@ -348,3 +347,53 @@ Validate AP Contact Details
 Create Unique Mobile Number
     ${numbers}=     Generate Random String    6    [NUMBERS]
     [Return]        +358888${numbers}
+
+Cancel Opportunity
+    [Arguments]       ${opportunity}
+    Edit Opportunity  ${opportunity}
+    click visible element       ${EDIT_STAGE_BUTTON}
+    Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="Cancelled"]
+    Save
+    Validate error message
+    Cancel and save
+
+Validate Opportunity Details
+    [Arguments]  ${OPPORTUNITY_NAME}  ${STAGE}
+                 ${current_date}=    Get Current Date    result_format=%d.%m.%Y
+                 ${oppo_close_date}=    Set Variable        //span[@title='Close Date']//following-sibling::div//span[text()='${current_date}']
+    Go to Entity  ${OPPORTUNITY_NAME}
+    Wait Until Page Contains Element   ${oppo_close_date}       10s
+    Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${STAGE}']  10s
+    Wait Until Page Contains Element   ${OPPORTUNITY_CANCELLED}  10s
+
+
+Save
+    click element                   //button[@title='Save']
+    sleep  2s
+
+Validate error message
+    #element should be visible       //div[@data-aura-class="forcePageError"]
+    #element should be visible       //a[contains(text(),"Close Comment")]
+    #element should be visible       //a[contains(text(),"Close Reason")]
+    element should be visible       //a[@data-field-name="telia_Close_Reason__c"]
+    element should be visible       //a[@data-field-name="telia_Close_Comment__c"]
+
+
+Cancel and save
+    Scroll Page To Location     0       3000
+    click element                   //a[contains(text(),"Close Comment")]
+    input text      //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling based on Customer request
+    Click Element           xpath=//span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
+    sleep  2s
+    click element   //a[@title="09 Customer Postponed"]
+    Save
+
+Edit Opportunity
+    [arguments]     ${opportunity}
+    Go to Entity    ${opportunity}
+
+Select option from Dropdown
+    [Arguments]             ${list}        ${item}
+    #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
+    Click Visible Element  ${list}
+    Click Visible Element  ${item}
