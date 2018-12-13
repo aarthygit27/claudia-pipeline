@@ -357,6 +357,7 @@ Cancel Opportunity
     Validate error message
     Cancel and save
 
+
 Validate Opportunity Details
     [Arguments]  ${OPPORTUNITY_NAME}  ${STAGE}
                  ${current_date}=    Get Current Date    result_format=%d.%m.%Y
