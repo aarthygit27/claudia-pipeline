@@ -54,6 +54,3 @@ Closing active opportunity as lost
     Create New Opportunity For Customer
     Cancel Opportunity  ${OPPORTUNITY_NAME}
     Validate Opportunity Details  ${OPPORTUNITY_NAME}  Closed Lost
-
-
-
