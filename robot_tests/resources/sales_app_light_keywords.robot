@@ -79,9 +79,9 @@ Search Salesforce
     [Arguments]         ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}      20s
     Input Text          xpath=${SEARCH_SALESFORCE}      ${item}
-    Sleep   5s
+    #Sleep   2s
     Press Key       xpath=${SEARCH_SALESFORCE}     \\13
-    Sleep   5s
+    #Sleep   2s
     Wait Until Page Contains element        xpath=${SEARCH_RESULTS}     30S
 
 Select Entity
@@ -243,7 +243,7 @@ Create New Master Contact
     ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
     ${email_id}=    Run Keyword     Create Unique Email         ${DEFAULT_EMAIL}
     ${mobile_num}=  Run Keyword     Create Unique Mobile Number
-    Set Test Variable    ${MASTER_FIRST_NAME}       Mas ${first_name}
+    Set Test Variable    ${MASTER_FIRST_NAME}       Master ${first_name}
     Set Test Variable    ${MASTER_LAST_NAME}        Test ${first_name}
     Set Test Variable    ${MASTER_PRIMARY_EMAIL}    ${email_id}
     Set Test Variable    ${MASTER_MOBILE_NUM}       ${mobile_num}
@@ -251,9 +251,9 @@ Create New Master Contact
     Click Visible Element               ${MASTER}
     click Element                       ${NEXT}
     Wait Until Element is Visible       ${CONTACT_INFO}     10s
-    Input Text                          ${MASTER_MOBILE_NUM_FIELD}        ${MASTER_MOBILE_NUM}
-    Input Text                          ${MASTER_FIRST_NAME_FIELD}        ${MASTER_FIRST_NAME}
-    Input Text                          ${MASTER_LAST_NAME_FIELD}         ${MASTER_LAST_NAME}
+    Input Text                          ${MOBILE_NUM_FIELD}               ${MASTER_MOBILE_NUM}
+    Input Text                          ${FIRST_NAME_FIELD}               ${MASTER_FIRST_NAME}
+    Input Text                          ${LAST_NAME_FIELD}                ${MASTER_LAST_NAME}
     Input Text                          ${MASTER_PHONE_NUM_FIELD}         ${MASTER_PHONE_NUM}
     Input Text                          ${MASTER_PRIMARY_EMAIL_FIELD}     ${MASTER_PRIMARY_EMAIL}
     #Input Text                          ${MASTER_EMAIL_FIELD}             ${MASTER_EMAIL}
@@ -268,7 +268,7 @@ Select from Autopopulate List
     Click Visible Element                   //div[contains(@class,'primaryLabel') and @title='${value}']
 
 Validate Master Contact Details
-    [Arguments]     ${element}
+    [Arguments]
                     ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${MASTER_ACCOUNT_NAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM}']
@@ -276,9 +276,8 @@ Validate Master Contact Details
                     ${primary_email}=   Set Variable       //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
                     #${email}=           Set Variable       //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
     Go to Entity   ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
-    Click Visible element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Sleep                               5s
-    Validate Contact Details   ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${primary_email}
+    Click Visible element               ${DETAILS_TAB}
+    Validate Contact Details   ${CONTACT_DETAILS}  ${contact_name}  ${account_name}  ${mobile_number}  ${primary_email}
     #Wait Until Page Contains Element    ${element}${phone_number}
     #Wait Until Page Contains Element    ${element}${email}
 
@@ -301,9 +300,9 @@ Create New NP Contact
     Click Visible Element               ${NON-PERSON}
     click Element                       ${NEXT}
     Wait Until Element is Visible       ${CONTACT_INFO}             10s
-    Input Text                          ${MASTER_MOBILE_NUM_FIELD}  ${NP_MOBILE_NUM}
-    Input Text                          ${MASTER_FIRST_NAME_FIELD}  ${NP_FIRST_NAME}
-    Input Text                          ${MASTER_LAST_NAME_FIELD}   ${NP_LAST_NAME}
+    Input Text                          ${MOBILE_NUM_FIELD}  ${NP_MOBILE_NUM}
+    Input Text                          ${FIRST_NAME_FIELD}  ${NP_FIRST_NAME}
+    Input Text                          ${LAST_NAME_FIELD}   ${NP_LAST_NAME}
     Input Text                          ${NP_EMAIL_FIELD}           ${NP_EMAIL}
     #Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${NP_ACCOUNT_NAME}
     Input Text                           ${ACCOUNT_NAME_FIELD}            ${NP_ACCOUNT_NAME}
@@ -311,16 +310,17 @@ Create New NP Contact
     Press Enter On                      ${ACCOUNT_NAME_FIELD}
     Click Visible Element               //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${NP_ACCOUNT_NAME}']
     Press Enter On                      ${SAVE_BUTTON}
+    Sleep  2s
 
 Validate NP Contact Details
-    [Arguments]     ${element}
+    [Arguments]
                     ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}']
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${NP_ACCOUNT_NAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${NP_MOBILE_NUM}']
                     ${email}=           Set Variable       //span[text()='Email']//following::a[text()='${NP_EMAIL}']
-    Go to Entity   Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}
-    Click Visible Element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Validate Contact Details  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
+    Go to Entity    Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}
+    Click Visible Element       ${DETAILS_TAB}
+    Validate Contact Details    ${CONTACT_DETAILS}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
 
 Create New Contact for Account
     ${first_name}=  Run Keyword         Create Unique Name          ${EMPTY}
@@ -331,72 +331,81 @@ Create New Contact for Account
     Set Test Variable                   ${AP_EMAIL}                 ${email_id}
     Set Test Variable                   ${AP_MOBILE_NUM}            ${mobile_num}
     click element           ${AP_NEW_CONTACT}
-    sleep                   2s
+    #Sleep  2s
+    Click Visible Element   ${AP_MOBILE_FIELD}
     Input Text              ${AP_MOBILE_FIELD}              ${AP_MOBILE_NUM}
-    Input Text              ${MASTER_FIRST_NAME_FIELD}      ${AP_FIRST_NAME}
-    Input Text              ${MASTER_LAST_NAME_FIELD}       ${AP_LAST_NAME}
+    Input Text              ${FIRST_NAME_FIELD}             ${AP_FIRST_NAME}
+    Input Text              ${LAST_NAME_FIELD}              ${AP_LAST_NAME}
     Input Text              ${MASTER_PRIMARY_EMAIL_FIELD}   ${AP_EMAIL}
     Click Element           ${AP_SAVE_BUTTON}
     Sleep                   2s
 
 Validate AP Contact Details
     Go To Entity   ${AP_FIRST_NAME} ${AP_LAST_NAME}  ${SEARCH_SALESFORCE}
-    [Arguments]     ${element}
+    [Arguments]
                     ${contact_name}=        Set Variable        //span[text()='Name']//following::span//span[text()='${AP_FIRST_NAME} ${AP_LAST_NAME}']
                     ${account_name}=        Set Variable        //span[text()='Account Name']//following::a[text()='${AP_ACCOUNT_NAME}']
                     ${mobile_number}=       Set Variable        //span[text()='Mobile']//following::span//span[@class="uiOutputPhone" and text()='${AP_MOBILE_NUM}']
                     ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_EMAIL}']
     #Click Visible Element               //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Validate Contact Details  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
+    Validate Contact Details  ${CONTACT_DETAILS}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
 
 Create Unique Mobile Number
     ${numbers}=     Generate Random String    6    [NUMBERS]
     [Return]        +358888${numbers}
 
-
 Validate Opportunity cannot be created
     [Arguments]     ${case}
     Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'      Wait Until Element is Visible           ${NEW_ITEM_POPUP}//*[text()='Account is either not a Business Account or Legal Status is not Active! Please review the Account information.']
     ...     ELSE        element should not be visible       //a[@title='New Opportunity' or @title='New']
-Cancel Opportunity
-    [Arguments]       ${opportunity}
+
+Cancel Opportunity and Validate
+    [Arguments]       ${opportunity}  ${stage}
     Edit Opportunity  ${opportunity}
-    click visible element       ${EDIT_STAGE_BUTTON}
-    Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="Cancelled"]
+    click visible element           ${EDIT_STAGE_BUTTON}
+    Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="${stage}"]
     Save
     Validate error message
     Cancel and save
+    Validate Closed Opportunity Details  ${opportunity}  ${stage}
+    Verify That Opportunity is Not Found under My All Open Opportunities
 
-
-Validate Opportunity Details
-    [Arguments]  ${OPPORTUNITY_NAME}  ${STAGE}
+Validate Closed Opportunity Details
+    [Arguments]  ${opportunity_name}  ${stage}  #${OPPO_STATUS}=Cancelled
                  ${current_date}=    Get Current Date    result_format=%d.%m.%Y
                  ${oppo_close_date}=    Set Variable        //span[@title='Close Date']//following-sibling::div//span[text()='${current_date}']
-    Go to Entity  ${OPPORTUNITY_NAME}
-    Wait Until Page Contains Element   ${oppo_close_date}       10s
-    Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${STAGE}']  10s
-    Wait Until Page Contains Element   ${OPPORTUNITY_CANCELLED}  10s
 
+    Go to Entity  ${opportunity_name}
+    Wait Until Page Contains Element   ${oppo_close_date}       10s
+    Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${stage}']  10s
+    ${oppo_status}=  set variable if  '${stage}'== 'Closed Lost'    Lost  Cancelled
+    #...  Wait Until Page Contains Element   //span[text()='Opportunity Status']/../following::span[text()='Lost']  10s
+    #...  ELSE Wait Until Page Contains Element   //span[text()='Opportunity Status']/../following::span[text()='Cancelled']  10s
+    #Wait Until Page Contains Element   //span[text()='Opportunity Status']/../following::span[text()='${OPP_STATUS}']  10s
+    Click Visible Element        ${EDIT_STAGE_BUTTON}
+    Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="Closed Won"]
+    Save
+    Wait Until Page Contains Element   //span[text()='Review the following errors']  10s
+    Press ESC On  //span[text()='Review the following errors']
 
 Save
     click element                   //button[@title='Save']
     sleep  2s
 
 Validate error message
-    #element should be visible       //div[@data-aura-class="forcePageError"]
-    #element should be visible       //a[contains(text(),"Close Comment")]
-    #element should be visible       //a[contains(text(),"Close Reason")]
     element should be visible       //a[@data-field-name="telia_Close_Reason__c"]
     element should be visible       //a[@data-field-name="telia_Close_Comment__c"]
-
+    #element should be visible       //a[contains(text(),"Close Comment")]
+    #element should be visible       //a[contains(text(),"Close Reason")]
+    #element should be visible       //div[@data-aura-class="forcePageError"]
 
 Cancel and save
     Scroll Page To Location     0       3000
-    click element                   //a[contains(text(),"Close Comment")]
-    input text      //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling based on Customer request
-    Click Element           xpath=//span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
-    sleep  2s
-    click element   //a[@title="09 Customer Postponed"]
+    Click element       //a[contains(text(),"Close Comment")]
+    input text          //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling based on Customer request
+    Click Element       //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
+    #sleep  2s
+    Click element       //a[@title="09 Customer Postponed"]
     Save
 
 Edit Opportunity
@@ -408,3 +417,12 @@ Select option from Dropdown
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
     Click Visible Element  ${list}
     Click Visible Element  ${item}
+
+Verify That Opportunity is Not Found under My All Open Opportunities
+    [Arguments]
+                ${oppo_name}=    Set Variable       //*[text()='${OPPORTUNITY_NAME}']
+    Open Tab    Opportunities
+    Select Correct View Type    My All Open Opportunities
+    Filter Opportunities By     Opportunity Name    ${OPPORTUNITY_NAME}
+    Sleep       5s
+    Page should not contain element    ${OPPORTUNITY_PAGE}${oppo_name}        20s
