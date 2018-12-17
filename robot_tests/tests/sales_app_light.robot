@@ -80,3 +80,5 @@ Closing active opportunity as lost
     Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
     Cancel Opportunity and Validate   ${OPPORTUNITY_NAME}   Closed Lost
+
+

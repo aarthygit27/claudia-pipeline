@@ -31,7 +31,6 @@ Go To Salesforce and Login into Lightning
     Go to Sales App
     Reset to Home
 
-
 Login to Salesforce as DigiSales Lightning User
     Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORD}
 
@@ -44,7 +43,6 @@ Login to Salesforce Lightning
     Click Element       id=Login
     Check For Lightning Force
     Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    30 seconds
-
 
 Check For Lightning Force
     Sleep   15s
@@ -360,7 +358,7 @@ Validate Opportunity cannot be created
     ...     ELSE        element should not be visible       //a[@title='New Opportunity' or @title='New']
 
 Cancel Opportunity and Validate
-    [Arguments]       ${opportunity}  ${stage}
+    [Arguments]     ${opportunity}  ${stage}
     Go to Entity    ${opportunity}
     click visible element           ${EDIT_STAGE_BUTTON}
     sleep  2s
@@ -379,14 +377,14 @@ Validate Closed Opportunity Details
     Wait Until Page Contains Element   ${oppo_close_date}       10s
     Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${stage}']  10s
     ${oppo_status}=  set variable if  '${stage}'== 'Closed Lost'    Lost  Cancelled
-    ${buttonNotAvailable}=    Run Keyword And Return Status  element should not be visible  ${EDIT_STAGE_BUTTON}
+    ${buttonNotAvailable}=  Run Keyword And Return Status  element should not be visible  ${EDIT_STAGE_BUTTON}
     Run Keyword If  ${buttonNotAvailable}   reload page
-    Click Visible Element        ${EDIT_STAGE_BUTTON}
-    Select option from Dropdown  //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title='Closed Won']
+    Click Visible Element               ${EDIT_STAGE_BUTTON}
+    Select option from Dropdown         //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title='Closed Won']
     Save
-    Wait Until Page Contains Element   //span[text()='Review the following errors']  10s
-    Press ESC On  //span[text()='Review the following errors']
-    click element  //*[@title='Cancel']
+    Wait Until Page Contains Element    //span[text()='Review the following errors']  10s
+    Press ESC On                        //span[text()='Review the following errors']
+    click element                       //*[@title='Cancel']
 
 Save
     click element                   //button[@title='Save']
@@ -402,7 +400,7 @@ Validate error message
 Cancel and save
     Scroll Page To Location     0       3000
     Click element       //a[contains(text(),"Close Comment")]
-    input text          //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling the opportunity
+    Input Text          //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling the opportunity
     Click Element       //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
     Click element       //a[@title="09 Customer Postponed"]
     Save
@@ -421,14 +419,13 @@ Select option from Dropdown
 
 Verify That Opportunity is Not Found under My All Open Opportunities
     [Arguments]     ${opportunity}
-                ${oppo_name}=    Set Variable       //*[text()='${opportunity}']   #${OPPORTUNITY_NAME}
-    Open Tab    Opportunities
+                    ${oppo_name}=    Set Variable       //*[text()='${opportunity}']   #${OPPORTUNITY_NAME}
+    Open Tab        Opportunities
     Select Correct View Type    My All Open Opportunities
-    #Click Element      //input[@name='search-input']
-    Wait Until Page Contains Element        ${SEARCH_INPUT}     20s
-    Input Text         ${SEARCH_INPUT}      ${opportunity}
-    Press Key          ${SEARCH_INPUT}     \\13
-    Sleep       5s
+    Wait Until Page Contains Element    ${SEARCH_INPUT}     20s
+    Input Text      ${SEARCH_INPUT}     ${opportunity}
+    Press Key       ${SEARCH_INPUT}     \\13
+    Sleep           5s
     Page should contain element    //*[text()='No items to display.']
 
 
