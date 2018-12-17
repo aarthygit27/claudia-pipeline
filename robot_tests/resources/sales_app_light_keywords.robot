@@ -432,3 +432,138 @@ Verify That Opportunity is Not Found under My All Open Opportunities
     Page should contain element    //*[text()='No items to display.']
 
 
+
+
+Create a Task
+    click element  ${NEW_TASK_LABEL}
+    Sleep   10s
+    wait until page contains element  xpath=${task_subject_input}    20s
+    ${random_string}   generate random string  8
+    input text    xpath=${task_subject_input}      Task-${random_string}
+   ## click element    xpath=//*[@title='Send Quote' and @class="slds-truncate"]  #this is for Send Quote
+    ${date}=    Get Date From Future    7
+    Set Test Variable    ${task_due_DATE}                                      ${date}
+    Input Text          xpath=//*[text()='Due Date']/../../div/input           ${task_due_DATE}
+    click element    xpath=${name_input_task}
+    input text       xpath=${name_input_task}     ${name_input}
+    sleep    5s
+    click element    //*[@title='${name_input}']/../../..
+    sleep    5s
+    click element  ${save_task_button}
+    sleep    20s
+    click element     ${suucess_msg_task_anchor}
+    sleep       20s
+    Search And Select the Entity            Task-${random_string}    ${EMPTY}
+
+Create a Meeting
+    click Element  ${NEW_EVENT_LABEL}
+    Sleep  10s
+    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   20s
+    click element    xpath=${SUBJECT_INPUT}
+    click element    xpath=//*[@title='${Meeting}' and @class="slds-truncate"]
+    click element    xpath=${EVENT_TYPE}
+    click element    xpath=${meeting_select_dropdown}
+    #click element     xpath=//div/ul/li[3]/a[(text()='Customer Call')]   #this is for call
+    click element     xpath=${reason_select_dropdown}
+    click element    xpath=${reason_select_dropdown_value}
+    ${date}=    Get Date From Future    1
+    Set Test Variable    ${meeting_start_DATE}                    ${date}
+    log to console       ${meeting_start_DATE}
+    Input Text           ${meeting_start_date_input}               ${meeting_start_DATE}
+    clear element text   ${meeting_start_time_input}
+    input text           ${meeting_start_time_input}               ${meeting_start_time}
+    ${date}=    Get Date From Future    2
+    Set Test Variable    ${meeting_end_DATE}             ${date}
+    Input Text           ${meeting_end_date_input}        ${meeting_end_DATE}
+    clear element text   ${meeting_end_time_input}
+    input text           ${meeting_end_time_input}      ${meeting_end_time}
+    input text           ${city_input}                  ${DEFAULT_CITY}
+    click element        ${contact_name_input}
+    input text           ${contact_name_input}          ${name_input}
+    sleep    5s
+    click element        ${contact_name_select}
+    click element     ${save_button_create}
+    sleep   20s
+    click element     ${success_message_anchor}
+    sleep  10s
+    ${start_date_form}  get text    xpath=${start_date_form_span}
+    ${end_date_from}    get text    xpath=${end_date_form_span}
+    ${location_form}    get text    xpath=${location_form_span}
+    # log to console  ${start_date_form}.appendix.${meeting_start_DATE}.appendix.${end_date_from}.appendix.${meeting_end_DATE}
+    should be equal as strings  ${start_date_form}  ${meeting_start_DATE} ${meeting_start time}
+    should be equal as strings  ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
+    should be equal as strings  ${location_form}   ${DEFAULT_CITY}
+    scroll page to location   0  600
+    click element   ${meeting_outcome_edit_button}
+    sleep  10s
+    click element     xpath=${meeting_outcome_select}
+    sleep  3s
+    click element    xpath=${meeting_outcome_dropdown_value}
+    click element    xpath=${meeting_status_select}
+    sleep  3s
+    click element  xpath=${meeting_status_value}
+    input text       xpath=${description_textarea}    ${name_input}.Edited.${Meeting}
+    click element    ${save_button_editform}
+    sleep   10s
+    ${description_form}  get text  ${description_span}
+    should be equal as strings  ${name_input}.Edited.${Meeting}   ${description_form}
+    ${meeting_outcome_form}  get text  ${meeting_outocme_span}
+    should be equal as strings    ${meeting_outcome_form}  Positive
+
+
+Create a Call
+    click Element  ${NEW_EVENT_LABEL}
+    Sleep  10s
+    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   20s
+    click element    xpath=${SUBJECT_INPUT}
+    #click element    xpath=//*[@title='${Meeting}' and @class="slds-truncate"]
+    click element    xpath=//*[@title='Call' and @class="slds-truncate"]  #this is for Call
+    #//*[@title="Meeting" and @class="slds-truncate"]
+    click element    xpath=${EVENT_TYPE}
+    click element    xpath=${subject_call_type}
+    #click element     xpath=//div/ul/li[3]/a[(text()='Customer Call')]   #this is for call
+    click element     xpath=${reason_select_dropdown}
+    click element    xpath=${reason_select_dropdown_value}
+    ${date}=    Get Date From Future    1
+    Set Test Variable    ${meeting_start_DATE}                    ${date}
+    log to console       ${meeting_start_DATE}
+    Input Text           ${meeting_start_date_input}               ${meeting_start_DATE}
+    clear element text   ${meeting_start_time_input}
+    input text           ${meeting_start_time_input}               ${meeting_start_time}
+    ${date}=    Get Date From Future    2
+    Set Test Variable    ${meeting_end_DATE}             ${date}
+    Input Text           ${meeting_end_date_input}        ${meeting_end_DATE}
+    clear element text   ${meeting_end_time_input}
+    input text           ${meeting_end_time_input}      ${meeting_end_time}
+    input text           ${city_input}                  ${DEFAULT_CITY}
+    click element        ${contact_name_input}
+    input text           ${contact_name_input}          ${name_input}
+    sleep    5s
+    click element        ${contact_name_select}
+    click element     ${save_button_create}
+    sleep   20s
+    click element     ${success_message_anchor}
+    sleep  10s
+    ${start_date_form}  get text    xpath=${start_date_form_span}
+    ${end_date_from}    get text    xpath=${end_date_form_span}
+    ${location_form}    get text    xpath=${location_form_span}
+    # log to console  ${start_date_form}.appendix.${meeting_start_DATE}.appendix.${end_date_from}.appendix.${meeting_end_DATE}
+    should be equal as strings  ${start_date_form}  ${meeting_start_DATE} ${meeting_start time}
+    should be equal as strings  ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
+    should be equal as strings  ${location_form}   ${DEFAULT_CITY}
+    scroll page to location   0  600
+    click element   ${meeting_outcome_edit_button}
+    sleep  10s
+    click element     xpath=${meeting_outcome_select}
+    sleep  3s
+    click element    xpath=${meeting_outcome_dropdown_value}
+    click element    xpath=${meeting_status_select}
+    sleep  3s
+    click element  xpath=${meeting_status_value}
+    input text       xpath=${description_textarea}    ${name_input}.Edited.${Meeting}
+    click element    ${save_button_editform}
+    sleep   10s
+    ${description_form}  get text  ${description_span}
+    should be equal as strings  ${name_input}.Edited.${Meeting}   ${description_form}
+    ${meeting_outcome_form}  get text  ${meeting_outocme_span}
+    should be equal as strings    ${meeting_outcome_form}  Positive

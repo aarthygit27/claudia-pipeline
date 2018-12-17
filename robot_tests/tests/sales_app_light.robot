@@ -48,6 +48,25 @@ Negative - Validate Opportunity cannot be created for Group account
     Go To Entity   ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created     GROUPACCOUNT
 
+
+Lightning: Create Meeting from Account
+    [Tags]   BQA-7948
+    Go To Salesforce and Login into Lightning
+    Go To Entity        ${TEST_ACCOUNT_CONTACT}
+    Create a Meeting
+
+Lightning: Create Call from Account
+    [Tags]   BQA-8085
+    Go To Salesforce and Login into Lightning
+    Go To Entity        ${TEST_ACCOUNT_CONTACT}
+    Create a Call
+
+Lightning: Create Task from Account
+    [Tags]   BQA-8463
+    Go To Salesforce and Login into Lightning
+    Go To Entity        ${TEST_ACCOUNT_CONTACT}
+    Create a Task
+
 Closing active opportunity as cancelled
     [Tags]  BQA-8465
     Go To Salesforce and Login into Lightning
@@ -61,4 +80,3 @@ Closing active opportunity as lost
     Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
     Cancel Opportunity and Validate   ${OPPORTUNITY_NAME}   Closed Lost
-
