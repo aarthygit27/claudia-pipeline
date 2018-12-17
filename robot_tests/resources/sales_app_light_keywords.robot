@@ -361,32 +361,32 @@ Validate Opportunity cannot be created
 
 Cancel Opportunity and Validate
     [Arguments]       ${opportunity}  ${stage}
-    Edit Opportunity  ${opportunity}
+    Go to Entity    ${opportunity}
     click visible element           ${EDIT_STAGE_BUTTON}
+    sleep  2s
     Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="${stage}"]
     Save
     Validate error message
     Cancel and save
     Validate Closed Opportunity Details  ${opportunity}  ${stage}
-    Verify That Opportunity is Not Found under My All Open Opportunities
+    Verify That Opportunity is Not Found under My All Open Opportunities  ${opportunity}
 
 Validate Closed Opportunity Details
-    [Arguments]  ${opportunity_name}  ${stage}  #${OPPO_STATUS}=Cancelled
-                 ${current_date}=    Get Current Date    result_format=%d.%m.%Y
+    [Arguments]  ${opportunity_name}  ${stage}
+                 ${current_date}=       Get Current Date    result_format=%d.%m.%Y
                  ${oppo_close_date}=    Set Variable        //span[@title='Close Date']//following-sibling::div//span[text()='${current_date}']
-
     Go to Entity  ${opportunity_name}
     Wait Until Page Contains Element   ${oppo_close_date}       10s
     Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${stage}']  10s
     ${oppo_status}=  set variable if  '${stage}'== 'Closed Lost'    Lost  Cancelled
-    #...  Wait Until Page Contains Element   //span[text()='Opportunity Status']/../following::span[text()='Lost']  10s
-    #...  ELSE Wait Until Page Contains Element   //span[text()='Opportunity Status']/../following::span[text()='Cancelled']  10s
-    #Wait Until Page Contains Element   //span[text()='Opportunity Status']/../following::span[text()='${OPP_STATUS}']  10s
+    ${buttonNotAvailable}=    Run Keyword And Return Status  element should not be visible  ${EDIT_STAGE_BUTTON}
+    Run Keyword If  ${buttonNotAvailable}   reload page
     Click Visible Element        ${EDIT_STAGE_BUTTON}
-    Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="Closed Won"]
+    Select option from Dropdown  //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title='Closed Won']
     Save
     Wait Until Page Contains Element   //span[text()='Review the following errors']  10s
     Press ESC On  //span[text()='Review the following errors']
+    click element  //*[@title='Cancel']
 
 Save
     click element                   //button[@title='Save']
@@ -402,11 +402,11 @@ Validate error message
 Cancel and save
     Scroll Page To Location     0       3000
     Click element       //a[contains(text(),"Close Comment")]
-    input text          //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling based on Customer request
+    input text          //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling the opportunity
     Click Element       //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
-    #sleep  2s
     Click element       //a[@title="09 Customer Postponed"]
     Save
+    Sleep  2s
 
 Edit Opportunity
     [arguments]     ${opportunity}
@@ -416,13 +416,19 @@ Select option from Dropdown
     [Arguments]             ${list}        ${item}
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
     Click Visible Element  ${list}
-    Click Visible Element  ${item}
+    Sleep  2s
+    Click Element  ${item}
 
 Verify That Opportunity is Not Found under My All Open Opportunities
-    [Arguments]
-                ${oppo_name}=    Set Variable       //*[text()='${OPPORTUNITY_NAME}']
+    [Arguments]     ${opportunity}
+                ${oppo_name}=    Set Variable       //*[text()='${opportunity}']   #${OPPORTUNITY_NAME}
     Open Tab    Opportunities
     Select Correct View Type    My All Open Opportunities
-    Filter Opportunities By     Opportunity Name    ${OPPORTUNITY_NAME}
+    #Click Element      //input[@name='search-input']
+    Wait Until Page Contains Element        ${SEARCH_INPUT}     20s
+    Input Text         ${SEARCH_INPUT}      ${opportunity}
+    Press Key          ${SEARCH_INPUT}     \\13
     Sleep       5s
-    Page should not contain element    ${OPPORTUNITY_PAGE}${oppo_name}        20s
+    Page should contain element    //*[text()='No items to display.']
+
+

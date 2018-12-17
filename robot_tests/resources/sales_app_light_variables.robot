@@ -68,6 +68,6 @@ ${AP_MOBILE_FIELD}                          //span[contains(text(),'Mobile')]/..
 ${AP_SAVE_BUTTON}                           //div[@class="modal-footer slds-modal__footer"]//span[contains(text(),"Save")]
 
 #OPPORTUNITY
-${EDIT_STAGE_BUTTON}                        //button[@title="Edit Stage"]
+${EDIT_STAGE_BUTTON}                        //*[@title="Edit Stage"]
 
 

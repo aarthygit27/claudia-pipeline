@@ -48,21 +48,17 @@ Negative - Validate Opportunity cannot be created for Group account
     Go To Entity   ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created     GROUPACCOUNT
 
-
-*** comment  ***
 Closing active opportunity as cancelled
     [Tags]  BQA-8465
     Go To Salesforce and Login into Lightning
     Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
     Cancel Opportunity and Validate   ${OPPORTUNITY_NAME}   Cancelled
-    #Validate Closed Opportunity Details  ${OPPORTUNITY_NAME}
+
 Closing active opportunity as lost
     [Tags]  BQA-8466
     Go To Salesforce and Login into Lightning
-    #Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
-    #Create New Opportunity For Customer     ACTIVEACCOUNT
-    #Cancel Opportunity and Validate   ${OPPORTUNITY_NAME}   Closed Lost
-    #Validate Closed Opportunity Details  TestOpportunity 20181214-122845  Closed Lost
-    Validate Closed Opportunity Details  TestOpportunity 20181214-142344  Closed Lost
-    #Verify That Opportunity is Not Found under My All Open Opportunities
+    Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer     ACTIVEACCOUNT
+    Cancel Opportunity and Validate   ${OPPORTUNITY_NAME}   Closed Lost
+
