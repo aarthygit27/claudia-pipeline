@@ -349,8 +349,9 @@ Validate AP Contact Details
     Validate Contact Details  ${CONTACT_DETAILS}  ${contact_name}  ${account_name}  ${mobile_number}  ${email}
 
 Create Unique Mobile Number
-    ${numbers}=     Generate Random String    6    [NUMBERS]
-    [Return]        +358888${numbers}
+    #${numbers}=     Generate Random String    6    [NUMBERS]
+    #[Return]        +358888${numbers}
+    [Return]        +358888888888
 
 Validate Opportunity cannot be created
     [Arguments]     ${case}
