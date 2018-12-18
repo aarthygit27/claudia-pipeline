@@ -113,4 +113,9 @@ ${task_subject_input}                       //div/div[1]/div[1]/div/div/lightnin
 ${name_input_task}                          //div/div[3]/div[1]/div/div/div/div/div/div[1]/div[2]/input
 ${save_task_button}                         //div/div[3]/div/div/div[2]/div[2]/button
 ${suucess_msg_task_anchor}                  //*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
-${TEST_ACCOUNT_CONTACT}                     Aacon Oys
+${TEST_ACCOUNT_CONTACT}                     Aacon Oy
+
+#CPQ
+${CPQ_BUTTON}                               //a[@title='CPQ']
+${SHOPPING_CART}                            //li[@title='Cart']
+${CPQ_SEARCH_FIELD}                         //div[contains(@class,'cpq-searchbox')]//input
