@@ -9,7 +9,7 @@ Test Teardown       Logout From All Systems and Close Browser
 *** Test Cases ***
 
 Lightning: Create opportunity from Account
-    [Tags]
+    [Tags]  BQA-8272        Lightning
     Go To Salesforce and Login into Lightning
     Go To Account   ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer
@@ -17,23 +17,19 @@ Lightning: Create opportunity from Account
     Verify That Opportunity is Found From My All Open Opportunities
 
 Lightning: Add new contact - Master
-    [Tags]
+    [Tags]  Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact and Validate
 
 Lightning: Add new contact - Non Person
-    [Tags]
+    [Tags]  Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New NP Contact and Validate
 
 Lightning: Add new contact from accounts page
-    [Tags]
+    [Tags]  Lightning
     Go To Salesforce and Login into Lightning
     Go To Account  ${AP_CONTACT_ACCOUNTNAME}
     Create New Contact for Account and Validate
-
-
-
-
