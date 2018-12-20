@@ -119,3 +119,4 @@ ${TEST_ACCOUNT_CONTACT}                     Aacon Oy
 ${CPQ_BUTTON}                               //a[@title='CPQ']
 ${SHOPPING_CART}                            //li[@title='Cart']
 ${CPQ_SEARCH_FIELD}                         //div[contains(@class,'cpq-searchbox')]//input
+

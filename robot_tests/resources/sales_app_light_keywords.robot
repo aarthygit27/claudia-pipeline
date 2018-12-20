@@ -565,3 +565,46 @@ Create a Call
     should be equal as strings  ${name_input}.Edited.${Meeting}   ${description_form}
     ${meeting_outcome_form}  get text  ${meeting_outocme_span}
     should be equal as strings    ${meeting_outcome_form}  Positive
+
+Verify That Business Account Attributes Are Named Right
+    Verify That Record Contains Attribute    Account ID
+    Verify That Record Contains Attribute    Account Record Type
+    Verify That Record Contains Attribute    Account Owner
+    Verify That Record Contains Attribute    Business ID
+    Verify That Record Contains Attribute    Account Name
+    Verify That Record Contains Attribute    Telia Customer ID
+    Verify That Record Contains Attribute    Marketing Name
+    Verify That Record Contains Attribute    AIDA ID
+    Verify That Record Contains Attribute    Phone
+    Verify That Record Contains Attribute    VAT Code
+    Verify That Record Contains Attribute    Website
+    Verify That Record Contains Attribute    Registered Association ID
+    Verify That Record Contains Attribute    Contact Preferences
+    Verify That Record Contains Attribute    Group Name
+    Verify That Record Contains Attribute    Next Opportunity Due
+    Verify That Record Contains Attribute    Group ID
+    Verify That Record Contains Attribute    Opportunities Open
+    Verify That Record Contains Attribute    Parent Account
+    Verify That Record Contains Attribute    Last Contacted Date
+    Verify That Record Contains Attribute    Days Uncontacted
+    Verify That Record Contains Attribute    Marketing Restriction
+    Verify That Record Contains Attribute    Company Form
+    Verify That Record Contains Attribute    Legal Status
+    Verify That Record Contains Attribute    Tax Activity
+    Verify That Record Contains Attribute    Status Reason
+    Verify That Record Contains Attribute    Bankruptcy Process Status
+    Verify That Record Contains Attribute    Business Segment
+    Verify That Record Contains Attribute    Street Address
+    Verify That Record Contains Attribute    Postal Code
+    Verify That Record Contains Attribute    City
+    Verify That Record Contains Attribute    Country
+    Verify That Record Contains Attribute    Main Mailing Address
+    Verify That Record Contains Attribute    Visiting Address
+    Verify That Record Contains Attribute    Multibella System ID
+    Verify That Record Contains Attribute    Billing System ID
+    Verify That Record Contains Attribute    AccountNumber
+    Verify That Record Contains Attribute    BS ID
+
+Verify That Record Contains Attribute
+    [Arguments]    ${attribute}
+    Wait Until Page Contains Element    //span[contains(@class,'test-id__field-label') and (text()='${attribute}')]

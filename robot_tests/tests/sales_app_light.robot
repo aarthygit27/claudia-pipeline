@@ -3,7 +3,7 @@ Documentation       Suite description
 Resource            ../resources/sales_app_light_keywords.robot
 
 Test Setup          Open Browser And Go To Login Page
-Test Teardown       Logout From All Systems and Close Browser
+#Test Teardown       Logout From All Systems and Close Browser
 
 *** Test Cases ***
 
@@ -79,3 +79,9 @@ Closing active opportunity as lost
     Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
     Cancel Opportunity and Validate   ${OPPORTUNITY_NAME}   Closed Lost
+
+Check Attributes/Business Account are named right in Sales Force UI
+    [Tags]    BQA-8484    Lightning
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Verify That Business Account Attributes Are Named Right
