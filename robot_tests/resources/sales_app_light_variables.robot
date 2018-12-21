@@ -4,7 +4,7 @@ ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${TEST_ENVIRONMENT}                         merge
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${TEST_ENVIRONMENT}
 ${PASSWORD}                                 PahaPassu1
-${LIGHTNING_TEST_ACCOUNT}                   AKK Sports Oy
+${LIGHTNING_TEST_ACCOUNT}                   Dignia Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}                           //img[@class='icon noicon']
