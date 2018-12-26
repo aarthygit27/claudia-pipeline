@@ -120,3 +120,42 @@ ${CPQ_BUTTON}                               //a[@title='CPQ']
 ${SHOPPING_CART}                            //li[@title='Cart']
 ${CPQ_SEARCH_FIELD}                         //div[contains(@class,'cpq-searchbox')]//input
 
+#Contacts-Attribute
+
+${BUSINESS_CARD_FIELD}                      //span[text()='Business Card Title']/ancestor::label/../input
+${STATUS}                                   //div[contains(@class,'modal-body')]//*[text()='Status']/parent::span/../div//a
+${STATUS_ACTIVE}                          //a[@title='Active']
+${PREFERRED_CONTACT_CHANNEL}                //div[contains(@class,'modal-body')]//*[text()='Preferred Contact Channel']/parent::span/../div//a
+${PREFERRED_CONTACT_CHANNEL_LETTER}         //a[@title='Letter']
+${GENDER}                                   //div[contains(@class,'modal-body')]//*[text()='Gender']/parent::span/../div//a
+${GENDER_MALE}                              //a[@title='1 - male']
+${COMMUNICATION_LANGUAGE}                   //div[contains(@class,'modal-body')]//*[text()='Communication Language']/parent::span/../div//a
+${COMMUNICATION_LANG_ENGLISH}               //a[@title='English']
+${LAST_CONTACTED_DATE}                      //div[contains(@class,'modal-body')]//span[text()='Last Contacted Date']/parent::div/..//span[@class='uiOutputDate']
+${SALES_ROLE}                               //div[contains(@class,'modal-body')]//*[text()='Sales Role']/parent::span/../div//a
+${SALES_ROLE_BUSINESS_CONTACT}              //a[@title='Business Contact']
+${JOB_TITLE_CODE}                           //div[contains(@class,'modal-body')]//*[text()='Job Title Code']/parent::span/../div//a
+${JOB_TITLE_CODE_NAME}                      //a[@title='verojohtaja - 8715']
+${OFFICE_NAME_FIELD}                        //span[text()='Office Name']/ancestor::label/../input
+${MONTH_TEXT}                               //h2[@class='monthYear']
+${NEXT_BUTTON_MONTH}                        //a[@title='Go to next month']
+${YEAR_DROPDOWN}                            //select[contains(@class,'slds-select')]
+${DETAILS_TAB}                              //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+${DATE_PICKER}                              //span[text()='Date Picker']/..
+${EMAIL_ID_FIELD}                           //div[@id='email']//input
+${MASTER_PHONE_NUM_FIELD}                   //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
+${MASTER_MOBILE_NUM_FIELD}                  //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
+
+${OFFICE_NAME}                              My Office
+${BUSINESS_CARD}                            My Card
+${STATUS_TEXT}                              Active
+${PREFERRED_CONTACT}                        Letter
+${COMMUNICATION_LANG}                       English
+${year}                                     1992
+${to_select_month}                          JANUARY
+${month_digit}                              1
+${day}                                      12
+${gender}                                   1 - male
+${sales_role_text}                          Business Contact
+${job_title_text}                           verojohtaja - 8715
+

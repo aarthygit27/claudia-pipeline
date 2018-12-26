@@ -84,7 +84,7 @@ Search Salesforce
 
 Select Entity
     [Arguments]         ${target_name}     ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   15s
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   30s
     Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
@@ -415,8 +415,10 @@ Select option from Dropdown
     [Arguments]             ${list}        ${item}
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
     Click Visible Element  ${list}
-    Sleep  2s
-    Click Element  ${item}
+    Sleep  5s
+    #Click Element  ${item}
+    ${element_xpath}=       Replace String      ${item}        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
 
 Verify That Opportunity is Not Found under My All Open Opportunities
     [Arguments]     ${opportunity}
@@ -608,3 +610,177 @@ Verify That Business Account Attributes Are Named Right
 Verify That Record Contains Attribute
     [Arguments]    ${attribute}
     Wait Until Page Contains Element    //span[contains(@class,'test-id__field-label') and (text()='${attribute}')]
+
+Create New Master Contact With All Details
+    ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
+    ${email_id}=    Run Keyword     Create Unique Email         ${DEFAULT_EMAIL}
+    ${mobile_num}=  Set Variable    +358968372101
+    Set Test Variable    ${MASTER_FIRST_NAME}       Mas ${first_name}
+    Sleep  3s
+    Set Test Variable    ${MASTER_LAST_NAME}        Test ${first_name}
+    Set Test Variable    ${MASTER_PRIMARY_EMAIL}    ${email_id}
+    Set Test Variable    ${MASTER_MOBILE_NUM}       ${mobile_num}
+    Click Visible Element               ${NEW_BUTTON}
+    Click Visible Element               ${MASTER}
+    click Element                       ${NEXT}
+    Wait Until Element is Visible       ${CONTACT_INFO}  10s
+    sleep  5s
+    Input Text                          ${MASTER_MOBILE_NUM_FIELD}        ${MASTER_PHONE_NUM}
+    Input Text                          ${FIRST_NAME_FIELD}        ${MASTER_FIRST_NAME}
+    Input Text                          ${LAST_NAME_FIELD}         ${MASTER_LAST_NAME}
+    Input Text                          ${MASTER_PHONE_NUM_FIELD}         ${MASTER_PHONE_NUM}
+    Input Text                          ${MASTER_PRIMARY_EMAIL_FIELD}     ${MASTER_PRIMARY_EMAIL}
+    Input Text                          ${EMAIL_ID_FIELD}             ${MASTER_PRIMARY_EMAIL}
+    Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${MASTER_ACCOUNT_NAME}
+    Input Text                          ${BUSINESS_CARD_FIELD}            ${BUSINESS_CARD}
+    Select option from Dropdown with Force Click Element         ${STATUS}  ${STATUS_ACTIVE}
+    Select option from Dropdown with Force Click Element         ${PREFERRED_CONTACT_CHANNEL}  ${PREFERRED_CONTACT_CHANNEL_LETTER}
+    Select option from Dropdown with Force Click Element         ${GENDER}  ${GENDER_MALE}
+    Select option from Dropdown with Force Click Element         ${COMMUNICATION_LANGUAGE}  ${COMMUNICATION_LANG_ENGLISH}
+    Select Date From DATEPICKER         ${DATE_PICKER}
+    ${last_contact_date}   Get Text  ${LAST_CONTACTED_DATE}
+    Set Test Variable  ${contacted_date_text}  ${last contact_date}
+    Select option from Dropdown with Force Click Element         ${SALES_ROLE}  ${SALES_ROLE_BUSINESS_CONTACT}
+    Select option from Dropdown with Force Click Element         ${JOB_TITLE_CODE}  ${JOB_TITLE_CODE_NAME}
+    Input Text                          ${OFFICE_NAME_FIELD}  ${OFFICE_NAME}
+    Click Element                       ${SAVE_BUTTON}
+    Sleep                               10s
+
+
+Validate Master Contact Details In Contact Page
+    [Arguments]     ${element}
+                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
+                    ${business_card_text}=  Set Variable   //span[text()='Business Card Title']//following::span//span[text()='${BUSINESS_CARD}']
+                    ${gender_selection}=  Set Variable     //span[text()='Gender']//following::span//span[text()='${gender}']
+                    ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${MASTER_ACCOUNT_NAME}']
+                    ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM}']
+                    ${phone_number}=    Set Variable       //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM}']
+                    ${primary_email}=   Set Variable       //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
+                    ${email}=           Set Variable       //span[text()='Email']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
+                    ${status}=          Set Variable       //span[text()='Status']//following::span//span[text()='${STATUS_TEXT}']
+                    ${preferred_contact}=   Set Variable   //span[text()='Preferred Contact Channel']//following::span//span[text()='${PREFERRED_CONTACT}']
+                    ${comm_lang}=   Set Variable   //span[text()='Communication Language']//following::span//span[text()='${COMMUNICATION_LANG}']
+                    ${birth_date}=  Set Variable   //span[text()='Birthdate']//following::span//span[text()='${day}.${month_digit}.${year}']
+                    ${last_contact_date}=  Set Variable  //span[text()='Last Contacted Date']//following::span//span[text()='${contacted_date_text}']
+                    ${sales_role}=  Set Variable  //span[text()='Sales Role']//following::span//span[text()='${sales_role_text}']
+                    ${job_title}=  Set Variable   //span[text()='Job Title Code']//following::span//span[text()='${job_title_text}']
+                    ${office_name_text}=  Set Variable  //span[text()='Office Name']//following::span//span[text()='${OFFICE_NAME}']
+
+
+    Go to Entity   ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
+    Sleep                               5s
+    Click Visible element               ${DETAILS_TAB}
+    Sleep                               5s
+    Validate Contact Details In Contact Page  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${primary_email}  ${email}  ${status}  ${preferred_contact}  ${comm_lang}  ${birth_date}  ${last_contact_date}  ${sales_role}  ${job_title}  ${office_name_text}
+    #Wait Until Page Contains Element    ${element}${phone_number}
+    #Wait Until Page Contains Element    ${element}${email}
+
+Select Date From DATEPICKER
+    [Arguments]  ${dateElement}
+                 ${select_year}=  Set Variable       //option[text()='${year}']
+     ${element_xpath}=       Replace String      ${dateElement}        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+     :FOR    ${INDEX}    IN RANGE    1    12
+     \    sleep  2s
+     \    ${month}=  Get Text  ${MONTH_TEXT}
+     \    Run Keyword If  "${month}" != "${to_select_month}"  click element  ${NEXT_BUTTON_MONTH}
+     \    Exit For Loop If  "${month}" == "${to_select_month}"
+     click element  ${YEAR_DROPDOWN}
+     sleep  2s
+     wait until element is visible   ${select_year}
+     click element  ${select_year}
+     Pick Date
+
+Pick Date
+    [Arguments]
+                ${select_day}=   Set Variable      //span[@data-aura-class='uiDayInMonthCell--default' and text()='${day}']
+     click element  ${select_day}
+
+Validate Contact Details In Contact Page
+    [Arguments]  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${primary_email}  ${email}  ${status}  ${preferred_contact}  ${comm_lang}  ${birth_date}
+          ...    ${last_contact_date}  ${sales_role}  ${job_title}  ${office_name_text}
+    Wait Until Page Contains Element    ${element}${contact_name}
+    Wait Until Page Contains Element    ${element}${account_name}
+    Wait Until Page Contains Element    ${element}${mobile_number}
+    Wait Until Page Contains Element    ${element}${primary_email}
+    Wait Until Page Contains Element    ${element}${email}
+    Wait Until Page Contains Element    ${element}${status}
+    Wait Until Page Contains Element    ${element}${preferred_contact}
+    Wait Until Page Contains Element    ${element}${comm_lang}
+    Wait Until Page Contains Element    ${element}${birth_date}
+    Wait Until Page Contains Element    ${element}${last_contact_date}
+    Wait Until Page Contains Element    ${element}${sales_role}
+    Wait Until Page Contains Element    ${element}${job_title}
+    Wait Until Page Contains Element    ${element}${office_name_text}
+
+Validate That Contact Person Attributes Are Named Right
+    [Arguments]
+                    ${business_card_title}=  Set Variable   //button[@title='Edit Business Card Title']/../..//span[text()='Business Card Title']
+                    ${name}=  Set Variable                 //span[@class='uiOutputText']/../../..//span[text()='Name']
+                    ${contact_ID}=  Set Variable          (//div[@class='windowViewMode-normal oneContent active lafPageHost']//*[text()='Contact ID'])[1]
+                    ${account_name}=    Set Variable       //button[@title='Edit Account Name']/../..//span[text()='Account Name']
+                    ${mobile_number}=   Set Variable       //button[@title='Edit Mobile']/../..//span[text()='Mobile']
+                    ${phone_number}=    Set Variable       //button[@title='Edit Phone']/../..//span[text()='Phone']
+                    ${primary_email}=   Set Variable       //button[@title='Edit Primary eMail']/../..//span[text()='Primary eMail']
+                    ${email}=           Set Variable       //button[@title='Edit Email']/../..//span[text()='Email']
+                    ${status}=          Set Variable       //button[@title='Edit Status']/../..//span[text()='Status']
+                    ${preferred_contact_title}=   Set Variable   //button[@title='Edit Preferred Contact Channel']/../..//span[text()='Preferred Contact Channel']
+                    ${comm_lang}=   Set Variable   //button[@title='Edit Communication Language']/../..//span[text()='Communication Language']
+                    ${birth_date}=  Set Variable   //button[@title='Edit Birthdate']/../..//span[text()='Birthdate']
+                    ${sales_role}=  Set Variable  //button[@title='Edit Sales Role']/../..//span[text()='Sales Role']
+                    ${office_name_text}=  Set Variable  //button[@title='Edit Office Name']/../..//span[text()='Office Name']
+                    ${gender_text}=  Set Variable  //button[@title='Edit Gender']/../..//span[text()='Gender']
+                    ${Address}=  Set Variable  (//div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='Address'])[1]
+                    ${External_address}=  Set Variable  (//div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='External Address'])[1]
+                    ${3rd_Party_Contact}=  Set Variable  //button[@title='Edit 3rd Party Contact']/../..//span[text()='3rd Party Contact']
+                    ${external_phone}=  Set Variable  //div[@class='windowViewMode-normal oneContent active lafPageHost']//section[@class='tabs__content active uiTab']//div[contains(@class,'test-id__section slds-section')]//button[@title='Edit Phone']//parent::div/../../../../div/div/div/div/span[text()='External Phone']
+     Wait Until Page Contains Element  ${business_card_title}
+     Wait Until Page Contains Element  ${name}
+     Wait Until Page Contains Element  ${contact_ID}
+     Wait Until Page Contains Element  ${account_name}
+     Wait Until Page Contains Element  ${mobile_number}
+     Wait Until Page Contains Element  ${phone_number}
+     Wait Until Page Contains Element  ${primary_email}
+     Wait Until Page Contains Element  ${email}
+     Wait Until Page Contains Element  ${status}
+     Scroll Page To Location  0  200
+     Wait Until Page Contains Element  ${preferred_contact_title}
+     Wait Until Page Contains Element  ${comm_lang}
+     Wait Until Page Contains Element  ${birth_date}
+     Scroll Page To Location  0  500
+     Wait Until Page Contains Element  ${sales_role}
+     Wait Until Page Contains Element  ${office_name_text}
+     Wait Until Page Contains Element  ${gender_text}
+     Wait Until Page Contains Element  ${Address}
+     Wait Until Page Contains Element  ${External_address}
+     Wait Until Page Contains Element  ${3rd_Party_Contact}
+     Wait Until Page Contains Element  ${external_phone}
+
+Go To Accounts
+    ${element_xpath}=       Replace String      ${ACCOUNTS_LINK}        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep  2s
+
+Click on Account Name
+
+    sleep  5s
+    ${count}=  Get Element Count  ${ACCOUNT_NAME}
+    Log To Console  Count:${count}
+    click element  ${ACCOUNT_NAME}[1]
+    #Run Keyword if  ${count} != 0  click element  xpath=${ACCOUNT_NAME}[0]
+    #...  else  Log To Console  no account name available
+
+Force click element
+  [Arguments]  ${elementToClick}
+    ${element_xpath}=       Replace String      ${elementToClick}        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep  2s
+
+Select option from Dropdown with Force Click Element
+    [Arguments]             ${list}        ${item}
+    #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
+   ${element_xpath}=       Replace String      ${list}        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep  2s
+    Click Element  ${item}
+

@@ -85,3 +85,11 @@ Check Attributes/Business Account are named right in Sales Force UI
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
+
+Check Attributes/Contact Person are named right
+    [Tags]      BQA-8483  Lightning
+    Go To Salesforce and Login into Lightning
+    Go to Contacts
+    Create New Master Contact With All Details
+    Validate Master Contact Details In Contact Page    ${CONTACT_DETAILS}
+    Validate That Contact Person Attributes Are Named Right
