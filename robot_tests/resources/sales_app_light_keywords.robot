@@ -15,14 +15,14 @@ Go to Sales App
 
 Switch to SalesApp
     Click Element       ${APP_LAUNCHER}
-    Wait until Page Contains Element        ${SALES_APP_LINK}       20s
+    Wait until Page Contains Element        ${SALES_APP_LINK}       60s
     Click Element       ${SALES_APP_LINK}
-    Wait Until Element is Visible       ${SALES_APP_NAME}           20s
+    Wait Until Element is Visible       ${SALES_APP_NAME}           60s
 
 Login Page Should Be Open
-    Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE}
-    Wait Until Element Is Visible        id=username     10 seconds
-    Wait Until Element Is Visible        id=password     10 seconds
+    Wait Until Keyword Succeeds     60s      1 second    Location Should Be      ${LOGIN_PAGE}
+    Wait Until Element Is Visible        id=username     60s
+    Wait Until Element Is Visible        id=password     60s
 
 Go To Salesforce and Login into Lightning
     [Arguments]   ${user}=DigiSales Lightning User
@@ -45,20 +45,20 @@ Login to Salesforce Lightning
     Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    30 seconds
 
 Check For Lightning Force
-    Sleep   15s
+    Sleep   10s
     ${url}=     Get Location
     ${contains}=  Evaluate  'lightning' in '${url}'
     Run Keyword Unless  ${contains}   Switch to Lightning
 
 Switch to Lightning
-    Sleep   15s
+    Sleep   10s
     Click Element       xpath=${CLASSIC_MENU}
-    Page Should Contain Element       xpath=${SWITCH_TO_LIGHTNING}      30s
+    Page Should Contain Element       xpath=${SWITCH_TO_LIGHTNING}      60s
     Click Element       xpath=${SWITCH_TO_LIGHTNING}
 
 Reset to Home
-    [Arguments]     ${timeout}=20 seconds
-    Wait Until Element is Visible       ${SALES_APP_HOME}       20 seconds
+    [Arguments]     ${timeout}=60s
+    Wait Until Element is Visible       ${SALES_APP_HOME}       60s
     Click Element     ${SALES_APP_HOME}
     Sleep       10s
 
@@ -75,16 +75,16 @@ Search And Select the Entity
 
 Search Salesforce
     [Arguments]         ${item}
-    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}      20s
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}      60s
     Input Text          xpath=${SEARCH_SALESFORCE}      ${item}
     #Sleep   2s
     Press Key       xpath=${SEARCH_SALESFORCE}     \\13
     #Sleep   2s
-    Wait Until Page Contains element        xpath=${SEARCH_RESULTS}     30S
+    Wait Until Page Contains element        xpath=${SEARCH_RESULTS}     60s
 
 Select Entity
     [Arguments]         ${target_name}     ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   30s
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   60s
     Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
@@ -105,7 +105,7 @@ Create New Opportunity For Customer
     Fill Mandatory Opportunity Information      ${stage}    ${days}
     Fill Mandatory Classification
     Click Save Button
-    Sleep           5s
+    Sleep           10s
     Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'      Validate Opportunity cannot be created     PASSIVEACCOUNT
     ...    ELSE         Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
 
@@ -113,8 +113,8 @@ Create New Opportunity For Customer
 Click New Item For Account
     [Arguments]     ${type}
      ${status}=      Run Keyword And Return Status      Element Should Be Visible     //a[@title='${type}']
-    Run Keyword If       ${status}     Run Keyword With Delay      0.5s    Click Element   xpath=//a[@title='${type}']
-    Wait Until Page Contains Element    ${NEW_ITEM_POPUP}     10s
+    Run Keyword If       ${status}     Run Keyword With Delay      0.10s    Click Element   xpath=//a[@title='${type}']
+    Wait Until Page Contains Element    ${NEW_ITEM_POPUP}     60s
 
 Fill Mandatory Opportunity Information
     [Arguments]
@@ -131,13 +131,13 @@ Fill Mandatory Opportunity Information
 
 Input Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}
-    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]      20s
+    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]      60s
     Input Text       xpath=${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]//following::input      ${value}
 
 
 Select Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}
-    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']   20s
+    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']   60s
     Click Element       ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
     Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]
     Click Element       //div[@class='select-options']//li//a[contains(text(),'${value}')]
@@ -153,12 +153,12 @@ Click Save Button
 
 
 Verify That Opportunity Creation Succeeded
-    Sleep       5s
-    Wait Until Element Is Visible       ${ACCOUNT_RELATED}      20s
+    Sleep       10s
+    Wait Until Element Is Visible       ${ACCOUNT_RELATED}      60s
     Click element       xpath=${ACCOUNT_RELATED}
     ${status}=      Run Keyword And Return Status      Element Should Be Visible     //span[@title='Account Team Members']
-    Run Keyword If       ${status}     Run Keyword With Delay      0.5s    Click Element   xpath=${ACCOUNT_RELATED}
-    Sleep       5s
+    Run Keyword If       ${status}     Run Keyword With Delay      0.10s    Click Element   xpath=${ACCOUNT_RELATED}
+    Sleep       10s
     Scroll Page To Location         0       450
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
@@ -175,18 +175,18 @@ Verify That Opportunity Is Saved And Data Is Correct
                     ${oppo_name}=    Set Variable       //*[text()='${OPPORTUNITY_NAME}']
                     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
                     ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
-    sleep       5s
-    Wait Until Page Contains Element   ${element}${oppo_name}       20s
+    sleep       10s
+    Wait Until Page Contains Element   ${element}${oppo_name}       60s
     Run keyword and ignore error        Click element       ${element}${oppo_name}
     Sleep       10s
-    Wait Until Page Contains Element    ${oppo_name}        20s
-    Wait Until Page Contains Element    ${account_name}     20s
-    Wait Until Page Contains Element    ${oppo_date}        20s
+    Wait Until Page Contains Element    ${oppo_name}        60s
+    Wait Until Page Contains Element    ${account_name}     60s
+    Wait Until Page Contains Element    ${oppo_date}        60s
 
 Verify That Opportunity Is Found With Search And Go To Opportunity
     [Arguments]     ${account_name}=${LIGHTNING_TEST_ACCOUNT}
     Go to Entity        ${OPPORTUNITY_NAME}
-    Wait until Page Contains Element    ${OPPORTUNITY_PAGE}//*[text()='${OPPORTUNITY_NAME}']     15s
+    Wait until Page Contains Element    ${OPPORTUNITY_PAGE}//*[text()='${OPPORTUNITY_NAME}']     60s
     Verify That Opportunity Is Saved And Data Is Correct    ${OPPORTUNITY_PAGE}
 
 
@@ -201,41 +201,41 @@ Verify That Opportunity is Found From My All Open Opportunities
     Select Correct View Type    My All Open Opportunities
     Filter Opportunities By     Opportunity Name    ${OPPORTUNITY_NAME}
     Sleep       10s
-    Wait Until Page Contains Element    ${OPPORTUNITY_PAGE}${oppo_name}        20s
-    Wait Until Page Contains Element    ${account_name}     20s
-    Wait Until Page Contains Element    ${oppo_date}        20s
+    Wait Until Page Contains Element    ${OPPORTUNITY_PAGE}${oppo_name}        60s
+    Wait Until Page Contains Element    ${account_name}     60s
+    Wait Until Page Contains Element    ${oppo_date}        60s
 
 Open tab
     [Arguments]    ${tabName}
-    ...     ${timeout}=20 seconds
-    Wait Until Element is Visible       //a[@title='${tabName}']       20 seconds
+    ...     ${timeout}=60s
+    Wait Until Element is Visible       //a[@title='${tabName}']       60s
     Click Element     //a[@title='${tabName}']
     Sleep       10s
 
 Select Correct View Type
     [Arguments]         ${type}
-    Sleep       5s
+    Sleep       10s
     click element      //span[contains(@class,'selectedListView')]
     #${flag}    Run Keyword And Return Status    Wait Until Element Is Visible    //span[@class=' virtualAutocompleteOptionText' and text()='${type}']
     #Run Keyword If      ${flag}         Click Element           //a[@title='Select List View']
-    Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      20s
+    Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      60s
     Click Element       //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
-    Sleep       5s
+    Sleep       10s
 
 
 Filter Opportunities By
     [Arguments]     ${field}    ${value}
     ${Count}=    get element count    ${RESULTS_TABLE}
     Click Element      //input[@name='search-input']
-    Wait Until Page Contains Element        ${SEARCH_INPUT}     20s
+    Wait Until Page Contains Element        ${SEARCH_INPUT}     60s
     Input Text          xpath=${SEARCH_INPUT}      ${value}
     Press Key       xpath=${SEARCH_INPUT}     \\13
-    Sleep   5s
+    Sleep   10s
     Run Keyword If  ${Count} > 1  Click Element     xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
 Go to Contacts
     Click Visible Element               ${CONTACTS_TAB}
-    Wait Until Page Contains element    ${CONTACTS_ICON}    10S
+    Wait Until Page Contains element    ${CONTACTS_ICON}    60s
 
 Create New Master Contact
     ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
@@ -248,7 +248,7 @@ Create New Master Contact
     Click Visible Element               ${NEW_BUTTON}
     Click Visible Element               ${MASTER}
     click Element                       ${NEXT}
-    Wait Until Element is Visible       ${CONTACT_INFO}     10s
+    Wait Until Element is Visible       ${CONTACT_INFO}     60s
     Input Text                          ${MOBILE_NUM_FIELD}               ${MASTER_MOBILE_NUM}
     Input Text                          ${FIRST_NAME_FIELD}               ${MASTER_FIRST_NAME}
     Input Text                          ${LAST_NAME_FIELD}                ${MASTER_LAST_NAME}
@@ -257,7 +257,7 @@ Create New Master Contact
     #Input Text                          ${MASTER_EMAIL_FIELD}             ${MASTER_EMAIL}
     Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${MASTER_ACCOUNT_NAME}
     Click Element                       ${SAVE_BUTTON}
-    Sleep                               5s
+    Sleep                               10s
     #Validate Master Contact Details     ${CONTACT_DETAILS}
 
 Select from Autopopulate List
@@ -297,7 +297,7 @@ Create New NP Contact
     Click Visible Element               ${NEW_BUTTON}
     Click Visible Element               ${NON-PERSON}
     click Element                       ${NEXT}
-    Wait Until Element is Visible       ${CONTACT_INFO}             10s
+    Wait Until Element is Visible       ${CONTACT_INFO}             60s
     Input Text                          ${MOBILE_NUM_FIELD}  ${NP_MOBILE_NUM}
     Input Text                          ${FIRST_NAME_FIELD}  ${NP_FIRST_NAME}
     Input Text                          ${LAST_NAME_FIELD}   ${NP_LAST_NAME}
@@ -375,15 +375,15 @@ Validate Closed Opportunity Details
                  ${current_date}=       Get Current Date    result_format=%d.%m.%Y
                  ${oppo_close_date}=    Set Variable        //span[@title='Close Date']//following-sibling::div//span[text()='${current_date}']
     Go to Entity  ${opportunity_name}
-    Wait Until Page Contains Element   ${oppo_close_date}       10s
-    Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${stage}']  10s
+    Wait Until Page Contains Element   ${oppo_close_date}       60s
+    Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${stage}']  60s
     ${oppo_status}=  set variable if  '${stage}'== 'Closed Lost'    Lost  Cancelled
     ${buttonNotAvailable}=  Run Keyword And Return Status  element should not be visible  ${EDIT_STAGE_BUTTON}
     Run Keyword If  ${buttonNotAvailable}   reload page
     Click Visible Element               ${EDIT_STAGE_BUTTON}
     Select option from Dropdown         //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title='Closed Won']
     Save
-    Wait Until Page Contains Element    //span[text()='Review the following errors']  10s
+    Wait Until Page Contains Element    //span[text()='Review the following errors']  60s
     Press ESC On                        //span[text()='Review the following errors']
     click element                       //*[@title='Cancel']
 
@@ -415,20 +415,18 @@ Select option from Dropdown
     [Arguments]             ${list}        ${item}
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
     Click Visible Element  ${list}
-    Sleep  5s
-    #Click Element  ${item}
-    ${element_xpath}=       Replace String      ${item}        \"  \\\"
-    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep  2s
+    Click Element  ${item}
 
 Verify That Opportunity is Not Found under My All Open Opportunities
     [Arguments]     ${opportunity}
                     ${oppo_name}=    Set Variable       //*[text()='${opportunity}']   #${OPPORTUNITY_NAME}
     Open Tab        Opportunities
     Select Correct View Type    My All Open Opportunities
-    Wait Until Page Contains Element    ${SEARCH_INPUT}     20s
+    Wait Until Page Contains Element    ${SEARCH_INPUT}     60s
     Input Text      ${SEARCH_INPUT}     ${opportunity}
     Press Key       ${SEARCH_INPUT}     \\13
-    Sleep           5s
+    Sleep           10s
     Page should contain element    //*[text()='No items to display.']
 
 
@@ -437,7 +435,7 @@ Verify That Opportunity is Not Found under My All Open Opportunities
 Create a Task
     click element  ${NEW_TASK_LABEL}
     Sleep   10s
-    wait until page contains element  xpath=${task_subject_input}    20s
+    wait until page contains element  xpath=${task_subject_input}    60s
     ${random_string}   generate random string  8
     input text    xpath=${task_subject_input}      Task-${random_string}
    ## click element    xpath=//*[@title='Send Quote' and @class="slds-truncate"]  #this is for Send Quote
@@ -446,19 +444,19 @@ Create a Task
     Input Text          xpath=//*[text()='Due Date']/../../div/input           ${task_due_DATE}
     click element    xpath=${name_input_task}
     input text       xpath=${name_input_task}     ${name_input}
-    sleep    5s
+    sleep    10s
     click element    //*[@title='${name_input}']/../../..
-    sleep    5s
+    sleep    10s
     click element  ${save_task_button}
-    sleep    20s
+    sleep    10s
     click element     ${suucess_msg_task_anchor}
-    sleep       20s
+    sleep       10s
     Search And Select the Entity            Task-${random_string}    ${EMPTY}
 
 Create a Meeting
     click Element  ${NEW_EVENT_LABEL}
     Sleep  10s
-    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   20s
+    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   60s
     click element    xpath=${SUBJECT_INPUT}
     click element    xpath=//*[@title='${Meeting}' and @class="slds-truncate"]
     click element    xpath=${EVENT_TYPE}
@@ -480,10 +478,10 @@ Create a Meeting
     input text           ${city_input}                  ${DEFAULT_CITY}
     click element        ${contact_name_input}
     input text           ${contact_name_input}          ${name_input}
-    sleep    5s
+    sleep    10s
     click element        ${contact_name_select}
     click element     ${save_button_create}
-    sleep   20s
+    sleep   10s
     click element     ${success_message_anchor}
     sleep  10s
     ${start_date_form}  get text    xpath=${start_date_form_span}
@@ -514,7 +512,7 @@ Create a Meeting
 Create a Call
     click Element  ${NEW_EVENT_LABEL}
     Sleep  10s
-    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   20s
+    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   60s
     click element    xpath=${SUBJECT_INPUT}
     #click element    xpath=//*[@title='${Meeting}' and @class="slds-truncate"]
     click element    xpath=//*[@title='Call' and @class="slds-truncate"]  #this is for Call
@@ -538,10 +536,10 @@ Create a Call
     input text           ${city_input}                  ${DEFAULT_CITY}
     click element        ${contact_name_input}
     input text           ${contact_name_input}          ${name_input}
-    sleep    5s
+    sleep    10s
     click element        ${contact_name_select}
     click element     ${save_button_create}
-    sleep   20s
+    sleep   10s
     click element     ${success_message_anchor}
     sleep  10s
     ${start_date_form}  get text    xpath=${start_date_form_span}
@@ -610,177 +608,3 @@ Verify That Business Account Attributes Are Named Right
 Verify That Record Contains Attribute
     [Arguments]    ${attribute}
     Wait Until Page Contains Element    //span[contains(@class,'test-id__field-label') and (text()='${attribute}')]
-
-Create New Master Contact With All Details
-    ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
-    ${email_id}=    Run Keyword     Create Unique Email         ${DEFAULT_EMAIL}
-    ${mobile_num}=  Set Variable    +358968372101
-    Set Test Variable    ${MASTER_FIRST_NAME}       Mas ${first_name}
-    Sleep  3s
-    Set Test Variable    ${MASTER_LAST_NAME}        Test ${first_name}
-    Set Test Variable    ${MASTER_PRIMARY_EMAIL}    ${email_id}
-    Set Test Variable    ${MASTER_MOBILE_NUM}       ${mobile_num}
-    Click Visible Element               ${NEW_BUTTON}
-    Click Visible Element               ${MASTER}
-    click Element                       ${NEXT}
-    Wait Until Element is Visible       ${CONTACT_INFO}  10s
-    sleep  5s
-    Input Text                          ${MASTER_MOBILE_NUM_FIELD}        ${MASTER_PHONE_NUM}
-    Input Text                          ${FIRST_NAME_FIELD}        ${MASTER_FIRST_NAME}
-    Input Text                          ${LAST_NAME_FIELD}         ${MASTER_LAST_NAME}
-    Input Text                          ${MASTER_PHONE_NUM_FIELD}         ${MASTER_PHONE_NUM}
-    Input Text                          ${MASTER_PRIMARY_EMAIL_FIELD}     ${MASTER_PRIMARY_EMAIL}
-    Input Text                          ${EMAIL_ID_FIELD}             ${MASTER_PRIMARY_EMAIL}
-    Select from Autopopulate List       ${ACCOUNT_NAME_FIELD}             ${MASTER_ACCOUNT_NAME}
-    Input Text                          ${BUSINESS_CARD_FIELD}            ${BUSINESS_CARD}
-    Select option from Dropdown with Force Click Element         ${STATUS}  ${STATUS_ACTIVE}
-    Select option from Dropdown with Force Click Element         ${PREFERRED_CONTACT_CHANNEL}  ${PREFERRED_CONTACT_CHANNEL_LETTER}
-    Select option from Dropdown with Force Click Element         ${GENDER}  ${GENDER_MALE}
-    Select option from Dropdown with Force Click Element         ${COMMUNICATION_LANGUAGE}  ${COMMUNICATION_LANG_ENGLISH}
-    Select Date From DATEPICKER         ${DATE_PICKER}
-    ${last_contact_date}   Get Text  ${LAST_CONTACTED_DATE}
-    Set Test Variable  ${contacted_date_text}  ${last contact_date}
-    Select option from Dropdown with Force Click Element         ${SALES_ROLE}  ${SALES_ROLE_BUSINESS_CONTACT}
-    Select option from Dropdown with Force Click Element         ${JOB_TITLE_CODE}  ${JOB_TITLE_CODE_NAME}
-    Input Text                          ${OFFICE_NAME_FIELD}  ${OFFICE_NAME}
-    Click Element                       ${SAVE_BUTTON}
-    Sleep                               10s
-
-
-Validate Master Contact Details In Contact Page
-    [Arguments]     ${element}
-                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
-                    ${business_card_text}=  Set Variable   //span[text()='Business Card Title']//following::span//span[text()='${BUSINESS_CARD}']
-                    ${gender_selection}=  Set Variable     //span[text()='Gender']//following::span//span[text()='${gender}']
-                    ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${MASTER_ACCOUNT_NAME}']
-                    ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM}']
-                    ${phone_number}=    Set Variable       //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM}']
-                    ${primary_email}=   Set Variable       //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
-                    ${email}=           Set Variable       //span[text()='Email']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
-                    ${status}=          Set Variable       //span[text()='Status']//following::span//span[text()='${STATUS_TEXT}']
-                    ${preferred_contact}=   Set Variable   //span[text()='Preferred Contact Channel']//following::span//span[text()='${PREFERRED_CONTACT}']
-                    ${comm_lang}=   Set Variable   //span[text()='Communication Language']//following::span//span[text()='${COMMUNICATION_LANG}']
-                    ${birth_date}=  Set Variable   //span[text()='Birthdate']//following::span//span[text()='${day}.${month_digit}.${year}']
-                    ${last_contact_date}=  Set Variable  //span[text()='Last Contacted Date']//following::span//span[text()='${contacted_date_text}']
-                    ${sales_role}=  Set Variable  //span[text()='Sales Role']//following::span//span[text()='${sales_role_text}']
-                    ${job_title}=  Set Variable   //span[text()='Job Title Code']//following::span//span[text()='${job_title_text}']
-                    ${office_name_text}=  Set Variable  //span[text()='Office Name']//following::span//span[text()='${OFFICE_NAME}']
-
-
-    Go to Entity   ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
-    Sleep                               5s
-    Click Visible element               ${DETAILS_TAB}
-    Sleep                               5s
-    Validate Contact Details In Contact Page  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${primary_email}  ${email}  ${status}  ${preferred_contact}  ${comm_lang}  ${birth_date}  ${last_contact_date}  ${sales_role}  ${job_title}  ${office_name_text}
-    #Wait Until Page Contains Element    ${element}${phone_number}
-    #Wait Until Page Contains Element    ${element}${email}
-
-Select Date From DATEPICKER
-    [Arguments]  ${dateElement}
-                 ${select_year}=  Set Variable       //option[text()='${year}']
-     ${element_xpath}=       Replace String      ${dateElement}        \"  \\\"
-    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
-     :FOR    ${INDEX}    IN RANGE    1    12
-     \    sleep  2s
-     \    ${month}=  Get Text  ${MONTH_TEXT}
-     \    Run Keyword If  "${month}" != "${to_select_month}"  click element  ${NEXT_BUTTON_MONTH}
-     \    Exit For Loop If  "${month}" == "${to_select_month}"
-     click element  ${YEAR_DROPDOWN}
-     sleep  2s
-     wait until element is visible   ${select_year}
-     click element  ${select_year}
-     Pick Date
-
-Pick Date
-    [Arguments]
-                ${select_day}=   Set Variable      //span[@data-aura-class='uiDayInMonthCell--default' and text()='${day}']
-     click element  ${select_day}
-
-Validate Contact Details In Contact Page
-    [Arguments]  ${element}  ${contact_name}  ${account_name}  ${mobile_number}  ${primary_email}  ${email}  ${status}  ${preferred_contact}  ${comm_lang}  ${birth_date}
-          ...    ${last_contact_date}  ${sales_role}  ${job_title}  ${office_name_text}
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${primary_email}
-    Wait Until Page Contains Element    ${element}${email}
-    Wait Until Page Contains Element    ${element}${status}
-    Wait Until Page Contains Element    ${element}${preferred_contact}
-    Wait Until Page Contains Element    ${element}${comm_lang}
-    Wait Until Page Contains Element    ${element}${birth_date}
-    Wait Until Page Contains Element    ${element}${last_contact_date}
-    Wait Until Page Contains Element    ${element}${sales_role}
-    Wait Until Page Contains Element    ${element}${job_title}
-    Wait Until Page Contains Element    ${element}${office_name_text}
-
-Validate That Contact Person Attributes Are Named Right
-    [Arguments]
-                    ${business_card_title}=  Set Variable   //button[@title='Edit Business Card Title']/../..//span[text()='Business Card Title']
-                    ${name}=  Set Variable                 //span[@class='uiOutputText']/../../..//span[text()='Name']
-                    ${contact_ID}=  Set Variable          (//div[@class='windowViewMode-normal oneContent active lafPageHost']//*[text()='Contact ID'])[1]
-                    ${account_name}=    Set Variable       //button[@title='Edit Account Name']/../..//span[text()='Account Name']
-                    ${mobile_number}=   Set Variable       //button[@title='Edit Mobile']/../..//span[text()='Mobile']
-                    ${phone_number}=    Set Variable       //button[@title='Edit Phone']/../..//span[text()='Phone']
-                    ${primary_email}=   Set Variable       //button[@title='Edit Primary eMail']/../..//span[text()='Primary eMail']
-                    ${email}=           Set Variable       //button[@title='Edit Email']/../..//span[text()='Email']
-                    ${status}=          Set Variable       //button[@title='Edit Status']/../..//span[text()='Status']
-                    ${preferred_contact_title}=   Set Variable   //button[@title='Edit Preferred Contact Channel']/../..//span[text()='Preferred Contact Channel']
-                    ${comm_lang}=   Set Variable   //button[@title='Edit Communication Language']/../..//span[text()='Communication Language']
-                    ${birth_date}=  Set Variable   //button[@title='Edit Birthdate']/../..//span[text()='Birthdate']
-                    ${sales_role}=  Set Variable  //button[@title='Edit Sales Role']/../..//span[text()='Sales Role']
-                    ${office_name_text}=  Set Variable  //button[@title='Edit Office Name']/../..//span[text()='Office Name']
-                    ${gender_text}=  Set Variable  //button[@title='Edit Gender']/../..//span[text()='Gender']
-                    ${Address}=  Set Variable  (//div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='Address'])[1]
-                    ${External_address}=  Set Variable  (//div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='External Address'])[1]
-                    ${3rd_Party_Contact}=  Set Variable  //button[@title='Edit 3rd Party Contact']/../..//span[text()='3rd Party Contact']
-                    ${external_phone}=  Set Variable  //div[@class='windowViewMode-normal oneContent active lafPageHost']//section[@class='tabs__content active uiTab']//div[contains(@class,'test-id__section slds-section')]//button[@title='Edit Phone']//parent::div/../../../../div/div/div/div/span[text()='External Phone']
-     Wait Until Page Contains Element  ${business_card_title}
-     Wait Until Page Contains Element  ${name}
-     Wait Until Page Contains Element  ${contact_ID}
-     Wait Until Page Contains Element  ${account_name}
-     Wait Until Page Contains Element  ${mobile_number}
-     Wait Until Page Contains Element  ${phone_number}
-     Wait Until Page Contains Element  ${primary_email}
-     Wait Until Page Contains Element  ${email}
-     Wait Until Page Contains Element  ${status}
-     Scroll Page To Location  0  200
-     Wait Until Page Contains Element  ${preferred_contact_title}
-     Wait Until Page Contains Element  ${comm_lang}
-     Wait Until Page Contains Element  ${birth_date}
-     Scroll Page To Location  0  500
-     Wait Until Page Contains Element  ${sales_role}
-     Wait Until Page Contains Element  ${office_name_text}
-     Wait Until Page Contains Element  ${gender_text}
-     Wait Until Page Contains Element  ${Address}
-     Wait Until Page Contains Element  ${External_address}
-     Wait Until Page Contains Element  ${3rd_Party_Contact}
-     Wait Until Page Contains Element  ${external_phone}
-
-Go To Accounts
-    ${element_xpath}=       Replace String      ${ACCOUNTS_LINK}        \"  \\\"
-    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
-    Sleep  2s
-
-Click on Account Name
-
-    sleep  5s
-    ${count}=  Get Element Count  ${ACCOUNT_NAME}
-    Log To Console  Count:${count}
-    click element  ${ACCOUNT_NAME}[1]
-    #Run Keyword if  ${count} != 0  click element  xpath=${ACCOUNT_NAME}[0]
-    #...  else  Log To Console  no account name available
-
-Force click element
-  [Arguments]  ${elementToClick}
-    ${element_xpath}=       Replace String      ${elementToClick}        \"  \\\"
-    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
-    Sleep  2s
-
-Select option from Dropdown with Force Click Element
-    [Arguments]             ${list}        ${item}
-    #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
-   ${element_xpath}=       Replace String      ${list}        \"  \\\"
-    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
-    Sleep  2s
-    Click Element  ${item}
-
