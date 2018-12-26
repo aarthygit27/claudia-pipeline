@@ -121,7 +121,6 @@ ${SHOPPING_CART}                            //li[@title='Cart']
 ${CPQ_SEARCH_FIELD}                         //div[contains(@class,'cpq-searchbox')]//input
 
 #Contacts-Attribute
-
 ${BUSINESS_CARD_FIELD}                      //span[text()='Business Card Title']/ancestor::label/../input
 ${STATUS}                                   //div[contains(@class,'modal-body')]//*[text()='Status']/parent::span/../div//a
 ${STATUS_ACTIVE}                          //a[@title='Active']
@@ -158,4 +157,3 @@ ${day}                                      12
 ${gender}                                   1 - male
 ${sales_role_text}                          Business Contact
 ${job_title_text}                           verojohtaja - 8715
-
