@@ -3,7 +3,7 @@ Documentation       Suite description
 Resource            ../resources/sales_app_light_keywords.robot
 
 Test Setup          Open Browser And Go To Login Page
-#Test Teardown       Logout From All Systems and Close Browser
+Test Teardown       Logout From All Systems and Close Browser
 
 *** Test Cases ***
 
