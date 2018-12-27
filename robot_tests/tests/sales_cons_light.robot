@@ -17,19 +17,19 @@ Lightning: Create opportunity from Account
     Verify That Opportunity is Found From My All Open Opportunities
 
 Lightning: Add new contact - Master
-    [Tags]  Lightning
+    [Tags]  BQA-8262        Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact and Validate
 
 Lightning: Add new contact - Non Person
-    [Tags]  Lightning
+    [Tags]  BQA-8263        Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New NP Contact and Validate
 
 Lightning: Add new contact from accounts page
-    [Tags]  Lightning
+    [Tags]  BQA-8265        Lightning
     Go To Salesforce and Login into Lightning
     Go To Account  ${AP_CONTACT_ACCOUNTNAME}
     Create New Contact for Account and Validate

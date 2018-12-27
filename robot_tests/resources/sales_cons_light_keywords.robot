@@ -22,11 +22,11 @@ Go To Salesforce and Login into Lightning
 Login To Salesforce Lightning And Close All Tabs
     [Arguments]     ${user}=Digisales Lightning User
     Run Keyword     Login to Salesforce as ${user}
-    Run Keyword and Ignore Error    Wait For Load
+    Sleep  5s
+    #Run Keyword and Ignore Error    Wait For Load
     Go to Lightning Sales Console
     Close All Tabs
     Reset to Home Tab
-
 
 Login to Salesforce as DigiSales Lightning User
     Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORD}
@@ -81,9 +81,9 @@ Search And Select the Account
 Search Salesforce
     [Arguments]         ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}      20s
-    Input Text          xpath=${SEARCH_SALESFORCE}      ${item}
-    Sleep   5s
-    Press Key       xpath=${SEARCH_SALESFORCE}     \\13
+    Input Text          ${SEARCH_SALESFORCE}      ${item}
+    #Sleep   5s
+    Press Key           ${SEARCH_SALESFORCE}     \\13
     Sleep   10s
     #ENVIRONMENT ISSUE
     #Wait Until Page Contains        //div[@class='listContent']//span[contains(@class,'mruSearchLabel') and contains(@title,'${item}')]
@@ -95,7 +95,7 @@ Search Salesforce
 
 Select Account
     [Arguments]         ${account_name}     ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${account_name}']
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${account_name}']   30s
     Click Element       ${TABLE_HEADER}[@title='${account_name}']
     Sleep   10s
     Account Should Be Open    ${account_name}
@@ -108,12 +108,12 @@ Account Should Be Open
     #Wait Until Page Contains Element        xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']      60 seconds
 
 Create New Opportunity For Customer
-    [Arguments]     ${opport_name}=${OPPORTUNITY_NAME}
+    [Arguments]     #${opport_name}=${EMPTY}
     ...             ${stage}=Analyse Prospect
     ...             ${days}=1
     ...             ${expect_error}=${FALSE}
     Click New Item For Account      New Opportunity
-    Fill Mandatory Opportunity Information      ${opport_name}    ${stage}    ${days}
+    Fill Mandatory Opportunity Information    ${stage}    ${days}
     Fill Mandatory Classification
     Click Save Button
     Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
@@ -124,14 +124,14 @@ Click New Item For Account
     #Click Element   xpath=//a[@title='${type}']
     Run Keyword If       ${status}     Run Keyword With Delay      0.5s    Click Element   xpath=//a[@title='${type}']
     #Run Keyword Unless   ${status}      Click New Item For Account From Dropdown    ${type}
-    Wait Until Page Contains Element    ${NEW_ITEM_POPUP}     10s
+    Wait Until Page Contains Element    ${NEW_ITEM_POPUP}     30s
 
 
 Fill Mandatory Opportunity Information
     [Arguments]
-    ...    ${opport_name}=${OPPORTUNITY_NAME}
     ...    ${stage}=Analyse Prospect
     ...    ${days}=1
+           ${opport_name}=  Run Keyword        Create Unique Name          TestOpportunity
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
     Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
@@ -165,9 +165,11 @@ Click Save Button
 Verify That Opportunity Creation Succeeded
     #Wait Until Element Is Visible   ${SUCCESS_MESSAGE}     60 s
     Sleep       10s
-    Click element       ${ACCOUNT_RELATED}
+    #Click Visible Element      ${ACCOUNT_RELATED}
+    Force click element         ${ACCOUNT_RELATED}
     Sleep       5s
-    Scroll Page To Location         0       500
+    Scroll Page To Location         0       1000
+    Click Visible Element  //span[text()='Opportunities']/../../span
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
 Verify That Opportunity Is Saved And Data Is Correct
@@ -179,11 +181,11 @@ Verify That Opportunity Is Saved And Data Is Correct
                     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
                     ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${date}']
 
-    Wait Until Page Contains Element   ${element}${oppo_name}
-    Click element       ${element}${oppo_name}
+    Wait Until Page Contains Element   ${element}${oppo_name}       30s
+    Force click element       ${element}${oppo_name}
     Sleep       10s
-    Wait Until Page Contains Element    ${element}${oppo_name}
-    Wait Until Page Contains Element    ${account_name}
+    Wait Until Page Contains Element    ${element}${oppo_name}      20s
+    Wait Until Page Contains Element    ${account_name}             20s
     #Wait Until Page Contains Element    ${oppo_date}
     Close All Tabs
 
@@ -209,7 +211,7 @@ Verify That Opportunity Is Found With Search And Go To Opportunity
     [Arguments]     ${account_name}=${LIGHTNING_TEST_ACCOUNT}
     Close All Tabs
     Go to Account        ${OPPORTUNITY_NAME}
-    Wait until Page Contains Element    ${OPPORTUNITYNAME_TAB}//*[text()='${OPPORTUNITY_NAME}']     15s
+    Wait until Page Contains Element    ${OPPORTUNITYNAME_TAB}//*[text()='${OPPORTUNITY_NAME}']     30s
     Verify That Opportunity Is Saved And Data Is Correct    ${OPPORTUNITYNAME_TAB}
 
 
@@ -287,15 +289,19 @@ Go to Sales Console
 Create New Master Contact and Validate
     Sleep       10s
     Click Element                           ${NEW_CONTACT}
-    Wait Until Element is Visible           //span[text()='Master']    20s
-    Click Element                           //span[text()='Master']
-    click element                           //span[text()='Next']
+    Click Visible Element                   //span[text()='Master']
+    Click element                           //span[text()='Next']
     Wait Until Element is Visible           ${CONTACT_INFO}               20 seconds
-    Input Text              xpath=${MOBILE_NUM}         ${CONTACT_MOBILE}
-    Input Text              xpath=${FIRST_NAME}         ${CONTACT_FIRSTNAME}
-    Input Text              xpath=${LAST_NAME}          ${CONTACT_LASTNAME}
+    ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
+    ${email_id}=    Run Keyword     Create Unique Email         ${DEFAULT_EMAIL}
+    Set Test Variable    ${CONTACT_FIRST_NAME}       Master ${first_name}
+    Set Test Variable    ${CONTACT_LAST_NAME}        Test ${first_name}
+    Set Test Variable    ${CONTACT_PRIMARY_EMAIL}    ${email_id}
+    Input Text           ${MOBILE_NUM}         ${CONTACT_MOBILE}
+    Input Text           ${FIRST_NAME_FIELD}         ${CONTACT_FIRST_NAME}
+    Input Text           ${LAST_NAME_FIELD}          ${CONTACT_LAST_NAME}
     Select from Autopopulate List       ${ACCOUNT_NAME}         ${CONTACT_ACCOUNTNAME}
-    Input Text              xpath=${PRIMARY_EMAIL}          ${CONTACT_EMAIL}
+    Input Text              xpath=${PRIMARY_EMAIL}          ${CONTACT_PRIMARY_EMAIL}
     Click Element                           ${SAVE_BUTTON}
     Sleep       10s
     Validate Contact Details    ${CONTACT_DETAILS}
@@ -310,10 +316,10 @@ Select from Autopopulate List
 
 Validate Contact Details
     [Arguments]     ${element}
-                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${CONTACT_FIRSTNAME} ${CONTACT_LASTNAME}']
+                    ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${CONTACT_FIRST_NAME} ${CONTACT_LAST_NAME}']
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${CONTACT_ACCOUNTNAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${CONTACT_MOBILE}']
-                    ${email}=    Set Variable               //span[text()='Primary eMail']//following::a[text()='${CONTACT_EMAIL}']
+                    ${email}=    Set Variable               //span[text()='Primary eMail']//following::a[text()='${CONTACT_PRIMARY_EMAIL}']
     Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep                               5s
@@ -326,15 +332,19 @@ Validate Contact Details
 Create New NP Contact and Validate
     Sleep                                   10s
     Click Element                           ${NEW_CONTACT}
-    Wait Until Element is Visible           //span[text()='Non-person']    20s
-    Click Element                           //span[text()='Non-person']
+    Click Visible Element                   //span[text()='Non-person']
     click element                           //span[text()='Next']
     Wait Until Element is Visible           ${CONTACT_INFO}                 20 seconds
-    Input Text                              xpath=${MOBILE_NUM}             ${NP_CONTACT_MOBILE}
-    Input Text                              xpath=${FIRST_NAME}             ${NP_CONTACT_FIRSTNAME}
-    Input Text                              xpath=${LAST_NAME}              ${NP_CONTACT_LASTNAME}
-    Select from Autopopulate List           ${ACCOUNT_NAME}                 ${NP_CONTACT_ACCOUNTNAME}
-    Input Text                              xpath=${PRIMARY_EMAIL}          ${NP_CONTACT_EMAIL}
+    ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
+    ${email_id}=    Run Keyword     Create Unique Email         ${DEFAULT_EMAIL}
+    Set Test Variable    ${NP_CONTACT_FIRSTNAME}       NP ${first_name}
+    Set Test Variable    ${NP_CONTACT_LASTNAME}        Test ${first_name}
+    Set Test Variable    ${NP_CONTACT_EMAIL}           ${email_id}
+    Input Text                              ${MOBILE_NUM}             ${NP_CONTACT_MOBILE}
+    Input Text                              ${FIRST_NAME_FIELD}       ${NP_CONTACT_FIRSTNAME}
+    Input Text                              ${LAST_NAME_FIELD}        ${NP_CONTACT_LASTNAME}
+    Select from Autopopulate List           ${ACCOUNT_NAME}           ${NP_CONTACT_ACCOUNTNAME}
+    Input Text                              xpath=${PRIMARY_EMAIL}    ${NP_CONTACT_EMAIL}
     Click Element                           ${SAVE_BUTTON}
     Sleep                                   10s
     Validate NP Contact Details             ${CONTACT_DETAILS}
@@ -357,11 +367,16 @@ Validate NP Contact Details
 Create New Contact for Account and Validate
     click element           ${AP_NEW_CONTACT}
     sleep                   2s
-    Input Text              xpath=${AP_MOBILE_NUM}         ${AP_CONTACT_MOBILE}
-    Input Text              xpath=${FIRST_NAME}         ${AP_CONTACT_FIRSTNAME}
-    Input Text              xpath=${LAST_NAME}          ${AP_CONTACT_LASTNAME}
-    Input Text              xpath=${PRIMARY_EMAIL}          ${AP_CONTACT_EMAIL}
-    Click Element           xpath=${AP_SAVE_BUTTON}
+    Input Text              ${AP_MOBILE_NUM}         ${AP_CONTACT_MOBILE}
+    ${first_name}=  Run Keyword     Create Unique Name          ${EMPTY}
+    ${email_id}=    Run Keyword     Create Unique Email         ${DEFAULT_EMAIL}
+    Set Test Variable    ${AP_CONTACT_FIRSTNAME}        AP ${first_name}
+    Set Test Variable    ${AP_CONTACT_LASTNAME}         Test ${first_name}
+    Set Test Variable    ${AP_CONTACT_EMAIL}            ${email_id}
+    Input Text              ${FIRST_NAME_FIELD}         ${AP_CONTACT_FIRSTNAME}
+    Input Text              ${LAST_NAME_FIELD}          ${AP_CONTACT_LASTNAME}
+    Input Text              ${PRIMARY_EMAIL}            ${AP_CONTACT_EMAIL}
+    Click Element           ${AP_SAVE_BUTTON}
     Sleep                   2s
     Validate AP Contact Details    ${CONTACT_DETAILS}
 
@@ -393,3 +408,9 @@ Switch to Lightning Sales Console
     wait until page contains element        ${SALES_CONSOLE_LINK}       15s
     click element                           ${SALES_CONSOLE_LINK}
     wait until element is visible           ${SALES_APP_NAME}           15s
+
+Force click element
+    [Arguments]  ${elementToClick}
+    ${element_xpath}=       Replace String      ${elementToClick}        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep  2s

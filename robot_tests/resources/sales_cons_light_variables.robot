@@ -4,7 +4,7 @@ ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${TEST_ENVIRONMENT}                         merge
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${TEST_ENVIRONMENT}
 ${PASSWORD}                                 PahaPassu1
-${LIGHTNING_TEST_ACCOUNT}                   Ambea Oy
+${LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}                           //img[@class='icon noicon']
@@ -17,9 +17,10 @@ ${SAVE_OPPORTUNITY}                         //div[@class='modal-container slds-m
 ${SUCCESS_MESSAGE}                          //div[@class='forceVisualMessageQueue']//div[@class='toastContainer slds-notify_container slds-is-relative']
 
 #New Opportunity
-${OPPORTUNITY_NAME}                         TestOpportunity1
+#${OPPORTUNITY_NAME}                        TestOpportunity1
 ${ACCOUNT_RELATED}                         //span[text()='Related']//parent::a
-${RELATED_OPPORTUNITY}                     //*[@class='primaryField']
+#${RELATED_OPPORTUNITY}                     //*[@class='primaryField']
+${RELATED_OPPORTUNITY}                      //tbody
 ${OPPORTUNITYNAME_TAB}                     //*[@id='primaryField']
 ${OPPORTUNITIES_SECTION}                   //li//span[text()='Opportunities']
 ${SEARCH_INPUT}                            //input[@name='search-input']
@@ -34,13 +35,13 @@ ${NEW_CONTACT}                              //*[@id='split-left']/div/div/div/di
 
 #NEW CONTACT - MASTER
 ${CONTACT_ACCOUNTNAME}                      Aacon Oy
-${CONTACT_FIRSTNAME}                        TEST1
-${CONTACT_LASTNAME}                         CONTACT1
-${CONTACT_EMAIL}                            master1@email.com
-${CONTACT_MOBILE}                            +358998877661
+#${CONTACT_FIRSTNAME}                        TEST1
+#${CONTACT_LASTNAME}                         CONTACT1
+#${CONTACT_EMAIL}                            master1@email.com
+${CONTACT_MOBILE}                            +358222222222
 ${MOBILE_NUM}                               //input[@class=' input' and @type='tel']
-${FIRST_NAME}                               //input[@placeholder='First Name']
-${LAST_NAME}                                //input[@placeholder='Last Name']
+${FIRST_NAME_FIELD}                               //input[@placeholder='First Name']
+${LAST_NAME_FIELD}                                //input[@placeholder='Last Name']
 ${ACCOUNT_NAME}                             //input[@title='Search Accounts']
 ${PRIMARY_EMAIL}                            //input[@type='email']
 ${SAVE_BUTTON}                              //button[@title="Save"]
@@ -49,18 +50,18 @@ ${CONTACT_DETAILS}                          //section[@class='tabs__content acti
 
 #NEW CONTACT - Non-person
 ${NP_CONTACT_ACCOUNTNAME}                   Aktia Fondbolag Ab
-${NP_CONTACT_FIRSTNAME}                     NPTEST5
-${NP_CONTACT_LASTNAME}                      NPCONTACT5
-${NP_CONTACT_EMAIL}                         nptest5@email.com
-${NP_CONTACT_MOBILE}                        +358888123455
+#${NP_CONTACT_FIRSTNAME}                     NPTEST5
+#${NP_CONTACT_LASTNAME}                      NPCONTACT5
+#${NP_CONTACT_EMAIL}                         nptest5@email.com
+${NP_CONTACT_MOBILE}                        +358333333333
 
 #NEW CONTACT FROM ACCOUNTS PAGE
 ${AP_CONTACT_ACCOUNTNAME}                   Gavetec Oy
 ${AP_NEW_CONTACT}                           //div[@title="New Contact"]
-${AP_CONTACT_FIRSTNAME}                     APTEST10
-${AP_CONTACT_LASTNAME}                      APCONTACT10
-${AP_CONTACT_EMAIL}                         aptest10@email.com
-${AP_CONTACT_MOBILE}                        +358888123457
+#${AP_CONTACT_FIRSTNAME}                     APTEST10
+#${AP_CONTACT_LASTNAME}                      APCONTACT10
+#${AP_CONTACT_EMAIL}                         aptest10@email.com
+${AP_CONTACT_MOBILE}                        +358444444444
 
 ${APP_LAUNCHER}                             //*[contains(@class,'slds-icon-waffle')]
 #//button[contains(@class,'salesforceIdentityAppLauncherHeader')]
