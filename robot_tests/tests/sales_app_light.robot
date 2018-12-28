@@ -48,24 +48,6 @@ Negative - Validate Opportunity cannot be created for Group account
     Go To Entity   ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created     GROUPACCOUNT
 
-Lightning: Create Meeting from Account
-    [Tags]   BQA-7948       Lightning
-    Go To Salesforce and Login into Lightning
-    Go To Entity        ${TEST_ACCOUNT_CONTACT}
-    Create a Meeting
-
-Lightning: Create Call from Account
-    [Tags]   BQA-8085       Lightning
-    Go To Salesforce and Login into Lightning
-    Go To Entity        ${TEST_ACCOUNT_CONTACT}
-    Create a Call
-
-Lightning: Create Task from Account
-    [Tags]   BQA-8463       Lightning
-    Go To Salesforce and Login into Lightning
-    Go To Entity        ${TEST_ACCOUNT_CONTACT}
-    Create a Task
-
 Closing active opportunity as cancelled
     [Tags]  BQA-8465        Lightning
     Go To Salesforce and Login into Lightning
@@ -93,3 +75,21 @@ Check Attributes/Contact Person are named right
     Create New Master Contact With All Details
     Validate Master Contact Details In Contact Page    ${CONTACT_DETAILS}
     Validate That Contact Person Attributes Are Named Right
+
+Lightning: Create Meeting from Account
+    [Tags]   BQA-7948       Lightning
+    Go To Salesforce and Login into Lightning
+    Go To Entity        ${TEST_ACCOUNT_CONTACT}
+    Create a Meeting
+
+Lightning: Create Call from Account
+    [Tags]   BQA-8085       Lightning
+    Go To Salesforce and Login into Lightning
+    Go To Entity        ${TEST_ACCOUNT_CONTACT}
+    Create a Call
+
+Lightning: Create Task from Account
+    [Tags]   BQA-8463       Lightning
+    Go To Salesforce and Login into Lightning
+    Go To Entity        ${TEST_ACCOUNT_CONTACT}
+    Create a Task

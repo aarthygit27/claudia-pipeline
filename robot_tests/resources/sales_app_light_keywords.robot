@@ -159,7 +159,8 @@ Verify That Opportunity Creation Succeeded
     ${status}=      Run Keyword And Return Status      Element Should Be Visible     //span[@title='Account Team Members']
     Run Keyword If       ${status}     Run Keyword With Delay      0.10s    Click Element   xpath=${ACCOUNT_RELATED}
     Sleep       10s
-    Scroll Page To Location         0       450
+    Scroll Page To Location         0       1000
+    Click Visible Element  //span[text()='Opportunities']/../../span
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
 
@@ -194,6 +195,7 @@ Verify That Opportunity is Found From My All Open Opportunities
     [Arguments]     ${account_name}=${LIGHTNING_TEST_ACCOUNT}
     ...             ${days}=1
                     ${date}=    Get Date From Future    ${days}
+                    #${oppo_name}=    Set variable       TestOpportunity 20181228-103642
                     ${oppo_name}=    Set Variable       //*[text()='${OPPORTUNITY_NAME}']
                     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
                     ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${date}']
@@ -231,7 +233,9 @@ Filter Opportunities By
     Input Text          xpath=${SEARCH_INPUT}      ${value}
     Press Key       xpath=${SEARCH_INPUT}     \\13
     Sleep   10s
-    Run Keyword If  ${Count} > 1  Click Element     xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    #get_all_links
+    double click element  ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    #Run Keyword If  ${Count} > 1  click visible element  xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
 Go to Contacts
     Click Visible Element               ${CONTACTS_TAB}
@@ -362,7 +366,7 @@ Cancel Opportunity and Validate
     [Arguments]     ${opportunity}  ${stage}
     Go to Entity    ${opportunity}
     click visible element           ${EDIT_STAGE_BUTTON}
-    sleep  2s
+    sleep  3s
     Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="${stage}"]
     Save
     Validate error message
@@ -403,7 +407,7 @@ Cancel and save
     Click element       //a[contains(text(),"Close Comment")]
     Input Text          //label//span[contains(text(),"Close Comment")]/../following::textarea  Cancelling the opportunity
     Click Element       //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
-    Click element       //a[@title="09 Customer Postponed"]
+    Click Element       //a[@title="09 Customer Postponed"]
     Save
     Sleep  2s
 
@@ -429,41 +433,105 @@ Verify That Opportunity is Not Found under My All Open Opportunities
     Sleep           10s
     Page should contain element    //*[text()='No items to display.']
 
-
-
-
 Create a Task
+   [Tags]  BQA-TASK
+    ${unique_subject_task}=  run keyword   Create Unique Task Subject
+    click Task Link on Page
+    Enter Mandatory Info on Task Form  ${unique_subject_task}
+    Save Task and click on Suucess Message
+    Search And Select the Entity            ${unique_subject_task}   ${EMPTY}
+    Validate Created Task   ${unique_subject_task}
+
+click Task Link on Page
     click element  ${NEW_TASK_LABEL}
-    Sleep   10s
-    wait until page contains element  xpath=${task_subject_input}    60s
-    ${random_string}   generate random string  8
-    input text    xpath=${task_subject_input}      Task-${random_string}
-   ## click element    xpath=//*[@title='Send Quote' and @class="slds-truncate"]  #this is for Send Quote
+    #Sleep   10s
+    wait until page contains element  xpath=${task_subject_input}    40s
+
+Enter Mandatory Info on Task Form
+    [Arguments]     ${task_subject}
+    input text      xpath=${task_subject_input}    ${task_subject}
+    sleep           10s
+    ${a}=  run keyword  Enter Task Due Date
+    Enter and Select Contact
+
+Enter Task Due Date
     ${date}=    Get Date From Future    7
+    log to console   ${date}
     Set Test Variable    ${task_due_DATE}                                      ${date}
     Input Text          xpath=//*[text()='Due Date']/../../div/input           ${task_due_DATE}
+    [return]            ${task_due_DATE}
+
+
+Enter and Select Contact
     click element    xpath=${name_input_task}
     input text       xpath=${name_input_task}     ${name_input}
     sleep    10s
     click element    //*[@title='${name_input}']/../../..
     sleep    10s
+
+Save Task and click on Suucess Message
     click element  ${save_task_button}
-    sleep    10s
+    sleep    30s
     click element     ${suucess_msg_task_anchor}
-    sleep       10s
-    Search And Select the Entity            Task-${random_string}    ${EMPTY}
+    sleep       40s
+
+Validate Created Task
+    [Arguments]    ${unique_subject_task_form}
+    ${name_form}        get text  ${contact_name_form}  #helina kejiyu comoare
+    #${related_to_form}  get text  ${related_to}     #aacon Oy ${save_opportunity}
+    log to console  ${name_form}
+     ${date_due}=    Get Date From Future    7
+     page should contain element  //span[@class='uiOutputDate' and text()='${date_due}']
+     page should contain element  //span[@class='test-id__field-value slds-form-element__static slds-grow ']/span[@class='uiOutputText' and text()='${unique_subject_task_form}']
+
+
+Enter and Select Contact Meeting
+    click element        ${contact_name_input}
+    input text           ${contact_name_input}          ${name_input}
+    sleep    10s
+    click element        ${contact_name_select}
+    sleep    10s
+
 
 Create a Meeting
+   [Tags]  BQA-MEETING
+    ${unique_subject_task}=  run keyword   Create Unique Task Subject
+    click Meeting Link on Page
+    Enter Mandatory Info on Meeting Form  ${unique_subject_task}
+    Save Meeting and click on Suucess Message
+    Search And Select the Entity            ${unique_subject_task}   ${EMPTY}
+    Validate Created Meeting
+    Modify Meeting Outcome
+    Validate the Modified Outcome
+
+Create Unique Task Subject
+    ${random_string}   generate random string  8
+    [Return]  Task-${random_string}
+
+
+click Meeting Link on Page
     click Element  ${NEW_EVENT_LABEL}
-    Sleep  10s
-    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   60s
-    click element    xpath=${SUBJECT_INPUT}
-    click element    xpath=//*[@title='${Meeting}' and @class="slds-truncate"]
-    click element    xpath=${EVENT_TYPE}
-    click element    xpath=${meeting_select_dropdown}
-    #click element     xpath=//div/ul/li[3]/a[(text()='Customer Call')]   #this is for call
+    #Sleep  10s
+    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   40s
+
+Enter Mandatory Info on Meeting Form
+    sleep             10s
+    [Arguments]       ${task_subject}
+    input text     xpath=${SUBJECT_INPUT}   ${task_subject}
+    sleep           10s
+    click element     xpath=${EVENT_TYPE}
+    click element     xpath=${meeting_select_dropdown}
+    sleep           10s
     click element     xpath=${reason_select_dropdown}
-    click element    xpath=${reason_select_dropdown_value}
+    click element     xpath=${reason_select_dropdown_value}
+    Enter Meeting Start and End Date
+    sleep           10s
+    input text           ${city_input}                  ${DEFAULT_CITY}
+    sleep           10s
+    Enter and Select Contact Meeting
+    sleep           10s
+
+Enter Meeting Start and End Date
     ${date}=    Get Date From Future    1
     Set Test Variable    ${meeting_start_DATE}                    ${date}
     log to console       ${meeting_start_DATE}
@@ -475,96 +543,76 @@ Create a Meeting
     Input Text           ${meeting_end_date_input}        ${meeting_end_DATE}
     clear element text   ${meeting_end_time_input}
     input text           ${meeting_end_time_input}      ${meeting_end_time}
-    input text           ${city_input}                  ${DEFAULT_CITY}
-    click element        ${contact_name_input}
-    input text           ${contact_name_input}          ${name_input}
-    sleep    10s
-    click element        ${contact_name_select}
+
+Save Meeting and click on Suucess Message
     click element     ${save_button_create}
-    sleep   10s
+    sleep   30s
     click element     ${success_message_anchor}
-    sleep  10s
-    ${start_date_form}  get text    xpath=${start_date_form_span}
-    ${end_date_from}    get text    xpath=${end_date_form_span}
-    ${location_form}    get text    xpath=${location_form_span}
-    # log to console  ${start_date_form}.appendix.${meeting_start_DATE}.appendix.${end_date_from}.appendix.${meeting_end_DATE}
-    should be equal as strings  ${start_date_form}  ${meeting_start_DATE} ${meeting_start time}
-    should be equal as strings  ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
-    should be equal as strings  ${location_form}   ${DEFAULT_CITY}
+    sleep  40s
+
+
+Validate Created Meeting
+     sleep       10s
+     ${date}=    Get Date From Future    1
+     Set Test Variable    ${meeting_start_DATE}                    ${date}
+     ${date}=    Get Date From Future    2
+     Set Test Variable    ${meeting_end_DATE}             ${date}
+     ${start_date_form}  get text    xpath=${start_date_form_span}
+     ${end_date_from}    get text    xpath=${end_date_form_span}
+     ${location_form}    get text    xpath=${location_form_span}
+     # log to console  ${start_date_form}.appendix.${meeting_start_DATE}.appendix.${end_date_from}.appendix.${meeting_end_DATE}
+     should be equal as strings  ${location_form}    ${DEFAULT_CITY}
+     should be equal as strings  ${start_date_form}  ${meeting_start_DATE} ${meeting_start time}
+     should be equal as strings  ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
+
+
+Modify Meeting Outcome
     scroll page to location   0  600
     click element   ${meeting_outcome_edit_button}
     sleep  10s
     click element     xpath=${meeting_outcome_select}
-    sleep  3s
+    sleep  10s
     click element    xpath=${meeting_outcome_dropdown_value}
     click element    xpath=${meeting_status_select}
-    sleep  3s
+    sleep  10s
     click element  xpath=${meeting_status_value}
     input text       xpath=${description_textarea}    ${name_input}.Edited.${Meeting}
     click element    ${save_button_editform}
-    sleep   10s
-    ${description_form}  get text  ${description_span}
-    should be equal as strings  ${name_input}.Edited.${Meeting}   ${description_form}
+    sleep   20s
+
+
+Validate the Modified Outcome
+    #${description_form}  get text  ${description_span}
+    #should be equal as strings  ${name_input}.Edited.${Meeting}   ${description_form}
     ${meeting_outcome_form}  get text  ${meeting_outocme_span}
     should be equal as strings    ${meeting_outcome_form}  Positive
 
 
 Create a Call
-    click Element  ${NEW_EVENT_LABEL}
-    Sleep  10s
-    Wait Until Page Contains element  xpath=${SUBJECT_INPUT}   60s
-    click element    xpath=${SUBJECT_INPUT}
-    #click element    xpath=//*[@title='${Meeting}' and @class="slds-truncate"]
-    click element    xpath=//*[@title='Call' and @class="slds-truncate"]  #this is for Call
-    #//*[@title="Meeting" and @class="slds-truncate"]
+   [Tags]  BQA-CALL
+   ${unique_subject_task}=  run keyword   Create Unique Task Subject
+   click Meeting Link on Page
+   Enter Mandatory Info on Call Form   ${unique_subject_task}
+   Save Meeting and click on Suucess Message
+   Search And Select the Entity            ${unique_subject_task}   ${EMPTY}
+   Validate Created Meeting
+   Modify Meeting Outcome
+   Validate the Modified Outcome
+
+Enter Mandatory Info on Call Form
+    sleep             10s
+    [Arguments]       ${task_subject}
+    input text      xpath=${SUBJECT_INPUT}   ${task_subject}
     click element    xpath=${EVENT_TYPE}
     click element    xpath=${subject_call_type}
-    #click element     xpath=//div/ul/li[3]/a[(text()='Customer Call')]   #this is for call
     click element     xpath=${reason_select_dropdown}
     click element    xpath=${reason_select_dropdown_value}
-    ${date}=    Get Date From Future    1
-    Set Test Variable    ${meeting_start_DATE}                    ${date}
-    log to console       ${meeting_start_DATE}
-    Input Text           ${meeting_start_date_input}               ${meeting_start_DATE}
-    clear element text   ${meeting_start_time_input}
-    input text           ${meeting_start_time_input}               ${meeting_start_time}
-    ${date}=    Get Date From Future    2
-    Set Test Variable    ${meeting_end_DATE}             ${date}
-    Input Text           ${meeting_end_date_input}        ${meeting_end_DATE}
-    clear element text   ${meeting_end_time_input}
-    input text           ${meeting_end_time_input}      ${meeting_end_time}
+    Enter Meeting Start and End Date
+    Sleep           10s
     input text           ${city_input}                  ${DEFAULT_CITY}
-    click element        ${contact_name_input}
-    input text           ${contact_name_input}          ${name_input}
-    sleep    10s
-    click element        ${contact_name_select}
-    click element     ${save_button_create}
-    sleep   10s
-    click element     ${success_message_anchor}
-    sleep  10s
-    ${start_date_form}  get text    xpath=${start_date_form_span}
-    ${end_date_from}    get text    xpath=${end_date_form_span}
-    ${location_form}    get text    xpath=${location_form_span}
-    # log to console  ${start_date_form}.appendix.${meeting_start_DATE}.appendix.${end_date_from}.appendix.${meeting_end_DATE}
-    should be equal as strings  ${start_date_form}  ${meeting_start_DATE} ${meeting_start time}
-    should be equal as strings  ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
-    should be equal as strings  ${location_form}   ${DEFAULT_CITY}
-    scroll page to location   0  600
-    click element   ${meeting_outcome_edit_button}
-    sleep  10s
-    click element     xpath=${meeting_outcome_select}
-    sleep  3s
-    click element    xpath=${meeting_outcome_dropdown_value}
-    click element    xpath=${meeting_status_select}
-    sleep  3s
-    click element  xpath=${meeting_status_value}
-    input text       xpath=${description_textarea}    ${name_input}.Edited.${Meeting}
-    click element    ${save_button_editform}
-    sleep   10s
-    ${description_form}  get text  ${description_span}
-    should be equal as strings  ${name_input}.Edited.${Meeting}   ${description_form}
-    ${meeting_outcome_form}  get text  ${meeting_outocme_span}
-    should be equal as strings    ${meeting_outcome_form}  Positive
+    sleep           10s
+    Enter and Select Contact Meeting
+    sleep           10s
 
 Verify That Business Account Attributes Are Named Right
     Verify That Record Contains Attribute    Account ID
@@ -715,7 +763,7 @@ Validate That Contact Person Attributes Are Named Right
     [Arguments]
                 ${business_card_title}=  Set Variable   //button[@title='Edit Business Card Title']/../..//span[text()='Business Card Title']
                 ${name}=  Set Variable                 //span[@class='uiOutputText']/../../..//span[text()='Name']
-                ${contact_ID}=  Set Variable          (//div[@class='windowViewMode-normal oneContent active lafPageHost']//*[text()='Contact ID'])[1]
+                ${contact_ID}=  Set Variable          //div[@class='windowViewMode-normal oneContent active lafPageHost']//*[text()='Contact ID']
                 ${account_name}=    Set Variable       //button[@title='Edit Account Name']/../..//span[text()='Account Name']
                 ${mobile_number}=   Set Variable       //button[@title='Edit Mobile']/../..//span[text()='Mobile']
                 ${phone_number}=    Set Variable       //button[@title='Edit Phone']/../..//span[text()='Phone']
@@ -728,8 +776,8 @@ Validate That Contact Person Attributes Are Named Right
                 ${sales_role}=  Set Variable   //button[@title='Edit Sales Role']/../..//span[text()='Sales Role']
                 ${office_name_text}=  Set Variable  //button[@title='Edit Office Name']/../..//span[text()='Office Name']
                 ${gender_text}=  Set Variable  //button[@title='Edit Gender']/../..//span[text()='Gender']
-                ${Address}=  Set Variable  (//div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='Address'])[1]
-                ${External_address}=  Set Variable  (//div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='External Address'])[1]
+                ${Address}=  Set Variable   //div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='Address']
+                ${External_address}=  Set Variable   //div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='External Address']
                 ${3rd_Party_Contact}=  Set Variable  //button[@title='Edit 3rd Party Contact']/../..//span[text()='3rd Party Contact']
                 ${external_phone}=  Set Variable  //div[@class='windowViewMode-normal oneContent active lafPageHost']//section[@class='tabs__content active uiTab']//div[contains(@class,'test-id__section slds-section')]//button[@title='Edit Phone']//parent::div/../../../../div/div/div/div/span[text()='External Phone']
      Wait Until Page Contains Element  ${business_card_title}
