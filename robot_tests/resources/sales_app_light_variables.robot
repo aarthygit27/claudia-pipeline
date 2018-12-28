@@ -24,7 +24,8 @@ ${ACCOUNT_HEADER}                           //header[@class='forceHighlightsPane
 ${NEW_ITEM_POPUP}                           //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}                         //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
 ${ACCOUNT_RELATED}                          //div[contains(@class,'active')]//span[text()='Related']//parent::a
-${RELATED_OPPORTUNITY}                      //*[@class='primaryField']
+#${RELATED_OPPORTUNITY}                      //*[@class='primaryField']
+${RELATED_OPPORTUNITY}                      //tbody
 ${OPPORTUNITY_PAGE}                         //*[contains(@class,'slds-page-header')]
 ${RESULTS_TABLE}                            //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SEARCH_INPUT}                             //input[@name='search-input']
@@ -114,6 +115,10 @@ ${name_input_task}                          //div/div[3]/div[1]/div/div/div/div/
 ${save_task_button}                         //div/div[3]/div/div/div[2]/div[2]/button
 ${suucess_msg_task_anchor}                  //*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${TEST_ACCOUNT_CONTACT}                     Aacon Oy
+${contact_name_form}                        //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
+${related_to}                               //span[@class='data-social-photo-guid-0c81cbe7-ad99-4592-a537-f11c4b51aaee photoContainer forceSocialPhoto_v2 forceOutputLookup']/../a[text()]
+${DEFAULT_CITY}  	            		    HELSINKI
+
 
 #CPQ
 ${CPQ_BUTTON}                               //a[@title='CPQ']
