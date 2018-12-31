@@ -3,7 +3,8 @@ ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${TEST_ENVIRONMENT}                         merge
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${TEST_ENVIRONMENT}
-${PASSWORD}                                 PahaPassu1
+${PASSWORD_OLD}                             PahaPassu1
+${PASSWORD_NEW}                             PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}                   Dignia Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']

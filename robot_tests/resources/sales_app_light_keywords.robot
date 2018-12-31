@@ -32,11 +32,12 @@ Go To Salesforce and Login into Lightning
     Reset to Home
 
 Login to Salesforce as DigiSales Lightning User
-    Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORD}
+    Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORD_NEW}
 
 Login to Salesforce Lightning
     [Arguments]         ${username}=${B2B_DIGISALES_LIGHT_USER}
-    ...                 ${password}=${PASSWORD}
+    ...                 ${password}=${PASSWORD_NEW}
+    log to console   ${password}.this is password
     Wait Until Page Contains Element        id=username
     Input Text          id=username         ${username}
     Input Password      id=password         ${password}
@@ -274,7 +275,7 @@ Validate Master Contact Details
                     ${contact_name}=    Set Variable       //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${MASTER_ACCOUNT_NAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM}']
-                    ${phone_number}=    Set Variable       //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM}']
+                     ${phone_number}=    Set Variable       //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM}']
                     ${primary_email}=   Set Variable       //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
                     #${email}=           Set Variable       //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
     Go to Entity   ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
@@ -434,7 +435,7 @@ Verify That Opportunity is Not Found under My All Open Opportunities
     Page should contain element    //*[text()='No items to display.']
 
 Create a Task
-   [Tags]  BQA-TASK
+
     ${unique_subject_task}=  run keyword   Create Unique Task Subject
     click Task Link on Page
     Enter Mandatory Info on Task Form  ${unique_subject_task}
@@ -488,13 +489,13 @@ Validate Created Task
 Enter and Select Contact Meeting
     click element        ${contact_name_input}
     input text           ${contact_name_input}          ${name_input}
-    sleep    10s
+    sleep    5s
     click element        ${contact_name_select}
-    sleep    10s
+    sleep    5s
 
 
 Create a Meeting
-   [Tags]  BQA-MEETING
+
     ${unique_subject_task}=  run keyword   Create Unique Task Subject
     click Meeting Link on Page
     Enter Mandatory Info on Meeting Form  ${unique_subject_task}
@@ -503,6 +504,8 @@ Create a Meeting
     Validate Created Meeting
     Modify Meeting Outcome
     Validate the Modified Outcome
+
+
 
 Create Unique Task Subject
     ${random_string}   generate random string  8
@@ -560,8 +563,11 @@ Validate Created Meeting
      ${start_date_form}  get text    xpath=${start_date_form_span}
      ${end_date_from}    get text    xpath=${end_date_form_span}
      ${location_form}    get text    xpath=${location_form_span}
-     # log to console  ${start_date_form}.appendix.${meeting_start_DATE}.appendix.${end_date_from}.appendix.${meeting_end_DATE}
+     log to console  ${location_form}.this is form data
+     log to console  ${DEFAULT_CITY}.this is inputdata from variables
      should be equal as strings  ${location_form}    ${DEFAULT_CITY}
+     log to console   ${start_date_form}.this is form start date
+     log to console   ${meeting_start_DATE} ${meeting_start time}.this user entered start date
      should be equal as strings  ${start_date_form}  ${meeting_start_DATE} ${meeting_start time}
      should be equal as strings  ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
 
@@ -589,7 +595,7 @@ Validate the Modified Outcome
 
 
 Create a Call
-   [Tags]  BQA-CALL
+
    ${unique_subject_task}=  run keyword   Create Unique Task Subject
    click Meeting Link on Page
    Enter Mandatory Info on Call Form   ${unique_subject_task}
@@ -826,3 +832,12 @@ Select option from Dropdown with Force Click Element
     Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep  2s
     Click Element  ${item}
+
+clickAndClearNotifications
+    ${notifi_present}=  Run Keyword And Return Status    Element Should Be Visible   xpath=//*[text()='Clear All']/..
+    Run Keyword If    ${notifi_present}    clearNotifications
+    log to console    ComingUp Tasks.${notifi_present}.Notification is present
+
+clearNotifications
+    click element  xpath=//*[text()='Clear All']/..
+

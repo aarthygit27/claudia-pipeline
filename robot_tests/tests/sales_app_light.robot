@@ -1,9 +1,9 @@
 *** Settings ***
 Documentation       Suite description
 Resource            ../resources/sales_app_light_keywords.robot
-
+Resource            ../resources/common.robot
 Test Setup          Open Browser And Go To Login Page
-Test Teardown       Logout From All Systems and Close Browser
+#Test Teardown       Logout From All Systems and Close Browser
 
 *** Test Cases ***
 
@@ -79,17 +79,32 @@ Check Attributes/Contact Person are named right
 Lightning: Create Meeting from Account
     [Tags]   BQA-7948       Lightning
     Go To Salesforce and Login into Lightning
+    clickAndClearNotifications
     Go To Entity        ${TEST_ACCOUNT_CONTACT}
     Create a Meeting
 
 Lightning: Create Call from Account
     [Tags]   BQA-8085       Lightning
     Go To Salesforce and Login into Lightning
+    clickAndClearNotifications
     Go To Entity        ${TEST_ACCOUNT_CONTACT}
     Create a Call
 
 Lightning: Create Task from Account
     [Tags]   BQA-8463       Lightning
     Go To Salesforce and Login into Lightning
+    clickAndClearNotifications
     Go To Entity        ${TEST_ACCOUNT_CONTACT}
     Create a Task
+
+
+
+#Create opportunity for HDC Flow from Account   still WIP
+   # [Tags]  BQA-HDCOppo      Lightning
+   # Go To Salesforce and Login into Lightning
+   # Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
+   # Create New Opportunity For Customer     ACTIVEACCOUNT
+   # Verify That Opportunity Is Found With Search And Go To Opportunity
+    #Verify That Opportunity is Found From My All Open Opportunities
+
+
