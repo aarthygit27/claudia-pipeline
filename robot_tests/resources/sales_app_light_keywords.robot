@@ -37,7 +37,7 @@ Login to Salesforce as DigiSales Lightning User
 Login to Salesforce Lightning
     [Arguments]         ${username}=${B2B_DIGISALES_LIGHT_USER}
     ...                 ${password}=${Password_merge}
-    log to console    ${password}
+    #log to console    ${password}
     Wait Until Page Contains Element        id=username
     Input Text          id=username         ${username}
     Input Password      id=password         ${Password_merge}
@@ -367,8 +367,11 @@ Cancel Opportunity and Validate
     [Arguments]     ${opportunity}  ${stage}
     Go to Entity    ${opportunity}
     click visible element           ${EDIT_STAGE_BUTTON}
-    sleep  3s
-    Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title="${stage}"]
+    sleep  5s
+    Select option from Dropdown     //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${stage}
+    #click visible element  //div[@class="uiInput uiInput--default"]//a[@class="select"]
+    #Press Key       //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
+    #Click Element   //a[@title="${stage}"]
     Save
     Validate error message
     Cancel and save
@@ -377,8 +380,10 @@ Cancel Opportunity and Validate
 
 Validate Closed Opportunity Details
     [Arguments]  ${opportunity_name}  ${stage}
-                 ${current_date}=       Get Current Date    result_format=%d.%m.%Y
-                 ${oppo_close_date}=    Set Variable        //span[@title='Close Date']//following-sibling::div//span[text()='${current_date}']
+                 #${current_date}=       Get Current Date    result_format=%d.%m.%Y
+                 ${current_ts}=       Get Current Date
+                 ${c_date} =  Convert Date  ${current_ts}  datetime
+                 ${oppo_close_date}=    Set Variable        //span[@title='Close Date']//following-sibling::div//span[text()='${c_date.day}.${c_date.month}.${c_date.year}']
     Go to Entity  ${opportunity_name}
     Wait Until Page Contains Element   ${oppo_close_date}       60s
     Wait Until Page Contains Element   //span[text()='Edit Stage']/../preceding::span[text()='${stage}']  60s
@@ -386,7 +391,7 @@ Validate Closed Opportunity Details
     ${buttonNotAvailable}=  Run Keyword And Return Status  element should not be visible  ${EDIT_STAGE_BUTTON}
     Run Keyword If  ${buttonNotAvailable}   reload page
     Click Visible Element               ${EDIT_STAGE_BUTTON}
-    Select option from Dropdown         //div[@class="uiInput uiInput--default"]//a[@class="select"]   //a[@title='Closed Won']
+    Select option from Dropdown         //div[@class="uiInput uiInput--default"]//a[@class="select"]   Closed Won
     Save
     Wait Until Page Contains Element    //span[text()='Review the following errors']  60s
     Press ESC On                        //span[text()='Review the following errors']
@@ -397,8 +402,8 @@ Save
     sleep  2s
 
 Validate error message
-    element should be visible       //a[@data-field-name="telia_Close_Reason__c"]
-    element should be visible       //a[@data-field-name="telia_Close_Comment__c"]
+    wait until element is visible   //a[@data-field-name="telia_Close_Comment__c"]  15s
+    wait until element is visible   //a[@data-field-name="telia_Close_Reason__c"]   15s
     #element should be visible       //a[contains(text(),"Close Comment")]
     #element should be visible       //a[contains(text(),"Close Reason")]
     #element should be visible       //div[@data-aura-class="forcePageError"]
@@ -419,9 +424,9 @@ Edit Opportunity
 Select option from Dropdown
     [Arguments]             ${list}        ${item}
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
-    Click Visible Element  ${list}
-    Sleep  2s
-    Click Element  ${item}
+    click visible element  ${list}
+    Press Key       ${list}    ${item}
+    Click Element   //a[@title='${item}']
 
 Verify That Opportunity is Not Found under My All Open Opportunities
     [Arguments]     ${opportunity}
@@ -446,7 +451,7 @@ Create a Task
 
 click Task Link on Page
     click element  ${NEW_TASK_LABEL}
-    #Sleep   10s
+    Sleep   10s
     wait until page contains element  xpath=${task_subject_input}    40s
 
 Enter Mandatory Info on Task Form
@@ -458,15 +463,14 @@ Enter Mandatory Info on Task Form
 
 Enter Task Due Date
     ${date}=    Get Date From Future    7
-    #log to console   ${date}
     Set Test Variable    ${task_due_DATE}                                      ${date}
     Input Text          xpath=//*[text()='Due Date']/../../div/input           ${task_due_DATE}
     [return]            ${task_due_DATE}
 
 
 Enter and Select Contact
-    click element    xpath=${name_input_task}
-    input text       xpath=${name_input_task}     ${name_input}
+    Click Visible Element  xpath=${name_input_task}
+    Input text       xpath=${name_input_task}     ${name_input}
     sleep    10s
     click element    //*[@title='${name_input}']/../../..
     sleep    10s
@@ -496,7 +500,6 @@ Enter and Select Contact Meeting
 
 
 Create a Meeting
-
     ${unique_subject_task}=  run keyword   Create Unique Task Subject
     Click Clear All Notifications
     click Meeting Link on Page
