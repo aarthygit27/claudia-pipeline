@@ -32,15 +32,15 @@ Go To Salesforce and Login into Lightning
     Reset to Home
 
 Login to Salesforce as DigiSales Lightning User
-    Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORD_NEW}
+    Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${Password_merge}
 
 Login to Salesforce Lightning
     [Arguments]         ${username}=${B2B_DIGISALES_LIGHT_USER}
-    ...                 ${password}=${PASSWORD_NEW}
-    log to console   ${password}.this is password
+    ...                 ${password}=${Password_merge}
+    log to console    ${password}
     Wait Until Page Contains Element        id=username
     Input Text          id=username         ${username}
-    Input Password      id=password         ${password}
+    Input Password      id=password         ${Password_merge}
     Click Element       id=Login
     Check For Lightning Force
     Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    30 seconds
@@ -437,6 +437,7 @@ Verify That Opportunity is Not Found under My All Open Opportunities
 Create a Task
 
     ${unique_subject_task}=  run keyword   Create Unique Task Subject
+    Click Clear All Notifications
     click Task Link on Page
     Enter Mandatory Info on Task Form  ${unique_subject_task}
     Save Task and click on Suucess Message
@@ -457,7 +458,7 @@ Enter Mandatory Info on Task Form
 
 Enter Task Due Date
     ${date}=    Get Date From Future    7
-    log to console   ${date}
+    #log to console   ${date}
     Set Test Variable    ${task_due_DATE}                                      ${date}
     Input Text          xpath=//*[text()='Due Date']/../../div/input           ${task_due_DATE}
     [return]            ${task_due_DATE}
@@ -480,7 +481,7 @@ Validate Created Task
     [Arguments]    ${unique_subject_task_form}
     ${name_form}        get text  ${contact_name_form}  #helina kejiyu comoare
     #${related_to_form}  get text  ${related_to}     #aacon Oy ${save_opportunity}
-    log to console  ${name_form}
+    #log to console  ${name_form}
      ${date_due}=    Get Date From Future    7
      page should contain element  //span[@class='uiOutputDate' and text()='${date_due}']
      page should contain element  //span[@class='test-id__field-value slds-form-element__static slds-grow ']/span[@class='uiOutputText' and text()='${unique_subject_task_form}']
@@ -497,6 +498,7 @@ Enter and Select Contact Meeting
 Create a Meeting
 
     ${unique_subject_task}=  run keyword   Create Unique Task Subject
+    Click Clear All Notifications
     click Meeting Link on Page
     Enter Mandatory Info on Meeting Form  ${unique_subject_task}
     Save Meeting and click on Suucess Message
@@ -537,7 +539,7 @@ Enter Mandatory Info on Meeting Form
 Enter Meeting Start and End Date
     ${date}=    Get Date From Future    1
     Set Test Variable    ${meeting_start_DATE}                    ${date}
-    log to console       ${meeting_start_DATE}
+    #log to console       ${meeting_start_DATE}
     Input Text           ${meeting_start_date_input}               ${meeting_start_DATE}
     clear element text   ${meeting_start_time_input}
     input text           ${meeting_start_time_input}               ${meeting_start_time}
@@ -563,11 +565,11 @@ Validate Created Meeting
      ${start_date_form}  get text    xpath=${start_date_form_span}
      ${end_date_from}    get text    xpath=${end_date_form_span}
      ${location_form}    get text    xpath=${location_form_span}
-     log to console  ${location_form}.this is form data
-     log to console  ${DEFAULT_CITY}.this is inputdata from variables
+    # log to console  ${location_form}.this is form data
+     #log to console  ${DEFAULT_CITY}.this is inputdata from variables
      should be equal as strings  ${location_form}    ${DEFAULT_CITY}
-     log to console   ${start_date_form}.this is form start date
-     log to console   ${meeting_start_DATE} ${meeting_start time}.this user entered start date
+     #log to console   ${start_date_form}.this is form start date
+     #log to console   ${meeting_start_DATE} ${meeting_start time}.this user entered start date
      should be equal as strings  ${start_date_form}  ${meeting_start_DATE} ${meeting_start time}
      should be equal as strings  ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
 
@@ -597,6 +599,7 @@ Validate the Modified Outcome
 Create a Call
 
    ${unique_subject_task}=  run keyword   Create Unique Task Subject
+   Click Clear All Notifications
    click Meeting Link on Page
    Enter Mandatory Info on Call Form   ${unique_subject_task}
    Save Meeting and click on Suucess Message
@@ -833,11 +836,10 @@ Select option from Dropdown with Force Click Element
     Sleep  2s
     Click Element  ${item}
 
-clickAndClearNotifications
+Click Clear All Notifications
     ${notifi_present}=  Run Keyword And Return Status    Element Should Be Visible   xpath=//*[text()='Clear All']/..
-    Run Keyword If    ${notifi_present}    clearNotifications
-    log to console    ComingUp Tasks.${notifi_present}.Notification is present
+    Run Keyword If    ${notifi_present}    Clear Notifications
 
-clearNotifications
+Clear Notifications
     click element  xpath=//*[text()='Clear All']/..
 
