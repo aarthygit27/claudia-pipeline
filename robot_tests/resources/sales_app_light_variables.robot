@@ -84,7 +84,7 @@ ${customer_Call}                            Customer Call
 ${name_input}                               Helinä Keiju
 ${meeting_text}                             //*[(text()='Meeting')]
 ${meeting_select_dropdown}                  //div/ul/li[2]/a[(text()='Meeting')]
-${reason_select_dropdown}                   //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[3]/div[1]/div/div/div/div/div/div/div/a
+${reason_select_dropdown}                   //*[text()='Reason']/..//following::div/div/div/div/a
 ${reason_select_dropdown_value}             //a[(text()='Solution Design')]
 ${meeting_start_time}                       9:00
 ${meeting_end_time}                         10:00
@@ -111,7 +111,7 @@ ${description_span}                         //*[text()='Description']/../../div[
 ${meeting_outocme_span}                     //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
 ${task_name_span}                           //*[@class='slds-grid primaryFieldRow']/div[@class='slds-grid slds-col slds-has-flexi-truncate slds-media--center']/div[@class='slds-media__body']/h1[@class='slds-page-header__title slds-m-right--small slds-truncate slds-align-middle']/span[contains(text(),'Task')]
 ${task_subject_input}                       //div/div[1]/div[1]/div/div/lightning-grouped-combobox/div/div/lightning-base-combobox/div/div[1]/input
-${name_input_task}                          //div/div[3]/div[1]/div/div/div/div/div/div[1]/div[2]/input
+${name_input_task}                          //*[text()='Name']//following::div/div/div[@class='inputWrapper slds-grid slds-grid_vertical-align-center slds-p-right_x-small']/div[@class='autocompleteWrapper slds-grow']/input
 ${save_task_button}                         //div/div[3]/div/div/div[2]/div[2]/button
 ${suucess_msg_task_anchor}                  //*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${TEST_ACCOUNT_CONTACT}                     Aacon Oy

@@ -160,8 +160,8 @@ Verify That Opportunity Creation Succeeded
     ${status}=      Run Keyword And Return Status      Element Should Be Visible     //span[@title='Account Team Members']
     Run Keyword If       ${status}     Run Keyword With Delay      0.10s    Click Element   xpath=${ACCOUNT_RELATED}
     Sleep       10s
-    Scroll Page To Location         0       1000
-    Scroll Page To Element          //span[text()='Opportunities']/../../span
+    #Scroll Page To Location         0       1000
+    Run Keyword And Continue On Failure     Scroll Page To Element          //span[text()='Opportunities']/../../span
     Click Visible Element           //span[text()='Opportunities']/../../span
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
@@ -173,9 +173,11 @@ Scroll Page To Location
 
 Scroll Page To Element
     [Arguments]    ${element}
-    Scroll Element Into View        ${element}
-    Wait Until Element is visible       ${element}     timeout=20s
-    Set Focus To Element            ${element}
+    #Run Keyword Unless       ${status}          Execsute JavaScript          window.scrollTo(0,100)
+    :FOR    ${i}    IN RANGE    9999999
+    \    ${status}=      Run Keyword And Return Status      Element Should Be Visible     ${element}
+    \    Execute JavaScript          window.scrollTo(0,100)
+    \    Exit For Loop If       ${status}
 
 
 Verify That Opportunity Is Saved And Data Is Correct
