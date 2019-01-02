@@ -169,8 +169,15 @@ Verify That Opportunity Creation Succeeded
     Force click element         ${ACCOUNT_RELATED}
     Sleep       5s
     Scroll Page To Location         0       1000
+    Scroll Page To Element          //span[text()='Opportunities']/../../span
     Click Visible Element  //span[text()='Opportunities']/../../span
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
+
+Scroll Page To Element
+    [Arguments]    ${element}
+    Scroll Element Into View        ${element}
+    Wait Until Element is visible       ${element}     timeout=20s
+    Set Focus To Element            ${element}
 
 Verify That Opportunity Is Saved And Data Is Correct
     [Arguments]     ${element}
@@ -252,7 +259,7 @@ Select Correct Tab Type
     [Arguments]         ${tab}
     Wait Until Element is Visible       ${SALES_CONSOLE_MENU}       20 seconds
     Click Element     ${SALES_CONSOLE_MENU}
-    ${CreateButtonVisible} =    Page Should Contain Element    ${tab}
+    ${CreateButtonVisible} =    Element should be visible    ${tab}
     Run Keyword If      ${CreateButtonVisible} == 'FAIL'    Click Element     ${SALES_CONSOLE_MENU}
     Click Element               ${tab}
     Sleep       5s
@@ -261,7 +268,7 @@ Select Correct Tab Type
 Select Correct View Type
     [Arguments]         ${type}
     Click Element       //a[@title='Select List View']
-    Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      20s
+    Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      30s
     Click Element       //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
     Sleep       5s
 

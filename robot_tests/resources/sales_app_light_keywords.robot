@@ -85,7 +85,7 @@ Search Salesforce
 
 Select Entity
     [Arguments]         ${target_name}     ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   60s
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   120s
     Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
@@ -161,7 +161,8 @@ Verify That Opportunity Creation Succeeded
     Run Keyword If       ${status}     Run Keyword With Delay      0.10s    Click Element   xpath=${ACCOUNT_RELATED}
     Sleep       10s
     Scroll Page To Location         0       1000
-    Click Visible Element  //span[text()='Opportunities']/../../span
+    Scroll Page To Element          //span[text()='Opportunities']/../../span
+    Click Visible Element           //span[text()='Opportunities']/../../span
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
 
@@ -169,6 +170,12 @@ Scroll Page To Location
     [Arguments]    ${x_location}    ${y_location}
     Execute JavaScript    window.scrollTo(${x_location},${y_location})
     Sleep       10s
+
+Scroll Page To Element
+    [Arguments]    ${element}
+    Scroll Element Into View        ${element}
+    Wait Until Element is visible       ${element}     timeout=20s
+    Set Focus To Element            ${element}
 
 
 Verify That Opportunity Is Saved And Data Is Correct
