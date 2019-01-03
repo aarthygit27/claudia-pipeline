@@ -1,9 +1,10 @@
 *** Settings ***
-Resource            ../resources/common.robot
-#Resource            ../resources/cpq_keywords.robot
-Resource            ../resources/sales_cons_light_variables.robot
 Library              Selenium2Library
-Library              libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
+
+Resource            ../resources/common.robot
+Resource            ../resources/cpq_keywords.robot
+Resource            ../resources/sales_cons_light_variables.robot
+
 
 *** Keywords ***
 
@@ -28,10 +29,11 @@ Login To Salesforce Lightning And Close All Tabs
     #Run Keyword and Ignore Error    Wait For Load
     Go to Lightning Sales Console
     Close All Tabs
+    Sleep  5s
     Reset to Home Tab
 
 Login to Salesforce as DigiSales Lightning User
-    Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORD}
+    Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORDCONSOLE}
 
 Login to Salesforce Lightning
     [Arguments]         ${username}=${B2B_DIGISALES_LIGHT_USER}
@@ -40,7 +42,7 @@ Login to Salesforce Lightning
     Input Text          id=username         ${username}
     Input Password      id=password         ${password}
     Click Element       id=Login
-    Check For Lightning Force
+    run keyword and ignore error        Check For Lightning Force
     Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    60 seconds
 
 
@@ -170,16 +172,19 @@ Verify That Opportunity Creation Succeeded
     #Click Visible Element      ${ACCOUNT_RELATED}
     Force click element         ${ACCOUNT_RELATED}
     Sleep       5s
-    Scroll Page To Location         0       1000
-    Scroll Page To Element          //span[text()='Opportunities']/../../span
-    Click Visible Element  //span[text()='Opportunities']/../../span
+    #Scroll Page To Location         0       1000
+    Run Keyword     Scroll Page To Element              //span[text()='Opportunities']/../../span/../../../a
+    force click element         //span[text()='Opportunities']/../../span/../../../a
+    #Click Visible Element  //span[text()='Opportunities']/../../span
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
 Scroll Page To Element
     [Arguments]    ${element}
-    Scroll Element Into View        ${element}
-    Wait Until Element is visible       ${element}     timeout=20s
-    Set Focus To Element            ${element}
+    #Run Keyword Unless       ${status}          Execsute JavaScript          window.scrollTo(0,100)
+    :FOR    ${i}    IN RANGE    99999
+    \    ${status}=      Run Keyword And Return Status      Element Should Be Visible     ${element}
+    \    Execute JavaScript          window.scrollTo(0,${i}*100)
+    \    Exit For Loop If       ${status}
 
 Verify That Opportunity Is Saved And Data Is Correct
     [Arguments]     ${element}
@@ -205,10 +210,10 @@ Scroll Page To Location
     Sleep       10s
 
 Close All Tabs
-    ${original}=    Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
+    ${original}=    run keyword     Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
     :FOR    ${i}    IN RANGE    ${original}
     \   Run Keyword and Ignore Error    Close Tab
-    ${current}=   Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
+    ${current}=   run keyword       Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
     ${closed}=      Evaluate        ${original}-${current}
     Log             Closed ${closed} tabs
     #Should Be Equal As Integers     ${current}    0
@@ -260,18 +265,21 @@ Reset to Home Tab
 Select Correct Tab Type
     [Arguments]         ${tab}
     Wait Until Element is Visible       ${SALES_CONSOLE_MENU}       20 seconds
-    Click Element     ${SALES_CONSOLE_MENU}
-    ${CreateButtonVisible} =    Element should be visible    ${tab}
-    Run Keyword If      ${CreateButtonVisible} == 'FAIL'    Click Element     ${SALES_CONSOLE_MENU}
+    Sleep   5s
+    force click element     ${SALES_CONSOLE_MENU}
+    #Click Element     ${SALES_CONSOLE_MENU}
+    ${CreateButtonVisible} =    Run Keyword And Return Status      Element Should Be Visible    ${tab}
+    run keyword if      ${CreateButtonVisible}=='FAIL'    Click Element     ${SALES_CONSOLE_MENU}
     Click Element               ${tab}
     Sleep       5s
 
 
 Select Correct View Type
     [Arguments]         ${type}
-    Click Element       //a[@title='Select List View']
-    Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      30s
-    Click Element       //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
+    #Click Element       //a[@title='Select List View']
+    #Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      30s
+    #Click Element       //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
+    Select option from Dropdown with Force Click Element        //a[@title='Select List View']           //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
     Sleep       5s
 
 Filter Opportunities By
@@ -329,8 +337,9 @@ Validate Contact Details
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${CONTACT_ACCOUNTNAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${CONTACT_MOBILE}']
                     ${email}=    Set Variable               //span[text()='Primary eMail']//following::a[text()='${CONTACT_PRIMARY_EMAIL}']
-    Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
-    Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Click Visible Element       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    #Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
+    #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep                               5s
     Wait Until Page Contains Element    ${element}${contact_name}
     Wait Until Page Contains Element    ${element}${account_name}
@@ -423,3 +432,11 @@ Force click element
     ${element_xpath}=       Replace String      ${elementToClick}        \"  \\\"
     Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep  2s
+
+Select option from Dropdown with Force Click Element
+    [Arguments]             ${list}        ${item}
+    #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
+    ${element_xpath}=       Replace String      ${list}        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep  2s
+    Click Element  ${item}

@@ -42,11 +42,11 @@ Login to Salesforce Lightning
     Input Text          id=username         ${username}
     Input Password      id=password         ${Password_merge}
     Click Element       id=Login
-    Check For Lightning Force
+    run keyword and ignore error         Check For Lightning Force
     Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    60 seconds
 
 Check For Lightning Force
-    Sleep   10s
+    Sleep   20s
     ${url}=     Get Location
     ${contains}=  Evaluate  'lightning' in '${url}'
     Run Keyword Unless  ${contains}   Switch to Lightning
@@ -230,11 +230,10 @@ Open tab
 Select Correct View Type
     [Arguments]         ${type}
     Sleep       10s
-    click element      //span[contains(@class,'selectedListView')]
-    #${flag}    Run Keyword And Return Status    Wait Until Element Is Visible    //span[@class=' virtualAutocompleteOptionText' and text()='${type}']
-    #Run Keyword If      ${flag}         Click Element           //a[@title='Select List View']
-    Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      60s
-    Click Element       //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
+    #click element      //span[contains(@class,'selectedListView')]
+    #Wait Until Page Contains Element        //span[@class=' virtualAutocompleteOptionText' and text()='${type}']      60s
+    #Click Element       //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
+    Select option from Dropdown with Force Click Element    //span[contains(@class,'selectedListView')]           //span[@class=' virtualAutocompleteOptionText' and text()='${type}']//parent::a
     Sleep       10s
 
 
@@ -505,7 +504,8 @@ Validate Created Task
 
 
 Enter and Select Contact Meeting
-    click element        ${contact_name_input}
+    Force click element         ${contact_name_input}
+    #click element        ${contact_name_input}
     input text           ${contact_name_input}          ${name_input}
     sleep    5s
     click element        ${contact_name_select}
@@ -631,8 +631,9 @@ Enter Mandatory Info on Call Form
     input text      xpath=${SUBJECT_INPUT}   ${task_subject}
     click element    xpath=${EVENT_TYPE}
     click element    xpath=${subject_call_type}
-    click element     xpath=${reason_select_dropdown}
-    click element    xpath=${reason_select_dropdown_value}
+    select option from dropdown with force click element        ${reason_select_dropdown}       ${reason_select_dropdown_value}
+    #click element     xpath=${reason_select_dropdown}
+    #click element    xpath=${reason_select_dropdown_value}
     Enter Meeting Start and End Date
     Sleep           10s
     input text           ${city_input}                  ${DEFAULT_CITY}

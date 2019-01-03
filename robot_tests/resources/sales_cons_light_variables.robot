@@ -3,7 +3,7 @@ ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${TEST_ENVIRONMENT}                         merge
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${TEST_ENVIRONMENT}
-${PASSWORD}                                 PahaPassu2
+${PASSWORDCONSOLE}                          PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
@@ -28,8 +28,8 @@ ${RESULTS_TABLE}                            //table[contains(@class,'uiVirtualDa
 ${SALES_CONSOLE_MENU}                       //*[@title='Show Navigation Menu']
 ${CONTACTS}                                 //div[@class="slds-context-bar__primary navLeft"]//span//span[text()="Contacts"]
 #//*[@id='navMenuList']/div/ul/li[3]/div/a/span[1]/lightning-icon
-${OPPORTUNITIES}                            //*[@id="navMenuList"]/div/ul/li[4]/div/a
-${HOME}                                     //*[@id="oneHeader"]/div[3]/div/div[1]/div[2]/a
+${OPPORTUNITIES}                            //*[@id="navMenuList"]//a[@title='Opportunities']
+${HOME}                                     //*[@id="navMenuList"]//a[@title='Home']
 ${SELECT_LIST_VIEW}                         //*[@id="navMenuList"]/div/ul/li[4]/div/a
 ${NEW_CONTACT}                              //*[@id='split-left']/div/div/div/div/div[1]/div[1]/div[2]/ul/li[1]/a/div
 
