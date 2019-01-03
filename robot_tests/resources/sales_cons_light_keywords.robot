@@ -2,6 +2,8 @@
 Resource            ../resources/common.robot
 #Resource            ../resources/cpq_keywords.robot
 Resource            ../resources/sales_cons_light_variables.robot
+Library              Selenium2Library
+Library              libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
 
 *** Keywords ***
 

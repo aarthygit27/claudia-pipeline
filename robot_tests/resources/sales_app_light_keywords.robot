@@ -43,7 +43,7 @@ Login to Salesforce Lightning
     Input Password      id=password         ${Password_merge}
     Click Element       id=Login
     Check For Lightning Force
-    Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    30 seconds
+    Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    60 seconds
 
 Check For Lightning Force
     Sleep   10s
@@ -161,8 +161,10 @@ Verify That Opportunity Creation Succeeded
     Run Keyword If       ${status}     Run Keyword With Delay      0.10s    Click Element   xpath=${ACCOUNT_RELATED}
     Sleep       10s
     #Scroll Page To Location         0       1000
-    Run Keyword And Continue On Failure     Scroll Page To Element          //span[text()='Opportunities']/../../span
-    Click Visible Element           //span[text()='Opportunities']/../../span
+    Run Keyword And Continue On Failure     Scroll Page To Element          //span[text()='Opportunities']/../../span/../../../a
+    ${element_xpath}=       Replace String      //span[text()='Opportunities']/../../span/../../../a        \"  \\\"
+    Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    #Click Visible Element           //span[text()='Opportunities']/../../span/../../../a
     Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
 
@@ -177,6 +179,7 @@ Scroll Page To Element
     :FOR    ${i}    IN RANGE    9999999
     \    ${status}=      Run Keyword And Return Status      Element Should Be Visible     ${element}
     \    Execute JavaScript          window.scrollTo(0,100)
+    \    Sleep      5s
     \    Exit For Loop If       ${status}
 
 
@@ -478,7 +481,8 @@ Enter Task Due Date
 
 
 Enter and Select Contact
-    Click Visible Element  xpath=${name_input_task}
+    #Click Visible Element  xpath=${name_input_task}
+    Force click element         ${name_input_task}
     Input text       xpath=${name_input_task}     ${name_input}
     sleep    10s
     click element    //*[@title='${name_input}']/../../..
@@ -539,8 +543,9 @@ Enter Mandatory Info on Meeting Form
     click element     xpath=${EVENT_TYPE}
     click element     xpath=${meeting_select_dropdown}
     sleep           10s
-    click element     xpath=${reason_select_dropdown}
-    click element     xpath=${reason_select_dropdown_value}
+    Select option from Dropdown with Force Click Element     ${reason_select_dropdown}      ${reason_select_dropdown_value}
+    #click element     xpath=${reason_select_dropdown}
+    #click element     xpath=${reason_select_dropdown_value}
     Enter Meeting Start and End Date
     sleep           10s
     input text           ${city_input}                  ${DEFAULT_CITY}
