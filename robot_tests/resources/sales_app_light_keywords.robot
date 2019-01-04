@@ -437,7 +437,7 @@ Select option from Dropdown
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]   ${item}
     click visible element  ${list}
     Press Key       ${list}    ${item}
-    Click Element   //a[@title='${item}']
+    force click element   //a[@title='${item}']
 
 Verify That Opportunity is Not Found under My All Open Opportunities
     [Arguments]     ${opportunity}
@@ -852,7 +852,7 @@ Select option from Dropdown with Force Click Element
     ${element_xpath}=       Replace String      ${list}        \"  \\\"
     Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep  2s
-    Click Element  ${item}
+    force click element  ${item}
 
 Click Clear All Notifications
     ${notifi_present}=  Run Keyword And Return Status    Element Should Be Visible   xpath=//*[text()='Clear All']/..

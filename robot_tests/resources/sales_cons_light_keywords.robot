@@ -43,7 +43,7 @@ Login to Salesforce Lightning
     Input Password      id=password         ${password}
     Click Element       id=Login
     run keyword and ignore error        Check For Lightning Force
-    Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    60 seconds
+    Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    120 seconds
 
 
 Check For Lightning Force
