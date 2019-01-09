@@ -8,7 +8,7 @@ Resource          ..${/}resources${/}P&O_Classic_variables.robot
 
 *** Test Cases ***
 Create New Order
-    Go To Salesforce and Login
+    Go To Salesforce and Login2    Digisales User devpo
     Go To    ${CLASSIC_APP}
     Go to Account2    ${DEFAULT_TEST_ACCOUNT}
     ${new_opportunity_name}=    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}

@@ -3,6 +3,7 @@ Resource          ..${/}resources${/}salesforce_keywords.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
 Resource          ../${/}resources${/}salesforce_variables.robot
 Library           Selenium2Library
+Resource          ../${/}resources${/}P&O_Classic_variables.robot
 
 *** Keywords ***
 Go to Account2
@@ -141,3 +142,17 @@ Edit Billing details
     Edit_fields    //div[@id='BillToContact_ileinner']    //input[@id='BillToContact']    John Doe    //a[@id='BillToContactIcon']
     Name_lookup
     Click Save Button
+
+Go To Salesforce and Login2
+    [Arguments]    ${user}
+    Go to Salesforce
+    Login To Salesforce And Close All Tabs2    ${user}
+
+Login to Salesforce And Close All Tabs2
+    [Arguments]    ${user}
+    Run Keyword    Login to Salesforce as ${user}
+    Run Keyword and Ignore Error    Wait For Load
+    Close All Tabs
+
+Login to Salesforce as Digisales User devpo
+    Login To Salesforce    ${B2B_DIGISALES_USER_DEVPO}    ${PASSWORD_DEVPO}
