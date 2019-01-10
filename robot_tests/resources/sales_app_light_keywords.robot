@@ -35,11 +35,11 @@ Login to Salesforce as DigiSales Lightning User
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce Lightning
-    [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${Password_merge}
+    [Arguments]    ${username}    ${password}
     #log to console    ${password}
     Wait Until Page Contains Element    id=username
     Input Text    id=username    ${username}
-    Input Password    id=password    ${Password_merge}
+    Input Password    id=password    ${password}
     Click Element    id=Login
     run keyword and ignore error    Check For Lightning Force
     Wait Until Page Contains Element    xpath=${LIGHTNING_ICON}    60 seconds
@@ -84,10 +84,11 @@ Search Salesforce
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']    120s
-    Click Element    ${TABLE_HEADER}[@title='${target_name}']
-    #Press key    ${TABLE_HEADER}[@title='${target_name}']    //13
-    Sleep    10s
+    ${element_catenate} =  catenate  ${TABLE_HEADER}  [@title='${target_name}']
+    Wait Until Page Contains element    ${element_catenate}   120s
+    Click Element       ${element_catenate}
+    #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
+    Sleep   10s
     Entity Should Be Open    ${target_name}
 
 Entity Should Be Open
@@ -798,11 +799,10 @@ Go To Accounts
     Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep    2s
 
-Click on Account Name
-    sleep    5s
-    ${count}=    Get Element Count    ${ACCOUNT_NAME}
-    Log To Console    Count:${count}
-    click element    ${ACCOUNT_NAME}[1]
+#Click on Account Name
+ #   sleep    5s
+  ## Log To Console    Count:${count}
+    #click element    ${ACCOUNT_NAME}[1]
 
 Force click element
     [Arguments]    ${elementToClick}
@@ -835,3 +835,48 @@ Change to original owner
     Mouse Over    //button[@title='Change Owner']
     Click Element    //button[@title='Cancel']/following-sibling::button
     sleep    10s
+
+Change Account Owner
+    ${CurrentOwnerName}=  Get Text  ${OWNER_NAME}
+    Log To Console  Current Owner:${CurrentOwnerName}
+    Click Element  ${CHANGE_OWNER}
+    Wait until Page Contains Element  ${SEARCH_OWNER}
+    Sleep  10s
+    Click Element  ${SEARCH_OWNER}
+    sleep  5s
+    Clear Element Text  ${SEARCH_OWNER}
+    ${OWNER_OPTIONS}=  Set Variable  (//a[@role='option' and not(contains(., '${CurrentOwnerName}'))])
+    ${Count}=    get element count    ${OWNER_OPTIONS}
+    Log To Console  No of options available as new owner:${Count}
+    ${SELECT_NEW_OWNER}=  catenate  ${OWNER_OPTIONS}  [1]
+    Run Keyword If  ${Count}!=0  Click Element  ${SELECT_NEW_OWNER}
+    ...          ELSE  Log to console  No Option available
+    Wait Until Page Contains Element  ${NEW_OWNER_SELECTED}  10s
+    ${NEW_OWNER_NAME}=  Get Text  ${NEW_OWNER_SELECTED}
+    Log To Console  New Owner selected:${NEW_OWNER_NAME}
+    click element  ${CHANGE_OWNER_BUTTON}
+    sleep  15s
+    ${NEW_OWNER_REFLECTED}=  Get Text  ${OWNER_NAME}
+    Sleep  20s
+    Should Be Equal As Strings  ${NEW_OWNER_REFLECTED}  ${NEW_OWNER_NAME}
+    Log to Console  Owner changed for the account
+
+Click on a given account
+    [Arguments]  ${acc_name}
+
+    sleep  5s
+    ${count}=  Get Element Count  ${ACCOUNT_NAME}
+    ${elementUsed}=  Set Variable  //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
+    Run Keyword if  ${count}!=0  click element  ${elementUsed}
+    ...         ELSE  Log To Console  No account name available
+    sleep  10s
+
+
+Click on Account Name
+
+    sleep  5s
+    ${count}=  Get Element Count  ${ACCOUNT_NAME}
+    ${elementUsed}=  Catenate  ${ACCOUNT_NAME}  [1]
+    Run Keyword if  ${count}!=0  click element  ${elementUsed}
+    ...         ELSE  Log To Console  No account name available
+    sleep  10s

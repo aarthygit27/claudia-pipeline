@@ -167,3 +167,15 @@ ${PASSWORD-SALESADMIN}    PahaPassu3
 ${REMOVE_ACCOUNT}    GESB Integration
 ${ownername}      //div[@class='ownerName']
 ${ACCOUNT_OWNER}    Sales Admin
+
+${ACCOUNT_LIST}                             //a[@data-refid='recordId']/../../parent::tr
+${ACCOUNT_NAME}                             (//tr//a[@data-refid='recordId'])
+${ACCOUNTS_LINK}                            //div[@class='bBottom']//span[text()='Accounts']
+${CHANGE_OWNER}                             //button[@title='Change Owner']
+${SEARCH_PEOPLE}                            //input[@title='Search People']
+#${OWNER_NAME}                               //div[contains(@class,'primaryLabel')]
+${CHANGE_OWNER_BUTTON}                      //button[@title='Cancel']/following-sibling::button
+${CHANGE_OWNER_BUTTON}                      //button[@title='Change Owner']
+${SEARCH_OWNER}                             //input[@placeholder='Search People...']
+${OWNER_NAME}                               //div[@class='ownerName']//a
+${NEW_OWNER_SELECTED}                       //span[@class='pillText']
