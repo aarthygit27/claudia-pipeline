@@ -1,10 +1,15 @@
 *** Settings ***
+Suite Teardown    Close All Browsers    # Suite Setup
+Test Setup        Open Browser And Go To Login Page
+Test Teardown     Logout From All Systems and Close Browser
 Resource          ..${/}resources${/}salesforce_keywords.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
 Resource          ..${/}resources${/}uad_keywords.robot
 Resource          ..${/}resources${/}tellu_keywords.robot
 Resource          ..${/}resources${/}P&O_Classic_keywords.robot
 Resource          ..${/}resources${/}P&O_Classic_variables.robot
+Resource          ..${/}resources${/}common_variables.robot
+Resource          ..${/}resources${/}common.robot
 
 *** Test Cases ***
 Create New Order

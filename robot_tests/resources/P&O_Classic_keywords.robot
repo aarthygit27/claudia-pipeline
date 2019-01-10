@@ -15,7 +15,7 @@ Go to Account2
     Wait Until Element Is Visible    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]    45s
     Click Link    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]
     Unselect Frame
-    Wait Until Element Is Visible    //a[@class='optionItem efpDetailsView ']
+    Wait Until Element Is Visible    //a[@class='optionItem efpDetailsView ']    30s
     Click Element    //a[@class='optionItem efpDetailsView ']
 
 create new opportunity
@@ -79,14 +79,19 @@ Add Telia Arkkitehti jatkuva palvelu
 
 Fill Laskutuksen lisätieto
     input text    //input[@name='productconfig_field_1_0']    This is the test order created by robot framework.L1
+    sleep    3s
     input text    //input[@name='productconfig_field_1_1']    This is the test order created by robot framework.L2
+    sleep    3s
     input text    //input[@name='productconfig_field_1_2']    This is the test order created by robot framework.L3
+    sleep    3s
     input text    //input[@name='productconfig_field_1_3']    This is the test order created by robot framework.L4
+    sleep    3s
     input text    //input[@name='productconfig_field_1_4']    This is the test order created by robot framework.L5
+    sleep    3s
 
 Add Muut asiantuntijapalvelut
     [Documentation]    This is to add Muut asiantuntijapalvelut to cart and fill the required details
-    sleep    10s
+    sleep    25s
     Wait Until Element Is Visible    //div[@data-product-id='01u6E000003TwOCQA0']/div/div/div/div/div/button    45s
     click button    //div[@data-product-id='01u6E000003TwOCQA0']/div/div/div/div/div/button
     sleep    10s
@@ -106,7 +111,7 @@ Add Muut asiantuntijapalvelut
     click element    //button[@class='slds-button slds-button--icon']
 
 Name_lookup
-    ${main_window}=    Get Title
+    ${MAIN_WINDOW}=    Get Title
     sleep    5s
     Select Window    title=Search ~ Salesforce - Unlimited Edition
     Select Frame    id=resultsFrame
@@ -114,7 +119,7 @@ Name_lookup
     sleep    3s
     click element    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a
     sleep    5s
-    Select Window    title=${main_window}
+    Select Window    title=${MAIN_WINDOW}
 
 Edit_fields
     [Arguments]    ${field}    ${input}    ${data}    ${icon}

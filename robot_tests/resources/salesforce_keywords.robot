@@ -1,485 +1,447 @@
 *** Settings ***
-Resource                ${PROJECTROOT}${/}resources${/}common.robot
-Resource                ${PROJECTROOT}${/}resources${/}cpq_keywords.robot
-Resource                ${PROJECTROOT}${/}resources${/}salesforce_variables.robot
+Resource          ..${/}resources${/}common.robot
+Resource          ..${/}resources${/}cpq_keywords.robot
+Resource          ..${/}resources${/}salesforce_variables.robot
 
 *** Keywords ***
 Account Should Be Open
-    [Arguments]         ${account_name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${account_name}')]      60 seconds
+    [Arguments]    ${account_name}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${account_name}')]    60 seconds
 
 Add Account For Contact Person
-    [Documentation]     Deprecated
-    [Arguments]         ${account_name}
-    # Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_NAME_LOOKUP}
-    # Search (Lookup)     ${account_name}
+    [Arguments]    ${account_name}
+    [Documentation]    Deprecated
+    # Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${ACCOUNT_NAME_LOOKUP}
+    # Search (Lookup)    ${account_name}
     # Select New Contact Window And Validate Title
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      id=con4     ${account_name}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=con4    ${account_name}
 
 Add Competitor And Partner
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Value       //td[./label[text()='Competitor']]/following-sibling::td//select[contains(@id,'unselected')]    4
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //td[./label[text()='Competitor']]/following-sibling::td//a[@title='Add']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select From List By Value       //td[./label[text()='Partner']]/following-sibling::td//select[contains(@id,'unselected')]       1
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //td[./label[text()='Partner']]/following-sibling::td//a[@title='Add']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select From List By Value    //td[./label[text()='Competitor']]/following-sibling::td//select[contains(@id,'unselected')]    4
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //td[./label[text()='Competitor']]/following-sibling::td//a[@title='Add']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select From List By Value    //td[./label[text()='Partner']]/following-sibling::td//select[contains(@id,'unselected')]    1
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //td[./label[text()='Partner']]/following-sibling::td//a[@title='Add']
 
 Add Contact Person To Product Order
     [Arguments]    ${test_cp}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}    60s
-    Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Wait Until Element Is Enabled  //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
-    Run Inside Iframe   ${ACCOUNT_FRAME}  Wait Until Page Contains Element  //input[@title='Save']   60s
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword With Delay      1s      Click Save Button Again If There Are Multiple Contact Persons
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      30s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}    60s
+    Wait Until Keyword Succeeds    20s    1s    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Enabled    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    ${test_cp}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //input[@title='Save']    60s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Save Button
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Run Keyword With Delay    1s    Click Save Button Again If There Are Multiple Contact Persons
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}    30s
 
 Add Mandatory Contact Data
+    [Arguments]    ${location}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${salutation}=${DEFAULT_SALUTATION}
     [Documentation]    Fill mandatory contact person data with given or generated data. Sets lastname of created contact
     ...    person as suite variable '${TEST_CONTACT_PERSON_LAST_NAME}'. First and last name can be given or use
     ...    the values generated by this keyword.
-    [Arguments]         ${location}
-    ...         ${first_name}=${EMPTY}
-    ...         ${last_name}=${EMPTY}
-    ...         ${email}=${DEFAULT_EMAIL}
-    ...         ${phone_number}=${DEFAULT_PHONE}
-    ...         ${salutation}=${DEFAULT_SALUTATION}
-    ${name}=            Create Unique Name      Contact Person
-    ${email}=           Create Unique Email     ${email}
-    ${first_name}=      Set Variable If    '${first_name}' == '${EMPTY}'    Test        ${first_name}
-    ${last_name}=       Set Variable If     '${last_name}' == '${EMPTY}'    ${name}     ${last_name}
-    Set Test Variable   ${TEST_CONTACT_PERSON_LAST_NAME}    ${last_name}
-    Run Keyword     Fill Mandatory Contact Person Values from ${location}
-    ...    ${first_name}
-    ...    ${TEST_CONTACT_PERSON_LAST_NAME}
-    ...    ${salutation}
-    ...    ${email}
-    ...    ${phone_number}
+    ${name}=    Create Unique Name    Contact Person
+    ${email}=    Create Unique Email    ${email}
+    ${first_name}=    Set Variable If    '${first_name}' == '${EMPTY}'    Test    ${first_name}
+    ${last_name}=    Set Variable If    '${last_name}' == '${EMPTY}'    ${name}    ${last_name}
+    Set Test Variable    ${TEST_CONTACT_PERSON_LAST_NAME}    ${last_name}
+    Run Keyword    Fill Mandatory Contact Person Values from ${location}    ${first_name}    ${TEST_CONTACT_PERSON_LAST_NAME}    ${salutation}    ${email}    ${phone_number}
 
 Add Mandatory Opportunity Data
+    [Arguments]    ${days}=1    ${stage}=Analyse Prospect
     [Documentation]    TODO
-    ...                 Deprecated
-    [Arguments]     ${days}=1
-    ...             ${stage}=Analyse Prospect
-    Fill Mandatory Opportunity Information      stage=${stage}    days=${days}
+    ...    Deprecated
+    Fill Mandatory Opportunity Information    stage=${stage}    days=${days}
     Fill Mandatory Classification
     Fill Opportunity Account Name
 
 Add Meeting Outcome and Save
-    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}    Select Value For Attribute      Meeting Outcome   Positive
-    Run Inside Iframe   ${frame}    Click Bottom Save Button
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   ${EDIT_BUTTON}
+    ${frame}=    Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe    ${frame}    Select Value For Attribute    Meeting Outcome    Positive
+    Run Inside Iframe    ${frame}    Click Bottom Save Button
+    Run Inside Iframe    ${frame}    Wait Until Element Is Visible    ${EDIT_BUTTON}
 
 Add Price Book For Opportunity
-    [Arguments]     ${pricebook}=B2B Pricebook
+    [Arguments]    ${pricebook}=B2B Pricebook
     Click Details Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    Pricebook2      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text      Pricebook2      ${pricebook}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Save Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']       20S
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Edit Button
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    Pricebook2    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Text    Pricebook2    ${pricebook}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Save Button
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='Pricebook2_ileinner']/a[text()='${pricebook}']    20S
 
 Add Product To Opportunity
-    [Arguments]     ${product_name}=ADSL-modeemi
+    [Arguments]    ${product_name}=ADSL-modeemi
     Open Details View At Opportunity
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //input[@value='Add Product']   10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Add Product']
-    ${frame}=       Wait Until Keyword Succeeds     10s     1s      Get Opportunity Iframe Xpath    ${OPPORTUNITY_NAME}
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element   //input[../../following-sibling::td[.//span[text()='${product_name}']]]      10s
-    Run Inside Iframe   ${frame}    Click Element   //input[../../following-sibling::td[.//span[text()='${product_name}']]]
-    Run Inside Iframe   ${frame}    Click Element   //input[@value='Select']
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //input[contains(@id,'Quantity')]   10s
-    Run Inside Iframe   ${frame}    Input Text    //input[contains(@id,'Quantity')]   1
-    Run Inside Iframe   ${frame}    Click Save Button
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //input[@value='Add Product']    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //input[@value='Add Product']
+    ${frame}=    Wait Until Keyword Succeeds    10s    1s    Get Opportunity Iframe Xpath    ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //input[../../following-sibling::td[.//span[text()='${product_name}']]]    10s
+    Run Inside Iframe    ${frame}    Click Element    //input[../../following-sibling::td[.//span[text()='${product_name}']]]
+    Run Inside Iframe    ${frame}    Click Element    //input[@value='Select']
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //input[contains(@id,'Quantity')]    10s
+    Run Inside Iframe    ${frame}    Input Text    //input[contains(@id,'Quantity')]    1
+    Run Inside Iframe    ${frame}    Click Save Button
 
 Add Quote Email Text To Product Order
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      20s
-    Wait Until Keyword Succeeds       20s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Quote Email Text       Quote email text for ${OPPORTUNITY_NAME}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}      20s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}    20s
+    Wait Until Keyword Succeeds    20s    1s    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Edit Button And Wait Product Order Edit Opens
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Quote Email Text    Quote email text for ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Save Button
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${EDIT_BUTTON}    20s
 
 Add Solution Area and update Solution Sub Area data
-    ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
-    Run Inside Iframe   ${frame}        Wait Until Page Contains Element    addSolutionAreasButton      20s
-    Run Inside Iframe   ${frame}        Click Element       addSolutionAreasButton
-    Run Inside Iframe   ${frame}        Wait Until Page Contains Element
-    ...     //table[@id='solutionAreaListBuilder']//input[@type='checkbox']/../../following-sibling::th/div     10s
-    ${SOLUTION_AREA}=       Run Inside Iframe   ${frame}    Get Text    //table[@id='solutionAreaListBuilder']//input[@type='checkbox']/../../following-sibling::th/div
-    Set Test Variable   ${SOLUTION_AREA}
-    Run Inside Iframe   ${frame}        Click Element       //table[@id='solutionAreaListBuilder']//input[@type='checkbox']
-    Run Inside Iframe   ${frame}    Click Element   //div[@id='addSolutionAreasModal']//button[text()='Add selected']
-    [Teardown]      Run Keyword and Ignore Error    Run Inside Iframe   ${frame}    Click Element   //div[@id='addSolutionAreasModal']//button[text()='Cancel']
+    ${frame}=    Get Account Tab Iframe Xpath    Sales Plan
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    addSolutionAreasButton    20s
+    Run Inside Iframe    ${frame}    Click Element    addSolutionAreasButton
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //table[@id='solutionAreaListBuilder']//input[@type='checkbox']/../../following-sibling::th/div    10s
+    ${SOLUTION_AREA}=    Run Inside Iframe    ${frame}    Get Text    //table[@id='solutionAreaListBuilder']//input[@type='checkbox']/../../following-sibling::th/div
+    Set Test Variable    ${SOLUTION_AREA}
+    Run Inside Iframe    ${frame}    Click Element    //table[@id='solutionAreaListBuilder']//input[@type='checkbox']
+    Run Inside Iframe    ${frame}    Click Element    //div[@id='addSolutionAreasModal']//button[text()='Add selected']
+    [Teardown]    Run Keyword and Ignore Error    Run Inside Iframe    ${frame}    Click Element    //div[@id='addSolutionAreasModal']//button[text()='Cancel']
 
 Add Solution Area With Quick Action
-    [Arguments]     ${product}=Devices
-    ...             ${sales_type}=New Money-New Services
-    ...             ${one_time_total}=0
-    ...             ${recurring_total}=0
-    ...             ${contract_length}=12
+    [Arguments]    ${product}=Devices    ${sales_type}=New Money-New Services    ${one_time_total}=0    ${recurring_total}=0    ${contract_length}=12
     Click Feed Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   ${ADD_SOLUTION_AREA_AT_DETAILS}
-    ${nested_iframe}=   Set Variable    //div[@class='grayborder']//iframe
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Wait Until Page Contains Element   //div[.//b[text()='Solution Area:']]/span/select     10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Solution Area:']]/span/select    ${product}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Sales Type:']]/span/select       ${sales_type}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Select From List By Label   //div[.//b[text()='Contract Length:']]/span/select       ${contract_length}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='One Time Total:']]/span/input       ${one_time_total}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Input Text   //div[.//b[text()='Recurring Total:']]/span/input      ${recurring_total}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Click Element   //a[@class='create-button']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Run Inside Iframe   ${nested_iframe}       Wait Until Page Contains Element     //h4[text()='Success']      20s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${ADD_SOLUTION_AREA_AT_DETAILS}
+    ${nested_iframe}=    Set Variable    //div[@class='grayborder']//iframe
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Wait Until Page Contains Element    //div[.//b[text()='Solution Area:']]/span/select    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Select From List By Label    //div[.//b[text()='Solution Area:']]/span/select    ${product}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Select From List By Label    //div[.//b[text()='Sales Type:']]/span/select    ${sales_type}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Select From List By Label    //div[.//b[text()='Contract Length:']]/span/select    ${contract_length}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Input Text    //div[.//b[text()='One Time Total:']]/span/input    ${one_time_total}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Input Text    //div[.//b[text()='Recurring Total:']]/span/input    ${recurring_total}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Click Element    //a[@class='create-button']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Run Inside Iframe    ${nested_iframe}    Wait Until Page Contains Element    //h4[text()='Success']    20s
     Reload Page
-
-# Addresses Should Be Available
-#     [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
-#     ${frame}=       Get Account Tab Iframe Xpath    Availability
-#     Run Inside Iframe   ${frame}        Wait Until Page Contains Element
-#     ...     //tr[.//td[text()='${address}']/following-sibling::td[text()='${street_number}']/following-sibling::td[text()='${postal_code}']/following-sibling::td[text()='${city}']]
+    # Addresses Should Be Available
+    #    [Arguments]    ${postal_code}    ${city}    ${address}    ${street_number}
+    #    ${frame}=    Get Account Tab Iframe Xpath    Availability
+    #    Run Inside Iframe    ${frame}    Wait Until Page Contains Element
+    #    ...    //tr[.//td[text()='${address}']/following-sibling::td[text()='${street_number}']/following-sibling::td[text()='${postal_code}']/following-sibling::td[text()='${city}']]
 
 App Is Open
-    [Arguments]         ${app_name}
-    Click Element       id=tsidButton
-    ${app_open}=        Run Keyword and Return Status   Element Should Not Be Visible   xpath=//a[@class='menuButtonMenuLink' and text()='${app_name}']
-    Click Element       id=tsidButton   # Close Menu
-    [Return]            ${app_open}
+    [Arguments]    ${app_name}
+    Click Element    id=tsidButton
+    ${app_open}=    Run Keyword and Return Status    Element Should Not Be Visible    xpath=//a[@class='menuButtonMenuLink' and text()='${app_name}']
+    Click Element    id=tsidButton    # Close Menu
+    [Return]    ${app_open}
 
 App Should Be Open
-    [Arguments]         ${app_name}
-    ${app_open}=        App Is Open     ${app_name}
-    Should Be True      ${app_open}
+    [Arguments]    ${app_name}
+    ${app_open}=    App Is Open    ${app_name}
+    Should Be True    ${app_open}
 
 Approve Quote
     Reload page
-    ${xpath}=       Set Variable    //div[@class='feeditembody' and .//span[text()='${OPPORTUNITY_NAME}']]//span[text()='Request has been approved by another approver.' or text()='Request approved.']
-    ${already_approved}=    Run Keyword And Return Status       Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element     ${xpath}
-    Run Keyword If      ${already_approved}     Return From Keyword
-    Run Inside Iframe   ${IFRAME}   Click Element   //div[@class='feeditembody' and .//span[text()='${OPPORTUNITY_NAME}']]//input[@value='Approve']
-    Run Inside Iframe   ${IFRAME}   Wait Until Element Is Visible   //div[contains(@id,'overlay_buttons')]//input[@value='OK']      10s
-    Run Inside Iframe   ${IFRAME}   Click Element   //div[contains(@id,'overlay_buttons')]//input[@value='OK']
+    ${xpath}=    Set Variable    //div[@class='feeditembody' and .//span[text()='${OPPORTUNITY_NAME}']]//span[text()='Request has been approved by another approver.' or text()='Request approved.']
+    ${already_approved}=    Run Keyword And Return Status    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    ${xpath}
+    Run Keyword If    ${already_approved}    Return From Keyword
+    Run Inside Iframe    ${IFRAME}    Click Element    //div[@class='feeditembody' and .//span[text()='${OPPORTUNITY_NAME}']]//input[@value='Approve']
+    Run Inside Iframe    ${IFRAME}    Wait Until Element Is Visible    //div[contains(@id,'overlay_buttons')]//input[@value='OK']    10s
+    Run Inside Iframe    ${IFRAME}    Click Element    //div[contains(@id,'overlay_buttons')]//input[@value='OK']
 
 Assign Opportunity To Me
-    [Arguments]     ${owner}=B2B DigiSales
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds     10s     1s      Click Element   //input[@value='Assign To Me']
-    Verify That Owner Has Changed   ${owner}    Opportunity
+    [Arguments]    ${owner}=B2B DigiSales
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Keyword Succeeds    10s    1s    Click Element    //input[@value='Assign To Me']
+    Verify That Owner Has Changed    ${owner}    Opportunity
 
 Assign Task To
-    [Arguments]     ${user}
-    Go To Account       ${TASK_NAME}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Assigned To     ${user}   ${TRUE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
+    [Arguments]    ${user}
+    Go To Account    ${TASK_NAME}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Edit Button
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Assigned To    ${user}    ${TRUE}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Save Button
 
 Initiate Availability Query
     Open Dashboard Tab At Account View
     Click Availability Check Button
 
 Cancel Edit
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element       //input[@value='Cancel']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element is Visible   ${EDIT_BUTTON}      15s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //input[@value='Cancel']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element is Visible    ${EDIT_BUTTON}    15s
 
 Change Account Owner
-    [Arguments]     ${owner}
+    [Arguments]    ${owner}
     Run Keyword And Ignore Error    Open Details Tab At Account View
     Run Keyword And Ignore Error    Click Details Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    //td[text()='Account Owner']/following-sibling::td//a[contains(text(),'Change')]
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    id=newOwn
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      id=newOwn   ${owner}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait For Load
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${FIELD_DETAIL}     20s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    //td[text()='Account Owner']/following-sibling::td//a[contains(text(),'Change')]
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    id=newOwn
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=newOwn    ${owner}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Bottom Save Button
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait For Load
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${FIELD_DETAIL}    20s
 
 Change Opportunity Owner
-    [Arguments]     ${owner}
+    [Arguments]    ${owner}
     Run Keyword And Ignore Error    Click Details Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='opp1_ileinner']/a[text()='[Change]']     10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element                       //div[@id='opp1_ileinner']/a[text()='[Change]']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    id=newOwn   10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Text                          id=newOwn   ${owner}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[@id='bottomButtonRow']/input[@title='Save']    10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element                       //td[@id='bottomButtonRow']/input[@title='Save']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@id='opp1_ileinner']/a[text()='[Change]']    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //div[@id='opp1_ileinner']/a[text()='[Change]']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    id=newOwn    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Text    id=newOwn    ${owner}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[@id='bottomButtonRow']/input[@title='Save']    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //td[@id='bottomButtonRow']/input[@title='Save']
 
 Change Stage To
-    [Arguments]     ${stage}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Select Value For Attribute      Stage   ${stage}
+    [Arguments]    ${stage}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Value For Attribute    Stage    ${stage}
 
 Check For Lightning Force And Switch Back To Sales Console
-    Sleep   15s
-    ${url}=     Get Location
-    ${contains}=  Evaluate  'lightning' in '${url}'
-    Run Keyword If  ${contains}
-    ...     Go To   https://cs80.salesforce.com/console
+    Sleep    15s
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword If    ${contains}    Go To    https://cs80.salesforce.com/console
 
 Check For Correct Dashboard Data
-    [Arguments]     ${main_dashboard}
-    ...             ${sales_team_test_name}
-    ...             ${manager_dashboard}=Operator Sales Manager Dashboard
-    ...             ${team_dashboard}=My Operator Sales Dashboard
-    ...             ${team_view_dashboard}=Operator Team View Dashboard
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@class='bPageTitle']/div/div[@class='content']/h1[text()='${main_dashboard}']
-    Run Inside Iframe       ${IFRAME}   Wait Until Page Contains Element   id=x-auto-2      15s
-    Run Inside Iframe       ${IFRAME}   Click Element   id=x-auto-2
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${manager_dashboard}']    15s
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_dashboard}']       15s
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //div[@id='x-auto-1']/div[text()='${team_view_dashboard}']  15s
-    Run Inside Iframe       ${IFRAME}   Page Should Contain Element     //span[@class='dashboardRowLabelWithPics' and text()='${sales_team_test_name}']  15s
+    [Arguments]    ${main_dashboard}    ${sales_team_test_name}    ${manager_dashboard}=Operator Sales Manager Dashboard    ${team_dashboard}=My Operator Sales Dashboard    ${team_view_dashboard}=Operator Team View Dashboard
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //div[@class='bPageTitle']/div/div[@class='content']/h1[text()='${main_dashboard}']
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    id=x-auto-2    15s
+    Run Inside Iframe    ${IFRAME}    Click Element    id=x-auto-2
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //div[@id='x-auto-1']/div[text()='${manager_dashboard}']    15s
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //div[@id='x-auto-1']/div[text()='${team_dashboard}']    15s
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //div[@id='x-auto-1']/div[text()='${team_view_dashboard}']    15s
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //span[@class='dashboardRowLabelWithPics' and text()='${sales_team_test_name}']    15s
 
 Check For Mandatory B2O Opportunity Attributes
-    [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
-    ...             ${opportunity_name}=${OPPORTUNITY_NAME}
-    ...             ${opportunity_description}=${B2O_OPPORTUNITY_DESCRIPTION}
-    ...             ${opportunity_stage}=${B2O_OPPORTUNITY_STAGE}
-    ...             ${opportunity_priority}=${B2O_OPPORTUNITY_PRIORITY}
-    ...             ${opportunity_close_date}=${OPPORTUNITY_CLOSE_DATE}
-    ...             ${opportunity_solution_area}=${B2O_OPPORTUNITY_SOLUTION_AREA}
-    Go To Account   ${opportunity_name}
+    [Arguments]    ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}    ${opportunity_name}=${OPPORTUNITY_NAME}    ${opportunity_description}=${B2O_OPPORTUNITY_DESCRIPTION}    ${opportunity_stage}=${B2O_OPPORTUNITY_STAGE}    ${opportunity_priority}=${B2O_OPPORTUNITY_PRIORITY}    ${opportunity_close_date}=${OPPORTUNITY_CLOSE_DATE}
+    ...    ${opportunity_solution_area}=${B2O_OPPORTUNITY_SOLUTION_AREA}
+    Go To Account    ${opportunity_name}
     Click Details Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp4_ileinner']/a[text()='${account_name}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp3_ileinner' and text()='${opportunity_name}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp14_ileinner' and text()='${opportunity_description}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp11_ileinner' and text()='${opportunity_stage}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='00N5800000CZHUG_ileinner' and text()='${opportunity_priority}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='opp9_ileinner' and text()='${opportunity_close_date}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element   //div[@id='00N5800000DL5Wa_ileinner' and text()='${opportunity_solution_area}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='opp4_ileinner']/a[text()='${account_name}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='opp3_ileinner' and text()='${opportunity_name}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='opp14_ileinner' and text()='${opportunity_description}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='opp11_ileinner' and text()='${opportunity_stage}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='00N5800000CZHUG_ileinner' and text()='${opportunity_priority}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='opp9_ileinner' and text()='${opportunity_close_date}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='00N5800000DL5Wa_ileinner' and text()='${opportunity_solution_area}']
 
 Check For Correct Today Page Content
-    [Arguments]     ${username}
-    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //p[contains(text(),'${username}')]      10s
+    [Arguments]    ${username}
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //p[contains(text(),'${username}')]    10s
     ${date}=    Get Current Date In Verbal Format
-    Log To Console      ${date}
-    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //h1[contains(text(),'${date}')]      10s
+    Log To Console    ${date}
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //h1[contains(text(),'${date}')]    10s
     #Limit not working?
-    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //h1[@class='slds-page-header__title' and contains(text(), 'task')]   limit=2      10s
-    ${count}=    Run Inside Iframe   ${IFRAME}    Get Element Count     //h1[@class='slds-page-header__title' and contains(text(), 'task')]
-    Log To Console  ${count}
-    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     id=chatter     10s
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //h1[@class='slds-page-header__title' and contains(text(), 'task')]    limit=2    10s
+    ${count}=    Run Inside Iframe    ${IFRAME}    Get Element Count    //h1[@class='slds-page-header__title' and contains(text(), 'task')]
+    Log To Console    ${count}
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    id=chatter    10s
     #Add checking based on closing order
-    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //span[@class='slds-text-heading--small' and contains(text(), 'Activities')]    10s
-    Run Inside Iframe   ${IFRAME}    Page Should Contain Element     //span[@class='slds-text-heading--small' and contains(text(), 'Opportunities')]    10s
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //span[@class='slds-text-heading--small' and contains(text(), 'Activities')]    10s
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //span[@class='slds-text-heading--small' and contains(text(), 'Opportunities')]    10s
 
 Check For Closing Opportunity As Won Without Opportunity Products
-    #[Arguments]     ${opportunity_name}
-    ${frame}=       Get Account Tab Iframe Xpath    ${OPPORTUNITY_NAME}
-    Log To Console      ${OPPORTUNITY_NAME}
-    Run Inside Iframe    ${frame}    Wait Until Page Contains Element   //br[text()[contains('It is not possible to close Opportunity')]]
+    #[Arguments]    ${opportunity_name}
+    ${frame}=    Get Account Tab Iframe Xpath    ${OPPORTUNITY_NAME}
+    Log To Console    ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //br[text()[contains('It is not possible to close Opportunity')]]
 
 Check If Case Was Created
-    [Arguments]     ${case_category}=Lists and reports
-    Go To Account   ${CASE_SUBJECT}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //div[contains(text(),'${CASE_SUBJECT}')]
-    #Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //span[contains(text(),'${case_category}')]
+    [Arguments]    ${case_category}=Lists and reports
+    Go To Account    ${CASE_SUBJECT}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Page Should Contain Element    //div[contains(text(),'${CASE_SUBJECT}')]
+    #Run Inside Iframe    ${ACCOUNT_FRAME}    Page Should Contain Element    //span[contains(text(),'${case_category}')]
 
 Check For Updated Event Data
     #Logic need updating for even 10th days (10,20, 30)...
-    Go to Account   ${EVENT_SUBJECT}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Text Should Be     id=evt5_ileinner     ${EVENT_SUBJECT}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Text Should Be     id=evt3_ileinner     ${DEFAULT_B2O_TEST_ACCOUNT}
-    @{start_date_data} =  Split String    ${EVENT_START_DATE}   -
-    @{end_date_data} =  Split String      ${EVENT_END_DATE}   -
-    Set Test Variable    ${CONVERTED_START_DATE}     ${EMPTY}
-    Set Test Variable    ${CONVERTED_END_DATE}       ${EMPTY}
-    :FOR    ${i}    IN RANGE    0    2
+    Go to Account    ${EVENT_SUBJECT}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Text Should Be    id=evt5_ileinner    ${EVENT_SUBJECT}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Text Should Be    id=evt3_ileinner    ${DEFAULT_B2O_TEST_ACCOUNT}
+    @{start_date_data} =    Split String    ${EVENT_START_DATE}    -
+    @{end_date_data} =    Split String    ${EVENT_END_DATE}    -
+    Set Test Variable    ${CONVERTED_START_DATE}    ${EMPTY}
+    Set Test Variable    ${CONVERTED_END_DATE}    ${EMPTY}
+    : FOR    ${i}    IN RANGE    0    2
     \    ${start_date_item}=    Replace String    @{start_date_data}[${i}]    0    ${EMPTY}
     \    ${end_date_item}=    Replace String    @{end_date_data}[${i}]    0    ${EMPTY}
-    \    ${CONVERTED_START_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_START_DATE}   ${start_date_item}
-    \    ${CONVERTED_END_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_END_DATE}   ${end_date_item}
-    ${CONVERTED_START_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_START_DATE}   @{start_date_data}[${2}]
-    ${CONVERTED_START_DATE}=      Replace String      ${CONVERTED_START_DATE}    .      ${EMPTY}      count=1
-    ${CONVERTED_END_DATE}=   Catenate    SEPARATOR=.   ${CONVERTED_END_DATE}   @{end_date_data}[${2}]
-    ${CONVERTED_END_DATE}=      Replace String      ${CONVERTED_END_DATE}    .      ${EMPTY}      count=1
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Contain      id=StartDateTime_ileinner   ${CONVERTED_START_DATE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Contain      id=EndDateTime_ileinner   ${CONVERTED_END_DATE}
+    \    ${CONVERTED_START_DATE}=    Catenate    SEPARATOR=.    ${CONVERTED_START_DATE}    ${start_date_item}
+    \    ${CONVERTED_END_DATE}=    Catenate    SEPARATOR=.    ${CONVERTED_END_DATE}    ${end_date_item}
+    ${CONVERTED_START_DATE}=    Catenate    SEPARATOR=.    ${CONVERTED_START_DATE}    @{start_date_data}[${2}]
+    ${CONVERTED_START_DATE}=    Replace String    ${CONVERTED_START_DATE}    .    ${EMPTY}    count=1
+    ${CONVERTED_END_DATE}=    Catenate    SEPARATOR=.    ${CONVERTED_END_DATE}    @{end_date_data}[${2}]
+    ${CONVERTED_END_DATE}=    Replace String    ${CONVERTED_END_DATE}    .    ${EMPTY}    count=1
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Contain    id=StartDateTime_ileinner    ${CONVERTED_START_DATE}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Contain    id=EndDateTime_ileinner    ${CONVERTED_END_DATE}
 
 Check If Quote Needs Approval
     Reload Page
-    Sleep   5
-    ${ret}=     Run Keyword And Return Status   Run Inside Iframe   ${OPPORTUNITY_FRAME}
-    ...     Wait Until Page Contains Element    //td[text()='Approval Status']/following-sibling::td//div[text()='Not Needed' or text()='Approved']     20s
+    Sleep    5
+    ${ret}=    Run Keyword And Return Status    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Approval Status']/following-sibling::td//div[text()='Not Needed' or text()='Approved']    20s
     [Return]    ${ret}
 
 Check that contact has been saved and can be found under proper Account
-    ${contact_person_name}=    Set Variable
-    ...    //span[contains(text(), 'Name')]/following-sibling::span[contains(text(), '${TEST_CONTACT_PERSON_LAST_NAME}')]
-    ${contact_person_name_related_to_account}=    Set Variable
-    ...    ${contact_person_name}/../following-sibling::li/span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${DEFAULT_TEST_ACCOUNT}')]
-    #todo:  reloading is temporary fix - something wrong with feed update. will be removed.
+    ${contact_person_name}=    Set Variable    //span[contains(text(), 'Name')]/following-sibling::span[contains(text(), '${TEST_CONTACT_PERSON_LAST_NAME}')]
+    ${contact_person_name_related_to_account}=    Set Variable    ${contact_person_name}/../following-sibling::li/span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${DEFAULT_TEST_ACCOUNT}')]
+    #todo:    reloading is temporary fix - something wrong with feed update. will be removed.
     Reload Page
-    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${contact_person_name_related_to_account}      15s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${contact_person_name_related_to_account}    15s
 
 Click Account Tab Button And It Should Stay Open
-    [Arguments]     ${tab}      ${direction}=left
-    [Documentation]     Salesforce has a tendency of randomly switching back to an old
-    ...                 tab so we need to wait for a moment to see if the tab stays active
+    [Arguments]    ${tab}    ${direction}=left
+    [Documentation]    Salesforce has a tendency of randomly switching back to an old
+    ...    tab so we need to wait for a moment to see if the tab stays active
     # Small resolutions have small arrows to navigate to different tabs
-    Run Keyword And Ignore Error    Click Element   //div[contains(@class,'x-tab-scroller-${direction}')]
-#    Click Element    //span[@class='tabText' and contains(text(), '${tab}')]
-#9.11    Wait Until Page Contains Element   //a[@title='${tab}']     10s
-#9.11    Click Element    //a[@title='${tab}']
-#    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
-    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and  //a[@title='${tab}']
+    Run Keyword And Ignore Error    Click Element    //div[contains(@class,'x-tab-scroller-${direction}')]
+    #    Click Element    //span[@class='tabText' and contains(text(), '${tab}')]
+    #9.11    Wait Until Page Contains Element    //a[@title='${tab}']    10s
+    #9.11    Click Element    //a[@title='${tab}']
+    #    Wait Until Page Contains Element    //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
+    Wait Until Page Contains Element    //li[contains(@class,'x-tab-strip-active') and    //a[@title='${tab}']
     Sleep    2
-#    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
-    Wait Until Page Contains Element     //li[contains(@class,'x-tab-strip-active') and //a[@title='${tab}']
+    #    Wait Until Page Contains Element    //li[contains(@class,'x-tab-strip-active') and .//span[@class='tabText' and contains(text(), '${tab}')]]
+    Wait Until Page Contains Element    //li[contains(@class,'x-tab-strip-active') and //a[@title='${tab}']
 
 Click Add New Contact
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${MORE_DROPDOWN_AT_DETAILS}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${MORE_DROPDOWN_AT_DETAILS}
     ${button_clicked}=    Run Keyword And Return Status    Click Add New Contact Via Dropdown
-    Run Keyword Unless    ${button_clicked}
-    ...    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    ${NEW_CONTACT_BUTTON_AT_DETAILS}  #If dropdown is not visible
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       ${CREATE_CP_BUTTON}
+    Run Keyword Unless    ${button_clicked}    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${NEW_CONTACT_BUTTON_AT_DETAILS}    #If dropdown is not visible
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${CREATE_CP_BUTTON}
 
 Click Add New Contact Via Dropdown
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element
-    ...    ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::${NEW_CONTACT_AT_MORE_DROPDOWN}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::${NEW_CONTACT_AT_MORE_DROPDOWN}
 
 Click Availability Check Button
-    ${frame}=       Get Account Tab Iframe Xpath    Dashboard
-    Run Inside Iframe   ${frame}    Wait Until Keyword Succeeds     10s     1s      Click Element     //button[text()[contains(.,'Availability check')]]
-    ${frame}=       Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element        Address Details        30s
+    ${frame}=    Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe    ${frame}    Wait Until Keyword Succeeds    10s    1s    Click Element    //button[text()[contains(.,'Availability check')]]
+    ${frame}=    Get Account Tab Iframe Xpath    Availability
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    Address Details    30s
 
 Click Bottom Save Button
-    Click Element   ${BOTTOM_SAVE_BUTTON}
-    Sleep       1.5     The screen after the element click varies depending on the page so we cannot wait until a specific element is visible
+    Click Element    ${BOTTOM_SAVE_BUTTON}
+    Sleep    1.5    The screen after the element click varies depending on the page so we cannot wait until a specific element is visible
 
 Click Contact Person Details
     Click Details Button
 
 Click Create Contact Person Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
 
 Click Create Event Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
-    # If there are multiple contacts with the same name, we must choose the correct contact person from a list.  By default one is already selected
-    ${multiple_contacts}=       Run Keyword And Return Status     Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[text()[contains(.,'Multiple items found')]]
-    Run Keyword If      ${multiple_contacts}    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
+    # If there are multiple contacts with the same name, we must choose the correct contact person from a list.    By default one is already selected
+    ${multiple_contacts}=    Run Keyword And Return Status    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[text()[contains(.,'Multiple items found')]]
+    Run Keyword If    ${multiple_contacts}    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Button    ${CREATE_CP_BUTTON}
 
 Click Create New Contract
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='New Contract']
-    ${frame}=   Get Account Tab Iframe Xpath    New Contract
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[contains(text(),'New Contract')]   30s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //input[@value='New Contract']
+    ${frame}=    Get Account Tab Iframe Xpath    New Contract
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //h2[contains(text(),'New Contract')]    30s
 
 Click Create New Opportunity
     Run Inside Iframe    ${IFRAME}    Click Element    ${NEW_OPPORTUNITY_BUTTON}
     Sleep    1
     Select Opportunity Record Type
     Sleep    1
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}
-    ...    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}    15 seconds
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}    15 seconds
 
 Click Create Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   publishersharebutton
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    publishersharebutton
 
 Click Details Button
-    Wait Until Keyword Succeeds     15s     1s
-    ...     Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_DETAILS}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element       ${FIELD_DETAIL}
+    Wait Until Keyword Succeeds    15s    1s    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${ACCOUNT_DETAILS}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${FIELD_DETAIL}
 
 Click Edit Button
     Click Element    ${EDIT_BUTTON}
 
 Click Edit Button And Wait Product Order Edit Opens
-    Click Element   ${EDIT_BUTTON}
-    Wait Until Page Contains Element    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']      10s
+    Click Element    ${EDIT_BUTTON}
+    Wait Until Page Contains Element    //label[contains(text(),'Contact Name')]/../following-sibling::td//input[@type='text']    10s
 
 Click Edit Contact Person
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Edit Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Contact Edit')]
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Edit Button
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Contact Edit')]
 
 Click Feed Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${ACCOUNT_FEED}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${ACCOUNT_FEED}
 
 Click New Opportunity (Details Tab)
-    ${status}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword And Return Status
-    ...     Element Should Be Visible     ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}
-   Run Keyword If       ${status}   Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}
-   Run Keyword Unless   ${status}   Click New Opportunity From More Dropdown
+    ${status}=    Run Inside Iframe    ${ACCOUNT_FRAME}    Run Keyword And Return Status    Element Should Be Visible    ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}
+    Run Keyword If    ${status}    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${NEW_OPPORTUNITY_BUTTON_AT_DETAILS}
+    Run Keyword Unless    ${status}    Click New Opportunity From More Dropdown
 
 Click New Opportunity From More Dropdown
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${MORE_DROPDOWN_AT_DETAILS}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element
-    ...     ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::${NEW_OPPORTUNITY_AT_MORE_DROPDOWN}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::${NEW_OPPORTUNITY_AT_MORE_DROPDOWN}
 
 Click New Item For Account
-    [Arguments]     ${type}
+    [Arguments]    ${type}
     Click Feed Button
-     ${status}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Run Keyword And Return Status
-    ...     Element Should Be Visible     //span[@class='optionLabel' and text()='${type}']
-    Run Keyword If       ${status}      Run Inside Iframe   ${ACCOUNT_FRAME}
-    ...     Run Keyword With Delay      0.5s    Click Element   //span[@class='optionLabel' and text()='${type}']
-    Run Keyword Unless   ${status}      Click New Item For Account From Dropdown    ${type}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${QUICKACTIONFIELD}]     10s
+    ${status}=    Run Inside Iframe    ${ACCOUNT_FRAME}    Run Keyword And Return Status    Element Should Be Visible    //span[@class='optionLabel' and text()='${type}']
+    Run Keyword If    ${status}    Run Inside Iframe    ${ACCOUNT_FRAME}    Run Keyword With Delay    0.5s    Click Element
+    ...    //span[@class='optionLabel' and text()='${type}']
+    Run Keyword Unless    ${status}    Click New Item For Account From Dropdown    ${type}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    ${QUICKACTIONFIELD}]    10s
 
 Click New Item For Account From Dropdown
-    [Arguments]     ${type}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${MORE_DROPDOWN_AT_DETAILS}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element
-    ...     ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::ul//span[contains(text(),'${type}')]
+    [Arguments]    ${type}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${MORE_DROPDOWN_AT_DETAILS}/../following-sibling::ul//span[contains(text(),'${type}')]
 
 Click New Item For Account From Details View
-    [Arguments]     ${type}
+    [Arguments]    ${type}
     Click Details Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //input[@value='${type}']
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    //input[@value='${type}']
 
 Click Next Button
-    Run Inside Iframe   ${IFRAME}       Click Element   //a[text()[contains(.,'Next')]]
+    Run Inside Iframe    ${IFRAME}    Click Element    //a[text()[contains(.,'Next')]]
 
 Click Save Button
-    Wait until Element Is Enabled     //input[@title="Save"]
-    Click Element       //input[@title="Save"]
+    Wait until Element Is Enabled    //input[@title="Save"]
+    Click Element    //input[@title="Save"]
     # Using "Wait until Element Is Visible" causes stale elements. Instead, we need to wait until Edit button does not have "dipslay: none;"
     #Wait Until Page Does Not Contain Element
     #...    //.[contains(text(), 'Order Detail')]/../following-sibling::td//input[@title="Edit" and @style="display: none;"]    10 s
 
 Click Save Button Again If There Are Multiple Contact Persons
     # If there are multiple contact persons with the same name. Clicking the save button once brings a dropdown menu to choose the correct person.
-    Sleep   1
-    Run Keyword And Ignore Error    Run Keywords    Wait Until Page Contains Element    //input[@title="Save"]      AND
-    ...    Click Save Button
+    Sleep    1
+    Run Keyword And Ignore Error    Run Keywords    Wait Until Page Contains Element    //input[@title="Save"]
+    ...    AND    Click Save Button
 
 Click To Create New Contact From Main Page
-    [Documentation]     Clicks the button when the "Contacts" tab is open
-    Run Inside Iframe   ${IFRAME}           Click Element   ${NEW_CONTACT_BUTTON}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'New Contact')]    5 seconds
+    [Documentation]    Clicks the button when the "Contacts" tab is open
+    Run Inside Iframe    ${IFRAME}    Click Element    ${NEW_CONTACT_BUTTON}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'New Contact')]    5 seconds
 
 Close All Specific Tabs
-    [Documentation]     Closes all tabs of a certain type, e.g "accountTab"
-    [Arguments]     ${tab}
+    [Arguments]    ${tab}
+    [Documentation]    Closes all tabs of a certain type, e.g "accountTab"
     ${original}=    Get Matching Xpath Count    xpath=//li[contains(@class, '${tab}')]
-    :FOR    ${i}    IN RANGE    ${original}
-    \   Run Keyword and Ignore Error    Close Tab   ${tab}
-    ${current}=   Get Matching Xpath Count    xpath=//li[contains(@class, '${tab}')]
-    ${closed}=      Evaluate        ${original}-${current}
-    Log             Closed ${closed} ${tab} tabs
-    Should Be Equal As Integers     ${current}      ${0}
+    : FOR    ${i}    IN RANGE    ${original}
+    \    Run Keyword and Ignore Error    Close Tab    ${tab}
+    ${current}=    Get Matching Xpath Count    xpath=//li[contains(@class, '${tab}')]
+    ${closed}=    Evaluate    ${original}-${current}
+    Log    Closed ${closed} ${tab} tabs
+    Should Be Equal As Integers    ${current}    ${0}
 
 Close All Tabs
-    ${menu_open}=   Run Keyword And Return Status   Page Should Contain Element     //div[contains(@class,'x-tab-tabmenu-right') and contains(@class,'x-tab-tabmenu-show')]
-    Run Keyword Unless      ${menu_open}    Click Element   //div[@class='x-tab-tabmenu-right']
-    Click Element   //span[text()='Close all primary tabs']
+    ${menu_open}=    Run Keyword And Return Status    Page Should Contain Element    //div[contains(@class,'x-tab-tabmenu-right') and contains(@class,'x-tab-tabmenu-show')]
+    Run Keyword Unless    ${menu_open}    Click Element    //div[@class='x-tab-tabmenu-right']
+    Click Element    //span[text()='Close all primary tabs']
     Run Keyword And Ignore Error    Discard Changes
 
 Close Tab That Contains Text
-    [Arguments]     ${tab_text}
-    Mouse Over      xpath=${NAVIGATORTAB}
-    Click Element  //span[contains(text(), ${tab_text})]/../../../../../a[@class='x-tab-strip-close']
+    [Arguments]    ${tab_text}
+    Mouse Over    xpath=${NAVIGATORTAB}
+    Click Element    //span[contains(text(), ${tab_text})]/../../../../../a[@class='x-tab-strip-close']
 
 Close First Tab
-    Mouse Over      xpath=${NAVIGATORTAB}
-    Click Element   xpath=${NAVIGATORTAB}/a[@class='x-tab-strip-close']
+    Mouse Over    xpath=${NAVIGATORTAB}
+    Click Element    xpath=${NAVIGATORTAB}/a[@class='x-tab-strip-close']
     Run Keyword And Ignore Error    Discard Changes
 
 Close Search Tab
-    ${tab_class}=    Set Variable       x-tab-strip-closable setupTab
+    ${tab_class}=    Set Variable    x-tab-strip-closable setupTab
     Wait Until Page Contains Element    xpath=${SEARCH_TAB}    20 seconds
-    Close Tab    ${tab_class}  # search tab needs to be closed to avoid multiple matching xpaths of details view
-    Wait Until Page Does Not Contain Element    xpath=${SEARCH_TAB}     2s
+    Close Tab    ${tab_class}    # search tab needs to be closed to avoid multiple matching xpaths of details view
+    Wait Until Page Does Not Contain Element    xpath=${SEARCH_TAB}    2s
 
 Close Tab
-    [Documentation]     Close the first tab that matches the given criterium
-    [Arguments]     ${tab}
-    Run Keyword And Ignore Error    Mouse Over      xpath=//li[contains(@class,'${tab}')]
-    Click Element   xpath=//li[contains(@class,'${tab}')]/a[@class='x-tab-strip-close']
+    [Arguments]    ${tab}
+    [Documentation]    Close the first tab that matches the given criterium
+    Run Keyword And Ignore Error    Mouse Over    xpath=//li[contains(@class,'${tab}')]
+    Click Element    xpath=//li[contains(@class,'${tab}')]/a[@class='x-tab-strip-close']
     Run Keyword And Ignore Error    Discard Changes
 
 Close Tabs And Logout
@@ -487,318 +449,279 @@ Close Tabs And Logout
     Logout From Salesforce
 
 Close Opportunity Check For Errors And Edit If Needed
-    [Arguments]     ${opportunity_stage}=Closed Lost
-    ...             ${won_check}=${FALSE}
-    ...             ${opportunity_name}=${OPPORTUNITY_NAME}
-    ...             ${close_reason}=08 Other
-    Go To Account   ${opportunity_name}
+    [Arguments]    ${opportunity_stage}=Closed Lost    ${won_check}=${FALSE}    ${opportunity_name}=${OPPORTUNITY_NAME}    ${close_reason}=08 Other
+    Go To Account    ${opportunity_name}
     Click Details Button
-    Set Opportunity Stage And Save      ${opportunity_stage}     ${TRUE}
-    Run Keyword If      ${won_check}==${TRUE}   Check For Closing Opportunity As Won Without Opportunity Products
+    Set Opportunity Stage And Save    ${opportunity_stage}    ${TRUE}
+    Run Keyword If    ${won_check}==${TRUE}    Check For Closing Opportunity As Won Without Opportunity Products
     Fill Close Reason And Comment And Save
 
 Contact Person Email Should Be Correct
-    [Arguments]         ${email}
-    Page Should Contain Element     //td[text()='Email']/following-sibling::td/div/a[contains(text(),'${email}')]
+    [Arguments]    ${email}
+    Page Should Contain Element    //td[text()='Email']/following-sibling::td/div/a[contains(text(),'${email}')]
 
 Contact Person Address Should Be Correct
-    [Arguments]         ${value}
+    [Arguments]    ${value}
     # For some strange reason Page Should Contain Element does not work.
-    ${text}=     Get Text     //td[text()='Address']/following-sibling::td/div
-    Should Contain     ${text}     ${value}    ignore_case=True
+    ${text}=    Get Text    //td[text()='Address']/following-sibling::td/div
+    Should Contain    ${text}    ${value}    ignore_case=True
 
 Contact Person Information Should Be Correct
-    [Arguments]         ${field}    ${value}
-    Page Should Contain Element     //td[text()='${field}']/following-sibling::td/div[contains(text(),'${value}')]
+    [Arguments]    ${field}    ${value}
+    Page Should Contain Element    //td[text()='${field}']/following-sibling::td/div[contains(text(),'${value}')]
 
 Contact Person List Should Have
-    [Arguments]         ${name}     ${email}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //tr[./th/a[contains(text(),'${name}')] and ./td[text()='${email}']]
+    [Arguments]    ${name}    ${email}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Visible    //tr[./th/a[contains(text(),'${name}')] and ./td[text()='${email}']]
 
 Correct Quick Actions Should Be Visible
-    ${frame}=   Get Account Tab Iframe Xpath    Open Opportunities
-    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Update']
-    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Create Event']
-    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Create Task']
-    Run Inside Iframe   ${frame}    Element Should be Visible       //ul[@class='actions']/li//span[text()='Close Opportunity']
+    ${frame}=    Get Account Tab Iframe Xpath    Open Opportunities
+    Run Inside Iframe    ${frame}    Element Should be Visible    //ul[@class='actions']/li//span[text()='Update']
+    Run Inside Iframe    ${frame}    Element Should be Visible    //ul[@class='actions']/li//span[text()='Create Event']
+    Run Inside Iframe    ${frame}    Element Should be Visible    //ul[@class='actions']/li//span[text()='Create Task']
+    Run Inside Iframe    ${frame}    Element Should be Visible    //ul[@class='actions']/li//span[text()='Close Opportunity']
 
 Create New Account
-    [Arguments]     ${type}     ${name}    ${parent}=${EMPTY}
-    Run Inside Iframe   ${IFRAME}           Click Element   ${NEW_ACCOUNT_BUTTON}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h1[contains(text(),'New Account')]    5 seconds
+    [Arguments]    ${type}    ${name}    ${parent}=${EMPTY}
+    Run Inside Iframe    ${IFRAME}    Click Element    ${NEW_ACCOUNT_BUTTON}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h1[contains(text(),'New Account')]    5 seconds
     Select Account Type    ${type}
-    Fill Account Name   ${name}
-    Run Keyword If      '${parent}'!='${EMPTY}'     Fill Parent Account Name    ${parent}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
+    Fill Account Name    ${name}
+    Run Keyword If    '${parent}'!='${EMPTY}'    Fill Parent Account Name    ${parent}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Bottom Save Button
 
 Create New Case
-    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
-    Run Inside Iframe   ${IFRAME}    Click Element   //input[@title='New Case']
+    [Arguments]    ${account_name}=${DEFAULT_TEST_ACCOUNT}
+    Run Inside Iframe    ${IFRAME}    Click Element    //input[@title='New Case']
     Fill In Mandatory Case Information And Check For Correct Fields
 
 Create New Account Owner From Dashboard And Check That The Values Are Correct
-    [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
-    ...             ${busines_id}=${DEFAULT_B2O_TEST_ACCOUNT_BUSINESS_ID}
-    ...             ${customer_id}=${DEFAULT_B2O_TEST_ACCOUNT_CUSTOMER_ID}
-    ${dashboard_frame}=   Get Account Tab Iframe Xpath    Dashboard
-    Run Inside Iframe   ${dashboard_frame}    Click Element   //button[text()='New Account Owner']
-    ${new_account_frame}=   Get Account Tab Iframe Xpath    New account owner
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountName     20s
-    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountName
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountBusinessId     20s
-    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountBusinessId
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountTeliaCustomerID     20s
-    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountTeliaCustomerID
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Display Account Information_nextBtn     20s
-    Run Inside Iframe   ${new_account_frame}    Wait Until Element Is Visible        id=Display Account Information_nextBtn     20s
-    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Display Account Information_nextBtn
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Select Contact_nextBtn     20s
-    Sleep   10
-    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Select Contact_nextBtn
+    [Arguments]    ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}    ${busines_id}=${DEFAULT_B2O_TEST_ACCOUNT_BUSINESS_ID}    ${customer_id}=${DEFAULT_B2O_TEST_ACCOUNT_CUSTOMER_ID}
+    ${dashboard_frame}=    Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe    ${dashboard_frame}    Click Element    //button[text()='New Account Owner']
+    ${new_account_frame}=    Get Account Tab Iframe Xpath    New account owner
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=AccountName    20s
+    Run Inside Iframe    ${new_account_frame}    Element Should Be Disabled    id=AccountName
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=AccountBusinessId    20s
+    Run Inside Iframe    ${new_account_frame}    Element Should Be Disabled    id=AccountBusinessId
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=AccountTeliaCustomerID    20s
+    Run Inside Iframe    ${new_account_frame}    Element Should Be Disabled    id=AccountTeliaCustomerID
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=Display Account Information_nextBtn    20s
+    Run Inside Iframe    ${new_account_frame}    Wait Until Element Is Visible    id=Display Account Information_nextBtn    20s
+    Run Inside Iframe    ${new_account_frame}    Click Element    id=Display Account Information_nextBtn
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=Select Contact_nextBtn    20s
+    Sleep    10
+    Run Inside Iframe    ${new_account_frame}    Click Element    id=Select Contact_nextBtn
     Fill Contact Information In New Account Owner Guided Process    New account owner
-    Fill Event Information In Guided Process                        New account owner
-    Run Inside Iframe   ${new_account_frame}    Click Element   Validate Contact & Create Event_nextBtn
-    Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=contactThankYouEmail
-    Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=sendThankYouEmail
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Send Thank You Email_nextBtn     20s
-    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Send Thank You Email_nextBtn
+    Fill Event Information In Guided Process    New account owner
+    Run Inside Iframe    ${new_account_frame}    Click Element    Validate Contact & Create Event_nextBtn
+    Run Inside Iframe    ${new_account_frame}    Page Should Contain Element    id=contactThankYouEmail
+    Run Inside Iframe    ${new_account_frame}    Page Should Contain Element    id=sendThankYouEmail
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=Send Thank You Email_nextBtn    20s
+    Run Inside Iframe    ${new_account_frame}    Click Element    id=Send Thank You Email_nextBtn
 
 Create New Prospect Account From Dashboard And Check That The Values Are Correct
-    [Arguments]     ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}
-    ...             ${busines_id}=${DEFAULT_B2O_TEST_ACCOUNT_BUSINESS_ID}
-    ...             ${customer_id}=${DEFAULT_B2O_TEST_ACCOUNT_CUSTOMER_ID}
-    ${dashboard_frame}=   Get Account Tab Iframe Xpath    Dashboard
-    Run Inside Iframe   ${dashboard_frame}    Click Element   //button[text()='New Prospect Account']
-    ${new_account_frame}=   Get Account Tab Iframe Xpath    New prospect account
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountName     20s
-    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountName
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountBusinessId     20s
-    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountBusinessId
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=AccountTeliaCustomerID     20s
-    Run Inside Iframe   ${new_account_frame}    Element Should Be Disabled           id=AccountTeliaCustomerID
-    Run Inside Iframe   ${new_account_frame}    Select Checkbox   id=wantsToContinue
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Display Account Information_nextBtn     20s
-    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Display Account Information_nextBtn
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=numberOfLocations     20s
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=businessChallenges     20s
-    Run Inside Iframe   ${new_account_frame}    Select Checkbox   id=createOpportunity
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=opportunityDescInput     20s
+    [Arguments]    ${account_name}=${DEFAULT_B2O_TEST_ACCOUNT}    ${busines_id}=${DEFAULT_B2O_TEST_ACCOUNT_BUSINESS_ID}    ${customer_id}=${DEFAULT_B2O_TEST_ACCOUNT_CUSTOMER_ID}
+    ${dashboard_frame}=    Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe    ${dashboard_frame}    Click Element    //button[text()='New Prospect Account']
+    ${new_account_frame}=    Get Account Tab Iframe Xpath    New prospect account
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=AccountName    20s
+    Run Inside Iframe    ${new_account_frame}    Element Should Be Disabled    id=AccountName
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=AccountBusinessId    20s
+    Run Inside Iframe    ${new_account_frame}    Element Should Be Disabled    id=AccountBusinessId
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=AccountTeliaCustomerID    20s
+    Run Inside Iframe    ${new_account_frame}    Element Should Be Disabled    id=AccountTeliaCustomerID
+    Run Inside Iframe    ${new_account_frame}    Select Checkbox    id=wantsToContinue
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=Display Account Information_nextBtn    20s
+    Run Inside Iframe    ${new_account_frame}    Click Element    id=Display Account Information_nextBtn
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=numberOfLocations    20s
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=businessChallenges    20s
+    Run Inside Iframe    ${new_account_frame}    Select Checkbox    id=createOpportunity
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=opportunityDescInput    20s
     ${name}=    Create Unique Name    Opportunity
-    Run Inside Iframe   ${new_account_frame}    Input Text                           id=opportunityDescInput     ${name}
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Account Profile_nextBtn     20s
-    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Account Profile_nextBtn
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=createContact     20s
-    Sleep   10s
-    Run Inside Iframe   ${new_account_frame}    Select Checkbox                      id=createContact
-    Fill Contact Information In New Account Owner Guided Process                     New prospect account
-    Run Inside Iframe   ${new_account_frame}    Unselect Checkbox                    id=createContact
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=CreateEvent     20s
-    Sleep   10s
-    Run Inside Iframe   ${new_account_frame}    Select Checkbox                      id=CreateEvent
-    Fill Event Information In Guided Process                                         New prospect account
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Create Contact & Create Event_nextBtn     20s
-    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Create Contact & Create Event_nextBtn
-    Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=contactThankYouEmail
-    Run Inside Iframe   ${new_account_frame}    Page Should Contain Element          id=sendThankYouEmail
-    Run Inside Iframe   ${new_account_frame}    Wait Until Page Contains Element     id=Send Thank You Email_nextBtn     20s
-    Run Inside Iframe   ${new_account_frame}    Click Element                        id=Send Thank You Email_nextBtn
+    Run Inside Iframe    ${new_account_frame}    Input Text    id=opportunityDescInput    ${name}
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=Account Profile_nextBtn    20s
+    Run Inside Iframe    ${new_account_frame}    Click Element    id=Account Profile_nextBtn
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=createContact    20s
+    Sleep    10s
+    Run Inside Iframe    ${new_account_frame}    Select Checkbox    id=createContact
+    Fill Contact Information In New Account Owner Guided Process    New prospect account
+    Run Inside Iframe    ${new_account_frame}    Unselect Checkbox    id=createContact
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=CreateEvent    20s
+    Sleep    10s
+    Run Inside Iframe    ${new_account_frame}    Select Checkbox    id=CreateEvent
+    Fill Event Information In Guided Process    New prospect account
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=Create Contact & Create Event_nextBtn    20s
+    Run Inside Iframe    ${new_account_frame}    Click Element    id=Create Contact & Create Event_nextBtn
+    Run Inside Iframe    ${new_account_frame}    Page Should Contain Element    id=contactThankYouEmail
+    Run Inside Iframe    ${new_account_frame}    Page Should Contain Element    id=sendThankYouEmail
+    Run Inside Iframe    ${new_account_frame}    Wait Until Page Contains Element    id=Send Thank You Email_nextBtn    20s
+    Run Inside Iframe    ${new_account_frame}    Click Element    id=Send Thank You Email_nextBtn
 
 Create New Contact Person For Customer From Details page
-    [Arguments]     ${customer}=${DEFAULT_TEST_ACCOUNT}
-    ...             ${first_name}=${EMPTY}
-    ...             ${last_name}=${EMPTY}
-    ...             ${email}=${DEFAULT_EMAIL}
-    ...             ${phone_number}=${DEFAULT_PHONE}
-    ...             ${salutation}=${DEFAULT_SALUTATION}
-    Go To Account   ${customer}
+    [Arguments]    ${customer}=${DEFAULT_TEST_ACCOUNT}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${salutation}=${DEFAULT_SALUTATION}
+    Go To Account    ${customer}
     Open Details Tab At Account View
-    Click New Item For Account From Details View   New Contact
-    Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}   Main Page
+    Click New Item For Account From Details View    New Contact
+    Enter mandatory information and save new contact    ${first_name}    ${last_name}    ${email}    ${phone_number}    ${salutation}    Main Page
 
 Create New Contact Person For Customer From Quick Action
-    [Arguments]     ${customer}=${DEFAULT_TEST_ACCOUNT}
-    ...             ${first_name}=${EMPTY}
-    ...             ${last_name}=${EMPTY}
-    ...             ${email}=${DEFAULT_EMAIL}
-    ...             ${phone_number}=${DEFAULT_PHONE}
-    ...             ${salutation}=${DEFAULT_SALUTATION}
-    Go To Account   ${customer}
-#    Open Details Tab At Account View
-    Click New Item For Account      New Contact
-    Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
+    [Arguments]    ${customer}=${DEFAULT_TEST_ACCOUNT}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${salutation}=${DEFAULT_SALUTATION}
+    Go To Account    ${customer}
+    #    Open Details Tab At Account View
+    Click New Item For Account    New Contact
+    Enter mandatory information and save new contact    ${first_name}    ${last_name}    ${email}    ${phone_number}    ${salutation}
 
 Create New B2O Opportunity For Customer
-    [Arguments]     ${account}
-    Go To Account   ${account}
-    Sleep   5
+    [Arguments]    ${account}
+    Go To Account    ${account}
+    Sleep    5
     Open Details Tab At Account View
     Click Details Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${NEW_OPPORTUNITY_BUTTON}
-    ${frame}=   Get Account Tab Iframe Xpath    Select Opportunity Record Type
-    Run Inside Iframe   ${frame}    Click Element   //input[@title='Continue']
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${NEW_OPPORTUNITY_BUTTON}
+    ${frame}=    Get Account Tab Iframe Xpath    Select Opportunity Record Type
+    Run Inside Iframe    ${frame}    Click Element    //input[@title='Continue']
     Fill Mandatory B2O Opportunity information
 
 Create New Contact Person For Account And Verify Outbound Status
-    [Arguments]     ${customer}=${DEFAULT_TEST_ACCOUNT}
-    ...             ${first_name}=${EMPTY}
-    ...             ${last_name}=${EMPTY}
-    ...             ${email}=${DEFAULT_EMAIL}
-    ...             ${phone_number}=${DEFAULT_PHONE}
-    ...             ${salutation_index}=0
-    ${name}=            Create Unique Name      Contact Person
-    ${email}=           Create Unique Email     ${email}
-    ${first_name}=      Set Variable If    '${first_name}' == '${EMPTY}'    Test        ${first_name}
-    ${last_name}=       Set Variable If     '${last_name}' == '${EMPTY}'    ${name}     ${last_name}
-    Set Test Variable   ${TEST_CONTACT_PERSON_LAST_NAME}    ${last_name}
-    Go To Account   ${customer}
+    [Arguments]    ${customer}=${DEFAULT_TEST_ACCOUNT}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${salutation_index}=0
+    ${name}=    Create Unique Name    Contact Person
+    ${email}=    Create Unique Email    ${email}
+    ${first_name}=    Set Variable If    '${first_name}' == '${EMPTY}'    Test    ${first_name}
+    ${last_name}=    Set Variable If    '${last_name}' == '${EMPTY}'    ${name}    ${last_name}
+    Set Test Variable    ${TEST_CONTACT_PERSON_LAST_NAME}    ${last_name}
+    Go To Account    ${customer}
     Click Details Button
-    Click New Item For Account From Details View   New Contact
-    ${select_conctact_frame}=   Get Account Tab Iframe Xpath    Select Contact Record Type
-    Run Inside Iframe   ${select_conctact_frame}    Click Element   //input[@title='Continue']
-    #Enter mandatory information and save new contact    ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}   Main Page
-    ${new_contact_frame}=   Get Account Tab Iframe Xpath    New Contact
-    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="name_firstcon2"]    ${first_name}
-    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="name_lastcon2"]    ${last_name}
-    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="con15"]    ${email}
-    Run Inside Iframe   ${new_contact_frame}    Input Text      //input[@id="00N5800000COfP6"]    ${phone_number}
-    Run Inside Iframe   ${new_contact_frame}    Select From List By Index       //select[@id="name_salutationcon2"]    ${salutation_index}
-    Run Inside Iframe   ${new_contact_frame}    Click Element       //input[@title='Save']
-    Go To Account       ${first_name} ${last_name}
+    Click New Item For Account From Details View    New Contact
+    ${select_conctact_frame}=    Get Account Tab Iframe Xpath    Select Contact Record Type
+    Run Inside Iframe    ${select_conctact_frame}    Click Element    //input[@title='Continue']
+    #Enter mandatory information and save new contact    ${first_name}    ${last_name}    ${email}    ${phone_number}    ${salutation}    Main Page
+    ${new_contact_frame}=    Get Account Tab Iframe Xpath    New Contact
+    Run Inside Iframe    ${new_contact_frame}    Input Text    //input[@id="name_firstcon2"]    ${first_name}
+    Run Inside Iframe    ${new_contact_frame}    Input Text    //input[@id="name_lastcon2"]    ${last_name}
+    Run Inside Iframe    ${new_contact_frame}    Input Text    //input[@id="con15"]    ${email}
+    Run Inside Iframe    ${new_contact_frame}    Input Text    //input[@id="00N5800000COfP6"]    ${phone_number}
+    Run Inside Iframe    ${new_contact_frame}    Select From List By Index    //select[@id="name_salutationcon2"]    ${salutation_index}
+    Run Inside Iframe    ${new_contact_frame}    Click Element    //input[@title='Save']
+    Go To Account    ${first_name} ${last_name}
     Click Details Button
-    ${contact_frame}=   Get Account Tab Iframe Xpath    ${first_name} ${last_name}
-    ${outbound_status} =    Run Inside Iframe   ${contact_frame}    Get Text      //div[@id='00N5800000CZIlj_ileinner']
-    Log To Console  ${outbound_status}
-    Run Keyword If      '${outbound_status}'!='OK'     Run Keywords     Log To Console   Outbound communication check in progress, waiting...   AND
-    ...     Sleep    60s    AND
-    ...     Reload Page     AND
-    ...     Run Inside Iframe   ${contact_frame}    Wait Until Page Contains Element    //div[@id='00N5800000CZIlj_ileinner']   AND
-    ...     Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZIlj_ileinner']   OK
+    ${contact_frame}=    Get Account Tab Iframe Xpath    ${first_name} ${last_name}
+    ${outbound_status} =    Run Inside Iframe    ${contact_frame}    Get Text    //div[@id='00N5800000CZIlj_ileinner']
+    Log To Console    ${outbound_status}
+    Run Keyword If    '${outbound_status}'!='OK'    Run Keywords    Log To Console    Outbound communication check in progress, waiting...
+    ...    AND    Sleep    60s
+    ...    AND    Reload Page
+    ...    AND    Run Inside Iframe    ${contact_frame}    Wait Until Page Contains Element    //div[@id='00N5800000CZIlj_ileinner']
+    ...    AND    Run Inside Iframe    ${contact_frame}    Element Text Should Be    //div[@id='00N5800000CZIlj_ileinner']    OK
 
 Create New Contract For Customer
-    [Arguments]     ${status}=Signed
-    ...             ${days}=0
+    [Arguments]    ${status}=Signed    ${days}=0
     Open Details Tab At Account View
     Open Details View At Opportunity
     Click Create New Contract
-    ${frame}=   Get Account Tab Iframe Xpath    New Contract
+    ${frame}=    Get Account Tab Iframe Xpath    New Contract
     ${date}=    Get Date From Future    ${days}
-    Run Inside Iframe   ${frame}    Select Value For Attribute      Status                  ${status}
-    Run Inside Iframe   ${frame}    Input Value For Attribute       Contract Start Date     ${date}
+    Run Inside Iframe    ${frame}    Select Value For Attribute    Status    ${status}
+    Run Inside Iframe    ${frame}    Input Value For Attribute    Contract Start Date    ${date}
     Click Bottom Save Button
 
 Create New Opportunity For Customer
-    [Arguments]     ${opport_name}=${EMPTY}
-    ...             ${stage}=Analyse Prospect
-    ...             ${days}=2
-    ...             ${expect_error}=${FALSE}
-#    Open Details Tab At Account View
+    [Arguments]    ${opport_name}=${EMPTY}    ${stage}=Analyse Prospect    ${days}=2    ${expect_error}=${FALSE}
+    #    Open Details Tab At Account View
     Click Feed Button
-    Click New Item For Account      New Opportunity
-    ${variable_exists}=    Run Keyword And Return Status     Variable Should Exist     ${PRODUCT}
-    Run Keyword Unless    ${variable_exists}    Set Test Variable   ${PRODUCT}      ${EMPTY}
-    Fill Mandatory Opportunity Information      ${opport_name}    ${stage}    ${days}
+    Click New Item For Account    New Opportunity
+    ${variable_exists}=    Run Keyword And Return Status    Variable Should Exist    ${PRODUCT}
+    Run Keyword Unless    ${variable_exists}    Set Test Variable    ${PRODUCT}    ${EMPTY}
+    Fill Mandatory Opportunity Information    ${opport_name}    ${stage}    ${days}
     Fill Mandatory Classification
     Click Create Button
-    Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
+    Run Keyword Unless    ${expect_error}    Verify That Opportunity Creation Succeeded
 
 Create New Opportunity From Main Page
-    [Documentation]     Deprecated
-    [Arguments]     ${days}=1
-    ...             ${stage}=Analyse Prospect
+    [Arguments]    ${days}=1    ${stage}=Analyse Prospect
+    [Documentation]    Deprecated
     Open Opportunities
     Click Create New Opportunity
-    Add Mandatory Opportunity Data      days=${days}    stage=${stage}
+    Add Mandatory Opportunity Data    days=${days}    stage=${stage}
     Save Opportunity
     Verify That Opportunity Is Saved And Data Is Correct
 
 Create New Sales Plan If Inactive
-    [Documentation]     test variable NO_SALES_PLAN must be set before calling this keyword
-    ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
-    ${active}=    Run Keyword And Return Status   Run Inside Iframe   ${frame}    Element Should Be Visible     //span[text()='Active']
-    Run Keyword Unless      ${NO_SALES_PLAN}    Return From Keyword If      ${active}
-    Run Inside Iframe   ${frame}        Click Element       //button[text()='Create new']
-    Run Keyword And Ignore Error        Dismiss Alert
-    Sleep           1s      Page needs to reload
+    [Documentation]    test variable NO_SALES_PLAN must be set before calling this keyword
+    ${frame}=    Get Account Tab Iframe Xpath    Sales Plan
+    ${active}=    Run Keyword And Return Status    Run Inside Iframe    ${frame}    Element Should Be Visible    //span[text()='Active']
+    Run Keyword Unless    ${NO_SALES_PLAN}    Return From Keyword If    ${active}
+    Run Inside Iframe    ${frame}    Click Element    //button[text()='Create new']
+    Run Keyword And Ignore Error    Dismiss Alert
+    Sleep    1s    Page needs to reload
 
 Create New Task For Customer
-    [Arguments]     ${name}=${EMPTY}
-    ...             ${stage}=Analyse Prospect
-    ...             ${days}=1
+    [Arguments]    ${name}=${EMPTY}    ${stage}=Analyse Prospect    ${days}=1
     Open Details Tab At Account View
-    Click New Item For Account      New Task
-    ${name}=    Create Unique Name      Task
+    Click New Item For Account    New Task
+    ${name}=    Create Unique Name    Task
     ${date}=    Get Date From Future    ${days}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Subject     ${name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Due Date    ${date}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Subject    ${name}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Due Date    ${date}
     Click Create Button
-    Set Test Variable   ${TASK_NAME}    ${name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[@class='feeditembody']//a[text()[contains(.,'${TASK_NAME}')]]     20s
+    Set Test Variable    ${TASK_NAME}    ${name}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[@class='feeditembody']//a[text()[contains(.,'${TASK_NAME}')]]    20s
 
 Created Contact Person Should Be Open
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${TEST_CONTACT_PERSON_FULL_NAME}')]    10 seconds
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${TEST_CONTACT_PERSON_FULL_NAME}')]    10 seconds
 
 Created Task Should Be Visible
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    //span[text()='${TASK_SUBJECT}']   15s
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //span[text()='${TASK_SUBJECT}']    15s
 
 Customer Details Page Should Contain
-    [Documentation]     Searches the customer and goes to its page. Goes to Details tab and clicks
-    ...                 the small details button. Then checks if "${text}" is in "${field}" field.
-    [Arguments]         ${customer}     ${busines_id}   ${field}    ${text}
+    [Arguments]    ${customer}    ${busines_id}    ${field}    ${text}
+    [Documentation]    Searches the customer and goes to its page. Goes to Details tab and clicks
+    ...    the small details button. Then checks if "${text}" is in "${field}" field.
     Close All Tabs
-    Go To Account       ${customer}
+    Go To Account    ${customer}
     Open Details Tab At Account View
     Click Details Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //span[contains(text(),'Business ID')]/../following-sibling::td/div[text()='${busines_id}']
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Contain Element     //td[text()='${field}']/following-sibling::td/div[text()='${text}']
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Page Should Contain Element    //span[contains(text(),'Business ID')]/../following-sibling::td/div[text()='${busines_id}']
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Page Should Contain Element    //td[text()='${field}']/following-sibling::td/div[text()='${text}']
 
 Customer Story Should Be Visible On The Right Sidebar
-    Run Inside Iframe   ${RIGHT_SIDEBAR_IFRAME}     Wait Until Page Contains Element    //div[text()='Customer Story']
+    Run Inside Iframe    ${RIGHT_SIDEBAR_IFRAME}    Wait Until Page Contains Element    //div[text()='Customer Story']
 
 Discard Changes
-    Click Element   xpath=//div[contains(@class,'x-window') and contains(@class, 'x-resizable-pinned')]//button[text()="Don't Save"]
+    Click Element    xpath=//div[contains(@class,'x-window') and contains(@class, 'x-resizable-pinned')]//button[text()="Don't Save"]
 
 Dismiss Mobile Phone Registration
-    Wait Until Page Contains Element       //div[@id='header' and contains(text(),'Register Your Mobile Phone')]    10 s
+    Wait Until Page Contains Element    //div[@id='header' and contains(text(),'Register Your Mobile Phone')]    10 s
     Capture Page Screenshot
-    Click Element       //a[text()="I Don't Want to Register My Phone"]
+    Click Element    //a[text()="I Don't Want to Register My Phone"]
 
 Edit Contact Person's Added Address
-    [Arguments]     ${street_name}=${DEFAULT_STREET_NAME}
-    ...             ${street_number}=${DEFAULT_STREET_NUMBER}
-    ...             ${staircase}=${DEFAULT_STAIRCASE}
-    ...             ${apartment_door}=${DEFAULT_APPARTMENT}
-    ...             ${postal_code}=${DEFAULT_POSTAL_CODE}
-    ...             ${city}=${DEFAULT_CITY}
+    [Arguments]    ${street_name}=${DEFAULT_STREET_NAME}    ${street_number}=${DEFAULT_STREET_NUMBER}    ${staircase}=${DEFAULT_STAIRCASE}    ${apartment_door}=${DEFAULT_APPARTMENT}    ${postal_code}=${DEFAULT_POSTAL_CODE}    ${city}=${DEFAULT_CITY}
     Click Details Button
     Click Edit Contact Person
-    ${address}=     Set Variable    ${street_name} ${street_number} ${staircase} ${apartment_door}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Street          ${address}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Postal Code     ${postal_code}
+    ${address}=    Set Variable    ${street_name} ${street_number} ${staircase} ${apartment_door}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Street    ${address}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Postal Code    ${postal_code}
     # Todo: Address can not be saved without City
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   City            ${city}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    City    ${city}
 
 Edit Event Description and WIG Areas
-    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}    Click Edit Button
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
-    Run Inside Iframe   ${frame}    Input Value For Attribute   Description      Description for event ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}    Click Element   ${NEW_EVENT_WIG_GLORY_FIELD}
-    Run Inside Iframe   ${frame}    Click Bottom Save Button
+    ${frame}=    Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe    ${frame}    Click Edit Button
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
+    Run Inside Iframe    ${frame}    Input Value For Attribute    Description    Description for event ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe    ${frame}    Click Element    ${NEW_EVENT_WIG_GLORY_FIELD}
+    Run Inside Iframe    ${frame}    Click Bottom Save Button
 
 Edit Opportunity
     Open Details View At Opportunity
-    Sleep   2   The page has already loaded so the edit button is visible, but if we click to too quickly, it won't recognize the click
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}      15s
+    Sleep    2    The page has already loaded so the edit button is visible, but if we click to too quickly, it won't recognize the click
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPO_EDIT_TITLE}    15s
 
 Enter mandatory information and save new contact
-    [Arguments]     ${first_name}=${EMPTY}
-    ...             ${last_name}=${EMPTY}
-    ...             ${email}=${DEFAULT_EMAIL}
-    ...             ${phone_number}=${DEFAULT_PHONE}
-    ...             ${salutation}=${DEFAULT_SALUTATION}
-    ...             ${location}=Customer Page
-    Add Mandatory Contact Data     ${location}      ${first_name}   ${last_name}    ${email}    ${phone_number}     ${salutation}
+    [Arguments]    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${salutation}=${DEFAULT_SALUTATION}    ${location}=Customer Page
+    Add Mandatory Contact Data    ${location}    ${first_name}    ${last_name}    ${email}    ${phone_number}    ${salutation}
     Click Create Contact Person Button
     Verify That Create Contact Person Button Is Not Visible
     Verify That Error Message Is Not Displayed
@@ -809,334 +732,290 @@ Enter mandatory (invalid) information and verify cp was not saved
     Verify That Error Message Is Displayed
 
 Expand Item If Necessary
-    [Arguments]     ${item}
-    ${visible}=      Run Keyword And Return Status    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //div/a[text()='${item}']
-    Run Keyword Unless      ${visible}      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       //div[@class='feeditemsummary']/p[text()='${item}']
+    [Arguments]    ${item}
+    ${visible}=    Run Keyword And Return Status    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Visible    //div/a[text()='${item}']
+    Run Keyword Unless    ${visible}    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    //div[@class='feeditemsummary']/p[text()='${item}']
 
 Expand Top Bar If Necessary
-    ${top_bar_visible}=     Run Keyword And Return Status   Wait Until Element Is Visible   ${TOP_BAR}
-    Run Keyword If      ${top_bar_visible}      Return From Keyword
-    Wait Until Page Contains Element    ${EXPAND_TOP_BAR}   10s
-    Mouse Over      ${EXPAND_TOP_BAR}
-    Click Element   ${EXPAND_TOP_BAR_HOVER}
-#    Set Focus To Element    ${EXPAND_TOP_BAR_HOVER}
-#    Simulate Event    ${EXPAND_TOP_BAR_HOVER}  Click
+    ${top_bar_visible}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${TOP_BAR}
+    Run Keyword If    ${top_bar_visible}    Return From Keyword
+    Wait Until Page Contains Element    ${EXPAND_TOP_BAR}    10s
+    Mouse Over    ${EXPAND_TOP_BAR}
+    Click Element    ${EXPAND_TOP_BAR_HOVER}
+    #    Set Focus To Element    ${EXPAND_TOP_BAR_HOVER}
+    #    Simulate Event    ${EXPAND_TOP_BAR_HOVER}    Click
     Wait Until Page Contains Element    ${TOP_BAR}
 
 Extract MuBe CaseID From Opportunity
-    Sleep   10s       The browser needs to catch its breath or it will complain about a JavaScript error. longer wait helps?
+    Sleep    10s    The browser needs to catch its breath or it will complain about a JavaScript error. longer wait helps?
     Reload Page
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*     5 seconds
-    ${mube_id}=    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Get Text    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*    5 seconds
+    ${mube_id}=    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Get Text    //.[text()= 'MultibellaCaseGuiId']/following-sibling::*
     Should Not Be Empty    ${mube_id}
-    ${length}=     Get Length    ${mube_id}
-    Should Not Be True    '${length}' == '1'   Mube CaseID is empty  # length is 1 if ID field is empty
+    ${length}=    Get Length    ${mube_id}
+    Should Not Be True    '${length}' == '1'    Mube CaseID is empty    # length is 1 if ID field is empty
     Set Test Variable    ${MUBE_CASE_ID}    ${mube_id}
 
 Fill Account Name
-    [Arguments]         ${name}=Test Account
-    ${fullname}=        Create Unique Name      ${name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    acc2    20s
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2    ${fullname}
-    Set Test Variable   ${TEST_ACCOUNT_NAME}      ${fullname}
+    [Arguments]    ${name}=Test Account
+    ${fullname}=    Create Unique Name    ${name}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    acc2    20s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    acc2    ${fullname}
+    Set Test Variable    ${TEST_ACCOUNT_NAME}    ${fullname}
 
 Fill Address Validation Information And Click Next
-    [Arguments]     ${postal_code}      ${city}     ${address}      ${street_number}
-    ${frame}=       Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    postalCodeCityForAddressA      10s
-    Run Inside Iframe   ${frame}    Input Text   postalCodeCityForAddressA     ${city}
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   //input[@id='postalCodeCityForAddressA']/following-sibling::ul[contains(@style,'display: block')]   10s
-    Run Inside Iframe   ${frame}    Click Element   //input[@id='postalCodeCityForAddressA']/following-sibling::ul//a[@role='menuitem' and text()='${city.upper()}']
-    # Run Inside Iframe   ${frame}    Input Text   City           ${city}
-    Run Inside Iframe   ${frame}    Input Text   AddressA         ${address}
-    # Run Inside Iframe   ${frame}    Input Text   Building       ${street_number}
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible   //input[@id='AddressA']/following-sibling::ul[contains(@style,'display: block')]   20s
-    Run Inside Iframe   ${frame}    Click Element   //input[@id='AddressA']/following-sibling::ul//a[@role='menuitem' and text()='${address} ${street_number}']
-    Run Inside Iframe   ${frame}    Click Element   Address Details_nextBtn
+    [Arguments]    ${postal_code}    ${city}    ${address}    ${street_number}
+    ${frame}=    Get Account Tab Iframe Xpath    Availability
+    Run Inside Iframe    ${frame}    Wait Until Element Is Visible    postalCodeCityForAddressA    10s
+    Run Inside Iframe    ${frame}    Input Text    postalCodeCityForAddressA    ${city}
+    Run Inside Iframe    ${frame}    Wait Until Element Is Visible    //input[@id='postalCodeCityForAddressA']/following-sibling::ul[contains(@style,'display: block')]    10s
+    Run Inside Iframe    ${frame}    Click Element    //input[@id='postalCodeCityForAddressA']/following-sibling::ul//a[@role='menuitem' and text()='${city.upper()}']
+    # Run Inside Iframe    ${frame}    Input Text    City    ${city}
+    Run Inside Iframe    ${frame}    Input Text    AddressA    ${address}
+    # Run Inside Iframe    ${frame}    Input Text    Building    ${street_number}
+    Run Inside Iframe    ${frame}    Wait Until Element Is Visible    //input[@id='AddressA']/following-sibling::ul[contains(@style,'display: block')]    20s
+    Run Inside Iframe    ${frame}    Click Element    //input[@id='AddressA']/following-sibling::ul//a[@role='menuitem' and text()='${address} ${street_number}']
+    Run Inside Iframe    ${frame}    Click Element    Address Details_nextBtn
 
 Fill Close Reason And Comment And Save
-    [Documentation]     Fill the mandatory close reason and comment. Fields are only available when the stage is not "analyse prospect"
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select value For Attribute      Close Reason    08 Other
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Input Value For Attribute       Close Comment   Close comment for ${OPPORTUNITY_NAME}
+    [Documentation]    Fill the mandatory close reason and comment. Fields are only available when the stage is not "analyse prospect"
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select value For Attribute    Close Reason    08 Other
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Value For Attribute    Close Comment    Close comment for ${OPPORTUNITY_NAME}
     Save Opportunity
 
 Fill Event Data
-    [Documentation]     Enter following data: Subject, Event Type, Reason, set Start and End Date in future
-    [Arguments]     ${contact_person}=${DEFAULT_TEST_CONTACT}
-    ...             ${account}=${DEFAULT_TEST_ACCOUNT}
-    ...             ${type}=${DEFAULT_EVENT_TYPE}
-    ...             ${reason}=${DEFAULT_EVENT_REASON}
-    ${subject}=     Create Unique Name      Test Event Subject
-    ${start_date}=      Get Date From Future    1
-    ${end_date}=        Get Date From Future    2
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Subject      ${subject}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Event Type   ${type}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Select Quick Action Value For Attribute     Reason       ${reason}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      Start    ${start_date}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Quick Action Value For Attribute      End      ${end_date}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_CONTACT_PERSON_FIELD}       ${contact_person}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Input Text      ${NEW_EVENT_ACCOUNT_FIELD}      ${account}
-    Set Test Variable       ${TEST_EVENT_SUBJECT}        ${subject}
+    [Arguments]    ${contact_person}=${DEFAULT_TEST_CONTACT}    ${account}=${DEFAULT_TEST_ACCOUNT}    ${type}=${DEFAULT_EVENT_TYPE}    ${reason}=${DEFAULT_EVENT_REASON}
+    [Documentation]    Enter following data: Subject, Event Type, Reason, set Start and End Date in future
+    ${subject}=    Create Unique Name    Test Event Subject
+    ${start_date}=    Get Date From Future    1
+    ${end_date}=    Get Date From Future    2
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Subject    ${subject}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute    Event Type    ${type}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute    Reason    ${reason}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Start    ${start_date}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    End    ${end_date}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${NEW_EVENT_CONTACT_PERSON_FIELD}    ${contact_person}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    ${NEW_EVENT_ACCOUNT_FIELD}    ${account}
+    Set Test Variable    ${TEST_EVENT_SUBJECT}    ${subject}
 
 Fill Mandatory Classification
     [Arguments]    ${account_name}=${DEFAULT_TEST_ACCOUNT}
-    Set Test Variable    ${OPPO_DESCRIPTION}     Test Automation ${PRODUCT} opportunity description
-    # Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       ${CLASSIF_DESCRIPTION_FIELD}
-    # Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible          ${CLASSIF_DESCRIPTION_FIELD}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Text                             ${CLASSIF_DESCRIPTION_FIELD}    ${OPPO_DESCRIPTION}
+    Set Test Variable    ${OPPO_DESCRIPTION}    Test Automation ${PRODUCT} opportunity description
+    # Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLASSIF_DESCRIPTION_FIELD}
+    # Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${CLASSIF_DESCRIPTION_FIELD}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Text    ${CLASSIF_DESCRIPTION_FIELD}    ${OPPO_DESCRIPTION}
 
 Fill Mandatory Contact Person Values from Customer Page
-    [Documentation]     Sets the test variable TEST_CONTACT_PERSON_FULL_NAME
-    [Arguments]
-    ...    ${firstname}
-    ...    ${lastname}
-    ...    ${salutation}=${DEFAULT_SALUTATION}
-    ...    ${email}=${DEFAULT_EMAIL}
-    ...    ${phone_number}=${DEFAULT_PHONE}
-    ...     ${sales_role}=Business Contact
-    Set Test Variable   ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute     Salutation      ${salutation}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute     Sales Role      ${sales_role}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      First Name      ${firstname}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Last Name       ${lastname}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Phone           ${phone_number}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Mobile          ${phone_number}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Email           ${email}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Business Card Title     ${DEFAULT_BUSINESS_CARD_TITLE}
+    [Arguments]    ${firstname}    ${lastname}    ${salutation}=${DEFAULT_SALUTATION}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${sales_role}=Business Contact
+    [Documentation]    Sets the test variable TEST_CONTACT_PERSON_FULL_NAME
+    Set Test Variable    ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute    Salutation    ${salutation}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Quick Action Value For Attribute    Sales Role    ${sales_role}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    First Name    ${firstname}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Last Name    ${lastname}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Phone    ${phone_number}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Mobile    ${phone_number}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Email    ${email}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Business Card Title    ${DEFAULT_BUSINESS_CARD_TITLE}
 
 Fill Mandatory B2O Opportunity information
-    [Arguments]
-    ...    ${opport_name}=${EMPTY}
-    ...    ${stage}=Analyse Prospect
-    ...    ${days}=5
-    ...    ${description}=Test B2O Opportunity
-    ...    ${priority}=Normal
-    ...    ${solution_area}=B2O Other services
-    Set Test Variable    ${B2O_OPPORTUNITY_DESCRIPTION}      ${description}
-    Set Test Variable    ${B2O_OPPORTUNITY_STAGE}      ${stage}
-    Set Test Variable    ${B2O_OPPORTUNITY_PRIORITY}      ${priority}
-    Set Test Variable    ${B2O_OPPORTUNITY_SOLUTION_AREA}      ${solution_area}
-    ${name}=    Set Variable If    '${PRODUCT}'=='${EMPTY}'   Opportunity     ${PRODUCT} Opportunity
+    [Arguments]    ${opport_name}=${EMPTY}    ${stage}=Analyse Prospect    ${days}=5    ${description}=Test B2O Opportunity    ${priority}=Normal    ${solution_area}=B2O Other services
+    Set Test Variable    ${B2O_OPPORTUNITY_DESCRIPTION}    ${description}
+    Set Test Variable    ${B2O_OPPORTUNITY_STAGE}    ${stage}
+    Set Test Variable    ${B2O_OPPORTUNITY_PRIORITY}    ${priority}
+    Set Test Variable    ${B2O_OPPORTUNITY_SOLUTION_AREA}    ${solution_area}
+    ${name}=    Set Variable If    '${PRODUCT}'=='${EMPTY}'    Opportunity    ${PRODUCT} Opportunity
     ${name}=    Create Unique Name    ${name}
     Set Test Variable    ${OPPORTUNITY_NAME}    ${name}
-    ${opport_name}=
-    ...    Set Variable If    '${opport_name}' == '${EMPTY}'    ${name}    ${opport_name}
+    ${opport_name}=    Set Variable If    '${opport_name}' == '${EMPTY}'    ${name}    ${opport_name}
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
-    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
-    ${frame}=   Get Account Tab Iframe Xpath    New Opportunity
-    Run Inside Iframe   ${frame}        Input Text                        id=opp3     ${OPPORTUNITY_NAME}
-    Run Inside Iframe   ${frame}        Input Text                        id=opp14     ${description}
-    Run Inside Iframe   ${frame}        Select From List By Value         id=opp11     ${stage}
-    Run Inside Iframe   ${frame}        Select From List By Value         id=00N5800000CZHUG     ${priority}
-    Run Inside Iframe   ${frame}        Input Text                        id=opp9     ${date}
-    Run Inside Iframe   ${frame}        Select From List By Value         id=00N5800000DL5Wa     ${solution_area}
-    Run Inside Iframe   ${frame}        Click Element      //input[@title='Save']
+    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}    ${date}
+    ${frame}=    Get Account Tab Iframe Xpath    New Opportunity
+    Run Inside Iframe    ${frame}    Input Text    id=opp3    ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${frame}    Input Text    id=opp14    ${description}
+    Run Inside Iframe    ${frame}    Select From List By Value    id=opp11    ${stage}
+    Run Inside Iframe    ${frame}    Select From List By Value    id=00N5800000CZHUG    ${priority}
+    Run Inside Iframe    ${frame}    Input Text    id=opp9    ${date}
+    Run Inside Iframe    ${frame}    Select From List By Value    id=00N5800000DL5Wa    ${solution_area}
+    Run Inside Iframe    ${frame}    Click Element    //input[@title='Save']
 
 Fill Mandatory Contact Person Values from Main Page
-    [Documentation]     Sets the test variable TEST_CONTACT_PERSON_FULL_NAME
-    [Arguments]
-    ...    ${firstname}
-    ...    ${lastname}
-    ...    ${salutation}=${DEFAULT_SALUTATION}
-    ...    ${email}=${DEFAULT_EMAIL}
-    ...    ${phone_number}=${DEFAULT_PHONE}
-    ...     ${sales_role}=Business Contact
-    Set Test Variable   ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute     Salutation      ${salutation}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute     Sales Role      ${sales_role}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      First Name      ${firstname}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Last Name       ${lastname}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Phone           ${phone_number}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Mobile          ${phone_number}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Email           ${email}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute      Business Card Title     ${DEFAULT_BUSINESS_CARD_TITLE}
+    [Arguments]    ${firstname}    ${lastname}    ${salutation}=${DEFAULT_SALUTATION}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${sales_role}=Business Contact
+    [Documentation]    Sets the test variable TEST_CONTACT_PERSON_FULL_NAME
+    Set Test Variable    ${TEST_CONTACT_PERSON_FULL_NAME}    ${salutation} ${firstname} ${lastname}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Value For Attribute    Salutation    ${salutation}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Value For Attribute    Sales Role    ${sales_role}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    First Name    ${firstname}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Last Name    ${lastname}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Phone    ${phone_number}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Mobile    ${phone_number}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Email    ${email}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Business Card Title    ${DEFAULT_BUSINESS_CARD_TITLE}
 
 Fill Mandatory Opportunity Information
-    [Arguments]
-    ...    ${opport_name}=${EMPTY}
-    ...    ${stage}=Analyse Prospect
-    ...    ${days}=1
-    ${name}=    Set Variable If    '${PRODUCT}'=='${EMPTY}'   Opportunity     ${PRODUCT} Opportunity
+    [Arguments]    ${opport_name}=${EMPTY}    ${stage}=Analyse Prospect    ${days}=1
+    ${name}=    Set Variable If    '${PRODUCT}'=='${EMPTY}'    Opportunity    ${PRODUCT} Opportunity
     ${name}=    Create Unique Name    ${name}
-    ${opport_name}=
-    ...    Set Variable If    '${opport_name}' == '${EMPTY}'    ${name}    ${opport_name}
+    ${opport_name}=    Set Variable If    '${opport_name}' == '${EMPTY}'    ${name}    ${opport_name}
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
-    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Opportunity Name    ${OPPORTUNITY_NAME}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Quick Action Value For Attribute    Stage        ${stage}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute     Close Date   ${OPPORTUNITY_CLOSE_DATE}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Press Tab On                           ${OPPO_INFO_CLOSE_DATE_FIELD}
+    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}    ${date}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute    Opportunity Name    ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Quick Action Value For Attribute    Stage    ${stage}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Quick Action Value For Attribute    Close Date    ${OPPORTUNITY_CLOSE_DATE}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Press Tab On    ${OPPO_INFO_CLOSE_DATE_FIELD}
 
 Fill In Mandatory Case Information And Check For Correct Fields
-    [Arguments]     ${account_name}=Elisa Appelsiini Oy
-    ...             ${category}=Lists and reports
-    ...             ${subject}=Default test case subject
-    ...             ${product_group}=Mobile
-    ...             ${available_reports}=Other
-    ...             ${email}=${DEFAULT_EMAIL}
-    ...             ${chargeable}=Yes
-    ...             ${chargeable_mobile_num}=0123456789
-    ...             ${non-chargeable_reason}=Pricing decision
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Wait Until Page Contains Element    id=cas4     20S
+    [Arguments]    ${account_name}=Elisa Appelsiini Oy    ${category}=Lists and reports    ${subject}=Default test case subject    ${product_group}=Mobile    ${available_reports}=Other    ${email}=${DEFAULT_EMAIL}
+    ...    ${chargeable}=Yes    ${chargeable_mobile_num}=0123456789    ${non-chargeable_reason}=Pricing decision
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    id=cas4    20S
     ${subject}=    Create Unique Name    test case subject
-    Set Test Variable   ${CASE_SUBJECT}     ${subject}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=cas4     ${account_name}
-    #Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Index           id=cas4_lkid     2
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000CZNtn     ${category}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=cas14     ${subject}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Element Should Be Disabled          id=00N5800000DYlhy
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000DYliL     ${product_group}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Element Should Be Enabled           id=00N5800000DYlhy
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000DYlhy     ${available_reports}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Element Should Be Enabled           id=00N5800000DYliN
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYliN     ${subject}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYli7     ${email}
-    ${start_date}=   Get Date From Future  1
-    ${ending_date}=  Run Keyword   Get Date From Future  28
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYli9     ${start_date}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYliW     ${ending_date}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N5800000DYli4     ${chargeable}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Input Text                          id=00N5800000DYliF     ${chargeable_mobile_num}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Select From List By Value           id=00N250000012Ra1     ${non-chargeable_reason}
-    Run Inside Iframe   ${ACCOUNT_FRAME}   Click Element                       //input[@value='Save & Close']
+    Set Test Variable    ${CASE_SUBJECT}    ${subject}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=cas4    ${account_name}
+    #Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Index    id=cas4_lkid    2
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    id=00N5800000CZNtn    ${category}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=cas14    ${subject}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Disabled    id=00N5800000DYlhy
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    id=00N5800000DYliL    ${product_group}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Enabled    id=00N5800000DYlhy
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    id=00N5800000DYlhy    ${available_reports}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Enabled    id=00N5800000DYliN
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=00N5800000DYliN    ${subject}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=00N5800000DYli7    ${email}
+    ${start_date}=    Get Date From Future    1
+    ${ending_date}=    Run Keyword    Get Date From Future    28
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=00N5800000DYli9    ${start_date}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=00N5800000DYliW    ${ending_date}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    id=00N5800000DYli4    ${chargeable}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    id=00N5800000DYliF    ${chargeable_mobile_num}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Value    id=00N250000012Ra1    ${non-chargeable_reason}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    //input[@value='Save & Close']
 
 Fill Contact Information In New Account Owner Guided Process
-    [Arguments]     ${frame_tab}
-    ...             ${first_name}=${EMPTY}
-    ...             ${last_name}=${EMPTY}
-    ...             ${email}=${DEFAULT_EMAIL}
-    ...             ${phone_number}=${DEFAULT_PHONE}
-    ...             ${business_card_title}=${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
-    ${name}=            Create Unique Name      Contact Person
-    ${email}=           Create Unique Email     ${email}
-    ${first_name}=      Set Variable If    '${first_name}' == '${EMPTY}'    Test        ${first_name}
-    ${last_name}=       Set Variable If     '${last_name}' == '${EMPTY}'    ${name}     ${last_name}
-    ${event_subject}=    Catenate   ${name}     Event
-    Set Suite Variable   ${EVENT_SUBJECT}     ${event_subject}
-    ${frame}=   Get Account Tab Iframe Xpath    ${frame_tab}
-    Run Keyword If      '${frame_tab}'=='New account owner'    Run Inside Iframe   ${frame}    Input text   id=contactFirstName    ${first_name}
-    Run Keyword If      '${frame_tab}'=='New account owner'    Run Inside Iframe   ${frame}    Input text   id=contactLastName     ${last_name}
-    Run Inside Iframe   ${frame}    Input text   id=contactMobile       ${phone_number}
-    Run Inside Iframe   ${frame}    Input text   id=contactEmail        ${email}
-    Run Inside Iframe   ${frame}    Input text   id=contactBusinessCardTitle    ${business_card_title}
+    [Arguments]    ${frame_tab}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${business_card_title}=${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
+    ${name}=    Create Unique Name    Contact Person
+    ${email}=    Create Unique Email    ${email}
+    ${first_name}=    Set Variable If    '${first_name}' == '${EMPTY}'    Test    ${first_name}
+    ${last_name}=    Set Variable If    '${last_name}' == '${EMPTY}'    ${name}    ${last_name}
+    ${event_subject}=    Catenate    ${name}    Event
+    Set Suite Variable    ${EVENT_SUBJECT}    ${event_subject}
+    ${frame}=    Get Account Tab Iframe Xpath    ${frame_tab}
+    Run Keyword If    '${frame_tab}'=='New account owner'    Run Inside Iframe    ${frame}    Input text    id=contactFirstName    ${first_name}
+    Run Keyword If    '${frame_tab}'=='New account owner'    Run Inside Iframe    ${frame}    Input text    id=contactLastName    ${last_name}
+    Run Inside Iframe    ${frame}    Input text    id=contactMobile    ${phone_number}
+    Run Inside Iframe    ${frame}    Input text    id=contactEmail    ${email}
+    Run Inside Iframe    ${frame}    Input text    id=contactBusinessCardTitle    ${business_card_title}
 
 Fill Event Information In Guided Process
-    [Arguments]     ${frame_tab}
-    ...             ${event_subject}=${EVENT_SUBJECT}
-    ...             ${start_days}=5
-    ...             ${end_days}=10
-    ${frame}=   Get Account Tab Iframe Xpath    ${frame_tab}
-    Run Inside Iframe   ${frame}    Select Checkbox   id=CreateEvent
-    Run Inside Iframe   ${frame}    Input Text   id=subject     ${event_subject}
+    [Arguments]    ${frame_tab}    ${event_subject}=${EVENT_SUBJECT}    ${start_days}=5    ${end_days}=10
+    ${frame}=    Get Account Tab Iframe Xpath    ${frame_tab}
+    Run Inside Iframe    ${frame}    Select Checkbox    id=CreateEvent
+    Run Inside Iframe    ${frame}    Input Text    id=subject    ${event_subject}
     ${start_date}=    Get Date With Dashes    ${start_days}
-    Set Test Variable   ${EVENT_START_DATE}     ${start_date}
-    Run Inside Iframe   ${frame}    Input Text   id=Date/Time (Local) 1     ${start_date}
+    Set Test Variable    ${EVENT_START_DATE}    ${start_date}
+    Run Inside Iframe    ${frame}    Input Text    id=Date/Time (Local) 1    ${start_date}
     ${end_date}=    Get Date With Dashes    ${end_days}
-    Set Test Variable   ${EVENT_END_DATE}     ${end_date}
-    Run Inside Iframe   ${frame}    Input Text   id=Date/Time (Local) 2     ${end_date}
+    Set Test Variable    ${EVENT_END_DATE}    ${end_date}
+    Run Inside Iframe    ${frame}    Input Text    id=Date/Time (Local) 2    ${end_date}
 
 Fill Opportunity Account name
-    [Documentation]     Deprecated
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element                          ${CLASSIF_ACCOUNT_SEARCH_BUTTON}
-    Search (Lookup)      ${DEFAULT_TEST_ACCOUNT}
+    [Documentation]    Deprecated
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${CLASSIF_ACCOUNT_SEARCH_BUTTON}
+    Search (Lookup)    ${DEFAULT_TEST_ACCOUNT}
     Select New Opportunity Window And Validate Title
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       ${CLASSIF_ACCOUNT_NAME_FILLED}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLASSIF_ACCOUNT_NAME_FILLED}
 
 Fill Parent Account Name
-    [Arguments]     ${parent}=${EMPTY}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc3    ${parent}
+    [Arguments]    ${parent}=${EMPTY}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    acc3    ${parent}
 
 Fill Task Data
-    ${subject}=     Create Unique Name      Test Task Subject
-    ${end_date}=        Get Date From Future    2
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Subject     ${subject}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute      Due Date    ${end_date}
-    Set Test Variable   ${TASK_SUBJECT}     ${subject}
-
+    ${subject}=    Create Unique Name    Test Task Subject
+    ${end_date}=    Get Date From Future    2
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Subject    ${subject}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Quick Action Value For Attribute    Due Date    ${end_date}
+    Set Test Variable    ${TASK_SUBJECT}    ${subject}
 
 Filter Opportunities By
-    [Arguments]     ${field}    ${order}=desc
-    Run Inside Iframe   ${IFRAME}    Click Element      //div[@title='${field}']
+    [Arguments]    ${field}    ${order}=desc
+    Run Inside Iframe    ${IFRAME}    Click Element    //div[@title='${field}']
     Sleep    0.5    # There is a weird bug, that it does not wait until the load for the _first_ time it is clicked
-    Run Inside Iframe   ${IFRAME}   Wait For Load
-    Run Keyword If      '${order}'=='desc'    Run Inside Iframe   ${IFRAME}       Click Element   //div[@title='${field}']
-    Run Keyword If      '${order}'=='desc'    Run Inside Iframe   ${IFRAME}       Wait For Load
+    Run Inside Iframe    ${IFRAME}    Wait For Load
+    Run Keyword If    '${order}'=='desc'    Run Inside Iframe    ${IFRAME}    Click Element    //div[@title='${field}']
+    Run Keyword If    '${order}'=='desc'    Run Inside Iframe    ${IFRAME}    Wait For Load
 
 Get Account Tab Iframe Xpath
-    [Documentation]     The "Details" tab is always first in the tabs, but it cannot be closed. If we want to select another iframe, we
-    ...                 need some hideous looking stuff to get the frame we want.
-    [Arguments]     ${tab}
-    ${frame}=       Set Variable    //div/div[.//span[@class='tabText' and contains(text(), '${tab}')]]/following-sibling::div[contains(@class,'x-plain-bwrap')]//div[contains(@id,'scc-st') and not(contains(@class,'x-hide-offsets'))]${IFRAME}
-    [Return]        ${frame}
+    [Arguments]    ${tab}
+    [Documentation]    The "Details" tab is always first in the tabs, but it cannot be closed. If we want to select another iframe, we
+    ...    need some hideous looking stuff to get the frame we want.
+    ${frame}=    Set Variable    //div/div[.//span[@class='tabText' and contains(text(), '${tab}')]]/following-sibling::div[contains(@class,'x-plain-bwrap')]//div[contains(@id,'scc-st') and not(contains(@class,'x-hide-offsets'))]${IFRAME}
+    [Return]    ${frame}
 
 Go to Account
-    [Documentation]    This keyword works also with contact person and other parameters which can be searched at main search
     [Arguments]    ${target_account}    ${type}=${EMPTY}
+    [Documentation]    This keyword works also with contact person and other parameters which can be searched at main search
     Close All Tabs
-    Log     Going to '${target_account}'
-    Wait Until Keyword Succeeds     240s     5s      Search And Verify Account Is Found    ${target_account}     ${type}
-    Select Account    ${target_account}     ${type}
-    Sleep   10s      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
-    Wait Until Keyword Succeeds   20s   1s   Close Search Tab
-    #Run Keyword And Ignore Error   Wait Until Keyword Succeeds   20s   1s   Close Tab That Contains Text  Search:
-    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     15s     1s      Dismiss Alert
+    Log    Going to '${target_account}'
+    Wait Until Keyword Succeeds    240s    5s    Search And Verify Account Is Found    ${target_account}    ${type}
+    Select Account    ${target_account}    ${type}
+    Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
+    Wait Until Keyword Succeeds    20s    1s    Close Search Tab
+    #Run Keyword And Ignore Error    Wait Until Keyword Succeeds    20s    1s    Close Tab That Contains Text    Search:
+    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds    15s    1s    Dismiss Alert
 
 Go To Event
-    [Documentation]     This works for other than events also. This is used for stuff that cannot be found with main search and
-    ...                 need to be selected from an account. For other cases `Go to Account` should be used.
-    [Arguments]     ${event}=${TEST_EVENT_SUBJECT}
-    Log         Going to ${event}
-#    Open Details Tab At Account View
+    [Arguments]    ${event}=${TEST_EVENT_SUBJECT}
+    [Documentation]    This works for other than events also. This is used for stuff that cannot be found with main search and
+    ...    need to be selected from an account. For other cases `Go to Account` should be used.
+    Log    Going to ${event}
+    #    Open Details Tab At Account View
     Expand Item If Necessary    ${event}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //div/a[text()='${event}']
-    ${frame}=       Get Account Tab Iframe Xpath    ${event}
-    Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //h2[@class='pageDescription' and contains(text(),'${event}')]      20s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    //div/a[text()='${event}']
+    ${frame}=    Get Account Tab Iframe Xpath    ${event}
+    Run Inside Iframe    ${frame}    Wait Until Element Is Visible    //h2[@class='pageDescription' and contains(text(),'${event}')]    20s
 
 Go to other view and then back to Sales Plan
     Open Details Tab At Account View
-    Sleep       2s
+    Sleep    2s
     Open Sales Plan Tab At Account View
 
 Go To Application
-    [Arguments]         ${app_name}
-    Log                 First check if '${app_name}' is open, only navigate there if necessary
-    ${app_open}=        App Is Open         ${app_name}
-    Run Keyword Unless      ${app_open}      Navigate To App       ${app_name}
+    [Arguments]    ${app_name}
+    Log    First check if '${app_name}' is open, only navigate there if necessary
+    ${app_open}=    App Is Open    ${app_name}
+    Run Keyword Unless    ${app_open}    Navigate To App    ${app_name}
 
 Go To Sales Application And Close All Tabs
     Go To Application    Sales Console
     # there's a need to wait some element to verify that page is fully loaded before next steps
-    Wait Until Element Is Visible       id=servicedesk      10 seconds
+    Wait Until Element Is Visible    id=servicedesk    10 seconds
     Close All Tabs
 
 Go To Salesforce
-    Go To           ${LOGIN_PAGE}
+    Go To    ${LOGIN_PAGE}
     Login Page Should Be Open
 
 Go To Salesforce and Login
-    [Arguments]     ${user}=Digisales User
+    [Arguments]    ${user}=Digisales User
     Go to Salesforce
-    Login To Salesforce And Close All Tabs      ${user}
+    Login To Salesforce And Close All Tabs    ${user}
 
 Go to Today page and check that there is link to team's opportunity queue
     Open Todays Page
-    Run Inside Iframe   ${IFRAME}   Page Should Contain Element     //a/h1[contains(text(),"in your team's queue")]
-    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds     10s     0.5s    Dismiss Alert
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //a/h1[contains(text(),"in your team's queue")]
+    # Run Keyword And Ignore Error    Wait Until Keyword Succeeds    10s    0.5s    Dismiss Alert
 
 Input Value For Attribute
-    [Arguments]     ${field}    ${value}    ${filter_hidden}=${FALSE}
-    ${xpath}=   Set Variable If     ${filter_hidden}
-    ...     //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input'][not(@type='hidden')]
-    ...     //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
+    [Arguments]    ${field}    ${value}    ${filter_hidden}=${FALSE}
+    ${xpath}=    Set Variable If    ${filter_hidden}    //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input'][not(@type='hidden')]    //td[.//label[text()='${field}']]/following-sibling::td//*[local-name()='textarea' or local-name()='input']
     Wait Until Page Contains Element    ${xpath}
-    Input Text      ${xpath}   ${value}
+    Input Text    ${xpath}    ${value}
 
 Input Quick Action Value For Attribute
-    [Arguments]     ${field}    ${value}
+    [Arguments]    ${field}    ${value}
     Wait Until Element Is Visible    ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//*[local-name()='textarea' or local-name()='input']
-    Input Text       ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//*[local-name()='textarea' or local-name()='input']   ${value}
+    Input Text    ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//*[local-name()='textarea' or local-name()='input']    ${value}
 
 Log Error Message
     [Arguments]    ${error_msg_field}
@@ -1146,812 +1025,784 @@ Log Error Message
     Set Test Variable    ${ERROR_MESSAGE}    ${error_msg}
 
 Login As Digisales Manager And Approve Quote
-    Go To Salesforce And Login      B2B DigisalesManager
+    Go To Salesforce And Login    B2B DigisalesManager
     Open Chatter
-    Wait Until Keyword Succeeds     1min    1s      Approve Quote
-    [Teardown]      Close Tabs And Logout
+    Wait Until Keyword Succeeds    1min    1s    Approve Quote
+    [Teardown]    Close Tabs And Logout
 
 Login to Salesforce
-    [Arguments]         ${username}=${B2B_DIGISALES_USER}
-    ...                 ${password}=${PASSWORD}
-    Wait Until Page Contains Element        id=username
-    Input Text          id=username         ${username}
-    Input Password      id=password         ${password}
-    Click Element       id=Login
+    [Arguments]    ${username}=${B2B_DIGISALES_USER}    ${password}=${PASSWORD}
+    Wait Until Page Contains Element    id=username
+    Input Text    id=username    ${username}
+    Input Password    id=password    ${password}
+    Click Element    id=Login
     Check For Lightning Force And Switch Back To Sales Console
-    Wait Until Page Contains Element   xpath=${LOGOUT_BUTTON}    30 seconds
+    Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    30 seconds
 
 Login to Salesforce And Go To Sales Application
     Login to Salesforce
     Go To Sales Application And Close All Tabs
 
 Login to Salesforce And Close All Tabs
-    [Arguments]     ${user}=Digisales User
-    Run Keyword     Login to Salesforce as ${user}
+    [Arguments]    ${user}=Digisales User
+    Run Keyword    Login to Salesforce as ${user}
     Run Keyword and Ignore Error    Wait For Load
     Close All Tabs
 
 Login To Salesforce And Handle Mobile Phone Registration
-    [Arguments]         ${username}=${B2B_DIGISALES_USER}
-    ...                 ${password}=${PASSWORD}
-    Input Text          id=username         ${username}
-    Input Password      id=password         ${password}
-    Click Element       id=Login
-    Run Keyword And Ignore Error        Dismiss Mobile Phone Registration
-    Wait Until Page Contains Element   xpath=${LOGOUT_BUTTON}    15 seconds
+    [Arguments]    ${username}=${B2B_DIGISALES_USER}    ${password}=${PASSWORD}
+    Input Text    id=username    ${username}
+    Input Password    id=password    ${password}
+    Click Element    id=Login
+    Run Keyword And Ignore Error    Dismiss Mobile Phone Registration
+    Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    15 seconds
 
 Login to Salesforce as Digisales User
-    Login To Salesforce     ${B2B_DIGISALES_USER}       ${PASSWORD}
+    Login To Salesforce    ${B2B_DIGISALES_USER}    ${PASSWORD}
 
 Login To Salesforce as Customer Care User
-    Login to Salesforce     ${CUSTOMER_CARE_USER}       ${PASSWORD}
+    Login to Salesforce    ${CUSTOMER_CARE_USER}    ${PASSWORD}
 
 Login to Salesforce as Sales Admin User
-    Login To Salesforce     ${SALES_ADMIN_USER}         ${PASSWORD}
+    Login To Salesforce    ${SALES_ADMIN_USER}    ${PASSWORD}
     Go To Sales Application And Close All Tabs
 
 Login To Salesforce as Product Manager
-    Login To Salesforce     ${PRODUCT_MANAGER_USER}     ${PASSWORD}
+    Login To Salesforce    ${PRODUCT_MANAGER_USER}    ${PASSWORD}
 
 Login To Salesforce as B2B DigisalesManager
-    Login To Salesforce     ${B2B_DIGISALES_MANAGER}    ${PASSWORD}
+    Login To Salesforce    ${B2B_DIGISALES_MANAGER}    ${PASSWORD}
 
 Login To Salesforce as B2O User
-    Login To Salesforce     ${B2O_DIGISALES_USER}     ${PASSWORD2}
+    Login To Salesforce    ${B2O_DIGISALES_USER}    ${PASSWORD2}
 
 Login To Salesforce As System Administrator
-    [Arguments]     ${env}
-    Import Library      config_parser
-    ${credentials}=     Config Section Map    ${env}
-    Login To Salesforce     &{credentials}[username]     &{credentials}[password]
+    [Arguments]    ${env}
+    Import Library    config_parser
+    ${credentials}=    Config Section Map    ${env}
+    Login To Salesforce    &{credentials}[username]    &{credentials}[password]
 
 Login Page Should Be Open
-    Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE}
-    Wait Until Element Is Visible        id=username     10 seconds
-    Wait Until Element Is Visible        id=password     10 seconds
+    Wait Until Keyword Succeeds    10 seconds    1 second    Location Should Be    ${LOGIN_PAGE}
+    Wait Until Element Is Visible    id=username    10 seconds
+    Wait Until Element Is Visible    id=password    10 seconds
 
 Logout Page Should Be Open
-    Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE_${TEST_ENVIRONMENT}}
-    Wait Until Element Is Visible        id=username     10 seconds
-    Wait Until Element Is Visible        id=password     10 seconds
+    Wait Until Keyword Succeeds    10 seconds    1 second    Location Should Be    ${LOGIN_PAGE_${TEST_ENVIRONMENT}}
+    Wait Until Element Is Visible    id=username    10 seconds
+    Wait Until Element Is Visible    id=password    10 seconds
 
 Logout From Salesforce
-    Click Element       id=userNavButton
-    Click Element       xpath=${LOGOUT_BUTTON}
+    Click Element    id=userNavButton
+    Click Element    xpath=${LOGOUT_BUTTON}
     Run Keyword And Ignore Error    Dismiss Alert
     Logout Page Should Be Open
 
 Main Frame Should Have Correct Info
-    ${frame}=   Get Account Tab Iframe Xpath    Dashboard
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //article//span[text()='Solution']
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //article//span[text()='Contacts']
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //article//span[text()='Contracts']
-    Run Inside Iframe   ${frame}    Element Should Be Visible   flyout-Popover
+    ${frame}=    Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //article//span[text()='Solution']
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //article//span[text()='Contacts']
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //article//span[text()='Contracts']
+    Run Inside Iframe    ${frame}    Element Should Be Visible    flyout-Popover
 
 Navigate To App
-    [Documentation]     Called from 'Go To Application' keyword.
-    [Arguments]         ${app_name}
-    Click Element       id=tsidButton
-    Wait Until Element is Visible           id=tsid-menuItems    5 seconds
-    Click Element       xpath=//div[@id='tsid-menuItems']/a[text()='${app_name}']
-    Wait Until Keyword Succeeds     10s     1s      App Should Be Open      ${app_name}
+    [Arguments]    ${app_name}
+    [Documentation]    Called from 'Go To Application' keyword.
+    Click Element    id=tsidButton
+    Wait Until Element is Visible    id=tsid-menuItems    5 seconds
+    Click Element    xpath=//div[@id='tsid-menuItems']/a[text()='${app_name}']
+    Wait Until Keyword Succeeds    10s    1s    App Should Be Open    ${app_name}
 
 Open Accounts
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Accounts
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   ${NEW_ACCOUNT_BUTTON}   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Accounts
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    ${NEW_ACCOUNT_BUTTON}    ${timeout}
 
 Open Active Sales Plan
     Open Details Tab At Account View
     Click Details Button
-    ${xpath}=       Set variable    //div[.//h3[text()='Sales Plans'] and contains(@class,'listRelatedObject')]
-    ${elem}=        Set Variable    ${xpath}//th[./following-sibling::td/img[@alt='Checked']]
-    ${hidden}=      Run Keyword And Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Not Be Visible   ${elem}
-    Run Keyword If      ${hidden}   Show More       Sales Plans
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible   ${elem}
-    ${sales_plan}=      Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text        ${elem}/a
-    Set Test Variable   ${SALES_PLAN_NAME}      ${sales_plan}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${elem}/a
-    ${frame}=   Get Account Tab Iframe Xpath    ${SALES_PLAN_NAME}
+    ${xpath}=    Set variable    //div[.//h3[text()='Sales Plans'] and contains(@class,'listRelatedObject')]
+    ${elem}=    Set Variable    ${xpath}//th[./following-sibling::td/img[@alt='Checked']]
+    ${hidden}=    Run Keyword And Return Status    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Not Be Visible    ${elem}
+    Run Keyword If    ${hidden}    Show More    Sales Plans
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${elem}
+    ${sales_plan}=    Run Inside Iframe    ${ACCOUNT_FRAME}    Get Text    ${elem}/a
+    Set Test Variable    ${SALES_PLAN_NAME}    ${sales_plan}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${elem}/a
+    ${frame}=    Get Account Tab Iframe Xpath    ${SALES_PLAN_NAME}
     Wait Until Page Contains Element    ${frame}    10s
 
 Open Activities
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Activities
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Task']   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Activities
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //input[@value='New Task']    ${timeout}
 
 Open Calendar For Sales Console
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Calendar For Sales Console
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //div[@class='bCalendar']   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Calendar For Sales Console
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //div[@class='bCalendar']    ${timeout}
 
 Open Cases
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Cases
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Case']   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Cases
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //input[@value='New Case']    ${timeout}
 
 Open Chatter
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Chatter
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    publishereditablearea   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Chatter
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    publishereditablearea    ${timeout}
 
 Open Contacts
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Contacts
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    ${NEW_CONTACT_BUTTON}   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Contacts
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    ${NEW_CONTACT_BUTTON}    ${timeout}
 
 Open Dashboards
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Dashboards
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //img[@title='Dashboards']   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Dashboards
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //img[@title='Dashboards']    ${timeout}
 
 Open Dashboard Tab At Account View
-    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Dashboard    right
+    Wait Until Keyword Succeeds    30s    1s    Click Account Tab Button And It Should Stay Open    Dashboard    right
 
 Open Details Tab At Account View
-    Wait Until Keyword Succeeds    60s    1s     Click Account Tab Button And It Should Stay Open      Details
+    Wait Until Keyword Succeeds    60s    1s    Click Account Tab Button And It Should Stay Open    Details
 
 Open Details View At Opportunity
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${ACCOUNT_DETAILS}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${ACCOUNT_DETAILS}
 
 Open Ideas
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Ideas
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //input[@value='New Idea']   ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Ideas
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //input[@value='New Idea']    ${timeout}
 
 Open just created opportunity and update Win probability, add Competitor and Partner
-    Go To Account   ${OPPORTUNITY_NAME}
+    Go To Account    ${OPPORTUNITY_NAME}
     Edit Opportunity
-    Update Win Probability      10%
+    Update Win Probability    10%
     Add Competitor And Partner
     Save Opportunity
 
 Open Open Opportunities Tab At Account View
-
-    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Open Opportunities
+    Wait Until Keyword Succeeds    30s    1s    Click Account Tab Button And It Should Stay Open    Open Opportunities
 
 Open Opportunities
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Opportunities
-    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Opportunities
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    ${NEW_OPPORTUNITY_BUTTON}    ${timeout}
 
 Open Sales Plan Tab At Account View
-    Wait Until Keyword Succeeds    30s    1s     Click Account Tab Button And It Should Stay Open      Sales Plan
-    ${frame}=   Get Account Tab Iframe Xpath    Sales Plan
-    ${NO_SALES_PLAN}=   Run Keyword and Return Status    Run Inside Iframe   ${frame}    Click element   //div[@id='saveSalesplanModal']/div[@class='slds-modal__container']//button[contains(text(),'Not now')]
+    Wait Until Keyword Succeeds    30s    1s    Click Account Tab Button And It Should Stay Open    Sales Plan
+    ${frame}=    Get Account Tab Iframe Xpath    Sales Plan
+    ${NO_SALES_PLAN}=    Run Keyword and Return Status    Run Inside Iframe    ${frame}    Click element    //div[@id='saveSalesplanModal']/div[@class='slds-modal__container']//button[contains(text(),'Not now')]
     Set Test Variable    ${NO_SALES_PLAN}
 
 Open Todays Page
-    [Arguments]     ${timeout}=20 seconds
-    Select Correct Tab Type     Today
-    Run Inside Iframe   ${IFRAME}   Wait Until Page Contains Element    chatter     ${timeout}
+    [Arguments]    ${timeout}=20 seconds
+    Select Correct Tab Type    Today
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    chatter    ${timeout}
 
 Opportunity Should be Unassigned
-    [Arguments]     ${opport_name}=${OPPORTUNITY_NAME}
-    Go To Account       ${opport_name}
+    [Arguments]    ${opport_name}=${OPPORTUNITY_NAME}
+    Go To Account    ${opport_name}
     Click Details Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //td[text()='Opportunity Owner']/following-sibling::td//a[contains(text(),'GESB Integration')]      10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //td[text()='Opportunity Owner']/following-sibling::td//a[contains(text(),'GESB Integration')]    10s
 
 Profile Attributes Should Be Visible On Left Sidebar
-    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //div[text()='Profile']
-    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Characteristics']
-    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Customer Challenges']
-    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Goals']
-    Run Inside Iframe   ${LEFT_SIDEBAR_IFRAME}      Wait Until Page Contains Element    //h3[text()='Needs']
+    Run Inside Iframe    ${LEFT_SIDEBAR_IFRAME}    Wait Until Page Contains Element    //div[text()='Profile']
+    Run Inside Iframe    ${LEFT_SIDEBAR_IFRAME}    Wait Until Page Contains Element    //h3[text()='Characteristics']
+    Run Inside Iframe    ${LEFT_SIDEBAR_IFRAME}    Wait Until Page Contains Element    //h3[text()='Customer Challenges']
+    Run Inside Iframe    ${LEFT_SIDEBAR_IFRAME}    Wait Until Page Contains Element    //h3[text()='Goals']
+    Run Inside Iframe    ${LEFT_SIDEBAR_IFRAME}    Wait Until Page Contains Element    //h3[text()='Needs']
 
 Quote Should Be Open
-    [Arguments]     ${quote_name}=${OPPORTUNITY_NAME}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[./h2[@class='pageDescription' and contains(text(),'${quote_name}')]]/h1[contains(text(),'Quote')]
+    [Arguments]    ${quote_name}=${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[./h2[@class='pageDescription' and contains(text(),'${quote_name}')]]/h1[contains(text(),'Quote')]
 
 Rate Opportunity
-    [Arguments]     ${rating}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${EDIT_BUTTON}      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Mouse Over      //td[contains(@id,'Pricebook')]
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Select Value For Attribute      Quality Rating      ${rating}
+    [Arguments]    ${rating}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${EDIT_BUTTON}    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Mouse Over    //td[contains(@id,'Pricebook')]
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${EDIT_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Value For Attribute    Quality Rating    ${rating}
     Save Opportunity
 
 Recommended Offerings Should Be Visible On the Right Sidebar
-    Run Inside Iframe   ${RIGHT_SIDEBAR_IFRAME}     Wait Until Page Contains Element    //div[text()='Recommended Offerings']
+    Run Inside Iframe    ${RIGHT_SIDEBAR_IFRAME}    Wait Until Page Contains Element    //div[text()='Recommended Offerings']
 
 Run Through Sales Plan Guided Process And Update Fields
-    ${guided_frame}=   Get Account Tab Iframe Xpath    Update sales plan
-    Run Inside Iframe   ${guided_frame}     Wait Until Page Contains Element    id=NumberofLocations
-    ${random}=   Get Random Int
-    Run Inside Iframe   ${guided_frame}     Input Text                          id=NumberofLocations            ${random}
-    ${random}=   Get Random Int
-    Run Inside Iframe   ${guided_frame}     Input Text                          id=EmployeesInCustomerService   ${random}
-    ${random}=   Get Random Int
-    Run Inside Iframe   ${guided_frame}     Input Text                          id=NumberofEmployees            ${random}
-    ${random}=   Get Random Int
-    Run Inside Iframe   ${guided_frame}     Input Text                          id=MobileEmployees              ${random}
-    Run Inside Iframe   ${guided_frame}     Click Element                       id=Account_nextBtn
+    ${guided_frame}=    Get Account Tab Iframe Xpath    Update sales plan
+    Run Inside Iframe    ${guided_frame}    Wait Until Page Contains Element    id=NumberofLocations
+    ${random}=    Get Random Int
+    Run Inside Iframe    ${guided_frame}    Input Text    id=NumberofLocations    ${random}
+    ${random}=    Get Random Int
+    Run Inside Iframe    ${guided_frame}    Input Text    id=EmployeesInCustomerService    ${random}
+    ${random}=    Get Random Int
+    Run Inside Iframe    ${guided_frame}    Input Text    id=NumberofEmployees    ${random}
+    ${random}=    Get Random Int
+    Run Inside Iframe    ${guided_frame}    Input Text    id=MobileEmployees    ${random}
+    Run Inside Iframe    ${guided_frame}    Click Element    id=Account_nextBtn
 
 Save Duplicate Contact Person
     Save (Ignore Alert) Button Should Be Visible
     Save New Contact Person
 
 Save (Ignore Alert) Button Should Be Visible
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be Visible   //input[@value='Save (Ignore Alert)']
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Visible    //input[@value='Save (Ignore Alert)']
 
 Save New Contact Person
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Bottom Save Button
     Verify That Create Contact Person Button Is Not Visible
     Verify That Error Message Is Not Displayed
 
 Save New Contact Person And Expect Error
-    [Arguments]     ${error}
-    Run Inside Iframe   ${ACCOUNT_FRAME}        Click Bottom Save Button
-    Verify That Error Message Is Displayed      ${CP_COMMON_ERROR_MESSAGE_FIELD}    ${error}
+    [Arguments]    ${error}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Bottom Save Button
+    Verify That Error Message Is Displayed    ${CP_COMMON_ERROR_MESSAGE_FIELD}    ${error}
 
 Save Opportunity
-    [Arguments]     ${expect_error}=${FALSE}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
-    Run Keyword If      ${expect_error}     Verify That Error Messages Are Shown
-    ...     ELSE    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Element Is Visible   //div[@class='listHoverLinks']    30 s
+    [Arguments]    ${expect_error}=${FALSE}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPORTUNITY_SAVE_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${OPPORTUNITY_SAVE_BUTTON}
+    Run Keyword If    ${expect_error}    Verify That Error Messages Are Shown
+    ...    ELSE    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //div[@class='listHoverLinks']    30 s
 
 Search And Verify Account Is Found
-    [Arguments]     ${target_account}   ${type}=${EMPTY}
-    Run Keyword And Ignore Error      Close All Tabs
+    [Arguments]    ${target_account}    ${type}=${EMPTY}
+    Run Keyword And Ignore Error    Close All Tabs
     Search Salesforce    ${target_account}
     Searched Item Should Be Visible    ${target_account}    ${type}
 
 Search Salesforce
-    [Arguments]         ${item}
-    Input Text          id=phSearchInput      ${item}
+    [Arguments]    ${item}
+    Input Text    id=phSearchInput    ${item}
     Wait Until Keyword Succeeds    30 s    1 s    Click Element    //div[contains(@id,'phSearchInput_autoCompleteBoxId')]//span[@class='queryText' and contains(text(), '${item}')]
-    Press Enter On     phSearchInput    # At least in Firefox version 52.0 enter needs to be pressed or the search won't happen
-    Click Element       id=phSearchClearButton
+    Press Enter On    phSearchInput    # At least in Firefox version 52.0 enter needs to be pressed or the search won't happen
+    Click Element    id=phSearchClearButton
 
 Searched Item Should Be Visible
-    [Arguments]         ${account_name}     ${type}=${EMPTY}
-    ${visible}=     Run Keyword and Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //a[text()='${account_name}']
-    ${no_matches_found}=    Run Keyword And Return Status   Run Inside Iframe   ${ACCOUNT_FRAME}    Element Should Be visible   //div[@id='searchResultsWarningMessageBox']//div[text()='No matches found']
-    Run Keyword If      ${no_matches_found}     Run Keywords    Capture Page Screenshot     AND     Fail    ${account_name} not found in search results.
+    [Arguments]    ${account_name}    ${type}=${EMPTY}
+    ${visible}=    Run Keyword and Return Status    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    //a[text()='${account_name}']
+    ${no_matches_found}=    Run Keyword And Return Status    Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be visible    //div[@id='searchResultsWarningMessageBox']//div[text()='No matches found']
+    Run Keyword If    ${no_matches_found}    Run Keywords    Capture Page Screenshot
+    ...    AND    Fail    ${account_name} not found in search results.
     # Sometimes the search shows more options. If we reload the page, the extra results should vanish.
-    Run Keyword Unless      ${visible}      Reload Page
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible       //div[contains(@id,'${type}')]//a[text()='${account_name}']       10s
+    Run Keyword Unless    ${visible}    Reload Page
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    //div[contains(@id,'${type}')]//a[text()='${account_name}']    10s
 
 Search (Setup)
-    [Arguments]         ${item}
+    [Arguments]    ${item}
     # Do not click the search button to get the quick access link for the search item
-    Input Text          id=setupSearch      ${item}
-    Wait Until Page Contains Element        xpath=//div[@id='AutoNumber5']//a[contains(text(),'${item}')]
-
-# Search (Lookup)
-#     [Documentation]     Some sort of verification should be run after this keyword
-#     ...                 Update on 5.6.2017: This keyword is still a complete disaster.
-#     ...                 Deprecated
-#     [Arguments]         ${item}
-#     ${kw_passed}=    Set Variable    ${FALSE}
-#     Wait Until Keyword Succeeds    20 s    1 s    Select Popup Search Window And Validate Title
-#     # ${ret}=    Run Inside Iframe    resultsFrame   Run Keyword And Return Status      Click Element      //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
-#     # ${ret}=    Run Keyword And Return Status      Click Element      //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
-#     # Run Keyword If    ${ret}    Set Variable     ${kw_passed}     ${TRUE}
-#     # Return From Keyword If     ${ret}
-#     Select Frame    searchFrame
-#     Input Text      ${LOOKUP_SEARCH_FIELD}    ${item}
-#     Click Element   ${LOOKUP_SEARCH_GO_BUTTON}
-#     Press Tab On    ${LOOKUP_SEARCH_GO_BUTTON}
-#     Unselect Frame
-#     Press Tab On    resultsFrame
-#     Select Frame    resultsFrame
-#     Press Tab On    //a[contains(text(),'Clear Search Results')]
-#     Press Enter On      //div[@class='listRelatedObject lookupBlock']//table//th/a[1]
-#     # Focus    //a[contains(text(), '${item}')]
-#     # Execute Javascript       document.dispatchEvent(new KeyboardEvent('keydown', {'which': 9, 'keyCode':9}));
-#     # Run Keyword and Ignore Error     Select Frame   resultsFrame
-#     # Run Keyword and Ignore Error     Click Element       //a[contains(text(), '${item}')]
-#     # ${kw_passed}=    Set Variable    ${TRUE}
-#     [Teardown]      Select Window     main
-#     # [Teardown]      Run Keywords      Log to console     ${kw_passed}    AND    Run Keyword If   '${kw_passed}'=='${FALSE}'     Close Browser
+    Input Text    id=setupSearch    ${item}
+    Wait Until Page Contains Element    xpath=//div[@id='AutoNumber5']//a[contains(text(),'${item}')]
+    # Search (Lookup)
+    #    [Documentation]    Some sort of verification should be run after this keyword
+    #    ...    Update on 5.6.2017: This keyword is still a complete disaster.
+    #    ...    Deprecated
+    #    [Arguments]    ${item}
+    #    ${kw_passed}=    Set Variable    ${FALSE}
+    #    Wait Until Keyword Succeeds    20 s    1 s    Select Popup Search Window And Validate Title
+    #    # ${ret}=    Run Inside Iframe    resultsFrame    Run Keyword And Return Status    Click Element    //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
+    #    # ${ret}=    Run Keyword And Return Status    Click Element    //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
+    #    # Run Keyword If    ${ret}    Set Variable    ${kw_passed}    ${TRUE}
+    #    # Return From Keyword If    ${ret}
+    #    Select Frame    searchFrame
+    #    Input Text    ${LOOKUP_SEARCH_FIELD}    ${item}
+    #    Click Element    ${LOOKUP_SEARCH_GO_BUTTON}
+    #    Press Tab On    ${LOOKUP_SEARCH_GO_BUTTON}
+    #    Unselect Frame
+    #    Press Tab On    resultsFrame
+    #    Select Frame    resultsFrame
+    #    Press Tab On    //a[contains(text(),'Clear Search Results')]
+    #    Press Enter On    //div[@class='listRelatedObject lookupBlock']//table//th/a[1]
+    #    # Focus    //a[contains(text(), '${item}')]
+    #    # Execute Javascript    document.dispatchEvent(new KeyboardEvent('keydown', {'which': 9, 'keyCode':9}));
+    #    # Run Keyword and Ignore Error    Select Frame    resultsFrame
+    #    # Run Keyword and Ignore Error    Click Element    //a[contains(text(), '${item}')]
+    #    # ${kw_passed}=    Set Variable    ${TRUE}
+    #    [Teardown]    Select Window    main
+    #    # [Teardown]    Run Keywords    Log to console    ${kw_passed}
+    ...    # AND    Run Keyword If    '${kw_passed}'=='${FALSE}'    Close Browser
 
 Search Result Should Contain Field
-    [Arguments]     ${result}   ${type}     ${expected_field}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element
-    ...     //div[@id='${type}']//th[./a[text()='${result}']]/following-sibling::td[text()='${expected_field}' or ./a[text()='${expected_field}']]      10s
+    [Arguments]    ${result}    ${type}    ${expected_field}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //div[@id='${type}']//th[./a[text()='${result}']]/following-sibling::td[text()='${expected_field}' or ./a[text()='${expected_field}']]    10s
 
 Select Account
-    [Arguments]         ${account_name}     ${type}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element    //div[contains(@id,'${type}')]//a[text()='${account_name}']
-    Sleep   10
+    [Arguments]    ${account_name}    ${type}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    //div[contains(@id,'${type}')]//a[text()='${account_name}']
+    Sleep    10
     Account Should Be Open    ${account_name}
 
 Select Account Type
-    [Arguments]         ${type}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select From List By Label   p3       ${type}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   //input[@title='Continue']
-    Sleep       0.3     Without this the keyword fails for a dead object error
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'New Account')]    10 seconds
+    [Arguments]    ${type}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select From List By Label    p3    ${type}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    //input[@title='Continue']
+    Sleep    0.3    Without this the keyword fails for a dead object error
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'New Account')]    10 seconds
 
 Select Correct View Type
-    [Arguments]         ${type}
-#    Run Inside Iframe   ${IFRAME}    Wait Until Page Contains Element   //select[contains(@title, 'View:')]     ${type}
-    Run Inside Iframe   ${IFRAME}    Select From List By Label   //select[contains(@title, 'View:')]     ${type}
-    Run Inside Iframe   ${IFRAME}    Wait For Load
+    [Arguments]    ${type}
+    #    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //select[contains(@title, 'View:')]    ${type}
+    Run Inside Iframe    ${IFRAME}    Select From List By Label    //select[contains(@title, 'View:')]    ${type}
+    Run Inside Iframe    ${IFRAME}    Wait For Load
 
 Select Correct Tab Type
-    [Arguments]         ${tab}
+    [Arguments]    ${tab}
     Run Keyword If    '${BROWSER}'=='ie'    Select Tab With Coordinates
-    ...                     ELSE            Select Tab With Keyboard Shortcut
-    Click Element       xpath=//ul[@class='x-menu-list']//span[text()='${tab}']
+    ...    ELSE    Select Tab With Keyboard Shortcut
+    Click Element    xpath=//ul[@class='x-menu-list']//span[text()='${tab}']
     Wait For Load
-
-# Select First Address and Verify Products Are Found
-#     ${frame}=       Get Account Tab Iframe Xpath    Availability
-#     Run Inside Iframe   ${frame}    Click Element   //button[text()='Select']
-#     Run Inside Iframe   ${frame}    Click Element   List of Available Addresses_nextBtn
-#     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h1[contains(text(),'List of Available Products')]     20s
-#     Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //table/tbody//td[contains(text(),'Telia Yritysinternet')]
+    # Select First Address and Verify Products Are Found
+    #    ${frame}=    Get Account Tab Iframe Xpath    Availability
+    #    Run Inside Iframe    ${frame}    Click Element    //button[text()='Select']
+    #    Run Inside Iframe    ${frame}    Click Element    List of Available Addresses_nextBtn
+    #    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //h1[contains(text(),'List of Available Products')]    20s
+    #    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //table/tbody//td[contains(text(),'Telia Yritysinternet')]
 
 Select New Opportunity Window And Validate Title
-    Select Window       main
-    Title Should Be     Opportunity Edit: New Opportunity - Console
+    Select Window    main
+    Title Should Be    Opportunity Edit: New Opportunity - Console
 
 Select New Contact Window And Validate Title
-    Select Window       main
-    Title Should Be     Contact Edit: New Contact - Console
+    Select Window    main
+    Title Should Be    Contact Edit: New Contact - Console
 
 Select Opportunity
-    [Arguments]     ${name}
-    Run Inside Iframe    ${IFRAME}    Click Element     //div/a/span[contains(text(),'${name}')]
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element   //h2[contains(text(),'${name}')]   10 s
+    [Arguments]    ${name}
+    Run Inside Iframe    ${IFRAME}    Click Element    //div/a/span[contains(text(),'${name}')]
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //h2[contains(text(),'${name}')]    10 s
 
 Select Opportunity Record Type
-    [Arguments]     ${op_type}=Opportunity
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element       //.[contains(text(), 'Record Type of new record')]
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select From List
-    ...    //.[contains(text(), 'Record Type of new record')]/../following-sibling::*//select    ${op_type}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element                          //input[@title='Continue']
+    [Arguments]    ${op_type}=Opportunity
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //.[contains(text(), 'Record Type of new record')]
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select From List    //.[contains(text(), 'Record Type of new record')]/../following-sibling::*//select    ${op_type}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //input[@title='Continue']
 
 Select Popup Search Window And Validate Title
-    Select Window       new
-    Title Should Be     Search ~ Salesforce - Unlimited Edition
-    Page Should Contain Element   //frameset
+    Select Window    new
+    Title Should Be    Search ~ Salesforce - Unlimited Edition
+    Page Should Contain Element    //frameset
 
 Select Quick Action Value For Attribute
-    [Arguments]     ${field}    ${value}
-    Wait Until Element Is Visible    ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//select   20s
-    Select From List By Label      ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//select   ${value}
+    [Arguments]    ${field}    ${value}
+    Wait Until Element Is Visible    ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//select    20s
+    Select From List By Label    ${QUICKACTIONFIELD}//label[contains(text(),'${field}')]]//select    ${value}
 
 Select Tab With Coordinates
     # IE cannot handle Javascript Keyboardevents, so we cannot use the keyboard shortcut for IE.
-    Click Element At Coordinates    xpath=//em[@class='x-btn-split']    120     0
+    Click Element At Coordinates    xpath=//em[@class='x-btn-split']    120    0
 
 Select Tab With Keyboard Shortcut
     # 86 is the ASCII code for 'V' key, which is the shortcut for the navigation tab
-    Execute Javascript      document.dispatchEvent(new KeyboardEvent('keydown', {'which': 86, 'keyCode':86}));
+    Execute Javascript    document.dispatchEvent(new KeyboardEvent('keydown', {'which': 86, 'keyCode':86}));
 
 Select Value For Attribute
-    [Arguments]     ${field}    ${value}
+    [Arguments]    ${field}    ${value}
     Wait Until Page Contains Element    //td[.//label[text()[contains(.,'${field}')]]]/following-sibling::td//select    10s
-    Select From List By Label   //td[.//label[text()[contains(.,'${field}')]]]/following-sibling::td//select      ${value}
+    Select From List By Label    //td[.//label[text()[contains(.,'${field}')]]]/following-sibling::td//select    ${value}
 
 Send Quote Email To Customer
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //input[@value='Send Quote Email']
-    Wait Until Keyword Succeeds     30s     1s      Dismiss Alert
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //input[@value='Send Quote Email']
+    Wait Until Keyword Succeeds    30s    1s    Dismiss Alert
 
 Set Opportunity Stage And Save
-    [Arguments]     ${stage}    ${expect_error}=${FALSE}
-    Wait Until Keyword Succeeds     30s     1s      Edit Opportunity
-    Change Stage to         ${stage}
+    [Arguments]    ${stage}    ${expect_error}=${FALSE}
+    Wait Until Keyword Succeeds    30s    1s    Edit Opportunity
+    Change Stage to    ${stage}
     Save Opportunity    ${expect_error}
 
 Show More
-    [Arguments]     ${page}
-    ${xpath}=   Set Variable    //div[.//h3[text()='${page}'] and contains(@class,'listRelatedObject')]//a[starts-with(text(),'Show')]
-    Wait Until Keyword Succeeds     10s     1s      Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element   ${xpath}
+    [Arguments]    ${page}
+    ${xpath}=    Set Variable    //div[.//h3[text()='${page}'] and contains(@class,'listRelatedObject')]//a[starts-with(text(),'Show')]
+    Wait Until Keyword Succeeds    10s    1s    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${xpath}
 
 Submit Quote For Approval
-    #Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@class='pbHeader']//input[@value='Submit for Approval']   30s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Element   //div[@class='pbHeader']//input[@value='Submit for Approval']
-    Sleep   3
+    #Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[@class='pbHeader']//input[@value='Submit for Approval']    30s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //div[@class='pbHeader']//input[@value='Submit for Approval']
+    Sleep    3
     Dismiss Alert
 
 Top Bar Should Have
-    [Arguments]     ${field}
-    Page Should Contain Element     ${TOP_BAR}//div[@class='wc_label' and text()='${field}']
+    [Arguments]    ${field}
+    Page Should Contain Element    ${TOP_BAR}//div[@class='wc_label' and text()='${field}']
 
 Try to create a new contact person with a same name to
-    [Arguments]     ${account}
-    ...         ${first_name}=${EMPTY}
-    ...         ${last_name}=${EMPTY}
-    ...         ${email}=${DEFAULT_EMAIL}
-    ...         ${phone_number}=${DEFAULT_PHONE}
-    ...         ${salutation}=${DEFAULT_SALUTATION}
+    [Arguments]    ${account}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=${DEFAULT_PHONE}    ${salutation}=${DEFAULT_SALUTATION}
     Open Contacts
     Click To Create New Contact From Main Page
-    Add Mandatory Contact Data      Main Page       ${first_name}   ${last_name}   ${email}     ${phone_number}     ${salutation}
-    Add Account For Contact Person      ${account}
+    Add Mandatory Contact Data    Main Page    ${first_name}    ${last_name}    ${email}    ${phone_number}    ${salutation}
+    Add Account For Contact Person    ${account}
     Save New Contact Person And Expect Error    duplicate record
 
 Try To Create New Opportunity And It Should Fail
-#    Open Details Tab At Account View
-    Create New Opportunity For Customer     expect_error=${TRUE}
+    #    Open Details Tab At Account View
+    Create New Opportunity For Customer    expect_error=${TRUE}
     Verify That Error Message Is Displayed
 
 Try To Save Opportunity And Expect Errors
-    [Documentation]     Click the save button, then sleep a moment so the page loads the "Saving..." button and then wait until
-    ...                 the save button is visible again. This way we ensure that if we try to save multiple times in a short
-    ...                 period, it will not recognize the old error messages as the current ones.
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Click Element                          ${OPPORTUNITY_SAVE_BUTTON}
-    Sleep       0.5
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}   Wait Until Page Contains Element       ${OPPORTUNITY_SAVE_BUTTON}       10s
+    [Documentation]    Click the save button, then sleep a moment so the page loads the "Saving..." button and then wait until
+    ...    the save button is visible again. This way we ensure that if we try to save multiple times in a short
+    ...    period, it will not recognize the old error messages as the current ones.
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPORTUNITY_SAVE_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    ${OPPORTUNITY_SAVE_BUTTON}
+    Sleep    0.5
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${OPPORTUNITY_SAVE_BUTTON}    10s
     Verify That Error Messages Are Shown
 
 Type Account Name
-    [Arguments]         ${account_name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Text      acc2         ${account_name}
+    [Arguments]    ${account_name}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Text    acc2    ${account_name}
 
 Update Contact Person In Salesforce
-    [Arguments]     ${phone}=${EMPTY}
-    ...             ${business_card_title}=${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
-    ${OLD_EMAIL}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Email']/following-sibling::td/div/a
-    ${OLD_PHONE}=       Run Inside Iframe   ${ACCOUNT_FRAME}    Get Text    //td[text()='Phone']/following-sibling::td/div
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Element       ${EDIT_BUTTON}
-    ${NEW_EMAIL}=       Create Unique Email
-    ${NEW_PHONE}=       Create Unique Phone Number
-    ${NEW_PHONE}=       Set Variable If     '${phone}'=='${EMPTY}'      ${NEW_PHONE}    ${phone}
-    ${OLD_PHONE}=       Strip Area Code From Phone Number   ${OLD_PHONE}
-    Set Test Variable   ${OLD_EMAIL}
-    Set Test Variable   ${OLD_PHONE}
-    Set Test Variable   ${NEW_EMAIL}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Email   ${NEW_EMAIL}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Phone   ${NEW_PHONE}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Input Value For Attribute   Business Card Title    ${business_card_title}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Gender              1 - ${DEFAULT_GENDER.lower()}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Sales Role          ${DEFAULT_SALES_ROLE_UPDATED}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Marketing - SMS     ${DEFAULT_MARKETING_SMS_PERMISSION_UPDATED.upper()}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Checkbox     //td[./label[text()='3rd Party Contact']]/following-sibling::td//input
+    [Arguments]    ${phone}=${EMPTY}    ${business_card_title}=${DEFAULT_BUSINESS_CARD_TITLE_UPDATED}
+    ${OLD_EMAIL}=    Run Inside Iframe    ${ACCOUNT_FRAME}    Get Text    //td[text()='Email']/following-sibling::td/div/a
+    ${OLD_PHONE}=    Run Inside Iframe    ${ACCOUNT_FRAME}    Get Text    //td[text()='Phone']/following-sibling::td/div
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Element    ${EDIT_BUTTON}
+    ${NEW_EMAIL}=    Create Unique Email
+    ${NEW_PHONE}=    Create Unique Phone Number
+    ${NEW_PHONE}=    Set Variable If    '${phone}'=='${EMPTY}'    ${NEW_PHONE}    ${phone}
+    ${OLD_PHONE}=    Strip Area Code From Phone Number    ${OLD_PHONE}
+    Set Test Variable    ${OLD_EMAIL}
+    Set Test Variable    ${OLD_PHONE}
+    Set Test Variable    ${NEW_EMAIL}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Email    ${NEW_EMAIL}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Phone    ${NEW_PHONE}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Input Value For Attribute    Business Card Title    ${business_card_title}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Value For Attribute    Gender    1 - ${DEFAULT_GENDER.lower()}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Value For Attribute    Sales Role    ${DEFAULT_SALES_ROLE_UPDATED}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Value For Attribute    Marketing - SMS    ${DEFAULT_MARKETING_SMS_PERMISSION_UPDATED.upper()}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Checkbox    //td[./label[text()='3rd Party Contact']]/following-sibling::td//input
     Sleep    2
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Save Button
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Save Button
     # Salesforce requires the phone number to be in +<country code>xxxx format, so strip the country code after input
-    ${NEW_PHONE}=       Strip Area Code From Phone Number   ${NEW_PHONE}
-    Set Test Variable   ${NEW_PHONE}
+    ${NEW_PHONE}=    Strip Area Code From Phone Number    ${NEW_PHONE}
+    Set Test Variable    ${NEW_PHONE}
 
 Update Contact Person Sales Role
-    [Arguments]     ${new_role}
-    [Documentation]     Assumes user is already in the edit contact person window
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Select Value For Attribute      Sales Role       ${new_role}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Click Bottom Save Button
+    [Arguments]    ${new_role}
+    [Documentation]    Assumes user is already in the edit contact person window
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Select Value For Attribute    Sales Role    ${new_role}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Click Bottom Save Button
 
 Update Description, Customer Business Goals, and Customer Business Challenges fields and press Save
-    ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //button[@title='Edit this Field']      10s
-    Run Inside Iframe   ${frame}    Click Element   //button[@title='Edit this Field']
-    Sleep   3
-    ${rand_string}=     Create Unique Name          Sales plan description
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //textarea[contains(@id,'Description')]     10s
-    Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Description')]     ${rand_string}
-    Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Goals')]     Sales plan customer business goals
-    Run Inside Iframe   ${frame}    Prolonged Input Text      //textarea[contains(@id,'Customer_Business_Challenges')]     Sales plan customer business challenges
-    Run Inside Iframe   ${frame}    Run Keyword With Delay      0.5s    Click Element   //button[text()='Save' and not(contains(@id,'saveList'))]
+    ${frame}=    Get Account Tab Iframe Xpath    Sales Plan
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //button[@title='Edit this Field']    10s
+    Run Inside Iframe    ${frame}    Click Element    //button[@title='Edit this Field']
+    Sleep    3
+    ${rand_string}=    Create Unique Name    Sales plan description
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //textarea[contains(@id,'Description')]    10s
+    Run Inside Iframe    ${frame}    Prolonged Input Text    //textarea[contains(@id,'Description')]    ${rand_string}
+    Run Inside Iframe    ${frame}    Prolonged Input Text    //textarea[contains(@id,'Customer_Business_Goals')]    Sales plan customer business goals
+    Run Inside Iframe    ${frame}    Prolonged Input Text    //textarea[contains(@id,'Customer_Business_Challenges')]    Sales plan customer business challenges
+    Run Inside Iframe    ${frame}    Run Keyword With Delay    0.5s    Click Element    //button[text()='Save' and not(contains(@id,'saveList'))]
     # TODO: 23.11.2017 Error during Javascript remoting. Something needs to be done about it
-    ${frame}=       Get Account Tab Iframe Xpath    Sales Plan
-    #Run Inside Iframe   ${frame}    Wait Until Element Is Not Visible       //button[text()='Save' and not(contains(@id,'saveList'))]   20s
-    Set Test Variable   ${SALES_PLAN_DESCRIPTION}       ${rand_string}
+    ${frame}=    Get Account Tab Iframe Xpath    Sales Plan
+    #Run Inside Iframe    ${frame}    Wait Until Element Is Not Visible    //button[text()='Save' and not(contains(@id,'saveList'))]    20s
+    Set Test Variable    ${SALES_PLAN_DESCRIPTION}    ${rand_string}
 
 Update meeting status to Done
-   # [Documentation]     An Error is expected from this keyword. The meeting outcome is not yet set so it should complain about it.
-    [Documentation]     The validation for meeting outcome is not expected, hence updating the script
-    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}    Click Edit Button
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
-    Run Inside Iframe   ${frame}    Select Value For Attribute      Meeting Status    Done
-    #Run Inside Iframe   ${frame}    Click Bottom Save Button
-    #Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[@class='errorMsg' and text()[contains(.,'Please select a value in the Meeting Outcome field')]]   10s #updated per DEO-53 Meeting outcome not mandotory
+    [Documentation]    The validation for meeting outcome is not expected, hence updating the script
+    # [Documentation]    An Error is expected from this keyword. The meeting outcome is not yet set so it should complain about it.
+    ${frame}=    Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe    ${frame}    Click Edit Button
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //h2[@class='mainTitle' and contains(text(),'Event Edit')]
+    Run Inside Iframe    ${frame}    Select Value For Attribute    Meeting Status    Done
+    #Run Inside Iframe    ${frame}    Click Bottom Save Button
+    #Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //div[@class='errorMsg' and text()[contains(.,'Please select a value in the Meeting Outcome field')]]    10s #updated per DEO-53 Meeting outcome not mandotory
 
 Update Opportunity Close Date And Close Reason
-    [Arguments]     ${days}=2       ${reason}=09 Customer Postponed
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element        p3      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select From List By Label       p3      Opportunity
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Element       //input[@title='Continue']
-    ${date}=        Get Date From Future    ${days}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Input Value For Attribute       Close Date     ${date}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select Value For Attribute      Close Reason     ${reason}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Click Bottom Save Button
+    [Arguments]    ${days}=2    ${reason}=09 Customer Postponed
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //td[text()='Opportunity Record Type']/following-sibling::td//a[contains(text(),'Change')]
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    p3    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select From List By Label    p3    Opportunity
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Element    //input[@title='Continue']
+    ${date}=    Get Date From Future    ${days}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Input Value For Attribute    Close Date    ${date}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Value For Attribute    Close Reason    ${reason}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Bottom Save Button
 
 Update Sales Plan From Account
     Open Dashboard Tab At Account View
-    ${dashboard_frame}=   Get Account Tab Iframe Xpath    Dashboard
-    Run Inside Iframe   ${dashboard_frame}    Click Element   //button[text()='Update Sales Plan']
-    Sleep   15s
+    ${dashboard_frame}=    Get Account Tab Iframe Xpath    Dashboard
+    Run Inside Iframe    ${dashboard_frame}    Click Element    //button[text()='Update Sales Plan']
+    Sleep    15s
     Run Through Sales Plan Guided Process And Update Fields
 
 Update Win Probability
-    [Arguments]     ${probability}=50%
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Select Value For Attribute      Win Probability %     ${probability}
+    [Arguments]    ${probability}=50%
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Value For Attribute    Win Probability %    ${probability}
 
 Verify Correct Contact Name
-    [Arguments]     ${contact_name}
-    ${frame}=   Get Account Tab Iframe Xpath    ${contact_name}
-    Sleep   5s
-    ${contact_name}=    Run Inside Iframe   ${frame}    Get Text    //h2[@class='topName']
-    Should Be Equal     ${contact_name}   ${DEFAULT_TEST_CONTACT}
-    Run Inside Iframe   ${frame}    Click Link      //a[@title='Details']
+    [Arguments]    ${contact_name}
+    ${frame}=    Get Account Tab Iframe Xpath    ${contact_name}
+    Sleep    5s
+    ${contact_name}=    Run Inside Iframe    ${frame}    Get Text    //h2[@class='topName']
+    Should Be Equal    ${contact_name}    ${DEFAULT_TEST_CONTACT}
+    Run Inside Iframe    ${frame}    Click Link    //a[@title='Details']
 
 Verify Contact Details At Account
-    [Arguments]     ${account_name}   ${contact_name}   ${sales_role}   ${updated_contact_title}
-    Go To Account   ${account_name}
+    [Arguments]    ${account_name}    ${contact_name}    ${sales_role}    ${updated_contact_title}
+    Go To Account    ${account_name}
     Click Details Button
-    ${account_frame}=   Get Account Tab Iframe Xpath    ${account_name}
-    ${related_contact_sales_role}=  Run Inside Iframe   ${account_frame}     Get Text     //*[@id="0015800000iwve9_RelatedAccountContactRelationList_body"]/table/tbody/tr[2]/td[6]
-    Log To Console  ${related_contact_sales_role}
-    Log To Console  ${sales_role}
-    Should Be Equal     ${related_contact_sales_role}   ${sales_role}
-    Run Keyword If   '${related_contact_sales_role}'=='${sales_role}'    Run Inside Iframe  ${account_frame}    Click Element      //a[text()='${contact_name}']
-    Sleep   5
-    ${contact_frame}=   Get Account Tab Iframe Xpath    ${contact_name}
-    Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZHaC_ileinner']   ${related_contact_sales_role}
-    Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZImP_ileinner']   ${updated_contact_title}
-    Run Inside Iframe   ${contact_frame}    Element Text Should Be      //div[@id='00N5800000CZIlj_ileinner']   OK
+    ${account_frame}=    Get Account Tab Iframe Xpath    ${account_name}
+    ${related_contact_sales_role}=    Run Inside Iframe    ${account_frame}    Get Text    //*[@id="0015800000iwve9_RelatedAccountContactRelationList_body"]/table/tbody/tr[2]/td[6]
+    Log To Console    ${related_contact_sales_role}
+    Log To Console    ${sales_role}
+    Should Be Equal    ${related_contact_sales_role}    ${sales_role}
+    Run Keyword If    '${related_contact_sales_role}'=='${sales_role}'    Run Inside Iframe    ${account_frame}    Click Element    //a[text()='${contact_name}']
+    Sleep    5
+    ${contact_frame}=    Get Account Tab Iframe Xpath    ${contact_name}
+    Run Inside Iframe    ${contact_frame}    Element Text Should Be    //div[@id='00N5800000CZHaC_ileinner']    ${related_contact_sales_role}
+    Run Inside Iframe    ${contact_frame}    Element Text Should Be    //div[@id='00N5800000CZImP_ileinner']    ${updated_contact_title}
+    Run Inside Iframe    ${contact_frame}    Element Text Should Be    //div[@id='00N5800000CZIlj_ileinner']    OK
 
 Verify Opportunity Owner
-    [Arguments]     ${owner}
-    ...             ${opportunity}
-    Go To Account   ${opportunity}
+    [Arguments]    ${owner}    ${opportunity}
+    Go To Account    ${opportunity}
     Click Details Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //div[@id='opp1_ileinner']/span/a[text()='${owner}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //div[@id='opp1_ileinner']/span/a[text()='${owner}']
 
 Verify That Activity Cannot Be Linked to Group Account
     Click Feed Button
-    Wait Until Keyword Succeeds     5s      1s      Run Keyword And Expect Error    WebDriverException*   Click New Item For Account      New Contact
-    Wait Until Keyword Succeeds     5s      1s      Run Keyword And Expect Error    WebDriverException*   Click New Item For Account      New Opportunity
-    Wait Until Keyword Succeeds     5s      1s      Run Keyword And Expect Error    WebDriverException*   Click New Item For Account      New Event
+    Wait Until Keyword Succeeds    5s    1s    Run Keyword And Expect Error    WebDriverException*    Click New Item For Account    New Contact
+    Wait Until Keyword Succeeds    5s    1s    Run Keyword And Expect Error    WebDriverException*    Click New Item For Account    New Opportunity
+    Wait Until Keyword Succeeds    5s    1s    Run Keyword And Expect Error    WebDriverException*    Click New Item For Account    New Event
 
 Verify That Record Contains Attribute
-    [Arguments]     ${attribute}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[contains(@class,'labelCol') and (text()='${attribute}' or ./span[contains(text(),'${attribute}')])]
+    [Arguments]    ${attribute}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[contains(@class,'labelCol') and (text()='${attribute}' or ./span[contains(text(),'${attribute}')])]
 
 Verify That Business Customer Is Terminated
-    [Documentation]     Searches for a business customer and checks if the status is set
-    ...                 to "Terminated". Keyword assumes that the "NEW_CUSTOMER_NAME" suite
-    ...                 is set.
-    [Arguments]         ${busines_id}
-    Wait Until Keyword Succeeds    10 min    30 s    Customer Details Page Should Contain    ${NEW_CUSTOMER_NAME}    ${busines_id}    Status      Terminated
+    [Arguments]    ${busines_id}
+    [Documentation]    Searches for a business customer and checks if the status is set
+    ...    to "Terminated". Keyword assumes that the "NEW_CUSTOMER_NAME" suite
+    ...    is set.
+    Wait Until Keyword Succeeds    10 min    30 s    Customer Details Page Should Contain    ${NEW_CUSTOMER_NAME}    ${busines_id}    Status
+    ...    Terminated
 
 Verify That Create Contact Person Button Is Not Visible
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Not Visible    ${CREATE_CP_BUTTON}    20 s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Not Visible    ${CREATE_CP_BUTTON}    20 s
 
 Verify That Contact Person Information is Correct
-    [Arguments]         ${name}=Test ${TEST_CONTACT_PERSON_LAST_NAME}
-    ...                 ${phone}=${DEFAULT_PHONE}
-    ...                 ${email}=${DEFAULT_EMAIL}
-    ...                 ${language}=${DEFAULT_LANGUAGE}
-    ...                 ${street_name}=${DEFAULT_STREET_NAME}
-    ...                 ${street_number}=${DEFAULT_STREET_NUMBER}
-    ...                 ${staircase}=${DEFAULT_STAIRCASE}
-    ...                 ${apartment_door}=${DEFAULT_APPARTMENT}
-    ...                 ${postal_code}=${DEFAULT_POSTAL_CODE}
-    ...                 ${city}=${DEFAULT_CITY}
-    ${address}=     Catenate Non Empty Values     ${street_name}    ${street_number}    ${staircase}    ${apartment_door}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Name        ${name}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Phone       ${phone}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Email Should Be Correct          ${email}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Language    ${language}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Address Should Be Correct        ${address}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Contact Person Address Should Be Correct        ${postal_code} ${city}
+    [Arguments]    ${name}=Test ${TEST_CONTACT_PERSON_LAST_NAME}    ${phone}=${DEFAULT_PHONE}    ${email}=${DEFAULT_EMAIL}    ${language}=${DEFAULT_LANGUAGE}    ${street_name}=${DEFAULT_STREET_NAME}    ${street_number}=${DEFAULT_STREET_NUMBER}
+    ...    ${staircase}=${DEFAULT_STAIRCASE}    ${apartment_door}=${DEFAULT_APPARTMENT}    ${postal_code}=${DEFAULT_POSTAL_CODE}    ${city}=${DEFAULT_CITY}
+    ${address}=    Catenate Non Empty Values    ${street_name}    ${street_number}    ${staircase}    ${apartment_door}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Name    ${name}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Phone    ${phone}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Contact Person Email Should Be Correct    ${email}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Contact Person Information Should Be Correct    Language    ${language}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Contact Person Address Should Be Correct    ${address}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Contact Person Address Should Be Correct    ${postal_code} ${city}
 
 Verify That Description And WIG Areas Are Correct
-    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}        Page Should Contain Element         //td[text()='DaaS']/following-sibling::td//img[@title='Checked']
+    ${frame}=    Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe    ${frame}    Element Text Should Be    //td[text()='Description']/following-sibling::td/div    Description for event ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe    ${frame}    Page Should Contain Element    //td[text()='DaaS']/following-sibling::td//img[@title='Checked']
 
 Verify That Error Message Is Not Displayed
+    [Arguments]    ${error_msg_field}=${CP_DETAILED_ERROR_MESSAGE_FIELD}
     [Documentation]    Uses detailed field message xpath as default,
-    ...   but also accepts alternative xpath of error message field as an argument
-    [Arguments]         ${error_msg_field}=${CP_DETAILED_ERROR_MESSAGE_FIELD}
-    ${error_msg}=       Run Keyword And Return Status
-    ...    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${error_msg_field}    2s
-    Run Keyword If      ${error_msg}    Log Error Message    ${error_msg_field}
-    Run Keyword If      ${error_msg}    FAIL    ${ERROR_MESSAGE}
+    ...    but also accepts alternative xpath of error message field as an argument
+    ${error_msg}=    Run Keyword And Return Status    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${error_msg_field}    2s
+    Run Keyword If    ${error_msg}    Log Error Message    ${error_msg_field}
+    Run Keyword If    ${error_msg}    FAIL    ${ERROR_MESSAGE}
 
 Verify That Error Message Is Displayed
+    [Arguments]    ${error_msg_field}=${CP_DETAILED_ERROR_MESSAGE_FIELD}    ${error_text}=${EMPTY}
     [Documentation]    Uses detailed field message xpath as default,
-    ...     but also accepts alternative xpath of error message field as an argument.
-    ...     Also takes the error message as an optional parameter.
-    [Arguments]     ${error_msg_field}=${CP_DETAILED_ERROR_MESSAGE_FIELD}
-    ...             ${error_text}=${EMPTY}
-    ${error_msg}=     Run Keyword And Return Status
-    ...    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${error_msg_field}[text()[contains(.,'${error_text}')]]    3 s
+    ...    but also accepts alternative xpath of error message field as an argument.
+    ...    Also takes the error message as an optional parameter.
+    ${error_msg}=    Run Keyword And Return Status    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Element Is Visible    ${error_msg_field}[text()[contains(.,'${error_text}')]]    3 s
     Run Keyword If    ${error_msg}    Log Error Message    ${error_msg_field}
     Run Keyword Unless    ${error_msg}    FAIL    Invalid information was added but no errors were displayed
     Run Inside Iframe    ${ACCOUNT_FRAME}    Element Should Be Visible    ${error_msg_field}[text()[contains(.,'${error_text}')]]
 
 Verify That Error Messages Are Shown
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(text(),'Error: Invalid Data.')]      15 s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_REASON_FIELD}/div[contains(@class,'errorMsg')]      15s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_COMMENT_FIELD}/div[@class='errorMsg']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //div[contains(text(),'Error: Invalid Data.')]    15 s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_REASON_FIELD}/div[contains(@class,'errorMsg')]    15s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${CLOSE_COMMENT_FIELD}/div[@class='errorMsg']
 
 Verify That Event Has Correct Data
-    [Arguments]     ${type}=${DEFAULT_EVENT_TYPE}
-    ...             ${reason}=${DEFAULT_EVENT_REASON}
-    ${frame}=       Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
-    Run Inside Iframe   ${frame}        Wait Until Page Contains Element    //td[text()='Subject']/following-sibling::td/div[text()='${TEST_EVENT_SUBJECT}']    15s
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Event Type']/following-sibling::td/div     ${type}
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Reason']/following-sibling::td/div         ${reason}
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Related To']/following-sibling::td/div     ${DEFAULT_TEST_ACCOUNT}
-    Run Inside Iframe   ${frame}        Element Text Should Be              //td[text()='Name']/following-sibling::td/div           ${DEFAULT_TEST_CONTACT}
+    [Arguments]    ${type}=${DEFAULT_EVENT_TYPE}    ${reason}=${DEFAULT_EVENT_REASON}
+    ${frame}=    Get Account Tab Iframe Xpath    ${TEST_EVENT_SUBJECT}
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //td[text()='Subject']/following-sibling::td/div[text()='${TEST_EVENT_SUBJECT}']    15s
+    Run Inside Iframe    ${frame}    Element Text Should Be    //td[text()='Event Type']/following-sibling::td/div    ${type}
+    Run Inside Iframe    ${frame}    Element Text Should Be    //td[text()='Reason']/following-sibling::td/div    ${reason}
+    Run Inside Iframe    ${frame}    Element Text Should Be    //td[text()='Related To']/following-sibling::td/div    ${DEFAULT_TEST_ACCOUNT}
+    Run Inside Iframe    ${frame}    Element Text Should Be    //td[text()='Name']/following-sibling::td/div    ${DEFAULT_TEST_CONTACT}
 
 Verify That Event Is Created
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[./a[text()[contains(.,'${TEST_EVENT_SUBJECT}')]]]/following-sibling::a[text()='created an event.']     20s
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[./a[text()[contains(.,'${TEST_EVENT_SUBJECT}')]]]/following-sibling::a[text()='created an event.']    20s
 
 Verify That Opportunity Cannot Be Updated
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${EDIT_BUTTON}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Does Not Contain Element    ${EDIT_BUTTON}
 
 Verify That Opportunity Close Reason And Date Has Been Changed
-    [Arguments]     ${days}     ${reason}
-    ${date}=     Get Date From Future   ${days}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Reason']/following-sibling::td/div[text()='${reason}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
+    [Arguments]    ${days}    ${reason}
+    ${date}=    Get Date From Future    ${days}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Reason']/following-sibling::td/div[text()='${reason}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
 
 Verify That Opportunity Creation Succeeded
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible   //div[text()='Opportunity created.']     60 s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    //div[text()='Opportunity created.']    60 s
     Reload Page
-#    Open Details Tab At Account View
+    #    Open Details Tab At Account View
     Verify That Opportunity Is Saved And Data Is Correct
 
 Verify That Opportunity is Found From My All Open Opportunities
     Close All Tabs
     Open Opportunities
     Select Correct View Type    My All Open Opportunities
-    Filter Opportunities By     Opportunity Name
-    ${first_letter}=       Set Variable    ${OPPORTUNITY_NAME[0].upper()}
-    Run Inside Iframe   ${IFRAME}   Click Element   //a/span[text()='${first_letter}']
-    Run Inside Iframe   ${IFRAME}   Wait For Load
+    Filter Opportunities By    Opportunity Name
+    ${first_letter}=    Set Variable    ${OPPORTUNITY_NAME[0].upper()}
+    Run Inside Iframe    ${IFRAME}    Click Element    //a/span[text()='${first_letter}']
+    Run Inside Iframe    ${IFRAME}    Wait For Load
     # Ensure we're on the first page
-    Run Inside Iframe   ${IFRAME}   Input Text      //input[@class='pageInput']     1
-    Run Inside Iframe   ${IFRAME}   Press Enter On  //input[@class='pageInput']
-    ${js}=      Set Variable    return Number(document.evaluate("//div[@class='paginator']//span[@class='right']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.slice(-1));
-    ${pages}=   Run Inside Iframe   ${IFRAME}   Execute Javascript      ${js}
-    :FOR   ${i}  IN RANGE   ${pages}
-    \   ${opportunity_found}=      Run Keyword And Return Status       Run Inside Iframe    ${IFRAME}   Page Should Contain Element     //span[text()='${OPPORTUNITY_NAME}']
-    \   Run Keyword If      ${opportunity_found}   Exit For Loop
-    \   Click Next Button
-    \   Run Inside Iframe   ${IFRAME}   Wait For Load
-    Run Keyword Unless      ${opportunity_found}       FAIL    ${OPPORTUNITY_NAME} not found from My All Open Opportunities.
+    Run Inside Iframe    ${IFRAME}    Input Text    //input[@class='pageInput']    1
+    Run Inside Iframe    ${IFRAME}    Press Enter On    //input[@class='pageInput']
+    ${js}=    Set Variable    return Number(document.evaluate("//div[@class='paginator']//span[@class='right']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.slice(-1));
+    ${pages}=    Run Inside Iframe    ${IFRAME}    Execute Javascript    ${js}
+    : FOR    ${i}    IN RANGE    ${pages}
+    \    ${opportunity_found}=    Run Keyword And Return Status    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //span[text()='${OPPORTUNITY_NAME}']
+    \    Run Keyword If    ${opportunity_found}    Exit For Loop
+    \    Click Next Button
+    \    Run Inside Iframe    ${IFRAME}    Wait For Load
+    Run Keyword Unless    ${opportunity_found}    FAIL    ${OPPORTUNITY_NAME} not found from My All Open Opportunities.
 
 Verify That Opportunity Is Found From My Opportunities
     Close All Tabs
     Open Opportunities
     Select Correct View Type    My All Opportunities
-    Filter Opportunities By     Close Date
-    Run Inside Iframe   ${IFRAME}   Page Should Contain Element     //td[./div/a/span[text()='${OPPORTUNITY_NAME}']]/following-sibling::td//span[text()='${DEFAULT_TEST_ACCOUNT}']
+    Filter Opportunities By    Close Date
+    Run Inside Iframe    ${IFRAME}    Page Should Contain Element    //td[./div/a/span[text()='${OPPORTUNITY_NAME}']]/following-sibling::td//span[text()='${DEFAULT_TEST_ACCOUNT}']
 
 Verify That Opportunity Is Found In Todays Page
     Close All Tabs
     Open Todays Page
-    Run Inside Iframe    ${IFRAME}      Wait Until Page Contains Element    //div[@id='chatter']//a[@title='${OPPORTUNITY_NAME}']    20 s
+    Run Inside Iframe    ${IFRAME}    Wait Until Page Contains Element    //div[@id='chatter']//a[@title='${OPPORTUNITY_NAME}']    20 s
 
 Verify That Opportunity Is Found With Search And Go To Opportunity
-    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
+    [Arguments]    ${account_name}=${DEFAULT_TEST_ACCOUNT}
     Close All Tabs
-    Go to Account        ${OPPORTUNITY_NAME}
-    Run Inside Iframe    ${ACCOUNT_FRAME}       Wait until Page Contains Element    //h2[contains(text(),'${OPPORTUNITY_NAME}')]
+    Go to Account    ${OPPORTUNITY_NAME}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait until Page Contains Element    //h2[contains(text(),'${OPPORTUNITY_NAME}')]
     Verify That Opportunity Is Saved And Data Is Correct    ${account_name}
 
 Verify That Opportunity Is Not Found From Open Opportunities
     Close All Tabs
     Open Opportunities
-    Run Inside Iframe   ${IFRAME}   Wait For Load
-    Select Correct View Type     My All Open Opportunities
-    Run Inside Iframe   ${IFRAME}  Run Keyword And Ignore Error  Click Element  ${LIST_VIEW}
+    Run Inside Iframe    ${IFRAME}    Wait For Load
+    Select Correct View Type    My All Open Opportunities
+    Run Inside Iframe    ${IFRAME}    Run Keyword And Ignore Error    Click Element    ${LIST_VIEW}
     Filter Opportunities By    Close Date
-    Run Inside Iframe   ${IFRAME}   Page Should Not Contain Element    //td/div/a/span[text()='${OPPORTUNITY_NAME}']
+    Run Inside Iframe    ${IFRAME}    Page Should Not Contain Element    //td/div/a/span[text()='${OPPORTUNITY_NAME}']
 
 Verify That Opportunity Is Saved And Data Is Correct
-    [Arguments]     ${account_name}=${DEFAULT_TEST_ACCOUNT}
-    ${oppo_name}=    Set Variable       //a[text()='${OPPORTUNITY_NAME}']
-    ${opportunity_name_related_to_account}=    Set Variable
-    ...    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${account_name}')]
-    ${opportunity_close_date_related_to_account}=    Set Variable
-    ...    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Close Date:')]/following-sibling::span[contains(text(), '${OPPORTUNITY_CLOSE_DATE}')]
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element   ${oppo_name}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element   ${opportunity_name_related_to_account}
-    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element        ${opportunity_close_date_related_to_account}
+    [Arguments]    ${account_name}=${DEFAULT_TEST_ACCOUNT}
+    ${oppo_name}=    Set Variable    //a[text()='${OPPORTUNITY_NAME}']
+    ${opportunity_name_related_to_account}=    Set Variable    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Account Name:')]/following-sibling::span[contains(text(), '${account_name}')]
+    ${opportunity_close_date_related_to_account}=    Set Variable    ${oppo_name}/../following-sibling::div//span[contains(text(), 'Close Date:')]/following-sibling::span[contains(text(), '${OPPORTUNITY_CLOSE_DATE}')]
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${oppo_name}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${opportunity_name_related_to_account}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${opportunity_close_date_related_to_account}
 
 Verify That Opportunity Status Has Been Changed
-    [Arguments]     ${stage}    ${status}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Stage']/following-sibling::td/div[text()='${stage}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Opportunity Status']/following-sibling::td/div[text()='${status}']
+    [Arguments]    ${stage}    ${status}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Stage']/following-sibling::td/div[text()='${stage}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Opportunity Status']/following-sibling::td/div[text()='${status}']
     #if sales admin closes opportunity closed day should not be automatically updated to today.
-    ${day_off}  Set Variable If  '${stage}'=='Closed Won'   5   0
-    ${date}=     Get Date From Future    ${day_off}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Should Not Be Visible       ${EDIT_BUTTON}
+    ${day_off}    Set Variable If    '${stage}'=='Closed Won'    5    0
+    ${date}=    Get Date From Future    ${day_off}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[text()='Close Date']/following-sibling::td/div[text()='${date}']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Should Not Be Visible    ${EDIT_BUTTON}
 
 Verify That Order Status Is Updated To
-    [Arguments]         ${status}
-    Wait Until Keyword Succeeds     30s     1s      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Text Should Be      Status_ileinner     ${status}
+    [Arguments]    ${status}
+    Wait Until Keyword Succeeds    30s    1s    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Text Should Be    Status_ileinner
+    ...    ${status}
 
 Verify That Owner Has Changed
-    [Arguments]         ${owner}    ${type}=Account
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[text()='${type} Owner']/following-sibling::td//a[contains(text(),'${owner}')]      20s
+    [Arguments]    ${owner}    ${type}=Account
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[text()='${type} Owner']/following-sibling::td//a[contains(text(),'${owner}')]    20s
 
 Verify That Products Are Found
-    ${frame}=           Get Account Tab Iframe Xpath    Availability
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //h1[normalize-space()='List of products available']    20s
-    Run Inside Iframe   ${frame}    Page Should Contain Element     //ng-form[@id='Product List']//table//tr
+    ${frame}=    Get Account Tab Iframe Xpath    Availability
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //h1[normalize-space()='List of products available']    20s
+    Run Inside Iframe    ${frame}    Page Should Contain Element    //ng-form[@id='Product List']//table//tr
 
 Verify That Quality Rating Field Does Not Exist
     Click Details Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible       ${EDIT_BUTTON}      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible   //td[.//span[text()='Quality Rating']]      10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Visible    ${EDIT_BUTTON}    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Element Is Not Visible    //td[.//span[text()='Quality Rating']]    10s
 
 Verify That Quality Rating Field Exists
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[.//span[text()='Quality Rating']]      10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[.//span[text()='Quality Rating']]    10s
 
 Verify That Quality Rating Has Correct Values
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Click Edit Button
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Excellent']      10s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Good']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Average']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Fair']
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}    Page Should Contain Element     //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Poor']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Click Edit Button
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Excellent']    10s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Good']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Average']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Fair']
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Page Should Contain Element    //td[.//label[text()='Quality Rating']]/following-sibling::td//option[@value='Poor']
     Capture Page Screenshot
-    Run Inside iframe   ${OPPORTUNITY_FRAME}    Click Element       //input[@value='Cancel']
+    Run Inside iframe    ${OPPORTUNITY_FRAME}    Click Element    //input[@value='Cancel']
 
 Verify That Quote Status Is Updated to
-    [Arguments]         ${status}
-    Wait Until Keyword Succeeds     30s     1s      Run Inside Iframe   ${OPPORTUNITY_FRAME}    Element Text Should Be      Status_ileinner     ${status}
+    [Arguments]    ${status}
+    Wait Until Keyword Succeeds    30s    1s    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Text Should Be    Status_ileinner
+    ...    ${status}
 
 Verify That Sales Plan Update History Is Correct
-    [Arguments]     ${user}=B2B DigiSales
-    ${frame}=           Get Account Tab Iframe Xpath    ${SALES_PLAN_NAME}
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element    //div[contains(@id,'LastModifiedBy')]/a[text()='${user}']   10s
-    ${t}=   Run Inside Iframe   ${frame}    Get Text    //div[contains(@id,'LastModifiedBy')]
-    Log     ${t}
-    Edit Time Should Be Within      120     ${t}
+    [Arguments]    ${user}=B2B DigiSales
+    ${frame}=    Get Account Tab Iframe Xpath    ${SALES_PLAN_NAME}
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //div[contains(@id,'LastModifiedBy')]/a[text()='${user}']    10s
+    ${t}=    Run Inside Iframe    ${frame}    Get Text    //div[contains(@id,'LastModifiedBy')]
+    Log    ${t}
+    Edit Time Should Be Within    120    ${t}
 
 Verify That Sales Role Is Updated
-    [Arguments]         ${role}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element     //td[.//span[text()[contains(.,'Sales Role')]]]/following-sibling::td/div[text()='${role}']    20s
+    [Arguments]    ${role}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //td[.//span[text()[contains(.,'Sales Role')]]]/following-sibling::td/div[text()='${role}']    20s
 
 Verify That Updated Values Are Visible In Sales Plan
-    ${frame}=           Get Account Tab Iframe Xpath    Sales Plan
-    Run Inside Iframe   ${frame}    Wait Until Page Contains Element     //span[contains(@id,'Description')]      10s
-    Run Inside Iframe   ${frame}    Element Text Should Be      //span[contains(@id,'Description')]     ${SALES_PLAN_DESCRIPTION}
-    Run Inside Iframe   ${frame}    Page Should Contain Element     //section[@id='opportunityHeatMap']//td[text()='${SOLUTION_AREA}']
+    ${frame}=    Get Account Tab Iframe Xpath    Sales Plan
+    Run Inside Iframe    ${frame}    Wait Until Page Contains Element    //span[contains(@id,'Description')]    10s
+    Run Inside Iframe    ${frame}    Element Text Should Be    //span[contains(@id,'Description')]    ${SALES_PLAN_DESCRIPTION}
+    Run Inside Iframe    ${frame}    Page Should Contain Element    //section[@id='opportunityHeatMap']//td[text()='${SOLUTION_AREA}']
 
 Verify That User Cannot Create New Opportunity
     Click Feed Button
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Page Should Not Contain Element     //span[text()='New Opportunity']
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Page Should Not Contain Element    //span[text()='New Opportunity']
 
 Verify That Task Is Created
-    [Arguments]     ${task}=${TASK_SUBJECT}
-    Run Inside Iframe   ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[.//a[contains(text(),'${task}')]]/a[text()='created a task.']    15s
+    [Arguments]    ${task}=${TASK_SUBJECT}
+    Run Inside Iframe    ${ACCOUNT_FRAME}    Wait Until Page Contains Element    //span[.//a[contains(text(),'${task}')]]/a[text()='created a task.']    15s
 
 Verify That Values Are Visible In Opportunity Layout
-    [Arguments]     ${product}=Devices
-    ...             ${sales_type}=New Money - New Services
-    ...             ${one_time_total}=0,00 €
-    ...             ${recurring_total}=0,00 €
-    ...             ${contract_length}=12
+    [Arguments]    ${product}=Devices    ${sales_type}=New Money - New Services    ${one_time_total}=0,00 €    ${recurring_total}=0,00 €    ${contract_length}=12
     Click Details Button
-    ${xpath}=       Set Variable    //tr[contains(@class,'dataRow') and ./th/a[text()='${product}']]
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Wait Until Page Contains Element    ${xpath}    20s
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[3]    ${sales_type}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[5]    ${one_time_total}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[6]    ${recurring_total}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be    ${xpath}/td[7]    ${contract_length}
+    ${xpath}=    Set Variable    //tr[contains(@class,'dataRow') and ./th/a[text()='${product}']]
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Wait Until Page Contains Element    ${xpath}    20s
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Text Should Be    ${xpath}/td[3]    ${sales_type}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Text Should Be    ${xpath}/td[5]    ${one_time_total}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Text Should Be    ${xpath}/td[6]    ${recurring_total}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Text Should Be    ${xpath}/td[7]    ${contract_length}
 
 Verify That Win Probability Is
-    [Arguments]     ${probability}
-    Run Inside Iframe   ${OPPORTUNITY_FRAME}        Element Text Should Be       //td[text()='Win Probability %']/following-sibling::td/div     ${probability}
+    [Arguments]    ${probability}
+    Run Inside Iframe    ${OPPORTUNITY_FRAME}    Element Text Should Be    //td[text()='Win Probability %']/following-sibling::td/div    ${probability}
 
 Wait For Load
     Sleep    0.5
     # @class='waitingSearchDiv'
-    Wait Until Keyword Succeeds    5 min   0.5 s    Element Should Not Be Visible     //div/div/span[text()='Loading...']
-
-# Wait Until Address Validation Results Page Has Loaded
-#     ${frame}=       Get Account Tab Iframe Xpath    Availability
-#     Run Inside Iframe   ${frame}    Wait Until Element Is Visible    //label[text()[contains(.,'Available Addresses')]]      30s
+    Wait Until Keyword Succeeds    5 min    0.5 s    Element Should Not Be Visible    //div/div/span[text()='Loading...']
+    # Wait Until Address Validation Results Page Has Loaded
+    #    ${frame}=    Get Account Tab Iframe Xpath    Availability
+    #    Run Inside Iframe    ${frame}    Wait Until Element Is Visible    //label[text()[contains(.,'Available Addresses')]]    30s
 
 Wait Until Contact Person Is Found In Salesforce
-    [Arguments]     ${contact_person_name}
-    Wait Until Keyword Succeeds       15min   10s     Search And Verify Account Is Found      ${contact_person_name}
+    [Arguments]    ${contact_person_name}
+    Wait Until Keyword Succeeds    15min    10s    Search And Verify Account Is Found    ${contact_person_name}
