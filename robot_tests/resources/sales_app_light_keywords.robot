@@ -30,8 +30,21 @@ Go To Salesforce and Login into Lightning
     Go to Sales App
     Reset to Home
 
+Go To Salesforce and Login into Lightning User
+    [Arguments]    ${user}=DigiSales Admin User
+    Go to Salesforce
+    Run Keyword    Login to Salesforce as ${user}
+    Go to Sales App
+    Reset to Home
+
+Login to Salesforce as DigiSales Admin User
+
+    Login To Salesforce Lightning    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+
+
 Login to Salesforce as DigiSales Lightning User
-    [Arguments]    ${username}    ${password}
+    [Arguments]       ${username}=${B2B_DIGISALES_LIGHT_USER}
+     ...              ${password}=${Password_merge}
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce Lightning

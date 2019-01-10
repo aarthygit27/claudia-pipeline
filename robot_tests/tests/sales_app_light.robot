@@ -143,14 +143,14 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Tags]  BQA-8525  Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+    Login to Salesforce as DigiSales Admin user
     Go To Accounts
     Click on a given account  Aacon Oy
     Change Account Owner
 
 Lightning: Sales admin Change Account owner for group account
     [Tags]  BQA-8526  Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+    Login to Salesforce as DigiSales Admin user
     Go To Accounts
     Click on Account Name
     Change Account Owner
