@@ -1,4 +1,4 @@
-*** Variables ***
+﻿*** Variables ***
 ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${TEST_ENVIRONMENT}                         merge
@@ -162,3 +162,8 @@ ${day}                                      12
 ${gender}                                   1 - male
 ${sales_role_text}                          Business Contact
 ${job_title_text}                           verojohtaja - 8715
+${SALES_ADMIN_USER}    saleadm@teliacompany.com.${TEST_ENVIRONMENT}
+${PASSWORD-SALESADMIN}    PahaPassu3
+${REMOVE_ACCOUNT}    GESB Integration
+${ownername}      //div[@class='ownerName']
+${ACCOUNT_OWNER}    Sales Admin
