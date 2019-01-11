@@ -76,7 +76,7 @@ Check Attributes/Contact Person are named right
     Validate That Contact Person Attributes Are Named Right
 
 Lightning: Create Meeting from Account
-    [Tags]    BQA-7948    Lightnin
+    [Tags]    BQA-7948    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Meeting
