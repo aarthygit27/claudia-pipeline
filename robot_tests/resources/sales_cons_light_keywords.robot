@@ -1,154 +1,137 @@
 *** Settings ***
-Library              Collections
-
-Resource            ..${/}resources${/}common.robot
-Resource            ..${/}resources${/}cpq_keywords.robot
-Resource            ..${/}resources${/}sales_cons_light_variables.robot
-
+Library           Collections
+Resource          ..${/}resources${/}common.robot
+Resource          ..${/}resources${/}cpq_keywords.robot
+Resource          ..${/}resources${/}sales_cons_light_variables.robot
 
 *** Keywords ***
-
 Go To Salesforce
-    Go To           ${LOGIN_PAGE}
+    Go To    ${LOGIN_PAGE}
     Login Page Should Be Open
 
 Login Page Should Be Open
-    Wait Until Keyword Succeeds     10 seconds      1 second    Location Should Be      ${LOGIN_PAGE}
-    Wait Until Element Is Visible        id=username     10 seconds
-    Wait Until Element Is Visible        id=password     10 seconds
+    Wait Until Keyword Succeeds    10 seconds    1 second    Location Should Be    ${LOGIN_PAGE}
+    Wait Until Element Is Visible    id=username    10 seconds
+    Wait Until Element Is Visible    id=password    10 seconds
 
 Go To Salesforce and Login into Lightning
-    [Arguments]     ${user}=DigiSales Lightning User
+    [Arguments]    ${user}=DigiSales Lightning User
     Go to Salesforce
-    Login To Salesforce Lightning And Close All Tabs      ${user}
+    Login To Salesforce Lightning And Close All Tabs    ${user}
 
 Login To Salesforce Lightning And Close All Tabs
-    [Arguments]     ${user}=Digisales Lightning User
-    Run Keyword     Login to Salesforce as ${user}
-    Sleep  5s
+    [Arguments]    ${user}=Digisales Lightning User
+    Run Keyword    Login to Salesforce as ${user}
+    Sleep    5s
     #Run Keyword and Ignore Error    Wait For Load
     Go to Lightning Sales Console
     Close All Tabs
-    Sleep  5s
+    Sleep    5s
     Reset to Home Tab
 
 Login to Salesforce as DigiSales Lightning User
-    Login To Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}       ${PASSWORDCONSOLE}
+    Login To Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}    ${PASSWORDCONSOLE}
 
 Login to Salesforce Lightning
-    [Arguments]         ${username}=${B2B_DIGISALES_LIGHT_USER}
-    ...                 ${password}=${PASSWORD}
-    Wait Until Page Contains Element        id=username
-    Input Text          id=username         ${username}
-    Input Password      id=password         ${password}
-    Click Element       id=Login
-    run keyword and ignore error        Check For Lightning Force
-    Wait Until Page Contains Element   xpath=${LIGHTNING_ICON}    120 seconds
-
+    [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${PASSWORD}
+    Wait Until Page Contains Element    id=username
+    Input Text    id=username    ${username}
+    Input Password    id=password    ${password}
+    Click Element    id=Login
+    run keyword and ignore error    Check For Lightning Force
+    Wait Until Page Contains Element    xpath=${LIGHTNING_ICON}    120 seconds
 
 Check For Lightning Force
-    Sleep   15s
-    ${url}=     Get Location
-    ${contains}=  Evaluate  'lightning' in '${url}'
-    Run Keyword Unless  ${contains}   Switch to Lightning
+    Sleep    15s
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword Unless    ${contains}    Switch to Lightning
 
 Switch to Lightning
-    Sleep   15s
-    Click Element       xpath=${CLASSIC_MENU}
-    Page Should Contain Element       xpath=${SWITCH_TO_LIGHTNING}      30s
-    Click Element       xpath=${SWITCH_TO_LIGHTNING}
+    Sleep    15s
+    Click Element    xpath=${CLASSIC_MENU}
+    Page Should Contain Element    xpath=${SWITCH_TO_LIGHTNING}    30s
+    Click Element    xpath=${SWITCH_TO_LIGHTNING}
 
 Go to Account
-    [Arguments]    ${target_account}   ${type}=${EMPTY}
+    [Arguments]    ${target_account}    ${type}=${EMPTY}
     Close All Tabs
-    Log     Going to '${target_account}'
-    #Wait Until Keyword Succeeds     240s     5s
-    Search And Select the Account    ${target_account}     ${type}
-    Sleep   10s      The page might load too quickly and it can appear as the search tab would be closed even though it isn't
-    #Wait Until Keyword Succeeds   20s   1s   Close Search Tab
-
-
-#Close Search Tab
-#    ${tab_class}=    Set Variable       x-tab-strip-closable setupTab
-#    Wait Until Page Contains Element    xpath=${SEARCH_TAB}    20 seconds
-#    Close Tab    ${tab_class}  # search tab needs to be closed to avoid multiple matching xpaths of details view
-#    Wait Until Page Does Not Contain Element    xpath=${SEARCH_TAB}     2s
-
+    Log    Going to '${target_account}'
+    #Wait Until Keyword Succeeds    240s    5s
+    Search And Select the Account    ${target_account}    ${type}
+    Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
+    #Wait Until Keyword Succeeds    20s    1s    Close Search Tab
+    #Close Search Tab
+    #    ${tab_class}=    Set Variable    x-tab-strip-closable setupTab
+    #    Wait Until Page Contains Element    xpath=${SEARCH_TAB}    20 seconds
+    #    Close Tab    ${tab_class}    # search tab needs to be closed to avoid multiple matching xpaths of details view
+    #    Wait Until Page Does Not Contain Element    xpath=${SEARCH_TAB}    2s
 
 Search And Select the Account
-    [Arguments]     ${target_account}  ${type}=${EMPTY}
+    [Arguments]    ${target_account}    ${type}=${EMPTY}
     Search Salesforce    ${target_account}
     #Searched Item Should Be Visible    ${target_account}    ${type}
-    Select Account    ${target_account}     ${type}
-
+    Select Account    ${target_account}    ${type}
 
 Search Salesforce
-    [Arguments]         ${item}
-    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}      20s
-    Input Text          ${SEARCH_SALESFORCE}      ${item}
-    #Sleep   5s
-    Press Key           ${SEARCH_SALESFORCE}     \\13
-    Sleep   10s
+    [Arguments]    ${item}
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    20s
+    Input Text    ${SEARCH_SALESFORCE}    ${item}
+    #Sleep    5s
+    Press Key    ${SEARCH_SALESFORCE}    \\13
+    Sleep    10s
     #ENVIRONMENT ISSUE
-    #Wait Until Page Contains        //div[@class='listContent']//span[contains(@class,'mruSearchLabel') and contains(@title,'${item}')]
-    #Click Element       //div[@class='listContent']//span[contains(@class,'mruSearchLabel') and contains(@title,'${item}')]
-    Wait Until Page Contains element        xpath=${TABS_OPENED}//a[contains(@title, 'Search')]     30S
-    #wait until page contains element        //*[@class='tabBarItems slds-grid']//a[contains(@title, 'Search')]
-    #Press Enter On     phSearchInput    # At least in Firefox version 52.0 enter needs to be pressed or the search won't happen
-    #Click Element       id=phSearchClearButton
+    #Wait Until Page Contains    //div[@class='listContent']//span[contains(@class,'mruSearchLabel') and contains(@title,'${item}')]
+    #Click Element    //div[@class='listContent']//span[contains(@class,'mruSearchLabel') and contains(@title,'${item}')]
+    Wait Until Page Contains element    xpath=${TABS_OPENED}//a[contains(@title, 'Search')]    30S
+    #wait until page contains element    //*[@class='tabBarItems slds-grid']//a[contains(@title, 'Search')]
+    #Press Enter On    phSearchInput    # At least in Firefox version 52.0 enter needs to be pressed or the search won't happen
+    #Click Element    id=phSearchClearButton
 
 Select Account
-    [Arguments]         ${account_name}     ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${account_name}']   30s
-    Click Element       ${TABLE_HEADER}[@title='${account_name}']
-    Sleep   10s
+    [Arguments]    ${account_name}    ${type}
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${account_name}']    30s
+    Click Element    ${TABLE_HEADER}[@title='${account_name}']
+    Sleep    10s
     Account Should Be Open    ${account_name}
-    #   To close the search tab
+    #    To close the search tab
 
 Account Should Be Open
-    [Arguments]         ${account_name}
+    [Arguments]    ${account_name}
     ${Count}=    get element count    ${TABS_OPENED}
-    Run Keyword If  ${Count} > 1  Click Element     xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']
-    #Wait Until Page Contains Element        xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']      60 seconds
+    Run Keyword If    ${Count} > 1    Click Element    xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']
+    #Wait Until Page Contains Element    xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']    60 seconds
 
 Create New Opportunity For Customer
-    [Arguments]     #${opport_name}=${EMPTY}
-    ...             ${stage}=Analyse Prospect
-    ...             ${days}=1
-    ...             ${expect_error}=${FALSE}
-    Click New Item For Account      New Opportunity
+    [Arguments]    ${stage}=Analyse Prospect    ${days}=1    ${expect_error}=${FALSE}    #${opport_name}=${EMPTY}
+    Click New Item For Account    New Opportunity
     Fill Mandatory Opportunity Information    ${stage}    ${days}
     Fill Mandatory Classification
     Click Save Button
     #Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
 
 Click New Item For Account
-    [Arguments]     ${type}
-     ${status}=      Run Keyword And Return Status      Element Should Be Visible     //a[@title='${type}']
-    #Click Element   xpath=//a[@title='${type}']
-    Run Keyword If       ${status}     Run Keyword With Delay      0.5s    Click Element   xpath=//a[@title='${type}']
-    #Run Keyword Unless   ${status}      Click New Item For Account From Dropdown    ${type}
-    Wait Until Page Contains Element    ${NEW_ITEM_POPUP}     30s
-
+    [Arguments]    ${type}
+    ${status}=    Run Keyword And Return Status    Element Should Be Visible    //a[@title='${type}']
+    #Click Element    xpath=//a[@title='${type}']
+    Run Keyword If    ${status}    Run Keyword With Delay    0.5s    Click Element    xpath=//a[@title='${type}']
+    #Run Keyword Unless    ${status}    Click New Item For Account From Dropdown    ${type}
+    Wait Until Page Contains Element    ${NEW_ITEM_POPUP}    30s
 
 Fill Mandatory Opportunity Information
-    [Arguments]
-    ...    ${stage}=Analyse Prospect
-    ...    ${days}=1
-           ${opport_name}=  Run Keyword        Create Unique Name          TestOpportunity
+    [Arguments]    ${stage}=Analyse Prospect    ${days}=1
+    ${opport_name}=    Run Keyword    Create Unique Name    TestOpportunity
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
-    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}      ${date}
-    Input Quick Action Value For Attribute     Opportunity Name    ${OPPORTUNITY_NAME}
-    Select Quick Action Value For Attribute    Stage        ${stage}
-    Input Quick Action Value For Attribute     Close Date   ${OPPORTUNITY_CLOSE_DATE}
-
+    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}    ${date}
+    Input Quick Action Value For Attribute    Opportunity Name    ${OPPORTUNITY_NAME}
+    Select Quick Action Value For Attribute    Stage    ${stage}
+    Input Quick Action Value For Attribute    Close Date    ${OPPORTUNITY_CLOSE_DATE}
 
 Input Quick Action Value For Attribute
-    [Arguments]     ${field}    ${value}
-    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]      20s
-    Input Text       xpath=${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]//following::input      ${value}
-
+    [Arguments]    ${field}    ${value}
+    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]    20s
+    Input Text    xpath=${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]//following::input    ${value}
 
 Select Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}

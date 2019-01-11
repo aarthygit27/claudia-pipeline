@@ -13,11 +13,13 @@ Resource          ..${/}resources${/}common.robot
 
 *** Test Cases ***
 Create New Order
+    [Tags]    BQA-8504    PO
     Go To Salesforce and Login2    Digisales User devpo
     Go To    ${CLASSIC_APP}
     Go to Account2    ${DEFAULT_TEST_ACCOUNT}
     ${new_opportunity_name}=    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}
     #${new_opportunity_name}=    Set Variable    Test_Opportunity_080120192055
+    sleep    10s
     Search Opportunity and click CPQ    ${new_opportunity_name}
     Search Products    Telia Arkkitehti jatkuva palvelu
     Add Telia Arkkitehti jatkuva palvelu
@@ -44,6 +46,11 @@ Create New Order
     Wait Until Element Is Visible    ${DECOMPOSE_ORDER}
     click button    ${DECOMPOSE_ORDER}
     Wait Until Element Is Visible    //h1[contains(text(),'Source Orders')]    120s
-    Wait Until Element Is Visible    ${ORCHESTRATE_PLAN}
+    Wait Until Element Is Visible    ${ORCHESTRATE_PLAN}    120s
+    sleep    10s
     Click Element    ${ORCHESTRATE_PLAN}
     sleep    30s
+    @{pages}    Get Window Titles
+    Select Window    title=@{pages}[1]
+    Wait Until Page Contains    Orchestration Plan Detail
+    Capture Page Screenshot

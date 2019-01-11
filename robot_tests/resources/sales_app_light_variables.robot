@@ -75,8 +75,10 @@ ${EDIT_STAGE_BUTTON}                        //*[@title="Edit Stage"]
 #Meeting, Call, Event, Task
 ${NEW_EVENT_LABEL}                          //*[(text()='New Event')]
 ${NEW_TASK_LABEL}                           //*[(text()='New Task')]
-${SUBJECT_INPUT}                            //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[1]/div[1]/div/div/lightning-grouped-combobox/div/div/lightning-base-combobox/div/div[1]/input
-${EVENT_TYPE}                               //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/a
+${SUBJECT_INPUT}                            //*[text()='Subject']/../div/div/lightning-base-combobox/div/div/input
+#//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[1]/div[1]/div/div/lightning-grouped-combobox/div/div/lightning-base-combobox/div/div[1]/input
+${EVENT_TYPE}                               //*[text()='Event Type']/..//following::div/div/div/div/a
+#//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/a
 ${subject_select_dropdown_value}            //*[@title='${Meeting}' and @class="slds-truncate"]
 ${subject_call_type}                        //*[@title='${customer_Call}']
 ${Meeting}                                  Meeting
@@ -88,18 +90,24 @@ ${reason_select_dropdown}                   //*[text()='Reason']/..//following::
 ${reason_select_dropdown_value}             //a[(text()='Solution Design')]
 ${meeting_start_time}                       9:00
 ${meeting_end_time}                         10:00
-${meeting_start_date_input}                 //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[5]/div[1]/div/div/fieldset/div/div[1]/input
-${meeting_start_time_input}                 //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[5]/div[1]/div/div/fieldset/div/div[2]/div[1]/input
-${meeting_end_date_input}                   //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[1]/input
-${meeting_end_time_input}                   //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[2]/div/input
-${city_input}                               //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[8]/div[1]/div/div/div/input
-${contact_name_input}                       //div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[9]/div[1]/div/div/div/div/div/div[1]/div[2]/input
+${meeting_start_date_input}                 //div/div[5]/div[1]/div/div/fieldset/div/div[1]/label//following-sibling::input
+${meeting_start_time_input}                 //div/div[5]/div[1]/div/div/fieldset/div/div[2]/div/label//following-sibling::input
+#//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[5]/div[1]/div/div/fieldset/div/div[2]/div[1]/input
+${meeting_end_date_input}                   //*[text()='End']//following::div/div/label[text()='Date']//following-sibling::input
+#//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[1]/input
+${meeting_end_time_input}                   //*[text()='End']//following::div/div/label[text()='Time']//following-sibling::input
+#//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[2]/div/input
+${city_input}                               //*[@class='label inputLabel uiLabel-left form-element__label uiLabel']//span[text()='Location']//following::input[@class=' input']
+#//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[8]/div[1]/div/div/div/input
+${contact_name_input}                       //*[text()='Name']//following::div/div/div[@class='inputWrapper slds-grid slds-grid_vertical-align-center slds-p-right_x-small']/div[@class='autocompleteWrapper slds-grow']/input
+#//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[9]/div[1]/div/div/div/div/div/div[1]/div[2]/input
 ${contact_name_select}                      //*[@title='${name_input}']/../../..
 ${start_date_form_span}                     //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='Start']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${end_date_form_span}                       //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='End']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${location_form_span}                       //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='Location']/../div/div[@class='slds-form-element__static slds-truncate']/span
-${save_button_create}                                         //div/div[3]/div/div/div[2]/div[2]/button
-${success_message_anchor}                   //*[contains(text(),'You have an upcoming Event with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
+${save_button_create}                        //div/div[3]/div/div/div[2]/div[2]/button
+${success_message_anchor}                   //div[contains(text(),'You have an upcoming Event')]
+#//*[contains(text(),'You have an upcoming Event with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${meeting_outcome_edit_button}              //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/button
 ${meeting_outcome_select}                   //*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div
 ${meeting_status_select}                    //*[text()='Meeting Status']/../../div[@class='uiMenu']/div/div/div
@@ -113,7 +121,8 @@ ${task_name_span}                           //*[@class='slds-grid primaryFieldRo
 ${task_subject_input}                       //div/div[1]/div[1]/div/div/lightning-grouped-combobox/div/div/lightning-base-combobox/div/div[1]/input
 ${name_input_task}                          //*[text()='Name']//following::div/div/div[@class='inputWrapper slds-grid slds-grid_vertical-align-center slds-p-right_x-small']/div[@class='autocompleteWrapper slds-grow']/input
 ${save_task_button}                         //div/div[3]/div/div/div[2]/div[2]/button
-${suucess_msg_task_anchor}                  //*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
+${suucess_msg_task_anchor}                  //div[contains(text(),'You have an upcoming Task with')]
+ #//*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${TEST_ACCOUNT_CONTACT}                     Aacon Oy
 ${contact_name_form}                        //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
 ${related_to}                               //span[@class='data-social-photo-guid-0c81cbe7-ad99-4592-a537-f11c4b51aaee photoContainer forceSocialPhoto_v2 forceOutputLookup']/../a[text()]
@@ -146,7 +155,8 @@ ${NEXT_BUTTON_MONTH}                        //a[@title='Go to next month']
 ${YEAR_DROPDOWN}                            //select[contains(@class,'slds-select')]
 ${DETAILS_TAB}                              //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
 ${DATE_PICKER}                              //span[text()='Date Picker']/..
-${EMAIL_ID_FIELD}                           //div[@id='email']//input
+${EMAIL_ID_FIELD}                           //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
+#//div[@id='email']//input
 ${MASTER_PHONE_NUM_FIELD}                   //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_MOBILE_NUM_FIELD}                  //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
 
