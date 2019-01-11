@@ -76,6 +76,7 @@ ${EDIT_STAGE_BUTTON}                        //*[@title="Edit Stage"]
 ${NEW_EVENT_LABEL}                          //*[(text()='New Event')]
 ${NEW_TASK_LABEL}                           //*[(text()='New Task')]
 ${SUBJECT_INPUT}                            //*[text()='Subject']/../div/div/lightning-base-combobox/div/div/input
+#//label[text()='Subject']//following::input[@class='slds-input slds-combobox__input']
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[1]/div[1]/div/div/lightning-grouped-combobox/div/div/lightning-base-combobox/div/div[1]/input
 ${EVENT_TYPE}                               //*[text()='Event Type']/..//following::div/div/div/div/a
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/a
@@ -97,7 +98,8 @@ ${meeting_end_date_input}                   //*[text()='End']//following::div/di
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[1]/input
 ${meeting_end_time_input}                   //*[text()='End']//following::div/div/label[text()='Time']//following-sibling::input
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[2]/div/input
-${city_input}                               //*[@class='label inputLabel uiLabel-left form-element__label uiLabel']//span[text()='Location']//following::input[@class=' input']
+${city_input}                               //span[text()='Location']//following::input[@class=' input']
+#//*[@class='label inputLabel uiLabel-left form-element__label uiLabel']//span[text()='Location']//following::input[@class=' input']
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[8]/div[1]/div/div/div/input
 ${contact_name_input}                       //*[text()='Name']//following::div/div/div[@class='inputWrapper slds-grid slds-grid_vertical-align-center slds-p-right_x-small']/div[@class='autocompleteWrapper slds-grow']/input
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[9]/div[1]/div/div/div/div/div/div[1]/div[2]/input

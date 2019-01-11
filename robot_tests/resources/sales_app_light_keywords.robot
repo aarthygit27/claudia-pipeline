@@ -92,9 +92,10 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
-    #Sleep    2s
-    Press Key    xpath=${SEARCH_SALESFORCE}    \\13
-    #Sleep    2s
+    Sleep    2s
+    Press Enter On  ${SEARCH_SALESFORCE}
+    #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
+    Sleep    2s
     Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    60s
 
 Select Entity
@@ -535,7 +536,7 @@ Enter Mandatory Info on Meeting Form
     #click element    xpath=${reason_select_dropdown_value}
     Enter Meeting Start and End Date
     sleep    10s
-    input text    ${city_input}    ${DEFAULT_CITY}
+    Input Text    ${city_input}    ${DEFAULT_CITY}
     sleep    10s
     Enter and Select Contact Meeting
     sleep    10s
