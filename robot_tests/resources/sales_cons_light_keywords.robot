@@ -100,8 +100,10 @@ Select Account
 
 Account Should Be Open
     [Arguments]    ${account_name}
-    ${Count}=    get element count    ${TABS_OPENED}
-    Run Keyword If    ${Count} > 1    Click Element    xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']
+    Run Keyword If    ${present}    Click specific element      ${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']
+    #${Count}=    get element count    ${TABS_OPENED}
+    #Run Keyword If    ${Count} > 1    Click Element    xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']
     #Wait Until Page Contains Element    xpath=${TABS_OPENED}//[contains(@class,'tabItem') and @title='${account_name}']    60 seconds
 
 Create New Opportunity For Customer
@@ -287,13 +289,22 @@ Select Correct View Type
 
 Filter Opportunities By
     [Arguments]     ${field}    ${value}
-    ${Count}=    get element count    ${RESULTS_TABLE}
+    #${Count}=    get element count    ${RESULTS_TABLE}
     Click Element      //input[@name='search-input']
     Wait Until Page Contains Element        ${SEARCH_INPUT}     20s
     Input Text          xpath=${SEARCH_INPUT}      ${value}
     Press Key       xpath=${SEARCH_INPUT}     \\13
     Sleep   5s
-    Run Keyword If  ${Count} > 1  Click Element     xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    Force click element     ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    #${present}=  Run Keyword And Return Status    Element Should Be Visible   ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    #Run Keyword If    ${present}    Click specific element      ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+
+Click specific element
+    [Arguments]     ${element}
+    @{locators}=     Get Webelements    xpath=${element}
+    ${original}=       Create List
+    :FOR   ${locator}   in    @{locators}
+    Click Element     xpath=${element}
 
 Go to Contacts
     Go to Sales Console
