@@ -237,14 +237,14 @@ Select Correct View Type
 
 Filter Opportunities By
     [Arguments]    ${field}    ${value}
-    ${Count}=    get element count    ${RESULTS_TABLE}
+    #${Count}=    get element count    ${RESULTS_TABLE}
     Click Element    //input[@name='search-input']
     Wait Until Page Contains Element    ${SEARCH_INPUT}    60s
     Input Text    xpath=${SEARCH_INPUT}    ${value}
     Press Key    xpath=${SEARCH_INPUT}    \\13
     Sleep    10s
     #get_all_links
-    double click element    ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    Force click element    ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
     #Run Keyword If    ${Count} > 1    click visible element    xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
 Go to Contacts
