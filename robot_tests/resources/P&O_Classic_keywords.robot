@@ -62,16 +62,23 @@ Add Telia Arkkitehti jatkuva palvelu
     click button    //button[contains(text(),'Add to Cart')]
     sleep    10s
     Capture Page Screenshot
+    Wait Until Element Is Visible    //button[@title='Settings']    45s
     Click Button    //button[@title='Settings']
     sleep    10s
-    Wait Until Element Is Enabled    //select[@name='productconfig_field_0_0']
+    Wait Until Element Is Enabled    //select[@name='productconfig_field_0_0']    30s
     click element    //select[@name='productconfig_field_0_0']
+    sleep    10s
     click element    //select[@name='productconfig_field_0_0']/option[contains(text(),'d')]
     input text    //input[@name='productconfig_field_0_1']    10
+    sleep    5s
     click element    //select[contains(@name,'productconfig_field_0_2')]
+    sleep    5s
     click element    //select[contains(@name,'productconfig_field_0_2')]/option[@value='10']
+    sleep    5s
     click element    //select[contains(@name,'productconfig_field_0_3')]
+    sleep    5s
     click element    //select[contains(@name,'productconfig_field_0_3')]/option[@value='10']
+    sleep    5s
     click element    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
     Fill Laskutuksen lisätieto
     click element    //button[@class='slds-button slds-button--icon']
@@ -97,9 +104,12 @@ Add Muut asiantuntijapalvelut
     sleep    10s
     Capture Page Screenshot
     Click Button    //button[@title='Settings']
+    sleep    5s
     input text    //textarea[@name='productconfig_field_0_0']    This is the test order created by robot framework
+    sleep    5s
     input text    //input[@name='productconfig_field_0_1']    10000
     Fill Laskutuksen lisätieto
+    sleep    5s
     click element    //button[@class='slds-button slds-button--icon']
     sleep    10s
     click element    //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
@@ -107,7 +117,9 @@ Add Muut asiantuntijapalvelut
     sleep    10s
     click element    //div[@ng-if='!importedScope.isProvisioningStatusDeleted(childProd, attrs.provisioningStatus)']//button[@title='Settings']
     input text    //input[@name='productconfig_field_0_1']    100
+    sleep    5s
     Fill Laskutuksen lisätieto
+    sleep    5s
     click element    //button[@class='slds-button slds-button--icon']
 
 Name_lookup
