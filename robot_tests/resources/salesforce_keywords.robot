@@ -1278,6 +1278,7 @@ Search Salesforce
     Input Text    id=phSearchInput    ${item}
     Wait Until Keyword Succeeds    30 s    1 s    Click Element    //div[contains(@id,'phSearchInput_autoCompleteBoxId')]//span[@class='queryText' and contains(text(), '${item}')]
     Press Enter On    phSearchInput    # At least in Firefox version 52.0 enter needs to be pressed or the search won't happen
+    sleep    10s
     Wait Until Element Is Visible    id=phSearchClearButton    45s
     Click Element    id=phSearchClearButton
 
