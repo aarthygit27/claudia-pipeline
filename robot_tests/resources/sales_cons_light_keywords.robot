@@ -210,13 +210,17 @@ Scroll Page To Location
     Sleep       10s
 
 Close All Tabs
-    ${original}=    run keyword     Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
-    :FOR    ${i}    IN RANGE    ${original}
-    \   Run Keyword and Ignore Error    Close Tab
-    ${current}=   run keyword       Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
-    ${closed}=      Evaluate        ${original}-${current}
-    Log             Closed ${closed} tabs
+    #${original}=    run keyword     Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
+    #:FOR    ${i}    IN RANGE    ${original}
+    #\   Run Keyword and Ignore Error    Close Tab
+    #${current}=   run keyword       Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
+    #${closed}=      Evaluate        ${original}-${current}
+    #Log             Closed ${closed} tabs
     #Should Be Equal As Integers     ${current}    0
+    @{locators}=     Get Webelements    xpath=${TABS_OPENED}//div[contains(@class,'close')]
+    ${original}=       Create List
+    :FOR   ${locator}   in    @{locators}
+    \       Run Keyword and Ignore Error    Close Tab
 
 Close Tab
     Click Element   xpath=${TABS_OPENED}//div[contains(@class,'close')]
