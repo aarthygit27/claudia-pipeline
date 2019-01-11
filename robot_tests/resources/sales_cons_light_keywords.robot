@@ -213,7 +213,9 @@ Close All Tabs
     \       Run Keyword and Ignore Error    Close Tab
 
 Close Tab
-    Click Element   xpath=${TABS_OPENED}//div[contains(@class,'close')]
+    ${visible}=     run keyword and return status   element should be visible  ${TABS_OPENED}//div[contains(@class,'close')]
+    run keyword if  ${visible}
+    ...     Click Element   xpath=${TABS_OPENED}//div[contains(@class,'close')]
 
 Verify That Opportunity Is Found With Search And Go To Opportunity
     [Arguments]     ${account_name}=${LIGHTNING_TEST_ACCOUNT}
