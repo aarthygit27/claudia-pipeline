@@ -13,7 +13,7 @@ Resource          ..${/}resources${/}common.robot
 
 *** Test Cases ***
 Create New Order
-    [Tags]    BQA-8504
+    [Tags]    BQA-8504    PO
     Go To Salesforce and Login2    Digisales User devpo
     Go To    ${CLASSIC_APP}
     Go to Account2    ${DEFAULT_TEST_ACCOUNT}
