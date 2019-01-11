@@ -1,9 +1,9 @@
 *** Settings ***
-Library              Selenium2Library
+Library              Collections
 
-Resource            ../resources/common.robot
-Resource            ../resources/cpq_keywords.robot
-Resource            ../resources/sales_cons_light_variables.robot
+Resource            ..${/}resources${/}common.robot
+Resource            ..${/}resources${/}cpq_keywords.robot
+Resource            ..${/}resources${/}sales_cons_light_variables.robot
 
 
 *** Keywords ***

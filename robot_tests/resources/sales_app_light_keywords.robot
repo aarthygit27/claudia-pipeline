@@ -1,7 +1,9 @@
 *** Settings ***
-Resource          ../resources/common.robot
-Resource          ../resources/cpq_keywords.robot
-Resource          ../resources/sales_app_light_variables.robot
+Library              Collections
+
+Resource          ..${/}resources${/}common.robot
+Resource          ..${/}resources${/}cpq_keywords.robot
+Resource          ..${/}resources${/}sales_app_light_variables.robot
 
 *** Keywords ***
 Go To Salesforce

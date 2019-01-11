@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Suite description
-Resource            ../resources/sales_cons_light_keywords.robot
-Resource            ../resources/sales_cons_light_variables.robot
+Resource            ..${/}resources${/}sales_cons_light_keywords.robot
+Resource            ..${/}resources${/}sales_cons_light_variables.robot
 
 Test Setup          Open Browser And Go To Login Page
 Test Teardown       Logout From All Systems and Close Browser
