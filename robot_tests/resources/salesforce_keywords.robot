@@ -1278,6 +1278,7 @@ Search Salesforce
     Input Text    id=phSearchInput    ${item}
     Wait Until Keyword Succeeds    30 s    1 s    Click Element    //div[contains(@id,'phSearchInput_autoCompleteBoxId')]//span[@class='queryText' and contains(text(), '${item}')]
     Press Enter On    phSearchInput    # At least in Firefox version 52.0 enter needs to be pressed or the search won't happen
+    Wait Until Element Is Visible    id=phSearchClearButton    45s
     Click Element    id=phSearchClearButton
 
 Searched Item Should Be Visible
@@ -1294,35 +1295,23 @@ Search (Setup)
     [Arguments]    ${item}
     # Do not click the search button to get the quick access link for the search item
     Input Text    id=setupSearch    ${item}
-    Wait Until Page Contains Element    xpath=//div[@id='AutoNumber5']//a[contains(text(),'${item}')]
-    # Search (Lookup)
-    #    [Documentation]    Some sort of verification should be run after this keyword
-    #    ...    Update on 5.6.2017: This keyword is still a complete disaster.
-    #    ...    Deprecated
-    #    [Arguments]    ${item}
-    #    ${kw_passed}=    Set Variable    ${FALSE}
-    #    Wait Until Keyword Succeeds    20 s    1 s    Select Popup Search Window And Validate Title
-    #    # ${ret}=    Run Inside Iframe    resultsFrame    Run Keyword And Return Status    Click Element    //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
-    #    # ${ret}=    Run Keyword And Return Status    Click Element    //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
-    #    # Run Keyword If    ${ret}    Set Variable    ${kw_passed}    ${TRUE}
-    #    # Return From Keyword If    ${ret}
-    #    Select Frame    searchFrame
-    #    Input Text    ${LOOKUP_SEARCH_FIELD}    ${item}
-    #    Click Element    ${LOOKUP_SEARCH_GO_BUTTON}
-    #    Press Tab On    ${LOOKUP_SEARCH_GO_BUTTON}
-    #    Unselect Frame
-    #    Press Tab On    resultsFrame
-    #    Select Frame    resultsFrame
-    #    Press Tab On    //a[contains(text(),'Clear Search Results')]
-    #    Press Enter On    //div[@class='listRelatedObject lookupBlock']//table//th/a[1]
-    #    # Focus    //a[contains(text(), '${item}')]
-    #    # Execute Javascript    document.dispatchEvent(new KeyboardEvent('keydown', {'which': 9, 'keyCode':9}));
-    #    # Run Keyword and Ignore Error    Select Frame    resultsFrame
-    #    # Run Keyword and Ignore Error    Click Element    //a[contains(text(), '${item}')]
-    #    # ${kw_passed}=    Set Variable    ${TRUE}
-    #    [Teardown]    Select Window    main
-    #    # [Teardown]    Run Keywords    Log to console    ${kw_passed}
-    ...    # AND    Run Keyword If    '${kw_passed}'=='${FALSE}'    Close Browser
+    Wait Until Page Contains Element    xpath=//div[@id='AutoNumber5']//a[contains(text(),'${item}')]    # Search (Lookup)    #    [Documentation]    Some sort of verification should be run after this keyword    #
+    ...    # ...    Update on 5.6.2017: This keyword is still a complete disaster.    #    ...    Deprecated    #
+    ...    # [Arguments]    ${item}    #    ${kw_passed}=    Set Variable    ${FALSE}
+    ...    #    Wait Until Keyword Succeeds    20 s    1 s    Select Popup Search Window And Validate Title    #
+    ...    # ${ret}=    Run Inside Iframe    resultsFrame    Run Keyword And Return Status    Click Element    //frame[@id='resultsFrame']//a[contains(text(), '${item}')]
+    ...    #    # ${ret}=    Run Keyword And Return Status    Click Element    //frame[@id='resultsFrame']//a[contains(text(), '${item}')]    #
+    ...    # Run Keyword If    ${ret}    Set Variable    ${kw_passed}    ${TRUE}    #
+    ...    # Return From Keyword If    ${ret}    #    Select Frame    searchFrame    #
+    ...    # Input Text    ${LOOKUP_SEARCH_FIELD}    ${item}    #    Click Element    ${LOOKUP_SEARCH_GO_BUTTON}
+    ...    #    Press Tab On    ${LOOKUP_SEARCH_GO_BUTTON}    #    Unselect Frame    #
+    ...    # Press Tab On    resultsFrame    #    Select Frame    resultsFrame    #
+    ...    # Press Tab On    //a[contains(text(),'Clear Search Results')]    #    Press Enter On    //div[@class='listRelatedObject lookupBlock']//table//th/a[1]    #
+    ...    # Focus    //a[contains(text(), '${item}')]    #    # Execute Javascript    document.dispatchEvent(new KeyboardEvent('keydown', {'which': 9, 'keyCode':9}));    #
+    ...    # Run Keyword and Ignore Error    Select Frame    resultsFrame    #    # Run Keyword and Ignore Error    Click Element
+    ...    # //a[contains(text(), '${item}')]    #    # ${kw_passed}=    Set Variable    ${TRUE}    #
+    ...    # [Teardown]    Select Window    main    #    # [Teardown]    Run Keywords
+    ...    # Log to console    ${kw_passed}    # AND    Run Keyword If    '${kw_passed}'=='${FALSE}'    Close Browser
 
 Search Result Should Contain Field
     [Arguments]    ${result}    ${type}    ${expected_field}
