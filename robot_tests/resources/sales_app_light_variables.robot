@@ -146,7 +146,8 @@ ${NEXT_BUTTON_MONTH}                        //a[@title='Go to next month']
 ${YEAR_DROPDOWN}                            //select[contains(@class,'slds-select')]
 ${DETAILS_TAB}                              //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
 ${DATE_PICKER}                              //span[text()='Date Picker']/..
-${EMAIL_ID_FIELD}                           //div[@id='email']//input
+${EMAIL_ID_FIELD}                           //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
+#//div[@id='email']//input
 ${MASTER_PHONE_NUM_FIELD}                   //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_MOBILE_NUM_FIELD}                  //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
 
