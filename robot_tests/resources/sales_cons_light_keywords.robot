@@ -120,7 +120,7 @@ Create New Opportunity For Customer
     Fill Mandatory Opportunity Information    ${stage}    ${days}
     Fill Mandatory Classification
     Click Save Button
-    Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
+    #Run Keyword Unless      ${expect_error}     Verify That Opportunity Creation Succeeded
 
 Click New Item For Account
     [Arguments]     ${type}
@@ -153,9 +153,10 @@ Input Quick Action Value For Attribute
 Select Quick Action Value For Attribute
     [Arguments]     ${field}    ${value}
     Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']   20s
-    Click Element       ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
-    Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]
-    Click Element       //div[@class='select-options']//li//a[contains(text(),'${value}')]
+    #Click Element       ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
+    #Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]
+    #Click Element       //div[@class='select-options']//li//a[contains(text(),'${value}')]
+    Select option from Dropdown with Force Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']    //div[@class='select-options']//li//a[contains(text(),'${value}')]
 
 
 Fill Mandatory Classification
@@ -166,17 +167,6 @@ Fill Mandatory Classification
 Click Save Button
     Click Element       ${SAVE_OPPORTUNITY}
 
-Verify That Opportunity Creation Succeeded
-    #Wait Until Element Is Visible   ${SUCCESS_MESSAGE}     60 s
-    Sleep       10s
-    #Click Visible Element      ${ACCOUNT_RELATED}
-    Force click element         ${ACCOUNT_RELATED}
-    Sleep       5s
-    #Scroll Page To Location         0       1000
-    Run Keyword     Scroll Page To Element              //span[text()='Opportunities']/../../span/../../../a
-    force click element         //span[text()='Opportunities']/../../span/../../../a
-    #Click Visible Element  //span[text()='Opportunities']/../../span
-    Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
 
 Scroll Page To Element
     [Arguments]    ${element}
@@ -184,25 +174,42 @@ Scroll Page To Element
     :FOR    ${i}    IN RANGE    99999
     \    ${status}=      Run Keyword And Return Status      Element Should Be Visible     ${element}
     \    Execute JavaScript          window.scrollTo(0,${i}*100)
+    \    Sleep   3s
     \    Exit For Loop If       ${status}
 
+
+#Verify That Opportunity Is Saved And Data Is Correct
+#    [Arguments]     ${element}
+#    ...             ${account_name}=${LIGHTNING_TEST_ACCOUNT}
+#    ...             ${days}=1
+#                    ${date}=    Get Date From Future    ${days}
+#                    ${oppo_name}=    Set Variable       //*[@title='${OPPORTUNITY_NAME}']
+#                    ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
+#                    ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${date}']
+#    #Run Keyword     Scroll Page To Element              ${element}${oppo_name}
+#    Sleep       30s
+#    element should be visible       //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//a[@title='${OPPORTUNITY_NAME}']
+#    Wait Until Page Contains Element   //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//a[@title='${OPPORTUNITY_NAME}']      30s
+#    force click element        //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//a[@title='${OPPORTUNITY_NAME}']
+#    #Force click element       ${element}${oppo_name}
+#    Sleep       10s
+#    Wait Until Page Contains Element    ${element}${oppo_name}      20s
+#    Wait Until Page Contains Element    ${account_name}             20s
+#    #Wait Until Page Contains Element    ${oppo_date}
+#    Close All Tabs
+
 Verify That Opportunity Is Saved And Data Is Correct
-    [Arguments]     ${element}
-    ...             ${account_name}=${LIGHTNING_TEST_ACCOUNT}
-    ...             ${days}=1
-                    ${date}=    Get Date From Future    ${days}
-                    ${oppo_name}=    Set Variable       //*[text()='${OPPORTUNITY_NAME}']
-                    ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
-                    ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${date}']
-
-    Wait Until Page Contains Element   ${element}${oppo_name}       30s
-    Force click element       ${element}${oppo_name}
-    Sleep       10s
-    Wait Until Page Contains Element    ${element}${oppo_name}      20s
-    Wait Until Page Contains Element    ${account_name}             20s
-    #Wait Until Page Contains Element    ${oppo_date}
-    Close All Tabs
-
+    [Arguments]    ${element}    ${account_name}=${LIGHTNING_TEST_ACCOUNT}
+    ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
+    ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
+    ${oppo_date}=    Set Variable    //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
+    sleep    10s
+    Wait Until Page Contains Element    ${element}${oppo_name}    60s
+    Run keyword and ignore error    Click element    ${element}${oppo_name}
+    Sleep    10s
+    Wait Until Page Contains Element    ${oppo_name}    60s
+    Wait Until Page Contains Element    ${account_name}    60s
+    Wait Until Page Contains Element    ${oppo_date}    60s
 
 Scroll Page To Location
     [Arguments]    ${x_location}    ${y_location}
