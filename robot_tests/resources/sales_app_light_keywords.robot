@@ -161,7 +161,7 @@ Click Save Button
 Verify That Opportunity Creation Succeeded
     Sleep    10s
     Wait Until Element Is Visible    ${ACCOUNT_RELATED}    60s
-    Click element    xpath=${ACCOUNT_RELATED}
+    Force click element    ${ACCOUNT_RELATED}
     ${status}=    Run Keyword And Return Status    Element Should Be Visible    //span[@title='Account Team Members']
     Run Keyword If    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
     Sleep    10s

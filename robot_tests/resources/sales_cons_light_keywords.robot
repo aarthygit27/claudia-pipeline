@@ -25,7 +25,8 @@ Login To Salesforce Lightning And Close All Tabs
     Sleep    5s
     #Run Keyword and Ignore Error    Wait For Load
     Go to Lightning Sales Console
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
     Sleep    5s
     Reset to Home Tab
 
@@ -55,7 +56,8 @@ Switch to Lightning
 
 Go to Account
     [Arguments]    ${target_account}    ${type}=${EMPTY}
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
     Log    Going to '${target_account}'
     #Wait Until Keyword Succeeds    240s    5s
     Search And Select the Account    ${target_account}    ${type}
@@ -213,11 +215,14 @@ Close All Tabs
     \       Run Keyword and Ignore Error    Close Tab
 
 Close Tab
-    Click Element   xpath=${TABS_OPENED}//div[contains(@class,'close')]
+    ${visible}=     run keyword and return status   element should be visible  ${TABS_OPENED}//div[contains(@class,'close')]
+    run keyword if  ${visible}
+    ...     Click Element   xpath=${TABS_OPENED}//div[contains(@class,'close')]
 
 Verify That Opportunity Is Found With Search And Go To Opportunity
     [Arguments]     ${account_name}=${LIGHTNING_TEST_ACCOUNT}
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
     Go to Account        ${OPPORTUNITY_NAME}
     Wait until Page Contains Element    ${OPPORTUNITYNAME_TAB}//*[text()='${OPPORTUNITY_NAME}']     30s
     Verify That Opportunity Is Saved And Data Is Correct    ${OPPORTUNITYNAME_TAB}
@@ -230,7 +235,8 @@ Verify That Opportunity is Found From My All Open Opportunities
                     ${oppo_name}=    Set Variable       //*[text()='${OPPORTUNITY_NAME}']
                     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
                     ${oppo_date}=    Set Variable       //*[@title='Close Date']//following-sibling::div//*[text()='${date}']
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
     Open Opportunities
     Select Correct View Type    My All Open Opportunities
     Filter Opportunities By     Opportunity Name    ${OPPORTUNITY_NAME}
@@ -239,19 +245,22 @@ Verify That Opportunity is Found From My All Open Opportunities
     Wait Until Page Contains Element    ${OPPORTUNITYNAME_TAB}${oppo_name}
     Wait Until Page Contains Element    ${account_name}
     #Wait Until Page Contains Element    ${oppo_date}
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
 
 
 Open Opportunities
     [Arguments]     ${timeout}=20 seconds
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
     Select Correct Tab Type     ${OPPORTUNITIES}
     Wait Until Page Contains Element    ${OPPORTUNITIES_SECTION}    ${timeout}
     Sleep       10s
 
 Reset to Home Tab
     [Arguments]     ${timeout}=20 seconds
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
     Sleep       5s
     Select Correct Tab Type     ${HOME}
     Sleep       5s
@@ -290,7 +299,8 @@ Go to Contacts
     Go to Sales Console
     Wait Until Element is Visible       ${CONTACTS}                 20 seconds
     Click Element                       ${CONTACTS}
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
     #Wait Until Page Contains element        xpath=${TABS_OPENED}//a[contains(@title, 'Contacts)]     30S
 
 Go to Sales Console
@@ -339,7 +349,8 @@ Validate Contact Details
     Wait Until Page Contains Element    ${element}${account_name}
     Wait Until Page Contains Element    ${element}${mobile_number}
     Wait Until Page Contains Element    ${element}${email}
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
 
 Create New NP Contact and Validate
     Sleep                                   10s
@@ -374,7 +385,9 @@ Validate NP Contact Details
     Wait Until Page Contains Element    ${element}${account_name}
     Wait Until Page Contains Element    ${element}${mobile_number}
     Wait Until Page Contains Element    ${element}${email}
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
+
 
 Create New Contact for Account and Validate
     click element           ${AP_NEW_CONTACT}
@@ -408,7 +421,8 @@ Validate AP Contact Details
     Wait Until Page Contains Element    ${element}${account_name}
     Wait Until Page Contains Element    ${element}${mobile_number}
     Wait Until Page Contains Element    ${element}${email}
-    Close All Tabs
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
+    Run Keyword If    ${present}    Close All Tabs
 
 Go to Lightning Sales Console
     ${IsElementVisible}=  Run Keyword And Return Status    Element Should Be Visible   ${SALES_APP_NAME}  20s
