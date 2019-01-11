@@ -458,4 +458,4 @@ Select option from Dropdown with Force Click Element
     ${element_xpath}=       Replace String      ${list}        \"  \\\"
     Execute JavaScript  document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep  2s
-    Click Element  ${item}
+    Force click element  ${item}
