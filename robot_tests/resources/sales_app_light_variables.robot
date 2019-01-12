@@ -186,8 +186,9 @@ ${ACCOUNTS_LINK}                            //div[@class='bBottom']//span[text()
 ${CHANGE_OWNER}                             //button[@title='Change Owner']
 ${SEARCH_PEOPLE}                            //input[@title='Search People']
 #${OWNER_NAME}                               //div[contains(@class,'primaryLabel')]
-${CHANGE_OWNER_BUTTON}                      //button[@title='Cancel']/following-sibling::button
-${CHANGE_OWNER_BUTTON}                      //button[@title='Change Owner']
-${SEARCH_OWNER}                             //input[@placeholder='Search People...']
+${CHANGE_OWNER_BUTTON}                      //div[contains(@class,'forceModalActionContainer')]//button[@title='Change Owner']
+#//button[@title='Cancel']/following-sibling::button
+#${CHANGE_OWNER_BUTTON}                      //button[@title='Change Owner']
+${SEARCH_OWNER}                             //input[@title='Search People']
 ${OWNER_NAME}                               //div[@class='ownerName']//a
 ${NEW_OWNER_SELECTED}                       //span[@class='pillText']

@@ -555,9 +555,11 @@ Enter Meeting Start and End Date
     input text    ${meeting_end_time_input}    ${meeting_end_time}
 
 Save Meeting and click on Suucess Message
-    click element    ${save_button_create}
+    #click element    ${save_button_create}
+    Force click element     ${save_button_create}
     sleep    30s
-    click element    ${success_message_anchor}
+    #click element    ${success_message_anchor}
+    Force click element     ${success_message_anchor}
     sleep    40s
 
 Validate Created Meeting
@@ -854,42 +856,66 @@ Change to original owner
 
 Change Account Owner
     ${CurrentOwnerName}=  Get Text  ${OWNER_NAME}
-    Log To Console  Current Owner:${CurrentOwnerName}
     Click Element  ${CHANGE_OWNER}
     Wait until Page Contains Element  ${SEARCH_OWNER}
     Sleep  10s
-    Click Element  ${SEARCH_OWNER}
-    sleep  5s
-    Clear Element Text  ${SEARCH_OWNER}
-    ${OWNER_OPTIONS}=  Set Variable  (//a[@role='option' and not(contains(., '${CurrentOwnerName}'))])
-    ${Count}=    get element count    ${OWNER_OPTIONS}
-    Log To Console  No of options available as new owner:${Count}
-    ${SELECT_NEW_OWNER}=  catenate  ${OWNER_OPTIONS}  [1]
-    Run Keyword If  ${Count}!=0  Click Element  ${SELECT_NEW_OWNER}
-    ...          ELSE  Log to console  No Option available
-    Wait Until Page Contains Element  ${NEW_OWNER_SELECTED}  10s
-    ${NEW_OWNER_NAME}=  Get Text  ${NEW_OWNER_SELECTED}
-    Log To Console  New Owner selected:${NEW_OWNER_NAME}
-    click element  ${CHANGE_OWNER_BUTTON}
-    sleep  15s
-    ${NEW_OWNER_REFLECTED}=  Get Text  ${OWNER_NAME}
+    #Click Element  ${SEARCH_OWNER}
+    #sleep  5s
+    #Clear Element Text  ${SEARCH_OWNER}
+    ${NewOwner}=    set variable if    '${CurrentOwnerName}'== 'Sales Admin'    B2B DigiSales     Sales Admin
+    Input Text    xpath=${SEARCH_OWNER}     ${NewOwner}
+    Sleep    2s
+    Press Enter On   ${SEARCH_OWNER}
+    Sleep   5s
+    #Wait Until Page Contains element    //a[@title='${NewOwner}']   120s
+    Force click element       //a[text()='${NewOwner}']
+    #Wait Until Page Contains Element  ${NEW_OWNER_SELECTED}  10s
+    #Select option from Dropdown with Force Click Element      ${SEARCH_OWNER}          //*[@title='${NewOwner}']
+    Click Visible Element     ${CHANGE_OWNER_BUTTON}
     Sleep  20s
-    Should Be Equal As Strings  ${NEW_OWNER_REFLECTED}  ${NEW_OWNER_NAME}
-    Log to Console  Owner changed for the account
+    ${NEW_OWNER_REFLECTED}=  Get Text  ${OWNER_NAME}
+    Should Be Equal As Strings  ${NEW_OWNER_REFLECTED}  ${NewOwner}
+
+
+    #${OWNER_OPTIONS}=  Set Variable  (//a[@role='option' and not(contains(., '${CurrentOwnerName}'))])
+    #${Count}=    get element count    ${OWNER_OPTIONS}
+    #Log To Console  No of options available as new owner:${Count}
+    #${SELECT_NEW_OWNER}=  catenate  ${OWNER_OPTIONS}  [1]
+    #Run Keyword If  ${Count}!=0  Click Element  ${SELECT_NEW_OWNER}
+    #...          ELSE  Log to console  No Option available
+#    Wait Until Page Contains Element  ${NEW_OWNER_SELECTED}  10s
+#    ${NEW_OWNER_NAME}=  Get Text  ${NEW_OWNER_SELECTED}
+#    Log To Console  New Owner selected:${NEW_OWNER_NAME}
+#    click element  ${CHANGE_OWNER_BUTTON}
+#    sleep  15s
+#    ${NEW_OWNER_REFLECTED}=  Get Text  ${OWNER_NAME}
+#    Sleep  20s
+#    Should Be Equal As Strings  ${NEW_OWNER_REFLECTED}  ${NEW_OWNER_NAME}
+#    Log to Console  Owner changed for the account
+
+
 
 Click on a given account
     [Arguments]  ${acc_name}
-
     sleep  5s
-    ${count}=  Get Element Count  ${ACCOUNT_NAME}
-    ${elementUsed}=  Set Variable  //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
-    Run Keyword if  ${count}!=0  click element  ${elementUsed}
-    ...         ELSE  Log To Console  No account name available
+    ${present}=  Run Keyword And Return Status    Element Should Be Visible   //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
+    Run Keyword If    ${present}    Click specific element      //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
+    ...     ELSE    Log To Console  No account name available
+    #${count}=  Get Element Count  ${ACCOUNT_NAME}
+    #${elementUsed}=  Set Variable  //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
+    #Run Keyword if  ${count}!=0  click element  ${elementUsed}
+    #...         ELSE  Log To Console  No account name available
     sleep  10s
+
+Click specific element
+    [Arguments]     ${element}
+    @{locators}=     Get Webelements    xpath=${element}
+    ${original}=       Create List
+    :FOR   ${locator}   in    @{locators}
+    Click Element     xpath=${element}
 
 
 Click on Account Name
-
     sleep  5s
     ${count}=  Get Element Count  ${ACCOUNT_NAME}
     ${elementUsed}=  Catenate  ${ACCOUNT_NAME}  [1]

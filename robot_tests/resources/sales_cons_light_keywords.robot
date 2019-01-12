@@ -80,15 +80,9 @@ Search Salesforce
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    20s
     Input Text    ${SEARCH_SALESFORCE}    ${item}
     #Sleep    5s
-    Press Key    ${SEARCH_SALESFORCE}    \\13
+    Press Enter On  ${SEARCH_SALESFORCE}
     Sleep    10s
-    #ENVIRONMENT ISSUE
-    #Wait Until Page Contains    //div[@class='listContent']//span[contains(@class,'mruSearchLabel') and contains(@title,'${item}')]
-    #Click Element    //div[@class='listContent']//span[contains(@class,'mruSearchLabel') and contains(@title,'${item}')]
     Wait Until Page Contains element    xpath=${TABS_OPENED}//a[contains(@title, 'Search')]    30S
-    #wait until page contains element    //*[@class='tabBarItems slds-grid']//a[contains(@title, 'Search')]
-    #Press Enter On    phSearchInput    # At least in Firefox version 52.0 enter needs to be pressed or the search won't happen
-    #Click Element    id=phSearchClearButton
 
 Select Account
     [Arguments]    ${account_name}    ${type}
