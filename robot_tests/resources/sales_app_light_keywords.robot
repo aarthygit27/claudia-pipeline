@@ -96,6 +96,8 @@ Search Salesforce
     Press Enter On  ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
+    ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      20s
+    run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
     Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    60s
 
 Select Entity
@@ -580,8 +582,10 @@ Validate Created Meeting
     should be equal as strings    ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
 
 Modify Meeting Outcome
-    scroll page to location    0    600
-    click element    ${meeting_outcome_edit_button}
+    scroll page to element  ${meeting_outcome_edit_button}
+    #scroll page to location    0    600
+    #click element    ${meeting_outcome_edit_button}
+    Force click element     ${meeting_outcome_edit_button}
     sleep    10s
     click element    xpath=${meeting_outcome_select}
     sleep    10s

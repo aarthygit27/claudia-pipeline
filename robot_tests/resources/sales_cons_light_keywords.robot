@@ -82,6 +82,8 @@ Search Salesforce
     #Sleep    5s
     Press Enter On  ${SEARCH_SALESFORCE}
     Sleep    10s
+    ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}//a[contains(@title, 'Search')]  20s
+    run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
     Wait Until Page Contains element    xpath=${TABS_OPENED}//a[contains(@title, 'Search')]    30S
 
 Select Account
