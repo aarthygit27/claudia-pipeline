@@ -57,6 +57,8 @@ Login to Salesforce Lightning
     Input Password    id=password    ${password}
     Click Element    id=Login
     run keyword and ignore error    Check For Lightning Force
+    ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${LIGHTNING_ICON}
+    Run Keyword If    ${buttonNotAvailable}    reload page
     Wait Until Page Contains Element    xpath=${LIGHTNING_ICON}    60 seconds
 
 Check For Lightning Force
