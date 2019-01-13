@@ -591,7 +591,7 @@ Modify Meeting Outcome
     sleep    10s
     click element    xpath=${meeting_outcome_select}
     sleep    10s
-    click element    xpath=${meeting_outcome_dropdown_value}
+    force click element    xpath=${meeting_outcome_dropdown_value}
     click element    xpath=${meeting_status_select}
     sleep    10s
     click element    xpath=${meeting_status_value}
@@ -1151,8 +1151,8 @@ SearchAndSelectBillingAccount
     wait until page contains element  //*[@id="ExtractAccount"]  30s
     click element   //*[@id="ExtractAccount"]
     wait until page contains element  //label[normalize-space(.)='Select Account']  30s
-    wait until page contains element  //div[text()='${LIGHTNING_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']   30s
-    click element  //div[text()='${LIGHTNING_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    wait until page contains element  //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']   30s
+    click element  //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     sleep  2s
     click element  //*[@id="SearchAccount_nextBtn"]
     log to console  Exiting billingAC page
@@ -1197,11 +1197,12 @@ RequestActionDate
 
 
 SelectOwnerAccountInfo
+   [Arguments]   ${e}= ${billing_account}
     #Select Owner Account FLow Chart Page
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     log to console  entering Owner Account page
-    wait until page contains element  //div[text()='Billing Digia Oyj-9']/..//preceding-sibling::td[2]/label/input[@type='checkbox']  30s
-    click element  //div[text()='Billing Digia Oyj-9']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    wait until page contains element  //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']  30s
+    click element  //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     click element  //*[@id="BuyerIsPayer"]//following-sibling::span
     click element  //*[@id="SelectedBuyerAccount_nextBtn"]
     unselect frame
@@ -1246,7 +1247,7 @@ CreateABillingAccount
     wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  30s
     ${account_name_get}=  get text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
     ${numbers}=     Generate Random String    4    [NUMBERS]
-    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
+    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
     Execute JavaScript    window.scrollTo(0,700)
     #scroll page to element  //*[@id="billing_country"]
     click element  //*[@id="billing_country"]
@@ -1274,7 +1275,7 @@ CreateABillingAccount
     sleep  10s
     unselect frame
 
-    [return]  Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
+    [return]  Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
 
 
 
