@@ -8,7 +8,7 @@ Resource          ../resources/common.robot
 *** Test Cases ***
 
 Create opportunity from Account for HDCFlow
-    [Tags]  BQA-HDCOppo        Lightning2
+    [Tags]  BQA-HDCOppo        Lightning
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
@@ -127,19 +127,19 @@ Check Attributes/Contact Person are named right
     Validate That Contact Person Attributes Are Named Right
 
 Lightning: Create Meeting from Account
-    [Tags]    BQA-7948    Lightning
+    [Tags]    BQA-7948    Lightning2
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Meeting
 
 Lightning: Create Call from Account
-    [Tags]    BQA-8085    Lightning
+    [Tags]    BQA-8085    Lightning2
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Call
 
 Lightning: Create Task from Account
-    [Tags]    BQA-8463    Lightning
+    [Tags]    BQA-8463    Lightning2
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Task
