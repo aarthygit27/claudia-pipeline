@@ -589,9 +589,9 @@ Modify Meeting Outcome
     #click element    ${meeting_outcome_edit_button}
     Force click element     ${meeting_outcome_edit_button}
     sleep    10s
-    click element    xpath=${meeting_outcome_select}
+    Force click element  ${meeting_outcome_select}
     sleep    10s
-    force click element    xpath=${meeting_outcome_dropdown_value}
+    force click element    ${meeting_outcome_dropdown_value}
     click element    xpath=${meeting_status_select}
     sleep    10s
     click element    xpath=${meeting_status_value}
@@ -1230,7 +1230,7 @@ CreateABillingAccount
 
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
-    sleep  120s
+    sleep  20s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="RemoteAction1"]  60s
     click element  //*[@id="RemoteAction1"]
