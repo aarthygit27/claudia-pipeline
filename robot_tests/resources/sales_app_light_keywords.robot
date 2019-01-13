@@ -46,7 +46,8 @@ Login to Salesforce as DigiSales Admin User
 
 Login to Salesforce as DigiSales Lightning User
     [Arguments]       ${username}=${B2B_DIGISALES_LIGHT_USER}
-     ...              ${password}=${Password_merge}
+      ...              ${password}=${Password_merge}
+
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce Lightning
@@ -928,3 +929,358 @@ Click on Account Name
     ...         ELSE  Log To Console  No account name available
     sleep  10s
 
+
+
+
+
+####HDC Keywords Sreeram
+
+
+#################################################################################the below keywords are for hdc on jan 11 and after recent pulling
+
+
+CreateAContactFromAccount_HDC
+    log to console  this is to create a account from contact for HDC flow
+    ${a}  create unique name   Contact_
+    click element  //li/a/div[text()='New Contact']
+    sleep  5s
+    #click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
+    sleep   3s
+    input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']     Testing
+    sleep  5s
+    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   30s
+    clear element text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
+    set focus to element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
+    force click element  //input[@placeholder="Last Name"]
+    input text  //input[@placeholder="Last Name"]   ${a}
+    sleep  2s
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]   kasibhotla.sreeramachandramurthy@teliacompany.com
+    sleep  2s
+    click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
+    sleep  10s
+
+    [return]  ${a}
+
+CreateAOppoFromAccount_HDC
+
+     [Arguments]   ${b}=${contact_name}
+     log to console  this is to create a Oppo from contact for HDC flow
+     ${oppo_name}  create unique name   Oppo_
+     wait until page contains element  //li/a/div[text()='New Opportunity']   30s
+     click element  //li/a/div[text()='New Opportunity']
+     sleep  10s
+     wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   40s
+     input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   ${oppo_name}
+     sleep  3s
+     ${close_date}  get date from future  10
+     input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[2]    ${close_date}
+     sleep  7s
+     input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]     Testing ${b}
+     wait until page contains element  //*[@title='Testing ${b}']/../../..   10s
+     click element  //*[@title='Testing ${b}']/../../..
+     sleep  2s
+     input text      //textarea   ${oppo_name}.${close_date}.Description Testing
+     click element  //button[@data-aura-class="uiButton"]/span[text()='Save']
+     sleep  10s
+     [return]  ${oppo_name}
+
+ChangeThePriceBookToHDC
+    log to console  this is to change the prioebook to HDCB2B
+    sleep  10s
+    Execute JavaScript    window.scrollTo(0,600)
+    #scroll page to element  //button[@title="Edit Price Book"]
+    click element  //button[@title="Edit Price Book"]
+    sleep  7s
+    click element  //div/div[10]/div[1]/div/div/div/div/div/div[2]/div/ul/li[1]/a/a
+    sleep  3s
+    input text   //input[@title='Search Price Books']   HDC Pricebook B2B
+    sleep  3s
+    click element  //*[@title='HDC Pricebook B2B']/../../..
+    click element  //button[@title='Save']
+    sleep  10s
+    execute javascript  window.scrollTo(0,0)
+    sleep  5s
+
+ClickingOnCPQ
+    ##clcking on CPQ
+     [Arguments]   ${b}=${oppo_name}
+    click element     xpath=//a[@title='CPQ']
+    #wait until page contains element  xpath=//h1[text()='${b}']   30s
+    sleep   40s
+
+AddingProductToCartAndClickNextButton
+    ##enter searcing product and click on add to cart and click on next button
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]  30s
+    #input text  xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]  Telia Colocation
+    wait until page contains element  xpath=//p[normalize-space(.) = 'Telia Colocation']/../../../div[@class='slds-tile__detail']/div/div/button   30s
+    click element  xpath=//p[normalize-space(.) = 'Telia Colocation']/../../../div[@class='slds-tile__detail']/div/div/button
+    wait until page contains element   xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Colocation']  30s
+
+    wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button  30s
+    click element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button
+    wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']   60
+    ##page should contain element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']
+    ##wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']   60s
+    #wait until page contains element  xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']   60s
+    execute javascript  window.scrollTo(0,200)
+    #scroll page to element  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    sleep  5s
+    wait until page contains element  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']   20s
+    click element  xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    log to console  before teardiwn
+    Unselect Frame
+    sleep   60s
+
+UpdateAndAddSalesType
+
+    select frame  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    wait until page contains element  xpath=//h1[normalize-space(.) = 'Update Products']    60s
+    log to console  selected new frame
+    wait until page contains element   xpath=//td[normalize-space(.)='Telia Colocation']  70s
+    click element  xpath=//td[normalize-space(.)='Telia Colocation']//following-sibling::td/select[contains(@class,'required')]
+    sleep  2s
+    click element  xpath=//td[normalize-space(.)='Telia Colocation']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    click element  xpath=//button[normalize-space(.)='Next']
+    unselect frame
+    sleep  50s
+
+OpenQuoteButtonPage
+
+    select frame  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    log to console  selected final page frame
+    wait until page contains element  //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]   60s
+    log to console  wait completed before open quote click
+    wait until element is visible  //*[@id="Open Quote"]  30s
+    wait until element is enabled  //*[@id="Open Quote"]   20
+    log to console  element visible next step
+    click element  //*[@id="Open Quote"]
+    unselect frame
+
+    sleep   30s
+
+CreditScoreApproving
+     sleep   30s
+    #credit score approval and go to home page again
+    click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    #wait until page contains element  //span[@class='test-id__field-label' and text()='Quote Number']  10s
+    sleep  20s
+    #scroll page to element  //button[@title='Edit Approval Status']
+    #sleep  10s
+    Execute JavaScript    window.scrollTo(0,1900)
+    #Execute Javascript    window.location.reload(true)
+    sleep   20s
+    wait until page contains element  //button[@title='Edit Approval Status']   30s
+    click element  //button[@title='Edit Approval Status']
+    sleep  10s
+     wait until page contains element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
+     wait until element is enabled  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
+     set focus to element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     force click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     Execute Javascript    window.location.reload(true)
+     sleep   50s
+      click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+      sleep  10s
+      Execute JavaScript    window.scrollTo(0,1900)
+      sleep  50s
+       click element  //button[@title='Edit Approval Status']
+      sleep  10s
+     force click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     sleep  5s
+     force click element  //a[@title='Approved']
+    sleep  2s
+     #//div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     sleep  50s
+     #Execute Javascript    window.location.reload(true)
+     #sleep  40s
+     #click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+     #sleep  5s
+     #Execute JavaScript    window.scrollTo(0,2000)
+     #sleep  10s
+
+   #  click element  //button[@title='Edit Approval Status']
+   #  sleep   5s
+   #  wait until page contains element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved']  30s
+   #  wait until element is enabled  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved']  30s
+   #  set focus to element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved']
+    # force click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved']
+    #double click element
+    #wait until page contains element  //div[@class='uiPopupTrigger']/div/div/a[@class='select' and @role='button'and text()='Not Approved']/..  30s
+    #wait until element is visible  //div[@class='uiPopupTrigger']/div/div/a[@class='select' and @role='button'and text()='Not Approved']/..  30s
+    #wait until element is enabled   //div[@class='uiPopupTrigger']/div/div/a[@class='select' and @role='button'and text()='Not Approved']/..   20
+    #set focus to element  //a[@class='select' and @role='button'and text()='Not Approved']/..
+    #force click element  //a[@class='select' and @role='button'and text()='Not Approved']/..
+    #//div[@class='uiPopupTrigger']/div/div/a[@class='select' and @role='button'and text()='Not Approved']/..
+    #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
+    #Press Key    //a[@class='select' and @role='button'and text()='Not Approved']/..   //13
+    #sleep   5s
+    #force click element  //a[@title='Approved']
+    sleep  2s
+    click element  //button[@title='Save']
+    sleep   20s
+    Execute JavaScript    window.scrollTo(0,0)
+    sleep   10s
+
+ClickonCreateOrderButton
+    #clicking on CPQ after credit score approval and click create order button this cpq not able to click so work on hold
+      wait until page contains element  //a[@title='CPQ']/..   30s
+     ##${expiry} =  get text  //*[text()='Expiration Date']
+    ##log to console  ${expiry}
+    force click element  //a[@title='CPQ']
+    sleep  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //span[text()='Create Order']/..  30s
+    click element  //span[text()='Create Order']/..
+    unselect frame
+    sleep  30s
+
+NextButtonOnOrderPage
+        #click on the next button from the cart
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //span[text()='Next']/..
+    click element   //span[text()='Next']/..
+    unselect frame
+    sleep  30s
+
+SearchAndSelectBillingAccount
+    execute javascript  window.location.reload(true)
+    sleep  60s
+    #Selecting the billingAC FLow chart page
+    #log to console  entering billingAC page
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //*[@id="ExtractAccount"]  30s
+    click element   //*[@id="ExtractAccount"]
+    wait until page contains element  //label[normalize-space(.)='Select Account']  30s
+    wait until page contains element  //div[text()='${LIGHTNING_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']   30s
+    click element  //div[text()='${LIGHTNING_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep  2s
+    click element  //*[@id="SearchAccount_nextBtn"]
+    log to console  Exiting billingAC page
+    unselect frame
+    sleep  30s
+
+SelectingTechnicalContact
+    [Arguments]   ${d}= ${contact_technical}
+    #Selecting the Techincal COntact FLow chart page
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    log to console  entering Technical COntact  page
+    wait until page contains element  //*[@id="ContactName"]  30s
+    #execute javascript   window.location.reload(true)
+    #reload page
+    #sleep  10s
+    wait until page contains element  //*[@id="ContactName"]  30s
+    input text  //*[@id="ContactName"]  Testing ${d}
+    click element  //*[@id="SearchContactByName"]
+
+    wait until page contains element  //div[text()='Testing ${d}']/..//preceding-sibling::td[2]  30s
+    click element            //div[text()='Testing ${d}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep  5s
+    click element                     //*[@id="Select Contact_nextBtn"]
+    log to console  Exiting  technical  page
+    unselect frame
+    sleep  30s
+
+RequestActionDate
+
+    #selecting Requested Action Date FLow chart page
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    log to console  entering Requested action date page
+    wait until page contains element  //*[@id="RequestedActionDate"]   30s
+    click element  //*[@id="RequestedActionDate"]
+    ${date_requested}=    Get Current Date    result_format=%m-%d-%Y
+    #log to console  ${d}
+    input text  //*[@id="RequestedActionDate"]    ${date_requested}
+    click element  //*[@id="Additional data_nextBtn"]
+    unselect frame
+    log to console  Exiting  Requested Action Date page
+    sleep  30s
+
+
+SelectOwnerAccountInfo
+    #Select Owner Account FLow Chart Page
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    log to console  entering Owner Account page
+    wait until page contains element  //div[text()='Billing Digia Oyj-9']/..//preceding-sibling::td[2]/label/input[@type='checkbox']  30s
+    click element  //div[text()='Billing Digia Oyj-9']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    click element  //*[@id="BuyerIsPayer"]//following-sibling::span
+    click element  //*[@id="SelectedBuyerAccount_nextBtn"]
+    unselect frame
+    log to console  Exiting  owner Account page
+    sleep  30s
+
+ReviewPage
+    #Review Page FLow chart Page
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    log to console  entering Review page
+    wait until page contains element  //*[@id="SubmitInstruction"]/div/p/h3/strong[contains(text(),'successfully')]   30s
+    click element  //*[@id="DecomposeOrder"]
+    unselect frame
+    log to console  Exiting Review page
+    sleep  30s
+
+ValidateTheOrchestrationPlan
+
+    execute javascript  window.scrollTo(0,2000)
+    sleep  10s
+    wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    click element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+
+CreateABillingAccount
+    # go to particular account and create a billing accouint from there
+
+    wait until page contains element  //li/a/div[@title='Billing Account']   45s
+    click element    //li/a/div[@title='Billing Account']
+    sleep  20s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //*[@id="RemoteAction1"]  30s
+    click element  //*[@id="RemoteAction1"]
+    unselect frame
+    sleep  10s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //*[@id="Customer_nextBtn"]   30s
+    click element  //*[@id="Customer_nextBtn"]
+    unselect frame
+    #select frame  xpath=//div[contains(@class,'slds')]/iframe
+    sleep   20s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  30s
+    ${account_name_get}=  get text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
+    ${numbers}=     Generate Random String    4    [NUMBERS]
+    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
+    Execute JavaScript    window.scrollTo(0,700)
+    #scroll page to element  //*[@id="billing_country"]
+    click element  //*[@id="billing_country"]
+    sleep  3s
+    click element  //*[@id="billing_country"]/option[@value='FI']
+    sleep  2s
+    click element  //*[@id="Invoice_Delivery_Method"]
+    sleep  3s
+    click element   //*[@id="Invoice_Delivery_Method"]/option[@value='Paper Invoice']
+    sleep  2s
+    input text  //*[@id="payment_term"]   10
+    sleep  2s
+    click element  //*[@id="create_billing_account"]/p[text()='Create Billing Account']
+    sleep   10s
+    execute javascript  window.scrollTo(0,2100)
+    #scroll page to element  //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
+    sleep  5s
+    wait until page contains element  //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']   30s
+    force click element  //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
+    unselect frame
+    sleep  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    sleep  20s
+    force click element  //*[@id="return_billing_account"]
+    sleep  10s
+    unselect frame
+
+    [return]  Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
+
+
+
+Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    [Arguments]       ${username}=mmw9007@teliacompany.com.Vlocupg
+                #${B2B_DIGISALES_LIGHT_USER}
+     ...              ${password}=Sriram@123
+                      #${Password_merge}
+    Login To Salesforce Lightning    ${username}    ${password}
