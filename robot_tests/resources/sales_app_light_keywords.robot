@@ -943,12 +943,12 @@ CreateAContactFromAccount_HDC
     log to console  this is to create a account from contact for HDC flow
     ${a}  create unique name   Contact_
     click element  //li/a/div[text()='New Contact']
-    sleep  5s
+    sleep  10s
     #click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
     sleep   3s
     input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']     Testing
     sleep  5s
-    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   30s
+    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   60s
     clear element text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     set focus to element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     force click element  //input[@placeholder="Last Name"]
@@ -957,7 +957,7 @@ CreateAContactFromAccount_HDC
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]   kasibhotla.sreeramachandramurthy@teliacompany.com
     sleep  2s
     click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
-    sleep  10s
+    sleep  30s
 
     [return]  ${a}
 
@@ -966,9 +966,9 @@ CreateAOppoFromAccount_HDC
      [Arguments]   ${b}=${contact_name}
      log to console  this is to create a Oppo from contact for HDC flow
      ${oppo_name}  create unique name   Oppo_
-     wait until page contains element  //li/a/div[text()='New Opportunity']   30s
+     wait until page contains element  //li/a/div[text()='New Opportunity']   60s
      click element  //li/a/div[text()='New Opportunity']
-     sleep  10s
+     sleep  60s
      wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   40s
      input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   ${oppo_name}
      sleep  3s
@@ -981,16 +981,16 @@ CreateAOppoFromAccount_HDC
      sleep  2s
      input text      //textarea   ${oppo_name}.${close_date}.Description Testing
      click element  //button[@data-aura-class="uiButton"]/span[text()='Save']
-     sleep  10s
+     sleep  60s
      [return]  ${oppo_name}
 
 ChangeThePriceBookToHDC
     log to console  this is to change the prioebook to HDCB2B
-    sleep  10s
+    sleep  30s
     Execute JavaScript    window.scrollTo(0,600)
     #scroll page to element  //button[@title="Edit Price Book"]
     click element  //button[@title="Edit Price Book"]
-    sleep  7s
+    sleep  10s
     click element  //div/div[10]/div[1]/div/div/div/div/div/div[2]/div/ul/li[1]/a/a
     sleep  3s
     input text   //input[@title='Search Price Books']   HDC Pricebook B2B
@@ -1011,22 +1011,22 @@ ClickingOnCPQ
 AddingProductToCartAndClickNextButton
     ##enter searcing product and click on add to cart and click on next button
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]  30s
+    wait until page contains element  xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]  60s
     #input text  xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]  Telia Colocation
-    wait until page contains element  xpath=//p[normalize-space(.) = 'Telia Colocation']/../../../div[@class='slds-tile__detail']/div/div/button   30s
+    wait until page contains element  xpath=//p[normalize-space(.) = 'Telia Colocation']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     click element  xpath=//p[normalize-space(.) = 'Telia Colocation']/../../../div[@class='slds-tile__detail']/div/div/button
-    wait until page contains element   xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Colocation']  30s
+    wait until page contains element   xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Colocation']  60s
 
-    wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button  30s
+    wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button  60s
     click element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button
-    wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']   60
+    wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']   60s
     ##page should contain element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']
     ##wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']   60s
     #wait until page contains element  xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']   60s
     execute javascript  window.scrollTo(0,200)
     #scroll page to element  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    sleep  5s
-    wait until page contains element  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']   20s
+    sleep  10s
+    wait until page contains element  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']   60s
     click element  xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     log to console  before teardiwn
     Unselect Frame
@@ -1043,7 +1043,7 @@ UpdateAndAddSalesType
     click element  xpath=//td[normalize-space(.)='Telia Colocation']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     click element  xpath=//button[normalize-space(.)='Next']
     unselect frame
-    sleep  50s
+    sleep  60s
 
 OpenQuoteButtonPage
 
@@ -1052,12 +1052,11 @@ OpenQuoteButtonPage
     wait until page contains element  //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]   60s
     log to console  wait completed before open quote click
     wait until element is visible  //*[@id="Open Quote"]  30s
-    wait until element is enabled  //*[@id="Open Quote"]   20
+    wait until element is enabled  //*[@id="Open Quote"]   20s
     log to console  element visible next step
     click element  //*[@id="Open Quote"]
     unselect frame
-
-    sleep   30s
+    sleep   60s
 
 CreditScoreApproving
      sleep   30s
@@ -1231,20 +1230,20 @@ CreateABillingAccount
 
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
-    sleep  20s
+    sleep  60s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="RemoteAction1"]  30s
+    wait until page contains element  //*[@id="RemoteAction1"]  60s
     click element  //*[@id="RemoteAction1"]
     unselect frame
-    sleep  10s
+    sleep  60s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="Customer_nextBtn"]   30s
+    wait until page contains element  //*[@id="Customer_nextBtn"]   60s
     click element  //*[@id="Customer_nextBtn"]
     unselect frame
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
-    sleep   20s
+    sleep   60s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  30s
+    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  60s
     ${account_name_get}=  get text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
     ${numbers}=     Generate Random String    4    [NUMBERS]
     input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
@@ -1268,11 +1267,11 @@ CreateABillingAccount
     wait until page contains element  //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']   30s
     force click element  //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
     unselect frame
-    sleep  30s
+    sleep  60s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    sleep  20s
+    sleep  30s
     force click element  //*[@id="return_billing_account"]
-    sleep  10s
+    sleep  60s
     unselect frame
 
     [return]  Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
