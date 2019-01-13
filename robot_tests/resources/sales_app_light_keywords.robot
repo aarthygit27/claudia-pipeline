@@ -1230,7 +1230,7 @@ CreateABillingAccount
 
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
-    sleep  60s
+    sleep  120s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="RemoteAction1"]  60s
     click element  //*[@id="RemoteAction1"]
