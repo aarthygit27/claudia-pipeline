@@ -585,12 +585,13 @@ Validate Created Meeting
     should be equal as strings    ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
 
 Modify Meeting Outcome
-    scroll page to location    0    600
+    scroll page to location    0    500
     #click element    ${meeting_outcome_edit_button}
     Force click element     ${meeting_outcome_edit_button}
     sleep    10s
     Force click element  ${meeting_outcome_select}
     sleep    10s
+
     force click element    ${meeting_outcome_dropdown_value}
     click element    xpath=${meeting_status_select}
     sleep    10s
