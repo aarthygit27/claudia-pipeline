@@ -156,7 +156,7 @@ Lightning: Sales admin Change Account owner for group account
 
 
 Create opportunity from Account for HDCFlow
-    [Tags]  BQA-HDCOppo        Lightning
+    [Tags]  BQA-HDCOppo        Lightning1
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
