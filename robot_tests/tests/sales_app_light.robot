@@ -39,7 +39,7 @@ Create opportunity from Account for HDCFlow
     SearchAndSelectBillingAccount
     SelectingTechnicalContact   ${contact_name}
     RequestActionDate
-    SelectOwnerAccountInfo   ${billing_account}
+    SelectOwnerAccountInfo   ${billing_acc_name}
     ReviewPage
     ValidateTheOrchestrationPlan
 
