@@ -112,7 +112,8 @@ ${save_button_create}                        //div/div[3]/div/div/div[2]/div[2]/
 ${success_message_anchor}                   //div[contains(text(),'You have an upcoming Event')]
 #//*[contains(text(),'You have an upcoming Event with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${meeting_outcome_edit_button}              //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/button
-${meeting_outcome_select}                   //*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div
+${meeting_outcome_select}                   //*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div/div/a
+#//*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div
 ${meeting_status_select}                    //*[text()='Meeting Status']/../../div[@class='uiMenu']/div/div/div
 ${meeting_status_value}                     //a[@title='Done']
 ${meeting_outcome_dropdown_value}           //div/ul/li[2]/a[@title='Positive']
