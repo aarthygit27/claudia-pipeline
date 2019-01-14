@@ -7,25 +7,31 @@ Resource          ..${/}resources${/}sales_app_light_variables.robot
 
 *** Keywords ***
 Go To Salesforce
+    [Documentation]     Go to SalesForce and verify the login page is displayed.
     Go To    ${LOGIN_PAGE}
     Login Page Should Be Open
 
 Go to Sales App
+    [Documentation]     Go to SalesForce and switch to salesapp menu.
     ${IsElementVisible}=    Run Keyword And Return Status    element should not be visible    ${SALES_APP_NAME}
     Run Keyword If    ${IsElementVisible}    Switch to SalesApp
 
 Switch to SalesApp
+    [Documentation]     Go to App launcher and click on SalesApp
     Click Element    ${APP_LAUNCHER}
     Wait until Page Contains Element    ${SALES_APP_LINK}    60s
     Click Element    ${SALES_APP_LINK}
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
 
 Login Page Should Be Open
+    [Documentation]     To Validate the elements in Login page
     Wait Until Keyword Succeeds    60s    1 second    Location Should Be    ${LOGIN_PAGE}
     Wait Until Element Is Visible    id=username    60s
     Wait Until Element Is Visible    id=password    60s
 
 Go To Salesforce and Login into Lightning
+    [Documentation]     Go to Salesforce and then Login as DigiSales Lightning User, then switch to Sales App
+    ...     and then select the Home Tab in Menu
     [Arguments]    ${user}=DigiSales Lightning User
     Go to Salesforce
     Run Keyword    Login to Salesforce as ${user}
@@ -33,6 +39,8 @@ Go To Salesforce and Login into Lightning
     Reset to Home
 
 Go To Salesforce and Login into Lightning User
+    [Documentation]     Go to Salesforce and then Login as DigiSales Admin User, then switch to Sales App
+    ...     and then select the Home Tab in Menu
     [Arguments]    ${user}=DigiSales Admin User
     Go to Salesforce
     Run Keyword    Login to Salesforce as ${user}
@@ -42,7 +50,6 @@ Go To Salesforce and Login into Lightning User
 Login to Salesforce as DigiSales Admin User
 
     Login To Salesforce Lightning    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
-
 
 Login to Salesforce as DigiSales Lightning User
     [Arguments]       ${username}=${B2B_DIGISALES_LIGHT_USER}
@@ -95,7 +102,7 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
-    Sleep    2s
+    #Sleep    2s
     Press Enter On  ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
@@ -437,6 +444,7 @@ Select option from Dropdown
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${item}
     click visible element    ${list}
     Press Key    ${list}    ${item}
+    Sleep   3s
     force click element    //a[@title='${item}']
 
 Verify That Opportunity is Not Found under My All Open Opportunities
