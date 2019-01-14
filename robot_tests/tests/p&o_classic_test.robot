@@ -54,3 +54,10 @@ Create New Order
     Select Window    title=@{pages}[1]
     Wait Until Page Contains    Orchestration Plan Detail
     Capture Page Screenshot
+
+Wait time checking
+    [Tags]    PO1
+    Go To Salesforce and Login2    Digisales User devpo
+    Go To    ${CLASSIC_APP}
+    Get Time
+    Go to Account2    ${DEFAULT_TEST_ACCOUNT}

@@ -15,8 +15,10 @@ Go to Account2
     Wait Until Element Is Visible    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]    60s
     Click Link    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]
     Unselect Frame
-    Wait Until Element Is Visible    //a[@class='optionItem efpDetailsView ']    45s
+    get time
+    Wait Until Element Is Visible    //a[@class='optionItem efpDetailsView ']    600s
     Click Element    //a[@class='optionItem efpDetailsView ']
+    get time
 
 create new opportunity
     [Arguments]    ${target_account}
