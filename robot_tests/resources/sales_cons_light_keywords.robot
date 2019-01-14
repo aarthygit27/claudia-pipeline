@@ -271,6 +271,7 @@ Select Correct Tab Type
     #Click Element     ${SALES_CONSOLE_MENU}
     ${CreateButtonVisible} =    Run Keyword And Return Status      Element Should Be Visible    ${tab}
     run keyword if      ${CreateButtonVisible}=='FAIL'    Click Element     ${SALES_CONSOLE_MENU}
+    Sleep       3s
     Click Element               ${tab}
     Sleep       5s
 

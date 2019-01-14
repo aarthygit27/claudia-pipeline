@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 
@@ -127,19 +127,19 @@ Check Attributes/Contact Person are named right
     Validate That Contact Person Attributes Are Named Right
 
 Lightning: Create Meeting from Account
-    [Tags]    BQA-7948    Lightning2
+    [Tags]    BQA-7948    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Meeting
 
 Lightning: Create Call from Account
-    [Tags]    BQA-8085    Lightning2
+    [Tags]    BQA-8085    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Call
 
 Lightning: Create Task from Account
-    [Tags]    BQA-8463    Lightning2
+    [Tags]    BQA-8463    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Task

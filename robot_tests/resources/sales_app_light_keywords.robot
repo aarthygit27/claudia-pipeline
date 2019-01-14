@@ -151,9 +151,9 @@ Input Quick Action Value For Attribute
 Select Quick Action Value For Attribute
     [Arguments]    ${field}    ${value}
     Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']    60s
-    Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
+    Force Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
     Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]
-    Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
+    Force Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
 
 Fill Mandatory Classification
     [Arguments]    ${account_name}=${LIGHTNING_TEST_ACCOUNT}
@@ -530,21 +530,21 @@ click Meeting Link on Page
 
 Enter Mandatory Info on Meeting Form
     [Arguments]    ${task_subject}
-    sleep    10s
+    sleep    5s
     input text    xpath=${SUBJECT_INPUT}    ${task_subject}
-    sleep    10s
+    sleep    5s
     click element    xpath=${EVENT_TYPE}
     click element    xpath=${meeting_select_dropdown}
-    sleep    10s
+    sleep    5s
     Select option from Dropdown with Force Click Element    ${reason_select_dropdown}    ${reason_select_dropdown_value}
     #click element    xpath=${reason_select_dropdown}
     #click element    xpath=${reason_select_dropdown_value}
     Enter Meeting Start and End Date
-    sleep    10s
+    sleep    5s
     Input Text    ${city_input}    ${DEFAULT_CITY}
-    sleep    10s
+    sleep    5s
     Enter and Select Contact Meeting
-    sleep    10s
+    sleep    5s
 
 Enter Meeting Start and End Date
     ${date}=    Get Date From Future    1
@@ -565,7 +565,7 @@ Save Meeting and click on Suucess Message
     sleep    30s
     #click element    ${success_message_anchor}
     Force click element     ${success_message_anchor}
-    sleep    40s
+    sleep    10s
 
 Validate Created Meeting
     sleep    10s
@@ -585,17 +585,12 @@ Validate Created Meeting
     should be equal as strings    ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
 
 Modify Meeting Outcome
-    scroll page to location    0    500
-    #click element    ${meeting_outcome_edit_button}
-    Force click element     ${meeting_outcome_edit_button}
-    sleep    10s
-    Force click element  ${meeting_outcome_select}
-    sleep    10s
-
-    force click element    ${meeting_outcome_dropdown_value}
-    click element    xpath=${meeting_status_select}
-    sleep    10s
-    click element    xpath=${meeting_status_value}
+    Click element       //div[@title='Edit']/..
+    wait until page contains element        //*[contains(text(),'Edit Task')]       30s
+    Sleep       5s
+    Select Quick Action Value For Attribute    Meeting Outcome    Positive
+    Sleep      5s
+    Select Quick Action Value For Attribute    Meeting Status    Done
     input text    xpath=${description_textarea}    ${name_input}.Edited.${Meeting}
     click element    ${save_button_editform}
     sleep    20s
