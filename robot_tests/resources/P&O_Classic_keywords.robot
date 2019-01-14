@@ -12,12 +12,11 @@ Go to Account2
     Search Salesforce    ${target_account}
     #sleep    10s
     #Select Frame    //iframe[@title='sessionserver']
-    Wait Until Element Is Visible    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]    60s
-    Click Link    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]
+    Wait Until Element Is Visible    //th/a[contains(text(),'${target_account}')]    60s    //th/a[contains(text(),'${target_account}')]
+    Click Link    //th/a[contains(text(),'${target_account}')]
     Unselect Frame
     Wait Until Element Is Visible    //a[@class='optionItem efpDetailsView ']    60s
     Click Element    //a[@class='optionItem efpDetailsView ']
-    get time
 
 create new opportunity
     [Arguments]    ${target_account}
