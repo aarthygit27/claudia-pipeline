@@ -13,6 +13,8 @@ Go to Account2
     #sleep    10s
     #Select Frame    //iframe[@title='sessionserver']
     get time
+    sleep    10s
+    Take Screenshot
     Wait Until Element Is Visible    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]    600s
     get time
     Click Link    //table[@class='list']/tbody/tr[contains(@class,'dataRow')]/th/a[contains(text(),'${target_account}')]
