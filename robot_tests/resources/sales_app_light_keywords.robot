@@ -6,6 +6,7 @@ Resource          ..${/}resources${/}cpq_keywords.robot
 Resource          ..${/}resources${/}sales_app_light_variables.robot
 
 *** Keywords ***
+
 Go To Salesforce
     [Documentation]     Go to SalesForce and verify the login page is displayed.
     Go To    ${LOGIN_PAGE}
@@ -37,6 +38,7 @@ Go To Salesforce and Login into Lightning
     Run Keyword    Login to Salesforce as ${user}
     Go to Sales App
     Reset to Home
+    Click Clear All Notifications
 
 Go To Salesforce and Login into Lightning User
     [Documentation]     Go to Salesforce and then Login as DigiSales Admin User, then switch to Sales App
@@ -121,7 +123,8 @@ Select Entity
 
 Entity Should Be Open
     [Arguments]    ${target_name}
-    Wait Until Page Contains element    ${ENTITY_HEADER}//*[text()='${target_name}']
+    Sleep   5s
+    Wait Until Page Contains element    ${ENTITY_HEADER}//*[text()='${target_name}']        30s
     #${Case} ---- ActiveStatus or PassiveStatus of Account
 
 Create New Opportunity For Customer
