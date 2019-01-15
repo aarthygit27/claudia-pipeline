@@ -110,7 +110,9 @@ Search Salesforce
     Sleep    2s
     ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      20s
     run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
-    Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    60s
+    ${IsNotVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      20s
+    run keyword If  ${IsNotVisible}    Press Enter On  ${SEARCH_SALESFORCE}
+    Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    120s
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
