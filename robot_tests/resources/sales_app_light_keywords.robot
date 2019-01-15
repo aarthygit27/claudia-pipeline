@@ -292,6 +292,7 @@ Create New Master Contact
 Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
+    Sleep   10s
     Click Visible Element    //div[contains(@class,'primaryLabel') and @title='${value}']
 
 Validate Master Contact Details
