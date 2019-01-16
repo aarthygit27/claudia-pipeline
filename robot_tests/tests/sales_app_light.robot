@@ -175,16 +175,16 @@ Lightning: Sales admin Change Account owner for group account
     Change Account Owner
 
 Create opportunity from Account for HDCFlow
-    [Tags]  BQA-HDCOppo        Lightning
+    [Tags]  BQA-HDCOppo        Lightning2
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
     #go to entity  Oppo_ 20190112-151427
-    sleep   10s
-    ${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
-    log to console  ${billing_acc_name}.this is billing account name
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    sleep   10s
+    #sleep   10s
+    #${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
+    #log to console  ${billing_acc_name}.this is billing account name
+    #Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    #sleep   10s
     ${contact_name}   run keyword  CreateAContactFromAccount_HDC
     log to console   ${contact_name}.this is name
     sleep   10s
