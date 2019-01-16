@@ -1241,17 +1241,22 @@ CreateABillingAccount
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
     sleep  20s
-    current frame contains  //div[contains(@class,'slds')]/iframe
+    Run Inside Iframe    //div[contains(@class,'slds')]/iframe    Click Element    //*[@id="RemoteAction1"]
+    log to console  RemoteAction1 clicked  selected.
+    wait until page contains element  //*[@id="Customer_nextBtn"]   60s
+    Run Inside Iframe    //div[contains(@class,'slds')]/iframe    Click Element    //*[@id="Customer_nextBtn"]
+    log to console  customer_next_btn clickeds
+    #current frame contains  //div[contains(@class,'slds')]/iframe
     #select frame  //div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="RemoteAction1"]  60s
     click element  //*[@id="RemoteAction1"]
-    unselect frame
+    #unselect frame
     sleep  60s
-    current frame contains  //div[contains(@class,'slds')]/iframe
+    #current frame contains  //div[contains(@class,'slds')]/iframe
     #select frame  //div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="Customer_nextBtn"]   60s
     click element  //*[@id="Customer_nextBtn"]
-    unselect frame
+   # unselect frame
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep   60s
     current frame contains  //div[contains(@class,'slds')]/iframe
