@@ -1239,11 +1239,15 @@ CreateABillingAccount
     # go to particular account and create a billing accouint from there
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
-    sleep  60s
-    frame should contain  //div[contains(@class,'slds')]//iframe   Send Account to billing system
-    sleep  20s
+    sleep  30s
+     Wait Until Page Contains Element    //div[contains(@class,'slds')]//iframe    40 seconds
+    Run Keyword    Select Frame   xpath=//div[contains(@class,'slds')]//iframe
+    log to console  frame selected
+    sleep  10s
+    #frame should contain  //div[contains(@class,'slds')]//iframe   Send Account to billing system
+    #sleep  20s
     #Run Inside Iframe    //div[contains(@class,'slds')]//iframe    Click Element    //*[@id="RemoteAction1"]
-    Force click element    //*[@id="RemoteAction1"]
+    click element    xpath=//div[@id="RemoteAction1"]
     log to console  RemoteAction1 clickedselected.
     sleep   60s
     #wait until page contains element  //*[@id="Customer_nextBtn"]   60s
