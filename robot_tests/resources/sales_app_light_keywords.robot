@@ -1241,12 +1241,12 @@ CreateABillingAccount
     click element    //li/a/div[@title='Billing Account']
     sleep  20s
     #Run Inside Iframe    //div[contains(@class,'slds')]//iframe    Click Element    //*[@id="RemoteAction1"]
-    Click Element    //*[@id="RemoteAction1"]
+    Force click element    //*[@id="RemoteAction1"]
     log to console  RemoteAction1 clickedselected.
     sleep   60s
     #wait until page contains element  //*[@id="Customer_nextBtn"]   60s
-    Run Inside Iframe    //div[contains(@class,'slds')]//iframe    Click Element    //*[@id="Customer_nextBtn"]
-    log to console  customer_next_btn clicked
+    #Run Inside Iframe    //div[contains(@class,'slds')]//iframe    Click Element    //*[@id="Customer_nextBtn"]
+    #log to console  customer_next_btn clicked
     #current frame contains  //div[contains(@class,'slds')]/iframe
     #select frame  //div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="RemoteAction1"]  60s
