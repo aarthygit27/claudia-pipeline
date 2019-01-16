@@ -978,7 +978,7 @@ CreateAOppoFromAccount_HDC
      ${oppo_name}  create unique name   Oppo_
      wait until page contains element  //li/a/div[text()='New Opportunity']   60s
      click element  //li/a/div[text()='New Opportunity']
-     sleep  60s
+     sleep  30s
      wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   40s
      input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   ${oppo_name}
      sleep  3s
@@ -1241,12 +1241,12 @@ CreateABillingAccount
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
     sleep  20s
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    select frame  //div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="RemoteAction1"]  60s
     click element  //*[@id="RemoteAction1"]
     unselect frame
     sleep  60s
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    select frame  //div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="Customer_nextBtn"]   60s
     click element  //*[@id="Customer_nextBtn"]
     unselect frame
