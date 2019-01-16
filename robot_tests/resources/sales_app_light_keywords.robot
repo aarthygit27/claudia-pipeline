@@ -953,21 +953,21 @@ CreateAContactFromAccount_HDC
     log to console  this is to create a account from contact for HDC flow
     ${a}  create unique name   Contact_
     click element  //li/a/div[text()='New Contact']
-    sleep  10s
+    sleep  5s
     #click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
     sleep   3s
     input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']     Testing
     sleep  5s
-    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   60s
+    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   30s
     clear element text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
-    #set focus to element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
+    set focus to element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     force click element  //input[@placeholder="Last Name"]
     input text  //input[@placeholder="Last Name"]   ${a}
     sleep  2s
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]   kasibhotla.sreeramachandramurthy@teliacompany.com
     sleep  2s
     click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
-    sleep  30s
+    sleep  10s
 
     [return]  ${a}
 
@@ -1234,44 +1234,30 @@ ValidateTheOrchestrationPlan
     sleep  10s
     wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
     click element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    sleep  10s
 
 CreateABillingAccount
     # go to particular account and create a billing accouint from there
+
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
-    sleep  30s
-     Wait Until Page Contains Element    //div[contains(@class,'slds')]//iframe    40 seconds
-    Run Keyword    Select Frame   xpath=//div[contains(@class,'slds')]//iframe
-    log to console  frame selected
-    sleep  10s
-    #frame should contain  //div[contains(@class,'slds')]//iframe   Send Account to billing system
-    #sleep  20s
-    #Run Inside Iframe    //div[contains(@class,'slds')]//iframe    Click Element    //*[@id="RemoteAction1"]
-    click element    xpath=//div[@id="RemoteAction1"]
-    log to console  RemoteAction1 clickedselected.
-    sleep   60s
-    #wait until page contains element  //*[@id="Customer_nextBtn"]   60s
-    #Run Inside Iframe    //div[contains(@class,'slds')]//iframe    Click Element    //*[@id="Customer_nextBtn"]
-    #log to console  customer_next_btn clicked
-    #current frame contains  //div[contains(@class,'slds')]/iframe
-    #select frame  //div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="RemoteAction1"]  60s
+    sleep  20s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //*[@id="RemoteAction1"]  30s
     click element  //*[@id="RemoteAction1"]
-    #unselect frame
-    sleep  60s
-    #current frame contains  //div[contains(@class,'slds')]/iframe
-    #select frame  //div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="Customer_nextBtn"]   60s
+    unselect frame
+    sleep  10s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //*[@id="Customer_nextBtn"]   30s
     click element  //*[@id="Customer_nextBtn"]
-   # unselect frame
+    unselect frame
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
-    sleep   60s
-    current frame contains  //div[contains(@class,'slds')]/iframe
-    #select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  60s
+    sleep   20s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  30s
     ${account_name_get}=  get text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
     ${numbers}=     Generate Random String    4    [NUMBERS]
-    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
+    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
     Execute JavaScript    window.scrollTo(0,700)
     #scroll page to element  //*[@id="billing_country"]
     click element  //*[@id="billing_country"]
@@ -1292,16 +1278,14 @@ CreateABillingAccount
     wait until page contains element  //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']   30s
     force click element  //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
     unselect frame
-    sleep  60s
-    current frame contains  //div[contains(@class,'slds')]/iframe
-    #select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    sleep  20s
     force click element  //*[@id="return_billing_account"]
-    sleep  60s
+    sleep  10s
     unselect frame
 
-    [return]  Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
-
+    [return]  Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
 
 
 Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
