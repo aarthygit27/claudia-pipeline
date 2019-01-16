@@ -1240,7 +1240,7 @@ CreateABillingAccount
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
     sleep  60s
-    frame should contain  //div[contains(@class,'slds')]//iframe   //*[@id="RemoteAction1"]
+    frame should contain  //div[contains(@class,'slds')]//iframe   Send Account to billing system
     sleep  20s
     #Run Inside Iframe    //div[contains(@class,'slds')]//iframe    Click Element    //*[@id="RemoteAction1"]
     Force click element    //*[@id="RemoteAction1"]
