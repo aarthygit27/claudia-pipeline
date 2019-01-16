@@ -1241,18 +1241,21 @@ CreateABillingAccount
     wait until page contains element  //li/a/div[@title='Billing Account']   45s
     click element    //li/a/div[@title='Billing Account']
     sleep  20s
-    select frame  //div[contains(@class,'slds')]/iframe
+    current frame contains  //div[contains(@class,'slds')]/iframe
+    #select frame  //div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="RemoteAction1"]  60s
     click element  //*[@id="RemoteAction1"]
     unselect frame
     sleep  60s
-    select frame  //div[contains(@class,'slds')]/iframe
+    current frame contains  //div[contains(@class,'slds')]/iframe
+    #select frame  //div[contains(@class,'slds')]/iframe
     wait until page contains element  //*[@id="Customer_nextBtn"]   60s
     click element  //*[@id="Customer_nextBtn"]
     unselect frame
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep   60s
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    current frame contains  //div[contains(@class,'slds')]/iframe
+    #select frame  xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  60s
     ${account_name_get}=  get text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
     ${numbers}=     Generate Random String    4    [NUMBERS]
@@ -1278,7 +1281,8 @@ CreateABillingAccount
     force click element  //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
     unselect frame
     sleep  60s
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    current frame contains  //div[contains(@class,'slds')]/iframe
+    #select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep  30s
     force click element  //*[@id="return_billing_account"]
     sleep  60s
