@@ -175,30 +175,24 @@ Lightning: Sales admin Change Account owner for group account
     Change Account Owner
 
 Create opportunity from Account for HDCFlow
-    [Tags]  BQA-HDCOppo        Lightning2
+    [Tags]  BQA-HDCOppo        Lightning
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    sleep  20s
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #go to entity  Oppo_ 20190112-151427
-    #sleep   10s
-
-
-
-
-
-
+     sleep  10s
     ${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
     log to console  ${billing_acc_name}.this is billing account name
-    #Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #sleep   10s
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    sleep   10s
     ${contact_name}   run keyword  CreateAContactFromAccount_HDC
     log to console   ${contact_name}.this is name
     sleep   10s
     ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     ###${contact_name}
     log to console   ${oppo_name}.this is opportunity
-    ${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
-    log to console  ${billing_acc_name}.this is billing account name
+    #${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
+    #log to console  ${billing_acc_name}.this is billing account name
     go to entity  ${oppo_name}
     sleep   30s
     ChangeThePriceBookToHDC
@@ -221,7 +215,7 @@ Create opportunity from Account for HDCFlow
     #Reach the Order Page and Validating the details
     #wait until page contains element  //span[text()='Order']//following::div/span[@class='uiOutputText']
     #${order_id}=   get text  //span[text()='Order']//following::div/span[@class='uiOutputText']
-    #page should contain element  //th/div/a[text()='Telia Colocation']
+    #spage should contain element  //th/div/a[text()='Telia Colocation']
     #page should contain element  //th/div/a[text()='Telia Colocation']//following::td/span[text()='New Money-New Services']
     #Execute JavaScript    window.scrollTo(0,2000)
     #page should contain element   //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
