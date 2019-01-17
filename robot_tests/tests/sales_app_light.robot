@@ -183,41 +183,41 @@ Create opportunity from Account for HDCFlow
 
     #${vLocUpg_TEST_ACCOUNT}
     capture page screenshot
-     sleep  10s
+    # sleep  10s
     ${billing_acc_name}  run keyword  CreateABillingAccount
-    sleep  40s                            #pass
+    sleep  60s                            #pass
     log to console  ${billing_acc_name}.this is billing account name
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #${vLocUpg_TEST_ACCOUNT}
-    capture page screenshot
-    sleep   40s
+    #capture page screenshot
+    #sleep   40s
     ##og to console  gotoentity_${vLocUpg_TEST_ACCOUNT}_passed
-    ${contact_name}   run keyword  CreateAContactFromAccount_HDC
-    log to console   ${contact_name}.this is name
-    sleep   30s
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    #${contact_name}   run keyword  CreateAContactFromAccount_HDC
+    #log to console   ${contact_name}.this is name
+    #sleep   30s
+    #${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     ###${contact_name}
-    log to console   ${oppo_name}.this is opportunity
+    #log to console   ${oppo_name}.this is opportunity
     ##${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
     #log to console  ${billing_acc_name}.this is billing account name
-    go to entity  ${oppo_name}
-    sleep   30s
-    ChangeThePriceBookToHDC
-    ClickingOnCPQ  ${oppo_name}
+    #go to entity  ${oppo_name}
+    #sleep   30s
+    #ChangeThePriceBookToHDC
+    #ClickingOnCPQ  ${oppo_name}
     #ClickingOnCPQ   Oppo_ 20190112-151427
-    AddingProductToCartAndClickNextButton
-    UpdateAndAddSalesType
-    OpenQuoteButtonPage
+    #AddingProductToCartAndClickNextButton
+    #UpdateAndAddSalesType
+    #OpenQuoteButtonPage
 
-    CreditScoreApproving
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
-    SelectingTechnicalContact   ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name}
-    ReviewPage
-    ValidateTheOrchestrationPlan
+    #CreditScoreApproving
+    #ClickonCreateOrderButton
+    #NextButtonOnOrderPage
+    #SearchAndSelectBillingAccount
+    #SelectingTechnicalContact   ${contact_name}
+    #RequestActionDate
+    #SelectOwnerAccountInfo   ${billing_acc_name}
+    #ReviewPage
+    #ValidateTheOrchestrationPlan
 
     #Reach the Order Page and Validating the details
     #wait until page contains element  //span[text()='Order']//following::div/span[@class='uiOutputText']
