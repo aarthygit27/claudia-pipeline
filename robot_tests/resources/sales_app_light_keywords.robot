@@ -121,8 +121,8 @@ Select Entity
     Click Element       ${element_catenate}
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
-    ${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    ${target_name}
-    run keyword Unless  ${ISOpen}       Click Element       ${element_catenate}
+    #${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    ${target_name}
+    #run keyword Unless  ${ISOpen}       Click Element       ${element_catenate}
 
 Entity Should Be Open
     [Arguments]    ${target_name}
