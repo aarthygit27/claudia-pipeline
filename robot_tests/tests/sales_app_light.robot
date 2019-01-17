@@ -179,17 +179,18 @@ Create opportunity from Account for HDCFlow
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     sleep  20s
-    Go To Entity   Digia Oyj
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+
     #${vLocUpg_TEST_ACCOUNT}
     capture page screenshot
      sleep  10s
     ${billing_acc_name}  run keyword  CreateABillingAccount
-    sleep  30s                            #pass
+    sleep  40s                            #pass
     log to console  ${billing_acc_name}.this is billing account name
-    Go To Entity    Digia Oyj
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #${vLocUpg_TEST_ACCOUNT}
     capture page screenshot
-    sleep   30s
+    sleep   40s
     ##og to console  gotoentity_${vLocUpg_TEST_ACCOUNT}_passed
     ${contact_name}   run keyword  CreateAContactFromAccount_HDC
     log to console   ${contact_name}.this is name
