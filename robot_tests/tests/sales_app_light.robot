@@ -181,8 +181,8 @@ Create opportunity from Account for HDCFlow
     sleep  20s
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
      sleep  10s
-    ${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
-    log to console  ${billing_acc_name}.this is billing account name
+    #${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
+    #log to console  ${billing_acc_name}.this is billing account name
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
     sleep   30s
     ${contact_name}   run keyword  CreateAContactFromAccount_HDC
@@ -191,8 +191,8 @@ Create opportunity from Account for HDCFlow
     ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     ###${contact_name}
     log to console   ${oppo_name}.this is opportunity
-    #${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
-    #log to console  ${billing_acc_name}.this is billing account name
+    ${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
+    log to console  ${billing_acc_name}.this is billing account name
     go to entity  ${oppo_name}
     sleep   30s
     ChangeThePriceBookToHDC
