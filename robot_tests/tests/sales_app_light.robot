@@ -186,8 +186,10 @@ Create opportunity from Account for HDCFlow
     # sleep  10s
     ${billing_acc_name}  run keyword  CreateABillingAccount
     sleep  60s                            #pass
+    capture page screenshot
     log to console  ${billing_acc_name}.this is billing account name
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    capture page screenshot
     #${vLocUpg_TEST_ACCOUNT}
     #capture page screenshot
     #sleep   40s
