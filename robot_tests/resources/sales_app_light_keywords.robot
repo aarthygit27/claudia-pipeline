@@ -1232,9 +1232,17 @@ ValidateTheOrchestrationPlan
 
     execute javascript  window.scrollTo(0,2000)
     sleep  10s
-    wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
     click element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
     sleep  10s
+    select frame   xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    sleep   10s
+    page should contain element   //a[text()='Start']
+    page should contain element   //a[text()='Assetize Order']
+    page should contain element   //a[text()='Deliver Service']
+    page should contain element   //a[text()='Order Events Update']
+    page should contain element   //a[text()='Activate Billing']
+    unselect frame
 
 CreateABillingAccount
     # go to particular account and create a billing accouint from there
