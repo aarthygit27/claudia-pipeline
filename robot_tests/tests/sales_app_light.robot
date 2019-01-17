@@ -184,10 +184,10 @@ Create opportunity from Account for HDCFlow
     ${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
     log to console  ${billing_acc_name}.this is billing account name
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    sleep   10s
+    sleep   30s
     ${contact_name}   run keyword  CreateAContactFromAccount_HDC
     log to console   ${contact_name}.this is name
-    sleep   10s
+    sleep   30s
     ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     ###${contact_name}
     log to console   ${oppo_name}.this is opportunity
