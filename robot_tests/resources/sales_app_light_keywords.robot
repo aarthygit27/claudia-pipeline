@@ -954,12 +954,12 @@ CreateAContactFromAccount_HDC
     log to console  this is to create a account from contact for HDC flow
     ${a}  create unique name   Contact_
     click element  //li/a/div[text()='New Contact']
-    sleep  10s
+    sleep  5s
     #click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
     sleep   3s
     input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']     Testing
     sleep  5s
-    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   60s
+    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   30s
     clear element text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     set focus to element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     force click element  //input[@placeholder="Last Name"]
@@ -968,7 +968,7 @@ CreateAContactFromAccount_HDC
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]   kasibhotla.sreeramachandramurthy@teliacompany.com
     sleep  2s
     click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
-    sleep  30s
+    sleep  10s
 
     [return]  ${a}
 
@@ -979,7 +979,7 @@ CreateAOppoFromAccount_HDC
      ${oppo_name}  create unique name   Oppo_
      wait until page contains element  //li/a/div[text()='New Opportunity']   60s
      click element  //li/a/div[text()='New Opportunity']
-     sleep  60s
+     sleep  30s
      wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   40s
      input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   ${oppo_name}
      sleep  3s
@@ -1233,8 +1233,17 @@ ValidateTheOrchestrationPlan
 
     execute javascript  window.scrollTo(0,2000)
     sleep  10s
-    wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
     click element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    sleep  10s
+    select frame   xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    sleep   10s
+    page should contain element   //a[text()='Start']
+    page should contain element   //a[text()='Assetize Order']
+    page should contain element   //a[text()='Deliver Service']
+    page should contain element   //a[text()='Order Events Update']
+    page should contain element   //a[text()='Activate Billing']
+    unselect frame
 
 CreateABillingAccount
     # go to particular account and create a billing accouint from there
@@ -1243,21 +1252,21 @@ CreateABillingAccount
     click element    //li/a/div[@title='Billing Account']
     sleep  20s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="RemoteAction1"]  60s
+    wait until page contains element  //*[@id="RemoteAction1"]  30s
     click element  //*[@id="RemoteAction1"]
     unselect frame
-    sleep  60s
+    sleep  10s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="Customer_nextBtn"]   60s
+    wait until page contains element  //*[@id="Customer_nextBtn"]   30s
     click element  //*[@id="Customer_nextBtn"]
     unselect frame
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
-    sleep   60s
+    sleep   20s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  60s
+    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  30s
     ${account_name_get}=  get text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
     ${numbers}=     Generate Random String    4    [NUMBERS]
-    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
+    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
     Execute JavaScript    window.scrollTo(0,700)
     #scroll page to element  //*[@id="billing_country"]
     click element  //*[@id="billing_country"]
@@ -1278,15 +1287,14 @@ CreateABillingAccount
     wait until page contains element  //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']   30s
     force click element  //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
     unselect frame
-    sleep  60s
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    sleep  20s
     force click element  //*[@id="return_billing_account"]
-    sleep  60s
+    sleep  10s
     unselect frame
 
-    [return]  Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
-
+    [return]  Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
 
 
 Login to Salesforce as DigiSales Lightning User vLocUpgSandbox

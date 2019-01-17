@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b287452c-1c33-4bba-887c-1c010e12bf7e" name="Default Changelist" comment="Commit for BQA-8483: Contact attribute validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -106,25 +107,37 @@
     <session id="1651108227">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="robot" value="342" />
-          <entry key="txt" value="103" />
+          <entry key="robot" value="1318" />
+          <entry key="txt" value="192" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="103" />
-          <entry key="Robot Feature" value="342" />
+          <entry key="PLAIN_TEXT" value="192" />
+          <entry key="Robot Feature" value="1318" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="1" />
+          <entry key="robot" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="1" />
+          <entry key="Robot Feature" value="2" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="1080" column="19" lean-forward="true" selection-start-line="1080" selection-start-column="19" selection-end-line="1080" selection-end-column="19" />
+            <state relative-caret-position="63">
+              <caret line="1239" column="4" lean-forward="true" selection-start-line="1239" selection-start-column="4" selection-end-line="1239" selection-end-column="4" />
               <folding>
                 <element signature="e#0#225#0" expanded="true" />
               </folding>
@@ -133,22 +146,58 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/common.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" selection-end-column="23" />
+            <state relative-caret-position="216">
+              <caret line="119" column="60" selection-start-line="118" selection-start-column="3" selection-end-line="119" selection-end-column="60" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="180" column="36" lean-forward="true" selection-start-line="180" selection-start-column="26" selection-end-line="180" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="26" column="68" lean-forward="true" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="41" column="48" selection-start-line="41" selection-start-column="48" selection-end-line="41" selection-end-column="48" />
+            <state relative-caret-position="255">
+              <caret line="188" column="28" lean-forward="true" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
               <folding>
                 <element signature="e#0#270#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/site-packages/SeleniumLibrary/keywords/frames.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4">
+              <caret line="81" column="16" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -157,16 +206,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>digi</find>
-      <find>attribute</find>
-      <find>Search And Add Product To Cart (CPQ)</find>
-      <find>end</find>
-      <find>go to</find>
-      <find>Telia Arkkitehti jatkuva palvelu</find>
-      <find>e2e</find>
-      <find>Add modelled product and unmodelled product to cart (CPQ)</find>
-      <find>account</find>
-      <find>Aaco</find>
       <find>//a[@title='Letter']</find>
       <find>${PREFERRED_CONTACT_CHANNEL_LETTER}</find>
       <find>Select from Autopopulate List</find>
@@ -187,6 +226,16 @@
       <find>//div/ul/li[2]/a[@title='Positive']</find>
       <find>Lightning2</find>
       <find>test</find>
+      <find>run</find>
+      <find>${OPPORTUNITY_FRAME}</find>
+      <find>Create opportunity from Account for HDCFlow</find>
+      <find>this is to create a account from contact for HDC flow</find>
+      <find>page contains</find>
+      <find>page contain</find>
+      <find>page shoul</find>
+      <find>owner</find>
+      <find>hdc</find>
+      <find>${ACCOUNT_FRAME}</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -218,8 +267,8 @@
         <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_tests.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot" />
-        <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" />
       </list>
     </option>
   </component>
@@ -255,7 +304,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Course" />
       <pane id="Scope">
         <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
           <expand>
@@ -302,16 +350,11 @@
               <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
-              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
-              <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Course" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -596,7 +639,84 @@
       <option name="project" value="LOCAL" />
       <updated>1547404912190</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547650149886</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1547650149886</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547655829372</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1547655829372</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Code refactoring">
+      <created>1547657398526</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1547657398526</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547658692544</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1547658692544</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547659237908</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1547659237908</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547659456904</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1547659456904</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547663278748</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1547663278748</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547663663536</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1547663663536</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547666068677</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1547666068677</updated>
+    </task>
+    <task id="LOCAL-00035" summary="for HDC Select Frame keyword refactoring">
+      <created>1547672745680</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1547672745680</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1547672936081</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1547672936081</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView">
@@ -612,7 +732,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2281399" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24960254" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -622,9 +742,9 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291815" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49125597" weight="0.3291815" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.7670906" visible="true" weight="0.3558719" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.29332274" side_tool="true" weight="0.3291815" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49046105" visible="true" weight="0.3291815" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.58585054" weight="0.23843417" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.41414943" side_tool="true" weight="0.3558719" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.3291815" />
       <window_info anchor="bottom" id="Inspection Results" order="11" sideWeight="0.49920508" weight="0.3291815" />
       <window_info anchor="bottom" id="Messages" order="12" />
@@ -704,16 +824,17 @@
     <MESSAGE value="Cancel Opportunity initial commit" />
     <MESSAGE value="Commit for Close opportunity" />
     <MESSAGE value="Added test for Create new contact from Accounts page" />
-    <MESSAGE value="Code refactoring" />
     <MESSAGE value="Final commit for Cancelling opportunity, BQA-8465" />
     <MESSAGE value="Final Commit for BQA-8466" />
     <MESSAGE value="BQA-8262: Changed mobile number to static value for contact creations" />
     <MESSAGE value="BQA-8484_Attribute Validation for Business Account" />
     <MESSAGE value="BQA-8483 Contact Attribute &amp; value validations" />
     <MESSAGE value="Added HDC flow in vLocUpgSandbox" />
-    <MESSAGE value="Commit for BQA-8483: Contact attribute validation" />
     <MESSAGE value="Increased wait time for selecting frames" />
-    <option name="LAST_COMMIT_MESSAGE" value="Increased wait time for selecting frames" />
+    <MESSAGE value="Code refactoring" />
+    <MESSAGE value="for HDC Select Frame keyword refactoring" />
+    <MESSAGE value="Commit for BQA-8483: Contact attribute validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit for BQA-8483: Contact attribute validation" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/oauth.txt.txt" />
@@ -871,27 +992,10 @@
     <entry file="file://$PROJECT_DIR$/robot_tests/tests/products_tests.robot">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/robot/libraries/BuiltIn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="1587" column="8" selection-start-line="1587" selection-start-column="8" selection-end-line="1587" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/SeleniumLibrary/keywords/frames.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/common.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="123" column="30" selection-start-line="123" selection-start-column="30" selection-end-line="123" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -902,20 +1006,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_cons_light_keywords.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="391" column="49" selection-start-line="391" selection-start-column="49" selection-end-line="391" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="1945" column="13" lean-forward="true" selection-start-line="1945" selection-start-column="13" selection-end-line="1945" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#186#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -928,36 +1022,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_cons_light_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="388" column="62" selection-start-line="388" selection-start-column="62" selection-end-line="388" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/SeleniumLibrary/keywords/frames.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="81" column="16" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/common.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="119" column="60" selection-start-line="118" selection-start-column="3" selection-end-line="119" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
+        <state relative-caret-position="117">
+          <caret line="26" column="68" lean-forward="true" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="68" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="1080" column="19" lean-forward="true" selection-start-line="1080" selection-start-column="19" selection-end-line="1080" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#225#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="127">
+          <caret line="180" column="36" lean-forward="true" selection-start-line="180" selection-start-column="26" selection-end-line="180" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="41" column="48" selection-start-line="41" selection-start-column="48" selection-end-line="41" selection-end-column="48" />
+        <state relative-caret-position="255">
+          <caret line="188" column="28" lean-forward="true" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
           <folding>
             <element signature="e#0#270#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="1239" column="4" lean-forward="true" selection-start-line="1239" selection-start-column="4" selection-end-line="1239" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#225#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -17,42 +17,17 @@ Create New Order
     Go To Salesforce and Login2    Digisales User devpo
     Go To    ${CLASSIC_APP}
     Go to Account2    ${DEFAULT_TEST_ACCOUNT}
-    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}
+    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}  1
     #${new_opportunity_name}=    Set Variable    Test_Opportunity_080120192055
     sleep    10s
-    Search Opportunity and click CPQ    ${new_opportunity_name}
+    Search Opportunity and click CPQ
     Search Products    Telia Arkkitehti jatkuva palvelu
     Add Telia Arkkitehti jatkuva palvelu
     sleep    10s
     Search Products    Muut asiantuntijapalvelut
     Add Muut asiantuntijapalvelut
     sleep    10s
-    Wait Until Element Is Visible    //button/span[text()='Next']    120s
-    click element    //button/span[text()='Next']
-    Wait Until Element Is Visible    //button[@id='BackToCPQ']    240s
-    click button    //button[contains(text(),'Next')]
-    sleep    10s
-    Wait Until Element Is Visible    //button[@id='Open Quote']    240s
-    Click Button    //button[@id='Open Quote']
-    Wait Until Element Is Enabled    ${CPQ_BUTTON}    120s
-    click button    ${CPQ_BUTTON}
-    Wait Until Element Is Visible    ${CREATE_ORDER}    120s
-    click element    ${CREATE_ORDER}
-    sleep    10s
-    Wait Until Element Is Visible    ${VIEW_BUTTON}    120s
-    Click Element    ${VIEW_BUTTON}
-    Edit Billing details
-    sleep    10s
-    Wait Until Element Is Visible    ${DECOMPOSE_ORDER}
-    click button    ${DECOMPOSE_ORDER}
-    Wait Until Element Is Visible    //h1[contains(text(),'Source Orders')]    120s
-    Wait Until Element Is Visible    ${ORCHESTRATE_PLAN}    120s
-    sleep    10s
-    Click Element    ${ORCHESTRATE_PLAN}
-    sleep    30s
-    @{pages}    Get Window Titles
-    Select Window    title=@{pages}[1]
-    Wait Until Page Contains    Orchestration Plan Detail
+    Place the order  Aacon Oy
     Capture Page Screenshot
 
 Wait time checking
@@ -61,3 +36,18 @@ Wait time checking
     Go To    ${CLASSIC_APP}
     Get Time
     Go to Account2    ${DEFAULT_TEST_ACCOUNT}
+
+Telia Domain Name Service - P&O create new order
+    [Tags]      BQA-8513
+    [Documentation]  To create new P&O order adding Telia Domain Name Service
+
+    Go To Salesforce and Login2    Digisales User devpo
+    Go To    ${CLASSIC_APP}
+    Search for a given account and click on Account  2018060002152336 (Betonimestarit Oy)  Betonimestarit Oy
+    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}  30
+    sleep    10s
+    Search Opportunity and click CPQ
+    Search Products    Telia Domain Name Service
+    Add Telia Domain Service Name
+    Place the order  Betonimestarit Oy
+    Capture Page Screenshot
