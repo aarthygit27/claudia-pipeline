@@ -121,12 +121,13 @@ Select Entity
     Click Element       ${element_catenate}
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
-    Entity Should Be Open    ${target_name}
+    #${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    ${target_name}
+    #run keyword Unless  ${ISOpen}       Click Element       ${element_catenate}
 
 Entity Should Be Open
     [Arguments]    ${target_name}
     Sleep   5s
-    Wait Until Page Contains element    ${ENTITY_HEADER}//*[text()='${target_name}']        30s
+    Wait Until Page Contains element    ${ENTITY_HEADER}//*[contains(text()='${target_name}')]        30s
     #${Case} ---- ActiveStatus or PassiveStatus of Account
 
 Create New Opportunity For Customer
