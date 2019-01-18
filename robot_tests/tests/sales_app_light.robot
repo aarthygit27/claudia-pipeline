@@ -7,57 +7,8 @@ Resource          ../resources/common.robot
 
 *** Test Cases ***
 
-Create opportunity from Account for HDCFlow
-    [Tags]  BQA-HDCOppo        Lightning
-    #Login to Salesforce as DigiSales Lightning User
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #go to entity  Oppo_ 20190112-151427
-    sleep   10s
-    ${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
-    log to console  ${billing_acc_name}.this is billing account name
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    sleep   10s
-    ${contact_name}   run keyword  CreateAContactFromAccount_HDC
-    log to console   ${contact_name}.this is name
-    sleep   10s
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC     ${contact_name}
-    ###${contact_name}
-    log to console   ${oppo_name}.this is opportunity
-    go to entity  ${oppo_name}
-    sleep   30s
-    ChangeThePriceBookToHDC
-    ClickingOnCPQ  ${oppo_name}
-    #ClickingOnCPQ   Oppo_ 20190112-151427
-    AddingProductToCartAndClickNextButton
-    UpdateAndAddSalesType
-    OpenQuoteButtonPage
-
-    CreditScoreApproving
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
-    SelectingTechnicalContact   ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name}
-    ReviewPage
-    ValidateTheOrchestrationPlan
-
-    #Reach the Order Page and Validating the details
-    #wait until page contains element  //span[text()='Order']//following::div/span[@class='uiOutputText']
-    #${order_id}=   get text  //span[text()='Order']//following::div/span[@class='uiOutputText']
-    #page should contain element  //th/div/a[text()='Telia Colocation']
-    #page should contain element  //th/div/a[text()='Telia Colocation']//following::td/span[text()='New Money-New Services']
-    #Execute JavaScript    window.scrollTo(0,2000)
-    #page should contain element   //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
-    #click element   //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
-    #sleep   20s
-
-
-
-
-
 Add new contact - Master
+    [Documentation]     Go to SalesForce Lightning. Create new master contact and validate the details.
     [Tags]    BQA-8396    Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -65,6 +16,7 @@ Add new contact - Master
     Validate Master Contact Details
 
 Add new contact - Non person
+    [Documentation]     Go to SalesForce Lightning. Create new non master contact and validate the details.
     [Tags]    BQA-8395    Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -72,6 +24,7 @@ Add new contact - Non person
     Validate NP Contact Details
 
 Add new contact from Accounts Page
+    [Documentation]     Go to SalesForce Lightning. Create new contact for account and validate the details.
     [Tags]    BQA-8394    Lightning
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
@@ -79,6 +32,8 @@ Add new contact from Accounts Page
     Validate AP Contact Details
 
 Create opportunity from Account
+    [Documentation]     Create new opportunity and validate in accounts related tab search in salesforce
+    ...     and then in My all open Opportunities section.
     [Tags]    BQA-8393    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -87,18 +42,24 @@ Create opportunity from Account
     Verify That Opportunity is Found From My All Open Opportunities
 
 Negative - Validate Opportunity cannot be created for Passive account
+    [Documentation]     Select the Passive account and validate that the Opportunity creation
+    ...     throws an error
     [Tags]    BQA-8457    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer    PASSIVEACCOUNT
 
 Negative - Validate Opportunity cannot be created for Group account
+    [Documentation]     Select the Group account and validate that the new opportunity button
+    ...     is not displayed
     [Tags]    BQA-8464    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created    GROUPACCOUNT
 
 Closing active opportunity as cancelled
+    [Documentation]     Select the Group account and validate that the new opportunity button
+    ...     is not displayed
     [Tags]    BQA-8465    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -106,6 +67,8 @@ Closing active opportunity as cancelled
     Cancel Opportunity and Validate    ${OPPORTUNITY_NAME}    Cancelled
 
 Closing active opportunity as lost
+    [Documentation]     Create new opportunity and close the opportunity as lost and validate that
+    ...     it cannot be updated further
     [Tags]    BQA-8466    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -113,12 +76,14 @@ Closing active opportunity as lost
     Cancel Opportunity and Validate    ${OPPORTUNITY_NAME}    Closed Lost
 
 Check Attributes/Business Account are named right in Sales Force UI
+    [Documentation]     To Verify the Business Account Attributes Are Named Right
     [Tags]    BQA-8484    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right
+    [Documentation]     To Verify the Contact Person Attributes and values Are Named Right after adding the contact
     [Tags]    BQA-8483    Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -127,19 +92,22 @@ Check Attributes/Contact Person are named right
     Validate That Contact Person Attributes Are Named Right
 
 Lightning: Create Meeting from Account
-    [Tags]    BQA-7948    Lightning2
+    [Documentation]     To create meeting for a account
+    [Tags]    BQA-7948    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Meeting
 
 Lightning: Create Call from Account
-    [Tags]    BQA-8085    Lightning2
+    [Documentation]     To create call for a account
+    [Tags]    BQA-8085    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Call
 
 Lightning: Create Task from Account
-    [Tags]    BQA-8463    Lightning2
+    [Documentation]     To create task for a account
+    [Tags]    BQA-8463    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Task
@@ -193,15 +161,86 @@ Remove Account owner
     Change to original owner
 
 Lightning: Sales admin Change Account owner
+    [Documentation]  Change Business Account owner by logging into Digisales Admin User
     [Tags]  BQA-8525  Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
 
 Lightning: Sales admin Change Account owner for group account
+    [Documentation]  Change Group Account owner by logging into Digisales Admin User
     [Tags]  BQA-8526  Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
 
+Create opportunity from Account for HDCFlow
+    [Tags]  BQA-HDCOppo        Lightning2
+    #Login to Salesforce as DigiSales Lightning User
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    sleep  20s
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    capture page screenshot
+    log to console  1st
+    sleep  10s
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    capture page screenshot
+     log to console  2nd
+    sleep  10s
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    capture page screenshot
+     log to console  3rd
+    sleep  10s
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    capture page screenshot
+     log to console  4th
+    sleep  10s
+    #${vLocUpg_TEST_ACCOUNT}
+    #capture page screenshot
+    # sleep  10s
+    #${billing_acc_name}  run keyword  CreateABillingAccount
+    #sleep  60s                            #pass
+    #capture page screenshot
+    #log to console  ${billing_acc_name}.this is billing account name
+    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #capture page screenshot
+    #${vLocUpg_TEST_ACCOUNT}
+    #capture page screenshot
+    #sleep   40s
+    ##og to console  gotoentity_${vLocUpg_TEST_ACCOUNT}_passed
+    #${contact_name}   run keyword  CreateAContactFromAccount_HDC
+    #log to console   ${contact_name}.this is name
+    #sleep   30s
+    #${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    ###${contact_name}
+    #log to console   ${oppo_name}.this is opportunity
+    ##${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
+    #log to console  ${billing_acc_name}.this is billing account name
+    #go to entity  ${oppo_name}
+    #sleep   30s
+    #ChangeThePriceBookToHDC
+    #ClickingOnCPQ  ${oppo_name}
+    #ClickingOnCPQ   Oppo_ 20190112-151427
+    #AddingProductToCartAndClickNextButton
+    #UpdateAndAddSalesType
+    #OpenQuoteButtonPage
 
+    #CreditScoreApproving
+    #ClickonCreateOrderButton
+    #NextButtonOnOrderPage
+    #SearchAndSelectBillingAccount
+    #SelectingTechnicalContact   ${contact_name}
+    #RequestActionDate
+    #SelectOwnerAccountInfo   ${billing_acc_name}
+    #ReviewPage
+    #ValidateTheOrchestrationPlan
+
+    #Reach the Order Page and Validating the details
+    #wait until page contains element  //span[text()='Order']//following::div/span[@class='uiOutputText']
+    #${order_id}=   get text  //span[text()='Order']//following::div/span[@class='uiOutputText']
+    #spage should contain element  //th/div/a[text()='Telia Colocation']
+    #page should contain element  //th/div/a[text()='Telia Colocation']//following::td/span[text()='New Money-New Services']
+    #Execute JavaScript    window.scrollTo(0,2000)
+    #page should contain element   //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
+    #click element   //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
+    #sleep   20s

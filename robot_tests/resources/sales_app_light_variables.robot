@@ -5,7 +5,8 @@ ${TEST_ENVIRONMENT}                         merge
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${TEST_ENVIRONMENT}
 ${Password_merge}                           PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}                   Dignia Oy
-${vLocUpg_TEST_ACCOUNT}                     Digia Oyj
+${vLocUpg_TEST_ACCOUNT}                     Aacon Oy
+#Digia Oyj
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}                           //img[@class='icon noicon']
@@ -114,11 +115,12 @@ ${success_message_anchor}                   //div[contains(text(),'You have an u
 ${meeting_outcome_edit_button}              //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/button
 ${meeting_outcome_select}                   //*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div/div/a
 #//*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div
-${meeting_status_select}                    //*[text()='Meeting Status']/../../div[@class='uiMenu']/div/div/div
-${meeting_status_value}                     //a[@title='Done']
-${meeting_outcome_dropdown_value}           //div/ul/li[2]/a[@title='Positive']
+${meeting_status_edit_button}               //*[@title='Edit Meeting Status']
+${meeting_status_select}                    //*[text()='Meeting Status']/../../div[@class='uiMenu']/div/div/div/a
+${meeting_status_value}                     //*[@title='Done']
+${meeting_outcome_dropdown_value}           //a[@title='Positive']
 ${description_textarea}                     //div/div/div[@class='slds-grid slds-col slds-is-editing slds-has-flexi-truncate full forcePageBlockItem forcePageBlockItemEdit']/div/div/div/textarea
-${save_button_editform}                     //*[@class='slds-button slds-button--neutral uiButton--brand uiButton forceActionButton' and @title='Save']
+${save_button_editform}                     //*[@class='slds-button slds-button--neutral uiButton--default uiButton--brand uiButton forceActionButton' and @title='Save']
 ${description_span}                         //*[text()='Description']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
 ${meeting_outocme_span}                     //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
 ${task_name_span}                           //*[@class='slds-grid primaryFieldRow']/div[@class='slds-grid slds-col slds-has-flexi-truncate slds-media--center']/div[@class='slds-media__body']/h1[@class='slds-page-header__title slds-m-right--small slds-truncate slds-align-middle']/span[contains(text(),'Task')]

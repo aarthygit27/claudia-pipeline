@@ -6,33 +6,43 @@ Resource          ..${/}resources${/}cpq_keywords.robot
 Resource          ..${/}resources${/}sales_app_light_variables.robot
 
 *** Keywords ***
+
 Go To Salesforce
+    [Documentation]     Go to SalesForce and verify the login page is displayed.
     Go To    ${LOGIN_PAGE}
     Login Page Should Be Open
 
 Go to Sales App
+    [Documentation]     Go to SalesForce and switch to salesapp menu.
     ${IsElementVisible}=    Run Keyword And Return Status    element should not be visible    ${SALES_APP_NAME}
     Run Keyword If    ${IsElementVisible}    Switch to SalesApp
 
 Switch to SalesApp
+    [Documentation]     Go to App launcher and click on SalesApp
     Click Element    ${APP_LAUNCHER}
     Wait until Page Contains Element    ${SALES_APP_LINK}    60s
     Click Element    ${SALES_APP_LINK}
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
 
 Login Page Should Be Open
+    [Documentation]     To Validate the elements in Login page
     Wait Until Keyword Succeeds    60s    1 second    Location Should Be    ${LOGIN_PAGE}
     Wait Until Element Is Visible    id=username    60s
     Wait Until Element Is Visible    id=password    60s
 
 Go To Salesforce and Login into Lightning
+    [Documentation]     Go to Salesforce and then Login as DigiSales Lightning User, then switch to Sales App
+    ...     and then select the Home Tab in Menu
     [Arguments]    ${user}=DigiSales Lightning User
     Go to Salesforce
     Run Keyword    Login to Salesforce as ${user}
     Go to Sales App
     Reset to Home
+    Click Clear All Notifications
 
 Go To Salesforce and Login into Lightning User
+    [Documentation]     Go to Salesforce and then Login as DigiSales Admin User, then switch to Sales App
+    ...     and then select the Home Tab in Menu
     [Arguments]    ${user}=DigiSales Admin User
     Go to Salesforce
     Run Keyword    Login to Salesforce as ${user}
@@ -42,7 +52,6 @@ Go To Salesforce and Login into Lightning User
 Login to Salesforce as DigiSales Admin User
 
     Login To Salesforce Lightning    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
-
 
 Login to Salesforce as DigiSales Lightning User
     [Arguments]       ${username}=${B2B_DIGISALES_LIGHT_USER}
@@ -95,13 +104,15 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
-    Sleep    2s
+    #Sleep    2s
     Press Enter On  ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
     ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      20s
     run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
-    Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    60s
+    ${IsNotVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      20s
+    run keyword If  ${IsNotVisible}    Press Enter On  ${SEARCH_SALESFORCE}
+    Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    120s
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
@@ -110,11 +121,13 @@ Select Entity
     Click Element       ${element_catenate}
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
-    Entity Should Be Open    ${target_name}
+    #${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    ${target_name}
+    #run keyword Unless  ${ISOpen}       Click Element       ${element_catenate}
 
 Entity Should Be Open
     [Arguments]    ${target_name}
-    Wait Until Page Contains element    ${ENTITY_HEADER}//*[text()='${target_name}']
+    Sleep   5s
+    Wait Until Page Contains element    ${ENTITY_HEADER}//*[contains(text()='${target_name}')]        30s
     #${Case} ---- ActiveStatus or PassiveStatus of Account
 
 Create New Opportunity For Customer
@@ -151,9 +164,9 @@ Input Quick Action Value For Attribute
 Select Quick Action Value For Attribute
     [Arguments]    ${field}    ${value}
     Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']    60s
-    Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
+    Force Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
     Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]
-    Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
+    Force Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
 
 Fill Mandatory Classification
     [Arguments]    ${account_name}=${LIGHTNING_TEST_ACCOUNT}
@@ -282,6 +295,7 @@ Create New Master Contact
 Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
+    Sleep   10s
     Click Visible Element    //div[contains(@class,'primaryLabel') and @title='${value}']
 
 Validate Master Contact Details
@@ -437,6 +451,7 @@ Select option from Dropdown
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${item}
     click visible element    ${list}
     Press Key    ${list}    ${item}
+    Sleep   3s
     force click element    //a[@title='${item}']
 
 Verify That Opportunity is Not Found under My All Open Opportunities
@@ -530,21 +545,21 @@ click Meeting Link on Page
 
 Enter Mandatory Info on Meeting Form
     [Arguments]    ${task_subject}
-    sleep    10s
+    sleep    5s
     input text    xpath=${SUBJECT_INPUT}    ${task_subject}
-    sleep    10s
+    sleep    5s
     click element    xpath=${EVENT_TYPE}
     click element    xpath=${meeting_select_dropdown}
-    sleep    10s
+    sleep    5s
     Select option from Dropdown with Force Click Element    ${reason_select_dropdown}    ${reason_select_dropdown_value}
     #click element    xpath=${reason_select_dropdown}
     #click element    xpath=${reason_select_dropdown_value}
     Enter Meeting Start and End Date
-    sleep    10s
+    sleep    5s
     Input Text    ${city_input}    ${DEFAULT_CITY}
-    sleep    10s
+    sleep    5s
     Enter and Select Contact Meeting
-    sleep    10s
+    sleep    5s
 
 Enter Meeting Start and End Date
     ${date}=    Get Date From Future    1
@@ -565,7 +580,7 @@ Save Meeting and click on Suucess Message
     sleep    30s
     #click element    ${success_message_anchor}
     Force click element     ${success_message_anchor}
-    sleep    40s
+    sleep    10s
 
 Validate Created Meeting
     sleep    10s
@@ -585,17 +600,12 @@ Validate Created Meeting
     should be equal as strings    ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
 
 Modify Meeting Outcome
-    scroll page to location    0    500
-    #click element    ${meeting_outcome_edit_button}
-    Force click element     ${meeting_outcome_edit_button}
-    sleep    10s
-    Force click element  ${meeting_outcome_select}
-    sleep    10s
-
-    force click element    ${meeting_outcome_dropdown_value}
-    click element    xpath=${meeting_status_select}
-    sleep    10s
-    click element    xpath=${meeting_status_value}
+    Click element       //div[@title='Edit']/..
+    wait until page contains element        //*[contains(text(),'Edit Task')]       30s
+    Sleep       5s
+    Select Quick Action Value For Attribute    Meeting Outcome    Positive
+    Sleep      5s
+    Select Quick Action Value For Attribute    Meeting Status    Done
     input text    xpath=${description_textarea}    ${name_input}.Edited.${Meeting}
     click element    ${save_button_editform}
     sleep    20s
@@ -944,12 +954,12 @@ CreateAContactFromAccount_HDC
     log to console  this is to create a account from contact for HDC flow
     ${a}  create unique name   Contact_
     click element  //li/a/div[text()='New Contact']
-    sleep  10s
+    sleep  5s
     #click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
     sleep   3s
     input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']     Testing
     sleep  5s
-    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   60s
+    wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']   30s
     clear element text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     set focus to element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     force click element  //input[@placeholder="Last Name"]
@@ -958,7 +968,7 @@ CreateAContactFromAccount_HDC
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]   kasibhotla.sreeramachandramurthy@teliacompany.com
     sleep  2s
     click element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
-    sleep  30s
+    sleep  10s
 
     [return]  ${a}
 
@@ -969,7 +979,7 @@ CreateAOppoFromAccount_HDC
      ${oppo_name}  create unique name   Oppo_
      wait until page contains element  //li/a/div[text()='New Opportunity']   60s
      click element  //li/a/div[text()='New Opportunity']
-     sleep  60s
+     sleep  30s
      wait until page contains element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   40s
      input text  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]   ${oppo_name}
      sleep  3s
@@ -1223,8 +1233,17 @@ ValidateTheOrchestrationPlan
 
     execute javascript  window.scrollTo(0,2000)
     sleep  10s
-    wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
     click element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    sleep  10s
+    select frame   xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    sleep   10s
+    page should contain element   //a[text()='Start']
+    page should contain element   //a[text()='Assetize Order']
+    page should contain element   //a[text()='Deliver Service']
+    page should contain element   //a[text()='Order Events Update']
+    page should contain element   //a[text()='Activate Billing']
+    unselect frame
 
 CreateABillingAccount
     # go to particular account and create a billing accouint from there
@@ -1233,21 +1252,21 @@ CreateABillingAccount
     click element    //li/a/div[@title='Billing Account']
     sleep  20s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="RemoteAction1"]  60s
+    wait until page contains element  //*[@id="RemoteAction1"]  30s
     click element  //*[@id="RemoteAction1"]
     unselect frame
-    sleep  60s
+    sleep  10s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //*[@id="Customer_nextBtn"]   60s
+    wait until page contains element  //*[@id="Customer_nextBtn"]   30s
     click element  //*[@id="Customer_nextBtn"]
     unselect frame
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
-    sleep   60s
+    sleep   20s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  60s
+    wait until page contains element  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]  30s
     ${account_name_get}=  get text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
     ${numbers}=     Generate Random String    4    [NUMBERS]
-    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
+    input text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]   Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
     Execute JavaScript    window.scrollTo(0,700)
     #scroll page to element  //*[@id="billing_country"]
     click element  //*[@id="billing_country"]
@@ -1268,15 +1287,14 @@ CreateABillingAccount
     wait until page contains element  //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']   30s
     force click element  //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
     unselect frame
-    sleep  60s
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    sleep  20s
     force click element  //*[@id="return_billing_account"]
-    sleep  60s
+    sleep  10s
     unselect frame
 
-    [return]  Billing_${vLocUpg_TEST_ACCOUNT}_${numbers}
-
+    [return]  Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
 
 
 Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
