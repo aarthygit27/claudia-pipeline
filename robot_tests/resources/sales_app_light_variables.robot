@@ -5,7 +5,8 @@ ${TEST_ENVIRONMENT}                         merge
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${TEST_ENVIRONMENT}
 ${Password_merge}                           PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}                   Dignia Oy
-${vLocUpg_TEST_ACCOUNT}                     Digia Oyj
+${vLocUpg_TEST_ACCOUNT}                     Aacon Oy
+#Digia Oyj
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}                           //img[@class='icon noicon']
