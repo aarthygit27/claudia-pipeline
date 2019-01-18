@@ -20,8 +20,6 @@ Go to Account2
     Click Element    ${details}
 
 create new opportunity
-<<<<<<< HEAD
-    [Arguments]    ${target_account}
     ${create_new}=    set variable    //div[@id='createNewButton']
     ${new_opportunity}=    Set Variable    //a[contains(@class,'opportunityMru')]/img[@title='Opportunity']
     ${continue_button}=    Set Variable    //input[@class='btn'][@title='Continue']
@@ -30,44 +28,26 @@ create new opportunity
     ${status}=    Set Variable    //select[@id='opp11']
     ${closing_date}=    Set Variable    //input[@id='opp9']
     ${pricing_list}=    Set Variable    //span/input[@id='CF00N5800000DyL67']
-=======
-    [Arguments]    ${target_account}  ${future_date}
->>>>>>> e9864846168b624a52e8e0a845f73d6c569c70c0
-    sleep    5s
+    ${DATE}=    Get Current Date    result_format=%d%m%Y%H%M
+    ${opportunity_name}=    Set Variable    Test Robot Order_${DATE}
     Click Element    ${create_new}
     Wait Until Element Is Visible    ${new_opportunity}
     Click Element    ${new_opportunity}
-    Wait Until Element Is Enabled    ${continue_button}
+    Wait Until Element Is Visible    ${continue_button}
     Capture Page Screenshot
-    Click Button    ${continue_button}
+    Click Element    ${continue_button}
     Wait Until Page Contains Element    //label[text()='Account Name']    120s
-    ${DATE}=    Get Current Date    result_format=%d%m%Y%H%M
-<<<<<<< HEAD
-    ${opportunity_name}=    Set Variable    Test Robot Order_${DATE}
     Input Text    ${opportunity_id}    ${opportunity_name}
-    Input Text    ${description}    Test Robot Order_${DATE}
+    Input Text    ${description}    ${opportunity_name}
     click element    ${status}
     click element    ${status}/option[@value='Analyse Prospect']
     ${close_date}=    Get Date From Future    30
     Input Text    ${closing_date}    ${close_date}
     Input Text    ${pricing_list}    b2b
-=======
-    ${OPPORTUNITY_NAME_TEXT}=  catenate  Test_Opportunity_  ${DATE}
-    Set Test Variable    ${opportunity_name}    ${OPPORTUNITY_NAME_TEXT}
-    Input Text    ${CREATE_OPPORTUNITY_NAME_FIELD}    ${opportunity_name}
-    Input Text        ${CREATE_OPPORTUNITY_DESCRIPTION}    This is a test opportunity
-    click element    ${CREATE_OPPORTUNITY_STAGE}
-    click element    ${CREATE_OPPORTUNITY_STAGE_SELECTION}
-    ${close_date}=    Get Date From Future    ${future_date}
-    Input Text    ${CREATE_OPPORTUNITY_DATE}    ${close_date}
-    Input Text    ${CREATE_OPPORTUNITY_PRICE_LIST}    b2b
->>>>>>> e9864846168b624a52e8e0a845f73d6c569c70c0
     Click Save Button
-    sleep  5s
-    #[Return]    ${opportunity_name}
+    sleep    5s
 
 Search Opportunity and click CPQ
-<<<<<<< HEAD
     [Arguments]    ${opportunity_name}
     ${opportunity_search}=    Set Variable    //div[@id='Opportunity_body']/table/tbody//tr//th/a[text()='${opportunity_name}']
     ${cpq}=    Set Variable    //div[@id='customButtonMuttonButton']/span[text()='CPQ']
@@ -77,15 +57,6 @@ Search Opportunity and click CPQ
     #Click Element    ${opportunity_search}
     Wait Until Element Is Visible    ${cpq}    30s
     Click Element    ${cpq}
-=======
-    #[Arguments]    ${opportunity_name}
-    Search Salesforce    ${opportunity_name}
-    Wait Until Element Is Visible    //div[@id='Opportunity_body']/table/tbody//tr//th/a[text()='${opportunity_name}']    30s
-    Click Element    //div[@id='Opportunity_body']/table/tbody//tr//th/a[text()='${opportunity_name}']
-    Wait Until Element Is Visible    ${CPQ_BUTTON_CREATE_OPPORTUNITY}    30s
-    Click Element    ${CPQ_BUTTON_CREATE_OPPORTUNITY}
->>>>>>> e9864846168b624a52e8e0a845f73d6c569c70c0
-    sleep    10s
 
 Search Products
     [Arguments]    ${product_name}
@@ -201,7 +172,6 @@ Login to Salesforce And Close All Tabs2
 Login to Salesforce as Digisales User devpo
     Login To Salesforce    ${B2B_DIGISALES_USER_DEVPO}    ${PASSWORD_DEVPO}
 
-<<<<<<< HEAD
 create order
     [Arguments]    ${target_account}
     [Documentation]    Used to create order after adding the products to the cart
@@ -358,7 +328,7 @@ General test setup
     Go To Salesforce and Login2    Digisales User devpo
     Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
-    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${target_account}
+    ${new_opportunity_name}=    Run Keyword    create new opportunity
     #${new_opportunity_name}=    Set Variable    Test Robot Order_160120192214
     sleep    10s
     Log    the opportunity id is \ ${new_opportunity_name}
@@ -618,106 +588,104 @@ Create billing Account
     click element    ${invoice_method} /option[@label='Paper Invoice']
     sleep    3s
     Click Element    ${billing_account_next_button}
-=======
+
 Add Telia Domain Service Name
     [Documentation]    This is to add Telia Domain Service Name to cart and fill the required details
     sleep    10s
-    click button  ${ADD_TO_CART}
+    click button    ${ADD_TO_CART}
     sleep    10s
     Capture Page Screenshot
     Wait Until Element Is Visible    ${SETTINGS_BTN}    45s
     Click Button    ${SETTINGS_BTN}
-    sleep  10s
+    sleep    10s
     Wait Until Element Is Enabled    ${Asiakkaan_verkkotunnus_Field}    30s
     click element    ${Asiakkaan_verkkotunnus_Field}
-    input text       ${Asiakkaan_verkkotunnus_Field}  Testrobot.fi
+    input text    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
     sleep    5s
     click element    ${Käyttäjä_lisätieto_field}
     sleep    5s
-    input text       ${Käyttäjä_lisätieto_field}        This is the test order created by robot framework.L1
+    input text    ${Käyttäjä_lisätieto_field}    This is the test order created by robot framework.L1
     sleep    5s
     click element    ${Linkittyvä_tuote_field}
-    input text       ${Linkittyvä_tuote_field}   This is the test order created by robot framework.L2
+    input text    ${Linkittyvä_tuote_field}    This is the test order created by robot framework.L2
     sleep    5s
     click element    ${Sisäinen_kommentti_field}
     sleep    5s
-    input text       ${Sisäinen_kommentti_field}  This is the test order created by robot framework.L3
-    sleep  5s
+    input text    ${Sisäinen_kommentti_field}    This is the test order created by robot framework.L3
+    sleep    5s
     click element    ${Finnish_Domain_Service_Add_To_Cart}
     sleep    10s
-    force click element  ${Finnish_Domain_Service_Settings_Icon}
+    force click element    ${Finnish_Domain_Service_Settings_Icon}
     sleep    10s
-    press enter on  ${Verkotunnus_Field}
+    press enter on    ${Verkotunnus_Field}
     sleep    5s
-    click element   ${Verkotunnus_option}
-    sleep  5s
-    press enter on  ${Voimassaoloaika_Field}
+    click element    ${Verkotunnus_option}
     sleep    5s
-    click element  ${Voimassaoloaika_option}
-    sleep  10s
-    click element  ${DNS_PRIMARY}
-    sleep  10s
-
+    press enter on    ${Voimassaoloaika_Field}
+    sleep    5s
+    click element    ${Voimassaoloaika_option}
+    sleep    10s
+    click element    ${DNS_PRIMARY}
+    sleep    10s
 
 Place the order
     [Arguments]    ${account_name}
     force click element    ${NEXT_BUTTON_CART}
-    sleep  10s
-    wait until element is visible  ${NEXT_BUTTON_UPDATE_PRODUCT}  240s
-    click element  ${NEXT_BUTTON_UPDATE_PRODUCT}
-    sleep  5s
-    wait until element is visible  ${OPEN_QUOTE_BUTTON}  240s
-    click element  ${OPEN_QUOTE_BUTTON}
-    wait until element is visible  ${CPQ_BTN}  240s
-    click element  ${CPQ_BTN}
-    sleep  5s
-    wait until element is visible  ${CREATE_ORDER_BTN}  240s
-    click element  ${CREATE_ORDER_BTN}
-    sleep  10s
-    wait until element is visible  ${NEXT_BUTTON_CART_PAGE}  240s
-    click element  ${NEXT_BUTTON_CART_PAGE}
-    sleep  5s
-    wait until element is visible  ${SEARCH_BUTTON_ACCOUNT}  240s
-    click element  ${SEARCH_BUTTON_ACCOUNT}
-    wait until element is visible  //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']  240s
-    click element  //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']
-    wait until element is visible  ${NEXT_BUTTON_ACCOUNT_SEARCH}  240s
-    click element  ${NEXT_BUTTON_ACCOUNT_SEARCH}
-    wait until element is visible  ${CONTACT_NAME_FIELD}  240s
-    click element  ${CONTACT_NAME_FIELD}
-    input text  ${CONTACT_NAME_FIELD}  John Doe
-    force click element  ${NEXT_BUTTON_SELECTCONTACT}
-    wait until element is visible  ${REQUESTED_ACTION_DATE}  240s
-    click element  ${REQUESTED_ACTION_DATE}
-    wait until element is visible  ${next_month_arrow}  60s
-    click element  ${next_month_arrow}
-    wait until element is visible  ${CHOOSE_DATE_ONE}  240s
-    click element  ${CHOOSE_DATE_ONE}
-    sleep  2s
-    click element  ${ADDITIONAL_DATA_NEXT_BTN}
-    wait until element is visible  //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input  240s
-    force click element  //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input
-    sleep  2s
-    click element  ${BUYER_IS_PAYER}
-    wait until element is visible  ${SELECT_BUYER_NEXT_BUTTON}  240s
-    click element  ${SELECT_BUYER_NEXT_BUTTON}
-    wait until element is visible  ${submit_order_button}
-    click element  ${submit_order_button}
-    wait until element is visible  ${ORCHESTRATION_PLAN_IMAGE}  240s
+    sleep    10s
+    wait until element is visible    ${NEXT_BUTTON_UPDATE_PRODUCT}    240s
+    click element    ${NEXT_BUTTON_UPDATE_PRODUCT}
+    sleep    5s
+    wait until element is visible    ${OPEN_QUOTE_BUTTON}    240s
+    click element    ${OPEN_QUOTE_BUTTON}
+    wait until element is visible    ${CPQ_BTN}    240s
+    click element    ${CPQ_BTN}
+    sleep    5s
+    wait until element is visible    ${CREATE_ORDER_BTN}    240s
+    click element    ${CREATE_ORDER_BTN}
+    sleep    10s
+    wait until element is visible    ${NEXT_BUTTON_CART_PAGE}    240s
+    click element    ${NEXT_BUTTON_CART_PAGE}
+    sleep    5s
+    wait until element is visible    ${SEARCH_BUTTON_ACCOUNT}    240s
+    click element    ${SEARCH_BUTTON_ACCOUNT}
+    wait until element is visible    //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']    240s
+    click element    //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']
+    wait until element is visible    ${NEXT_BUTTON_ACCOUNT_SEARCH}    240s
+    click element    ${NEXT_BUTTON_ACCOUNT_SEARCH}
+    wait until element is visible    ${CONTACT_NAME_FIELD}    240s
+    click element    ${CONTACT_NAME_FIELD}
+    input text    ${CONTACT_NAME_FIELD}    John Doe
+    force click element    ${NEXT_BUTTON_SELECTCONTACT}
+    wait until element is visible    ${REQUESTED_ACTION_DATE}    240s
+    click element    ${REQUESTED_ACTION_DATE}
+    wait until element is visible    ${next_month_arrow}    60s
+    click element    ${next_month_arrow}
+    wait until element is visible    ${CHOOSE_DATE_ONE}    240s
+    click element    ${CHOOSE_DATE_ONE}
+    sleep    2s
+    click element    ${ADDITIONAL_DATA_NEXT_BTN}
+    wait until element is visible    //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input    240s
+    force click element    //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input
+    sleep    2s
+    click element    ${BUYER_IS_PAYER}
+    wait until element is visible    ${SELECT_BUYER_NEXT_BUTTON}    240s
+    click element    ${SELECT_BUYER_NEXT_BUTTON}
+    wait until element is visible    ${submit_order_button}
+    click element    ${submit_order_button}
+    wait until element is visible    ${ORCHESTRATION_PLAN_IMAGE}    240s
 
 Search for a given account and click on Account
-     [Arguments]  ${ACCOUNT_NAME_SALES}  ${ACCOUNT_NAME}
+    [Arguments]    ${ACCOUNT_NAME_SALES}    ${ACCOUNT_NAME}
+    Sleep    10s
+    Wait Until Page Contains Element    ${SEARCH_FIELD_SALES}
+    Input Text    ${SEARCH_FIELD_SALES}    ${ACCOUNT_NAME_SALES}
+    Click Element    ${SEARCH_BUTTON_SALES}
+    Sleep    5s
+    Force click element    //a[contains(text(),'${ACCOUNT_NAME}')]
+    Sleep    5s
 
-     Sleep  10s
-     Wait Until Page Contains Element  ${SEARCH_FIELD_SALES}
-     Input Text  ${SEARCH_FIELD_SALES}  ${ACCOUNT_NAME_SALES}
-     Click Element  ${SEARCH_BUTTON_SALES}
-     Sleep  5s
-     Force click element  //a[contains(text(),'${ACCOUNT_NAME}')]
-     Sleep  5s
 Force click element
     [Arguments]    ${elementToClick}
     ${element_xpath}=    Replace String    ${elementToClick}    \"    \\\"
     Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep    2s
->>>>>>> e9864846168b624a52e8e0a845f73d6c569c70c0

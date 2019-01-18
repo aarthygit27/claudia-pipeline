@@ -15,23 +15,12 @@ Resource          ..${/}resources${/}common.robot
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
     [Tags]    BQA-8504    PO
-<<<<<<< HEAD
     General test setup    ${DEVPO_ACCOUNT}
-=======
-    Go To Salesforce and Login2    Digisales User devpo
-    Go To    ${CLASSIC_APP}
-    Go to Account2    ${DEFAULT_TEST_ACCOUNT}
-    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}  1
-    #${new_opportunity_name}=    Set Variable    Test_Opportunity_080120192055
-    sleep    10s
-    Search Opportunity and click CPQ
->>>>>>> e9864846168b624a52e8e0a845f73d6c569c70c0
     Search Products    Telia Arkkitehti jatkuva palvelu
     Add Telia Arkkitehti jatkuva palvelu
     sleep    10s
     Search Products    Muut asiantuntijapalvelut
     Add Muut asiantuntijapalvelut
-<<<<<<< HEAD
     create order    ${DEVPO_ACCOUNT}
     Complete Order
 
@@ -242,10 +231,9 @@ Test scenario 22 Other:Operation and Support Services
     Search Products    Toimenpide XL
     Add Toimenpide XL
     create order    ${DEVPO_ACCOUNT}
-=======
-    sleep    10s
-    Place the order  Aacon Oy
-    Capture Page Screenshot
+    #sleep    10s
+    #Place the order    Aacon Oy
+    #Capture Page Screenshot
 
 Wait time checking
     [Tags]    PO1
@@ -255,17 +243,15 @@ Wait time checking
     Go to Account2    ${DEFAULT_TEST_ACCOUNT}
 
 Telia Domain Name Service - P&O create new order
-    [Tags]      BQA-8513
-    [Documentation]  To create new P&O order adding Telia Domain Name Service
-
+    [Documentation]    To create new P&O order adding Telia Domain Name Service
+    [Tags]    BQA-8513
     Go To Salesforce and Login2    Digisales User devpo
     Go To    ${CLASSIC_APP}
-    Search for a given account and click on Account  2018060002152336 (Betonimestarit Oy)  Betonimestarit Oy
-    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}  30
+    Search for a given account and click on Account    2018060002152336 (Betonimestarit Oy)    Betonimestarit Oy
+    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}    30
     sleep    10s
     Search Opportunity and click CPQ
     Search Products    Telia Domain Name Service
     Add Telia Domain Service Name
-    Place the order  Betonimestarit Oy
+    Place the order    Betonimestarit Oy
     Capture Page Screenshot
->>>>>>> e9864846168b624a52e8e0a845f73d6c569c70c0
