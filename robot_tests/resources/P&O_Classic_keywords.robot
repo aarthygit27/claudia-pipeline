@@ -591,88 +591,80 @@ Create billing Account
 
 Add Telia Domain Service Name
     [Documentation]    This is to add Telia Domain Service Name to cart and fill the required details
-    sleep    10s
-    click button    ${ADD_TO_CART}
-    sleep    10s
+    Wait for element to appear  3s
+    Force click element  ${ADD_TO_CART}
     Capture Page Screenshot
-    Wait Until Element Is Visible    ${SETTINGS_BTN}    45s
+    Wait Until Element Is Visible    ${SETTINGS_BTN}    240s
     Click Button    ${SETTINGS_BTN}
-    sleep    10s
-    Wait Until Element Is Enabled    ${Asiakkaan_verkkotunnus_Field}    30s
+    Wait Until Element Is Visible    ${Asiakkaan_verkkotunnus_Field}    240s
     click element    ${Asiakkaan_verkkotunnus_Field}
-    input text    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
-    sleep    5s
+    input text       ${Asiakkaan_verkkotunnus_Field}  Testrobot.fi
+    Wait Until Element Is Visible  ${Käyttäjä_lisätieto_field}  240s
     click element    ${Käyttäjä_lisätieto_field}
-    sleep    5s
-    input text    ${Käyttäjä_lisätieto_field}    This is the test order created by robot framework.L1
-    sleep    5s
+    input text       ${Käyttäjä_lisätieto_field}        This is the test order created by robot framework.L1
+    Wait Until Element Is Visible  ${Linkittyvä_tuote_field}  240s
     click element    ${Linkittyvä_tuote_field}
-    input text    ${Linkittyvä_tuote_field}    This is the test order created by robot framework.L2
-    sleep    5s
+    input text       ${Linkittyvä_tuote_field}   This is the test order created by robot framework.L2
+    Wait Until Element Is Visible  ${Sisäinen_kommentti_field}  240s
     click element    ${Sisäinen_kommentti_field}
-    sleep    5s
-    input text    ${Sisäinen_kommentti_field}    This is the test order created by robot framework.L3
-    sleep    5s
+    input text       ${Sisäinen_kommentti_field}  This is the test order created by robot framework.L3
+    Wait Until Element Is Visible  ${Finnish_Domain_Service_Add_To_Cart}  240s
     click element    ${Finnish_Domain_Service_Add_To_Cart}
-    sleep    10s
-    force click element    ${Finnish_Domain_Service_Settings_Icon}
-    sleep    10s
-    press enter on    ${Verkotunnus_Field}
-    sleep    5s
-    click element    ${Verkotunnus_option}
-    sleep    5s
-    press enter on    ${Voimassaoloaika_Field}
-    sleep    5s
-    click element    ${Voimassaoloaika_option}
-    sleep    10s
-    click element    ${DNS_PRIMARY}
-    sleep    10s
+    Wait Until Element Is Visible  ${Finnish_Domain_Service_Settings_Icon}  240s
+    force click element  ${Finnish_Domain_Service_Settings_Icon}
+    Wait for element to appear  10s
+    press enter on  ${Verkotunnus_Field}
+    Wait for element to appear  2s
+    click element   ${Verkotunnus_option}
+    Wait for element to appear  5s
+    press enter on  ${Voimassaoloaika_Field}
+    Wait for element to appear  2s
+    click element  ${Voimassaoloaika_option}
+    Wait for element to appear  10s
+    click element  ${DNS_PRIMARY}
+    Wait for element to appear  10s
 
 Place the order
+    [Documentation]  This is to submit the order after adding products to cart
     [Arguments]    ${account_name}
     force click element    ${NEXT_BUTTON_CART}
-    sleep    10s
-    wait until element is visible    ${NEXT_BUTTON_UPDATE_PRODUCT}    240s
-    click element    ${NEXT_BUTTON_UPDATE_PRODUCT}
-    sleep    5s
-    wait until element is visible    ${OPEN_QUOTE_BUTTON}    240s
-    click element    ${OPEN_QUOTE_BUTTON}
-    wait until element is visible    ${CPQ_BTN}    240s
-    click element    ${CPQ_BTN}
-    sleep    5s
-    wait until element is visible    ${CREATE_ORDER_BTN}    240s
-    click element    ${CREATE_ORDER_BTN}
-    sleep    10s
-    wait until element is visible    ${NEXT_BUTTON_CART_PAGE}    240s
-    click element    ${NEXT_BUTTON_CART_PAGE}
-    sleep    5s
-    wait until element is visible    ${SEARCH_BUTTON_ACCOUNT}    240s
-    click element    ${SEARCH_BUTTON_ACCOUNT}
-    wait until element is visible    //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']    240s
-    click element    //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']
-    wait until element is visible    ${NEXT_BUTTON_ACCOUNT_SEARCH}    240s
-    click element    ${NEXT_BUTTON_ACCOUNT_SEARCH}
-    wait until element is visible    ${CONTACT_NAME_FIELD}    240s
-    click element    ${CONTACT_NAME_FIELD}
-    input text    ${CONTACT_NAME_FIELD}    John Doe
-    force click element    ${NEXT_BUTTON_SELECTCONTACT}
-    wait until element is visible    ${REQUESTED_ACTION_DATE}    240s
-    click element    ${REQUESTED_ACTION_DATE}
-    wait until element is visible    ${next_month_arrow}    60s
-    click element    ${next_month_arrow}
-    wait until element is visible    ${CHOOSE_DATE_ONE}    240s
-    click element    ${CHOOSE_DATE_ONE}
-    sleep    2s
-    click element    ${ADDITIONAL_DATA_NEXT_BTN}
-    wait until element is visible    //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input    240s
-    force click element    //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input
-    sleep    2s
-    click element    ${BUYER_IS_PAYER}
-    wait until element is visible    ${SELECT_BUYER_NEXT_BUTTON}    240s
-    click element    ${SELECT_BUYER_NEXT_BUTTON}
-    wait until element is visible    ${submit_order_button}
-    click element    ${submit_order_button}
-    wait until element is visible    ${ORCHESTRATION_PLAN_IMAGE}    240s
+    wait until element is visible  ${NEXT_BUTTON_UPDATE_PRODUCT}  240s
+    click element  ${NEXT_BUTTON_UPDATE_PRODUCT}
+    wait until element is visible  ${OPEN_QUOTE_BUTTON}  240s
+    click element  ${OPEN_QUOTE_BUTTON}
+    wait until element is visible  ${CPQ_BTN}  240s
+    click element  ${CPQ_BTN}
+    wait until element is visible  ${CREATE_ORDER_BTN}  240s
+    click element  ${CREATE_ORDER_BTN}
+    wait until element is visible  ${NEXT_BUTTON_CART_PAGE}  240s
+    click element  ${NEXT_BUTTON_CART_PAGE}
+    wait until element is visible  ${SEARCH_BUTTON_ACCOUNT}  240s
+    click element  ${SEARCH_BUTTON_ACCOUNT}
+    wait until element is visible  //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']  240s
+    click element  //div[text()='${account_name}']/../..//label//span[@class='slds-checkbox--faux']
+    wait until element is visible  ${NEXT_BUTTON_ACCOUNT_SEARCH}  240s
+    click element  ${NEXT_BUTTON_ACCOUNT_SEARCH}
+    wait until element is visible  ${CONTACT_NAME_FIELD}  240s
+    click element  ${CONTACT_NAME_FIELD}
+    input text  ${CONTACT_NAME_FIELD}  John Doe
+    Force click element  ${NEXT_BUTTON_SELECTCONTACT}
+    wait until element is visible  ${REQUESTED_ACTION_DATE}  240s
+    click element  ${REQUESTED_ACTION_DATE}
+    wait until element is visible  ${next_month_arrow}  240s
+    click element  ${next_month_arrow}
+    wait until element is visible  ${CHOOSE_DATE_ONE}  240s
+    click element  ${CHOOSE_DATE_ONE}
+    sleep  2s
+    click element  ${ADDITIONAL_DATA_NEXT_BTN}
+    wait until element is visible  //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input  240s
+    Force click element  //div[contains(text(),'${account_name}') and contains(text(),'Billing')]/../..//label//input
+    sleep  2s
+    click element  ${BUYER_IS_PAYER}
+    wait until element is visible  ${SELECT_BUYER_NEXT_BUTTON}  240s
+    click element  ${SELECT_BUYER_NEXT_BUTTON}
+    wait until element is visible  ${submit_order_button}
+    click element  ${submit_order_button}
+    wait until element is visible  ${ORCHESTRATION_PLAN_IMAGE}  240s
 
 Search for a given account and click on Account
     [Arguments]    ${ACCOUNT_NAME_SALES}    ${ACCOUNT_NAME}
@@ -689,3 +681,13 @@ Force click element
     ${element_xpath}=    Replace String    ${elementToClick}    \"    \\\"
     Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep    2s
+
+
+click Visible Element
+    [Arguments]    ${locator}
+    Wait Until Element Is Visible    ${locator}    240 s
+    Click Element    ${locator}
+
+Wait for element to appear
+    [Arguments]    ${time}
+    sleep  ${time}

@@ -245,12 +245,7 @@ Wait time checking
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
     [Tags]    BQA-8513
-    Go To Salesforce and Login2    Digisales User devpo
-    Go To    ${CLASSIC_APP}
-    Search for a given account and click on Account    2018060002152336 (Betonimestarit Oy)    Betonimestarit Oy
-    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}    30
-    sleep    10s
-    Search Opportunity and click CPQ
+    General test setup  ${DEVPO_ACCOUNT}
     Search Products    Telia Domain Name Service
     Add Telia Domain Service Name
     Place the order    Betonimestarit Oy
