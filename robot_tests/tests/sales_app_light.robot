@@ -199,21 +199,21 @@ Create opportunity from Account for HDCFlow
     Go To Entity     ${oppo_name}
     sleep   30s
     ChangeThePriceBookToHDC
-    #ClickingOnCPQ  ${oppo_name}
+    ClickingOnCPQ  ${oppo_name}
     #ClickingOnCPQ   Oppo_ 20190112-151427
-    #AddingProductToCartAndClickNextButton
-    #UpdateAndAddSalesType
-    #OpenQuoteButtonPage
+    AddingProductToCartAndClickNextButton
+    UpdateAndAddSalesType
+    OpenQuoteButtonPage
 
-    #CreditScoreApproving
-    #ClickonCreateOrderButton
-    #NextButtonOnOrderPage
-    #SearchAndSelectBillingAccount
-    #SelectingTechnicalContact   ${contact_name}
-    #RequestActionDate
-    #SelectOwnerAccountInfo   ${billing_acc_name}
-    #ReviewPage
-    #ValidateTheOrchestrationPlan
+    CreditScoreApproving
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount
+    SelectingTechnicalContact   ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name}
+    ReviewPage
+    ValidateTheOrchestrationPlan
 
     #Reach the Order Page and Validating the details
     #wait until page contains element  //span[text()='Order']//following::div/span[@class='uiOutputText']
