@@ -182,40 +182,20 @@ Create opportunity from Account for HDCFlow
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     sleep  20s
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #capture page screenshot
-    #log to console  1st
-    #sleep  10s
-    #Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #capture page screenshot
-     #log to console  2nd
-    #sleep  10s
-    #Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #capture page screenshot
-     #log to console  3rd
-    #sleep  10s
-    #Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #capture page screenshot
-    # log to console  4th
-    #sleep  10s
-    #${vLocUpg_TEST_ACCOUNT}
-    #capture page screenshot
-     sleep  10s
+    sleep  10s
     ${billing_acc_name}  run keyword  CreateABillingAccount
     sleep  10s                            #pass
-    #capture page screenshot
+    capture page screenshot
     log to console  ${billing_acc_name}.this is billing account name
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     capture page screenshot
     ${contact_name}   run keyword  CreateAContactFromAccount_HDC
     log to console   ${contact_name}.this is name
     sleep   10s
-    #${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     ###${contact_name}
-    #log to console   ${oppo_name}.this is opportunity
-    ##${billing_acc_name}  run keyword  CreateABillingAccount                                #pass
-    #log to console  ${billing_acc_name}.this is billing account name
-    #go to entity  ${oppo_name}
-    #sleep   30s
+    log to console   ${oppo_name}.this is opportunity
+    sleep   10s
     #ChangeThePriceBookToHDC
     #ClickingOnCPQ  ${oppo_name}
     #ClickingOnCPQ   Oppo_ 20190112-151427
