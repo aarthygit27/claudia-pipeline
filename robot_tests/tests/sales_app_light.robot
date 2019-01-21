@@ -196,7 +196,7 @@ Create opportunity from Account for HDCFlow
     ###${contact_name}
     log to console   ${oppo_name}.this is opportunity
     sleep   10s
-    #ChangeThePriceBookToHDC
+    ChangeThePriceBookToHDC
     #ClickingOnCPQ  ${oppo_name}
     #ClickingOnCPQ   Oppo_ 20190112-151427
     #AddingProductToCartAndClickNextButton
