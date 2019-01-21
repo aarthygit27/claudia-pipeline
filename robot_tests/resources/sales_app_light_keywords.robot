@@ -684,7 +684,7 @@ Verify That Business Account Attributes Are Named Right
 
 Verify That Record Contains Attribute
     [Arguments]    ${attribute}
-    Wait Until Page Contains Element    //span[contains(@class,'test-id__field-label') and (text()='${attribute}')]
+    Wait Until Page Contains Element    //span[contains(@class,'test-id__field-label') and (text()='${attribute}')]         10s
 
 Create New Master Contact With All Details
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
