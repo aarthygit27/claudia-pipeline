@@ -1084,17 +1084,17 @@ CreditScoreApproving
      sleep  10s
     #scroll page to element  //button[@title='Edit Approval Status']
     #sleep  10s
-    Execute JavaScript    window.scrollTo(0,1700)
+    Execute JavaScript    window.scrollTo(0,1600)
     #Execute Javascript    window.location.reload(true)
     sleep   20s
-    wait until page contains element  //button[@title='Edit Approval Status']   30s
+    wait until page contains element  //button[@title='Edit Approval Status']   45s
     click element  //button[@title='Edit Approval Status']
     sleep  10s
-     wait until page contains element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
-     wait until element is enabled  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
-     set focus to element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     wait until page contains element  //div[@class='uiMenu']/div[@class='uiPopupTrigger]/div/div/a[text()='Not Approved'][1]  30s
+     wait until element is enabled  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  30s
+     set focus to element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
      capture page screenshot
-     click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     click element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
      Execute Javascript    window.location.reload(true)
      sleep   50s
       click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
@@ -1103,7 +1103,7 @@ CreditScoreApproving
       sleep  50s
        click element  //button[@title='Edit Approval Status']
       sleep  10s
-     click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     click element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
      sleep  5s
      force click element  //a[@title='Approved']
     sleep  2s
