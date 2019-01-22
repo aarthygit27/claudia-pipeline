@@ -1090,11 +1090,11 @@ CreditScoreApproving
     wait until page contains element  //button[@title='Edit Approval Status']   45s
     click element  //button[@title='Edit Approval Status']
     sleep  10s
-     wait until page contains element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  30s
-     wait until element is enabled  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  30s
+     wait until page contains element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  45s
+     wait until element is enabled  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  45s
      set focus to element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
      capture page screenshot
-     click element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
+     force click element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
      Execute Javascript    window.location.reload(true)
      sleep   50s
       click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
