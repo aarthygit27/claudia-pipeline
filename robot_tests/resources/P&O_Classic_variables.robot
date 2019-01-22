@@ -9,7 +9,6 @@ ${B2B_DIGISALES_USER_DEVPO}    b2bdigi@teliacompany.com.devpo
 ${PASSWORD_DEVPO}    PahaPassu2
 ${DEFAULT_TEST_ACCOUNT}    Aacon Oy
 ${MAIN_WINDOW}    ${EMPTY}
-<<<<<<< HEAD
 ${NEXT_BUTTON}    //button/span[text()='Next']
 ${technical_contact}    John Doe
 ${ADD_CART}       //button[contains(text(),'Add to Cart')]
@@ -17,7 +16,6 @@ ${SETTINGS}       //button[@title='Settings']
 ${SPINNER_SMALL}    //div[contains(@class,'small button-spinner')]
 ${X_BUTTON}       //button[@class='slds-button slds-button--icon']
 ${DEVPO_ACCOUNT}    Betonimestarit Oy
-
 ${LOGIN_PAGE}     https://test.salesforce.com/
 ${SALES_CLASSIC_USER}    b2bdigi@teliacompany.com.devpo
 ${PASSWORD_SALES_CLASSIC}    PahaPassu2
@@ -83,3 +81,9 @@ ${CREATE_OPPORTUNITY_STAGE}    //select[@id='opp11']
 ${CREATE_OPPORTUNITY_STAGE_SELECTION}    //select[@id='opp11']/option[@value='Analyse Prospect']
 ${CREATE_OPPORTUNITY_DATE}    //input[@id='opp9']
 ${CREATE_OPPORTUNITY_PRICE_LIST}    //span/input[@id='CF00N5800000DyL67']
+${EDIT_BUTTON}    //input[@title='Edit']
+${CONTACT_FIELD}    //input[@id='CF00N5800000CZNtx']
+${CONTACT_LOOKUP}    //img[@alt='Contact Lookup (New Window)']
+${SHOW_ALL_RESULTS_BUTTON}    //a[text()='Show all results']
+${SELECT_CONTACT_NAME}    //tr[@class='dataRow even last first']//a
+${SALES_ADMIN_USER_DEVPO}    saleadm@teliacompany.com.devpo

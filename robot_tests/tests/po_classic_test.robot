@@ -116,6 +116,8 @@ Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Koulutus jatkuva palvelu
     Add Koulutus jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
@@ -124,6 +126,8 @@ Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Koulutus kertapalvelu
     Add Koulutus kertapalvelu
     create order    ${DEVPO_ACCOUNT}
@@ -132,6 +136,8 @@ Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Koulutus varallaolo ja matkustus
     Add Koulutus varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
@@ -140,6 +146,8 @@ Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Jatkuvuudenhallinta jatkuva palvelu
     Add Jatkuvuudenhallinta jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
@@ -148,6 +156,8 @@ Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Jatkuvuudenhallinta kertapalvelu
     Add Jatkuvuudenhallinta kertapalvelu
     create order    ${DEVPO_ACCOUNT}
@@ -156,6 +166,8 @@ Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Jatkuvuudenhallinta varallaolo ja matkustus
     Add Jatkuvuudenhallinta varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
@@ -164,6 +176,8 @@ Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Palvelujohtaminen jatkuva palvelu
     Add Palvelujohtaminen jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
@@ -172,6 +186,8 @@ Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Palvelujohtaminen kertapalvelu
     Add Palvelujohtaminen kertapalvelu
     create order    ${DEVPO_ACCOUNT}
@@ -180,6 +196,8 @@ Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Palvelujohtaminen varallaolo ja matkustus
     Add Palvelujohtaminen varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
@@ -188,6 +206,8 @@ Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Hallinta ja Tuki jatkuva palvelu
     Add Hallinta ja Tuki jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
@@ -196,6 +216,8 @@ Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Hallinta ja Tuki kertapalvelu
     Add Hallinta ja Tuki kertapalvelu
     create order    ${DEVPO_ACCOUNT}
@@ -204,6 +226,8 @@ Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Hallinta ja Tuki varallaolo ja matkustus
     Add Hallinta ja Tuki varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
@@ -212,6 +236,8 @@ Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
     [Tags]    PO
     General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
     Search Products    Asiantuntijakäynti
     Add Asiantuntijakäynti
     Search Products    Pikatoimituslisä
@@ -245,12 +271,7 @@ Wait time checking
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
     [Tags]    BQA-8513
-    Go To Salesforce and Login2    Digisales User devpo
-    Go To    ${CLASSIC_APP}
-    Search for a given account and click on Account    2018060002152336 (Betonimestarit Oy)    Betonimestarit Oy
-    Run Keyword    create new opportunity    ${DEFAULT_TEST_ACCOUNT}    30
-    sleep    10s
-    Search Opportunity and click CPQ
+    General test setup    ${DEVPO_ACCOUNT}
     Search Products    Telia Domain Name Service
     Add Telia Domain Service Name
     Place the order    Betonimestarit Oy

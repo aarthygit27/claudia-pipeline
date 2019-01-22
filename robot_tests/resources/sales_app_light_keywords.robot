@@ -1015,12 +1015,14 @@ ChangeThePriceBookToHDC
 ClickingOnCPQ
     ##clcking on CPQ
      [Arguments]   ${b}=${oppo_name}
+     log to console  ClickingOnCPQ
     click element     xpath=//a[@title='CPQ']
     #wait until page contains element  xpath=//h1[text()='${b}']   30s
     sleep   40s
 
 AddingProductToCartAndClickNextButton
     ##enter searcing product and click on add to cart and click on next button
+    log to console  AddingProductToCartAndClickNextButton
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]  60s
     #input text  xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]  Telia Colocation
@@ -1044,7 +1046,7 @@ AddingProductToCartAndClickNextButton
     sleep   60s
 
 UpdateAndAddSalesType
-
+    log to console   UpdateAndAddSalesType
     select frame  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until page contains element  xpath=//h1[normalize-space(.) = 'Update Products']    60s
     log to console  selected new frame
@@ -1057,7 +1059,7 @@ UpdateAndAddSalesType
     sleep  60s
 
 OpenQuoteButtonPage
-
+    log to console   OpenQuoteButtonPage
     select frame  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console  selected final page frame
     wait until page contains element  //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]   60s
@@ -1071,6 +1073,7 @@ OpenQuoteButtonPage
 
 CreditScoreApproving
      sleep   30s
+    log to console    CreditScoreApproving
     #credit score approval and go to home page again
     click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #wait until page contains element  //span[@class='test-id__field-label' and text()='Quote Number']  10s
@@ -1086,7 +1089,7 @@ CreditScoreApproving
      wait until page contains element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
      wait until element is enabled  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
      set focus to element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
-     force click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
      Execute Javascript    window.location.reload(true)
      sleep   50s
       click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
@@ -1132,6 +1135,7 @@ CreditScoreApproving
     sleep   10s
 
 ClickonCreateOrderButton
+    log to console   ClickonCreateOrderButton
     #clicking on CPQ after credit score approval and click create order button this cpq not able to click so work on hold
       wait until page contains element  //a[@title='CPQ']/..   30s
      ##${expiry} =  get text  //*[text()='Expiration Date']
@@ -1145,6 +1149,7 @@ ClickonCreateOrderButton
     sleep  30s
 
 NextButtonOnOrderPage
+        log to console  NextButtonOnOrderPage
         #click on the next button from the cart
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //span[text()='Next']/..
@@ -1155,6 +1160,7 @@ NextButtonOnOrderPage
 SearchAndSelectBillingAccount
     execute javascript  window.location.reload(true)
     sleep  60s
+    log to console  SearchAndSelectBillingAccount
     #Selecting the billingAC FLow chart page
     #log to console  entering billingAC page
     select frame  xpath=//div[contains(@class,'slds')]/iframe
@@ -1171,7 +1177,7 @@ SearchAndSelectBillingAccount
 
 SelectingTechnicalContact
     [Arguments]   ${d}= ${contact_technical}
-    #Selecting the Techincal COntact FLow chart page
+    log to console   Selecting the Techincal COntact FLow chart page
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     log to console  entering Technical COntact  page
     wait until page contains element  //*[@id="ContactName"]  30s
@@ -1192,7 +1198,7 @@ SelectingTechnicalContact
 
 RequestActionDate
 
-    #selecting Requested Action Date FLow chart page
+    log to console   selecting Requested Action Date FLow chart page
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     log to console  entering Requested action date page
     wait until page contains element  //*[@id="RequestedActionDate"]   30s
@@ -1208,7 +1214,7 @@ RequestActionDate
 
 SelectOwnerAccountInfo
    [Arguments]   ${e}= ${billing_account}
-    #Select Owner Account FLow Chart Page
+    log to console   Select Owner Account FLow Chart Page
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     log to console  entering Owner Account page
     wait until page contains element  //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']  30s
@@ -1220,7 +1226,7 @@ SelectOwnerAccountInfo
     sleep  30s
 
 ReviewPage
-    #Review Page FLow chart Page
+    log to console   Review Page FLow chart Page
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     log to console  entering Review page
     wait until page contains element  //*[@id="SubmitInstruction"]/div/p/h3/strong[contains(text(),'successfully')]   30s
@@ -1233,6 +1239,7 @@ ValidateTheOrchestrationPlan
 
     execute javascript  window.scrollTo(0,2000)
     sleep  10s
+    log to console  plan validation
     wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
     click element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
     sleep  10s
