@@ -1084,12 +1084,12 @@ CreditScoreApproving
      sleep  10s
     #scroll page to element  //button[@title='Edit Approval Status']
     #sleep  10s
-    Execute JavaScript    window.scrollTo(0,1600)
+    Execute JavaScript    window.scrollTo(0, 1300)
     #Execute Javascript    window.location.reload(true)
     sleep   20s
     wait until page contains element  //button[@title='Edit Approval Status']   45s
     click element  //button[@title='Edit Approval Status']
-    sleep  10s
+    sleep  20s
      wait until page contains element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  45s
      wait until element is enabled  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  45s
      set focus to element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
