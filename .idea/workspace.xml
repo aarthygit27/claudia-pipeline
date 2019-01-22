@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b287452c-1c33-4bba-887c-1c010e12bf7e" name="Default Changelist" comment="Commit for BQA-8483: Contact attribute validation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -143,8 +141,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="472">
-              <caret line="1110" column="5" selection-start-line="1110" selection-start-column="5" selection-end-line="1110" selection-end-column="5" />
+            <state relative-caret-position="200">
+              <caret line="1094" column="42" lean-forward="true" selection-start-line="1094" selection-start-column="42" selection-end-line="1094" selection-end-column="42" />
               <folding>
                 <element signature="e#0#225#0" expanded="true" />
               </folding>
@@ -449,13 +447,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1534508639598</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Lightning - Sales App: Add new master contact">
-      <created>1544106070552</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1544106070552</updated>
     </task>
     <task id="LOCAL-00005" summary="Lightning - Sales App: Added test for Create new non person contact">
       <created>1544311300043</created>
@@ -793,7 +784,14 @@
       <option name="project" value="LOCAL" />
       <updated>1548098802140</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Commit for BQA-8483: Contact attribute validation">
+      <created>1548182274984</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1548182274984</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1148,8 +1146,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="1110" column="5" selection-start-line="1110" selection-start-column="5" selection-end-line="1110" selection-end-column="5" />
+        <state relative-caret-position="200">
+          <caret line="1094" column="42" lean-forward="true" selection-start-line="1094" selection-start-column="42" selection-end-line="1094" selection-end-column="42" />
           <folding>
             <element signature="e#0#225#0" expanded="true" />
           </folding>
