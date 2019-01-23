@@ -756,6 +756,7 @@ Add_child_product
     ${child_cart}=    set variable    //div[@class='cpq-item-no-children'][contains(text(),'${child_product}')]/../../../div/button
     sleep    10s
     Click Element    ${child_cart}
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     sleep    10s
 
 Click_Settings
