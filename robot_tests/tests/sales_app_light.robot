@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 
@@ -181,6 +181,8 @@ Create opportunity from Account for HDCFlow
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     sleep  20s
+    #Go To Entity   Oppo_ 20190122-195448
+    #sleep  10s
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
     sleep  10s
     ${billing_acc_name}  run keyword  CreateABillingAccount
@@ -200,7 +202,7 @@ Create opportunity from Account for HDCFlow
     sleep   30s
     ChangeThePriceBookToHDC
     ClickingOnCPQ  ${oppo_name}
-    #ClickingOnCPQ   Oppo_ 20190112-151427
+    ##ClickingOnCPQ   Oppo_ 20190112-151427
     AddingProductToCartAndClickNextButton
     UpdateAndAddSalesType
     OpenQuoteButtonPage
