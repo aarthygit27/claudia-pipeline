@@ -204,6 +204,17 @@ Scroll Page To Element
     \    Sleep    5s
     \    Exit For Loop If    ${status}
 
+ScrollUntillFound
+    [Arguments]    ${element}
+    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
+    : FOR    ${i}    IN RANGE    9999
+    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+    \    Execute JavaScript    window.scrollTo(0,${i}*200)
+    \    Sleep    5s
+    \    Exit For Loop If    ${status}
+
+
+
 Verify That Opportunity Is Saved And Data Is Correct
     [Arguments]    ${element}    ${account_name}=${LIGHTNING_TEST_ACCOUNT}
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
@@ -1078,27 +1089,34 @@ CreditScoreApproving
     click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #wait until page contains element  //span[@class='test-id__field-label' and text()='Quote Number']  10s
     sleep  20s
+    Execute Javascript    window.location.reload(true)
+    sleep   30s
+     click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+     sleep  10s
+    ScrollUntillFound   //button[@title='Edit Approval Status']
     #scroll page to element  //button[@title='Edit Approval Status']
     #sleep  10s
-    Execute JavaScript    window.scrollTo(0,1900)
+    #Execute JavaScript    window.scrollTo(0, 1300)
     #Execute Javascript    window.location.reload(true)
     sleep   20s
-    wait until page contains element  //button[@title='Edit Approval Status']   30s
+    wait until page contains element  //button[@title='Edit Approval Status']   45s
     click element  //button[@title='Edit Approval Status']
-    sleep  10s
-     wait until page contains element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
-     wait until element is enabled  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]  30s
-     set focus to element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
-     click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+    sleep  20s
+     wait until page contains element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  45s
+     wait until element is enabled  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]  45s
+     set focus to element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
+     capture page screenshot
+     force click element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
      Execute Javascript    window.location.reload(true)
      sleep   50s
       click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
       sleep  10s
-      Execute JavaScript    window.scrollTo(0,1900)
+      ScrollUntillFound   //button[@title='Edit Approval Status']
+      #Execute JavaScript    window.scrollTo(0,1900)
       sleep  50s
        click element  //button[@title='Edit Approval Status']
       sleep  10s
-     force click element  //div[@class="uiMenu"]/div[@class="uiPopupTrigger"]/div/div/a[text()='Not Approved'][1]
+     click element  //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
      sleep  5s
      force click element  //a[@title='Approved']
     sleep  2s
