@@ -73,6 +73,7 @@ Add Telia Arkkitehti jatkuva palvelu
     [Documentation]    This is to add Telia Arkkitehti jatkuva palvelu to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    d    yes
 
 Fill Laskutuksen lisätieto
@@ -246,8 +247,6 @@ Update_settings
     ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
     sleep    10s
     Capture Page Screenshot
-    Wait Until Element Is Visible    ${SETTINGS}    45s
-    Click Button    ${SETTINGS}
     sleep    10s
     Wait Until Element Is Visible    ${Hinnoitteluperuste}    30s
     ${check}=    Run Keyword And Return Status    click element    ${Hinnoitteluperuste}
@@ -273,12 +272,14 @@ Add Telia Konsultointi jatkuva palvelu
     [Documentation]    This is to add Telia Konsultointi jatkuva palvelu to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    d    yes
 
 Add Telia Konsultointi varallaolo ja matkustus
     [Documentation]    This is to Telia Konsultointi varallaolo ja matkustus to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    yes
 
 Update_settings2
@@ -305,12 +306,14 @@ Add Telia Projektijohtaminen jatkuva palvelu
     [Documentation]    This is to add \ Telia Projektijohtaminen jatkuva palvelu to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    d    yes
 
 Add Telia Projektijohtaminen varallaolo ja matkustus
     [Documentation]    This is to add Telia Projektijohtaminen varallaolo ja matkustus to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    yes
 
 Add Telia Palvelunhallintakeskus
@@ -325,6 +328,7 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFpQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    d    yes
 
 General test setup
@@ -343,6 +347,7 @@ Add Avainasiakaspalvelukeskus kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyzbQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus varallaolo ja matkustus
@@ -350,6 +355,7 @@ Add Avainasiakaspalvelukeskus varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFzQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
@@ -357,6 +363,7 @@ Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGJQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
@@ -364,6 +371,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyzqQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
@@ -371,24 +379,28 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvG9QAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Koulutus jatkuva palvelu
     [Documentation]    This is to add \ Koulutus jatkuva palvelu to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Add Koulutus kertapalvelu
     [Documentation]    This is to add \ Koulutus jatkuva palvelu to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Add Koulutus varallaolo ja matkustus
     [Documentation]    This is to add \ Koulutus jatkuva palvelu to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Add Jatkuvuudenhallinta jatkuva palvelu
@@ -417,6 +429,7 @@ Add Palvelujohtaminen jatkuva palvelu
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    d    no
 
 Add Palvelujohtaminen kertapalvelu
@@ -424,6 +437,7 @@ Add Palvelujohtaminen kertapalvelu
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Add Palvelujohtaminen varallaolo ja matkustus
@@ -431,6 +445,7 @@ Add Palvelujohtaminen varallaolo ja matkustus
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Add Hallinta ja Tuki jatkuva palvelu
@@ -438,6 +453,7 @@ Add Hallinta ja Tuki jatkuva palvelu
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    d    no
 
 Add Hallinta ja Tuki kertapalvelu
@@ -445,6 +461,7 @@ Add Hallinta ja Tuki kertapalvelu
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Add Hallinta ja Tuki varallaolo ja matkustus
@@ -452,6 +469,7 @@ Add Hallinta ja Tuki varallaolo ja matkustus
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Complete Order
@@ -487,6 +505,7 @@ Add Events jatkuva palvelu
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    ${Hinnoitteluperuste}    no
 
 Add Toimenpide XS
@@ -494,6 +513,7 @@ Add Toimenpide XS
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
 
 Add Toimenpide S
@@ -502,6 +522,7 @@ Add Toimenpide S
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jytEQAQ']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Toimenpide M
@@ -510,6 +531,7 @@ Add Toimenpide M
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jytdQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Toimenpide L
@@ -518,6 +540,7 @@ Add Toimenpide L
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyu2QAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    Click_Settings
     Update_settings    h    no
 
 Add Toimenpide XL
@@ -525,7 +548,9 @@ Add Toimenpide XL
     ...    to cart and fill the required details
     sleep    10s
     click button    ${ADD_CART}
+    Click_Settings
     Update_settings    h    no
+    Click_Settings
     Update_settings    h    no
 
 Account seletion
@@ -732,3 +757,8 @@ Add_child_product
     sleep    10s
     Click Element    ${child_cart}
     sleep    10s
+
+Click_Settings
+    sleep    10s
+    Wait Until Element Is Visible    ${SETTINGS}    45s
+    Click Button    ${SETTINGS}
