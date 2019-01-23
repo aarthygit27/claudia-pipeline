@@ -34,7 +34,7 @@ create new opportunity
     Click Element    ${create_new}
     Wait Until Element Is Visible    ${new_opportunity}
     Click Element    ${new_opportunity}
-    Wait Until Element Is Visible    ${continue_button}
+    Wait Until Element Is Visible    ${continue_button}    60s
     Capture Page Screenshot
     Click Element    ${continue_button}
     Wait Until Page Contains Element    //label[text()='Account Name']    120s
@@ -49,6 +49,7 @@ create new opportunity
     Input Text    ${pricing_list}    b2b
     Click Save Button
     sleep    5s
+    [Return]    ${opportunity_name}
 
 Search Opportunity and click CPQ
     [Arguments]    ${opportunity_name}
@@ -97,7 +98,6 @@ Add Muut asiantuntijapalvelut
     ${Laskutettava_toimenpide}=    Set Variable    //textarea[@name='productconfig_field_0_0']
     ${Kustannus}=    set variable    //input[@name='productconfig_field_0_1']
     ${Kilometrikorvaus}=    set variable    //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
-    ${Kilometrikorvaus_settings}=    set variable    //div[@ng-if='!importedScope.isProvisioningStatusDeleted(childProd, attrs.provisioningStatus)']//button[@title='Settings']
     ${Kilometrit}=    set variable    //input[@name='productconfig_field_0_1']
     sleep    25s
     Wait Until Element Is Visible    ${product_id}    45s
@@ -116,7 +116,7 @@ Add Muut asiantuntijapalvelut
     click element    ${Kilometrikorvaus}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     sleep    10s
-    click element    ${Kilometrikorvaus_settings}
+    click element    ${CHILD_SETTINGS}
     input text    ${Kilometrit}    100
     sleep    5s
     Fill Laskutuksen lisätieto
@@ -195,7 +195,7 @@ create order
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
     click element    ${CREATE_ORDER}
     sleep    10s
-    Edit_Details
+    #Edit_Details
     Wait Until Element Is Visible    ${cart_next_button}    120s
     click element    ${cart_next_button}
     sleep    10s
@@ -290,7 +290,7 @@ Update_settings2
     sleep    10s
     Capture Page Screenshot
     Wait Until Element Is Visible    ${SETTINGS}    45s
-    Click Button    ${SETTINGS}
+    Click Button    ${SETTINGS_BTN}
     sleep    10s
     Wait Until Element Is Visible    ${Palvelunhallintakeskus}    30s
     click element    ${Palvelunhallintakeskus}
@@ -335,7 +335,7 @@ General test setup
     ${new_opportunity_name}=    Run Keyword    create new opportunity
     #${new_opportunity_name}=    Set Variable    Test Robot Order_160120192214
     sleep    10s
-    Log    the opportunity id is \ ${new_opportunity_name}
+    Log    the opportunity id is ${new_opportunity_name}
     Search Opportunity and click CPQ    ${new_opportunity_name}
 
 Add Avainasiakaspalvelukeskus kertapalvelu
@@ -395,21 +395,21 @@ Add Jatkuvuudenhallinta jatkuva palvelu
     [Documentation]    This is to add Jatkuvuudenhallinta jatkuva palvelu
     ...    to cart and fill the required details
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${CHILD_SETTINGS}
     Update_settings    h    no
 
 Add Jatkuvuudenhallinta kertapalvelu
     [Documentation]    This is to add Jatkuvuudenhallinta kertapalvelu
     ...    to cart and fill the required details
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${CHILD_SETTINGS}
     Update_settings    h    no
 
 Add Jatkuvuudenhallinta varallaolo ja matkustus
     [Documentation]    This is to Add Jatkuvuudenhallinta varallaolo ja matkustus
     ...    to cart and fill the required details
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${CHILD_SETTINGS}
     Update_settings    h    no
 
 Add Palvelujohtaminen jatkuva palvelu
@@ -465,10 +465,6 @@ Complete Order
     Wait Until Element Is Visible    ${update_order}    120s
     Click Element    ${update_order}
     sleep    10s
-    Wait Until Element Is Visible    ${Orchestration Plan}    120s
-    ${plan_id}=    Get Text    ${Orchestration Plan}
-    Log    The plan created is ${plan_id}
-    sleep    3s
     Wait Until Element Is Visible    ${complete_order}    120s
     click element    ${complete_order}
     sleep    10s
@@ -729,3 +725,10 @@ contact_lookup
 
 Login to Salesforce as Sales admin User devpo
     Login To Salesforce    ${SALES_ADMIN_USER_DEVPO}    ${PASSWORD_DEVPO}
+
+Add_child_product
+    [Arguments]    ${child_product}
+    ${child_cart}=    set variable    //div[@class='cpq-item-no-children'][contains(text(),'${child_product}')]/../../../div/button
+    sleep    10s
+    Click Element    ${child_cart}
+    sleep    10s

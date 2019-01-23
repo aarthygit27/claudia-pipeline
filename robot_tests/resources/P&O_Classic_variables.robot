@@ -87,3 +87,4 @@ ${CONTACT_LOOKUP}    //img[@alt='Contact Lookup (New Window)']
 ${SHOW_ALL_RESULTS_BUTTON}    //a[text()='Show all results']
 ${SELECT_CONTACT_NAME}    //tr[@class='dataRow even last first']//a
 ${SALES_ADMIN_USER_DEVPO}    saleadm@teliacompany.com.devpo
+${CHILD_SETTINGS}    //div[@ng-if='!importedScope.isProvisioningStatusDeleted(childProd, attrs.provisioningStatus)']//button[@title='Settings']

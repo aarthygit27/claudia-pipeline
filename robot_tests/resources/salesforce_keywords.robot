@@ -1037,7 +1037,7 @@ Login to Salesforce
     Input Password    id=password    ${password}
     Click Element    id=Login
     Check For Lightning Force And Switch Back To Sales Console
-    Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    30 seconds
+    Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    60s
 
 Login to Salesforce And Go To Sales Application
     Login to Salesforce

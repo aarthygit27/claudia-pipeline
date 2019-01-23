@@ -24,17 +24,6 @@ Test scenario 1:Telia Architect
     create order    ${DEVPO_ACCOUNT}
     Complete Order
 
-Test scenario 3:Telia Consulting
-    [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
-    Search Products    Telia Konsultointi jatkuva palvelu
-    Add Telia Konsultointi jatkuva palvelu
-    Search Products    Telia Konsultointi varallaolo ja matkustus
-    Add Telia Konsultointi varallaolo ja matkustus
-    create order    ${DEVPO_ACCOUNT}
-    Complete Order
-
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
     [Tags]    PO
@@ -43,6 +32,17 @@ Test scenario 2: Telia Project management
     Add Telia Projektijohtaminen jatkuva palvelu
     Search Products    Telia Projektijohtaminen varallaolo ja matkustus
     Add Telia Projektijohtaminen varallaolo ja matkustus
+    create order    ${DEVPO_ACCOUNT}
+    Complete Order
+
+Test scenario 3:Telia Consulting
+    [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
+    [Tags]    PO
+    General test setup    ${DEVPO_ACCOUNT}
+    Search Products    Telia Konsultointi jatkuva palvelu
+    Add Telia Konsultointi jatkuva palvelu
+    Search Products    Telia Konsultointi varallaolo ja matkustus
+    Add Telia Konsultointi varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
     Complete Order
 
@@ -121,6 +121,7 @@ Test scenario 10:Training
     Search Products    Koulutus jatkuva palvelu
     Add Koulutus jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
@@ -131,6 +132,7 @@ Test scenario 11:Training
     Search Products    Koulutus kertapalvelu
     Add Koulutus kertapalvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
@@ -141,6 +143,7 @@ Test scenario 12:Training
     Search Products    Koulutus varallaolo ja matkustus
     Add Koulutus varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -148,9 +151,10 @@ Test scenario 13:Continuity Management Service
     General test setup    ${DEVPO_ACCOUNT}
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
-    Search Products    Jatkuvuudenhallinta jatkuva palvelu
+    Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
     Add Jatkuvuudenhallinta jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -158,9 +162,10 @@ Test scenario 14:Continuity Management Service
     General test setup    ${DEVPO_ACCOUNT}
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
-    Search Products    Jatkuvuudenhallinta kertapalvelu
+    Add_child_product    Jatkuvuudenhallinta kertapalvelu
     Add Jatkuvuudenhallinta kertapalvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -168,9 +173,10 @@ Test scenario 15:Continuity Management Service
     General test setup    ${DEVPO_ACCOUNT}
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
-    Search Products    Jatkuvuudenhallinta varallaolo ja matkustus
+    Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
     Add Jatkuvuudenhallinta varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
@@ -181,6 +187,7 @@ Test scenario 16:Service Lead Service
     Search Products    Palvelujohtaminen jatkuva palvelu
     Add Palvelujohtaminen jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
@@ -191,6 +198,7 @@ Test scenario 17:Service Lead Service
     Search Products    Palvelujohtaminen kertapalvelu
     Add Palvelujohtaminen kertapalvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
@@ -201,6 +209,7 @@ Test scenario 18: Service Lead Service
     Search Products    Palvelujohtaminen varallaolo ja matkustus
     Add Palvelujohtaminen varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
@@ -211,6 +220,7 @@ Test scenario 19:Operation and Support Service
     Search Products    Hallinta ja Tuki jatkuva palvelu
     Add Hallinta ja Tuki jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
@@ -221,6 +231,7 @@ Test scenario 20:Operation and Support Service
     Search Products    Hallinta ja Tuki kertapalvelu
     Add Hallinta ja Tuki kertapalvelu
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
@@ -231,6 +242,7 @@ Test scenario 21:Operation and Support Service
     Search Products    Hallinta ja Tuki varallaolo ja matkustus
     Add Hallinta ja Tuki varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
+    Complete Order
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
@@ -257,9 +269,7 @@ Test scenario 22 Other:Operation and Support Services
     Search Products    Toimenpide XL
     Add Toimenpide XL
     create order    ${DEVPO_ACCOUNT}
-    #sleep    10s
-    #Place the order    Aacon Oy
-    #Capture Page Screenshot
+    Complete Order
 
 Wait time checking
     [Tags]    PO1
