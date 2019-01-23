@@ -34,7 +34,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]     Create new opportunity and validate in accounts related tab search in salesforce
     ...     and then in My all open Opportunities section.
-    [Tags]    BQA-8393    Lightnin
+    [Tags]    BQA-8393    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -60,7 +60,7 @@ Negative - Validate Opportunity cannot be created for Group account
 Closing active opportunity as cancelled
     [Documentation]     Select the Group account and validate that the new opportunity button
     ...     is not displayed
-    [Tags]    BQA-8465    Lightnin
+    [Tags]    BQA-8465    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -69,7 +69,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]     Create new opportunity and close the opportunity as lost and validate that
     ...     it cannot be updated further
-    [Tags]    BQA-8466    Lightnin
+    [Tags]    BQA-8466    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -77,7 +77,7 @@ Closing active opportunity as lost
 
 Check Attributes/Business Account are named right in Sales Force UI
     [Documentation]     To Verify the Business Account Attributes Are Named Right
-    [Tags]    BQA-8484    Lightnin
+    [Tags]    BQA-8484    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
@@ -93,7 +93,7 @@ Check Attributes/Contact Person are named right
 
 Lightning: Create Meeting from Account
     [Documentation]     To create meeting for a account
-    [Tags]    BQA-7948    Lightnin
+    [Tags]    BQA-7948    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Meeting
