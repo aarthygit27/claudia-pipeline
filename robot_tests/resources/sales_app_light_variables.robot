@@ -196,3 +196,4 @@ ${CHANGE_OWNER_BUTTON}                      //div[contains(@class,'forceModalAct
 ${SEARCH_OWNER}                             //input[@title='Search People']
 ${OWNER_NAME}                               //div[@class='ownerName']//a
 ${NEW_OWNER_SELECTED}                       //span[@class='pillText']
+${CLOSE_NOTIFICATION}                       //button[@title='Dismiss notification']
