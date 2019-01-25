@@ -116,10 +116,10 @@ Search Salesforce
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
-    ${element_catenate} =  catenate  ${TABLE_HEADER}  [@title='${target_name}']
-    Wait Until Page Contains element    ${element_catenate}   120s
+    #${element_catenate} =  ${TABLE_HEADER}  [@title='${target_name}']
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   120s
     Sleep   5s
-    Click Element       ${element_catenate}
+    Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
     Wait Until Page Contains element        //h1//span[text()='${target_name}']         120s
