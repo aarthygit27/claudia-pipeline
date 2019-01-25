@@ -187,6 +187,8 @@ create order
     Wait Until Element Is Visible    ${cart_next_button}    120s
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
+    sleep    10s
+    Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
     Wait Until Element Is Visible    ${open_quote}    240s
@@ -208,8 +210,6 @@ create order
     Addtional data
     sleep    3s
     Select Owner
-    sleep    3s
-    create billing account    ${target_account}
     sleep    3s
     wait until element is visible    ${submit_order}    120s
     click element    ${submit_order}
@@ -565,6 +565,7 @@ Account seletion
     Wait Until Element Is Visible    ${account_checkbox}    120s
     click element    ${account_checkbox}
     sleep    3s
+    Capture Page Screenshot
     Wait Until Element Is Visible    ${search_account_next_button}    120s
     Click Element    ${search_account_next_button}
 
@@ -575,6 +576,8 @@ select order contacts
     Wait Until Element Is Visible    ${contact_search_title}    120s
     Wait Until Element Is Visible    ${contact_search}    120s
     Input Text    ${contact_search}    ${technical_contact}
+    sleep    3s
+    Capture Page Screenshot
     Click Element    ${contact_next_button}
 
 Addtional data
@@ -589,15 +592,20 @@ Addtional data
     Click Button    ${next_month}
     click element    ${firstday}
     sleep    3s
+    Capture Page Screenshot
     Click Element    ${additional_info_next_button}
 
 Select Owner
     [Documentation]    Used to select the owner of the order
+    ${owner_account}=    Set Variable    //ng-form[@id='BuyerAccount']//span[@class='slds-checkbox--faux']
     ${buyer_payer}=    Set Variable    //input[@id='BuyerIsPayer']/../span
     ${buyer_account_next_button}=    Set Variable    //div[@id='SelectedBuyerAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
     Wait Until Element Is Visible    ${buyer_payer}    120s
+    Click Element    ${owner_account}
+    sleep    3s
     click element    ${buyer_payer}
     sleep    3s
+    Capture Page Screenshot
     Wait Until Element Is Visible    ${buyer_account_next_button}    120s
     click element    ${buyer_account_next_button}
 
@@ -612,6 +620,7 @@ Create billing Account
     click element    ${invoice_method}
     click element    ${invoice_method} /option[@label='Paper Invoice']
     sleep    3s
+    Capture Page Screenshot
     Click Element    ${billing_account_next_button}
 
 Add Telia Domain Service Name
