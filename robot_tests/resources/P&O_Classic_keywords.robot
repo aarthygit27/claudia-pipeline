@@ -753,6 +753,7 @@ contact_lookup
     Capture Page Screenshot
     sleep    3s
     Click Element    ${SHOW_ALL_RESULTS_BUTTON}
+    sleep    7s
     click element    ${SELECT_CONTACT_NAME}
     sleep    5s
     Select Window    title=${MAIN_WINDOW}
