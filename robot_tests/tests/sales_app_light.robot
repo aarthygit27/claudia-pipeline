@@ -34,7 +34,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]     Create new opportunity and validate in accounts related tab search in salesforce
     ...     and then in My all open Opportunities section.
-    [Tags]    BQA-8393    Lightning2
+    [Tags]    BQA-8393    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
