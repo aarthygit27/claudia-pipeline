@@ -43,7 +43,7 @@ create new opportunity
     click element    ${status}
     click element    ${status}/option[@value='Analyse Prospect']
     input text    ${contact}    ${technical_contact}
-    contact_lookup
+    #contact_lookup
     ${close_date}=    Get Date From Future    30
     Input Text    ${closing_date}    ${close_date}
     Input Text    ${pricing_list}    b2b
