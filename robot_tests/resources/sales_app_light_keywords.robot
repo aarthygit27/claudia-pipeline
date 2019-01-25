@@ -118,11 +118,13 @@ Select Entity
     [Arguments]    ${target_name}    ${type}
     ${element_catenate} =  catenate  ${TABLE_HEADER}  [@title='${target_name}']
     Wait Until Page Contains element    ${element_catenate}   120s
+    Sleep   5s
     Click Element       ${element_catenate}
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   10s
-    #${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    ${target_name}
-    #run keyword Unless  ${ISOpen}       Click Element       ${element_catenate}
+    Wait Until Page Contains element        //h1//span[text()='${target_name}']         120s
+    #${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
+    #run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
 
 Entity Should Be Open
     [Arguments]    ${target_name}
