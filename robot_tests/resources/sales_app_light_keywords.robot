@@ -118,18 +118,18 @@ Select Entity
     [Arguments]    ${target_name}    ${type}
     #${element_catenate} =  ${TABLE_HEADER}  [@title='${target_name}']
     Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   120s
-    Sleep   5s
+    Sleep   15s
     Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
-    Sleep   10s
+    Sleep   15s
     Wait Until Page Contains element        //h1//span[text()='${target_name}']         120s
-    #${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
-    #run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
+    ${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
+    run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
 
 Entity Should Be Open
     [Arguments]    ${target_name}
     Sleep   5s
-    Wait Until Page Contains element    ${ENTITY_HEADER}//*[contains(text()='${target_name}')]        30s
+    Wait Until Page Contains element    ${target_name}        30s
     #${Case} ---- ActiveStatus or PassiveStatus of Account
 
 Create New Opportunity For Customer
