@@ -1024,8 +1024,9 @@ CreateAOppoFromAccount_HDC
 ChangeThePriceBookToHDC
     log to console  this is to change the prioebook to HDCB2B
     sleep  30s
-    Execute JavaScript    window.scrollTo(0,600)
+    #Execute JavaScript    window.scrollTo(0,600)
     #scroll page to element  //button[@title="Edit Price Book"]
+    ScrollUntillFound   //button[@title="Edit Price Book"]
     click element  //button[@title="Edit Price Book"]
     sleep  10s
     click element  //div/div[10]/div[1]/div/div/div/div/div/div[2]/div/ul/li[1]/a/a
@@ -1062,8 +1063,9 @@ AddingProductToCartAndClickNextButton
     ##page should contain element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']
     ##wait until page contains element  xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']   60s
     #wait until page contains element  xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']   60s
-    execute javascript  window.scrollTo(0,200)
+    #execute javascript  window.scrollTo(0,200)
     #scroll page to element  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    scrolluntillfound   //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     sleep  10s
     wait until page contains element  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']   60s
     click element  xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
@@ -1104,7 +1106,8 @@ CreditScoreApproving
     click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #wait until page contains element  //span[@class='test-id__field-label' and text()='Quote Number']  10s
     sleep  20s
-    Execute Javascript    window.location.reload(true)
+    ScrollUntillFound   //button[@title='Edit Approval Status']
+    #Execute Javascript    window.location.reload(true)
     sleep   30s
      click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
      sleep  10s
@@ -1270,7 +1273,8 @@ ReviewPage
 
 ValidateTheOrchestrationPlan
 
-    execute javascript  window.scrollTo(0,2000)
+    scrolluntillfound  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+    #execute javascript  window.scrollTo(0,2000)
     sleep  10s
     log to console  plan validation
     wait until page contains element  //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
