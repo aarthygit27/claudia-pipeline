@@ -1107,8 +1107,8 @@ CreditScoreApproving
     #wait until page contains element  //span[@class='test-id__field-label' and text()='Quote Number']  10s
     sleep  20s
     ScrollUntillFound   //button[@title='Edit Approval Status']
-    #Execute Javascript    window.location.reload(true)
-    sleep   30s
+    Execute Javascript    window.location.reload(true)
+    sleep   40s
      click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
      sleep  10s
     ScrollUntillFound   //button[@title='Edit Approval Status']
