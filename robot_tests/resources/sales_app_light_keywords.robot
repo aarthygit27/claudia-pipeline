@@ -92,7 +92,7 @@ Reset to Home
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     Log    Going to '${target}'
-    Search And Select the Entity    ${target}    ${type}
+    Wait Until Keyword Succeeds    2 mins      10s     Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
 
 Search And Select the Entity
@@ -286,6 +286,7 @@ Create New Master Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${mobile_num}=    Run Keyword    Create Unique Mobile Number
+    wait until keyword succeeds     2mins       5s      Go to Contacts
     Set Test Variable    ${MASTER_FIRST_NAME}    Master ${first_name}
     Set Test Variable    ${MASTER_LAST_NAME}    Test ${first_name}
     Set Test Variable    ${MASTER_PRIMARY_EMAIL}    ${email_id}
@@ -335,6 +336,7 @@ Create New NP Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${mobile_num}=    Run Keyword    Create Unique Mobile Number
+    wait until keyword succeeds     2mins       5s      Go to Contacts
     Set Test Variable    ${NP_FIRST_NAME}    NP ${first_name}
     Set Test Variable    ${NP_LAST_NAME}    Test ${first_name}
     Set Test Variable    ${NP_EMAIL}    ${email_id}

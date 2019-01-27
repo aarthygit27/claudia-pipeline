@@ -11,7 +11,6 @@ Add new contact - Master
     [Documentation]     Go to SalesForce Lightning. Create new master contact and validate the details.
     [Tags]    BQA-8396    Lightning
     Go To Salesforce and Login into Lightning
-    Go to Contacts
     Create New Master Contact
     Validate Master Contact Details
 
@@ -19,7 +18,6 @@ Add new contact - Non person
     [Documentation]     Go to SalesForce Lightning. Create new non master contact and validate the details.
     [Tags]    BQA-8395    Lightning
     Go To Salesforce and Login into Lightning
-    Go to Contacts
     Create New NP Contact
     Validate NP Contact Details
 
