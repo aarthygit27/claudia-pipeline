@@ -92,7 +92,7 @@ Reset to Home
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     Log    Going to '${target}'
-    Wait Until Keyword Succeeds    2 mins      10s     Search And Select the Entity    ${target}    ${type}
+    Wait Until Keyword Succeeds    5 mins      10s     Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
 
 Search And Select the Entity
@@ -117,12 +117,12 @@ Search Salesforce
 Select Entity
     [Arguments]    ${target_name}    ${type}
     #${element_catenate} =  ${TABLE_HEADER}  [@title='${target_name}']
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   120s
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   40s
     Sleep   15s
     Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   15s
-    Wait Until Page Contains element        //h1//span[text()='${target_name}']         120s
+    Wait Until Page Contains element        //h1//span[text()='${target_name}']         40s
     ${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
     run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
 
@@ -280,6 +280,10 @@ Filter Opportunities By
 
 Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
+    Sleep   10s
+    ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
+    Run Keyword If    ${isVisible}    Run Keyword With Delay    0.10s    Click Element    xpath=//*[@title='Close this window']
+    ...     Go to Contacts
     Wait Until Page Contains element    ${CONTACTS_ICON}    60s
 
 Create New Master Contact
