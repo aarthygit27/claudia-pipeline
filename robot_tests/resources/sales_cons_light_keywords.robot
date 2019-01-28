@@ -35,7 +35,7 @@ Login to Salesforce as DigiSales Lightning User
 
 Login to Salesforce Lightning
     [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${PASSWORD}
-    Wait Until Page Contains Element    id=username
+    Wait Until Page Contains Element    id=username     240s
     Input Text    id=username    ${username}
     Input Password    id=password    ${password}
     Click Element    id=Login
@@ -197,7 +197,6 @@ Verify That Opportunity Is Saved And Data Is Correct
 Scroll Page To Location
     [Arguments]    ${x_location}    ${y_location}
     Execute JavaScript    window.scrollTo(${x_location},${y_location})
-    Sleep       10s
 
 Close All Tabs
     #${original}=    run keyword     Get Element Count    xpath=${TABS_OPENED}//div[contains(@class,'close')]
@@ -240,8 +239,8 @@ Verify That Opportunity is Found From My All Open Opportunities
     Filter Opportunities By     Opportunity Name    ${OPPORTUNITY_NAME}
     #Click element       ${RELATED_OPPORTUNITY}${oppo_name}
     Sleep       10s
-    Wait Until Page Contains Element    ${OPPORTUNITYNAME_TAB}${oppo_name}
-    Wait Until Page Contains Element    ${account_name}
+    Wait Until Page Contains Element    ${OPPORTUNITYNAME_TAB}${oppo_name}      240s
+    Wait Until Page Contains Element    ${account_name}     240s
     #Wait Until Page Contains Element    ${oppo_date}
     ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
     Run Keyword If    ${present}    Close All Tabs
@@ -339,7 +338,7 @@ Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
-    Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']
+    Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      240s
     Click Element                   //div[contains(@class,'primaryLabel') and @title='${value}']
 
 
@@ -353,10 +352,10 @@ Validate Contact Details
     #Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep                               5s
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${email}
+    Wait Until Page Contains Element    ${element}${contact_name}           240s
+    Wait Until Page Contains Element    ${element}${account_name}       240s
+    Wait Until Page Contains Element    ${element}${mobile_number}      240s
+    Wait Until Page Contains Element    ${element}${email}      240s
     ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
     Run Keyword If    ${present}    Close All Tabs
 
@@ -389,10 +388,10 @@ Validate NP Contact Details
     Wait Until Page Contains Element            //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     Click element           //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep                   10s
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${email}
+    Wait Until Page Contains Element    ${element}${contact_name}       240s
+    Wait Until Page Contains Element    ${element}${account_name}       240s
+    Wait Until Page Contains Element    ${element}${mobile_number}      240s
+    Wait Until Page Contains Element    ${element}${email}      240s
     ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
     Run Keyword If    ${present}    Close All Tabs
 
@@ -425,10 +424,10 @@ Validate AP Contact Details
     Wait Until Page Contains Element        //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     Click element                           //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep       5s
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${email}
+    Wait Until Page Contains Element    ${element}${contact_name}       240s
+    Wait Until Page Contains Element    ${element}${account_name}       240s
+    Wait Until Page Contains Element    ${element}${mobile_number}      240s
+    Wait Until Page Contains Element    ${element}${email}      240s
     ${present}=  Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}
     Run Keyword If    ${present}    Close All Tabs
 
