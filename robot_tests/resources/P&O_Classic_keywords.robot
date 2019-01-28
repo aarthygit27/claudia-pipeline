@@ -748,8 +748,8 @@ contact_lookup
     click element    ${contact_name_lookup}
     sleep    10s
     @{titles}=    Get Window Titles
-    ${MAIN_WINDOW}=    Get From List    @{titles}    1
-    ${child_window}=    Get From List    @{titles}    2
+    ${MAIN_WINDOW}=    Set Variable    @{titles}[0]
+    ${child_window}=    set variable    @{titles}[1]
     Select Window    title=${child_window}
     sleep    10s
     Select Frame    id=resultsFrame
