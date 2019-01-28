@@ -280,9 +280,9 @@ Filter Opportunities By
 
 Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
-    Sleep   10s
+    Sleep   20s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
-    Run Keyword If    ${isVisible}    Run Keyword With Delay    0.10s    Click Element    xpath=//*[@title='Close this window']
+    Run Keyword If    ${isVisible}      force click element     xpath=//*[@title='Close this window']
     ...     Go to Contacts
     Wait Until Page Contains element    ${CONTACTS_ICON}    60s
 
