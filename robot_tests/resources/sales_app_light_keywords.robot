@@ -324,7 +324,7 @@ Validate Master Contact Details
     ${primary_email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
     #${email}=    Set Variable    //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
     Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
-    Click Visible element    ${DETAILS_TAB}
+    Click Visible element    ${DETAILS_TAB}         40s
     Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${primary_email}
     #Wait Until Page Contains Element    ${element}${phone_number}
     #Wait Until Page Contains Element    ${element}${email}
