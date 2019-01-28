@@ -744,12 +744,12 @@ Edit_Details
 
 contact_lookup
     ${contact_name_lookup}=    set variable    //img[@title='Contact Lookup (New Window)']
-    @{titles}=    Get Window Titles
-    ${MAIN_WINDOW}=    @{titles}[0]
-    ${child_window}=    @{titles}[1]
     sleep    5s
     click element    ${contact_name_lookup}
     sleep    10s
+    @{titles}=    Get Window Titles
+    ${MAIN_WINDOW}=    Get From List    @{titles}    0
+    ${child_window}=    Get From List    @{titles}    1
     Select Window    title=${child_window}
     sleep    10s
     Select Frame    id=resultsFrame
