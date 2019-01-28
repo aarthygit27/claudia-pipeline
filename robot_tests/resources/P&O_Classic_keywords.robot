@@ -44,6 +44,7 @@ create new opportunity
     click element    ${status}/option[@value='Analyse Prospect']
     input text    ${contact}    ${technical_contact}
     contact_lookup
+    sleep    5s
     ${close_date}=    Get Date From Future    30
     Input Text    ${closing_date}    ${close_date}
     Input Text    ${pricing_list}    b2b
@@ -743,11 +744,13 @@ Edit_Details
 
 contact_lookup
     ${contact_name_lookup}=    set variable    //img[@title='Contact Lookup (New Window)']
-    ${MAIN_WINDOW}=    Get Title
+    @{titles}=    Get Window Titles
+    ${MAIN_WINDOW}=    @{titles}[0]
+    ${child_window}=    @{titles}[1]
     sleep    5s
     click element    ${contact_name_lookup}
     sleep    10s
-    Select Window    title=Search ~ Salesforce - Unlimited Edition
+    Select Window    title=${child_window}
     sleep    10s
     Select Frame    id=resultsFrame
     Capture Page Screenshot
