@@ -72,8 +72,9 @@ Search Products
 
 Add Telia Arkkitehti jatkuva palvelu
     [Documentation]    This is to add Telia Arkkitehti jatkuva palvelu to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TtYXQA0']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    d    yes
 
@@ -271,17 +272,20 @@ Update_settings
 
 Add Telia Konsultointi jatkuva palvelu
     [Documentation]    This is to add Telia Konsultointi jatkuva palvelu to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEAQA0']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    d    yes
 
 Add Telia Konsultointi varallaolo ja matkustus
     [Documentation]    This is to Telia Konsultointi varallaolo ja matkustus to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEKQA0']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    yes
+    \    \    \    01u6E000003TvEKQA0
 
 Update_settings2
     ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_0']
@@ -305,22 +309,25 @@ Update_settings2
 
 Add Telia Projektijohtaminen jatkuva palvelu
     [Documentation]    This is to add \ Telia Projektijohtaminen jatkuva palvelu to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEUQA0']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    d    yes
 
 Add Telia Projektijohtaminen varallaolo ja matkustus
     [Documentation]    This is to add Telia Projektijohtaminen varallaolo ja matkustus to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEZQA0']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    yes
 
 Add Telia Palvelunhallintakeskus
     [Documentation]    This is to add \ Telia Palvelunhallintakeskus to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFfQAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Update_settings2
 
 Add Avainasiakaspalvelukeskus jatkuva palvelu
@@ -385,22 +392,25 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
 
 Add Koulutus jatkuva palvelu
     [Documentation]    This is to add \ Koulutus jatkuva palvelu to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGdQAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
 Add Koulutus kertapalvelu
-    [Documentation]    This is to add \ Koulutus jatkuva palvelu to cart and fill the required details
+    [Documentation]    This is to Add Koulutus kertapalvelu to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jz05QAA']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
 Add Koulutus varallaolo ja matkustus
-    [Documentation]    This is to add \ Koulutus jatkuva palvelu to cart and fill the required details
+    [Documentation]    This is to add Koulutus varallaolo ja matkustus to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGnQAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
@@ -428,48 +438,54 @@ Add Jatkuvuudenhallinta varallaolo ja matkustus
 Add Palvelujohtaminen jatkuva palvelu
     [Documentation]    This is to Add Palvelujohtaminen jatkuva palvelu
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwNsQAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    d    no
 
 Add Palvelujohtaminen kertapalvelu
     [Documentation]    This is to Add Palvelujohtaminen kertapalvelu
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004n5tYQAQ']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
 Add Palvelujohtaminen varallaolo ja matkustus
-    [Documentation]    This is to Add Palvelujohtaminen kertapalvelu
+    [Documentation]    This is to Add Palvelujohtaminen varallaolo ja matkustus
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwO2QAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
 Add Hallinta ja Tuki jatkuva palvelu
     [Documentation]    This is to Add Hallinta ja Tuki jatkuva palvelu
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvHjQAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    d    no
 
 Add Hallinta ja Tuki kertapalvelu
     [Documentation]    This is to Add Hallinta ja Tuki kertapalvelu
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jz0FQAQ']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
 Add Hallinta ja Tuki varallaolo ja matkustus
     [Documentation]    This is to Add Hallinta ja Tuki varallaolo ja matkustus
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvHtQAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
@@ -491,19 +507,22 @@ Complete Order
 Add Asiantuntijakäynti
     [Documentation]    This is to Add Asiantuntijakäynti
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003Tw07QAC']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
 
 Add Pikatoimituslisä
     [Documentation]    This is to Add Pikatoimituslisä
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwJaQAK']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
 
 Add Events jatkuva palvelu
     [Arguments]    ${Hinnoitteluperuste}
     [Documentation]    This is to Add Events jatkuva palvelu
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwJkQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${ADD_CART}
     Click_Settings
@@ -512,8 +531,9 @@ Add Events jatkuva palvelu
 Add Toimenpide XS
     [Documentation]    This is to Add Toimenpide XS
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jysGQAQ']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
@@ -547,10 +567,9 @@ Add Toimenpide L
 Add Toimenpide XL
     [Documentation]    This is to Add Toimenpide XL
     ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyugQAA']/div/div/div/div/div/button
     sleep    10s
-    click button    ${ADD_CART}
-    Click_Settings
-    Update_settings    h    no
+    click button    ${product_id}
     Click_Settings
     Update_settings    h    no
 
