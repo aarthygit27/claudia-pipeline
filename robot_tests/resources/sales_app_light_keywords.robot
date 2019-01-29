@@ -62,7 +62,7 @@ Login to Salesforce as DigiSales Lightning User
 Login to Salesforce Lightning
     [Arguments]    ${username}    ${password}
     #log to console    ${password}
-    Wait Until Page Contains Element    id=username
+    Wait Until Page Contains Element    id=username         240s
     Input Text    id=username    ${username}
     Input Password    id=password    ${password}
     Click Element    id=Login
@@ -280,9 +280,9 @@ Filter Opportunities By
 
 Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
-    Sleep   10s
+    Sleep   20s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
-    Run Keyword If    ${isVisible}    Run Keyword With Delay    0.10s    Click Element    xpath=//*[@title='Close this window']
+    Run Keyword If    ${isVisible}      force click element     xpath=//*[@title='Close this window']
     ...     Go to Contacts
     Wait Until Page Contains element    ${CONTACTS_ICON}    60s
 
@@ -324,17 +324,17 @@ Validate Master Contact Details
     ${primary_email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
     #${email}=    Set Variable    //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
     Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
-    Click Visible element    ${DETAILS_TAB}         40s
+    Click Visible element    ${DETAILS_TAB}
     Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${primary_email}
     #Wait Until Page Contains Element    ${element}${phone_number}
     #Wait Until Page Contains Element    ${element}${email}
 
 Validate Contact Details
     [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${email}
+    Wait Until Page Contains Element    ${element}${contact_name}       240s
+    Wait Until Page Contains Element    ${element}${account_name}       240s
+    Wait Until Page Contains Element    ${element}${mobile_number}      240s
+    Wait Until Page Contains Element    ${element}${email}      240s
 
 Create New NP Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
@@ -703,7 +703,7 @@ Verify That Business Account Attributes Are Named Right
 
 Verify That Record Contains Attribute
     [Arguments]    ${attribute}
-    Wait Until Page Contains Element    //span[contains(@class,'test-id__field-label') and (text()='${attribute}')]         10s
+    Wait Until Page Contains Element    //span[contains(@class,'test-id__field-label') and (text()='${attribute}')]     240s      10s
 
 Create New Master Contact With All Details
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
@@ -792,19 +792,19 @@ Validate Contact Details In Contact Page
     [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}    ${primary_email}    ${email}
     ...    ${status}    ${preferred_contact}    ${comm_lang}    ${birth_date}    ${last_contact_date}    ${sales_role}
     ...    ${job_title}    ${office_name_text}
-    Wait Until Page Contains Element    ${element}${contact_name}
-    Wait Until Page Contains Element    ${element}${account_name}
-    Wait Until Page Contains Element    ${element}${mobile_number}
-    Wait Until Page Contains Element    ${element}${primary_email}
-    Wait Until Page Contains Element    ${element}${email}
-    Wait Until Page Contains Element    ${element}${status}
-    Wait Until Page Contains Element    ${element}${preferred_contact}
-    Wait Until Page Contains Element    ${element}${comm_lang}
-    Wait Until Page Contains Element    ${element}${birth_date}
-    Wait Until Page Contains Element    ${element}${last_contact_date}
-    Wait Until Page Contains Element    ${element}${sales_role}
-    Wait Until Page Contains Element    ${element}${job_title}
-    Wait Until Page Contains Element    ${element}${office_name_text}
+    Wait Until Page Contains Element    ${element}${contact_name}       240s
+    Wait Until Page Contains Element    ${element}${account_name}       240s
+    Wait Until Page Contains Element    ${element}${mobile_number}      240s
+    Wait Until Page Contains Element    ${element}${primary_email}      240s
+    Wait Until Page Contains Element    ${element}${email}          240s
+    Wait Until Page Contains Element    ${element}${status}     240s
+    Wait Until Page Contains Element    ${element}${preferred_contact}      240s
+    Wait Until Page Contains Element    ${element}${comm_lang}      240s
+    Wait Until Page Contains Element    ${element}${birth_date}     240s
+    Wait Until Page Contains Element    ${element}${last_contact_date}      240s
+    Wait Until Page Contains Element    ${element}${sales_role}     240s
+    Wait Until Page Contains Element    ${element}${job_title}      240s
+    Wait Until Page Contains Element    ${element}${office_name_text}       240s
 
 Validate That Contact Person Attributes Are Named Right
     ${business_card_title}=    Set Variable    //button[@title='Edit Business Card Title']/../..//span[text()='Business Card Title']
@@ -826,27 +826,27 @@ Validate That Contact Person Attributes Are Named Right
     ${External_address}=    Set Variable    //div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'test-id__section slds-section')]//span[text()='External Address']
     ${3rd_Party_Contact}=    Set Variable    //button[@title='Edit 3rd Party Contact']/../..//span[text()='3rd Party Contact']
     ${external_phone}=    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//section[@class='tabs__content active uiTab']//div[contains(@class,'test-id__section slds-section')]//button[@title='Edit Phone']//parent::div/../../../../div/div/div/div/span[text()='External Phone']
-    Wait Until Page Contains Element    ${business_card_title}
-    Wait Until Page Contains Element    ${name}
-    Wait Until Page Contains Element    ${contact_ID}
-    Wait Until Page Contains Element    ${account_name}
-    Wait Until Page Contains Element    ${mobile_number}
-    Wait Until Page Contains Element    ${phone_number}
-    Wait Until Page Contains Element    ${primary_email}
-    Wait Until Page Contains Element    ${email}
-    Wait Until Page Contains Element    ${status}
+    Wait Until Page Contains Element    ${business_card_title}          240s
+    Wait Until Page Contains Element    ${name}         240s
+    Wait Until Page Contains Element    ${contact_ID}           240s
+    Wait Until Page Contains Element    ${account_name}         240s
+    Wait Until Page Contains Element    ${mobile_number}        240s
+    Wait Until Page Contains Element    ${phone_number}         240s
+    Wait Until Page Contains Element    ${primary_email}        240s
+    Wait Until Page Contains Element    ${email}        240s
+    Wait Until Page Contains Element    ${status}       240s
     Scroll Page To Location    0    200
-    Wait Until Page Contains Element    ${preferred_contact_title}
-    Wait Until Page Contains Element    ${comm_lang}
-    Wait Until Page Contains Element    ${birth_date}
+    Wait Until Page Contains Element    ${preferred_contact_title}      240s
+    Wait Until Page Contains Element    ${comm_lang}        240s
+    Wait Until Page Contains Element    ${birth_date}       240s
     Scroll Page To Location    0    500
-    Wait Until Page Contains Element    ${sales_role}
-    Wait Until Page Contains Element    ${office_name_text}
-    Wait Until Page Contains Element    ${gender_text}
-    Wait Until Page Contains Element    ${Address}
-    Wait Until Page Contains Element    ${External_address}
-    Wait Until Page Contains Element    ${3rd_Party_Contact}
-    Wait Until Page Contains Element    ${external_phone}
+    Wait Until Page Contains Element    ${sales_role}       240s
+    Wait Until Page Contains Element    ${office_name_text}     240s
+    Wait Until Page Contains Element    ${gender_text}      240s
+    Wait Until Page Contains Element    ${Address}      240s
+    Wait Until Page Contains Element    ${External_address}     240s
+    Wait Until Page Contains Element    ${3rd_Party_Contact}        240s
+    Wait Until Page Contains Element    ${external_phone}       240s
 
 Go To Accounts
     ${element_xpath}=    Replace String    ${ACCOUNTS_LINK}    \"    \\\"
@@ -896,7 +896,7 @@ Change to original owner
     Click Button    //button[@title='Change Owner']
     sleep    8s
     Element Should Be Enabled    //input[@title='Search People']
-    Wait Until Page Contains Element    //input[@title='Search People']
+    Wait Until Page Contains Element    //input[@title='Search People']     240s
     Input Text    //input[@title='Search People']    ${ACCOUNT_OWNER}
     Select from Autopopulate List    //input[@title='Search People']    ${ACCOUNT_OWNER}
     Mouse Over    //button[@title='Change Owner']
@@ -906,7 +906,7 @@ Change to original owner
 Change Account Owner
     ${CurrentOwnerName}=  Get Text  ${OWNER_NAME}
     Click Element  ${CHANGE_OWNER}
-    Wait until Page Contains Element  ${SEARCH_OWNER}
+    Wait until Page Contains Element  ${SEARCH_OWNER}       240s
     Sleep  10s
     #Click Element  ${SEARCH_OWNER}
     #sleep  5s
