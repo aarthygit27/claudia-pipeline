@@ -117,12 +117,12 @@ Search Salesforce
 Select Entity
     [Arguments]    ${target_name}    ${type}
     #${element_catenate} =  ${TABLE_HEADER}  [@title='${target_name}']
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   40s
+    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   120s
     Sleep   15s
     Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   15s
-    Wait Until Page Contains element        //h1//span[text()='${target_name}']         40s
+    Wait Until Page Contains element        //h1//span[text()='${target_name}']         120s
     ${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
     run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
 
@@ -280,11 +280,11 @@ Filter Opportunities By
 
 Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
-    Sleep   20s
+    Sleep   30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
     Run Keyword If    ${isVisible}      force click element     xpath=//*[@title='Close this window']
     ...     Go to Contacts
-    Wait Until Page Contains element    ${CONTACTS_ICON}    60s
+    Wait Until Page Contains element    ${CONTACTS_ICON}    240s
 
 Create New Master Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
