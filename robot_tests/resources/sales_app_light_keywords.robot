@@ -109,11 +109,11 @@ Search Salesforce
     Press Enter On  ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
-    ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      20s
+    ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
     run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
-    ${IsNotVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      20s
-    run keyword unless  ${IsNotVisible}    Press Enter On  ${SEARCH_SALESFORCE}
-    Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    120s
+    ${IsNotVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
+    run keyword unless  ${IsNotVisible}    Search Salesforce   ${item}
+
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
