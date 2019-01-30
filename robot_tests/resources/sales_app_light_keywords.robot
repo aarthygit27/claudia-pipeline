@@ -92,11 +92,12 @@ Reset to Home
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     Log    Going to '${target}'
-    Wait Until Keyword Succeeds    5 mins      10s     Search And Select the Entity    ${target}    ${type}
+    Wait Until Keyword Succeeds    8 mins      40s     Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
 
 Search And Select the Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
+    Reload page
     Search Salesforce    ${target}
     Select Entity    ${target}    ${type}
 
@@ -122,7 +123,7 @@ Select Entity
     Click Element       ${TABLE_HEADER}[@title='${target_name}']
     #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
     Sleep   15s
-    Wait Until Page Contains element        //h1//span[text()='${target_name}']         120s
+    Wait Until Page Contains element        //h1//span[text()='${target_name}']         400s
     ${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
     run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
 
@@ -283,13 +284,15 @@ Go to Contacts
     Sleep   30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
     Run Keyword If    ${isVisible}      force click element     xpath=//*[@title='Close this window']
-    ...     Go to Contacts
+    Click Visible Element    ${CONTACTS_TAB}
+    Sleep   30s
     Wait Until Page Contains element    ${CONTACTS_ICON}    240s
 
 Create New Master Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${mobile_num}=    Run Keyword    Create Unique Mobile Number
+    Close All Notifications
     wait until keyword succeeds     2mins       5s      Go to Contacts
     Set Test Variable    ${MASTER_FIRST_NAME}    Master ${first_name}
     Set Test Variable    ${MASTER_LAST_NAME}    Test ${first_name}
