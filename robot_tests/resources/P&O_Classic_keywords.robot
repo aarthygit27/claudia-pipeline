@@ -258,11 +258,11 @@ Update_settings
     sleep    5s
     click element    ${Palveluaika}
     sleep    5s
-    click element    ${Palveluaika}/option[@value='10']
+    click element    ${Palveluaika}//option[contains(text(),'arkisin 8-16')]
     sleep    5s
     Run Keyword And Ignore Error    click element    ${Laskuttaminen}
     sleep    5s
-    Run Keyword And Ignore Error    click element    ${Laskuttaminen}/option[@value='10']
+    Run Keyword And Ignore Error    click element    ${Laskuttaminen}/option[contains(text(),'Laskutus heti')]
     sleep    5s
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
     Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
@@ -288,10 +288,7 @@ Add Telia Konsultointi varallaolo ja matkustus
     \    \    \    01u6E000003TvEKQA0
 
 Update_settings2
-    ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_0']
-    ${Henkilötyöaika}=    Set Variable    //input[@name='productconfig_field_0_1']
-    ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
-    ${Laskuttaminen}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
+    ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_1']
     ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
     sleep    10s
     Capture Page Screenshot
@@ -300,7 +297,7 @@ Update_settings2
     sleep    10s
     Wait Until Element Is Visible    ${Palvelunhallintakeskus}    30s
     click element    ${Palvelunhallintakeskus}
-    click element    ${Palvelunhallintakeskus}//option[@value='20']
+    click element    ${Palvelunhallintakeskus}//option[contains(text(),'Olemassaoleva avainasiakaspalvelukeskus')]
     sleep    5s
     click element    ${Työtilaus vaadittu}
     Fill Laskutuksen lisätieto
@@ -501,6 +498,7 @@ Complete Order
     Click Element    ${update_order}
     sleep    10s
     Wait Until Element Is Visible    ${complete_order}    120s
+    Capture Page Screenshot
     click element    ${complete_order}
     sleep    10s
 
