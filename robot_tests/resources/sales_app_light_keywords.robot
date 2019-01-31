@@ -111,24 +111,6 @@ Search Salesforce
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
-    ${element_catenate} =    Set Variable    [@title='${target_name}']
-    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    40s
-    Sleep    15s
-    Click Element    ${TABLE_HEADER}${element_catenate}
-    #Press key    ${TABLE_HEADER}[@title='${target_name}']    //13
-    Sleep    15s
-    Wait Until Page Contains element    //h1//span[text()='${target_name}']    40s
-    ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
-    run keyword Unless    ${ISOpen}    Search And Select the Entity    ${target_name}    ${type}
-=======
-    ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
-    run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
-    ${IsNotVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
-    run keyword unless  ${IsNotVisible}    Search Salesforce   ${item}
-
-
-Select Entity
-    [Arguments]    ${target_name}    ${type}
     #${element_catenate} =  ${TABLE_HEADER}  [@title='${target_name}']
     Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   120s
     Sleep   15s
@@ -138,7 +120,7 @@ Select Entity
     Wait Until Page Contains element        //h1//span[text()='${target_name}']         400s
     ${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
     run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
->>>>>>> d3b694fc658bb108c84df87a2fc6b3592824a58c
+
 
 Entity Should Be Open
     [Arguments]    ${target_name}
