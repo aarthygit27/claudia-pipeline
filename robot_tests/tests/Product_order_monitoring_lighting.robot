@@ -9,7 +9,7 @@ Resource          ../resources/Product_order_monitoring_lighting_variables.robot
 
 *** Test Cases ***
 Create opportunity from Account for telia yritysinternet
-    [Tags]    BQA-HDCOppo    Lightning2    telia yritsinternet
+    [Tags]    BQA-HDCOppo    Lightning2    Product_monitoring
     General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
     creating opportunity and navigating to CPQ
     search products    telia yritysinternet
@@ -20,7 +20,7 @@ Create opportunity from Account for telia yritysinternet
     Capture Page Screenshot
 
 Create opportunity from Account for HDCFlow
-    [Tags]    BQA-HDCOppo    Lightning2
+    [Tags]    BQA-HDCOppo    Lightning2    Product_monitoring
     General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
     sleep    10s
     creating opportunity and navigating to CPQ
