@@ -87,11 +87,7 @@ Reset to Home
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     Log    Going to '${target}'
-<<<<<<< HEAD
-    Wait Until Keyword Succeeds    5 mins    10s    Search And Select the Entity    ${target}    ${type}
-=======
     Wait Until Keyword Succeeds    8 mins      40s     Search And Select the Entity    ${target}    ${type}
->>>>>>> d3b694fc658bb108c84df87a2fc6b3592824a58c
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
 
 Search And Select the Entity
@@ -105,15 +101,13 @@ Search Salesforce
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
     #Sleep    2s
-    Press Enter On    ${SEARCH_SALESFORCE}
+    Press Enter On  ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
-<<<<<<< HEAD
-    ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    20s
-    run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
-    ${IsNotVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    20s
-    run keyword unless    ${IsNotVisible}    Press Enter On    ${SEARCH_SALESFORCE}
-    Wait Until Page Contains element    xpath=${SEARCH_RESULTS}    120s
+    ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
+    run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
+    ${IsNotVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
+    run keyword unless  ${IsNotVisible}    Search Salesforce   ${item}
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
