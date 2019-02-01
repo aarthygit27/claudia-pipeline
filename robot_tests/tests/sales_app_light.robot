@@ -195,7 +195,7 @@ Create opportunity from Account for HDCFlow
     sleep    10s
     Go To Entity    ${oppo_name}
     sleep    30s
-    ChangeThePriceBookToHDC
+    ChangeThePriceBookToHDC    HDC Pricebook B2B
     ClickingOnCPQ    ${oppo_name}
     ##ClickingOnCPQ    Oppo_ 20190112-151427
     Adding Telia Colocation    Telia Colocation

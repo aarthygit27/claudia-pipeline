@@ -35,27 +35,26 @@ Adding telia yritysinternet
 General setup
     [Arguments]    ${username}    ${password}
     Login as Light user    ${username}    ${password}
-    sleep    20s
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #sleep    20s
+    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     sleep    10s
     capture page screenshot
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    capture page screenshot
-    sleep    10s
+    Log To Console    pause now
+    sleep    5s
 
-creating opportunity and navigating to CPQ
+creating opportunity
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
     log to console    ${oppo_name}.this is opportunity
     sleep    10s
     Go To Entity    ${oppo_name}
     sleep    30s
-    ClickingOnCPQ    ${oppo_name}
+    [Return]    ${oppo_name}
 
 order creation
     [Arguments]    ${products}
-    UpdateAndAddSalesType    ${products}
+    #UpdateAndAddSalesType    ${products}
     OpenQuoteButtonPage
-    CreditScoreApproving
+    #CreditScoreApproving
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     close order

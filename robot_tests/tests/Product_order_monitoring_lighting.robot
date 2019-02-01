@@ -6,16 +6,18 @@ Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/Product_order_monitoring_lighting_keywords.robot
 Resource          ../resources/Product_order_monitoring_lighting_variables.robot
+Resource          ../resources/sales_app_light_variables.robot
 
 *** Test Cases ***
 Create opportunity from Account for telia yritysinternet
     [Tags]    BQA-HDCOppo    Lightning2    Product_monitoring
     General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
-    creating opportunity and navigating to CPQ
-    search products    telia yritysinternet
-    Adding telia yritysinternet
+    #${oppo_name}=    creating opportunity
+    #ClickingOnCPQ    ${oppo_name}
+    #search products    telia yritysinternet
+    #Adding telia yritysinternet
     sleep    10s
-    #order creation    telia yritysinternet
+    order creation    telia yritysinternet
     #sleep    10s
     Capture Page Screenshot
 
@@ -23,20 +25,23 @@ Create opportunity from Account for HDCFlow
     [Tags]    BQA-HDCOppo    Lightning2    Product_monitoring
     General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
     sleep    10s
-    creating opportunity and navigating to CPQ
+    ${oppo_name}=    creating opportunity
+    ChangeThePriceBookToHDC    HDC Pricebook B2B
+    ClickingOnCPQ    ${oppo_name}
+    search products    Telia Colocation
     Adding Telia Colocation    Telia Colocation
     Updating Setting Telia Colocation
-    #UpdateAndAddSalesType    Telia Colocation
-    #OpenQuoteButtonPage
+    UpdateAndAddSalesType    Telia Colocation
+    OpenQuoteButtonPage
     #CreditScoreApproving
-    #ClickonCreateOrderButton
-    #NextButtonOnOrderPage
-    #SearchAndSelectBillingAccount
-    #SelectingTechnicalContact    ${contact_name}
-    #RequestActionDate
-    #SelectOwnerAccountInfo    ${billing_acc_name}
-    #ReviewPage
-    #ValidateTheOrchestrationPlan
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount
+    SelectingTechnicalContact    ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${TEST_ACCOUNT_CONTACT}
+    ReviewPage
+    ValidateTheOrchestrationPlan
     #Reach the Order Page and Validating the details
     #wait until page contains element    //span[text()='Order']//following::div/span[@class='uiOutputText']
     #${order_id}=    get text    //span[text()='Order']//following::div/span[@class='uiOutputText']

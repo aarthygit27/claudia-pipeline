@@ -87,7 +87,7 @@ Reset to Home
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     Log    Going to '${target}'
-    Wait Until Keyword Succeeds    8 mins      40s     Search And Select the Entity    ${target}    ${type}
+    Wait Until Keyword Succeeds    8 mins    40s    Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
 
 Search And Select the Entity
@@ -101,26 +101,25 @@ Search Salesforce
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
     #Sleep    2s
-    Press Enter On  ${SEARCH_SALESFORCE}
+    Press Enter On    ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
-    ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
-    run keyword unless  ${IsVisible}    Press Enter On  ${SEARCH_SALESFORCE}
-    ${IsNotVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${SEARCH_RESULTS}      60s
-    run keyword unless  ${IsNotVisible}    Search Salesforce   ${item}
+    ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
+    ${IsNotVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    run keyword unless    ${IsNotVisible}    Search Salesforce    ${item}
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
-    #${element_catenate} =  ${TABLE_HEADER}  [@title='${target_name}']
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']   120s
-    Sleep   15s
-    Click Element       ${TABLE_HEADER}[@title='${target_name}']
-    #Press key      ${TABLE_HEADER}[@title='${target_name}']   //13
-    Sleep   15s
-    Wait Until Page Contains element        //h1//span[text()='${target_name}']         400s
-    ${ISOpen}=   Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
-    run keyword Unless  ${ISOpen}       Search And Select the Entity      ${target_name}        ${type}
-
+    ${element_catenate} =    Set Variable    [@title='${target_name}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    Sleep    15s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    #Press key    ${TABLE_HEADER}[@title='${target_name}']    //13
+    Sleep    15s
+    Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
+    ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
+    run keyword Unless    ${ISOpen}    Search And Select the Entity    ${target_name}    ${type}
 
 Entity Should Be Open
     [Arguments]    ${target_name}
@@ -274,11 +273,11 @@ Filter Opportunities By
 
 Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
-    Sleep   30s
+    Sleep    30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
-    Run Keyword If    ${isVisible}      force click element     xpath=//*[@title='Close this window']
+    Run Keyword If    ${isVisible}    force click element    xpath=//*[@title='Close this window']
     Click Visible Element    ${CONTACTS_TAB}
-    Sleep   30s
+    Sleep    30s
     Wait Until Page Contains element    ${CONTACTS_ICON}    240s
 
 Create New Master Contact
@@ -286,7 +285,7 @@ Create New Master Contact
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${mobile_num}=    Run Keyword    Create Unique Mobile Number
     Close All Notifications
-    wait until keyword succeeds     2mins       5s      Go to Contacts
+    wait until keyword succeeds    2mins    5s    Go to Contacts
     Set Test Variable    ${MASTER_FIRST_NAME}    Master ${first_name}
     Set Test Variable    ${MASTER_LAST_NAME}    Test ${first_name}
     Set Test Variable    ${MASTER_PRIMARY_EMAIL}    ${email_id}
@@ -1002,6 +1001,8 @@ CreateAOppoFromAccount_HDC
     [Return]    ${oppo_name}
 
 ChangeThePriceBookToHDC
+    [Arguments]    ${price_book}
+    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'B2B Pricebook')]/following::span[@class='deleteIcon']
     log to console    this is to change the prioebook to HDCB2B
     sleep    30s
     #Execute JavaScript    window.scrollTo(0,600)
@@ -1009,11 +1010,11 @@ ChangeThePriceBookToHDC
     ScrollUntillFound    //button[@title="Edit Price Book"]
     click element    //button[@title="Edit Price Book"]
     sleep    10s
-    click element    //div/div[10]/div[1]/div/div/div/div/div/div[2]/div/ul/li[1]/a/a
+    click element    ${B2B_Price_list_delete_icon}
     sleep    3s
-    input text    //input[@title='Search Price Books']    HDC Pricebook B2B
+    input text    //input[@title='Search Price Books']    ${price_book}
     sleep    3s
-    click element    //*[@title='HDC Pricebook B2B']/../../..
+    click element    //*[@title='${price_book}']/../../..
     click element    //button[@title='Save']
     sleep    10s
     execute javascript    window.scrollTo(0,0)
@@ -1039,10 +1040,11 @@ UpdateAndAddSalesType
     [Arguments]    ${products}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
     ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
-    ${next_button}=    Set Variable    //button[normalize-space(.)='Next']
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     log to console    UpdateAndAddSalesType
     sleep    30s
-    #select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until page contains element    ${update_order}    60s
     log to console    selected new frame
     wait until page contains element    ${product_list}    70s
@@ -1050,13 +1052,14 @@ UpdateAndAddSalesType
     sleep    2s
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     click element    ${next_button}
-    #unselect frame
+    unselect frame
     sleep    60s
 
 OpenQuoteButtonPage
     ${open_quote}=    Set Variable    //*[@id="Open Quote"]
     ${approval}=    set var\    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
     log to console    OpenQuoteButtonPage
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected final page frame
     wait until page contains element    ${approval}    60s
