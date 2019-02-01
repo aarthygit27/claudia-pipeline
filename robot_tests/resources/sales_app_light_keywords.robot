@@ -274,30 +274,19 @@ Filter Opportunities By
 
 Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
-<<<<<<< HEAD
-    Sleep    20s
-    ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
-    Run Keyword If    ${isVisible}    force click element    xpath=//*[@title='Close this window']    Go to Contacts
-    Wait Until Page Contains element    ${CONTACTS_ICON}    60s
-=======
     Sleep   30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
     Run Keyword If    ${isVisible}      force click element     xpath=//*[@title='Close this window']
     Click Visible Element    ${CONTACTS_TAB}
     Sleep   30s
     Wait Until Page Contains element    ${CONTACTS_ICON}    240s
->>>>>>> d3b694fc658bb108c84df87a2fc6b3592824a58c
 
 Create New Master Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${mobile_num}=    Run Keyword    Create Unique Mobile Number
-<<<<<<< HEAD
-    wait until keyword succeeds    2mins    5s    Go to Contacts
-=======
     Close All Notifications
     wait until keyword succeeds     2mins       5s      Go to Contacts
->>>>>>> d3b694fc658bb108c84df87a2fc6b3592824a58c
     Set Test Variable    ${MASTER_FIRST_NAME}    Master ${first_name}
     Set Test Variable    ${MASTER_LAST_NAME}    Test ${first_name}
     Set Test Variable    ${MASTER_PRIMARY_EMAIL}    ${email_id}
