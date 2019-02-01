@@ -7,30 +7,7 @@ Resource          ..${/}resources${/}sales_app_light_keywords.robot
 
 *** Keywords ***
 Adding telia yritysinternet
-    ${Telia_yritysinternet}=    set variable    //div[@data-product-id='01u58000005pgZ8AAI']/div/div/div/div/div/button
-    ${SETTINGS}=    Set Variable    //button[@title='Settings']
-    ${ Liittymän_nopeus}=    Set Variable    //select[@name='productconfig_field_0_0']
-    ${Sopimusaika}=    Set Variable    //select[@name='productconfig_field_0_1']
-    ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
-    ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    wait until page contains element    ${Telia_yritysinternet}    60s
-    sleep    10s
-    click element    ${Telia_yritysinternet}
-    Capture Page Screenshot
-    ###Updating settings
-    Wait Until Element Is Visible    ${SETTINGS}    60s
-    click element    ${SETTINGS}
-    Wait Until Element Is Visible    ${ Liittymän_nopeus}    60s
-    Click Element    ${ Liittymän_nopeus}
-    Wait Until Element Is Visible    ${ Liittymän_nopeus}/option[@value='1']    30s
-    click element    ${ Liittymän_nopeus}/option[@value='1']
-    click element    ${Sopimusaika}
-    Wait Until Element Is Visible    ${Sopimusaika}/option[@value='1']    30s
-    click element    ${Sopimusaika}/option[@value='1']
-    sleep    5s
-    Click Element    ${X_BUTTON}
-    Wait Until Element Is Visible    ${Next_Button}    60s
-    Click Element    ${Next_Button}
+    Adding Products    ${Telia_yritysinternet}
 
 General setup
     [Arguments]    ${username}    ${password}
@@ -71,3 +48,30 @@ Close order
 Login as Light user
     [Arguments]    ${username}    ${password}
     Login To Salesforce Lightning    ${username}    ${password}
+
+Adding Products
+    [Arguments]    ${product}
+    wait until page contains element    //div[@data-product-id='${product}']/div/div/div/div/div/button    60s
+    sleep    10s
+    click element    //div[@data-product-id='${product}']/div/div/div/div/div/button
+    Capture Page Screenshot
+
+Updating setting Telia_yritysinternet
+    ${SETTINGS}=    Set Variable    //button[@title='Settings']
+    ${ Liittymän_nopeus}=    Set Variable    //select[@name='productconfig_field_0_0']
+    ${Sopimusaika}=    Set Variable    //select[@name='productconfig_field_0_1']
+    ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
+    ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    Wait Until Element Is Visible    ${SETTINGS}    60s
+    click element    ${SETTINGS}
+    Wait Until Element Is Visible    ${ Liittymän_nopeus}    60s
+    Click Element    ${ Liittymän_nopeus}
+    Wait Until Element Is Visible    ${ Liittymän_nopeus}/option[@value='1']    30s
+    click element    ${ Liittymän_nopeus}/option[@value='1']
+    click element    ${Sopimusaika}
+    Wait Until Element Is Visible    ${Sopimusaika}/option[@value='1']    30s
+    click element    ${Sopimusaika}/option[@value='1']
+    sleep    5s
+    Click Element    ${X_BUTTON}
+    Wait Until Element Is Visible    ${Next_Button}    60s
+    Click Element    ${Next_Button}
