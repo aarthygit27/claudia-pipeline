@@ -35,8 +35,8 @@ Adding telia yritysinternet
 General setup
     [Arguments]    ${username}    ${password}
     Login as Light user    ${username}    ${password}
-    #sleep    20s
-    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    sleep    20s
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     sleep    10s
     capture page screenshot
     Log To Console    pause now
@@ -52,7 +52,7 @@ creating opportunity
 
 order creation
     [Arguments]    ${products}
-    #UpdateAndAddSalesType    ${products}
+    UpdateAndAddSalesType    ${products}
     OpenQuoteButtonPage
     #CreditScoreApproving
     ClickonCreateOrderButton
