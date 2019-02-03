@@ -255,7 +255,7 @@ Create B2B Order
 
 
 Test123
-    [Tags]    Test    Lightning2
+    [Tags]    Test    Lightning3
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #Execute javascript   document.body.style.transform = 'scale(0.8)';
     #document.body.style.zoom="50%"

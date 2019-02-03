@@ -1209,6 +1209,7 @@ getOrderStatusBeforeSubmitting
     wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']   60s
 
 clickOnSubmitOrder
+    wait until page contains element  //a[@title='Submit Order']   60s
     click element  //a[@title='Submit Order']
     sleep   20s
     execute javascript   window.location.reload(true)
