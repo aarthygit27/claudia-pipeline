@@ -7,6 +7,7 @@ ${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Dignia Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
+${r}                 b2b
 ${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']

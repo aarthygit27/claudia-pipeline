@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 
@@ -175,20 +175,19 @@ Create opportunity from Account for HDCFlow
     [Tags]    BQA-HDCOppo    Lightning2
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    sleep    20s
-    #Go To Entity    Oppo_ 20190122-195448
-    #sleep    10s
+    #sleep    20s
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    sleep    10s
-    ${billing_acc_name}    run keyword    CreateABillingAccount
-    sleep    10s    #pass
-    capture page screenshot
-    log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    capture page screenshot
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
     sleep    10s
+    #sleep    10s
+    ${billing_acc_name}    run keyword    CreateABillingAccount
+    #sleep    10s    #pass
+    #capture page screenshot
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #capture page screenshot
+    sleep   10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ###${contact_name}
     log to console    ${oppo_name}.this is opportunity
@@ -220,3 +219,66 @@ Create opportunity from Account for HDCFlow
     #page should contain element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
     #click element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
     #sleep    20s
+
+
+
+Create B2B Order
+    [Tags]  BQA-B2BOrder       Lightning3
+    #Login to Salesforce as DigiSales Lightning User
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    #${sc_name}  run keyword  createAAgreement   Service Contract
+    #${billing_acc_name}  run keyword  CreateABillingAccount
+    #capture page screenshot
+    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #capture page screenshot
+    ${contact_name}   run keyword  CreateAContactFromAccount_HDC
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    Go To Entity     ${oppo_name}
+    ChangeThePriceBookToHDC   B2B Pricebook
+    ##B2O pricebook
+    ClickingOnCPQ  ${oppo_name}
+    AddProductToCart   Alerta projektointi
+    ##B2O Other Services
+    Run Keyword If    '${r}'== 'b2b'    run keyword  UpdateAndAddSalesType   Alerta projektointi
+    Run keyword If    '${r}'== 'b2o'    run keyword  UpdateAndAddSalesTypeB2O   B2O Other Services
+    ##B2O Other Services
+    OpenQuoteButtonPage
+    CreditScoreApproving
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    getOrderStatusBeforeSubmitting
+    clickOnSubmitOrder
+    getOrderStatusAfterSubmitting
+
+
+
+Test123
+    [Tags]    Test    Lightning2
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    #Execute javascript   document.body.style.transform = 'scale(0.8)';
+    #document.body.style.zoom="50%"
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity     ${oppo_name}
+    ChangeThePriceBookToHDC   HDC Pricebook B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    OpenQuoteButtonPage
+    CreditScoreApproving
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount
+    SelectingTechnicalContact    ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    ReviewPage
+    ValidateTheOrchestrationPlan
