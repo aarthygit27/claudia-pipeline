@@ -171,45 +171,45 @@ Lightning: Sales admin Change Account owner for group account
     Go to Entity    Aacon Oy
     Change Account Owner
 
-Create opportunity from Account for HDCFlow
-    [Tags]    BQA-HDCOppo    Lightning2
-    #Login to Salesforce as DigiSales Lightning User
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #sleep    20s
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
-    sleep    10s
+#Create opportunity from Account for HDCFlow
+ #   [Tags]    BQA-HDCOppo    Lightning2
+  #  #Login to Salesforce as DigiSales Lightning User
+  #  Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+   # #sleep    20s
+    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #log to console    ${contact_name}.this is name
     #sleep    10s
-    ${billing_acc_name}    run keyword    CreateABillingAccount
+    #sleep    10s
+    #${billing_acc_name}    run keyword    CreateABillingAccount
     #sleep    10s    #pass
     #capture page screenshot
-    log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #log to console    ${billing_acc_name}.this is billing account name
+    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #capture page screenshot
-    sleep   10s
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    #sleep   10s
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ###${contact_name}
-    log to console    ${oppo_name}.this is opportunity
-    sleep    10s
-    Go To Entity    ${oppo_name}
-    sleep    30s
-    ChangeThePriceBookToHDC    HDC Pricebook B2B
-    ClickingOnCPQ    ${oppo_name}
+    #log to console    ${oppo_name}.this is opportunity
+    #sleep    10s
+    #Go To Entity    ${oppo_name}
+    #sleep    30s
+    #ChangeThePriceBookToHDC    HDC Pricebook B2B
+    #ClickingOnCPQ    ${oppo_name}
     ##ClickingOnCPQ    Oppo_ 20190112-151427
-    Adding Telia Colocation    Telia Colocation
-    Updating Setting Telia Colocation
-    UpdateAndAddSalesType    Telia Colocation
-    OpenQuoteButtonPage
-    CreditScoreApproving
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
-    SelectingTechnicalContact    ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
-    ReviewPage
-    ValidateTheOrchestrationPlan
+    #Adding Telia Colocation    Telia Colocation
+    #Updating Setting Telia Colocation
+    #UpdateAndAddSalesType    Telia Colocation
+    #OpenQuoteButtonPage
+    #CreditScoreApproving
+    #ClickonCreateOrderButton
+    #NextButtonOnOrderPage
+    #SearchAndSelectBillingAccount
+    #SelectingTechnicalContact    ${contact_name}
+    #RequestActionDate
+    #SelectOwnerAccountInfo    ${billing_acc_name}
+    #ReviewPage
+    #ValidateTheOrchestrationPlan
     #Reach the Order Page and Validating the details
     #wait until page contains element    //span[text()='Order']//following::div/span[@class='uiOutputText']
     #${order_id}=    get text    //span[text()='Order']//following::div/span[@class='uiOutputText']
@@ -249,13 +249,14 @@ Create B2B Order
     NextButtonOnOrderPage
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
+    sleep  60s
     clickOnSubmitOrder
     getOrderStatusAfterSubmitting
 
 
 
-Test123
-    [Tags]    Test    Lightning3
+Create HDC Order
+    [Tags]   BQA-HDCOrder    Lightning3
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #Execute javascript   document.body.style.transform = 'scale(0.8)';
     #document.body.style.zoom="50%"
