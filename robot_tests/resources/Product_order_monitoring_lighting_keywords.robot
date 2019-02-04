@@ -75,3 +75,9 @@ Updating setting Telia_yritysinternet
     Click Element    ${X_BUTTON}
     Wait Until Element Is Visible    ${Next_Button}    60s
     Click Element    ${Next_Button}
+
+Updating setting B2O other services
+    ${SETTINGS}=    Set Variable    //button[@title='Settings']
+    ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    Wait Until Element Is Visible    ${Next_Button}    60s
+    Click Element    ${Next_Button}

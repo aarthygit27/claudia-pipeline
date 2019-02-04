@@ -43,3 +43,25 @@ Create opportunity from Account for HDCFlow
     SelectOwnerAccountInfo    ${vLocUpg_TEST_ACCOUNT}
     ReviewPage
     ValidateTheOrchestrationPlan
+
+Create opportunity from Account for B2O other services
+    [Tags]    Product_monitoring    HDC_montoring
+    General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
+    sleep    10s
+    ${oppo_name}=    creating opportunity
+    ChangeThePriceBookToHDC    HDC Pricebook B2O
+    ClickingOnCPQ    ${oppo_name}
+    search products    B2O Other Services
+    Adding Products    ${B2O_Other_Services}
+    Updating setting B2O other services
+    UpdateAndAddSalesType    Telia Colocation
+    OpenQuoteButtonPage
+    #CreditScoreApproving
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount
+    SelectingTechnicalContact    ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${vLocUpg_TEST_ACCOUNT}
+    ReviewPage
+    ValidateTheOrchestrationPlan
