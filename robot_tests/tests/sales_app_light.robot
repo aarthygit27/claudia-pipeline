@@ -1,8 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-#Test Teardown     Logout From All Systems and Close Browser
-Resource          ../resources/sales_app_light_keywords.robot
+Resource          ../resources/sales_app_light_keywords.robot    #Test Teardown    Logout From All Systems and Close Browser
 Resource          ../resources/common.robot
 
 *** Test Cases ***
@@ -170,12 +169,11 @@ Lightning: Sales admin Change Account owner for group account
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
-
-#Create opportunity from Account for HDCFlow
- #   [Tags]    BQA-HDCOppo    Lightning2
-  #  #Login to Salesforce as DigiSales Lightning User
-  #  Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-   # #sleep    20s
+    #Create opportunity from Account for HDCFlow
+    #    [Tags]    BQA-HDCOppo    Lightning2
+    #    #Login to Salesforce as DigiSales Lightning User
+    #    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    # #sleep    20s
     #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #log to console    ${contact_name}.this is name
@@ -187,7 +185,7 @@ Lightning: Sales admin Change Account owner for group account
     #log to console    ${billing_acc_name}.this is billing account name
     #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #capture page screenshot
-    #sleep   10s
+    #sleep    10s
     #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ###${contact_name}
     #log to console    ${oppo_name}.this is opportunity
@@ -220,28 +218,26 @@ Lightning: Sales admin Change Account owner for group account
     #click element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
     #sleep    20s
 
-
-
 Create B2B Order
-    [Tags]  BQA-B2BOrder       Lightning3
+    [Tags]    BQA-B2BOrder    Lightning3
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #${sc_name}  run keyword  createAAgreement   Service Contract
-    #${billing_acc_name}  run keyword  CreateABillingAccount
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${sc_name}    run keyword    createAAgreement    Service Contract
+    #${billing_acc_name}    run keyword    CreateABillingAccount
     #capture page screenshot
     #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #capture page screenshot
-    ${contact_name}   run keyword  CreateAContactFromAccount_HDC
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
-    Go To Entity     ${oppo_name}
-    ChangeThePriceBookToHDC   B2B Pricebook
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ChangeThePriceBookToHDC    B2B Pricebook
     ##B2O pricebook
-    ClickingOnCPQ  ${oppo_name}
-    AddProductToCart   Alerta projektointi
+    ClickingOnCPQ    ${oppo_name}
+    AddProductToCart    Alerta projektointi
     ##B2O Other Services
-    Run Keyword If    '${r}'== 'b2b'    run keyword  UpdateAndAddSalesType   Alerta projektointi
-    Run keyword If    '${r}'== 'b2o'    run keyword  UpdateAndAddSalesTypeB2O   B2O Other Services
+    Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
+    Run keyword If    '${r}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
     ##B2O Other Services
     OpenQuoteButtonPage
     CreditScoreApproving
@@ -249,16 +245,14 @@ Create B2B Order
     NextButtonOnOrderPage
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
-    sleep  60s
+    sleep    60s
     clickOnSubmitOrder
     getOrderStatusAfterSubmitting
 
-
-
 Create HDC Order
-    [Tags]   BQA-HDCOrder    Lightning3
+    [Tags]    BQA-HDCOrder    Lightning3    monitor_chetan
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #Execute javascript   document.body.style.transform = 'scale(0.8)';
+    #Execute javascript    document.body.style.transform = 'scale(0.8)';
     #document.body.style.zoom="50%"
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -267,8 +261,8 @@ Create HDC Order
     log to console    ${oppo_name}.this is opportunity
     ${billing_acc_name}    run keyword    CreateABillingAccount
     log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity     ${oppo_name}
-    ChangeThePriceBookToHDC   HDC Pricebook B2B
+    Go To Entity    ${oppo_name}
+    ChangeThePriceBookToHDC    HDC Pricebook B2B
     ClickingOnCPQ    ${oppo_name}
     Adding Telia Colocation    Telia Colocation
     Updating Setting Telia Colocation
