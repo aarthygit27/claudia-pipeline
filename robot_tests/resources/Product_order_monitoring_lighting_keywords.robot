@@ -76,7 +76,6 @@ Updating setting Telia_yritysinternet
     Wait Until Element Is Visible    ${Next_Button}    60s
     Click Element    ${Next_Button}
 
-<<<<<<< HEAD
 update sales products
     [Arguments]    ${products}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
@@ -106,11 +105,7 @@ Opening Quote
     unselect frame
     sleep    60s
 
-Update Setting B2O other services
-=======
 Updating setting B2O other services
-    ${SETTINGS}=    Set Variable    //button[@title='Settings']
->>>>>>> d8cba9b6ec7b32e8835e51535531a1d7368f8f87
     ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     Wait Until Element Is Visible    ${Next_Button}    60s
     Click Element    ${Next_Button}
