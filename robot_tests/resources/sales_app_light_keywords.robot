@@ -964,7 +964,7 @@ CreateAContactFromAccount_HDC
     sleep    5s
     #click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
     sleep    3s
-    set focus to element  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
+    set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    Testing
     sleep    5s
@@ -1031,18 +1031,18 @@ ClickingOnCPQ
     sleep    40s
 
 AddProductToCart
-    [Arguments]   ${pname}=${product_name}
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
-    input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
-    wait until page contains element  xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
-    sleep   5s
-    click element  xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
-    wait until page contains element  //div[@class='cpq-item-product']/div[@class='cpq-item-base-product']//following::div[@class='cpq-item-no-children']/span[normalize-space(.)='${pname}']   60s
-    scrolluntillfound  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    click element   //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    [Arguments]    ${pname}=${product_name}
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    input text    //div[contains(@class, 'cpq-searchbox')]//input    ${pname}
+    wait until page contains element    xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button    60s
+    sleep    5s
+    click element    xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    wait until page contains element    //div[@class='cpq-item-product']/div[@class='cpq-item-base-product']//following::div[@class='cpq-item-no-children']/span[normalize-space(.)='${pname}']    60s
+    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    click element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     unselect frame
-    sleep  60s
+    sleep    60s
 
 AddingProductToCartAndClickNextButton
     [Arguments]    ${product}
@@ -1070,22 +1070,22 @@ UpdateAndAddSalesType
     click element    ${next_button}
     unselect frame
     sleep    60s
-UpdateAndAddSalesTypeB2O
-    [Arguments]   ${pname}=${product_name}
-    select frame  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    wait until page contains element  xpath=//h1[normalize-space(.) = 'Update Products']    60s
-    wait until page contains element   xpath=//td[normalize-space(.)='${pname}']  70s
-    #click element  xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
-    #sleep  2s
-    #click element  xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
-    click element  xpath=//button[normalize-space(.)='Next']
-    unselect frame
-    sleep  60s
 
+UpdateAndAddSalesTypeB2O
+    [Arguments]    ${pname}=${product_name}
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    wait until page contains element    xpath=//h1[normalize-space(.) = 'Update Products']    60s
+    wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
+    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
+    #sleep    2s
+    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    click element    xpath=//button[normalize-space(.)='Next']
+    unselect frame
+    sleep    60s
 
 OpenQuoteButtonPage
     ${open_quote}=    Set Variable    //*[@id="Open Quote"]
-    ${approval}=      Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
+    ${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
     log to console    OpenQuoteButtonPage
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
@@ -1194,32 +1194,31 @@ NextButtonOnOrderPage
     unselect frame
     sleep    30s
 
-
 OrderNextStepsPage
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
-     wait until page contains element  //*[contains(text(),'close this window')]   60s
-     wait until page contains element  //*[@id="Close"]  60s
-     click element  //*[@id="Close"]
-     unselect frame
-     sleep  30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    //*[contains(text(),'close this window')]    60s
+    wait until page contains element    //*[@id="Close"]    60s
+    click element    //*[@id="Close"]
+    unselect frame
+    sleep    30s
 
 getOrderStatusBeforeSubmitting
     click element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']   60s
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']   60s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']    60s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']    60s
 
 clickOnSubmitOrder
-    wait until page contains element  //a[@title='Submit Order']   60s
-    click element  //a[@title='Submit Order']
-    sleep   20s
-    execute javascript   window.location.reload(true)
-    sleep   20s
-getOrderStatusAfterSubmitting
-   wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']   60s
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    wait until page contains element  //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Processed']   60s
-    wait until page contains element  //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Processed']   60s
+    wait until page contains element    //a[@title='Submit Order']    60s
+    click element    //a[@title='Submit Order']
+    sleep    20s
+    execute javascript    window.location.reload(true)
+    sleep    20s
 
+getOrderStatusAfterSubmitting
+    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']    60s
+    click element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Processed']    60s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Processed']    60s
 
 SearchAndSelectBillingAccount
     execute javascript    window.location.reload(true)
@@ -1327,7 +1326,6 @@ CreateABillingAccount
     #wait until page contains element    //*[@id="Customer_nextBtn"]    30s
     #click element    //*[@id="Customer_nextBtn"]
     #unselect frame
-
     sleep    20s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]    30s
@@ -1371,7 +1369,7 @@ Login to Salesforce as DigiSales Admin User Release
     Login To Salesforce Lightning    ${SALES_ADMIN_USER_RELEASE}    ${PASSWORD-SALESADMIN}
 
 Updating Setting Telia Colocation
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element    xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Colocation']    60s
     wait until page contains element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button    60s
     click element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button
@@ -1386,7 +1384,7 @@ Updating Setting Telia Colocation
     wait until page contains element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']    60s
     click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     log to console    before teardiwn
-    Unselect Frame
+    #Unselect Frame
     sleep    60s
 
 search products
@@ -1400,7 +1398,7 @@ search products
 Adding Telia Colocation
     [Arguments]    ${product}
     ##enter searcing product and click on add to cart and click on next button
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element    xpath=//p[normalize-space(.) = '${product}']/../../../div[@class='slds-tile__detail']/div/div/button    60s    #xpath=//p[normalize-space(.) = '${product}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep    10s
     click element    xpath=//p[normalize-space(.) = '${product}']/../../../div[@class='slds-tile__detail']/div/div/button
