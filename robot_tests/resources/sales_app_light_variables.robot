@@ -1,10 +1,10 @@
 ﻿*** Variables ***
 ${BROWSER}                                  Firefox
-${LOGIN_PAGE}                               https://test.salesforce.com/
-${TEST_ENVIRONMENT}                         merge
-${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${TEST_ENVIRONMENT}
+${LOGIN_PAGE_APP}                           https://test.salesforce.com/
+${ENVIRONMENT}                              release
+${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}                           PahaPassu2
-${LIGHTNING_TEST_ACCOUNT}                   Dignia Oy
+${LIGHTNING_TEST_ACCOUNT}                   Abbott Oy
 ${vLocUpg_TEST_ACCOUNT}                     Aacon Oy
 #Digia Oyj
 ${CLASSIC_MENU}                             //*[@id="userNav"]
@@ -178,11 +178,11 @@ ${day}                                      12
 ${gender}                                   1 - male
 ${sales_role_text}                          Business Contact
 ${job_title_text}                           verojohtaja - 8715
-${SALES_ADMIN_USER}    saleadm@teliacompany.com.${TEST_ENVIRONMENT}
-${PASSWORD-SALESADMIN}    PahaPassu3
-${REMOVE_ACCOUNT}    GESB Integration
-${ownername}      //div[@class='ownerName']
-${ACCOUNT_OWNER}    Sales Admin
+${SALES_ADMIN_USER}                         saleadm@teliacompany.com.${ENVIRONMENT}
+${PASSWORD-SALESADMIN}                      PahaPassu3
+${REMOVE_ACCOUNT}                           GESB Integration
+${ownername}                                //div[@class='ownerName']
+${ACCOUNT_OWNER}                            Sales Admin
 
 ${ACCOUNT_LIST}                             //a[@data-refid='recordId']/../../parent::tr
 ${ACCOUNT_NAME}                             (//tr//a[@data-refid='recordId'])

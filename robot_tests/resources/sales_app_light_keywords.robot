@@ -66,6 +66,9 @@ Login to Salesforce Lightning
     Input Text    id=username    ${username}
     Input Password    id=password    ${password}
     Click Element    id=Login
+    Sleep   40s
+    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[@class='continue']
+    Run Keyword If    ${infoAvailable}    force click element  //a[@class='continue']
     run keyword and ignore error    Check For Lightning Force
     ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${LIGHTNING_ICON}
     Run Keyword If    ${buttonNotAvailable}    reload page
@@ -284,8 +287,7 @@ Go to Contacts
     Sleep   30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
     Run Keyword If    ${isVisible}      force click element     xpath=//*[@title='Close this window']
-    Click Visible Element    ${CONTACTS_TAB}
-    Sleep   30s
+    ...  Go to Contacts
     Wait Until Page Contains element    ${CONTACTS_ICON}    240s
 
 Create New Master Contact
