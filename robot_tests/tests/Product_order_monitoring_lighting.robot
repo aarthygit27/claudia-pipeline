@@ -10,7 +10,7 @@ Resource          ../resources/sales_app_light_variables.robot
 
 *** Test Cases ***
 Create opportunity from Account for telia yritysinternet
-    [Tags]    Product_monitoring
+    [Tags]    Product_monitoring    internet
     General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
     ${oppo_name}=    creating opportunity
     ClickingOnCPQ    ${oppo_name}
@@ -54,7 +54,7 @@ Create opportunity from Account for B2O other services
     search products    B2O Other Services
     Adding Products    ${B2O_Other_Services}
     Updating setting B2O other services
-    UpdateAndAddSalesType    Telia Colocation
+    UpdateAndAddSalesTypeB2O    B2O Other Services
     OpenQuoteButtonPage
     #CreditScoreApproving
     ClickonCreateOrderButton
