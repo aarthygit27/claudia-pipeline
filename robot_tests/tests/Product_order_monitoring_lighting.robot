@@ -47,21 +47,70 @@ Create opportunity from Account for HDCFlow
     ValidateTheOrchestrationPlan
 
 Create opportunity from Account for B2O other services
-    [Tags]    BQA-B2BOrder    Lightning3
     General setup    ${SALES_ADMIN_USER_RELEASE}    ${SALEADM_PASSWORD_RELEASE}
+    sleep    10s
     ${oppo_name}=    creating opportunity
     ChangeThePriceBookToHDC    HDC Pricebook B2O
     ClickingOnCPQ    ${oppo_name}
     search products    B2O Other Services
-    Adding Products    ${B2O_Other_services}
-    Update Setting B2O other services
+    Adding Products    ${B2O_Other_Services}
+    Updating setting B2O other services
     UpdateAndAddSalesTypeB2O    B2O Other Services
     OpenQuoteButtonPage
     #CreditScoreApproving
     ClickonCreateOrderButton
     NextButtonOnOrderPage
+    SearchAndSelectBillingAccount
+    SelectingTechnicalContact    ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${vLocUpg_TEST_ACCOUNT}
+    ReviewPage
+    ValidateTheOrchestrationPlan
+
+<<<<<<< HEAD
+    [Tags]    BQA-B2BOrder    Lightning3
+    General setup    ${SALES_ADMIN_USER_RELEASE}    ${SALEADM_PASSWORD_RELEASE}
+
+=======
+    [Tags]    Product_monitoring    HDC_montoring
+    General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
+    sleep    10s
+
+>>>>>>> d8cba9b6ec7b32e8835e51535531a1d7368f8f87
+    ${oppo_name}=    creating opportunity
+    ChangeThePriceBookToHDC    HDC Pricebook B2O
+    ClickingOnCPQ    ${oppo_name}
+    search products    B2O Other Services
+
+<<<<<<< HEAD
+    Adding Products    ${B2O_Other_services}
+    Update Setting B2O other services
+    UpdateAndAddSalesTypeB2O    B2O Other Services
+
+=======
+    Adding Products    ${B2O_Other_Services}
+    Updating setting B2O other services
+    UpdateAndAddSalesType    Telia Colocation
+
+>>>>>>> d8cba9b6ec7b32e8835e51535531a1d7368f8f87
+    OpenQuoteButtonPage
+    #CreditScoreApproving
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+
+<<<<<<< HEAD
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
     sleep    60s
     clickOnSubmitOrder
     getOrderStatusAfterSubmitting
+
+=======
+    SearchAndSelectBillingAccount
+    SelectingTechnicalContact    ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${vLocUpg_TEST_ACCOUNT}
+    ReviewPage
+    ValidateTheOrchestrationPlan
+
+>>>>>>> d8cba9b6ec7b32e8835e51535531a1d7368f8f87
