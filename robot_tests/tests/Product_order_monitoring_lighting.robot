@@ -34,12 +34,12 @@ Create opportunity from Account for HDCFlow
     Updating Setting Telia Colocation
     UpdateAndAddSalesType    Telia Colocation
     OpenQuoteButtonPage
-    CreditScoreApproving
+    #CreditScoreApproving
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount
     SelectingTechnicalContact    ${contact_name}
     RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
+    SelectOwnerAccountInfo    ${vLocUpg_TEST_ACCOUNT}
     ReviewPage
     ValidateTheOrchestrationPlan
