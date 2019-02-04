@@ -17,7 +17,7 @@ General setup
     sleep    10s
     capture page screenshot
     Log To Console    pause now
-    sleep    5s
+    #sleep    5s
 
 creating opportunity
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
@@ -29,7 +29,7 @@ creating opportunity
 
 order creation
     [Arguments]    ${products}
-    UpdateAndAddSalesType    ${products}
+    update sales products    ${products}
     OpenQuoteButtonPage
     #CreditScoreApproving
     ClickonCreateOrderButton
@@ -73,5 +73,39 @@ Updating setting Telia_yritysinternet
     click element    ${Sopimusaika}/option[@value='1']
     sleep    5s
     Click Element    ${X_BUTTON}
+    Wait Until Element Is Visible    ${Next_Button}    60s
+    Click Element    ${Next_Button}
+
+update sales products
+    [Arguments]    ${products}
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    log to console    UpdateAndAddSalesType
+    sleep    30s
+    Select Window
+    Select Frame    //div[contains(@class,'slds')]/iframe
+    sleep    20s
+    wait until page contains element    ${product_list}    70s
+    click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+
+Opening Quote
+    ${open_quote}=    Set Variable    //*[@id="Open Quote"]
+    ${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
+    log to console    OpenQuoteButtonPage
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    log to console    selected final page frame
+    wait until page contains element    ${approval}    60s
+    log to console    wait completed before open quote click
+    wait until element is visible    ${open_quote}    30s
+    wait until element is enabled    ${open_quote}    20s
+    log to console    element visible next step
+    click element    ${open_quote}
+    unselect frame
+    sleep    60s
+
+Update Setting B2O other services
+    ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     Wait Until Element Is Visible    ${Next_Button}    60s
     Click Element    ${Next_Button}

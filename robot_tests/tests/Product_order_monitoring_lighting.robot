@@ -11,20 +11,22 @@ Resource          ../resources/sales_app_light_variables.robot
 *** Test Cases ***
 Create opportunity from Account for telia yritysinternet
     [Tags]    Product_monitoring
-    General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
+    General setup    ${SALES_ADMIN_USER_RELEASE}    ${SALEADM_PASSWORD_RELEASE}
     ${oppo_name}=    creating opportunity
+    Go To Entity    ${oppo_name}
+    sleep    30s
     ClickingOnCPQ    ${oppo_name}
-    search products    telia yritysinternet
+    search products    Telia Yritysinternet
     Adding Products    ${Telia_yritysinternet}
     Updating setting Telia_yritysinternet
     sleep    10s
-    order creation    telia yritysinternet
+    order creation    Telia Yritysinternet
     #sleep    10s
     Capture Page Screenshot
 
 Create opportunity from Account for HDCFlow
     [Tags]    Product_monitoring    HDC_montoring
-    General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
+    General setup    ${SALES_ADMIN_USER_RELEASE}    ${SALEADM_PASSWORD_RELEASE}
     sleep    10s
     ${oppo_name}=    creating opportunity
     ChangeThePriceBookToHDC    HDC Pricebook B2B
@@ -43,3 +45,23 @@ Create opportunity from Account for HDCFlow
     SelectOwnerAccountInfo    ${vLocUpg_TEST_ACCOUNT}
     ReviewPage
     ValidateTheOrchestrationPlan
+
+Create opportunity from Account for B2O other services
+    [Tags]    BQA-B2BOrder    Lightning3
+    General setup    ${SALES_ADMIN_USER_RELEASE}    ${SALEADM_PASSWORD_RELEASE}
+    ${oppo_name}=    creating opportunity
+    ChangeThePriceBookToHDC    HDC Pricebook B2O
+    ClickingOnCPQ    ${oppo_name}
+    search products    B2O Other Services
+    Adding Products    ${B2O_Other_services}
+    Update Setting B2O other services
+    UpdateAndAddSalesTypeB2O    B2O Other Services
+    OpenQuoteButtonPage
+    #CreditScoreApproving
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    getOrderStatusBeforeSubmitting
+    sleep    60s
+    clickOnSubmitOrder
+    getOrderStatusAfterSubmitting
