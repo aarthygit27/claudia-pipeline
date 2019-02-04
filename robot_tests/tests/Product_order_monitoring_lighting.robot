@@ -23,7 +23,7 @@ Create opportunity from Account for telia yritysinternet
     Capture Page Screenshot
 
 Create opportunity from Account for HDCFlow
-    [Tags]    Product_monitoring
+    [Tags]    Product_monitoring    HDC_montoring
     General setup    ${B2B_LIGHT_USER}    ${PASSWORD_LIGHT}
     sleep    10s
     ${oppo_name}=    creating opportunity
