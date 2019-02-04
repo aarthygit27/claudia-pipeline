@@ -34,21 +34,12 @@ Create opportunity from Account for HDCFlow
     Updating Setting Telia Colocation
     UpdateAndAddSalesType    Telia Colocation
     OpenQuoteButtonPage
-    #CreditScoreApproving
+    CreditScoreApproving
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount
     SelectingTechnicalContact    ${contact_name}
     RequestActionDate
-    SelectOwnerAccountInfo    ${TEST_ACCOUNT_CONTACT}
+    SelectOwnerAccountInfo    ${billing_acc_name}
     ReviewPage
     ValidateTheOrchestrationPlan
-    #Reach the Order Page and Validating the details
-    #wait until page contains element    //span[text()='Order']//following::div/span[@class='uiOutputText']
-    #${order_id}=    get text    //span[text()='Order']//following::div/span[@class='uiOutputText']
-    #spage should contain element    //th/div/a[text()='Telia Colocation']
-    #page should contain element    //th/div/a[text()='Telia Colocation']//following::td/span[text()='New Money-New Services']
-    #Execute JavaScript    window.scrollTo(0,2000)
-    #page should contain element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
-    #click element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
-    #sleep    20s
