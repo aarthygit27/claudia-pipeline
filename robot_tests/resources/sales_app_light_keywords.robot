@@ -980,7 +980,7 @@ CreateAContactFromAccount_HDC
 
 CreateAOppoFromAccount_HDC
     [Arguments]    ${b}=${contact_name}
-    log to console    this is to create a Oppo from contact for HDC flow
+    log to console    this is to create a Oppo from contact
     ${oppo_name}    create unique name    Oppo_
     wait until page contains element    //li/a/div[text()='New Opportunity']    60s
     click element    //li/a/div[text()='New Opportunity']
