@@ -75,7 +75,7 @@ Test scenario 6: Key Customer Service Desk
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Avainasiakaspalvelukeskus
-    Add Avainasiakaspalvelukeskus kertapalvelu
+    Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
     Complete Order
 

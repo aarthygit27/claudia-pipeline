@@ -88,3 +88,13 @@ ${SHOW_ALL_RESULTS_BUTTON}    //a[text()='Show all results']
 ${SELECT_CONTACT_NAME}    //tr[@class='dataRow even last first']//a
 ${SALES_ADMIN_USER_DEVPO}    saleadm@teliacompany.com.devpo
 ${CHILD_SETTINGS}    //div[@ng-if='!importedScope.isProvisioningStatusDeleted(childProd, attrs.provisioningStatus)']//button[@title='Settings']
+${Telia_Arkkitehti_jatkuva_palvelu}    01u6E000003TtYXQA0
+${Muut_asiantuntijapalvelut}    01u6E000003TwOCQA0
+${Telia_Projektijohtaminen_jatkuva_palvelu}    01u6E000003TvEUQA0
+${Telia_Projektijohtaminen_varallaolo_ja_matkustus}    01u6E000003TvEZQA0
+${Telia_Konsultointi_jatkuva_palvelu}    01u6E000003TvEAQA0
+${Telia_Konsultointi_varallaolo_ja_matkustus}    01u6E000003TvEKQA0
+${Telia_Palvelunhallintakeskus}    01u6E000003TvFfQAK
+${Avainasiakaspalvelukeskus_kertapalvelu}    01u6E000004jyzbQAA
+${Avainasiakaspalvelukeskus_varallaolo_ja_matkustus}    01u6E000003TvFzQAK
+${Avainasiakaspalvelukeskus_lisätyöt_jatkuva_palvelu}    01u6E000003TvGJQA0
