@@ -29,7 +29,7 @@ creating opportunity
 
 order creation
     [Arguments]    ${products}
-    update sales products    ${products}
+    UpdateAndAddSalesType    ${products}
     OpenQuoteButtonPage
     #CreditScoreApproving
     ClickonCreateOrderButton
