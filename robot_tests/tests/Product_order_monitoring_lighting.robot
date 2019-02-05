@@ -17,7 +17,7 @@ Create opportunity from Account for telia yritysinternet
     sleep    30s
     ClickingOnCPQ    ${oppo_name}
     search products    Telia Yritysinternet
-    Adding Products    ${Telia_yritysinternet}
+    Adding Products    ${Telia_yritysinternet_merge}
     Updating setting Telia_yritysinternet
     sleep    10s
     order creation    Telia Yritysinternet
