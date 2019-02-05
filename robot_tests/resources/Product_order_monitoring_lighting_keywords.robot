@@ -51,12 +51,10 @@ Login as Light user
 
 Adding Products
     [Arguments]    ${product}
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element    //div[@data-product-id='${product}']/div/div/div/div/div/button    60s
     sleep    10s
     click element    //div[@data-product-id='${product}']/div/div/div/div/div/button
     Capture Page Screenshot
-    Unselect Frame
 
 Updating setting Telia_yritysinternet
     ${SETTINGS}=    Set Variable    //button[@title='Settings']
