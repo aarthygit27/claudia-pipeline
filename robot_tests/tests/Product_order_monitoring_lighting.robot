@@ -11,7 +11,7 @@ Resource          ../resources/sales_app_light_variables.robot
 *** Test Cases ***
 Create opportunity from Account for telia yritysinternet
     [Tags]    Product_monitoring    internet
-    General setup    ${SALES_ADMIN_USER_RELEASE}    ${SALEADM_PASSWORD_RELEASE}
+    General setup    ${SALEADM_USER_MERGE}    ${SALEADM_PASSWORD_RELEASE}
     ${oppo_name}=    creating opportunity
     Go To Entity    ${oppo_name}
     sleep    30s
