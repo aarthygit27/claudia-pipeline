@@ -7,3 +7,4 @@ ${Telia_Colocation}    01u5800000fKPxxAAG
 ${SALEADM_PASSWORD_RELEASE}    PahaPassu3
 ${B2O_Other_services}    01u5800000eLeiCAAS
 ${SALEADM_USER_MERGE}    saleadm@teliacompany.com.merge
+${Telia_yritysinternet_merge}    01u1q000001CbtVAAS
