@@ -114,11 +114,11 @@ Search Salesforce
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
-    #${element_catenate} =    ${TABLE_HEADER}    [@title='${target_name}']
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${target_name}']    120s
+    ${element_catenate} =    set variable    [@title='${target_name}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
     Sleep    15s
-    Click Element    ${TABLE_HEADER}[@title='${target_name}']
-    #Press key    ${TABLE_HEADER}[@title='${target_name}']    //13
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    #Press key    ${TABLE_HEADER}${element_catenate}    //13
     Sleep    15s
     Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
     ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
