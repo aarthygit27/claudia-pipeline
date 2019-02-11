@@ -31,7 +31,7 @@ order creation
     [Arguments]    ${products}
     update sales products    ${products}
     #UpdateAndAddSalesType    ${products}
-    OpenQuoteButtonPage
+    Opening Quote
     #CreditScoreApproving
     ClickonCreateOrderButton
     NextButtonOnOrderPage
@@ -79,15 +79,16 @@ Updating setting Telia_yritysinternet
 
 Opening Quote
     ${open_quote}=    Set Variable    //button[@id='View Quote']    #//*[@id="Open Quote"]
-    ${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
+    #${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
+    ${central_spinner}=    Set Variable    //div[@class='center-block spinner']
     log to console    OpenQuoteButtonPage
     Wait Until Element Is Not Visible    //div[@class='center-block spinner']    90s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected final page frame
     log to console    wait completed before open quote click
-    wait until element is visible    ${open_quote}    30s
-    #wait until element is enabled    ${open_quote}    20s
+    Wait Until Element Is Not Visible    ${central_spinner}    90s
+    #wait until element is visible    ${open_quote}    30s
     log to console    element visible next step
     click element    ${open_quote}
     unselect frame
