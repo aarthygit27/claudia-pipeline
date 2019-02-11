@@ -15,7 +15,7 @@ Resource          ..${/}resources${/}common.robot
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
     [Tags]    BQA-8504    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Arkkitehti jatkuva palvelu
     Add Telia Arkkitehti jatkuva palvelu
     sleep    10s
@@ -27,7 +27,7 @@ Test scenario 1:Telia Architect
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Projektijohtaminen jatkuva palvelu
     Add Telia Projektijohtaminen jatkuva palvelu
     Search Products    Telia Projektijohtaminen varallaolo ja matkustus
@@ -38,7 +38,7 @@ Test scenario 2: Telia Project management
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Konsultointi jatkuva palvelu
     Add Telia Konsultointi jatkuva palvelu
     Search Products    Telia Konsultointi varallaolo ja matkustus
@@ -49,7 +49,7 @@ Test scenario 3:Telia Consulting
 Test scenario 4: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Telia Projektijohtaminen varallaolo ja matkustus
@@ -60,7 +60,7 @@ Test scenario 4: Key Customer Service Desk
 Test scenario 5: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk one-time services
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Avainasiakaspalvelukeskus
@@ -71,7 +71,7 @@ Test scenario 5: Key Customer Service Desk
 Test scenario 6: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk standby and travelling Services
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Avainasiakaspalvelukeskus
@@ -82,7 +82,7 @@ Test scenario 6: Key Customer Service Desk
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work Continuous Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Avainasiakaspalvelukeskus
@@ -93,7 +93,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Avainasiakaspalvelukeskus
@@ -104,7 +104,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Avainasiakaspalvelukeskus
@@ -115,7 +115,7 @@ Test scenario 9: Key Customer Service Desk
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Koulutus jatkuva palvelu
@@ -126,7 +126,7 @@ Test scenario 10:Training
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Koulutus kertapalvelu
@@ -137,7 +137,7 @@ Test scenario 11:Training
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Koulutus varallaolo ja matkustus
@@ -148,7 +148,7 @@ Test scenario 12:Training
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
@@ -159,7 +159,7 @@ Test scenario 13:Continuity Management Service
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta kertapalvelu
@@ -170,7 +170,7 @@ Test scenario 14:Continuity Management Service
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
@@ -181,7 +181,7 @@ Test scenario 15:Continuity Management Service
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Palvelujohtaminen jatkuva palvelu
@@ -192,7 +192,7 @@ Test scenario 16:Service Lead Service
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Palvelujohtaminen kertapalvelu
@@ -203,7 +203,7 @@ Test scenario 17:Service Lead Service
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Palvelujohtaminen varallaolo ja matkustus
@@ -214,7 +214,7 @@ Test scenario 18: Service Lead Service
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Hallinta ja Tuki jatkuva palvelu
@@ -225,7 +225,7 @@ Test scenario 19:Operation and Support Service
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Hallinta ja Tuki kertapalvelu
@@ -236,7 +236,7 @@ Test scenario 20:Operation and Support Service
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Hallinta ja Tuki varallaolo ja matkustus
@@ -247,7 +247,7 @@ Test scenario 21:Operation and Support Service
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
     [Tags]    PO
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     Search Products    Asiantuntijakäynti
@@ -281,8 +281,26 @@ Wait time checking
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
     [Tags]    BQA-8513
-    General test setup    ${DEVPO_ACCOUNT}
+    General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Domain Name Service
     Add Telia Domain Service Name
     Place the order    Betonimestarit Oy
     Capture Page Screenshot
+
+Test : Telia IP VPN NNI
+    [Tags]    IPVPN
+    General test setup    ${DEVPO_ACCOUNT}    B2O
+    Search Products    Telia IP VPN NNI \
+    Add Telia IP VPN NNI    ${TELIA_VPN_NNI}
+    create order    ${DEVPO_ACCOUNT}
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
+
+Test : Telia IP VPN ACCESS
+    [Tags]    IPVPN
+    General test setup    ${DEVPO_ACCOUNT}    B2O
+    Search Products    Telia IP VPN Access
+    Add Telia IP VPN ACCESS    ${TELIA_VPN_ACCESS}
+    create order    ${DEVPO_ACCOUNT}
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}

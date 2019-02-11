@@ -87,8 +87,8 @@ Opening Quote
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected final page frame
     log to console    wait completed before open quote click
-    Wait Until Element Is Not Visible    ${central_spinner}    90s
-    #wait until element is visible    ${open_quote}    30s
+    Wait Until Element Is Not Visible    ${central_spinner}    120s
+    wait until element is visible    ${open_quote}    30s
     log to console    element visible next step
     click element    ${open_quote}
     unselect frame
@@ -98,3 +98,23 @@ Updating setting B2O other services
     ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     Wait Until Element Is Visible    ${Next_Button}    60s
     Click Element    ${Next_Button}
+
+update sales products
+    [Arguments]    ${products}
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${sales_type}=    Set Variable    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+    log to console    UpdateAndAddSalesType
+    sleep    30s
+    Reload Page
+    Wait Until Page Contains Element    //div[contains(@class,'slds')]/iframe    60s
+    #Select Window
+    Select Frame    //div[contains(@class,'slds')]/iframe
+    sleep    20s
+    wait until page contains element    ${product_list}    70s
+    click element    ${sales_type}
+    sleep    5s
+    click element    ${sales_type}/option[contains(@value,'New Money-New Services')]
+    sleep    10s
+    click element    ${next_button}

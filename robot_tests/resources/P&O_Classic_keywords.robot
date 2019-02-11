@@ -20,6 +20,7 @@ Go to Account2
     Click Element    ${details}
 
 create new opportunity
+    [Arguments]    ${pricebook}
     ${create_new}=    set variable    //div[@id='createNewButton']
     ${new_opportunity}=    Set Variable    //a[contains(@class,'opportunityMru')]/img[@title='Opportunity']
     ${continue_button}=    Set Variable    //input[@class='btn'][@title='Continue']
@@ -47,7 +48,7 @@ create new opportunity
     sleep    5s
     ${close_date}=    Get Date From Future    30
     Input Text    ${closing_date}    ${close_date}
-    Input Text    ${pricing_list}    b2b
+    Input Text    ${pricing_list}    ${pricebook}
     Click Save Button
     sleep    5s
     [Return]    ${opportunity_name}
@@ -337,11 +338,11 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
     Update_settings    d    yes
 
 General test setup
-    [Arguments]    ${target_account}
+    [Arguments]    ${target_account}    ${pricebook}
     Go To Salesforce and Login2    Sales admin User devpo
     Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
-    ${new_opportunity_name}=    Run Keyword    create new opportunity
+    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
     #${new_opportunity_name}=    Set Variable    Test Robot Order_160120192214
     sleep    10s
     Log    the opportunity id is ${new_opportunity_name}
@@ -489,18 +490,21 @@ Add Hallinta ja Tuki varallaolo ja matkustus
 Complete Order
     [Documentation]    Used to update the order and complete order
     ${complete_order}=    Set Variable    //td[@id='topButtonRow']/input[@value='Complete Item']
-    ${update_order}=    Set Variable    //a[text()='Work Order Update']
+    ${update_order}=    Set Variable    //a[text()='Order Finished']    #//a[text()='Work Order Update']
     ${Orchestration Plan}=    Set Variable    //table/tbody/tr/td[@class='dataCol col02']/a[contains(text(),'Plan')]
+    ${order}=    Set Variable    //div[@id='CF00N5800000CYwbi_ileinner']/a
     Wait Until Element Is Visible    //h2[text()='Orchestration Plan Detail']    120s
     Capture Page Screenshot
     sleep    3s
     Wait Until Element Is Visible    ${update_order}    120s
+    ${order_id}    Get Text    ${order}
     Click Element    ${update_order}
     sleep    10s
     Wait Until Element Is Visible    ${complete_order}    120s
     Capture Page Screenshot
     click element    ${complete_order}
     sleep    10s
+    [Return]    ${order_id}
 
 Add Asiantuntijakäynti
     [Documentation]    This is to Add Asiantuntijakäynti
@@ -793,3 +797,28 @@ Click_Settings
     sleep    10s
     Wait Until Element Is Visible    ${SETTINGS}    45s
     Click Button    ${SETTINGS}
+
+Add Telia IP VPN NNI
+    [Arguments]    ${product}
+    ${product_id}=    Set Variable    //div[@data-product-id='${product}']/div/div/div/div/div/button
+    sleep    10s
+    click button    ${product_id}
+
+Add Telia IP VPN ACCESS
+    [Arguments]    ${product}
+    ${product_id}=    Set Variable    //div[@data-product-id='${product}']/div/div/div/div/div/button
+    sleep    10s
+    click button    ${product_id}
+
+checking the orchestration plan
+    [Arguments]    ${order_id}
+    ${order_search}=    Set Variable    //div[@id='Order_body']/table/tbody//tr//th/a[text()='${order_id}']
+    ${plan}=    set variable    //div[@id='CF00N5800000BWy1H_ileinner']/a
+    Search Salesforce    ${order_id}
+    Wait Until Element Is Visible    ${order_search}    30s
+    Click Element    ${order_search}
+    Wait Until Element Is Visible    ${plan}    60s
+    Click Element    ${plan}
+    sleep    15s
+    Execute Javascript    window.scrollTo(0,150)
+    Capture Page Screenshot

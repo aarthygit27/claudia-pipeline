@@ -98,3 +98,5 @@ ${Telia_Palvelunhallintakeskus}    01u6E000003TvFfQAK
 ${Avainasiakaspalvelukeskus_kertapalvelu}    01u6E000004jyzbQAA
 ${Avainasiakaspalvelukeskus_varallaolo_ja_matkustus}    01u6E000003TvFzQAK
 ${Avainasiakaspalvelukeskus_lisätyöt_jatkuva_palvelu}    01u6E000003TvGJQA0
+${TELIA_VPN_NNI}    01u6E000004z9cgQAA
+${TELIA_VPN_ACCESS}    01u6E000004z9dPQAQ
