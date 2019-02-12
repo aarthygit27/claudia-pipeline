@@ -295,6 +295,8 @@ Test : Telia IP VPN NNI
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
+    #Order events update
+    #checking the orchestration plan    ${order_id}
 
 Test : Telia IP VPN ACCESS
     [Tags]    IPVPN

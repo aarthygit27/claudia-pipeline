@@ -82,9 +82,9 @@ Opening Quote
     #${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
     ${central_spinner}=    Set Variable    //div[@class='center-block spinner']
     log to console    OpenQuoteButtonPage
-    Wait Until Element Is Not Visible    //div[@class='center-block spinner']    90s
-    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
-    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Not Visible    //div[@class='center-block spinner']    120s
+    Wait Until Page Contains Element    //div[contains(@class,'slds')]/iframe    60s
+    select frame    //div[contains(@class,'slds')]/iframe
     log to console    selected final page frame
     log to console    wait completed before open quote click
     Wait Until Element Is Not Visible    ${central_spinner}    120s
@@ -105,12 +105,16 @@ update sales products
     ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${sales_type}=    Set Variable    ${product_list} //following-sibling::td/select[contains(@class,'required')]
-    log to console    UpdateAndAddSalesType
+    log to console    update sales products
     sleep    30s
+    log to console    sleep completed
     Reload Page
+    log to console    page reloaded
     Wait Until Page Contains Element    //div[contains(@class,'slds')]/iframe    60s
+    log to console    frame found
     #Select Window
     Select Frame    //div[contains(@class,'slds')]/iframe
+    log to console    frame selected
     sleep    20s
     wait until page contains element    ${product_list}    70s
     click element    ${sales_type}

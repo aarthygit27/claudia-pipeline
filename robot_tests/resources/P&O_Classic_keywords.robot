@@ -820,5 +820,22 @@ checking the orchestration plan
     Wait Until Element Is Visible    ${plan}    60s
     Click Element    ${plan}
     sleep    15s
-    Execute Javascript    window.scrollTo(0,150)
+    Execute Javascript    window.scrollTo(0,250)
     Capture Page Screenshot
+
+Order events update
+    [Documentation]    Used to update the order and complete order
+    ${complete_order}=    Set Variable    //td[@id='topButtonRow']/input[@value='Complete Item']
+    ${order_events}=    Set Variable    //a[contains(text(),'Order Events Update')]    #//a[text()='Work Order Update']
+    ${Orchestration Plan}=    Set Variable    //table/tbody/tr/td[@class='dataCol col02']/a[contains(text(),'Plan')]
+    ${order}=    Set Variable    //div[@id='CF00N5800000CYwbi_ileinner']/a
+    Wait Until Element Is Visible    //h2[text()='Orchestration Plan Detail']    120s
+    Capture Page Screenshot
+    sleep    3s
+    Wait Until Element Is Visible    ${order_events}    120s
+    Click Element    ${order_events}
+    sleep    10s
+    Wait Until Element Is Visible    ${complete_order}    120s
+    Capture Page Screenshot
+    click element    ${complete_order}
+    sleep    10s
