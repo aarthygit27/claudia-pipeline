@@ -277,3 +277,15 @@ Create HDC Order
     SelectOwnerAccountInfo    ${billing_acc_name}
     ReviewPage
     ValidateTheOrchestrationPlan
+
+Closing Opportunity as Won with FYR below 3 KEUR
+    [Tags]    BQA-8794
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ    ${oppo_name}
+    search products    Telia Taloushallinto XXL-paketti
+    Adding Telia Taloushallinto XXL-paketti
+    UpdateAndAddSalesTypewith quantity    Telia Taloushallinto XXL-paketti
+    OpenQuoteButtonPage

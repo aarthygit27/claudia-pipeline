@@ -1406,3 +1406,32 @@ Adding Telia Colocation
     click element    xpath=//p[normalize-space(.) = '${product}']/../../../div[@class='slds-tile__detail']/div/div/button
     Capture Page Screenshot
     unselect frame
+
+Adding Telia Taloushallinto XXL-paketti
+    ${productid}=    Set Variable    01u58000005pgbPAAQ
+    ${product}=    Set Variable    //div[@data-product-id='${productid}']/div/div/div/div/div/button
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Wait Until Element Is Visible    ${product}    60s
+    Click Element    ${product}
+    sleep    20s
+
+UpdateAndAddSalesTypewith quantity
+    [Arguments]    ${products}
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${contract_length}=    Set Variable    ${product_list}//following-sibling::td/select[contains(@ng-model,'p.ContractLength')]
+    log to console    UpdateAndAddSalesType
+    sleep    30s
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    wait until page contains element    ${update_order}    60s
+    log to console    selected new frame
+    wait until page contains element    ${product_list}    70s
+    click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    ${contract_length}
+    click element    ${contract_length}/option[@value='60']
+    click element    ${next_button}
+    unselect frame
+    sleep    60s
