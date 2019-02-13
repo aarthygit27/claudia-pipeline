@@ -16,7 +16,7 @@ Create opportunity from Account for telia yritysinternet
     Go To Entity    ${oppo_name}
     sleep    30s
     ClickingOnCPQ    ${oppo_name}
-    search products    Telia Yritysinternet
+    searching products    Telia Yritysinternet
     Adding Products    ${Telia_yritysinternet}
     Updating setting Telia_yritysinternet
     sleep    10s
