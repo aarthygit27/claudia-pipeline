@@ -122,3 +122,12 @@ update sales products
     click element    ${sales_type}/option[contains(@value,'New Money-New Services')]
     sleep    10s
     click element    ${next_button}
+
+searching products
+    [Arguments]    ${product}
+    log to console    AddingProductToCartAndClickNextButton
+    sleep    15s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    60s
+    sleep    10s
+    input text    xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    ${product}
