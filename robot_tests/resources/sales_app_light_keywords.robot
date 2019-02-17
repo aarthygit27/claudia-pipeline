@@ -1427,11 +1427,11 @@ UpdateAndAddSalesTypewith quantity
     ${quantity}=    Set Variable    ${product_list}//following-sibling::td/input[@ng-model='p.Quantity']
     log to console    UpdateAndAddSalesType
     sleep    30s
-    ${reporting}    Run Keyword And Return Status    Wait Until Page Contains Element    ${reporting_products}
-    Run Keyword If    ${reporting} == True    Suggested Reporting Products
+    ${reporting}    Run Keyword And Return Status    Wait Until Page Contains    Suggested Reporting Products
+    Run Keyword If    ${reporting} == True    Reporting Products
     #${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     #Run Keyword If    ${status} == False    Reload Page
-    sleep     20s
+    sleep    20s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until page contains element    ${update_order}    60s
@@ -1508,11 +1508,11 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
     sleep    4s
     Select From List    ${Toimitustapa}    Vakiotoimitus
     sleep    5s
-    click element     ${X_BUTTON}
+    click element    ${X_BUTTON}
     Wait Until Element Is Visible    ${Next_Button}    60s
     Click Element    ${Next_Button}
 
-Suggested Reporting Products
+Reporting Products
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Run Keyword If    ${status} == False    Reload Page
