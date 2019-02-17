@@ -1410,28 +1410,112 @@ Adding Telia Colocation
 Adding Telia Taloushallinto XXL-paketti
     ${productid}=    Set Variable    01u58000005pgbPAAQ
     ${product}=    Set Variable    //div[@data-product-id='${productid}']/div/div/div/div/div/button
+    ${next_button}=    set variable    //span[contains(text(),'Next')]
     #select frame    xpath=//div[contains(@class,'slds')]/iframe
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
     sleep    20s
+    Click Element    ${next_button}
 
 UpdateAndAddSalesTypewith quantity
-    [Arguments]    ${products}
+    [Arguments]    ${products}    ${quantity_value}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${reporting_products}=    Set Variable    //h1[contains(text(),'Suggested Reporting Products')]
     ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${contract_length}=    Set Variable    ${product_list}//following-sibling::td/select[contains(@ng-model,'p.ContractLength')]
+    ${quantity}=    Set Variable    ${product_list}//following-sibling::td/input[@ng-model='p.Quantity']
     log to console    UpdateAndAddSalesType
     sleep    30s
+    ${reporting}    Run Keyword And Return Status    Wait Until Page Contains Element    ${reporting_products}
+    Run Keyword If    ${reporting} == True    Suggested Reporting Products
+    #${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    #Run Keyword If    ${status} == False    Reload Page
+    sleep     20s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until page contains element    ${update_order}    60s
     log to console    selected new frame
+    wait untilpage contains element    ${quantity}    60s
+    Clear Element Text    ${quantity}
+    Input Text    ${quantity}    ${quantity_value}
     wait until page contains element    ${product_list}    70s
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     sleep    2s
-    click element    ${contract_length}
-    click element    ${contract_length}/option[@value='60']
+    #click element    ${contract_length}
+    #click element    ${contract_length}/option[@value='60']
     click element    ${next_button}
+    sleep    2s
     unselect frame
     sleep    60s
+
+OpenQuoteButtonPage_release
+    ${open_quote}=    Set Variable    //*[@id="View Quote"]
+    ${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
+    log to console    OpenQuoteButtonPage
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    log to console    selected final page frame
+    log to console    wait completed before view quote click
+    wait until element is visible    ${open_quote}    30s
+    wait until element is enabled    ${open_quote}    20s
+    log to console    element visible next step
+    click element    ${open_quote}
+    unselect frame
+    sleep    60s
+
+Closing the opportunity
+    #${stage_complete}=    set variable    //span[text()='Mark Stage as Complete']
+    ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
+    ${edit_stage}=    set variable    //button[@title='Edit Stage']
+    #Wait Until Element Is Visible    ${stage_complete}    60s
+    ${stage}=    Get Text    ${current_stage}
+    Log To Console    The current stage is ${stage}
+    Capture Page Screenshot
+    click element    ${EDIT_STAGE_BUTTON}
+    Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    Closed Won
+    Execute Javascript    window.scrollTo(0,600)
+    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
+    Wait Until Page Contains Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    60s
+    Execute Javascript    window.scrollTo(0,9000)
+    #Get Text    //span[contains(text(),'Service Address Street')]/../../span
+    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    08 Other
+    input text    //span[text()='Close Comment']/../../textarea    this is a test opportunity to closed won
+    click element    //span[contains(text(),'Save')]
+
+Update closing dependencies
+    ${stage_name}=    set variable    //input[@name='StageName']
+    Click Element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']
+    click element    ${stage_name}
+    sleep    4s
+    click element    ${stage_name}    Closed Won
+
+searching and adding Telia Viestintäpalvelu VIP (24 kk)
+    search products    Telia Viestintäpalvelu VIP (24 kk)
+    ${product}=    Set Variable    //div[@data-product-id='${Telia_Viestintäpalvelu_VIP}']/div/div/div/div/div/button
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Wait Until Element Is Visible    ${product}    60s
+    Click Element    ${product}
+
+updating settings Telia Viestintäpalvelu VIP (24 kk)
+    ${SETTINGS}=    Set Variable    //button[@title='Settings']
+    ${Toimitustapa}=    set variable    //select[@name='productconfig_field_0_0']
+    ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
+    ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    sleep    5s
+    click element    ${SETTINGS}
+    sleep    4s
+    Select From List    ${Toimitustapa}    Vakiotoimitus
+    sleep    5s
+    click element     ${X_BUTTON}
+    Wait Until Element Is Visible    ${Next_Button}    60s
+    Click Element    ${Next_Button}
+
+Suggested Reporting Products
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Run Keyword If    ${status} == False    Reload Page
+    sleep    20s
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    click element    ${next_button}

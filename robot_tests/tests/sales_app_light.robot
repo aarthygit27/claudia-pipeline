@@ -280,12 +280,23 @@ Create HDC Order
 
 Closing Opportunity as Won with FYR below 3 KEUR
     [Tags]    BQA-8794
+    ${FYR}=    set variable    //span[@title='FYR Total']/../div
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #${oppo_name}    set variable    Oppo_ 20190215-220810
     Go To Entity    ${oppo_name}
     ClickingOnCPQ    ${oppo_name}
-    search products    Telia Taloushallinto XXL-paketti
-    Adding Telia Taloushallinto XXL-paketti
-    UpdateAndAddSalesTypewith quantity    Telia Taloushallinto XXL-paketti
-    OpenQuoteButtonPage
+    searching and adding Telia Viestintäpalvelu VIP (24 kk)
+    updating settings Telia Viestintäpalvelu VIP (24 kk)
+    #search products    Telia Taloushallinto XXL-paketti
+    #Adding Telia Taloushallinto XXL-paketti
+    UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    8
+    OpenQuoteButtonPage_release
+    Go To Entity    ${oppo_name}
+    #Go to Entity    Oppo_ 20190215-220810
+    Closing the opportunity
+    sleep    15s
+    Capture Page Screenshot
+    ${FYR_value}=    get text    ${FYR}
+    Log to console    The FYR value is ${FYR_value}
