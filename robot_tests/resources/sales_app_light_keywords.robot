@@ -1503,7 +1503,7 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
     ${Toimitustapa}=    set variable    //select[@name='productconfig_field_0_0']
     ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
     ${Next_Button}=    Set Variable    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    sleep    5s
+    Wait Until Element Is Visible    ${SETTINGS}    60s
     click element    ${SETTINGS}
     sleep    4s
     Select From List    ${Toimitustapa}    Vakiotoimitus
