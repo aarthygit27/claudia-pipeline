@@ -1392,10 +1392,11 @@ search products
     [Arguments]    ${product}
     log to console    AddingProductToCartAndClickNextButton
     sleep    15s
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element    xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    60s
+    Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
+    select frame    //div[contains(@class,'slds')]/iframe
+    wait until page contains element    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    60s
     sleep    10s
-    input text    xpath=//div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    ${product}
+    input text    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    ${product}
 
 Adding Telia Colocation
     [Arguments]    ${product}
@@ -1543,8 +1544,7 @@ Closing Opportunity as Won with FYR
     UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    ${quantity}
     OpenQuoteButtonPage_release
     Go To Entity    ${oppo_name}
-    #Go to Entity    Oppo_ 20190215-220810
-    Closing the opportunity    ${continuation}
+    #Closing the opportunity    ${continuation}
     sleep    15s
     Capture Page Screenshot
     ${FYR_value}=    get text    ${FYR}

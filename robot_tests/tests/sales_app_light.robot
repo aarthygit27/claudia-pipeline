@@ -304,7 +304,7 @@ Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     [Tags]    BQA-8795
     ${Edit_continuation}=    Set Variable    //button[@title='Edit Create Continuation Sales Opportunity?']
     Closing Opportunity as Won with FYR    200    Yes
-    sleep     10s
+    sleep    10s
     Click Element    ${Edit_continuation}
     Execute Javascript    window.scrollTo(0,125)
     sleep    3s
