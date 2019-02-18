@@ -280,23 +280,39 @@ Create HDC Order
 
 Closing Opportunity as Won with FYR below 3 KEUR
     [Tags]    BQA-8794
-    ${FYR}=    set variable    //span[@title='FYR Total']/../div
-    Go To Salesforce and Login into Lightning
-    Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    #${oppo_name}    set variable    Oppo_ 20190215-220810
-    Go To Entity    ${oppo_name}
-    ClickingOnCPQ    ${oppo_name}
-    searching and adding Telia Viestintäpalvelu VIP (24 kk)
-    updating settings Telia Viestintäpalvelu VIP (24 kk)
+    Closing Opportunity as Won with FYR    8    No
+    #${FYR}=    set variable    //span[@title='FYR Total']/../div
+    #Go To Salesforce and Login into Lightning
+    #Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #Go To Entity    ${oppo_name}
+    #ClickingOnCPQ    ${oppo_name}
+    #searching and adding Telia Viestintäpalvelu VIP (24 kk)
+    #updating settings Telia Viestintäpalvelu VIP (24 kk)
     #search products    Telia Taloushallinto XXL-paketti
     #Adding Telia Taloushallinto XXL-paketti
-    UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    8
-    OpenQuoteButtonPage_release
-    Go To Entity    ${oppo_name}
-    #Go to Entity    Oppo_ 20190215-220810
-    Closing the opportunity
-    sleep    15s
+    #UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    8
+    #OpenQuoteButtonPage_release
+    #Go To Entity    ${oppo_name}
+    #Closing the opportunity    no
+    #sleep    15s
+    #Capture Page Screenshot
+    #${FYR_value}=    get text    ${FYR}
+    #Log to console    The FYR value is ${FYR_value}
+
+Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
+    [Tags]    BQA-8795
+    ${Edit_continuation}=    Set Variable    //button[@title='Edit Create Continuation Sales Opportunity?']
+    Closing Opportunity as Won with FYR    200    Yes
+    sleep     10s
+    Click Element    ${Edit_continuation}
+    Execute Javascript    window.scrollTo(0,125)
+    sleep    3s
+    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
+    click element    //span[contains(text(),'Save')]
+    sleep    5s
     Capture Page Screenshot
-    ${FYR_value}=    get text    ${FYR}
-    Log to console    The FYR value is ${FYR_value}
+
+Closing Opportunity as Won with FYR greater than 100KEUR
+    [Tags]    BQA-8796
+    Closing Opportunity as Won with FYR    300    Yes

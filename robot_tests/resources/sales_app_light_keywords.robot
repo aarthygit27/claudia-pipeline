@@ -1422,16 +1422,18 @@ UpdateAndAddSalesTypewith quantity
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
     ${reporting_products}=    Set Variable    //h1[contains(text(),'Suggested Reporting Products')]
     ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
-    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Previous')]/../..//button[contains(@class,'form-control')][contains(text(),'Next')]
     ${contract_length}=    Set Variable    ${product_list}//following-sibling::td/select[contains(@ng-model,'p.ContractLength')]
     ${quantity}=    Set Variable    ${product_list}//following-sibling::td/input[@ng-model='p.Quantity']
     log to console    UpdateAndAddSalesType
     sleep    30s
-    ${reporting}    Run Keyword And Return Status    Wait Until Page Contains    Suggested Reporting Products
-    Run Keyword If    ${reporting} == True    Reporting Products
+    #${reporting}    Run Keyword And Return Status    Wait Until Page Contains    Suggested Reporting Products    60s
+    #Run Keyword If    ${reporting} == True    Reporting Products
+    Reporting Products
     #${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     #Run Keyword If    ${status} == False    Reload Page
     sleep    20s
+    Wait Until Element Is Not Visible    //div[@class='center-block spinner']    120s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until page contains element    ${update_order}    60s
@@ -1445,6 +1447,8 @@ UpdateAndAddSalesTypewith quantity
     sleep    2s
     #click element    ${contract_length}
     #click element    ${contract_length}/option[@value='60']
+    Execute Javascript    window.scrollTo(0,400)
+    Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
     sleep    2s
     unselect frame
@@ -1466,6 +1470,7 @@ OpenQuoteButtonPage_release
     sleep    60s
 
 Closing the opportunity
+    [Arguments]    ${continuation}
     #${stage_complete}=    set variable    //span[text()='Mark Stage as Complete']
     ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
     ${edit_stage}=    set variable    //button[@title='Edit Stage']
@@ -1476,7 +1481,7 @@ Closing the opportunity
     click element    ${EDIT_STAGE_BUTTON}
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    Closed Won
     Execute Javascript    window.scrollTo(0,600)
-    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
+    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}
     Wait Until Page Contains Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    60s
     Execute Javascript    window.scrollTo(0,9000)
     #Get Text    //span[contains(text(),'Service Address Street')]/../../span
@@ -1518,4 +1523,29 @@ Reporting Products
     Run Keyword If    ${status} == False    Reload Page
     sleep    20s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
+    unselect frame
+
+Closing Opportunity as Won with FYR
+    [Arguments]    ${quantity}    ${continuation}
+    ${FYR}=    set variable    //span[@title='FYR Total']/../div
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ    ${oppo_name}
+    searching and adding Telia Viestintäpalvelu VIP (24 kk)
+    updating settings Telia Viestintäpalvelu VIP (24 kk)
+    #search products    Telia Taloushallinto XXL-paketti
+    #Adding Telia Taloushallinto XXL-paketti
+    UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    ${quantity}
+    OpenQuoteButtonPage_release
+    Go To Entity    ${oppo_name}
+    #Go to Entity    Oppo_ 20190215-220810
+    Closing the opportunity    ${continuation}
+    sleep    15s
+    Capture Page Screenshot
+    ${FYR_value}=    get text    ${FYR}
+    Log to console    The FYR value is ${FYR_value}
