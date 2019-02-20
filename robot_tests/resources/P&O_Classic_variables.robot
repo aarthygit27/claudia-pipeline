@@ -1,5 +1,5 @@
 *** Variables ***
-${CLASSIC_APP}    https://cs85.salesforce.com/
+${CLASSIC_APP}    https://telia-fi--devpo.my.salesforce.com/home/home.jsp?source=lex
 ${DECOMPOSE_ORDER}    //td[@id='topButtonRow']//input[@title='Decompose Order']
 ${ORCHESTRATE_PLAN}    //*[contains(text(),'Start Orchestration Plan')]
 ${VIEW_BUTTON}    //button[contains(text(),'View')]
