@@ -461,7 +461,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     Adding Products    ${Online_Asiantuntijapalvelut}
 
 test for loop
-    : FOR    ${i}    IN RANGE    9
+    : FOR    ${i}    IN RANGE
     \    Exit For Loop If    ${i} == 9
     \    Log    ${i}
     Log    Exited
