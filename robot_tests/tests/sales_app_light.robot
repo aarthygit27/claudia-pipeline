@@ -218,43 +218,41 @@ Lightning: Sales admin Change Account owner for group account
     #click element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
     #sleep    20s
 
-
-
 Create HDC Order
-    [Tags]   BQA-HDCOrder    LightningE2E
+    [Tags]    BQA-HDCOrder    LightningE2E
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #go to entity  319021811502
-    #sleep  10s
-    #${order_number}   run keyword  getOrderStatusAfterSubmitting
+    #go to entity    319021811502
+    #sleep    10s
+    #${order_number}    run keyword    getOrderStatusAfterSubmitting
     #ValidateTheOrchestrationPlan
-    #go to entity  ${order_number}
+    #go to entity    ${order_number}
     #openAssetviaOppoProductRelated
-    #sleep   300s
-    #click element  //span[@class='title' and text()='Assets']
-    #sleep   3s
-    #click element  //div[@data-aura-class="forceOutputLookupWithPreview"]/a[text()='Telia Colocation']
-    ##${business_acc_name}  run keyword   CreateBusinessAccount
-    ##log to console  ${business_acc_name}.this is business account
-    #Execute javascript   document.body.style.transform = 'scale(0.8)';
+    #sleep    300s
+    #click element    //span[@class='title' and text()='Assets']
+    #sleep    3s
+    #click element    //div[@data-aura-class="forceOutputLookupWithPreview"]/a[text()='Telia Colocation']
+    ##${business_acc_name}    run keyword    CreateBusinessAccount
+    ##log to console    ${business_acc_name}.this is business account
+    #Execute javascript    document.body.style.transform = 'scale(0.8)';
     #document.body.style.zoom="50%"
-    #Go To Entity     ${business_acc_name}
-    Go To Entity     ${vLocUpg_TEST_ACCOUNT}
+    #Go To Entity    ${business_acc_name}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     ${billing_acc_name}    run keyword    CreateABillingAccount
     log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity     ${oppo_name}
-    ChangeThePriceBookToHDC   HDC Pricebook B2B
+    Go To Entity    ${oppo_name}
+    ChangeThePriceBookToHDC    HDC Pricebook B2B
     ClickingOnCPQ    ${oppo_name}
     Adding Telia Colocation    Telia Colocation
     Updating Setting Telia Colocation
     UpdateAndAddSalesType    Telia Colocation
     OpenQuoteButtonPage
     #CreditScoreApproving
-    #go to entity  Oppo_ 20190217-115637   Quotes
-    sleep  40s
+    #go to entity    Oppo_ 20190217-115637    Quotes
+    sleep    40s
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount
@@ -266,32 +264,31 @@ Create HDC Order
     ReviewPage
     ValidateTheOrchestrationPlan
 
-
 Create B2B Order
-    [Tags]  BQA-B2BOrder       LightningE2E
+    [Tags]    BQA-B2BOrder    LightningE2E
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #GO TO ENTITY  Oppo_ 20190217-191125
-    #SLEEP  60S
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    #${sc_name}  run keyword  createAAgreement   Service Contract
-    #${billing_acc_name}  run keyword  CreateABillingAccount
+    #GO TO ENTITY    Oppo_ 20190217-191125
+    #SLEEP    60S
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${sc_name}    run keyword    createAAgreement    Service Contract
+    #${billing_acc_name}    run keyword    CreateABillingAccount
     #capture page screenshot
     #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #capture page screenshot
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
-    sleep   10s
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
-    Go To Entity     ${oppo_name}
-    ChangeThePriceBookToHDC   B2B Pricebook
+    sleep    10s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ChangeThePriceBookToHDC    B2B Pricebook
     ##B2O pricebook
-    ClickingOnCPQ  ${oppo_name}
-    AddProductToCart  Alerta projektointi
+    ClickingOnCPQ    ${oppo_name}
+    AddProductToCart    Alerta projektointi
     ##B2O Other Services
-    Run Keyword If    '${r}'== 'b2b'    run keyword  UpdateAndAddSalesType   Alerta projektointi
-    Run keyword If    '${r}'== 'b2o'    run keyword  UpdateAndAddSalesTypeB2O   B2O Other Services
-    #sleep   600s
+    Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
+    Run keyword If    '${r}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
+    #sleep    600s
     ##B2O Other Services
     OpenQuoteButtonPage
     #CreditScoreApproving
@@ -299,28 +296,28 @@ Create B2B Order
     NextButtonOnOrderPage
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
-    sleep  60s
+    sleep    60s
     clickOnSubmitOrder
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]  BQA-B2OOrder       LightningE2E
+    [Tags]    BQA-B2OOrder    LightningE2E
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
-    sleep   10s
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
-    Go To Entity     ${oppo_name}
-    ChangeThePriceBookToHDC   B2O pricebook
+    sleep    10s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ChangeThePriceBookToHDC    B2O pricebook
     ##B2B Pricebook
-    ClickingOnCPQ  ${oppo_name}
-    AddProductToCart  B2O Other Services
+    ClickingOnCPQ    ${oppo_name}
+    AddProductToCart    B2O Other Services
     ##Alerta projektointi
-    Run Keyword If    '${r}'== 'b2b'    run keyword  UpdateAndAddSalesType   Alerta projektointi
-    Run keyword If    '${p}'== 'b2o'    run keyword  UpdateAndAddSalesTypeB2O   B2O Other Services
-    #sleep   600s
+    Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
+    Run keyword If    '${p}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
+    #sleep    600s
     ##B2O Other Services
     OpenQuoteButtonPage
     #CreditScoreApproving
@@ -328,27 +325,24 @@ Create B2O Order
     NextButtonOnOrderPage
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
-    sleep  60s
+    sleep    60s
     clickOnSubmitOrder
     getOrderStatusAfterSubmitting
 
-
 createAOppoViaSVE
-    [Tags]   BQA-8798    LightningE2E
+    [Tags]    BQA-8798    LightningE2E
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
-    sleep   10s
+    sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
-    go to entity  ${oppo_name}
-    clickingOnSolutionValueEstimate   ${oppo_name}
-    ${fyr}  run keyword  addProductsViaSVE         ${product_name}
+    go to entity    ${oppo_name}
+    clickingOnSolutionValueEstimate    ${oppo_name}
+    ${fyr}    run keyword    addProductsViaSVE    ${product_name}
     Go To Entity    ${oppo_name}
-    validateCreatedOppoForFYR   ${fyr}
-
-
+    validateCreatedOppoForFYR    ${fyr}
 
 Closing Opportunity as Won with FYR below 3 KEUR
     [Tags]    BQA-8794
@@ -388,3 +382,46 @@ Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
 Closing Opportunity as Won with FYR greater than 100KEUR
     [Tags]    BQA-8796
     Closing Opportunity as Won with FYR    300    Yes
+
+E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
+    [Tags]    BQA-9121
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #${oppo_name}    set variable    Oppo_ 20190301-113538
+    sleep    5s
+    Go To Entity    ${oppo_name}
+    sleep    5s
+    Editing Win prob    no
+    Adding partner and competitor
+    Capture Page Screenshot
+    sleep    10s
+    #clickingOnSolutionValueEstimate    ${oppo_name}
+    ClickingOnCPQ    ${oppo_name}
+    search products    Telia Yritysinternet Plus
+    Adding Yritysinternet Plus
+    search products    DataNet Multi
+    Adding DataNet Multi
+    UpdateAndAddSalesType for 2 products    Telia Yritysinternet Plus    DataNet Multi
+    OpenQuoteButtonPage_release
+    sleep    10s
+    ${quote_number}    Run Keyword    preview and submit quote
+    Opportunity status
+    Create contract    ${TEST_ACCOUNT_CONTACT}    ${oppo_name}
+    Create Order from quote    ${quote_number}    ${oppo_name}
+    View order and send summary
+    sleep    10s
+    Go to Entity    ${oppo_name}
+    Closing the opportunity    No
+
+Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
+    [Tags]    BQA-9121
+    ${next_button}=    set variable    //span[contains(text(),'Next')]
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #${oppo_name}    set variable    Oppo_ 20190301-113538
+    sleep    5s
+    Go To Entity    ${oppo_name}
+    sleep    5s
+    ClickingOnCPQ    ${oppo_name}

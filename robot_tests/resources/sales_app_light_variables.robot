@@ -7,7 +7,6 @@ ${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Abbott Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
-
 ${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
@@ -188,13 +187,14 @@ ${NEW_OWNER_SELECTED}    //span[@class='pillText']
 ${CLOSE_NOTIFICATION}    //button[@title='Dismiss notification']
 ${SALES_ADMIN_USER_RELEASE}    saleadm@teliacompany.com.release
 ${Telia_Viestintäpalvelu_VIP}    01u58000005pgLrAAI    # Telia Viestintäpalvelu VIP
-
 #### SVE,B2B,B2,HDC Orders
-${r}                 b2b
-${p}                 b2o
-${product_name}      Telia Robotics
-${product_quantity}   1
-${NRC}                35
-${RC}                 50
-${sales_type_value}   New Money-New Services
+${r}              b2b
+${p}              b2o
+${product_name}    Telia Robotics
+${product_quantity}    1
+${NRC}            35
+${RC}             50
+${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
+${Yritysinternet_Plus}    01u58000005pgVpAAI
+${DataNet_Multi}    01u58000005pgURAAY
