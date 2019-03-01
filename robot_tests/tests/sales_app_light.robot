@@ -425,3 +425,43 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     Go To Entity    ${oppo_name}
     sleep    5s
     ClickingOnCPQ    ${oppo_name}
+    search products    Telia Ulkoistettu asiakaspalvelu
+    Adding Products    ${Telia_Ulkoistettu_asiakaspalvelu}
+    search products    Telia Neuvottelupalvelut
+    Adding Products    ${Telia_Neuvottelupalvelut}
+    search products    Telia Palvelunumero
+    Adding Products    ${Telia_Palvelunumero}
+    search products    Telia Yritysliittymä
+    Adding Products    ${Telia_Yritysliittymä}
+    search products    Telia Laskutuspalvelu
+    Adding Products    ${Telia_Laskutuspalvelu}
+    search products    Telia Sopiva Enterprise
+    Adding Products    ${Telia_Sopiva_Enterprise}
+    search products    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus
+    Adding Products    ${Telia_Ulkoistettu_asiakaspalvelu-Lisäkirjaus}
+    search products    Telia Neuvottelupalvelut - Lisäkirjaus
+    Adding Products    ${Telia_Neuvottelupalvelut-Lisäkirjaus}
+    search products    Telia Palvelunumero - Lisäkirjaus
+    Adding Products    ${Telia_Palvelunumero-Lisäkirjaus}
+    search products    Telia Yritysliittymä - Lisäkirjaus
+    Adding Products    ${Telia_Yritysliittymä-Lisäkirjaus}
+    search products    Telia Laskutuspalvelu - Lisäkirjaus
+    Adding Products    ${Telia_Laskutuspalvelu-Lisäkirjaus}
+    search products    Telia Sopiva Enterprise - Lisäkirjaus
+    Adding Products    ${Telia_Sopiva_Enterprise-Lisäkirjaus}
+    search products    Sopiva Pro-migraatio
+    Adding Products    ${Sopiva_Pro-migraatio}
+    search products    Sovelluskauppa 3rd Party Apps
+    Adding Products    ${Sovelluskauppa_3rd_Party_Apps}
+    search products    VIP:n käytössä olevat Cid-numerot
+    Adding Products    ${VIP:n_käytössä_olevat_Cid-numerot}
+    search products    Ohjaus Telia Numeropalveluun
+    Adding Products    ${Ohjaus_Telia_Numeropalveluun}
+    search products    Online Asiantuntijapalvelut
+    Adding Products    ${Online_Asiantuntijapalvelut}
+
+test for loop
+    : FOR    ${i}    IN RANGE    9
+    \    Exit For Loop If    ${i} == 9
+    \    Log    ${i}
+    Log    Exited

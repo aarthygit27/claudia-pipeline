@@ -198,3 +198,20 @@ ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
 ${Yritysinternet_Plus}    01u58000005pgVpAAI
 ${DataNet_Multi}    01u58000005pgURAAY
+${Telia_Ulkoistettu_asiakaspalvelu}    01u58000005pgeSAAQ
+${Telia_Neuvottelupalvelut}    01u58000005pgSfAAI
+${Telia_Palvelunumero}    01u58000005pvIuAAI
+${Telia_Yritysliittymä}    01u58000005pgcWAAQ
+${Telia_Laskutuspalvelu}    01u58000005pgL3AAI
+${Telia_Sopiva_Enterprise}    01u58000005pgUDAAY
+${Telia_Ulkoistettu_asiakaspalvelu-Lisäkirjaus }    01u58000006Z4IRAA0
+${Telia_Neuvottelupalvelut-Lisäkirjaus}    01u58000006Z4IbAAK
+${Telia_Palvelunumero-Lisäkirjaus}    01u58000006Z4IqAAK
+${Telia_Yritysliittymä-Lisäkirjaus}    01u58000006Z4JAAA0
+${Telia_Laskutuspalvelu-Lisäkirjaus}    01u58000006Z4JUAA0
+${Telia_Sopiva Enterprise-Lisäkirjaus}    01u58000006Z4JeAAK
+${Sopiva_Pro-migraatio}    01u58000005pgUFAAY
+${Sovelluskauppa_3rd_Party_Apps}    01u58000005pgeDAAQ
+${VIP:n_käytössä_olevat_Cid-numerot}    01u58000005pvIkAAI
+${Ohjaus_Telia_Numeropalveluun}    01u58000005pgPzAAI
+${Online_Asiantuntijapalvelut}    01u58000005pgPjAAI

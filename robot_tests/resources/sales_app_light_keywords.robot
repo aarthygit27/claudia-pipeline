@@ -1888,3 +1888,10 @@ View order and send summary
     sleep    10s
     Wait Until Element Is Visible    ${order_progress}    60s
     Capture Page Screenshot
+
+Adding Products
+    [Arguments]    ${product-id}
+    ${product}=    Set Variable    //div[@data-product-id='${product-id}']/div/div/div/div/div/button
+    Wait Until Element Is Visible    ${product}    60s
+    Click Element    ${product}
+    unselect frame
