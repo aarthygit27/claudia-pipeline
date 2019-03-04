@@ -82,8 +82,8 @@ Notify Service DDM Order
 #    Should Be Equal As Integers    ${return_value}    200
 
 Create Service NGSF Order
-#    ${return_value} =    Create Service Order NGSF
-#    Should Be Equal As Integers    ${return_value}    200
+    ${return_value} =    Create Service Order NGSF
+    Should Be Equal As Integers    ${return_value}    200
 
 Create SAP Product Order
     ${return_value} =   Create Product Order SAP

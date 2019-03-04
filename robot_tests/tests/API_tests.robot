@@ -41,7 +41,7 @@ NGSF_Notification_Service_Order
     [Documentation]    Test create NGSF endpoint.
     [Tags]    APITests
     Authenticate To API NGSF_DDM
-    Notify Service NGSF Order
+#    Notify Service NGSF Order
 
 DDM_Notification_Service_Order
     [Documentation]    Test create NGSF endpoint.
