@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="b287452c-1c33-4bba-887c-1c010e12bf7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/claudia-pipeline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/claudia-pipeline.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" afterDir="false" />
+=======
+    <list default="true" id="b287452c-1c33-4bba-887c-1c010e12bf7e" name="Default Changelist" comment="Added E2E scripts for B2B,B2O,HDC,SVE and also the new password for Mube login">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot" afterDir="false" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,40 +26,41 @@
     <session id="407572207">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.7" value="2" />
-          <entry key="project.open.time.8" value="3" />
+          <entry key="project.open.time.8" value="4" />
           <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="11" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="2" />
-          <entry key="robot" value="27" />
+          <entry key="py" value="4" />
+          <entry key="robot" value="43" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="2" />
-          <entry key="Robot file" value="26" />
+          <entry key="Python" value="4" />
+          <entry key="Robot Feature" value="6" />
+          <entry key="Robot file" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1461" />
-          <entry key="robot" value="1175" />
+          <entry key="py" value="1469" />
+          <entry key="robot" value="1178" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="1461" />
-          <entry key="Robot file" value="1173" />
+          <entry key="Python" value="1469" />
+          <entry key="Robot file" value="1176" />
         </counts>
       </usages-collector>
     </session>
@@ -109,14 +118,14 @@
     <session id="1651108227">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="robot" value="5659" />
-          <entry key="txt" value="192" />
+          <entry key="robot" value="5781" />
+          <entry key="txt" value="378" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="192" />
-          <entry key="Robot Feature" value="5659" />
+          <entry key="PLAIN_TEXT" value="378" />
+          <entry key="Robot Feature" value="5781" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -184,12 +193,21 @@
     <favorites_list name="claudia-pipeline" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords.robot">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-980">
               <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+=======
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="1255" column="46" selection-start-line="1255" selection-start-column="46" selection-end-line="1255" selection-end-column="46" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
               <folding>
                 <element signature="e#0#136#0" expanded="true" />
               </folding>
@@ -200,15 +218,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="17">
               <caret line="1247" lean-forward="true" selection-start-line="1247" selection-end-line="1247" />
               <folding>
                 <element signature="e#14#29#0" expanded="true" />
               </folding>
+=======
+            <state relative-caret-position="180">
+              <caret line="193" column="24" selection-start-line="193" selection-start-column="21" selection-end-line="193" selection-end-column="24" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/robot_tests/tests/API_tests.robot">
           <provider selected="true" editor-type-id="text-editor">
@@ -217,6 +241,13 @@
               <folding>
                 <element signature="e#0#266#0" expanded="true" />
               </folding>
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="183">
+              <caret line="241" column="43" lean-forward="true" selection-start-line="241" selection-start-column="43" selection-end-line="241" selection-end-column="43" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
             </state>
           </provider>
         </entry>
@@ -225,6 +256,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+<<<<<<< HEAD
       <find>hdc</find>
       <find>${ACCOUNT_FRAME}</find>
       <find>before</find>
@@ -239,6 +271,8 @@
       <find>contains</find>
       <find>reload</find>
       <find>&quot;</find>
+=======
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <find>force</find>
       <find>force click element</find>
       <find>details</find>
@@ -250,11 +284,33 @@
       <find>size</find>
       <find>soze</find>
       <find>select fra</find>
+<<<<<<< HEAD
       <find>list</find>
       <find>none</find>
       <find>sap</find>
       <find>int</find>
       <find>API_Authenticate_Sap</find>
+=======
+      <find>CreateAOppoFromAccount_HDCö</find>
+      <find>deVPO</find>
+      <find>GEneral</find>
+      <find>AddingProductToCartAndClickNextButton</find>
+      <find>sale</find>
+      <find>pass</find>
+      <find>DEVPO_ACCOUNT</find>
+      <find>General test setup</find>
+      <find>Go to Account2</find>
+      <find>Sales</find>
+      <find>Search Salesforce</find>
+      <find>ChangeThePriceBookToHDC</find>
+      <find>AddProductToCart</find>
+      <find>create</find>
+      <find>getOrderStatusAfterSubmitting</find>
+      <find>Create B2B Order</find>
+      <find>Sales admin Change</find>
+      <find>Sales admin Change Account owner for group account</find>
+      <find>set focus to element</find>
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
     </findStrings>
     <replaceStrings>
       <replace>none</replace>
@@ -271,7 +327,11 @@
         <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sanity_check.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/aida_keywords.robot" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot" />
+=======
+        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
         <option value="$PROJECT_DIR$/robot_tests/resources/uad_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_tests_new_master.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_keywords_lightning.robot" />
@@ -285,19 +345,34 @@
         <option value="$PROJECT_DIR$/robot_tests/resources/cpq_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_tests.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/tests/po_classic_test.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/run.py" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/Product_order_monitoring_lighting_keywords.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/keyword_monitor.py" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/P&amp;O_Classic_keywords.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot" />
-        <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" />
         <option value="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" />
+=======
+        <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+<<<<<<< HEAD
     <option name="x" value="-12" />
     <option name="width" value="1191" />
     <option name="height" value="1032" />
+=======
+    <option name="x" value="9" />
+    <option name="width" value="1680" />
+    <option name="height" value="1020" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -325,6 +400,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -336,6 +412,8 @@
           <select />
         </subPane>
       </pane>
+=======
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <pane id="Scope">
         <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
           <expand>
@@ -365,6 +443,34 @@
         </subPane>
       </pane>
       <pane id="Course" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
+              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
+              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
+              <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
+              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
+              <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
+              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
+              <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -390,25 +496,41 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Robot Framework.SAP_Create_Product_Order">
     <configuration name="Address_validation" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
       <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Address_validation&quot;" />
+=======
+  <component name="RunManager" selected="Robot Framework.createAOppoViaSVE">
+    <configuration name="Create B2B Order" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Create B2B Order&quot;" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <option name="INTERPRETER_NAME" value="python" />
       <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
+<<<<<<< HEAD
       <option name="testCaseName" value="Address_validation" />
       <module name="" />
       <method v="2" />
     </configuration>
     <configuration name="Credit_score" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
       <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Credit_score&quot;" />
+=======
+      <option name="testCaseName" value="Create B2B Order" />
+      <module name="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Create HDC Order" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Create HDC Order&quot;" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <option name="INTERPRETER_NAME" value="python" />
       <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
+<<<<<<< HEAD
       <option name="testCaseName" value="Credit_score" />
       <module name="" />
       <method v="2" />
@@ -426,27 +548,60 @@
     </configuration>
     <configuration name="Resource_availability" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
       <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Resource_availability&quot;" />
+=======
+      <option name="testCaseName" value="Create HDC Order" />
+      <module name="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test : Telia IP VPN NNI" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Test : Telia IP VPN NNI&quot;" />
+      <option name="INTERPRETER_NAME" value="python" />
+      <option name="textField1" value="robot_tests/tests/po_classic_test.robot" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
+      <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
+      <option name="testCaseName" value="Test : Telia IP VPN NNI" />
+      <module name="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test123" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Test123&quot;" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <option name="INTERPRETER_NAME" value="python" />
       <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
+<<<<<<< HEAD
       <option name="testCaseName" value="Resource_availability" />
       <module name="" />
       <method v="2" />
     </configuration>
     <configuration name="SAP_Create_Product_Order" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
       <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;SAP_Create_Product_Order&quot;" />
+=======
+      <option name="testCaseName" value="Test123" />
+      <module name="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="createAOppoViaSVE" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;createAOppoViaSVE&quot;" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <option name="INTERPRETER_NAME" value="python" />
       <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
+<<<<<<< HEAD
       <option name="testCaseName" value="SAP_Create_Product_Order" />
+=======
+      <option name="testCaseName" value="createAOppoViaSVE" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <module name="" />
       <method v="2" />
     </configuration>
     <list>
+<<<<<<< HEAD
       <item itemvalue="Robot Framework.ECM_Create_document" />
       <item itemvalue="Robot Framework.Address_validation" />
       <item itemvalue="Robot Framework.Resource_availability" />
@@ -460,6 +615,21 @@
         <item itemvalue="Robot Framework.Credit_score" />
         <item itemvalue="Robot Framework.Resource_availability" />
         <item itemvalue="Robot Framework.Address_validation" />
+=======
+      <item itemvalue="Robot Framework.Test123" />
+      <item itemvalue="Robot Framework.Create B2B Order" />
+      <item itemvalue="Robot Framework.Test : Telia IP VPN NNI" />
+      <item itemvalue="Robot Framework.Create HDC Order" />
+      <item itemvalue="Robot Framework.createAOppoViaSVE" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Robot Framework.createAOppoViaSVE" />
+        <item itemvalue="Robot Framework.Create B2B Order" />
+        <item itemvalue="Robot Framework.Create HDC Order" />
+        <item itemvalue="Robot Framework.Test : Telia IP VPN NNI" />
+        <item itemvalue="Robot Framework.Test123" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       </list>
     </recent_temporary>
   </component>
@@ -473,13 +643,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1534508639598</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Final Commit for BQA-8466">
-      <created>1545056286706</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1545056286706</updated>
     </task>
     <task id="LOCAL-00016" summary="BQA-8262: Changed mobile number to static value for contact creations">
       <created>1545145299540</created>
@@ -817,7 +980,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549219767413</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Added E2E scripts for B2B,B2O,HDC,SVE and also the new password for Mube login">
+      <created>1550696248645</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1550696248646</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TodoView">
@@ -833,13 +1003,22 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
+<<<<<<< HEAD
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18521462" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.290938" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
+<<<<<<< HEAD
       <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.70667726" visible="true" weight="0.3432282" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49920508" weight="0.39517626" />
+=======
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.70667726" visible="true" weight="0.27224198" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49920508" weight="0.39679715" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291815" />
@@ -855,6 +1034,32 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+<<<<<<< HEAD
+=======
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22734499" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.70667726" visible="true" weight="0.3291815" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49920508" weight="0.39679715" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3291815" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.54133546" weight="0.3291815" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.58505565" weight="0.37544483" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.41494435" side_tool="true" weight="0.23843417" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.3291815" />
+      <window_info anchor="bottom" id="Inspection Results" order="11" sideWeight="0.49920508" weight="0.3291815" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="bottom" id="Educational.CheckDetails" order="13" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Bucklescript" order="14" weight="0.3291815" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -914,15 +1119,23 @@
     <MESSAGE value="Code refactoring" />
     <MESSAGE value="for HDC Select Frame keyword refactoring" />
     <MESSAGE value="Commit for BQA-8483: Contact attribute validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit for BQA-8483: Contact attribute validation" />
+    <MESSAGE value="Added E2E scripts for B2B,B2O,HDC,SVE and also the new password for Mube login" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added E2E scripts for B2B,B2O,HDC,SVE and also the new password for Mube login" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/oauth.txt.txt" />
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_lib.py" />
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+=======
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="182" column="8" selection-start-line="182" selection-start-column="8" selection-end-line="182" selection-end-column="8" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
         </state>
       </provider>
     </entry>
@@ -1034,16 +1247,6 @@
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/common_variables.robot">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/tests/product_order_monitoring.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/tests/products_tests.robot">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/SeleniumLibrary/keywords/javascript.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1096,6 +1299,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/robot_tests/tests/Product_order_monitoring_lighting.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
@@ -1103,6 +1307,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/common.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
@@ -1110,6 +1316,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/Product_order_monitoring_lighting_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
@@ -1117,6 +1324,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
     <entry file="file://C:/Python27/Lib/site-packages/SeleniumLibrary/keywords/window.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="109">
@@ -1124,22 +1333,105 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
           <caret line="1205" selection-start-line="1205" selection-end-line="1205" />
+=======
+    <entry file="file://C:/Python27/Lib/site-packages/robot/libraries/BuiltIn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="1587" column="8" selection-start-line="1587" selection-start-column="8" selection-end-line="1587" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/products_tests.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/product_order_monitoring.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/Product_order_monitoring_lighting_variables.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/keyword_monitor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="26" selection-start-column="26" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="23" lean-forward="true" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/Product_order_monitoring_lighting.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="27" column="49" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/po_classic_test.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4811">
+          <caret line="283" column="22" selection-start-line="283" selection-start-column="4" selection-end-line="283" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/P&amp;O_Classic_variables.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1496">
+          <caret line="88" column="29" selection-start-line="88" selection-start-column="29" selection-end-line="88" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/Product_order_monitoring_lighting_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2159">
+          <caret line="127" column="59" selection-start-line="127" selection-start-column="59" selection-end-line="127" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/P&amp;O_Classic_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="26" column="28" lean-forward="true" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        <state relative-caret-position="180">
+          <caret line="193" column="24" selection-start-line="193" selection-start-column="21" selection-end-line="193" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="318">
           <caret line="281" column="10" selection-start-line="281" selection-start-column="10" selection-end-line="281" selection-end-column="10" />
         </state>
@@ -1209,6 +1501,19 @@
           <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
           <folding>
             <element signature="e#0#266#0" expanded="true" />
+=======
+        <state relative-caret-position="183">
+          <caret line="241" column="43" lean-forward="true" selection-start-line="241" selection-start-column="43" selection-end-line="241" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="1255" column="46" selection-start-line="1255" selection-start-column="46" selection-end-line="1255" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#221#0" expanded="true" />
+>>>>>>> 60cca08d22a46d00d55565b74ed3e9c3bbe68b83
           </folding>
         </state>
       </provider>
