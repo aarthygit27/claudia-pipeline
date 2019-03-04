@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b287452c-1c33-4bba-887c-1c010e12bf7e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/claudia-pipeline.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/claudia-pipeline.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" beforeDir="false" afterPath="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -140,37 +143,79 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-1536632117">
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="1925" />
+          <entry key="robot" value="831" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="1925" />
+          <entry key="Robot Feature" value="831" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="html" value="1" />
+          <entry key="py" value="5" />
+          <entry key="pyi" value="1" />
+          <entry key="robot" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="HTML" value="1" />
+          <entry key="Python" value="5" />
+          <entry key="PythonStub" value="1" />
+          <entry key="Robot Feature" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="claudia-pipeline" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="1205" selection-start-line="1205" selection-end-line="1205" />
+            <state relative-caret-position="-980">
+              <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
               <folding>
-                <element signature="e#0#221#0" expanded="true" />
+                <element signature="e#0#136#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot">
+        <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+            <state relative-caret-position="17">
+              <caret line="1247" lean-forward="true" selection-start-line="1247" selection-end-line="1247" />
+              <folding>
+                <element signature="e#14#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot">
+        <entry file="file://$PROJECT_DIR$/robot_tests/tests/API_tests.robot">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="281" column="10" selection-start-line="281" selection-start-column="10" selection-end-line="281" selection-end-column="10" />
+            <state relative-caret-position="108">
+              <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
               <folding>
-                <element signature="e#0#270#0" expanded="true" />
+                <element signature="e#0#266#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -180,11 +225,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>this is to create a account from contact for HDC flow</find>
-      <find>page contains</find>
-      <find>page contain</find>
-      <find>page shoul</find>
-      <find>owner</find>
       <find>hdc</find>
       <find>${ACCOUNT_FRAME}</find>
       <find>before</find>
@@ -210,7 +250,15 @@
       <find>size</find>
       <find>soze</find>
       <find>select fra</find>
+      <find>list</find>
+      <find>none</find>
+      <find>sap</find>
+      <find>int</find>
+      <find>API_Authenticate_Sap</find>
     </findStrings>
+    <replaceStrings>
+      <replace>none</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -220,12 +268,9 @@
       <list>
         <option value="$PROJECT_DIR$/robot_tests/resources/common_variables.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords_lib.py" />
-        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" />
-        <option value="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/salesforce_variables.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sanity_check.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/aida_keywords.robot" />
-        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/uad_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_tests_new_master.robot" />
@@ -243,13 +288,15 @@
         <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_variables.robot" />
         <option value="$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot" />
         <option value="$PROJECT_DIR$/robot_tests/tests/sales_app_light.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords.robot" />
+        <option value="$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py" />
+        <option value="$PROJECT_DIR$/robot_tests/tests/API_tests.robot" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1680" />
+    <option name="x" value="-12" />
+    <option name="width" value="1191" />
     <option name="height" value="1032" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -284,23 +331,6 @@
             <path>
               <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
               <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
-              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
-              <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
-              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
-              <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="claudia-pipeline" type="b2602c69:ProjectViewProjectNode" />
-              <item name="claudia-pipeline" type="462c0819:PsiDirectoryNode" />
-              <item name="robot_tests" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -360,76 +390,76 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Robot Framework.Create B2B Order">
-    <configuration name="Add new contact - Master" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Add new contact - Master&quot;" />
+  <component name="RunManager" selected="Robot Framework.SAP_Create_Product_Order">
+    <configuration name="Address_validation" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Address_validation&quot;" />
       <option name="INTERPRETER_NAME" value="python" />
-      <option name="textField1" value="robot_tests/tests/sales_app_light.robot" />
+      <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
-      <option name="testCaseName" value="Add new contact - Master" />
+      <option name="testCaseName" value="Address_validation" />
       <module name="" />
       <method v="2" />
     </configuration>
-    <configuration name="Check Attributes/Contact Person are named right" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Check Attributes/Contact Person are named right&quot;" />
+    <configuration name="Credit_score" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Credit_score&quot;" />
       <option name="INTERPRETER_NAME" value="python" />
-      <option name="textField1" value="robot_tests/tests/sales_app_light.robot" />
+      <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
-      <option name="testCaseName" value="Check Attributes/Contact Person are named right" />
+      <option name="testCaseName" value="Credit_score" />
       <module name="" />
       <method v="2" />
     </configuration>
-    <configuration name="Create B2B Order" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Create B2B Order&quot;" />
+    <configuration name="ECM_Create_document" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;ECM_Create_document&quot;" />
       <option name="INTERPRETER_NAME" value="python" />
-      <option name="textField1" value="robot_tests/tests/sales_app_light.robot" />
+      <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
-      <option name="testCaseName" value="Create B2B Order" />
+      <option name="testCaseName" value="ECM_Create_document" />
       <module name="" />
       <method v="2" />
     </configuration>
-    <configuration name="Create opportunity from Account for HDCFlow" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Create opportunity from Account for HDCFlow&quot;" />
+    <configuration name="Resource_availability" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Resource_availability&quot;" />
       <option name="INTERPRETER_NAME" value="python" />
-      <option name="textField1" value="robot_tests/tests/sales_app_light.robot" />
+      <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
-      <option name="testCaseName" value="Create opportunity from Account for HDCFlow" />
+      <option name="testCaseName" value="Resource_availability" />
       <module name="" />
       <method v="2" />
     </configuration>
-    <configuration name="Test123" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;Test123&quot;" />
+    <configuration name="SAP_Create_Product_Order" type="DEMO_RUN_CONFIGURATION" factoryName="Robot Framework" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value=" -m robot.run  -t &quot;SAP_Create_Product_Order&quot;" />
       <option name="INTERPRETER_NAME" value="python" />
-      <option name="textField1" value="robot_tests/tests/sales_app_light.robot" />
+      <option name="textField1" value="robot_tests/tests/API_tests.robot" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="ENV_PATH" value="$PROJECT_DIR$/venv/bin" />
       <option name="envPATH" value="$PROJECT_DIR$/venv/bin" />
-      <option name="testCaseName" value="Test123" />
+      <option name="testCaseName" value="SAP_Create_Product_Order" />
       <module name="" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Robot Framework.Check Attributes/Contact Person are named right" />
-      <item itemvalue="Robot Framework.Add new contact - Master" />
-      <item itemvalue="Robot Framework.Create opportunity from Account for HDCFlow" />
-      <item itemvalue="Robot Framework.Test123" />
-      <item itemvalue="Robot Framework.Create B2B Order" />
+      <item itemvalue="Robot Framework.ECM_Create_document" />
+      <item itemvalue="Robot Framework.Address_validation" />
+      <item itemvalue="Robot Framework.Resource_availability" />
+      <item itemvalue="Robot Framework.Credit_score" />
+      <item itemvalue="Robot Framework.SAP_Create_Product_Order" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Robot Framework.Create B2B Order" />
-        <item itemvalue="Robot Framework.Test123" />
-        <item itemvalue="Robot Framework.Create opportunity from Account for HDCFlow" />
-        <item itemvalue="Robot Framework.Add new contact - Master" />
-        <item itemvalue="Robot Framework.Check Attributes/Contact Person are named right" />
+        <item itemvalue="Robot Framework.SAP_Create_Product_Order" />
+        <item itemvalue="Robot Framework.ECM_Create_document" />
+        <item itemvalue="Robot Framework.Credit_score" />
+        <item itemvalue="Robot Framework.Resource_availability" />
+        <item itemvalue="Robot Framework.Address_validation" />
       </list>
     </recent_temporary>
   </component>
@@ -803,13 +833,13 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2798092" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18521462" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.70667726" visible="true" weight="0.3291815" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49920508" weight="0.39679715" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.70667726" visible="true" weight="0.3432282" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49920508" weight="0.39517626" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3291815" />
@@ -825,28 +855,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25437203" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7853736" weight="0.3291815" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49920508" weight="0.39679715" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3291815" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49125597" weight="0.3291815" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.7670906" weight="0.3291815" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.21462639" side_tool="true" visible="true" weight="0.3291815" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.3291815" />
-      <window_info anchor="bottom" id="Inspection Results" order="11" sideWeight="0.49920508" weight="0.3291815" />
-      <window_info anchor="bottom" id="Messages" order="12" />
-      <window_info anchor="bottom" id="Educational.CheckDetails" order="13" show_stripe_button="false" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -911,13 +919,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/oauth.txt.txt" />
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_lib.py" />
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="182" column="8" selection-start-line="182" selection-start-column="8" selection-end-line="182" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/multibella_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -945,20 +946,6 @@
     <entry file="file://$PROJECT_DIR$/robot_tests/tests/sales_tests_lightning.robot" />
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_keywords_lightning.robot" />
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/salesforce_variables_lightning.robot" />
-    <entry file="file://$PROJECT_DIR$/robot_tests/tests/API_tests.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords.robot">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/aida_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1113,9 +1100,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
           <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
-          <folding>
-            <element signature="e#0#494#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1130,9 +1114,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
           <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
-          <folding>
-            <element signature="e#0#289#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1143,20 +1124,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/robot/libraries/BuiltIn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="1587" column="8" selection-start-line="1587" selection-start-column="8" selection-end-line="1587" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/robot_tests/resources/sales_app_light_keywords.robot">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
           <caret line="1205" selection-start-line="1205" selection-end-line="1205" />
-          <folding>
-            <element signature="e#0#221#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1171,8 +1142,73 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="281" column="10" selection-start-line="281" selection-start-column="10" selection-end-line="281" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/2and3/uuid.pyi">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/urllib3/connectionpool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="358" column="30" lean-forward="true" selection-start-line="358" selection-start-column="30" selection-end-line="358" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/robot/libraries/BuiltIn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="694" column="38" lean-forward="true" selection-start-line="694" selection-start-column="38" selection-end-line="694" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-762174762/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="2206" column="8" selection-start-line="2206" selection-start-column="8" selection-end-line="2206" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://C:/Python27/Lib/bdb.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="224" selection-start-line="224" selection-end-line="224" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords_library.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1247" lean-forward="true" selection-start-line="1247" selection-end-line="1247" />
           <folding>
-            <element signature="e#0#270#0" expanded="true" />
+            <element signature="e#14#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/resources/API_keywords.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-980">
+          <caret line="26" column="34" lean-forward="true" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#136#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/robot_tests/tests/API_tests.robot">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
+          <folding>
+            <element signature="e#0#266#0" expanded="true" />
           </folding>
         </state>
       </provider>
