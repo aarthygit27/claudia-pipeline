@@ -2,8 +2,7 @@
 Resource          ..${/}resources${/}salesforce_keywords.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
 Resource          ../${/}resources${/}salesforce_variables.robot
-#Library           Selenium2Library
-Resource          ../${/}resources${/}P&O_Classic_variables.robot
+Resource          ../${/}resources${/}P&O_Classic_variables.robot    #Library    Selenium2Library
 
 *** Keywords ***
 Go to Account2
@@ -340,6 +339,7 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
 General test setup
     [Arguments]    ${target_account}    ${pricebook}
     Go To Salesforce and Login2    Sales admin User devpo
+    switching to classic app
     Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
     ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
@@ -839,3 +839,19 @@ Order events update
     Capture Page Screenshot
     click element    ${complete_order}
     sleep    10s
+
+switching to classic app
+    ${settings_classic}    set variable    //span[@id='userNavLabel']
+    ${switch_lighting}    Set Variable    //a[@title='Switch to Lightning Experience']
+    ${setting_lighting}    Set Variable    //span[contains(@class,'userProfileCardTriggerRoot')]
+    ${switch_classic}    Set Variable    //a[text()='Switch to Salesforce Classic']
+    sleep    5s
+    Wait Until Element Is Visible    ${settings_classic}    60s
+    Click Element    ${settings_classic}
+    Wait Until Element Is Visible    ${switch_lighting}    30s
+    Click Element    ${switch_lighting}
+    sleep    5s
+    Wait Until Element Is Visible    ${setting_lighting}    60s
+    Click Element    ${setting_lighting}
+    Wait Until Element Is Visible    ${switch_classic}    30s
+    Click Element    ${switch_classic}
