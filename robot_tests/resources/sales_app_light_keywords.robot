@@ -1895,3 +1895,48 @@ Adding Products
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
     unselect frame
+
+Updating sales type \ multiple products
+    [Arguments]    @{products}
+    [Documentation]    This is used to Update sales type for multiple products
+    ...
+    ...    The input for this keyword is \ list of products
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${prod}    create list    @{products}
+    ${count}    Get Length    ${prod}
+    log to console    Updating sales type \ multiple products
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}
+    Run Keyword If    ${status} == False    Reload Page
+    sleep    20s
+    Wait Until Element Is Enabled    ${frame}    60s
+    select frame    ${frame}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} == ${count}
+    \    ${product_name}    Get Value    @{products}[${i}]
+    \    wait until page contains element    ${update_order}    60s
+    \    log to console    selected new frame
+    \    click element    ${product_name} //following-sibling::td/select[contains(@class,'required')]
+    \    sleep    2s
+    \    click element    ${product_name}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    Log    sleep    5s
+    Wait Until Element Is Visible    ${next_button}    60s
+    click element    ${next_button}
+    Capture Page Screenshot
+    Unselect Frame
+    sleep    5s
+
+Searching and adding multiple products
+    [Arguments]    @{products}
+    [Documentation]    This is used to search and add multiple products
+    ...
+    ...    In order to add the product we are using the product-id
+    ...
+    ...    the tag used to extract the product-id is "data-product-id"
+    ${prod}    create list    @{products}
+    ${count}    Get Length    ${prod}
+    Log To Console    Searching and adding multiple products
+    :FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} == ${count}
+    \    ${product_name}    Get Value    @{products}[${i}]

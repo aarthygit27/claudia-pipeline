@@ -426,42 +426,45 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     sleep    5s
     ClickingOnCPQ    ${oppo_name}
     search products    Telia Ulkoistettu asiakaspalvelu
-    Adding Products    ${Telia_Ulkoistettu_asiakaspalvelu}
+    Adding Products    ${Telia Ulkoistettu asiakaspalvelu}
     search products    Telia Neuvottelupalvelut
-    Adding Products    ${Telia_Neuvottelupalvelut}
+    Adding Products    ${Telia Neuvottelupalvelut}
     search products    Telia Palvelunumero
-    Adding Products    ${Telia_Palvelunumero}
+    Adding Products    ${Telia Palvelunumero}
     search products    Telia Yritysliittymä
-    Adding Products    ${Telia_Yritysliittymä}
+    Adding Products    ${Telia Yritysliittymä}
     search products    Telia Laskutuspalvelu
-    Adding Products    ${Telia_Laskutuspalvelu}
+    Adding Products    ${Telia Laskutuspalvelu}
     search products    Telia Sopiva Enterprise
-    Adding Products    ${Telia_Sopiva_Enterprise}
+    Adding Products    ${Telia Sopiva Enterprise}
     search products    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus
-    Adding Products    ${Telia_Ulkoistettu_asiakaspalvelu-Lisäkirjaus}
+    Adding Products    ${Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus}
     search products    Telia Neuvottelupalvelut - Lisäkirjaus
-    Adding Products    ${Telia_Neuvottelupalvelut-Lisäkirjaus}
+    Adding Products    ${Telia Neuvottelupalvelut - Lisäkirjaus}
     search products    Telia Palvelunumero - Lisäkirjaus
-    Adding Products    ${Telia_Palvelunumero-Lisäkirjaus}
+    Adding Products    ${Telia Palvelunumero - Lisäkirjaus}
     search products    Telia Yritysliittymä - Lisäkirjaus
-    Adding Products    ${Telia_Yritysliittymä-Lisäkirjaus}
+    Adding Products    ${Telia Yritysliittymä - Lisäkirjaus}
     search products    Telia Laskutuspalvelu - Lisäkirjaus
-    Adding Products    ${Telia_Laskutuspalvelu-Lisäkirjaus}
+    Adding Products    ${Telia Laskutuspalvelu - Lisäkirjaus}
     search products    Telia Sopiva Enterprise - Lisäkirjaus
-    Adding Products    ${Telia_Sopiva_Enterprise-Lisäkirjaus}
+    Adding Products    ${Telia Sopiva Enterprise - Lisäkirjaus}
     search products    Sopiva Pro-migraatio
-    Adding Products    ${Sopiva_Pro-migraatio}
+    Adding Products    ${Sopiva Pro-migraatio}
     search products    Sovelluskauppa 3rd Party Apps
-    Adding Products    ${Sovelluskauppa_3rd_Party_Apps}
+    Adding Products    ${Sovelluskauppa 3rd Party Apps}
     search products    VIP:n käytössä olevat Cid-numerot
-    Adding Products    ${VIP:n_käytössä_olevat_Cid-numerot}
+    Adding Products    ${VIP:n käytössä olevat Cid-numerot}
     search products    Ohjaus Telia Numeropalveluun
-    Adding Products    ${Ohjaus_Telia_Numeropalveluun}
+    Adding Products    ${Ohjaus Telia Numeropalveluun}
     search products    Online Asiantuntijapalvelut
-    Adding Products    ${Online_Asiantuntijapalvelut}
+    Adding Products    ${Online Asiantuntijapalvelut}
 
-test for loop
-    : FOR    ${i}    IN RANGE
-    \    Exit For Loop If    ${i} == 9
-    \    Log    ${i}
-    Log    Exited
+test for iframe
+    [Tags]    iframe_test
+    ${iframe}    Set Variable    //div[@class='panel-h panel resultsPanel']/iframe
+    Open Browser    https://jsfiddle.net/westonruter/6mSuK/    firefox
+    wait until element is visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Capture Page Screenshot
+    unselect frame
