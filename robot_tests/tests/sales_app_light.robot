@@ -459,12 +459,3 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     Adding Products    ${Ohjaus Telia Numeropalveluun}
     search products    Online Asiantuntijapalvelut
     Adding Products    ${Online Asiantuntijapalvelut}
-
-test for iframe
-    [Tags]    iframe_test
-    ${iframe}    Set Variable    //div[@class='panel-h panel resultsPanel']/iframe
-    Open Browser    https://jsfiddle.net/westonruter/6mSuK/    firefox
-    wait until element is visible    ${iframe}    60s
-    Select Frame    ${iframe}
-    Capture Page Screenshot
-    unselect frame
