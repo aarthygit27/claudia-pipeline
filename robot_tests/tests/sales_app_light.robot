@@ -422,48 +422,16 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     ...    Telia Sopiva Enterprise - Lisäkirjaus    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    ${oppo_name}    set variable    Oppo_ 20190301-113538
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #${oppo_name}    set variable    Oppo_ 20190301-113538
     sleep    5s
     Go To Entity    ${oppo_name}
     sleep    5s
     ClickingOnCPQ    ${oppo_name}
     sleep    10s
     Searching and adding multiple products    @{products}
-    #    search products    Telia Ulkoistettu asiakaspalvelu
-    #    Adding Products    ${Telia Ulkoistettu asiakaspalvelu}
-    #    search products    Telia Neuvottelupalvelut
-    #    Adding Products    ${Telia Neuvottelupalvelut}
-    #    search products    Telia Palvelunumero
-    #    Adding Products    ${Telia Palvelunumero}
-    #    search products    Telia Yritysliittymä
-    #    Adding Products    ${Telia Yritysliittymä}
-    #    search products    Telia Laskutuspalvelu
-    #    Adding Products    ${Telia Laskutuspalvelu}
-    #    search products    Telia Sopiva Enterprise
-    #    Adding Products    ${Telia Sopiva Enterprise}
-    #    search products    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus
-    #    Adding Products    ${Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus}
-    #    search products    Telia Neuvottelupalvelut - Lisäkirjaus
-    #    Adding Products    ${Telia Neuvottelupalvelut - Lisäkirjaus}
-    #    search products    Telia Palvelunumero - Lisäkirjaus
-    #    Adding Products    ${Telia Palvelunumero - Lisäkirjaus}
-    #    search products    Telia Yritysliittymä - Lisäkirjaus
-    #    Adding Products    ${Telia Yritysliittymä - Lisäkirjaus}
-    #    search products    Telia Laskutuspalvelu - Lisäkirjaus
-    #    Adding Products    ${Telia Laskutuspalvelu - Lisäkirjaus}
-    #    search products    Telia Sopiva Enterprise - Lisäkirjaus
-    #    Adding Products    ${Telia Sopiva Enterprise - Lisäkirjaus}
-    #    search products    Sopiva Pro-migraatio
-    #    Adding Products    ${Sopiva Pro-migraatio}
-    #    search products    Sovelluskauppa 3rd Party Apps
-    #    Adding Products    ${Sovelluskauppa 3rd Party Apps}
-    #    search products    VIP:n käytössä olevat Cid-numerot
-    #    Adding Products    ${VIP:n käytössä olevat Cid-numerot}
-    #    search products    Ohjaus Telia Numeropalveluun
-    #    Adding Products    ${Ohjaus Telia Numeropalveluun}
-    #    search products    Online Asiantuntijapalvelut
-    #    Adding Products    ${Online Asiantuntijapalvelut}
+    Updating sales type \ multiple products    @{products}
+    OpenQuoteButtonPage_release
 
 Iframe_test
     [Tags]    Iframe_tests

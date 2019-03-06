@@ -1913,14 +1913,17 @@ Updating sales type \ multiple products
     Wait Until Element Is Enabled    ${frame}    60s
     select frame    ${frame}
     : FOR    ${i}    IN RANGE    9999
-    \    Exit For Loop If    ${i} == ${count}
-    \    ${product_name}    Get Value    @{products}[${i}]
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${product_list}    Set Variable    //td[normalize-space(.)='${product_name}']
     \    wait until page contains element    ${update_order}    60s
     \    log to console    selected new frame
-    \    click element    ${product_name} //following-sibling::td/select[contains(@class,'required')]
+    \    wait until page contains element    ${product_list}//following-sibling::td/select[contains(@class,'required')]    60s
+    \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]
     \    sleep    2s
-    \    click element    ${product_name}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
-    Log    sleep    5s
+    \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    log    Completed updating the sales type
+    sleep    5s
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
     Capture Page Screenshot

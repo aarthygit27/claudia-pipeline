@@ -1275,6 +1275,7 @@ Search And Verify Account Is Found
 
 Search Salesforce
     [Arguments]    ${item}
+    Wait Until Element Is Visible    id=phSearchInput    90s
     Input Text    id=phSearchInput    ${item}
     Capture Page Screenshot
     Wait Until Keyword Succeeds    30 s    1 s    Click Element    //div[contains(@id,'phSearchInput_autoCompleteBoxId')]//span[@class='queryText' and contains(text(), '${item}')]
