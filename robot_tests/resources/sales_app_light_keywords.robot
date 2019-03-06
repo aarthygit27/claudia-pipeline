@@ -1486,9 +1486,9 @@ search products
     sleep    15s
     Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
     select frame    //div[contains(@class,'slds')]/iframe
-    wait until page contains element    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    60s
+    wait until page contains element    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    60s
     sleep    10s
-    input text    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-empty')]    ${product}
+    input text    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    ${product}
 
 Adding Telia Colocation
     [Arguments]    ${product}
@@ -1934,9 +1934,24 @@ Searching and adding multiple products
     ...    In order to add the product we are using the product-id
     ...
     ...    the tag used to extract the product-id is "data-product-id"
-    ${prod}    create list    @{products}
+    ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
+    ${next_button}    set variable    //span[contains(text(),'Next')]
+    #@{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
+    ...    # Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
+    ...    # Telia Sopiva Enterprise - Lisäkirjaus    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
+    ${prod}    Create List    @{products}
     ${count}    Get Length    ${prod}
+    Log To Console    ${count}
     Log To Console    Searching and adding multiple products
-    :FOR    ${i}    IN RANGE    9999
-    \    Exit For Loop If    ${i} == ${count}
-    \    ${product_name}    Get Value    @{products}[${i}]
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${product_id}    Set Variable    ${${product_name}}
+    \    Log To Console    product name ${product_name}
+    \    search products    ${product_name}
+    \    Log To Console    Product id ${product_id}
+    \    Adding Products    ${product_id}
+    Wait Until Element Is Enabled    ${iframe}    60s
+    select frame    ${iframe}
+    Click Element    ${next_button}
+    Unselect Frame
