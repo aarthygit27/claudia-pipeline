@@ -3,6 +3,7 @@ Library           Collections
 Resource          ..${/}resources${/}common.robot
 Resource          ..${/}resources${/}cpq_keywords.robot
 Resource          ..${/}resources${/}sales_app_light_variables.robot
+Resource          ..${/}resources${/}multibella_keywords.robot
 
 *** Keywords ***
 Go To Salesforce
@@ -1896,7 +1897,7 @@ Adding Products
     Click Element    ${product}
     unselect frame
 
-Updating sales type \ multiple products
+Updating sales type multiple products
     [Arguments]    @{products}
     [Documentation]    This is used to Update sales type for multiple products
     ...
@@ -1906,8 +1907,8 @@ Updating sales type \ multiple products
     ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     ${prod}    create list    @{products}
     ${count}    Get Length    ${prod}
-    log to console    Updating sales type \ multiple products
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}
+    log to console    Updating sales type multiple products
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}    60s
     Run Keyword If    ${status} == False    Reload Page
     sleep    20s
     Wait Until Element Is Enabled    ${frame}    60s
@@ -1918,7 +1919,7 @@ Updating sales type \ multiple products
     \    ${product_list}    Set Variable    //td[normalize-space(.)='${product_name}']
     \    wait until page contains element    ${update_order}    60s
     \    log to console    selected new frame
-    \    wait until page contains element    ${product_list}//following-sibling::td/select[contains(@class,'required')]    60s
+    \    Wait Until Element Is Visible    ${product_list}//following-sibling::td/select[contains(@class,'required')]    120s
     \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]
     \    sleep    2s
     \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
@@ -1939,9 +1940,6 @@ Searching and adding multiple products
     ...    the tag used to extract the product-id is "data-product-id"
     ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
     ${next_button}    set variable    //span[contains(text(),'Next')]
-    #@{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
-    ...    # Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
-    ...    # Telia Sopiva Enterprise - Lisäkirjaus    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
     ${prod}    Create List    @{products}
     ${count}    Get Length    ${prod}
     Log To Console    ${count}
@@ -1958,3 +1956,53 @@ Searching and adding multiple products
     select frame    ${iframe}
     Click Element    ${next_button}
     Unselect Frame
+
+Preview order summary and verify order
+    [Arguments]    @{products}
+    ${preview_order_summary}    Set Variable    //div[@title='Preview Order Summary']
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${prod}    Create List    @{products}
+    ${count}    Get Length    ${prod}
+    Wait Until Element Is Visible    ${preview_order_summary}    120s
+    Click Element    ${preview_order_summary}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}
+    Run Keyword If    ${status} == False    Reload Page
+    sleep    20s
+    Wait Until Element Is Enabled    ${frame}    60s
+    select frame    ${frame}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${status}    Run Keyword And Return Status    ${product_name}
+    \    Log    ${product_name} is present in order summary ${status}
+    unselect frame
+
+Get Multibella id
+    ${multibella_guiId}    Set Variable    //span[text()='MultibellaCaseGuiId']/../../div/span/span
+    Wait Until Element Is Visible    ${DETAILS_TAB}    60s
+    Click Element    ${DETAILS_TAB}
+    sleep    5s
+    wait until element is visible    ${multibella_guiId}    60s
+    ${multibella_value}    get text    ${multibella_guiId}
+    [Return]    ${multibella_value}
+
+verifying Multibella order case
+    [Arguments]    ${multibella_caseid}    @{products}
+    ${history}    set variable    //a[text()='History']
+    ${title}    Set Variable    //span[text()='Title']/../../td[3]
+    MUBE Open Browser And Go To CRM Login Page
+    MUBE Log In CRM    ${MUBE_ADMIN_USERNAME}    ${MUBE_ADMIN_PASSWORD}
+    MUBE Verify That Case Exists in MuBe    ${multibella_caseid}
+    Wait Until Element Is Visible    ${history}    60s
+    click element    ${history}
+    wait until element is visible    ${title}
+    ${listed_products}    get text    ${title}
+    @{list_products}    Split String    ${listed_products}    ,${SPACE}
+    ${list_P}    Create List    @{list_products}
+    ${count}    Get Length    ${list_P}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${list_product}    Set Variable    @{list_products}[i]
+    \    ${product}    Set Variable    @{products}[i]
+    \    ${present}    Run Keyword And Return Status    Should Be Equal As Strings    ${list_product}    ${product}
+    \    log    @{list_products} is present ${present}

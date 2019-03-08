@@ -544,6 +544,7 @@ MUBE Verify That Business Customer Is Terminated
     Page Should Contain Element    //td[contains(text(),'Status in CRM')]/following-sibling::td//span[text()='Terminated']
 
 MUBE Verify That Case Exists in MuBe
+    [Arguments]    ${MUBE_CASE_ID}
     MUBE Open All Cases Page
     MUBE Set Filter Input    Case no    ${MUBE_CASE_ID}
     MUBE Click Apply Filters

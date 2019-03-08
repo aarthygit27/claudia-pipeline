@@ -3,6 +3,7 @@ Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
 Resource          ../resources/sales_app_light_keywords.robot    #Test Teardown    Logout From All Systems and Close Browser
 Resource          ../resources/common.robot
+Resource          ../resources/multibella_keywords.robot
 
 *** Test Cases ***
 Add new contact - Master
@@ -415,11 +416,12 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9121
+    [Tags]    BQA-9122
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
     ...    Telia Sopiva Enterprise - Lisäkirjaus    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
+    ${Submit Order}    set variable    //div[@title='Submit Order']
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
@@ -430,8 +432,20 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     ClickingOnCPQ    ${oppo_name}
     sleep    10s
     Searching and adding multiple products    @{products}
-    Updating sales type \ multiple products    @{products}
+    Updating sales type multiple products    @{products}
     OpenQuoteButtonPage_release
+    preview and submit quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    Preview order summary and verify order    @{products}
+    go back
+    Wait Until Element Is Visible    ${Submit Order}
+    click element    ${Submit Order}
+    sleep    60s
+    Capture Page Screenshot
+    ${multibella_GuiID}    Get Multibella id
+    verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 Iframe_test
     [Tags]    Iframe_tests
@@ -443,3 +457,9 @@ Iframe_test
     Select Frame    ${iframe}
     Capture Page Screenshot
     unselect frame
+
+multibella check
+    @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
+    ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
+    ...    Telia Sopiva Enterprise - Lisäkirjaus    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
+    verifying Multibella order case    1708912    @{products}
