@@ -56,7 +56,7 @@ ${NP_CONTACT_ACCOUNTNAME}                   Aktia Fondbolag Ab
 ${NP_CONTACT_MOBILE}                        +358333333333
 
 #NEW CONTACT FROM ACCOUNTS PAGE
-${AP_CONTACT_ACCOUNTNAME}                   Gavetec Oy
+${AP_CONTACT_ACCOUNTNAME}                   Gasum Oy
 ${AP_NEW_CONTACT}                           //div[@title="New Contact"]
 #${AP_CONTACT_FIRSTNAME}                     APTEST10
 #${AP_CONTACT_LASTNAME}                      APCONTACT10

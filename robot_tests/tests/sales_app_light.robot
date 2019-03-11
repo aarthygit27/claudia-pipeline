@@ -93,6 +93,8 @@ Lightning: Create Meeting from Account
     [Tags]    BQA-7948    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Create New Contact for Account
+    Go to Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Meeting
 
 Lightning: Create Call from Account
@@ -100,6 +102,8 @@ Lightning: Create Call from Account
     [Tags]    BQA-8085    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Create New Contact for Account
+    Go to Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Call
 
 Lightning: Create Task from Account

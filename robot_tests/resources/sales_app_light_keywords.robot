@@ -49,7 +49,7 @@ Go To Salesforce and Login into Lightning User
     Reset to Home
 
 Login to Salesforce as DigiSales Admin User
-    Login To Salesforce Lightning    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+    Login To Salesforce Lightning    ${SALES_ADMIN_APP_USER}   ${PASSWORD-SALESADMIN}
 
 Login to Salesforce as DigiSales Lightning User
     [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${Password_merge}
@@ -286,7 +286,8 @@ Create New Master Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${mobile_num}=    Run Keyword    Create Unique Mobile Number
-    Close All Notifications
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
+    Run Keyword If    ${present}        Close All Notifications
     wait until keyword succeeds    2mins    5s    Go to Contacts
     Set Test Variable    ${MASTER_FIRST_NAME}    Master ${first_name}
     Set Test Variable    ${MASTER_LAST_NAME}    Test ${first_name}
@@ -532,11 +533,12 @@ Validate Created Task
     page should contain element    //span[@class='test-id__field-value slds-form-element__static slds-grow ']/span[@class='uiOutputText' and text()='${unique_subject_task_form}']
 
 Enter and Select Contact Meeting
+    Set Test Variable    ${name_input}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
     Force click element    ${contact_name_input}
     #click element    ${contact_name_input}
-    input text    ${contact_name_input}    ${name_input}
+    input text    ${contact_name_input}     ${name_input}
     sleep    5s
-    click element    ${contact_name_select}
+    click element    //*[@title='${name_input}']/../../..
     sleep    5s
 
 Create a Meeting
