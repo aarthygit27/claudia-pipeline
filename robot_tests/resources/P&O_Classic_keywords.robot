@@ -112,7 +112,7 @@ Add Muut asiantuntijapalvelut
     sleep    5s
     input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
     sleep    5s
-    input text    ${Kustannus}    10000
+    #input text    ${Kustannus}    10000
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
