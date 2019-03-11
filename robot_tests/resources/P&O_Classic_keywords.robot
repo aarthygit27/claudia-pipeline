@@ -107,6 +107,7 @@ Add Muut asiantuntijapalvelut
     click button    ${product_id}
     sleep    10s
     Capture Page Screenshot
+    Wait Until Element Is Visible    ${SETTINGS}    60s
     Click Button    ${SETTINGS}
     sleep    5s
     input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
