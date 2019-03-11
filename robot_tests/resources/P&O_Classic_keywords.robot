@@ -165,7 +165,7 @@ Edit Billing details
 
 Go To Salesforce and Login2
     [Arguments]    ${user}
-    Go to Salesforce
+    Go To Salesforce
     Login To Salesforce And Close All Tabs2    ${user}
 
 Login to Salesforce And Close All Tabs2
