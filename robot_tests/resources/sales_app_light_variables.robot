@@ -59,7 +59,7 @@ ${MASTER_ACCOUNT_NAME}    Aktia Fondbolag Ab
 ${MASTER_PHONE_NUM}    +358968372101
 ${MASTER_EMAIL}    saemail@telia.com
 ${NP_EMAIL_FIELD}    //input[@type='email']
-${NP_ACCOUNT_NAME}    Gavetec Oy
+${NP_ACCOUNT_NAME}    Gasum Oy
 ${NP_PHONE_NUM}    +358968372111
 ${AP_ACCOUNT_NAME}    Ambea Oy
 ${AP_NEW_CONTACT}    //div[@title="New Contact"]
@@ -79,7 +79,6 @@ ${subject_select_dropdown_value}    //*[@title='${Meeting}' and @class="slds-tru
 ${subject_call_type}    //*[@title='${customer_Call}']
 ${Meeting}        Meeting
 ${customer_Call}    Customer Call
-${name_input}     Helinä Keiju
 ${meeting_text}    //*[(text()='Meeting')]
 ${meeting_select_dropdown}    //div/ul/li[2]/a[(text()='Meeting')]
 ${reason_select_dropdown}    //*[text()='Reason']/..//following::div/div/div/div/a
@@ -98,7 +97,6 @@ ${city_input}     //span[text()='Location']//following::input[@class=' input']
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[8]/div[1]/div/div/div/input
 ${contact_name_input}    //*[text()='Name']//following::div/div/div[@class='inputWrapper slds-grid slds-grid_vertical-align-center slds-p-right_x-small']/div[@class='autocompleteWrapper slds-grow']/input
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[9]/div[1]/div/div/div/div/div/div[1]/div[2]/input
-${contact_name_select}    //*[@title='${name_input}']/../../..
 ${start_date_form_span}    //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='Start']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${end_date_form_span}    //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='End']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${location_form_span}    //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='Location']/../div/div[@class='slds-form-element__static slds-truncate']/span
