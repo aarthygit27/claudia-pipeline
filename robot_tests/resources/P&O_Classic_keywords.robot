@@ -340,7 +340,7 @@ General test setup
     [Arguments]    ${target_account}    ${pricebook}
     Go To Salesforce and Login2    Sales admin User devpo
     switching to classic app
-    Go To    ${CLASSIC_APP}
+    #Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
     ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
     #${new_opportunity_name}=    Set Variable    Test Robot Order_160120192214
@@ -845,6 +845,7 @@ switching to classic app
     ${switch_lighting}    Set Variable    //a[@title='Switch to Lightning Experience']
     ${setting_lighting}    Set Variable    //span[contains(@class,'userProfileCardTriggerRoot')]
     ${switch_classic}    Set Variable    //a[text()='Switch to Salesforce Classic']
+    ${search_button}    Set Variable    id=phSearchInput
     sleep    5s
     Wait Until Element Is Visible    ${settings_classic}    60s
     Click Element    ${settings_classic}
@@ -855,3 +856,4 @@ switching to classic app
     Click Element    ${setting_lighting}
     Wait Until Element Is Visible    ${switch_classic}    30s
     Click Element    ${switch_classic}
+    Wait Until Element Is Visible    ${search_button}    90s
