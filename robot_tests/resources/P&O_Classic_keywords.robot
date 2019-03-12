@@ -112,7 +112,7 @@ Add Muut asiantuntijapalvelut
     sleep    5s
     input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
     sleep    5s
-    input text    ${Kustannus}    10000
+    #input text    ${Kustannus}    10000
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
@@ -165,7 +165,7 @@ Edit Billing details
 
 Go To Salesforce and Login2
     [Arguments]    ${user}
-    Go to Salesforce
+    Go To Salesforce
     Login To Salesforce And Close All Tabs2    ${user}
 
 Login to Salesforce And Close All Tabs2
