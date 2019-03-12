@@ -184,7 +184,7 @@ create order
     ${cart_next_button}=    Set Variable    //button/span[text()='Next']
     ${CPQ_next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${backCPQ}=    Set Variable    //button[@id='BackToCPQ']
-    ${open_quote}=    Set Variable    //button[@id='Open Quote']
+    ${open_quote}=    Set Variable    //button[@id='View Quote']    #//button[@id='Open Quote']
     ${spinner}=    set variable    //div[contains(@class,'slds-spinner--brand')]
     ${submit_order}=    Set Variable    //p[text()='Submit Order']
     sleep    10s
@@ -195,6 +195,7 @@ create order
     Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
+    Credit score validation
     Wait Until Element Is Visible    ${open_quote}    240s
     Click Button    ${open_quote}
     Wait Until Element Is Enabled    ${CPQ_BUTTON}    120s
@@ -859,3 +860,11 @@ switching to classic app
     Wait Until Element Is Visible    ${switch_classic}    30s
     Click Element    ${switch_classic}
     Wait Until Element Is Visible    ${search_button}    90s
+
+Credit score validation
+    ${next_but}    Set Variable    //form[@id='a1q6E000000SBKZQA4-24']//button[contains(text(),'Next')]
+    ${central_spinner}    Set Variable    //div[@class='center-block spinner']
+    wait until element is not visible    ${central_spinner}    120s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${next_but}    60s
+    Run Keyword If    ${status} == True    click element    ${next_but}
+    sleep    5s
