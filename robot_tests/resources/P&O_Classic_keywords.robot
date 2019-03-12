@@ -184,7 +184,6 @@ create order
     ${cart_next_button}=    Set Variable    //button/span[text()='Next']
     ${CPQ_next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${backCPQ}=    Set Variable    //button[@id='BackToCPQ']
-    ${open_quote}=    Set Variable    //button[@id='View Quote']    #//button[@id='Open Quote']
     ${spinner}=    set variable    //div[contains(@class,'slds-spinner--brand')]
     ${submit_order}=    Set Variable    //p[text()='Submit Order']
     sleep    10s
@@ -196,8 +195,7 @@ create order
     click button    ${CPQ_next_button}
     sleep    10s
     Credit score validation
-    Wait Until Element Is Visible    ${open_quote}    240s
-    Click Button    ${open_quote}
+    View Open Quote
     Wait Until Element Is Enabled    ${CPQ_BUTTON}    120s
     click button    ${CPQ_BUTTON}
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
@@ -650,6 +648,7 @@ Create billing Account
 
 Add Telia Domain Service Name
     [Documentation]    This is to add Telia Domain Service Name to cart and fill the required details
+    ${Asiakkaan_verkkotunnus_Field}    set variable    //input[@name='productconfig_field_1_0']
     Wait for element to appear    3s
     Force click element    ${ADD_TO_CART}
     Capture Page Screenshot
@@ -686,6 +685,7 @@ Add Telia Domain Service Name
 Place the order
     [Arguments]    ${account_name}
     [Documentation]    This is to submit the order after adding products to cart
+    ${next_month_arrow}    set variable    //button[@title='Next Month']
     force click element    ${NEXT_BUTTON_CART}
     wait until element is visible    ${NEXT_BUTTON_UPDATE_PRODUCT}    240s
     click element    ${NEXT_BUTTON_UPDATE_PRODUCT}
@@ -868,3 +868,16 @@ Credit score validation
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${next_but}    60s
     Run Keyword If    ${status} == True    click element    ${next_but}
     sleep    5s
+
+View Open Quote
+    ${open_quote}=    Set Variable    //button[@id='Open Quote']    #//button[@id='Open Quote']
+    ${view_quote}    Set Variable    //button[@id='View Quote']
+    ${quote}    Set Variable    //button[contains(@id,'Quote')]
+    ${central_spinner}    Set Variable    //div[@class='center-block spinner']
+    wait until element is not visible    ${central_spinner}    120s
+    Wait Until Element Is Visible    ${quote}    120s
+    ${quote_text}    get text    ${quote}
+    ${open}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    Open Quote
+    ${view}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    View Quote
+    Run Keyword If    ${open} == True    click element     ${open_quote}
+    Run Keyword If    ${view} == True    click element     ${view_quote}

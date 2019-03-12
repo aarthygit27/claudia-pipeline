@@ -299,7 +299,8 @@ Telia Domain Name Service - P&O create new order
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Domain Name Service
     Add Telia Domain Service Name
-    Place the order    Betonimestarit Oy
+    create order    ${DEVPO_ACCOUNT}
+    #Place the order    Betonimestarit Oy
     Capture Page Screenshot
 
 Test : Telia IP VPN NNI
