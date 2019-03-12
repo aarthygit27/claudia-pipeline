@@ -90,6 +90,7 @@ Reset to Home
 
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
+    Close All Notifications
     Log    Going to '${target}'
     Wait Until Keyword Succeeds    8 mins    40s    Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
@@ -153,8 +154,11 @@ Fill Mandatory Opportunity Information
     Set Test Variable    ${OPPORTUNITY_NAME}    ${opport_name}
     ${date}=    Get Date From Future    ${days}
     Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}    ${date}
+    Sleep    5s
     Input Quick Action Value For Attribute    Opportunity Name    ${OPPORTUNITY_NAME}
+    Sleep    5s
     Select Quick Action Value For Attribute    Stage    ${stage}
+    Sleep    5s
     Input Quick Action Value For Attribute    Close Date    ${OPPORTUNITY_CLOSE_DATE}
 
 Input Quick Action Value For Attribute
