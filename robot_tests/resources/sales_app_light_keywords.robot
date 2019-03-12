@@ -545,7 +545,7 @@ Enter and Select Contact Meeting
     #click element    ${contact_name_input}
     input text    ${contact_name_input}     ${name_input}
     sleep    5s
-    click element    //*[@title='${name_input}']/../../..
+    click element    //*[@title='${name_input}']/../..
     sleep    5s
 
 Create a Meeting

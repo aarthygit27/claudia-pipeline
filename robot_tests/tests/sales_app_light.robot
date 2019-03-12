@@ -111,6 +111,8 @@ Lightning: Create Task from Account
     [Tags]    BQA-8463    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Create New Contact for Account
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Task
     #Create opportunity from Account for HDCFlow
     #    [Tags]    BQA-HDCOppo    Lightning
@@ -122,7 +124,7 @@ Lightning: Create Task from Account
 
 Change Account owner for Group Account
     [Tags]    BQA-8523    Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     sleep    10s
     Scroll Page To Location    0    1407.75
@@ -141,7 +143,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Tags]    BQA-8524    Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     sleep    10s
     ${ACCOUNT_OWNER}    Get Text    ${ownername}
