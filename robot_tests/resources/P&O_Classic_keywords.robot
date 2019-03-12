@@ -493,7 +493,7 @@ Add Hallinta ja Tuki varallaolo ja matkustus
 Complete Order
     [Documentation]    Used to update the order and complete order
     ${complete_order}=    Set Variable    //td[@id='topButtonRow']/input[@value='Complete Item']
-    ${update_order}=    Set Variable    //a[text()='Order Finished']    #//a[text()='Work Order Update']
+    ${update_order}=    Set Variable    //a[text()='Work Order Update']    #//a[text()='Work Order Update']    #//a[text()='Order Finished']
     ${Orchestration Plan}=    Set Variable    //table/tbody/tr/td[@class='dataCol col02']/a[contains(text(),'Plan')]
     ${order}=    Set Variable    //div[@id='CF00N5800000CYwbi_ileinner']/a
     Wait Until Element Is Visible    //h2[text()='Orchestration Plan Detail']    120s
