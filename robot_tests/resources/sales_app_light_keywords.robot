@@ -90,7 +90,8 @@ Reset to Home
 
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
-    Click Clear All Notifications
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
+    Run Keyword If    ${present}    Close All Notifications
     Log    Going to '${target}'
     Wait Until Keyword Succeeds    8 mins    40s    Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
@@ -187,8 +188,9 @@ Verify That Opportunity Creation Succeeded
     Force click element    ${ACCOUNT_RELATED}
     ${status}=    Run Keyword And Return Status    Element Should Be Visible    //span[@title='Account Team Members']
     Run Keyword If    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
-    Sleep    10s
-    #Scroll Page To Location    0    1000
+    Sleep       15s
+    ScrollUntillFound           //span[text()='Opportunities']/../../span/../../../a
+    #Scroll element into view        xpath=//span[text()='Opportunities']/../../span/../../../a
     Run Keyword And Continue On Failure    Scroll Page To Element    //span[text()='Opportunities']/../../span/../../../a
     ${element_xpath}=    Replace String    //span[text()='Opportunities']/../../span/../../../a    \"    \\\"
     Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
@@ -203,7 +205,7 @@ Scroll Page To Location
 Scroll Page To Element
     [Arguments]    ${element}
     #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
-    : FOR    ${i}    IN RANGE    9999999
+    : FOR    ${i}    IN RANGE    99
     \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
     \    Execute JavaScript    window.scrollTo(0,100)
     \    Sleep    5s
@@ -223,7 +225,8 @@ Verify That Opportunity Is Saved And Data Is Correct
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
     ${oppo_date}=    Set Variable    //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
-    sleep    10s
+    #ScrollUntillFound        ${element}${oppo_name}
+    Run Keyword And Continue On Failure    Scroll Page To Element    ${element}${oppo_name}
     Wait Until Page Contains Element    ${element}${oppo_name}    60s
     Run keyword and ignore error    Click element    ${element}${oppo_name}
     Sleep    10s

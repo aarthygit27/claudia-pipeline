@@ -4,7 +4,7 @@ ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
-${LIGHTNING_TEST_ACCOUNT}    Abbott Oy
+${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
 ${CLASSIC_MENU}    //*[@id="userNav"]
@@ -32,7 +32,7 @@ ${OPPORTUNITY_PAGE}    //*[contains(@class,'slds-page-header')]
 ${RESULTS_TABLE}    //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SEARCH_INPUT}    //input[@name='search-input']
 ${PASSIVE_TEST_ACCOUNT}    Airmec Oy
-${GROUP_TEST_ACCOUNT}    Atria
+${GROUP_TEST_ACCOUNT}    Digita
 #CONTACTS
 ${CONTACTS_TAB}    //div[@class='bBottom']//a[@title='Contacts']
 ${CONTACTS_ICON}    //div[@class="slds-grid"]//nav[@role="navigation"]//span[contains(text(),'Contacts')]
