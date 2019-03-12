@@ -90,7 +90,7 @@ Reset to Home
 
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
-    Close All Notifications
+    Click Clear All Notifications
     Log    Going to '${target}'
     Wait Until Keyword Succeeds    8 mins    40s    Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
