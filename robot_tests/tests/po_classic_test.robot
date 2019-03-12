@@ -22,7 +22,8 @@ Test scenario 1:Telia Architect
     Search Products    Muut asiantuntijapalvelut
     Add Muut asiantuntijapalvelut
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
@@ -33,7 +34,8 @@ Test scenario 2: Telia Project management
     Search Products    Telia Projektijohtaminen varallaolo ja matkustus
     Add Telia Projektijohtaminen varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
@@ -44,7 +46,8 @@ Test scenario 3:Telia Consulting
     Search Products    Telia Konsultointi varallaolo ja matkustus
     Add Telia Konsultointi varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 4: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request
@@ -55,7 +58,8 @@ Test scenario 4: Key Customer Service Desk
     Search Products    Telia Projektijohtaminen varallaolo ja matkustus
     Add Telia Projektijohtaminen varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 5: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk one-time services
@@ -66,7 +70,8 @@ Test scenario 5: Key Customer Service Desk
     Search Products    Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus kertapalvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 6: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk standby and travelling Services
@@ -77,7 +82,8 @@ Test scenario 6: Key Customer Service Desk
     Search Products    Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work Continuous Service
@@ -88,7 +94,8 @@ Test scenario 7: Key Customer Service Desk Additional Work
     Search Products    Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
@@ -99,7 +106,8 @@ Test scenario 8: Key Customer Service Desk Additional Work
     Search Products    Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
@@ -110,7 +118,8 @@ Test scenario 9: Key Customer Service Desk
     Search Products    Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
@@ -121,7 +130,8 @@ Test scenario 10:Training
     Search Products    Koulutus jatkuva palvelu
     Add Koulutus jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
@@ -132,7 +142,8 @@ Test scenario 11:Training
     Search Products    Koulutus kertapalvelu
     Add Koulutus kertapalvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
@@ -143,7 +154,8 @@ Test scenario 12:Training
     Search Products    Koulutus varallaolo ja matkustus
     Add Koulutus varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -154,7 +166,8 @@ Test scenario 13:Continuity Management Service
     Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
     Add Jatkuvuudenhallinta jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -165,7 +178,8 @@ Test scenario 14:Continuity Management Service
     Add_child_product    Jatkuvuudenhallinta kertapalvelu
     Add Jatkuvuudenhallinta kertapalvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -176,7 +190,8 @@ Test scenario 15:Continuity Management Service
     Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
     Add Jatkuvuudenhallinta varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
@@ -187,7 +202,8 @@ Test scenario 16:Service Lead Service
     Search Products    Palvelujohtaminen jatkuva palvelu
     Add Palvelujohtaminen jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
@@ -198,7 +214,8 @@ Test scenario 17:Service Lead Service
     Search Products    Palvelujohtaminen kertapalvelu
     Add Palvelujohtaminen kertapalvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
@@ -209,7 +226,8 @@ Test scenario 18: Service Lead Service
     Search Products    Palvelujohtaminen varallaolo ja matkustus
     Add Palvelujohtaminen varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
@@ -220,7 +238,8 @@ Test scenario 19:Operation and Support Service
     Search Products    Hallinta ja Tuki jatkuva palvelu
     Add Hallinta ja Tuki jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
@@ -231,7 +250,8 @@ Test scenario 20:Operation and Support Service
     Search Products    Hallinta ja Tuki kertapalvelu
     Add Hallinta ja Tuki kertapalvelu
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
@@ -242,7 +262,8 @@ Test scenario 21:Operation and Support Service
     Search Products    Hallinta ja Tuki varallaolo ja matkustus
     Add Hallinta ja Tuki varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
@@ -269,22 +290,17 @@ Test scenario 22 Other:Operation and Support Services
     Search Products    Toimenpide XL
     Add Toimenpide XL
     create order    ${DEVPO_ACCOUNT}
-    Complete Order
-
-Wait time checking
-    [Tags]    PO1
-    Go To Salesforce and Login2    Digisales User devpo
-    Go To    ${CLASSIC_APP}
-    Get Time
-    Go to Account2    ${DEFAULT_TEST_ACCOUNT}
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
 
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    BQA-8513
+    [Tags]    BQA-8513    PO
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Domain Name Service
     Add Telia Domain Service Name
-    Place the order    Betonimestarit Oy
+    create order    ${DEVPO_ACCOUNT}
+    #Place the order    Betonimestarit Oy
     Capture Page Screenshot
 
 Test : Telia IP VPN NNI

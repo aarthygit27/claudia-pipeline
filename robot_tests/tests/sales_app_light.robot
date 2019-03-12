@@ -450,20 +450,3 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     Capture Page Screenshot
     ${multibella_GuiID}    Get Multibella id
     verifying Multibella order case    ${multibella_GuiID}    @{products}
-
-Iframe_test
-    [Tags]    Iframe_tests
-    Go To Salesforce and Login into Lightning
-    ${iframe}    Set Variable    //div[@class='panel-h panel resultsPanel']/iframe
-    Go To    https://jsfiddle.net/westonruter/6mSuK/
-    Log To Console    navigating to frame test link
-    wait until element is visible    ${iframe}    60s
-    Select Frame    ${iframe}
-    Capture Page Screenshot
-    unselect frame
-
-multibella check
-    @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
-    ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
-    ...    Telia Sopiva Enterprise - Lisäkirjaus    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
-    verifying Multibella order case    1708912    @{products}
