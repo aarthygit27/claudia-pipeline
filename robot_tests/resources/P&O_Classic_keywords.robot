@@ -74,6 +74,7 @@ Add Telia Arkkitehti jatkuva palvelu
     [Documentation]    This is to add Telia Arkkitehti jatkuva palvelu to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TtYXQA0']/div/div/div/div/div/button
     sleep    10s
+    Wait Until Element Is Visible    ${product_id}    60s
     click button    ${product_id}
     Click_Settings
     Update_settings    d    yes
@@ -101,7 +102,7 @@ Add Muut asiantuntijapalvelut
     ${Laskutettava_toimenpide}=    Set Variable    //textarea[@name='productconfig_field_0_0']
     ${Kustannus}=    set variable    //input[@name='productconfig_field_0_1']
     ${Kilometrikorvaus}=    set variable    //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
-    ${Kilometrit}=    set variable    //input[@name='productconfig_field_0_1']
+    ${Kilometrit}=    set variable    //input[contains(@class,'ng-valid')][@value='0']
     sleep    25s
     Wait Until Element Is Visible    ${product_id}    45s
     click button    ${product_id}
