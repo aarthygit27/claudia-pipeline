@@ -8,21 +8,21 @@ Resource          ../resources/multibella_keywords.robot
 *** Test Cases ***
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details.
-    [Tags]    BQA-8396    Lightning1
+    [Tags]    BQA-8396    Lightning
     Go To Salesforce and Login into Lightning
     Create New Master Contact
     Validate Master Contact Details
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395    Lightning1
+    [Tags]    BQA-8395    Lightning
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact Details
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
-    [Tags]    BQA-8394    Lightning1
+    [Tags]    BQA-8394    Lightning
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
@@ -41,7 +41,7 @@ Create opportunity from Account
 Negative - Validate Opportunity cannot be created for Passive account
     [Documentation]    Select the Passive account and validate that the Opportunity creation
     ...    throws an error
-    [Tags]    BQA-8457    Lightning1
+    [Tags]    BQA-8457    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer    PASSIVEACCOUNT
