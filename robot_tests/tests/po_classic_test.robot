@@ -295,7 +295,7 @@ Test scenario 22 Other:Operation and Support Services
 
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    BQA-8513
+    [Tags]    BQA-8513    PO
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Domain Name Service
     Add Telia Domain Service Name
