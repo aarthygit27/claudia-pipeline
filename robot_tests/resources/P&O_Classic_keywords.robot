@@ -798,7 +798,7 @@ Add_child_product
 
 Click_Settings
     sleep    10s
-    Wait Until Element Is Visible    ${SETTINGS}    45s
+    Wait Until Element Is Visible   ${SETTINGS}    45s
     Click Button    ${SETTINGS}
 
 Add Telia IP VPN NNI

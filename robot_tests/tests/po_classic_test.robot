@@ -27,7 +27,7 @@ Test scenario 1:Telia Architect
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
-    [Tags]    PO
+    [Tags]    PO    BQA-8790
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Projektijohtaminen jatkuva palvelu
     Add Telia Projektijohtaminen jatkuva palvelu
@@ -39,7 +39,7 @@ Test scenario 2: Telia Project management
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]    PO
+    [Tags]    PO    BQA-9189
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Konsultointi jatkuva palvelu
     Add Telia Konsultointi jatkuva palvelu
@@ -51,7 +51,7 @@ Test scenario 3:Telia Consulting
 
 Test scenario 4: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request
-    [Tags]    PO
+    [Tags]    PO    BQA-9190
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -63,7 +63,7 @@ Test scenario 4: Key Customer Service Desk
 
 Test scenario 5: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk one-time services
-    [Tags]    PO
+    [Tags]    PO    BQA-9191
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -75,7 +75,7 @@ Test scenario 5: Key Customer Service Desk
 
 Test scenario 6: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk standby and travelling Services
-    [Tags]    PO
+    [Tags]    PO    BQA-9192
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -87,7 +87,7 @@ Test scenario 6: Key Customer Service Desk
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work Continuous Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9193
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -99,7 +99,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9194
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -111,7 +111,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
-    [Tags]    PO
+    [Tags]    PO    BQA-9195
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -123,7 +123,7 @@ Test scenario 9: Key Customer Service Desk
 
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9196
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -135,7 +135,7 @@ Test scenario 10:Training
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9197
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -147,7 +147,7 @@ Test scenario 11:Training
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
-    [Tags]    PO
+    [Tags]    PO    BQA-9198
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -159,7 +159,7 @@ Test scenario 12:Training
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9199
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -171,7 +171,7 @@ Test scenario 13:Continuity Management Service
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9200
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -183,7 +183,7 @@ Test scenario 14:Continuity Management Service
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9201
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -195,7 +195,7 @@ Test scenario 15:Continuity Management Service
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9202
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -207,7 +207,7 @@ Test scenario 16:Service Lead Service
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9203
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -219,7 +219,7 @@ Test scenario 17:Service Lead Service
 
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9204
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -231,7 +231,7 @@ Test scenario 18: Service Lead Service
 
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9205
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -243,7 +243,7 @@ Test scenario 19:Operation and Support Service
 
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9206
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -255,7 +255,7 @@ Test scenario 20:Operation and Support Service
 
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
-    [Tags]    PO
+    [Tags]    PO    BQA-9207
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -267,7 +267,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO
+    [Tags]    PO    BQA-9208
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -304,7 +304,7 @@ Telia Domain Name Service - P&O create new order
     Capture Page Screenshot
 
 Test : Telia IP VPN NNI
-    [Tags]    IPVPN
+    [Tags]    IPVPN     BQA-9002
     General test setup    ${DEVPO_ACCOUNT}    B2O
     Search Products    Telia IP VPN NNI \
     Add Telia IP VPN NNI    ${TELIA_VPN_NNI}
@@ -315,7 +315,7 @@ Test : Telia IP VPN NNI
     #checking the orchestration plan    ${order_id}
 
 Test : Telia IP VPN ACCESS
-    [Tags]    IPVPN
+    [Tags]    IPVPN     BQA-9002
     General test setup    ${DEVPO_ACCOUNT}    B2O
     Search Products    Telia IP VPN Access
     Add Telia IP VPN ACCESS    ${TELIA_VPN_ACCESS}
