@@ -386,7 +386,7 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvG9QAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings  ${SETTINGS}
+    Click_Settings  (//button[@title='Settings'])[1]
     Update_settings    h    no
 
 Add Koulutus jatkuva palvelu
@@ -800,8 +800,8 @@ Click_Settings
 #    sleep    10s
 #   Wait Until Element Is Visible   ${SETTINGS}    45s
 #    Click Button    ${SETTINGS}
-    [Arguments]     ${SETTINGS}
-   @{locators}=     Get Webelements    xpath=(${SETTINGS})[1]
+    [Arguments]     ${element}
+   @{locators}=     Get Webelements    xpath=${element}
    ${original}=       Create List
    :FOR   ${locator}   in    @{locators}
    Click Element     xpath=${element}
