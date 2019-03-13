@@ -79,7 +79,7 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    20s
     Input Text    ${SEARCH_SALESFORCE}    ${item}
-    #Sleep    5s
+    Sleep    5s
     Press Enter On  ${SEARCH_SALESFORCE}
     Sleep    10s
     ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}//a[contains(@title, 'Search')]  20s
@@ -422,7 +422,10 @@ Validate AP Contact Details
                     ${mobile_number}=       Set Variable        //span[text()='Mobile']//following::span//span[text()='${AP_CONTACT_MOBILE}']
                     ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_CONTACT_EMAIL}']
     Wait Until Page Contains Element        //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
-    Click element                           //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Sleep       5s
+    Force click element                     //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    Sleep       15s
+    Force click element                     //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep       5s
     Wait Until Page Contains Element    ${element}${contact_name}       240s
     Wait Until Page Contains Element    ${element}${account_name}       240s

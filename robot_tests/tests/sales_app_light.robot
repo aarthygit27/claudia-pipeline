@@ -1,7 +1,8 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Resource          ../resources/sales_app_light_keywords.robot    #Test Teardown    Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
+Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 
@@ -111,6 +112,8 @@ Lightning: Create Task from Account
     [Tags]    BQA-8463    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Create New Contact for Account
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create a Task
     #Create opportunity from Account for HDCFlow
     #    [Tags]    BQA-HDCOppo    Lightning
@@ -122,12 +125,12 @@ Lightning: Create Task from Account
 
 Change Account owner for Group Account
     [Tags]    BQA-8523    Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     sleep    10s
-    Scroll Page To Location    0    1407.75
-    Wait Until Element Is Visible    //table[contains(@class,'forceRecordLayout')]//tbody//tr[1]//td[3]//span[1]//span[1]    30s
-    ${original}=    Get Text    //table[contains(@class,'forceRecordLayout')]//tbody//tr[1]//td[3]//span[1]//span[1]
+    #Scroll Page To Location    0    1407.75
+    Wait Until Element Is Visible    //div[@class='ownerName']//a       30s
+    ${original}=    Get Text    //div[@class='ownerName']//a
     Click Element    //div[@title='Change Owner']
     sleep    8s
     Element Should Be Enabled    //input[@title='Search People']
@@ -136,12 +139,12 @@ Change Account owner for Group Account
     Select from Autopopulate List    //input[@title='Search People']    ${original}
     Click Button    //button[@title='Submit']
     sleep    10s
-    ${new_owner}=    Get Text    //div[@class='ownerName']
+    ${new_owner}=    Get Text    //div[@class='ownerName']//a
     Should Be Equal As Strings    ${original}    ${new_owner}
 
 Remove Account owner
     [Tags]    BQA-8524    Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_USER}    ${PASSWORD-SALESADMIN}
+    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     sleep    10s
     ${ACCOUNT_OWNER}    Get Text    ${ownername}
