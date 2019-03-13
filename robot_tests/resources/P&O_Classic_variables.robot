@@ -12,7 +12,7 @@ ${MAIN_WINDOW}    ${EMPTY}
 ${NEXT_BUTTON}    //button/span[text()='Next']
 ${technical_contact}    John Doe
 ${ADD_CART}       //button[contains(text(),'Add to Cart')]
-${SETTINGS}       //button[@title='Settings']
+${SETTINGS}       (//button[@title='Settings'])[1]
 ${SPINNER_SMALL}    //div[contains(@class,'small button-spinner')]
 ${X_BUTTON}       //button[@class='slds-button slds-button--icon']
 ${DEVPO_ACCOUNT}    Betonimestarit Oy
