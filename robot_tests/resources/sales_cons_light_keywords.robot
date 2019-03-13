@@ -423,7 +423,7 @@ Validate AP Contact Details
                     ${email}=               Set Variable        //span[text()='Primary eMail']//following::a[text()='${AP_CONTACT_EMAIL}']
     Wait Until Page Contains Element        //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     Force click element                     //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Sleep       5s
+    Sleep       15s
     Wait Until Page Contains Element    ${element}${contact_name}       240s
     Wait Until Page Contains Element    ${element}${account_name}       240s
     Wait Until Page Contains Element    ${element}${mobile_number}      240s

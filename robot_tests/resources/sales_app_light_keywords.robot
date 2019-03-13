@@ -318,8 +318,8 @@ Create New Master Contact
 Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
-    Sleep    10s
-    Click Visible Element    //div[contains(@class,'primaryLabel') and @title='${value}']
+    Sleep    20s
+    click element     //div[@title='${value}']/../../../a
 
 Validate Master Contact Details
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
@@ -517,17 +517,17 @@ Enter Task Due Date
     [Return]    ${task_due_DATE}
 
 Enter and Select Contact
-    #Click Visible Element    xpath=${name_input_task}
+    Set Test Variable    ${name_input}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
     Force click element    ${name_input_task}
-    Input text    xpath=${name_input_task}    ${name_input}
-    sleep    10s
-    click element    //*[@title='${name_input}']/../../..
+    Input text    ${name_input_task}    ${name_input}
+    Wait Until Page Contains Element        //*[@title='${name_input}']/../..    60s
+    Force click element      //*[@title='${name_input}']/../..
     sleep    10s
 
 Save Task and click on Suucess Message
-    click element    ${save_task_button}
+    force click element    ${save_task_button}
     sleep    30s
-    click element    ${suucess_msg_task_anchor}
+    force click element    ${suucess_msg_task_anchor}
     sleep    40s
 
 Validate Created Task
@@ -544,7 +544,7 @@ Enter and Select Contact Meeting
     Force click element    ${contact_name_input}
     #click element    ${contact_name_input}
     input text    ${contact_name_input}     ${name_input}
-    sleep    5s
+    Wait Until Page Contains Element        //*[@title='${name_input}']/../..    60s
     click element    //*[@title='${name_input}']/../..
     sleep    5s
 
@@ -900,12 +900,14 @@ Change to original owner
     Click Button    //button[@title='Change Owner']
     sleep    8s
     Element Should Be Enabled    //input[@title='Search People']
-    Wait Until Page Contains Element    //input[@title='Search People']    240s
+    Wait Until Page Contains Element    //input[@title='Search People']
     Input Text    //input[@title='Search People']    ${ACCOUNT_OWNER}
+    #select option from dropdown with force click element    //input[@title='Search People']    ${ACCOUNT_OWNER}
     Select from Autopopulate List    //input[@title='Search People']    ${ACCOUNT_OWNER}
     Mouse Over    //button[@title='Change Owner']
     Click Element    //button[@title='Cancel']/following-sibling::button
     sleep    10s
+
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
