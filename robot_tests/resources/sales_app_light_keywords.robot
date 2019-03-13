@@ -286,7 +286,7 @@ Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
     Sleep    30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
-    Run Keyword If    ${isVisible}    force click element    xpath=//*[@title='Close this window']    Go to Contacts
+    Run Keyword If    ${isVisible}      Go to Contacts
     Wait Until Page Contains element    ${CONTACTS_ICON}    240s
 
 Create New Master Contact
@@ -541,12 +541,13 @@ Validate Created Task
 
 Enter and Select Contact Meeting
     Set Test Variable    ${name_input}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
+    Scroll Page To Element       ${save_button_create}
     Force click element    ${contact_name_input}
     #click element    ${contact_name_input}
     input text    ${contact_name_input}     ${name_input}
     Wait Until Page Contains Element        //*[@title='${name_input}']/../..    60s
     Sleep       15s
-    click element    //*[@title='${name_input}']/../..
+    click element    //div[@title='${name_input}']/../..
     sleep    5s
 
 Create a Meeting
