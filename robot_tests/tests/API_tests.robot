@@ -20,7 +20,7 @@ API_credit_scoring
 
 ULM_Add_User
     [Documentation]    Test create, update ULM endpoint.
-    [Tags]    APITests
+    [Tags]    APITests  wip
     Authenticate To API ULM
     Create New User to Existing Company ULM
     Update ULM Request
@@ -45,13 +45,13 @@ NGSF_Notification_Service_Order
 
 DDM_Notification_Service_Order
     [Documentation]    Test create NGSF endpoint.
-    [Tags]    APITests
+    [Tags]    APITests  wip
     Authenticate To API NGSF_DDM
     Notify Service DDM Order
 
 SAP_Create_Product_Order
    [Documentation]     Test create SAP endpoint.
-   [Tags]  APITests
+   [Tags]  APITests wip
     Authenticate To API SAP
     Create SAP Product Order
 
