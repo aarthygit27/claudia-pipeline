@@ -386,7 +386,7 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvG9QAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings  ${SETTINGS}
     Update_settings    h    no
 
 Add Koulutus jatkuva palvelu
@@ -797,9 +797,14 @@ Add_child_product
     sleep    10s
 
 Click_Settings
-    sleep    10s
-    Wait Until Element Is Visible   ${SETTINGS}    45s
-    Click Button    ${SETTINGS}
+#    sleep    10s
+#   Wait Until Element Is Visible   ${SETTINGS}    45s
+#    Click Button    ${SETTINGS}
+    [Arguments]     ${SETTINGS}
+   @{locators}=     Get Webelements    xpath=(${SETTINGS})[1]
+   ${original}=       Create List
+   :FOR   ${locator}   in    @{locators}
+   Click Element     xpath=${element}
 
 Add Telia IP VPN NNI
     [Arguments]    ${product}
