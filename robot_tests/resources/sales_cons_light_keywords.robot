@@ -79,7 +79,7 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    20s
     Input Text    ${SEARCH_SALESFORCE}    ${item}
-    #Sleep    5s
+    Sleep    5s
     Press Enter On  ${SEARCH_SALESFORCE}
     Sleep    10s
     ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}//a[contains(@title, 'Search')]  20s

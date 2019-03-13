@@ -545,7 +545,7 @@ Enter and Select Contact Meeting
     #click element    ${contact_name_input}
     input text    ${contact_name_input}     ${name_input}
     Wait Until Page Contains Element        //*[@title='${name_input}']/../..    60s
-    Sleep       5s
+    Sleep       15s
     click element    //*[@title='${name_input}']/../..
     sleep    5s
 
