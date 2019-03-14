@@ -527,8 +527,8 @@ Enter and Select Contact
 Save Task and click on Suucess Message
     force click element    ${save_task_button}
     sleep    30s
-    force click element    ${suucess_msg_task_anchor}
-    sleep    40s
+    #force click element    ${suucess_msg_task_anchor}
+    #sleep    40s
 
 Validate Created Task
     [Arguments]    ${unique_subject_task_form}
