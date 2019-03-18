@@ -351,11 +351,11 @@ General test setup
 
 Add Avainasiakaspalvelukeskus kertapalvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus kertapalvelu to cart and fill the required details
-    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyzbQAA']/div/div/div/div/div/button
+    ${product_id}=    Set Variable    //div[@data-product-id='${Avainasiakaspalvelukeskus}']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings    Avainasiakaspalvelukeskus kertapalvelu
-    Update_settings    h    no
+    #Click_Settings    Avainasiakaspalvelukeskus
+    #Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus varallaolo ja matkustus
     [Documentation]    This is to add Avainasiakaspalvelukeskus varallaolo ja matkustus to cart and fill the required details

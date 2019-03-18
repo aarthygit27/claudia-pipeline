@@ -12,7 +12,7 @@ ${MAIN_WINDOW}    ${EMPTY}
 ${NEXT_BUTTON}    //button/span[text()='Next']
 ${technical_contact}    John Doe
 ${ADD_CART}       //button[contains(text(),'Add to Cart')]
-${SETTINGS}     //button[@title='Settings']
+${SETTINGS}       //button[@title='Settings']
 ${SPINNER_SMALL}    //div[contains(@class,'small button-spinner')]
 ${X_BUTTON}       //button[@class='slds-button slds-button--icon']
 ${DEVPO_ACCOUNT}    Betonimestarit Oy
@@ -100,3 +100,4 @@ ${Avainasiakaspalvelukeskus_varallaolo_ja_matkustus}    01u6E000003TvFzQAK
 ${Avainasiakaspalvelukeskus_lisätyöt_jatkuva_palvelu}    01u6E000003TvGJQA0
 ${TELIA_VPN_NNI}    01u6E000004z9cgQAA
 ${TELIA_VPN_ACCESS}    01u6E000004z9dPQAQ
+${Avainasiakaspalvelukeskus}    01u6E000004kuWgQAI
