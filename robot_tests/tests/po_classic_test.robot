@@ -79,6 +79,7 @@ Test scenario 6: Key Customer Service Desk
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
+    sleep    10s
     Search Products    Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
