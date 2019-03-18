@@ -799,7 +799,10 @@ Add_child_product
 Click_Settings
     [Arguments]    ${product}
     ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='${product}']
+    sleep    15s
+    Capture Page Screenshot
     Wait Until Element Is Visible    ${added_product}    45s
+    Capture Page Screenshot
     Click Button    ${SETTINGS}
     #@{locators}=    Get Webelements    xpath=${element}
     #${original}=    Create List
