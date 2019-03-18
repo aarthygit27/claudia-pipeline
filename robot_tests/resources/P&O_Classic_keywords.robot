@@ -361,27 +361,39 @@ Add Avainasiakaspalvelukeskus kertapalvelu
 Add Avainasiakaspalvelukeskus varallaolo ja matkustus
     [Documentation]    This is to add Avainasiakaspalvelukeskus varallaolo ja matkustus to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFzQAK']/div/div/div/div/div/button
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus varallaolo ja matkustus']
     sleep    10s
     click button    ${product_id}
     sleep    15s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
+    Run Keyword If    ${status} == False    click button    ${product_id}
+    Wait Until Element Is Visible    ${added_product}    20s
     Click_Settings    Avainasiakaspalvelukeskus varallaolo ja matkustus
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGJQA0']/div/div/div/div/div/button
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu']
     sleep    10s
     click button    ${product_id}
     sleep    15s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
+    Run Keyword If    ${status} == False    click button    ${product_id}
+    Wait Until Element Is Visible    ${added_product}    20s
     Click_Settings    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus lisätyöt kertapalvelu to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyzqQAA']/div/div/div/div/div/button
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus lisätyöt kertapalvelu']
     sleep    10s
     click button    ${product_id}
     sleep    15s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
+    Run Keyword If    ${status} == False    click button    ${product_id}
+    Wait Until Element Is Visible    ${added_product}    20s
     Click_Settings    Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     Update_settings    h    no
 
