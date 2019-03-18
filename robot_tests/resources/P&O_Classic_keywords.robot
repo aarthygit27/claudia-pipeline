@@ -354,6 +354,7 @@ Add Avainasiakaspalvelukeskus kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='${Avainasiakaspalvelukeskus kertapalvelu}']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    sleep    15s
     Click_Settings    Avainasiakaspalvelukeskus kertapalvelu
     Update_settings    h    no
 
@@ -362,6 +363,7 @@ Add Avainasiakaspalvelukeskus varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFzQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    sleep    15s
     Click_Settings    Avainasiakaspalvelukeskus varallaolo ja matkustus
     Update_settings    h    no
 
@@ -370,6 +372,7 @@ Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGJQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    sleep    15s
     Click_Settings    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     Update_settings    h    no
 
@@ -378,6 +381,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyzqQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    sleep    15s
     Click_Settings    Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     Update_settings    h    no
 
@@ -386,6 +390,7 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvG9QAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
+    sleep    15s
     Click_Settings    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Update_settings    h    no
 
@@ -394,7 +399,7 @@ Add Koulutus jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGdQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings     Koulutus jatkuva palvelu
+    Click_Settings    Koulutus jatkuva palvelu
     Update_settings    h    no
 
 Add Koulutus kertapalvelu
