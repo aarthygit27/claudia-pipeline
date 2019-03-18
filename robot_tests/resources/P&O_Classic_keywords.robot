@@ -388,9 +388,13 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
 Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     [Documentation]    This is to add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvG9QAK']/div/div/div/div/div/button
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='${product}']
     sleep    10s
     click button    ${product_id}
     sleep    15s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
+    Run Keyword If    ${status} == False    click button    ${product_id}
+    Wait Until Element Is Visible    ${added_product}    20s
     Click_Settings    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Update_settings    h    no
 
@@ -802,11 +806,11 @@ Add_child_product
     sleep    10s
 
 Click_Settings
-    [Arguments]    ${product}
-    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='${product}']
+    [Arguments]    ${added_product}
+    #${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='${product}']
     sleep    15s
     Capture Page Screenshot
-    Wait Until Element Is Visible    ${added_product}    45s
+    #Wait Until Element Is Visible    ${added_product}    45s
     Capture Page Screenshot
     Click Button    ${SETTINGS}
     #@{locators}=    Get Webelements    xpath=${element}
