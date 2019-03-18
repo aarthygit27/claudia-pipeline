@@ -268,7 +268,7 @@ Update_settings
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
     Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
     Fill Laskutuksen lisätieto
-    click element    ${X_BUTTON}
+    #click element    ${X_BUTTON}
     sleep    15s
 
 Add Telia Konsultointi jatkuva palvelu
@@ -302,7 +302,7 @@ Update_settings2
     sleep    5s
     click element    ${Työtilaus vaadittu}
     Fill Laskutuksen lisätieto
-    click element    ${X_BUTTON}
+    #click element    ${X_BUTTON}
     sleep    15s
 
 Add Telia Projektijohtaminen jatkuva palvelu
