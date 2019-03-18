@@ -304,7 +304,7 @@ Telia Domain Name Service - P&O create new order
     Capture Page Screenshot
 
 Test : Telia IP VPN NNI
-    [Tags]    IPVPN     BQA-9002
+    [Tags]    IPVPN    BQA-9002
     General test setup    ${DEVPO_ACCOUNT}    B2O
     Search Products    Telia IP VPN NNI \
     Add Telia IP VPN NNI    ${TELIA_VPN_NNI}
@@ -315,7 +315,7 @@ Test : Telia IP VPN NNI
     #checking the orchestration plan    ${order_id}
 
 Test : Telia IP VPN ACCESS
-    [Tags]    IPVPN     BQA-9002
+    [Tags]    IPVPN    BQA-9002
     General test setup    ${DEVPO_ACCOUNT}    B2O
     Search Products    Telia IP VPN Access
     Add Telia IP VPN ACCESS    ${TELIA_VPN_ACCESS}

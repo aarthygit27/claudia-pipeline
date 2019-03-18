@@ -76,7 +76,7 @@ Add Telia Arkkitehti jatkuva palvelu
     sleep    10s
     Wait Until Element Is Visible    ${product_id}    60s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Telia Arkkitehti jatkuva palvelu
     Update_settings    d    yes
 
 Fill Laskutuksen lisätieto
@@ -276,7 +276,7 @@ Add Telia Konsultointi jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEAQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Telia Konsultointi jatkuva palvelu
     Update_settings    d    yes
 
 Add Telia Konsultointi varallaolo ja matkustus
@@ -284,7 +284,7 @@ Add Telia Konsultointi varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEKQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
     Update_settings    h    yes
     \    \    \    01u6E000003TvEKQA0
 
@@ -310,7 +310,7 @@ Add Telia Projektijohtaminen jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEUQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Telia Projektijohtaminen jatkuva palvelu
     Update_settings    d    yes
 
 Add Telia Projektijohtaminen varallaolo ja matkustus
@@ -318,7 +318,7 @@ Add Telia Projektijohtaminen varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEZQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
     Update_settings    h    yes
 
 Add Telia Palvelunhallintakeskus
@@ -334,7 +334,7 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFpQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Avainasiakaspalvelukeskus jatkuva palvelu
     Update_settings    d    yes
 
 General test setup
@@ -354,7 +354,7 @@ Add Avainasiakaspalvelukeskus kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyzbQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Avainasiakaspalvelukeskus kertapalvelu
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus varallaolo ja matkustus
@@ -362,7 +362,7 @@ Add Avainasiakaspalvelukeskus varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFzQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Avainasiakaspalvelukeskus varallaolo ja matkustus
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
@@ -370,7 +370,7 @@ Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGJQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
@@ -378,7 +378,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyzqQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     Update_settings    h    no
 
 Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
@@ -386,7 +386,7 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvG9QAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings  (//button[@title='Settings'])[1]
+    Click_Settings    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Update_settings    h    no
 
 Add Koulutus jatkuva palvelu
@@ -394,7 +394,7 @@ Add Koulutus jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGdQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings     Koulutus jatkuva palvelu
     Update_settings    h    no
 
 Add Koulutus kertapalvelu
@@ -402,7 +402,7 @@ Add Koulutus kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jz05QAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Koulutus kertapalvelu
     Update_settings    h    no
 
 Add Koulutus varallaolo ja matkustus
@@ -410,7 +410,7 @@ Add Koulutus varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGnQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Koulutus varallaolo ja matkustus
     Update_settings    h    no
 
 Add Jatkuvuudenhallinta jatkuva palvelu
@@ -440,7 +440,7 @@ Add Palvelujohtaminen jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwNsQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Palvelujohtaminen jatkuva palvelu
     Update_settings    d    no
 
 Add Palvelujohtaminen kertapalvelu
@@ -449,7 +449,7 @@ Add Palvelujohtaminen kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004n5tYQAQ']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Palvelujohtaminen kertapalvelu
     Update_settings    h    no
 
 Add Palvelujohtaminen varallaolo ja matkustus
@@ -458,7 +458,7 @@ Add Palvelujohtaminen varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwO2QAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Palvelujohtaminen varallaolo ja matkustus
     Update_settings    h    no
 
 Add Hallinta ja Tuki jatkuva palvelu
@@ -467,7 +467,7 @@ Add Hallinta ja Tuki jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvHjQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Hallinta ja Tuki jatkuva palvelu
     Update_settings    d    no
 
 Add Hallinta ja Tuki kertapalvelu
@@ -476,7 +476,7 @@ Add Hallinta ja Tuki kertapalvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jz0FQAQ']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Hallinta ja Tuki kertapalvelu
     Update_settings    h    no
 
 Add Hallinta ja Tuki varallaolo ja matkustus
@@ -485,7 +485,7 @@ Add Hallinta ja Tuki varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvHtQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Hallinta ja Tuki varallaolo ja matkustus
     Update_settings    h    no
 
 Complete Order
@@ -528,7 +528,7 @@ Add Events jatkuva palvelu
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwJkQAK']/div/div/div/div/div/button
     sleep    10s
     click button    ${ADD_CART}
-    Click_Settings
+    Click_Settings    Events jatkuva palvelu
     Update_settings    ${Hinnoitteluperuste}    no
 
 Add Toimenpide XS
@@ -537,7 +537,7 @@ Add Toimenpide XS
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jysGQAQ']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Toimenpide XS
     Update_settings    h    no
 
 Add Toimenpide S
@@ -546,7 +546,7 @@ Add Toimenpide S
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jytEQAQ']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Toimenpide S
     Update_settings    h    no
 
 Add Toimenpide M
@@ -555,7 +555,7 @@ Add Toimenpide M
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jytdQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Toimenpide M
     Update_settings    h    no
 
 Add Toimenpide L
@@ -564,7 +564,7 @@ Add Toimenpide L
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyu2QAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Toimenpide L
     Update_settings    h    no
 
 Add Toimenpide XL
@@ -573,7 +573,7 @@ Add Toimenpide XL
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyugQAA']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings
+    Click_Settings    Toimenpide XL
     Update_settings    h    no
 
 Account seletion
@@ -797,14 +797,14 @@ Add_child_product
     sleep    10s
 
 Click_Settings
-#    sleep    10s
-#   Wait Until Element Is Visible   ${SETTINGS}    45s
-#    Click Button    ${SETTINGS}
-    [Arguments]     ${element}
-   @{locators}=     Get Webelements    xpath=${element}
-   ${original}=       Create List
-   :FOR   ${locator}   in    @{locators}
-   Click Element     xpath=${element}
+    [Arguments]    ${product}
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[contains(text(),'${product}')]
+    Wait Until Element Is Visible    ${added_product}    45s
+    Click Button    ${SETTINGS}
+    #@{locators}=    Get Webelements    xpath=${element}
+    #${original}=    Create List
+    #: FOR    ${locator}    IN    @{locators}
+    #Click Element    xpath=${element}
 
 Add Telia IP VPN NNI
     [Arguments]    ${product}
@@ -884,5 +884,5 @@ View Open Quote
     ${quote_text}    get text    ${quote}
     ${open}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    Open Quote
     ${view}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    View Quote
-    Run Keyword If    ${open} == True    click element     ${open_quote}
-    Run Keyword If    ${view} == True    click element     ${view_quote}
+    Run Keyword If    ${open} == True    click element    ${open_quote}
+    Run Keyword If    ${view} == True    click element    ${view_quote}
