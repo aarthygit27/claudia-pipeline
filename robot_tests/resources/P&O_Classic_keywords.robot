@@ -388,7 +388,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
 Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     [Documentation]    This is to add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvG9QAK']/div/div/div/div/div/button
-    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='${product}']
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus']
     sleep    10s
     click button    ${product_id}
     sleep    15s
