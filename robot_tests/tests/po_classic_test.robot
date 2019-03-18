@@ -75,7 +75,7 @@ Test scenario 5: Key Customer Service Desk
 
 Test scenario 6: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk standby and travelling Services
-    [Tags]    PO    BQA-9192
+    [Tags]    PO    BQA-9192    PO1
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -88,7 +88,7 @@ Test scenario 6: Key Customer Service Desk
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work Continuous Service
-    [Tags]    PO    BQA-9193
+    [Tags]    PO    BQA-9193    PO1
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -100,7 +100,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]    PO    BQA-9194
+    [Tags]    PO    BQA-9194    PO1
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
@@ -112,7 +112,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
-    [Tags]    PO    BQA-9195
+    [Tags]    PO    BQA-9195    PO1
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
