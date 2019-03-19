@@ -318,6 +318,7 @@ Add Telia Projektijohtaminen varallaolo ja matkustus
     sleep    10s
     click button    ${product_id}
     Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
+    Capture Page Screenshot
     Update_settings    h    yes
 
 Add Telia Palvelunhallintakeskus
