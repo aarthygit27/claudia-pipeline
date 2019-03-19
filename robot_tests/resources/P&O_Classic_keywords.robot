@@ -320,11 +320,10 @@ Add Telia Projektijohtaminen varallaolo ja matkustus
     Wait Until Element Is Visible    ${product_id}    45s
     Capture Page Screenshot
     click button    ${product_id}
-    Capture Page Screenshot
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
     Run Keyword If    ${status} == False    click button    ${product_id}
     Wait Until Element Is Visible    ${added_product}    20s
-    Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
+    Click_Settings    Avainasiakaspalvelukeskus jatkuva palvelu
     Capture Page Screenshot
     Update_settings    h    yes
 
@@ -339,10 +338,14 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus jatkuva palvelu
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFpQAK']/div/div/div/div/div/button
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus jatkuva palvelu']
     sleep    10s
     click button    ${product_id}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
+    Run Keyword If    ${status} == False    click button    ${product_id}
+    Wait Until Element Is Visible    ${added_product}    20s
     Click_Settings    Avainasiakaspalvelukeskus jatkuva palvelu
-    Update_settings    d    yes
+    Update_settings    d    no
 
 General test setup
     [Arguments]    ${target_account}    ${pricebook}
@@ -359,9 +362,13 @@ General test setup
 Add Avainasiakaspalvelukeskus kertapalvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus kertapalvelu to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='${Avainasiakaspalvelukeskus kertapalvelu}']/div/div/div/div/div/button
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus kertapalvelu']
     sleep    10s
     click button    ${product_id}
     sleep    15s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
+    Run Keyword If    ${status} == False    click button    ${product_id}
+    Wait Until Element Is Visible    ${added_product}    20s
     Click_Settings    Avainasiakaspalvelukeskus kertapalvelu
     Update_settings    h    no
 
@@ -917,3 +924,10 @@ View Open Quote
     ${view}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    View Quote
     Run Keyword If    ${open} == True    click element    ${open_quote}
     Run Keyword If    ${view} == True    click element    ${view_quote}
+
+Search and add Avainasiakaspalvelukeskus
+    Search Products    Avainasiakaspalvelukeskus
+    ${product_id}=    Set Variable    //div[@data-product-id='${Avainasiakaspalvelukeskus}']/div/div/div/div/div/button
+    sleep    10s
+    click button    ${product_id}
+    sleep    15s

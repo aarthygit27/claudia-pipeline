@@ -53,10 +53,11 @@ Test scenario 4: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request
     [Tags]    PO    BQA-9190
     General test setup    ${DEVPO_ACCOUNT}    b2b
-    #Search Products    Telia Palvelunhallintakeskus
-    #Add Telia Palvelunhallintakeskus
-    Search Products    Telia Projektijohtaminen varallaolo ja matkustus
-    Add Telia Projektijohtaminen varallaolo ja matkustus
+    Search Products    Telia Palvelunhallintakeskus
+    Add Telia Palvelunhallintakeskus
+    Search and add Avainasiakaspalvelukeskus
+    Search Products    Avainasiakaspalvelukeskus jatkuva palvelu
+    Add Avainasiakaspalvelukeskus jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
@@ -67,7 +68,8 @@ Test scenario 5: Key Customer Service Desk
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
-    Search Products    Avainasiakaspalvelukeskus
+    Search and add Avainasiakaspalvelukeskus
+    Search Products    Avainasiakaspalvelukeskus kertapalvelu
     Add Avainasiakaspalvelukeskus kertapalvelu
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
@@ -80,7 +82,8 @@ Test scenario 6: Key Customer Service Desk
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
     sleep    10s
-    Search Products    Avainasiakaspalvelukeskus
+    Search and add Avainasiakaspalvelukeskus
+    Search Products    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
@@ -92,7 +95,8 @@ Test scenario 7: Key Customer Service Desk Additional Work
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
-    Search Products    Avainasiakaspalvelukeskus
+    Search and add Avainasiakaspalvelukeskus
+    Search Products    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
@@ -104,7 +108,8 @@ Test scenario 8: Key Customer Service Desk Additional Work
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
-    Search Products    Avainasiakaspalvelukeskus
+    Search and add Avainasiakaspalvelukeskus
+    Search Products    Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
@@ -116,7 +121,8 @@ Test scenario 9: Key Customer Service Desk
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus
-    Search Products    Avainasiakaspalvelukeskus
+    Search and add Avainasiakaspalvelukeskus
+    Search Products    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
