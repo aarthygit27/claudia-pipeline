@@ -317,6 +317,7 @@ Add Telia Projektijohtaminen varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEZQA0']/div/div/div/div/div/button
     ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Telia Projektijohtaminen varallaolo ja matkustus']
     sleep    10s
+    Wait Until Element Is Visible    ${product_id}    45s
     click button    ${product_id}
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
     Run Keyword If    ${status} == False    click button    ${product_id}
