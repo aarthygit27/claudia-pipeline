@@ -900,6 +900,7 @@ switching to classic app
     sleep    5s
     Wait Until Element Is Visible    ${setting_lighting}    60s
     Click Element    ${setting_lighting}
+    sleep    10s
     Wait Until Element Is Visible    ${switch_classic}    30s
     Click Element    ${switch_classic}
     Wait Until Element Is Visible    ${search_button}    90s
