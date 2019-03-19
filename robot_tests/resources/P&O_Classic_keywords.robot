@@ -320,6 +320,7 @@ Add Telia Projektijohtaminen varallaolo ja matkustus
     Wait Until Element Is Visible    ${product_id}    45s
     Capture Page Screenshot
     click button    ${product_id}
+    Capture Page Screenshot
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
     Run Keyword If    ${status} == False    click button    ${product_id}
     Wait Until Element Is Visible    ${added_product}    20s
