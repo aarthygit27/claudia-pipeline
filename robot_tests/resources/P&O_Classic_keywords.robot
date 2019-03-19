@@ -315,8 +315,12 @@ Add Telia Projektijohtaminen jatkuva palvelu
 Add Telia Projektijohtaminen varallaolo ja matkustus
     [Documentation]    This is to add Telia Projektijohtaminen varallaolo ja matkustus to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEZQA0']/div/div/div/div/div/button
+    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Telia Projektijohtaminen varallaolo ja matkustus']
     sleep    10s
     click button    ${product_id}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
+    Run Keyword If    ${status} == False    click button    ${product_id}
+    Wait Until Element Is Visible    ${added_product}    20s
     Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
     Capture Page Screenshot
     Update_settings    h    yes
