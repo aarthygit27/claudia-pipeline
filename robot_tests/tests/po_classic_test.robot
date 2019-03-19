@@ -53,8 +53,8 @@ Test scenario 4: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request
     [Tags]    PO    BQA-9190
     General test setup    ${DEVPO_ACCOUNT}    b2b
-    Search Products    Telia Palvelunhallintakeskus
-    Add Telia Palvelunhallintakeskus
+    #Search Products    Telia Palvelunhallintakeskus
+    #Add Telia Palvelunhallintakeskus
     Search Products    Telia Projektijohtaminen varallaolo ja matkustus
     Add Telia Projektijohtaminen varallaolo ja matkustus
     create order    ${DEVPO_ACCOUNT}
