@@ -286,7 +286,6 @@ Add Telia Konsultointi varallaolo ja matkustus
     click button    ${product_id}
     Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
     Update_settings    h    yes
-    \    \    \    01u6E000003TvEKQA0
 
 Update_settings2
     ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_1']
