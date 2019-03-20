@@ -49,7 +49,7 @@ Go To Salesforce and Login into Lightning User
     Reset to Home
 
 Login to Salesforce as DigiSales Admin User
-    Login To Salesforce Lightning    ${SALES_ADMIN_APP_USER}   ${PASSWORD-SALESADMIN}
+    Login To Salesforce Lightning    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
 
 Login to Salesforce as DigiSales Lightning User
     [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${Password_merge}
@@ -188,9 +188,9 @@ Verify That Opportunity Creation Succeeded
     Force click element    ${ACCOUNT_RELATED}
     ${status}=    Run Keyword And Return Status    Element Should Be Visible    //span[@title='Account Team Members']
     Run Keyword If    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
-    Sleep       15s
-    ScrollUntillFound           //span[text()='Opportunities']/../../span/../../../a
-    #Scroll element into view        xpath=//span[text()='Opportunities']/../../span/../../../a
+    Sleep    15s
+    ScrollUntillFound    //span[text()='Opportunities']/../../span/../../../a
+    #Scroll element into view    xpath=//span[text()='Opportunities']/../../span/../../../a
     Run Keyword And Continue On Failure    Scroll Page To Element    //span[text()='Opportunities']/../../span/../../../a
     ${element_xpath}=    Replace String    //span[text()='Opportunities']/../../span/../../../a    \"    \\\"
     Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
@@ -225,7 +225,7 @@ Verify That Opportunity Is Saved And Data Is Correct
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
     ${oppo_date}=    Set Variable    //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
-    #ScrollUntillFound        ${element}${oppo_name}
+    #ScrollUntillFound    ${element}${oppo_name}
     Run Keyword And Continue On Failure    Scroll Page To Element    ${element}${oppo_name}
     Wait Until Page Contains Element    ${element}${oppo_name}    60s
     Run keyword and ignore error    Click element    ${element}${oppo_name}
@@ -286,7 +286,7 @@ Go to Contacts
     Click Visible Element    ${CONTACTS_TAB}
     Sleep    30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
-    Run Keyword If    ${isVisible}      Go to Contacts
+    Run Keyword If    ${isVisible}    Go to Contacts
     Wait Until Page Contains element    ${CONTACTS_ICON}    240s
 
 Create New Master Contact
@@ -294,7 +294,7 @@ Create New Master Contact
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${mobile_num}=    Run Keyword    Create Unique Mobile Number
     ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
-    Run Keyword If    ${present}        Close All Notifications
+    Run Keyword If    ${present}    Close All Notifications
     wait until keyword succeeds    2mins    5s    Go to Contacts
     Set Test Variable    ${MASTER_FIRST_NAME}    Master ${first_name}
     Set Test Variable    ${MASTER_LAST_NAME}    Test ${first_name}
@@ -319,7 +319,7 @@ Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
     Sleep    20s
-    click element     //div[@title='${value}']/../../../a
+    click element    //div[@title='${value}']/../../../a
 
 Validate Master Contact Details
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
@@ -520,8 +520,8 @@ Enter and Select Contact
     Set Test Variable    ${name_input}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
     Force click element    ${name_input_task}
     Input text    ${name_input_task}    ${name_input}
-    Wait Until Page Contains Element        //*[@title='${name_input}']/../..    60s
-    Force click element      //*[@title='${name_input}']/../..
+    Wait Until Page Contains Element    //*[@title='${name_input}']/../..    60s
+    Force click element    //*[@title='${name_input}']/../..
     sleep    10s
 
 Save Task and click on Suucess Message
@@ -541,12 +541,12 @@ Validate Created Task
 
 Enter and Select Contact Meeting
     Set Test Variable    ${name_input}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
-    Scroll Page To Element       ${save_button_create}
+    Scroll Page To Element    ${save_button_create}
     Force click element    ${contact_name_input}
     #click element    ${contact_name_input}
-    input text    ${contact_name_input}     ${name_input}
-    Wait Until Page Contains Element        //*[@title='${name_input}']/../..    60s
-    Sleep       15s
+    input text    ${contact_name_input}    ${name_input}
+    Wait Until Page Contains Element    //*[@title='${name_input}']/../..    60s
+    Sleep    15s
     click element    //div[@title='${name_input}']/../..
     sleep    5s
 
@@ -910,7 +910,6 @@ Change to original owner
     Click Element    //button[@title='Cancel']/following-sibling::button
     sleep    10s
 
-
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
     Click Element    ${CHANGE_OWNER}
@@ -1034,6 +1033,8 @@ CreateAOppoFromAccount_HDC
     ${close_date}    get date from future    10
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[2]    ${close_date}
     sleep    10s
+    click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
+    Capture Page Screenshot
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    Testing ${b}
     wait until page contains element    //*[@title='Testing ${b}']/../../..    10s
     click element    //*[@title='Testing ${b}']/../../..
