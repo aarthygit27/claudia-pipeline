@@ -832,7 +832,7 @@ Add_child_product
     sleep    10s
 
 Click_Settings
-    [Arguments]    ${added_product}
+    [Arguments]    ${product}
     ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='${product}']
     sleep    15s
     Capture Page Screenshot
