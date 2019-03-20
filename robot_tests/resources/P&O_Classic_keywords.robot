@@ -337,7 +337,7 @@ Add Telia Palvelunhallintakeskus
 Add Avainasiakaspalvelukeskus jatkuva palvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus jatkuva palvelu
     ...    to cart and fill the required details
-    ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvGJQA0']/div/div/div/div/div/button
+    ${product_id}=    Set Variable    //div[@data-product-id='${Avainasiakaspalvelukeskus jatkuva palvelu}']/div/div/div/div/div/button
     ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus jatkuva palvelu']
     sleep    10s
     click button    ${product_id}

@@ -58,6 +58,7 @@ Test scenario 4: Key Customer Service Desk
     Search and add Avainasiakaspalvelukeskus
     Search Products    Avainasiakaspalvelukeskus jatkuva palvelu
     Add Avainasiakaspalvelukeskus jatkuva palvelu
+    Capture Page Screenshot
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}

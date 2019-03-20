@@ -101,3 +101,4 @@ ${Avainasiakaspalvelukeskus_lisätyöt_jatkuva_palvelu}    01u6E000003TvGJQA0
 ${TELIA_VPN_NNI}    01u6E000004z9cgQAA
 ${TELIA_VPN_ACCESS}    01u6E000004z9dPQAQ
 ${Avainasiakaspalvelukeskus}    01u6E000004kuWgQAI
+${Avainasiakaspalvelukeskus jatkuva palvelu}    01u6E000003TvFpQAK
