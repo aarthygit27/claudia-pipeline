@@ -95,7 +95,7 @@ ${Telia_Projektijohtaminen_varallaolo_ja_matkustus}    01u6E000003TvEZQA0
 ${Telia_Konsultointi_jatkuva_palvelu}    01u6E000003TvEAQA0
 ${Telia_Konsultointi_varallaolo_ja_matkustus}    01u6E000003TvEKQA0
 ${Telia_Palvelunhallintakeskus}    01u6E000003TvFfQAK
-${Avainasiakaspalvelukeskus kertapalvelu}    01u6E000004jyzbQAA
+${Avainasiakaspalvelukeskus kertapalvelu}    01u6E000004jyzqQAA
 ${Avainasiakaspalvelukeskus_varallaolo_ja_matkustus}    01u6E000003TvFzQAK
 ${Avainasiakaspalvelukeskus_lisätyöt_jatkuva_palvelu}    01u6E000003TvGJQA0
 ${TELIA_VPN_NNI}    01u6E000004z9cgQAA
