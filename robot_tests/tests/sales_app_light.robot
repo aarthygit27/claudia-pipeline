@@ -129,7 +129,7 @@ Change Account owner for Group Account
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     sleep    10s
     #Scroll Page To Location    0    1407.75
-    Wait Until Element Is Visible    //div[@class='ownerName']//a       30s
+    Wait Until Element Is Visible    //div[@class='ownerName']//a    30s
     ${original}=    Get Text    //div[@class='ownerName']//a
     Click Element    //div[@title='Change Owner']
     sleep    8s
@@ -353,7 +353,7 @@ createAOppoViaSVE
     validateCreatedOppoForFYR    ${fyr}
 
 Closing Opportunity as Won with FYR below 3 KEUR
-    [Tags]    BQA-8794  new
+    [Tags]    BQA-8794    new
     Closing Opportunity as Won with FYR    8    No
     #${FYR}=    set variable    //span[@title='FYR Total']/../div
     #Go To Salesforce and Login into Lightning
@@ -375,10 +375,11 @@ Closing Opportunity as Won with FYR below 3 KEUR
     #Log to console    The FYR value is ${FYR_value}
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
-    [Tags]    BQA-8795      new
+    [Tags]    BQA-8795    new
     ${Edit_continuation}=    Set Variable    //button[@title='Edit Create Continuation Sales Opportunity?']
     Closing Opportunity as Won with FYR    200    Yes
     sleep    10s
+    Execute Javascript    window.scrollTo(0,125)
     Click Element    ${Edit_continuation}
     Execute Javascript    window.scrollTo(0,125)
     sleep    3s
@@ -388,11 +389,11 @@ Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     Capture Page Screenshot
 
 Closing Opportunity as Won with FYR greater than 100KEUR
-    [Tags]    BQA-8796      new
+    [Tags]    BQA-8796    new
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121      new
+    [Tags]    BQA-9121    new
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
@@ -423,7 +424,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9122      new
+    [Tags]    BQA-9122    new
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
