@@ -75,7 +75,7 @@ Open Browser And Go To Login Page
     Run Keyword If    '${BEHIND_PROXY}'=='True'    Open Browser And Go To Login Page (Proxy)    ${page}
     ...    ELSE    Open Browser    ${page}    ${BROWSER}    # Run Keyword If    '${BEHIND_PROXY}'=='True'
     ...    # Set Window Size    ${1920}    ${1080}    # ...    # ELSE    Maximize Browser Window
-    Set Window Size    1920    1080
+    Set Window Size    1800    1080
     #Maximize Browser Window
 
 Open Browser And Go To Login Page (Proxy)
