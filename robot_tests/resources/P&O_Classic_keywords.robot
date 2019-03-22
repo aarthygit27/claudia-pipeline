@@ -284,7 +284,7 @@ Add Telia Konsultointi varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvEKQA0']/div/div/div/div/div/button
     sleep    10s
     click button    ${product_id}
-    Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
+    Click_Settings    Telia Konsultointi varallaolo ja matkustus
     Update_settings    h    yes
 
 Update_settings2
@@ -323,7 +323,7 @@ Add Telia Projektijohtaminen varallaolo ja matkustus
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
     Run Keyword If    ${status} == False    click button    ${product_id}
     Wait Until Element Is Visible    ${added_product}    20s
-    Click_Settings    Avainasiakaspalvelukeskus jatkuva palvelu
+    Click_Settings    Telia Projektijohtaminen varallaolo ja matkustus
     Capture Page Screenshot
     Update_settings    h    yes
 
