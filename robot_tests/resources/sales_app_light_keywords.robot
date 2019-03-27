@@ -1500,7 +1500,7 @@ search products
     log to console    AddingProductToCartAndClickNextButton
     sleep    15s
     Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
-    select frame    //div[contains(@class,'slds')]/iframe
+    Select Frame    //div[contains(@class,'slds')]/iframe
     wait until page contains element    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    60s
     sleep    10s
     input text    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    ${product}
@@ -1644,7 +1644,6 @@ Closing Opportunity as Won with FYR
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
     Go To Entity    ${oppo_name}
     ClickingOnCPQ    ${oppo_name}
-    sleep    15s
     searching and adding Telia Viestintäpalvelu VIP (24 kk)
     updating settings Telia Viestintäpalvelu VIP (24 kk)
     #search products    Telia Taloushallinto XXL-paketti
