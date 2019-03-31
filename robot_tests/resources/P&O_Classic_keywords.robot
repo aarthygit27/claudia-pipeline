@@ -57,9 +57,9 @@ Search Opportunity and click CPQ
     ${opportunity_search}=    Set Variable    //div[@id='Opportunity_body']/table/tbody//tr//th/a[text()='${opportunity_name}']
     ${cpq}=    Set Variable    //div[@id='customButtonMuttonButton']/span[text()='CPQ']
     sleep    10s
-    Search Salesforce    ${opportunity_name}
-    Wait Until Element Is Visible    ${opportunity_search}    30s
-    Click Element    ${opportunity_search}
+    #Search Salesforce    ${opportunity_name}
+    #Wait Until Element Is Visible    ${opportunity_search}    30s
+    #Click Element    ${opportunity_search}
     Wait Until Element Is Visible    ${cpq}    30s
     Click Element    ${cpq}
 
@@ -354,12 +354,12 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
 
 General test setup
     [Arguments]    ${target_account}    ${pricebook}
-    Log To Console    General test setup
+    44    General test setup
     Go To Salesforce and Login2    Sales admin User devpo
     switching to classic app
     #Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
-    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
+    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}    ]
     #${new_opportunity_name}=    Set Variable    Test Robot Order_090420191743
     sleep    10s
     Log    the opportunity id is ${new_opportunity_name}
@@ -989,7 +989,7 @@ Add Telia Sign
     click button    ${product_id}
     Click_Settings    Telia Sign
     Wait Until Element Is Visible    ${Paketti}    60s
-    :FOR    ${i}    IN RANGE    9999
+    : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > 3
     \    ${package_name}    set variable    @{package}[${i}]
     \    ${package_cost}    set variable    @{cost}[${i}]
