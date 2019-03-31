@@ -956,8 +956,11 @@ Laskutuksen lisätieto_2
     ${Laskutuksen lisätieto_3}    Set Variable    //input[@name='productconfig_field_0_2']
     ${Laskutuksen lisätieto_4}    Set Variable    //input[@name='productconfig_field_0_3']
     ${Laskutuksen lisätieto_5}    Set Variable    //input[@name='productconfig_field_0_4']
+    ${heading}    Set Variable    //h2[contains(text(),'Updated Telia')]
     Wait Until Element Is Visible    ${Laskutuksen lisätieto_1}    60s
     input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
+    ${update}    Run Keyword And Return Status    Wait Until Element Is Visible    ${heading}    60s
+    Run Keyword If    ${update} == False    input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
     sleep    3s
     input text    ${Laskutuksen lisätieto_2}    test order by robot framework.L2
     sleep    3s
