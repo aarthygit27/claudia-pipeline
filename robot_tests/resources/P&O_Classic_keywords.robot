@@ -354,7 +354,7 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
 
 General test setup
     [Arguments]    ${target_account}    ${pricebook}
-    44    General test setup
+    Log To Console    General test setup
     Go To Salesforce and Login2    Sales admin User devpo
     switching to classic app
     #Go To    ${CLASSIC_APP}
