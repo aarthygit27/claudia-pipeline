@@ -975,7 +975,7 @@ CreateAContactFromAccount_HDC
     log to console    this is to create a account from contact for HDC flow
     ${a}    create unique name    Contact_
     force click element    //li/a/div[text()='New Contact']
-    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    60s
     #click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
     #sleep    3s
     #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
@@ -1023,7 +1023,7 @@ reEnterContactData
 CreateAOppoFromAccount_HDC
     [Arguments]    ${b}=${contact_name}
     log to console    this is to create a Oppo from contact for HDC flow.${b}.contact
-    ${oppo_name}    create unique name    Oppo_
+    ${oppo_name}    create unique name    Test Robot Order_
     wait until page contains element    //li/a/div[text()='New Opportunity']    60s
     force click element    //li/a/div[text()='New Opportunity']
     sleep    30s
@@ -1968,7 +1968,10 @@ Searching and adding multiple products
     \    Adding Products    ${product_id}
     Wait Until Element Is Enabled    ${iframe}    60s
     select frame    ${iframe}
+    Scroll Page To Location    0    100
     Click Element    ${next_button}
+    #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
+    #Run Keyword If    ${status} == True    click element     ${next_button}
     Unselect Frame
 
 Preview order summary and verify order

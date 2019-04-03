@@ -454,3 +454,23 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     Capture Page Screenshot
     ${multibella_GuiID}    Get Multibella id
     verifying Multibella order case    ${multibella_GuiID}    @{products}
+
+HDC - Complete Sales Process: UAT/Sanity Regression
+    [Tags]    BQA-8560
+    ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
+    Go To Salesforce and Login into Lightning
+    #Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    #${billing_acc_name}    run keyword    CreateABillingAccount
+    #log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    sleep    10s
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
+    sleep    5s
+    wait until element is visible    ${win_prob_edit}    20s
+    click element    ${win_prob_edit}
+    Adding partner and competitor
+    ChangeThePriceBookToHDC    HDC Pricebook B2B
