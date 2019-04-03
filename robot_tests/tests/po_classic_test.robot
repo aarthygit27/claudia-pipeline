@@ -331,3 +331,7 @@ Test : Telia IP VPN ACCESS
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
+
+window sizing
+    [Tags]    size
+    Open Browser And Go To Login Page
