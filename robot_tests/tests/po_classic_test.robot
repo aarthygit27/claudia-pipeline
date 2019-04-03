@@ -334,4 +334,10 @@ Test : Telia IP VPN ACCESS
 
 window sizing
     [Tags]    size
-    Open Browser And Go To Login Page
+    Go To Salesforce and Login2    Sales admin User devpo
+    sleep    10s
+    Capture Page Screenshot
+    Set Window Size    1500    720
+    Capture Page Screenshot
+    Maximize Browser Window
+    Capture Page Screenshot
