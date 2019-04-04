@@ -337,7 +337,7 @@ window sizing
     Go To Salesforce and Login2    Sales admin User devpo
     sleep    10s
     Capture Page Screenshot
-    Set Window Size    1920    720
-    Capture Page Screenshot
+    #Set Window Size    1920    720
+    #Capture Page Screenshot
     Execute Javascript    document.body.style.zoom="80%"
     Capture Page Screenshot
