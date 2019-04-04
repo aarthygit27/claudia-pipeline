@@ -341,5 +341,5 @@ window sizing
     Capture Page Screenshot
     #Set Window Size    1920    720
     #Capture Page Screenshot
-    Execute Javascript    document.body.style.zoom="80%"
+    Execute Javascript    document.body.style.zoom="50%"
     Capture Page Screenshot
