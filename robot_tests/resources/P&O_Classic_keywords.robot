@@ -932,3 +932,47 @@ Search and add Avainasiakaspalvelukeskus
     sleep    10s
     click button    ${product_id}
     sleep    15s
+
+Add Telia Crowd Insights
+    ${product_id}=    Set Variable    //div[@data-product-id='${Telia Crowd Insights}']/div/div/div/div/div/button
+    sleep    10s
+    click button    ${product_id}
+    Click_Settings    Telia Crowd Insights
+    Laskutuksen lisätieto_2
+    click element    ${X_BUTTON}
+    sleep    15s
+
+Laskutuksen lisätieto_2
+    ${Laskutuksen lisätieto_1}    Set Variable    //input[@name='productconfig_field_0_0']
+    ${Laskutuksen lisätieto_2}    Set Variable    //input[@name='productconfig_field_0_1']
+    ${Laskutuksen lisätieto_3}    Set Variable    //input[@name='productconfig_field_0_2']
+    ${Laskutuksen lisätieto_4}    Set Variable    //input[@name='productconfig_field_0_3']
+    ${Laskutuksen lisätieto_5}    Set Variable    //input[@name='productconfig_field_0_4']
+    input text    ${Laskutuksen lisätieto_1}    This is the test order created by robot framework.L1
+    sleep    3s
+    input text    ${Laskutuksen lisätieto_2}    This is the test order created by robot framework.L2
+    sleep    3s
+    input text    ${Laskutuksen lisätieto_3}    This is the test order created by robot framework.L3
+    sleep    3s
+    input text    ${Laskutuksen lisätieto_4}    This is the test order created by robot framework.L4
+    sleep    3s
+    input text    ${Laskutuksen lisätieto_5}    This is the test order created by robot framework.L5
+    sleep    3s
+
+Add Telia Robotics
+    ${product_id}=    Set Variable    //div[@data-product-id='${Telia Robotics}']/div/div/div/div/div/button
+    sleep    10s
+    click button    ${product_id}
+    Click_Settings    Telia Robotics
+    Laskutuksen lisätieto_2
+    click element    ${X_BUTTON}
+    sleep    15s
+
+Add Telia Sign
+    ${product_id}=    Set Variable    //div[@data-product-id='${Telia Sign}']/div/div/div/div/div/button
+    ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
+    sleep    10s
+    click button    ${product_id}
+    Click_Settings    Telia Sign
+    click element    ${X_BUTTON}
+    sleep    15s

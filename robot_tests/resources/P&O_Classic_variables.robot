@@ -102,3 +102,6 @@ ${TELIA_VPN_NNI}    01u6E000004z9cgQAA
 ${TELIA_VPN_ACCESS}    01u6E000004z9dPQAQ
 ${Avainasiakaspalvelukeskus}    01u6E000004kuWgQAI
 ${Avainasiakaspalvelukeskus jatkuva palvelu}    01u6E000003TvFpQAK
+${Telia Crowd Insights}    01u6E000003U0Z8QAK
+${Telia Robotics}    01u6E000003U0SHQA0
+${Telia Sign}     01u6E000004kKZ7QAM

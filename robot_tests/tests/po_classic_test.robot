@@ -15,25 +15,25 @@ Resource          ..${/}resources${/}common.robot
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
     [Tags]    BQA-8504    PO1    PO
-    General test setup    ${DEVPO_ACCOUNT}    b2b
+    General test setup    Bittium Wireless Oy    b2b
     Search Products    Telia Arkkitehti jatkuva palvelu
     Add Telia Arkkitehti jatkuva palvelu
     sleep    10s
     Search Products    Muut asiantuntijapalvelut
     Add Muut asiantuntijapalvelut
-    create order    ${DEVPO_ACCOUNT}
+    create order    Bittium Wireless Oy
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
     [Tags]    BQA-8790    PO1    PO
-    General test setup    ${DEVPO_ACCOUNT}    b2b
+    General test setup    Bittium Wireless Oy    b2b
     Search Products    Telia Projektijohtaminen jatkuva palvelu
     Add Telia Projektijohtaminen jatkuva palvelu
     Search Products    Telia Projektijohtaminen varallaolo ja matkustus
     Add Telia Projektijohtaminen varallaolo ja matkustus
-    create order    ${DEVPO_ACCOUNT}
+    create order    Bittium Wireless Oy
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
 
@@ -341,5 +341,19 @@ window sizing
     Capture Page Screenshot
     #Set Window Size    1920    720
     #Capture Page Screenshot
-    Execute Javascript    document.body.style.zoom="50 %"
+    #Press Key    xpath=//body    Keys.CONTROL, Keys.SUBTRACT
+    #Execute Javascript    document.body.style.MozTransform = "zoom: 0.50";
+    Execute Javascript     keyPress(KeyEvent.VK_CONTROL);
+    Execute Javascript     robot.keyPress(KeyEvent.VK_SUBTRACT);
+    Execute Javascript     robot.keyRelease(KeyEvent.VK_SUBTRACT);
+    Execute Javascript     robot.keyRelease(KeyEvent.VK_CONTROL);
     Capture Page Screenshot
+
+Telia Crowd Insights
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    BQA-9208    PO2    PO
+    General test setup    ${DEVPO_ACCOUNT}    b2b
+    Search Products    Telia Crowd Insights
+    create order    ${DEVPO_ACCOUNT}
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
