@@ -7,7 +7,7 @@ Resource          ../${/}resources${/}P&O_Classic_variables.robot    #Library   
 *** Keywords ***
 Go to Account2
     [Arguments]    ${target_account}
-    ${account}=    Set Variable    //th/a[contains(text(),'${target_account}')]
+    ${account}=    Set Variable    //th/a[text()='${target_account}']
     ${details}=    Set Variable    //a[@class='optionItem efpDetailsView ']
     Log    Going to '${target_account}'
     Search Salesforce    ${target_account}
