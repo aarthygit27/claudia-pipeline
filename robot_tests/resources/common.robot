@@ -80,8 +80,8 @@ Open Browser And Go To Login Page
 
 Open Browser And Go To Login Page (Proxy)
     [Arguments]    ${page}=${LOGIN_PAGE}
-    ${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
-    ${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
+    #${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
+    #${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
     ${proxy.https_proxy}=    Set Variable    ${PROXY}
     Create Webdriver    ${BROWSER}    #proxy=${proxy}    #firefox_profile=${profile}
     Go To    ${page}
