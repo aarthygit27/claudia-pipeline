@@ -351,9 +351,29 @@ window sizing
 
 Telia Crowd Insights
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    BQA-9208    PO2    PO
+    [Tags]    PO2    PO
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Crowd Insights
+    Add Telia Crowd Insights
+    create order    ${DEVPO_ACCOUNT}
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
+
+Telia Robotics
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    PO2    PO
+    General test setup    ${DEVPO_ACCOUNT}    b2b
+    Search Products    Telia Robotics
+    Add Telia Robotics
+    create order    ${DEVPO_ACCOUNT}
+    ${order_id}=    Complete Order
+    checking the orchestration plan    ${order_id}
+
+Telia Sign
+    [Tags]    PO2    PO
+    General test setup    ${DEVPO_ACCOUNT}    b2b
+    Search Products    Telia Sign
+    Add Telia Sign
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}

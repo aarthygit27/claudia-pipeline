@@ -57,9 +57,9 @@ Search Opportunity and click CPQ
     ${opportunity_search}=    Set Variable    //div[@id='Opportunity_body']/table/tbody//tr//th/a[text()='${opportunity_name}']
     ${cpq}=    Set Variable    //div[@id='customButtonMuttonButton']/span[text()='CPQ']
     sleep    10s
-    #Search Salesforce    ${opportunity_name}
-    #Wait Until Element Is Visible    ${opportunity_search}    30s
-    #Click Element    ${opportunity_search}
+    Search Salesforce    ${opportunity_name}
+    Wait Until Element Is Visible    ${opportunity_search}    30s
+    Click Element    ${opportunity_search}
     Wait Until Element Is Visible    ${cpq}    30s
     Click Element    ${cpq}
 
@@ -353,8 +353,8 @@ General test setup
     switching to classic app
     #Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
-    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
-    #${new_opportunity_name}=    Set Variable    Test Robot Order_160120192214
+    #${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
+    ${new_opportunity_name}=    Set Variable    Test Robot Order_050420192112
     sleep    10s
     Log    the opportunity id is ${new_opportunity_name}
     Search Opportunity and click CPQ    ${new_opportunity_name}
@@ -970,9 +970,24 @@ Add Telia Robotics
 
 Add Telia Sign
     ${product_id}=    Set Variable    //div[@data-product-id='${Telia Sign}']/div/div/div/div/div/button
+    ${update}    Set Variable    //h2[contains(text(),'Updated Telia Sign')]
     ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
+    @{package}    Set Variable    paketti M    paketti L    paketti XL    paketti S
+    @{cost}    Set Variable    62.00 €    225.00 €    625.00 €    10.00 €
     sleep    10s
     click button    ${product_id}
     Click_Settings    Telia Sign
+    Wait Until Element Is Visible    ${Paketti}    60s
+    :FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > 3
+    \    ${package_name}    set variable    @{package}[${i}]
+    \    ${package_cost}    set variable    @{cost}[${i}]
+    \    ${money}    Set Variable    //span[contains(text(),'${package_cost}')]
+    \    Log To Console    package name ${package_name}
+    \    Select From List By Value    ${Paketti}    ${package_name}
+    \    Wait Until Element Is Visible    ${update}    60s
+    \    click element    ${X_BUTTON}
+    \    Wait Until Element Is Visible    ${package_cost}    60s
+    \    Click_Settings    Telia Sign
     click element    ${X_BUTTON}
     sleep    15s

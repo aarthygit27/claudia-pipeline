@@ -1971,7 +1971,7 @@ Searching and adding multiple products
     Scroll Page To Location    0    100
     Click Element    ${next_button}
     #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
-    #Run Keyword If    ${status} == True    click element     ${next_button}
+    #Run Keyword If    ${status} == True    click element    ${next_button}
     Unselect Frame
 
 Preview order summary and verify order
