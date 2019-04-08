@@ -85,7 +85,7 @@ Open Browser And Go To Login Page (Proxy)
     ${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
     ${proxy.https_proxy}=    Set Variable    ${PROXY}
     #${proxy.https_proxy}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
-    Create Webdriver    ${BROWSER}    proxy=${proxy}    ${proxy1}    #firefox_profile=${profile}
+    Create Webdriver    ${BROWSER}    ${proxy}    proxy    ${proxy1}    #firefox_profile=${profile}
     Go To    ${page}
 
 Press Enter On
