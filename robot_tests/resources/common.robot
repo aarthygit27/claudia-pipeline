@@ -81,11 +81,11 @@ Open Browser And Go To Login Page
 Open Browser And Go To Login Page (Proxy)
     [Arguments]    ${page}=${LOGIN_PAGE}
     #${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
-    ${proxy}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
-    #${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
+    ${proxy1}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
+    ${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
     ${proxy.https_proxy}=    Set Variable    ${PROXY}
     #${proxy.https_proxy}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
-    Create Webdriver    ${BROWSER}    proxy=${proxy}    firefox_profile=${profile}
+    Create Webdriver    ${BROWSER}    proxy=${proxy}    ${proxy1}    #firefox_profile=${profile}
     Go To    ${page}
 
 Press Enter On
@@ -126,3 +126,12 @@ Strip Area Code From Phone Number
     [Arguments]    ${number}
     ${stripped}=    Remove String    ${number}    +358
     [Return]    ${stripped}
+
+Open Browser And Go To Login Page(proxy2)
+    [Arguments]    ${page}=${LOGIN_PAGE}
+    ${proxy}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
+    ${proxy dict}=    Create Dictionary    httpProxy    ${proxy}    ftpProxy    ${proxy}    sslProxy
+    ...    ${proxy}    noProxy    127.0.0.1    proxyType     MANUAL    class
+    ...    org.openqa.selenium.Proxy    autodetect    ${False}
+    ${default IE caps}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
+    Set To Dictionary    ${default IE caps}    proxy    ${proxy dict}
