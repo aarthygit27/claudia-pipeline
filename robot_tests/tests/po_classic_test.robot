@@ -343,10 +343,10 @@ window sizing
     #Capture Page Screenshot
     #Press Key    xpath=//body    Keys.CONTROL, Keys.SUBTRACT
     #Execute Javascript    document.body.style.MozTransform = "zoom: 0.50";
-    Execute Javascript     keyPress(KeyEvent.VK_CONTROL);
-    Execute Javascript     robot.keyPress(KeyEvent.VK_SUBTRACT);
-    Execute Javascript     robot.keyRelease(KeyEvent.VK_SUBTRACT);
-    Execute Javascript     robot.keyRelease(KeyEvent.VK_CONTROL);
+    #Execute Javascript     keyPress(KeyEvent.VK_CONTROL);
+    #Execute Javascript     robot.keyPress(KeyEvent.VK_SUBTRACT);
+    #Execute Javascript     robot.keyRelease(KeyEvent.VK_SUBTRACT);
+    #Execute Javascript     robot.keyRelease(KeyEvent.VK_CONTROL);
     Capture Page Screenshot
 
 Telia Crowd Insights
