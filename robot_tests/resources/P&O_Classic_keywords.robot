@@ -991,6 +991,5 @@ Add Telia Sign
     \    Wait Until Element Is Visible    ${update}    60s
     \    #click element    //button[@ng-click='importedScope.close()']
     \    Wait Until Element Is Visible    ${money}    60s
-    \    #Click_Settings    Telia Sign
     click element    //button[@ng-click='importedScope.close()']
     sleep    15s
