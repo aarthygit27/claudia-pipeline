@@ -65,8 +65,10 @@ Search Opportunity and click CPQ
 
 Search Products
     [Arguments]    ${product_name}
-    Wait Until Page Contains Element    //span[text()='PRODUCTS']    45s
+    #Wait Until Page Contains Element    //span[text()='PRODUCTS']    45s
     sleep    10s
+    Wait Until Page Contains Element    //input[@placeholder='Search']    45s
+    click element    //input[@placeholder='Search']
     input text    //input[@placeholder='Search']    ${product_name}
     Capture Page Screenshot
 
@@ -354,7 +356,7 @@ General test setup
     #Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
     #${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
-    ${new_opportunity_name}=    Set Variable    Test Robot Order_050420192112
+    ${new_opportunity_name}=    Set Variable    Test Robot Order_090420191743
     sleep    10s
     Log    the opportunity id is ${new_opportunity_name}
     Search Opportunity and click CPQ    ${new_opportunity_name}
@@ -975,6 +977,7 @@ Add Telia Sign
     @{package}    Set Variable    paketti M    paketti L    paketti XL    paketti S
     @{cost}    Set Variable    62.00 €    225.00 €    625.00 €    10.00 €
     sleep    10s
+    Wait Until Element Is Visible    ${product_id}    60s
     click button    ${product_id}
     Click_Settings    Telia Sign
     Wait Until Element Is Visible    ${Paketti}    60s
@@ -986,8 +989,8 @@ Add Telia Sign
     \    Log To Console    package name ${package_name}
     \    Select From List By Value    ${Paketti}    ${package_name}
     \    Wait Until Element Is Visible    ${update}    60s
-    \    click element    ${X_BUTTON}
-    \    Wait Until Element Is Visible    ${package_cost}    60s
-    \    Click_Settings    Telia Sign
-    click element    ${X_BUTTON}
+    \    #click element    //button[@ng-click='importedScope.close()']
+    \    Wait Until Element Is Visible    ${money}    60s
+    \    #Click_Settings    Telia Sign
+    click element    //button[@ng-click='importedScope.close()']
     sleep    15s
