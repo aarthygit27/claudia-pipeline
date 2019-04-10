@@ -914,7 +914,7 @@ switching to classic app
     Wait Until Element Is Visible    ${search_button}    90s
 
 Credit score validation
-    ${next_but}    Set Variable    //form[@id='a1q6E000000SBKZQA4-24']//button[contains(text(),'Next')]
+    ${next_but}    Set Variable    //form[@id='a1q6E000000SBKZQA4-27']//button[contains(text(),'Next')]
     ${central_spinner}    Set Variable    //div[@class='center-block spinner']
     wait until element is not visible    ${central_spinner}    120s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${next_but}    60s
@@ -956,6 +956,7 @@ Laskutuksen lisätieto_2
     ${Laskutuksen lisätieto_3}    Set Variable    //input[@name='productconfig_field_0_2']
     ${Laskutuksen lisätieto_4}    Set Variable    //input[@name='productconfig_field_0_3']
     ${Laskutuksen lisätieto_5}    Set Variable    //input[@name='productconfig_field_0_4']
+    Wait Until Element Is Visible    ${Laskutuksen lisätieto_1}    60s
     input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
     sleep    3s
     input text    ${Laskutuksen lisätieto_2}    test order by robot framework.L2
