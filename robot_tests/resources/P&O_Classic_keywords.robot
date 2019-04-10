@@ -956,15 +956,15 @@ Laskutuksen lisätieto_2
     ${Laskutuksen lisätieto_3}    Set Variable    //input[@name='productconfig_field_0_2']
     ${Laskutuksen lisätieto_4}    Set Variable    //input[@name='productconfig_field_0_3']
     ${Laskutuksen lisätieto_5}    Set Variable    //input[@name='productconfig_field_0_4']
-    input text    ${Laskutuksen lisätieto_1}    This is the test order created by robot framework.L1
+    input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
     sleep    3s
-    input text    ${Laskutuksen lisätieto_2}    This is the test order created by robot framework.L2
+    input text    ${Laskutuksen lisätieto_2}    test order by robot framework.L2
     sleep    3s
-    input text    ${Laskutuksen lisätieto_3}    This is the test order created by robot framework.L3
+    input text    ${Laskutuksen lisätieto_3}    test order by robot framework.L3
     sleep    3s
-    input text    ${Laskutuksen lisätieto_4}    This is the test order created by robot framework.L4
+    input text    ${Laskutuksen lisätieto_4}    test order by robot framework.L4
     sleep    3s
-    input text    ${Laskutuksen lisätieto_5}    This is the test order created by robot framework.L5
+    input text    ${Laskutuksen lisätieto_5}    test order by robot framework.L5
     sleep    3s
 
 Add Telia Robotics
