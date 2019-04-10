@@ -14,7 +14,7 @@ ${technical_contact}    John Doe
 ${ADD_CART}       //button[contains(text(),'Add to Cart')]
 ${SETTINGS}       //button[@title='Settings']
 ${SPINNER_SMALL}    //div[contains(@class,'small button-spinner')]
-${X_BUTTON}       //button[@class='slds-button slds-button--icon']
+${X_BUTTON}       //span[contains(text(),'Close')]/..
 ${DEVPO_ACCOUNT}    Betonimestarit Oy
 ${LOGIN_PAGE}     https://test.salesforce.com/
 ${SALES_CLASSIC_USER}    b2bdigi@teliacompany.com.devpo
