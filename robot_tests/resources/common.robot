@@ -124,12 +124,3 @@ Strip Area Code From Phone Number
     [Arguments]    ${number}
     ${stripped}=    Remove String    ${number}    +358
     [Return]    ${stripped}
-
-Open Browser And Go To Login Page(proxy2)
-    [Arguments]    ${page}=${LOGIN_PAGE}
-    ${proxy}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
-    ${proxy dict}=    Create Dictionary    httpProxy    ${proxy}    ftpProxy    ${proxy}    sslProxy
-    ...    ${proxy}    noProxy    127.0.0.1    proxyType     MANUAL    class
-    ...    org.openqa.selenium.Proxy    autodetect    ${False}
-    ${default IE caps}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
-    Set To Dictionary    ${default IE caps}    proxy    ${proxy dict}
