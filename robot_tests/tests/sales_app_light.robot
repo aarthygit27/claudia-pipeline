@@ -484,5 +484,6 @@ Frame test
     select frame    ${frame}
     sleep    10s
     Capture Page Screenshot
-    Set Window Size    1920    1080
-    Capture Page Screenshot
+    Get Window Size
+    #Set Window Size    1920    1080
+    #Capture Page Screenshot
