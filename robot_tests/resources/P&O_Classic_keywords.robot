@@ -66,6 +66,7 @@ Search Opportunity and click CPQ
 Search Products
     [Arguments]    ${product_name}
     #Wait Until Page Contains Element    //span[text()='PRODUCTS']    45s
+    Log To Console    Search Products
     sleep    10s
     Wait Until Page Contains Element    //input[@placeholder='Search']    45s
     #click element    //input[@placeholder='Search']
@@ -184,6 +185,7 @@ Login to Salesforce as Digisales User devpo
 create order
     [Arguments]    ${target_account}
     [Documentation]    Used to create order after adding the products to the cart
+    Log To Console    create order
     ${cart_next_button}=    Set Variable    //button/span[text()='Next']
     ${CPQ_next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${backCPQ}=    Set Variable    //button[@id='BackToCPQ']
@@ -352,6 +354,7 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
 
 General test setup
     [Arguments]    ${target_account}    ${pricebook}
+    Log To Console    General test setup
     Go To Salesforce and Login2    Sales admin User devpo
     switching to classic app
     #Go To    ${CLASSIC_APP}
@@ -528,6 +531,7 @@ Add Hallinta ja Tuki varallaolo ja matkustus
 
 Complete Order
     [Documentation]    Used to update the order and complete order
+    Log To Console    Complete Order
     ${complete_order}=    Set Variable    //td[@id='topButtonRow']/input[@value='Complete Item']
     ${update_order}=    Set Variable    //a[text()='Work Order Update']    #//a[text()='Work Order Update']    #//a[text()='Order Finished']
     ${Orchestration Plan}=    Set Variable    //table/tbody/tr/td[@class='dataCol col02']/a[contains(text(),'Plan')]
@@ -861,6 +865,7 @@ Add Telia IP VPN ACCESS
 
 checking the orchestration plan
     [Arguments]    ${order_id}
+    Log To Console    checking the orchestration plan
     ${order_search}=    Set Variable    //div[@id='Order_body']/table/tbody//tr//th/a[text()='${order_id}']
     ${plan}=    set variable    //div[@id='CF00N5800000BWy1H_ileinner']/a
     Search Salesforce    ${order_id}
@@ -972,6 +977,7 @@ Add Telia Robotics
     sleep    15s
 
 Add Telia Sign
+    Log To Console    Adding products
     ${product_id}=    Set Variable    //div[@data-product-id='${Telia Sign}']/div/div/div/div/div/button
     ${update}    Set Variable    //h2[contains(text(),'Updated Telia Sign')]
     ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
