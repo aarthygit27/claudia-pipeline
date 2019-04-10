@@ -998,5 +998,5 @@ Add Telia Sign
     \    #click element    //button[@ng-click='importedScope.close()']
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${money}    60s
     \    Log To Console    package name = ${package_name} | Package cost = \ ${package_cost} | Status = ${status}
-    click element    //button[@ng-click='importedScope.close()']
+    click element    ${X_BUTTON}
     sleep    15s
