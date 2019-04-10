@@ -474,3 +474,12 @@ HDC - Complete Sales Process: UAT/Sanity Regression
     click element    ${win_prob_edit}
     Adding partner and competitor
     ChangeThePriceBookToHDC    HDC Pricebook B2B
+
+Frame test
+    [Tags]    frame
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Go To Salesforce and Login into Lightning
+    Go To    https://telia-fi--release.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDYwRTAwMDAwQ25rZDYifSwic3RhdGUiOnt9fQ%3D%3D
+    Wait Until Element Is Visible    ${frame}    45s
+    select frame    ${frame}
+    sleep    10s
