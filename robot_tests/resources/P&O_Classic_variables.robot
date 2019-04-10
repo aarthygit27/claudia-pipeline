@@ -6,7 +6,7 @@ ${VIEW_BUTTON}    //button[contains(text(),'View')]
 ${CREATE_ORDER}    //span[text()='Create Order']
 ${CPQ_BUTTON}     //td[@id='topButtonRow']//input[@title='CPQ']
 ${B2B_DIGISALES_USER_DEVPO}    b2bdigi@teliacompany.com.devpo
-${PASSWORD_DEVPO}    PahaPassu2
+${PASSWORD_DEVPO}    PahaPassu3
 ${DEFAULT_TEST_ACCOUNT}    Aacon Oy
 ${MAIN_WINDOW}    ${EMPTY}
 ${NEXT_BUTTON}    //button/span[text()='Next']
@@ -18,7 +18,7 @@ ${X_BUTTON}       //button[@class='slds-button slds-button--icon']
 ${DEVPO_ACCOUNT}    Betonimestarit Oy
 ${LOGIN_PAGE}     https://test.salesforce.com/
 ${SALES_CLASSIC_USER}    b2bdigi@teliacompany.com.devpo
-${PASSWORD_SALES_CLASSIC}    PahaPassu2
+${PASSWORD_SALES_CLASSIC}    PahaPassu3
 ${SALES_HOME_PAGE}    //a[@class='switch-to-lightning']
 ${SALES_CONSOLE_HOME_PAGE}    https://cs85.salesforce.com/home/home.jsp?source=lex
 ${SEARCH_FIELD_SALES}    //input[@id='phSearchInput']

@@ -68,7 +68,8 @@ Search Products
     #Wait Until Page Contains Element    //span[text()='PRODUCTS']    45s
     sleep    10s
     Wait Until Page Contains Element    //input[@placeholder='Search']    45s
-    click element    //input[@placeholder='Search']
+    #click element    //input[@placeholder='Search']
+    sleep    10s
     input text    //input[@placeholder='Search']    ${product_name}
     Capture Page Screenshot
 
@@ -355,8 +356,8 @@ General test setup
     switching to classic app
     #Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
-    #${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
-    ${new_opportunity_name}=    Set Variable    Test Robot Order_090420191743
+    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
+    #${new_opportunity_name}=    Set Variable    Test Robot Order_090420191743
     sleep    10s
     Log    the opportunity id is ${new_opportunity_name}
     Search Opportunity and click CPQ    ${new_opportunity_name}
@@ -986,10 +987,10 @@ Add Telia Sign
     \    ${package_name}    set variable    @{package}[${i}]
     \    ${package_cost}    set variable    @{cost}[${i}]
     \    ${money}    Set Variable    //span[contains(text(),'${package_cost}')]
-    \    Log To Console    package name ${package_name}
     \    Select From List By Value    ${Paketti}    ${package_name}
     \    Wait Until Element Is Visible    ${update}    60s
     \    #click element    //button[@ng-click='importedScope.close()']
-    \    Wait Until Element Is Visible    ${money}    60s
+    \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${money}    60s
+    \    Log To Console    package name = ${package_name} | Package cost = \ ${package_cost} | Status = ${status}
     click element    //button[@ng-click='importedScope.close()']
     sleep    15s
