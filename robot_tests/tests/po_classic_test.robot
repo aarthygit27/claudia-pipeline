@@ -343,15 +343,15 @@ window sizing
     #Capture Page Screenshot
     #Press Key    xpath=//body    Keys.CONTROL, Keys.SUBTRACT
     #Execute Javascript    document.body.style.MozTransform = "zoom: 0.50";
-    #Execute Javascript     keyPress(KeyEvent.VK_CONTROL);
-    #Execute Javascript     robot.keyPress(KeyEvent.VK_SUBTRACT);
-    #Execute Javascript     robot.keyRelease(KeyEvent.VK_SUBTRACT);
-    #Execute Javascript     robot.keyRelease(KeyEvent.VK_CONTROL);
+    #Execute Javascript    keyPress(KeyEvent.VK_CONTROL);
+    #Execute Javascript    robot.keyPress(KeyEvent.VK_SUBTRACT);
+    #Execute Javascript    robot.keyRelease(KeyEvent.VK_SUBTRACT);
+    #Execute Javascript    robot.keyRelease(KeyEvent.VK_CONTROL);
     Capture Page Screenshot
 
 Telia Crowd Insights
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO
+    [Tags]    PO2new    PO    POlatest
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Crowd Insights
     Add Telia Crowd Insights
@@ -361,7 +361,7 @@ Telia Crowd Insights
 
 Telia Robotics
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO
+    [Tags]    PO2new    PO    POlatest
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Robotics
     Add Telia Robotics
@@ -370,7 +370,7 @@ Telia Robotics
     checking the orchestration plan    ${order_id}
 
 Telia Sign
-    [Tags]    PO2new    PO
+    [Tags]    PO2new    PO    POlatest
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Sign
     Add Telia Sign
