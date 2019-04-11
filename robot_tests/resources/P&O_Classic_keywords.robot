@@ -966,6 +966,9 @@ Laskutuksen lisätieto_2
     Run Keyword If    ${update} == False    input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
     sleep    3s
     Input Text    ${Laskutuksen lisätieto_2}    test order by robot framework.L2
+    Capture Page Screenshot
+    sleep    5s
+    Capture Page Screenshot
     sleep    3s
     input text    ${Laskutuksen lisätieto_3}    test order by robot framework.L3
     sleep    3s
