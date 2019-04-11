@@ -359,7 +359,7 @@ General test setup
     switching to classic app
     #Go To    ${CLASSIC_APP}
     Go to Account2    ${target_account}
-    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}    ]
+    ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
     #${new_opportunity_name}=    Set Variable    Test Robot Order_090420191743
     sleep    10s
     Log    the opportunity id is ${new_opportunity_name}
