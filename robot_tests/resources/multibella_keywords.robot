@@ -1,7 +1,7 @@
 *** Settings ***
-Library           Selenium2Library
-Library           libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
-Library           libs.business_id_generator.BusinessIdGenerator.BusinessIdGenerator
+Library           SeleniumLibrary
+#Library           libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
+#Library           libs.business_id_generator.BusinessIdGenerator.BusinessIdGenerator
 Library           Screenshot
 Resource          ..${/}resources${/}common.robot
 
