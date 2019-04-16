@@ -44,7 +44,9 @@ updating close date
     ${Edit_close_date}    set variable    //span[contains(text(),'Edit Close Date')]/../../button
     ${closing_date}    Set Variable    //div[contains(@data-aura-class,'uiInput--datetime')]/div/input
     Log To Console    updating close date
+    Scroll Page To Element    ${Edit_close_date}
     click element    ${Edit_close_date}
+    Scroll Page To Element    ${closing_date}
     Clear Element Text    ${closing_date}
     input text    ${closing_date}    ${close_date}
     click element    //button[@title='Save']
@@ -288,3 +290,29 @@ Fill Laskutuksen lisätieto
     sleep    3s
     input text    ${Laskutuksen lisätieto 5}    test order by robot framework.L5
     sleep    3s
+
+update_setting_TeliaSign
+    #    Wait Until Element Is Visible    ${iframe}    60s
+    #    Select Frame    ${iframe}
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${closing}    Set Variable    //span[text()='Close']
+    ${setting}    Set Variable    //button[@title='Settings']
+    ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
+    ${update}    Set Variable    //h2[contains(text(),'Updated Telia Sign')]
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${setting}    60s
+    Click Element    ${setting}
+    Wait Until Element Is Visible    ${Paketti}    60s
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > 3
+    \    ${package_name}    set variable    @{package}[${i}]
+    \    ${package_cost}    set variable    @{cost}[${i}]
+    \    ${money}    Set Variable    //span[contains(text(),'${package_cost}')]
+    \    Select From List By Value    ${Paketti}    ${package_name}
+    \    Wait Until Element Is Visible    ${update}    60s
+    \    #click element    //button[@ng-click='importedScope.close()']
+    \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${money}    60s
+    \    Log To Console    package name = ${package_name} | Package cost = \ ${package_cost} | Status = ${status}
+    click element    ${closing}
+    Unselect Frame

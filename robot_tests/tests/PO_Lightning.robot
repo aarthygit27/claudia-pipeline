@@ -98,3 +98,14 @@ Product8: Telia Crowd Insights
     OpenQuoteButtonPage_release
     ClickingOnCPQ
     Create_Order
+
+Product8: Telia Sign
+    [Tags]    TeliaRobotics
+    General Setup    B2B
+    Searching and adding product    Telia Sign
+    update_setting_TeliaSign
+    clicking on next button
+    UpdateAndAddSalesTypeB2O
+    OpenQuoteButtonPage_release
+    ClickingOnCPQ
+    Create_Order
