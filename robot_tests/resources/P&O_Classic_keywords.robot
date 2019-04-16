@@ -57,9 +57,9 @@ Search Opportunity and click CPQ
     ${opportunity_search}=    Set Variable    //div[@id='Opportunity_body']/table/tbody//tr//th/a[text()='${opportunity_name}']
     ${cpq}=    Set Variable    //div[@id='customButtonMuttonButton']/span[text()='CPQ']
     sleep    10s
-    Search Salesforce    ${opportunity_name}
-    Wait Until Element Is Visible    ${opportunity_search}    30s
-    Click Element    ${opportunity_search}
+    #Search Salesforce    ${opportunity_name}
+    #Wait Until Element Is Visible    ${opportunity_search}    30s
+    #Click Element    ${opportunity_search}
     Wait Until Element Is Visible    ${cpq}    30s
     Click Element    ${cpq}
 
@@ -956,10 +956,19 @@ Laskutuksen lisätieto_2
     ${Laskutuksen lisätieto_3}    Set Variable    //input[@name='productconfig_field_0_2']
     ${Laskutuksen lisätieto_4}    Set Variable    //input[@name='productconfig_field_0_3']
     ${Laskutuksen lisätieto_5}    Set Variable    //input[@name='productconfig_field_0_4']
+    ${heading}    Set Variable    //h2[contains(text(),'Updated Telia')]
+    Capture Page Screenshot
     Wait Until Element Is Visible    ${Laskutuksen lisätieto_1}    60s
     input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
+    Capture Page Screenshot
+    ${update}    Run Keyword And Return Status    Wait Until Element Is Visible    ${heading}    60s
+    Capture Page Screenshot
+    Run Keyword If    ${update} == False    input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
     sleep    3s
-    input text    ${Laskutuksen lisätieto_2}    test order by robot framework.L2
+    Input Text    ${Laskutuksen lisätieto_2}    test order by robot framework.L2
+    Capture Page Screenshot
+    sleep    5s
+    Capture Page Screenshot
     sleep    3s
     input text    ${Laskutuksen lisätieto_3}    test order by robot framework.L3
     sleep    3s
@@ -989,7 +998,7 @@ Add Telia Sign
     click button    ${product_id}
     Click_Settings    Telia Sign
     Wait Until Element Is Visible    ${Paketti}    60s
-    :FOR    ${i}    IN RANGE    9999
+    : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > 3
     \    ${package_name}    set variable    @{package}[${i}]
     \    ${package_cost}    set variable    @{cost}[${i}]

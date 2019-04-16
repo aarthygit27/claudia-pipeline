@@ -30,7 +30,7 @@ ${ACCOUNT_RELATED}    //div[contains(@class,'active')]//span[text()='Related']//
 ${RELATED_OPPORTUNITY}    //tbody
 ${OPPORTUNITY_PAGE}    //*[contains(@class,'slds-page-header')]
 ${RESULTS_TABLE}    //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
-${SEARCH_INPUT}    //input[@name='search-input']
+${SEARCH_INPUT}    //input[contains(@name,'search-input')]
 ${PASSIVE_TEST_ACCOUNT}    Airmec Oy
 ${GROUP_TEST_ACCOUNT}    Digita
 #CONTACTS
@@ -184,7 +184,6 @@ ${OWNER_NAME}     //div[@class='ownerName']//a
 ${NEW_OWNER_SELECTED}    //span[@class='pillText']
 ${CLOSE_NOTIFICATION}    //button[@title='Dismiss notification']
 ${SALES_ADMIN_USER_RELEASE}    saleadm@teliacompany.com.release
-${Telia_Viestintäpalvelu_VIP}    01u58000005pgLrAAI    # Telia Viestintäpalvelu VIP
 #### SVE,B2B,B2,HDC Orders
 ${r}              b2b
 ${p}              b2o
@@ -194,24 +193,3 @@ ${NRC}            35
 ${RC}             50
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
-${Yritysinternet Plus}    01u58000005pgVpAAI
-${DataNet Multi}    01u58000005pgURAAY
-${Telia Ulkoistettu asiakaspalvelu}    01u58000005pgeSAAQ
-${Telia Neuvottelupalvelut}    01u58000005pgSfAAI
-${Telia Palvelunumero}    01u58000005pvIuAAI
-${Telia Yritysliittymä}    01u58000005pgcWAAQ
-${Telia Laskutuspalvelu}    01u58000005pgL3AAI
-${Telia Sopiva Enterprise}    01u58000005pgUDAAY
-${Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus}    01u58000006Z4IRAA0
-${Telia Neuvottelupalvelut - Lisäkirjaus}    01u58000006Z4IbAAK
-${Telia Palvelunumero - Lisäkirjaus}    01u58000006Z4IqAAK
-${Telia Yritysliittymä - Lisäkirjaus}    01u58000006Z4JAAA0
-${Telia Laskutuspalvelu - Lisäkirjaus}    01u58000006Z4JUAA0
-${Telia Sopiva Enterprise - Lisäkirjaus}    01u58000006Z4JeAAK
-${Sopiva Pro-migraatio}    01u58000005pgUFAAY
-${Sovelluskauppa 3rd Party Apps}    01u58000005pgeDAAQ
-${VIP:n käytössä olevat Cid-numerot}    01u58000005pvIkAAI
-${Ohjaus Telia Numeropalveluun}    01u58000005pgPzAAI
-${Online Asiantuntijapalvelut}    01u58000005pgPjAAI
-${PASSWORD_SALESADMIN_SITPO}    PahaPassu3
-${SALES_ADMIN_SITPO}    saleadm@teliacompany.com.sitpo

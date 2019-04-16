@@ -351,7 +351,7 @@ window sizing
 
 Telia Crowd Insights
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO    POlatest
+    [Tags]    PO2new    PO    POlatest    crowd
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Crowd Insights
     Add Telia Crowd Insights

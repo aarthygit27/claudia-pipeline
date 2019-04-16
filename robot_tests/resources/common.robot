@@ -1,5 +1,5 @@
 *** Settings ***
-Library           Selenium2Library
+Library           SeleniumLibrary
 Library           String
 Library           Dialogs
 Library           Screenshot

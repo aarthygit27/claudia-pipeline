@@ -273,7 +273,7 @@ Select Correct View Type
 Filter Opportunities By
     [Arguments]    ${field}    ${value}
     #${Count}=    get element count    ${RESULTS_TABLE}
-    Click Element    //input[@name='search-input']
+    Click Element    //input[contains(@name,'search-input')]
     Wait Until Page Contains Element    ${SEARCH_INPUT}    60s
     Input Text    xpath=${SEARCH_INPUT}    ${value}
     Press Key    xpath=${SEARCH_INPUT}    \\13
