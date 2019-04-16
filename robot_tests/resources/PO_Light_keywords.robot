@@ -5,15 +5,16 @@ Resource          ../resources/multibella_keywords.robot
 
 *** Keywords ***
 General Setup
+    [Arguments]    ${price_list}
     Go To Salesforce and Login into Lightning    sitpo admin
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    ${oppo_name}    set variable    Test Robot Order_ 20190329-194158
+    ${oppo_name}    set variable    Test Robot Order_ 20190415-155717
     sleep    5s
     Go To Entity    ${oppo_name}
     sleep    5s
     updating close date
-    Change Price list    B2O
+    Change Price list    ${price_list}
     ClickingOnCPQ    ${oppo_name}
 
 Login to Salesforce as sitpo admin
@@ -90,12 +91,12 @@ update_setting1
     sleep    10s
     click element    ${closing}
 
-Searc669811hing and adding product
+Searching and adding product
     [Arguments]    ${products}
     ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
     ${next_button}    set variable    //span[contains(text(),'Next')]
     ${prod}    Create List    ${products}
-    Log To Console    Searc669811hing and adding product
+    Log To Console    Searching and adding product
     ${product_id}    Set Variable    ${${products}}
     Log To Console    product name ${products}
     search products    ${products}
@@ -192,6 +193,7 @@ update_setting_Ethernet Nordic E-LAN EVP-LAN
     input text    ${ Network bridge }    This is a test opportunity
     helinsiki_address
     click element    ${closing}
+    Unselect Frame
 
 update_setting_Ethernet Nordic HUB/E-NNI
     ${Service level}    Set Variable    //select[@name='productconfig_field_0_4']
@@ -208,6 +210,7 @@ update_setting_Ethernet Nordic HUB/E-NNI
     sleep    5s
     helinsiki_address
     click element    ${closing}
+    Unselect Frame
 
 helinsiki_address
     ${street_add1}    set variable    //input[@name='productconfig_field_1_0']
@@ -236,8 +239,8 @@ update_setting_Telia Ethernet subscription
     ${Interface}    Set Variable    //select[@name='productconfig_field_0_8']
     ${option}    Set Variable    ${Interface}//option[contains(text(),'10/100Base-TX')]
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
-    ${setting}    Set Variable    //button[@title='Settings']
     ${closing}    Set Variable    //span[text()='Close']
+    ${setting}    Set Variable    //button[@title='Settings']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     Click Element    ${setting}
@@ -253,3 +256,35 @@ update_setting_Telia Ethernet subscription
     Click Element    ${option}
     helinsiki_address
     click element    ${closing}
+    Unselect Frame
+
+update_setting_TeliaRobotics
+    #    Wait Until Element Is Visible    ${iframe}    60s
+    #    Select Frame    ${iframe}
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${closing}    Set Variable    //span[text()='Close']
+    ${setting}    Set Variable    //button[@title='Settings']
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${setting}    60s
+    Click Element    ${setting}
+    Fill Laskutuksen lisätieto
+    click element    ${closing}
+    Unselect Frame
+
+Fill Laskutuksen lisätieto
+    ${Laskutuksen lisätieto 1}=    set variable    //input[@name='productconfig_field_0_0']
+    ${Laskutuksen lisätieto 2}=    set variable    //input[@name='productconfig_field_0_1']
+    ${Laskutuksen lisätieto 3}=    set variable    //input[@name='productconfig_field_0_2']
+    ${Laskutuksen lisätieto 4}=    set variable    //input[@name='productconfig_field_0_3']
+    ${Laskutuksen lisätieto 5}=    set variable    //input[@name='productconfig_field_0_4']
+    input text    ${Laskutuksen lisätieto 1}    test order by robot framework.L1
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 2}    test order by robot framework.L2
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 3}    test order by robot framework.L3
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 4}    test order by robot framework.L4
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 5}    test order by robot framework.L5
+    sleep    3s

@@ -7,3 +7,6 @@ ${Ethernet Nordic E-LAN EVP-LAN}    01u2600000Owhg2AAB
 ${Ethernet Nordic HUB/E-NNI}    01u2600000Ooy4NAAR
 ${Telia Ethernet subscription}    01u2600000Oy7hWAAR
 ${Telia Colocation}    01u5800000fKPwuAAG
+${setting}        //button[@title='Settings']
+${telia Robotics}    01u2600000Q4FybAAF
+${Telia Crowd Insights}    01u2600000Q4E4MAAV
