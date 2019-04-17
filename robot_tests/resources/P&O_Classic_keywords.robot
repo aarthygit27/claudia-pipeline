@@ -1,8 +1,7 @@
 *** Settings ***
 Resource          ..${/}resources${/}salesforce_keywords.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
-Resource          ../${/}resources${/}salesforce_variables.robot
-Resource          ../${/}resources${/}P&O_Classic_variables.robot    #Library    Selenium2Library
+Resource          P&O_Classic_variables.robot
 
 *** Keywords ***
 Go to Account2

@@ -2,6 +2,7 @@
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
+Resource          ../resources/PO_Lighting_variables.robot
 
 *** Keywords ***
 General Setup
@@ -23,12 +24,12 @@ Login to Salesforce as sitpo admin
 Change Price list
     [Arguments]    ${price_lists}
     ${Price List}    set variable    //span[contains(text(),'Price List')]/../../button
-    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'B2B')]/following::span[@class='deleteIcon']
+    ${B2B_Price_list_delete_icon}=    Set Variable    //label/span[text()='Price List']/../../div//a[@class='deleteAction']
     Log To Console    Change Price list
     ScrollUntillFound    //button[@title="Edit Price List"]
     click element    //button[@title="Edit Price List"]
     sleep    10s
-    Scroll Page To Location    0    700
+    ScrollUntillFound    ${B2B_Price_list_delete_icon}=
     click element    ${B2B_Price_list_delete_icon}
     sleep    3s
     input text    //input[@title='Search Price Lists']    ${price_lists}
