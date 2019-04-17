@@ -60,7 +60,7 @@ Login to Salesforce Lightning
     #log to console    ${password}
     Wait Until Page Contains Element    id=username    240s
     Input Text    id=username    ${username}
-    Input Password    id=password    ${password}
+    Input text    id=password    ${password}
     Click Element    id=Login
     Sleep    40s
     ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[@class='continue']
