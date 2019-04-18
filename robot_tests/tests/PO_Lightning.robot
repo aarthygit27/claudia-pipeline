@@ -94,7 +94,7 @@ Product8: Telia Crowd Insights
     Searching and adding product    Telia Crowd Insights
     update_setting_TeliaRobotics
     clicking on next button
-    UpdateAndAddSalesTypeB2O
+    UpdateAndAddSalesTypeB2O    Telia Crowd Insights
     OpenQuoteButtonPage_release
     ClickingOnCPQ
     Create_Order
@@ -105,7 +105,7 @@ Product8: Telia Sign
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
     clicking on next button
-    UpdateAndAddSalesTypeB2O
+    UpdateAndAddSalesTypeB2O    Telia Sign
     OpenQuoteButtonPage_release
     ClickingOnCPQ
     Create_Order

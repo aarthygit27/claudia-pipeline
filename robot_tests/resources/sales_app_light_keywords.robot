@@ -1065,7 +1065,6 @@ ChangeThePriceBookToHDC
     sleep    5s
 
 ClickingOnCPQ
-    [Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
     click element    xpath=//a[@title='CPQ']
@@ -1173,16 +1172,19 @@ UpdateAndAddSalesType
 
 UpdateAndAddSalesTypeB2O
     [Arguments]    ${pname}=${product_name}
+    ${spinner}    Set Variable    //div[@class='center-block spinner']
     ${status}=    Run Keyword And Return Status    wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     run keyword if    ${status} == False    Reload Page
     wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Not Visible    ${spinner}    60s
     #wait until page contains element    xpath=//h1[normalize-space(.) = 'Update Products']    60s
-    sleep    10s
-    wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
+    #sleep    10s
+    #wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
     #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
     #sleep    2s
     #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
     click element    xpath=//button[normalize-space(.)='Next']
     unselect frame
     sleep    60s
@@ -1557,8 +1559,8 @@ UpdateAndAddSalesTypewith quantity
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     sleep    2s
-    #click element    ${contract_length}
-    #click element    ${contract_length}/option[@value='60']
+    click element    ${contract_length}
+    click element    ${contract_length}/option[@value='60']
     Execute Javascript    window.scrollTo(0,400)
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
