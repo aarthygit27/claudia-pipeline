@@ -202,15 +202,6 @@ Scroll Page To Location
     Execute JavaScript    window.scrollTo(${x_location},${y_location})
     Sleep    10s
 
-Scroll Page To Element
-    [Arguments]    ${element}
-    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
-    : FOR    ${i}    IN RANGE    99
-    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-    \    Execute JavaScript    window.scrollTo(0,100)
-    \    Sleep    5s
-    \    Exit For Loop If    ${status}
-
 ScrollUntillFound
     [Arguments]    ${element}
     #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
