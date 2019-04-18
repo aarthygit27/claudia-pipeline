@@ -1165,6 +1165,7 @@ UpdateAndAddSalesTypeB2O
     [Arguments]    ${pname}=${product_name}
     ${spinner}    Set Variable    //div[@class='center-block spinner']
     ${status}=    Run Keyword And Return Status    wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    log to console    UpdateAndAddSalesTypeB2O
     run keyword if    ${status} == False    Reload Page
     wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
