@@ -1170,11 +1170,11 @@ UpdateAndAddSalesTypeB2O
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Wait Until Element Is Not Visible    ${spinner}    60s
     #wait until page contains element    xpath=//h1[normalize-space(.) = 'Update Products']    60s
-    #sleep    10s
-    #wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
-    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
-    #sleep    2s
-    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    sleep    10s
+    wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
+    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
     click element    xpath=//button[normalize-space(.)='Next']
     unselect frame
