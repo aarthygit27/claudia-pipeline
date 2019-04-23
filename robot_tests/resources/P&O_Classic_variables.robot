@@ -105,3 +105,4 @@ ${Avainasiakaspalvelukeskus jatkuva palvelu}    01u6E000003TvFpQAK
 ${Telia Crowd Insights}    01u6E000003U0Z8QAK
 ${Telia Robotics}    01u6E000003U0SHQA0
 ${Telia Sign}     01u6E000004kKZ7QAM
+${CHILD_SETTINGS_new}    //div[contains(@ng-show,'childProd')][contains(text(),'Kilometrikorvaus')]/../../..//button[@title='Show Actions']
