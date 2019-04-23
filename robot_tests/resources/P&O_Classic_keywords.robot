@@ -125,7 +125,7 @@ Add Muut asiantuntijapalvelut
     click element    ${Kilometrikorvaus}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     sleep    10s
-    click element    ${CHILD_SETTINGS}
+    click element    ${CHILD_SETTINGS_new}
     input text    ${Kilometrit}    100
     sleep    5s
     Fill Laskutuksen lisätieto
@@ -947,6 +947,7 @@ Search and add Avainasiakaspalvelukeskus
 
 Add Telia Crowd Insights
     ${product_id}=    Set Variable    //div[@data-product-id='${Telia Crowd Insights}']/div/div/div/div/div/button
+    log to console    adding products and updating configuration
     sleep    10s
     click button    ${product_id}
     Click_Settings_new    Telia Crowd Insights
@@ -983,6 +984,7 @@ Laskutuksen lisätieto_2
 
 Add Telia Robotics
     ${product_id}=    Set Variable    //div[@data-product-id='${Telia Robotics}']/div/div/div/div/div/button
+    log to console    adding products and updating configuration
     sleep    10s
     click button    ${product_id}
     Click_Settings_new    Telia Robotics
@@ -991,7 +993,7 @@ Add Telia Robotics
     sleep    15s
 
 Add Telia Sign
-    Log To Console    Adding products
+    log to console    adding products and updating configuration
     ${product_id}=    Set Variable    //div[@data-product-id='${Telia Sign}']/div/div/div/div/div/button
     ${update}    Set Variable    //h2[contains(text(),'Updated Telia Sign')]
     ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
