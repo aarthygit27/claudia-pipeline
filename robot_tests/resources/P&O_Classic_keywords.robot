@@ -354,9 +354,12 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
 General test setup
     [Arguments]    ${target_account}    ${pricebook}
     Log To Console    General test setup
+    Log To Console    login
     Go To Salesforce and Login2    Sales admin User devpo
+    Log To Console    switching to classic
     switching to classic app
     #Go To    ${CLASSIC_APP}
+    Log To Console    selecting account
     Go to Account2    ${target_account}
     ${new_opportunity_name}=    Run Keyword    create new opportunity    ${pricebook}
     #${new_opportunity_name}=    Set Variable    Test Robot Order_090420191743
