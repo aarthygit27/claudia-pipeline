@@ -7,6 +7,7 @@ Library           DateTime
 Library           Collections
 Resource          ..${/}resources${/}common_variables.robot    #Library    libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
 
+
 *** Keywords ***
 Click Visible Element
     [Arguments]    ${locator}
