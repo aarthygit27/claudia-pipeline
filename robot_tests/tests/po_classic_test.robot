@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Teardown    Close All Browsers    # Suite Setup
-Test Setup        Open Browser And Go To Login Page
+Test Setup        Open Browser And Go To Login Page_PO
 Test Teardown     Logout From All Systems and Close Browser
 Resource          ..${/}resources${/}salesforce_keywords.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
