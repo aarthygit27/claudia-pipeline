@@ -1014,3 +1014,4 @@ Open Browser And Go To Login Page_PO
     [Arguments]    ${page}=${LOGIN_PAGE}
     Open Browser    ${page}    ${BROWSER}
     Maximize Browser Window
+    log to console    browser open
