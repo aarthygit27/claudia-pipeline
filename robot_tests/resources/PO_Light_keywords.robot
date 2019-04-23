@@ -23,12 +23,16 @@ Login to Salesforce as sitpo admin
 Change Price list
     [Arguments]    ${price_lists}
     ${Price List}    set variable    //span[contains(text(),'Price List')]/../../button
-    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'B2B')]/following::span[@class='deleteIcon']
+    ${B2B_Price_list_delete_icon}=    Set Variable    //label/span[text()='Price List']/../../div//a[@class='deleteAction']
     Log To Console    Change Price list
-    ScrollUntillFound    //button[@title="Edit Price List"]
+    ${element_position}    Get Vertical Position    //button[@title="Edit Price List"]
+    ${scroll_position}=    Evaluate    ${element_position}+40
+    Log To Console    ${scroll_position}
+    Scroll Page To Location    0    ${scroll_position}
+    #ScrollUntillFound    //button[@title="Edit Price List"]
     click element    //button[@title="Edit Price List"]
     sleep    10s
-    Scroll Page To Location    0    700
+    #ScrollUntillFound    ${B2B_Price_list_delete_icon}
     click element    ${B2B_Price_list_delete_icon}
     sleep    3s
     input text    //input[@title='Search Price Lists']    ${price_lists}
