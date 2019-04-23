@@ -1009,3 +1009,8 @@ Add Telia Sign
     \    Log To Console    package name = ${package_name} | Package cost = \ ${package_cost} | Status = ${status}
     click element    ${X_BUTTON}
     sleep    15s
+
+Open Browser And Go To Login Page_PO
+    [Arguments]    ${page}=${LOGIN_PAGE}
+    Open Browser    ${page}    ${BROWSER}
+    Maximize Browser Window
