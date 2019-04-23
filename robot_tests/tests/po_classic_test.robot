@@ -377,3 +377,19 @@ Telia Sign
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
+
+Telia test
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    POtest
+    Log To Console    General test setup    b2b
+    Log To Console    login
+    Go To Salesforce and Login2    Sales admin User devpo
+    Capture Page Screenshot
+    Log To Console    switching to classic
+    switching to classic app
+    #Go To    ${CLASSIC_APP}
+    Capture Page Screenshot
+    Log To Console    selecting account
+    Go to Account2    ${DEVPO_ACCOUNT}
+    sleep    10s
+    Capture Page Screenshot

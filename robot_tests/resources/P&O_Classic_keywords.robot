@@ -30,6 +30,7 @@ create new opportunity
     ${DATE}=    Get Current Date    result_format=%d%m%Y%H%M
     ${contact}=    Set Variable    //input[@id='CF00N5800000CZNtx']
     ${opportunity_name}=    Set Variable    Test Robot Order_${DATE}
+    log to console    new opportunity creation
     Click Element    ${create_new}
     Wait Until Element Is Visible    ${new_opportunity}
     Click Element    ${new_opportunity}
