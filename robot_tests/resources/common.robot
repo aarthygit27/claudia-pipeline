@@ -73,19 +73,17 @@ Logout From All Systems and Close Browser
 Open Browser And Go To Login Page
     [Arguments]    ${page}=${LOGIN_PAGE}
     Run Keyword If    '${BEHIND_PROXY}'=='True'    Open Browser And Go To Login Page (Proxy)    ${page}
-    ...    ELSE    Open Browser    ${page}    ${BROWSER}
-    # Run Keyword If    '${BEHIND_PROXY}'=='True'    Set Window Size    ${1920}    ${1080}
-    # ...
-    ...    # ELSE    Maximize Browser Window
+    ...    ELSE    Open Browser    ${page}    ${BROWSER}    # Run Keyword If    '${BEHIND_PROXY}'=='True'
+    ...    # Set Window Size    ${1920}    ${1080}    # ...    # ELSE    Maximize Browser Window
     Maximize Browser Window
 
 Open Browser And Go To Login Page (Proxy)
     [Arguments]    ${page}=${LOGIN_PAGE}
     #${proxy.https_proxy}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
-    ${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
+    #${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
     ${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
     ${proxy.https_proxy}=    Set Variable    ${PROXY}
-    Create Webdriver    ${BROWSER}    proxy=${proxy}    firefox_profile=${profile}
+    Create Webdriver    ${BROWSER}    proxy=${proxy}    #firefox_profile=${profile}
     Go To    ${page}
 
 Press Enter On
@@ -126,3 +124,12 @@ Strip Area Code From Phone Number
     [Arguments]    ${number}
     ${stripped}=    Remove String    ${number}    +358
     [Return]    ${stripped}
+
+Scroll Page To Element
+    [Arguments]    ${element}
+    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
+    : FOR    ${i}    IN RANGE    99
+    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+    \    Execute JavaScript    window.scrollTo(0,100)
+    \    Sleep    5s
+    \    Exit For Loop If    ${status}

@@ -30,6 +30,6 @@ ${Sovelluskauppa 3rd Party Apps}    01u58000005pgeDAAQ
 ${VIP:n käytössä olevat Cid-numerot}    01u58000005pvIkAAI
 ${Ohjaus Telia Numeropalveluun}    01u58000005pgPzAAI
 ${Online Asiantuntijapalvelut}    01u58000005pgPjAAI
-${PASSWORD_SALESADMIN_SITPO}    PahaPassu3
+${PASSWORD_SALESADMIN_SITPO}    PahaPassu1
 ${SALES_ADMIN_SITPO}    saleadm@teliacompany.com.sitpo
 ${Telia Sign}     01u2600000Q4Is6AAF

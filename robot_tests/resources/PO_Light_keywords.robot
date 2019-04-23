@@ -2,6 +2,7 @@
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
+Resource          ../resources/PO_Lighting_variables.robot
 
 *** Keywords ***
 General Setup
@@ -15,7 +16,7 @@ General Setup
     sleep    5s
     updating close date
     Change Price list    ${price_list}
-    ClickingOnCPQ    ${oppo_name}
+    ClickingOnCPQ
 
 Login to Salesforce as sitpo admin
     Login To Salesforce Lightning    ${SALES_ADMIN_SITPO}    ${PASSWORD_SALESADMIN_SITPO}
@@ -33,14 +34,15 @@ Change Price list
     click element    //button[@title="Edit Price List"]
     sleep    10s
     #ScrollUntillFound    ${B2B_Price_list_delete_icon}
+    #Scroll Element Into View    ${B2B_Price_list_delete_icon}
+    log to console    ${price_lists}
     click element    ${B2B_Price_list_delete_icon}
     sleep    3s
     input text    //input[@title='Search Price Lists']    ${price_lists}
     sleep    3s
     click element    //*[@title='${price_lists}']/../../..
     click element    //button[@title='Save']
-    sleep    10s
-    execute javascript    window.scrollTo(0,0)
+    #execute javascript    window.scrollTo(0,0)
     sleep    5s
 
 updating close date
@@ -53,10 +55,11 @@ updating close date
     Scroll Page To Element    ${closing_date}
     Clear Element Text    ${closing_date}
     input text    ${closing_date}    ${close_date}
+    Scroll Page To Element    //button[@title='Save']
     click element    //button[@title='Save']
     sleep    10s
-    execute javascript    window.scrollTo(0,0)
-    sleep    5s
+    #execute javascript    window.scrollTo(0,0)
+    #sleep    5s
 
 Review_page_sitpo
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
@@ -298,6 +301,8 @@ Fill Laskutuksen lisätieto
 update_setting_TeliaSign
     #    Wait Until Element Is Visible    ${iframe}    60s
     #    Select Frame    ${iframe}
+    @{package}    Set Variable    paketti M    paketti L    paketti XL    paketti S
+    @{cost}    Set Variable    62.00 €    225.00 €    625.00 €    10.00 €
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${closing}    Set Variable    //span[text()='Close']
     ${setting}    Set Variable    //button[@title='Settings']

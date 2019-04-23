@@ -60,7 +60,7 @@ Login to Salesforce Lightning
     #log to console    ${password}
     Wait Until Page Contains Element    id=username    240s
     Input Text    id=username    ${username}
-    Input Password    id=password    ${password}
+    Input text    id=password    ${password}
     Click Element    id=Login
     Sleep    40s
     ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[@class='continue']
@@ -201,15 +201,6 @@ Scroll Page To Location
     [Arguments]    ${x_location}    ${y_location}
     Execute JavaScript    window.scrollTo(${x_location},${y_location})
     Sleep    10s
-
-Scroll Page To Element
-    [Arguments]    ${element}
-    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
-    : FOR    ${i}    IN RANGE    99
-    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-    \    Execute JavaScript    window.scrollTo(0,100)
-    \    Sleep    5s
-    \    Exit For Loop If    ${status}
 
 ScrollUntillFound
     [Arguments]    ${element}
@@ -1065,7 +1056,6 @@ ChangeThePriceBookToHDC
     sleep    5s
 
 ClickingOnCPQ
-    [Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
     click element    xpath=//a[@title='CPQ']
@@ -1173,16 +1163,20 @@ UpdateAndAddSalesType
 
 UpdateAndAddSalesTypeB2O
     [Arguments]    ${pname}=${product_name}
+    ${spinner}    Set Variable    //div[@class='center-block spinner']
     ${status}=    Run Keyword And Return Status    wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    log to console    UpdateAndAddSalesTypeB2O
     run keyword if    ${status} == False    Reload Page
     wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Not Visible    ${spinner}    60s
     #wait until page contains element    xpath=//h1[normalize-space(.) = 'Update Products']    60s
     sleep    10s
     wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
-    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
-    #sleep    2s
-    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
     click element    xpath=//button[normalize-space(.)='Next']
     unselect frame
     sleep    60s
@@ -1557,8 +1551,8 @@ UpdateAndAddSalesTypewith quantity
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     sleep    2s
-    #click element    ${contract_length}
-    #click element    ${contract_length}/option[@value='60']
+    click element    ${contract_length}
+    click element    ${contract_length}/option[@value='60']
     Execute Javascript    window.scrollTo(0,400)
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
