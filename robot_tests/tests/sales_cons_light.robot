@@ -7,7 +7,7 @@ Resource          ..${/}resources${/}sales_cons_light_variables.robot
 
 *** Test Cases ***
 Lightning: Create opportunity from Account
-    [Tags]    BQA-8272    Lightning
+    [Tags]    BQA-8272    LightningFail
     Go To Salesforce and Login into Lightning
     Go To Account    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer

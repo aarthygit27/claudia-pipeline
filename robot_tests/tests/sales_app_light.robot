@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-#Test Teardown     Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -9,7 +9,7 @@ Resource          ../resources/multibella_keywords.robot
 *** Test Cases ***
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details.
-    [Tags]    BQA-8396    Lightning
+    [Tags]    BQA-8396    LightningFail
     Go To Salesforce and Login into Lightning
     Create New Master Contact
     Validate Master Contact Details
@@ -56,9 +56,9 @@ Negative - Validate Opportunity cannot be created for Group account
     Validate Opportunity cannot be created    GROUPACCOUNT
 
 Closing active opportunity as cancelled
-    [Documentation]    Select the Group account and validate that the new opportunity button
-    ...    is not displayed
-    [Tags]    BQA-8465    Lightning
+    [Documentation]     Create new opportunity and cancel the opportunity and validate that
+    ...    it cannot be updated further
+    [Tags]    BQA-8465    LightningFail
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -67,7 +67,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8466    Lightning
+    [Tags]    BQA-8466    LightningFail
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -143,7 +143,7 @@ Change Account owner for Group Account
     Should Be Equal As Strings    ${original}    ${new_owner}
 
 Remove Account owner
-    [Tags]    BQA-8524    Lightning
+    [Tags]    BQA-8524    LightningFail
     Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     sleep    10s
