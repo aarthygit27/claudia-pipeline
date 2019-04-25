@@ -25,13 +25,16 @@ Change Price list
     [Arguments]    ${price_lists}
     ${Price List}    set variable    //span[contains(text(),'Price List')]/../../button
     ${B2B_Price_list_delete_icon}=    Set Variable    //label/span[text()='Price List']/../../div//a[@class='deleteAction']
+    ${edit pricelist}    Set Variable    //button[@title='Edit Price List']
     Log To Console    Change Price list
-    ${element_position}    Get Vertical Position    //button[@title="Edit Price List"]
-    ${scroll_position}=    Evaluate    ${element_position}+40
+    sleep    10s
+    Scroll Page To Element    ${edit pricelist}
+    ${element_position}    Get Vertical Position    ${edit pricelist}
+    ${scroll_position}=    Evaluate    ${element_position}+ 5
     Log To Console    ${scroll_position}
     Scroll Page To Location    0    ${scroll_position}
-    #ScrollUntillFound    //button[@title="Edit Price List"]
-    click element    //button[@title="Edit Price List"]
+    #ScrollUntillFound    ${edit pricelist}
+    click element    ${edit pricelist}
     sleep    10s
     #ScrollUntillFound    ${B2B_Price_list_delete_icon}
     #Scroll Element Into View    ${B2B_Price_list_delete_icon}
