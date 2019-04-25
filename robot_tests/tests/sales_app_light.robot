@@ -16,7 +16,7 @@ Add new contact - Master
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395    Lightning
+    [Tags]    BQA-8395    LightningFail
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact Details
@@ -82,7 +82,7 @@ Check Attributes/Business Account are named right in Sales Force UI
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    Lightning
+    [Tags]    BQA-8483    LightningFail
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
