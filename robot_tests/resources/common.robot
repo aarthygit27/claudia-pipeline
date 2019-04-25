@@ -7,6 +7,7 @@ Library           DateTime
 Library           Collections
 Resource          ..${/}resources${/}common_variables.robot    #Library    libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
 
+
 *** Keywords ***
 Click Visible Element
     [Arguments]    ${locator}
@@ -73,14 +74,16 @@ Logout From All Systems and Close Browser
 Open Browser And Go To Login Page
     [Arguments]    ${page}=${LOGIN_PAGE}
     Run Keyword If    '${BEHIND_PROXY}'=='True'    Open Browser And Go To Login Page (Proxy)    ${page}
-    ...    ELSE    Open Browser    ${page}    ${BROWSER}    # Run Keyword If    '${BEHIND_PROXY}'=='True'
-    ...    # Set Window Size    ${1920}    ${1080}    # ...    # ELSE    Maximize Browser Window
+    ...    ELSE    Open Browser    ${page}    ${BROWSER}
+    # Run Keyword If    '${BEHIND_PROXY}'=='True'    Set Window Size    ${1920}    ${1080}
+    # ...
+    ...    # ELSE    Maximize Browser Window
     Maximize Browser Window
 
 Open Browser And Go To Login Page (Proxy)
     [Arguments]    ${page}=${LOGIN_PAGE}
     #${proxy.https_proxy}=    Set Variable    proxy-fi.ddc.teliasonera.net:8080
-    profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
+    ${profile}=    Evaluate    selenium.webdriver.firefox.firefox_profile.FirefoxProfile(profile_directory="/home/jenkins/.mozilla/firefox/al34m1vz.default")    selenium
     ${proxy}=    Evaluate    sys.modules['selenium.webdriver'].Proxy()    sys, selenium.webdriver
     ${proxy.https_proxy}=    Set Variable    ${PROXY}
     Create Webdriver    ${BROWSER}    proxy=${proxy}    firefox_profile=${profile}
