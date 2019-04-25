@@ -21,9 +21,9 @@ ${SUCCESS_MESSAGE}                          //div[@class='forceVisualMessageQueu
 ${ACCOUNT_RELATED}                         //span[text()='Related']//parent::a
 #${RELATED_OPPORTUNITY}                     //*[@class='primaryField']
 ${RELATED_OPPORTUNITY}                      //tbody
-${OPPORTUNITYNAME_TAB}                     //*[@id='primaryField']
+${OPPORTUNITYNAME_TAB}                     //*[contains(@class,'slds-page-header')]
 ${OPPORTUNITIES_SECTION}                   //li//span[text()='Opportunities']
-${SEARCH_INPUT}                            //input[@name='search-input']
+${SEARCH_INPUT}                            //input[contains(@name,'search-input')]
 ${RESULTS_TABLE}                            //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SALES_CONSOLE_MENU}                       //*[@title='Show Navigation Menu']
 ${CONTACTS}                                 //div[@class="slds-context-bar__primary navLeft"]//span//span[text()="Contacts"]

@@ -83,7 +83,7 @@ Search Salesforce
     Press Enter On  ${SEARCH_SALESFORCE}
     Sleep    10s
     ${IsVisible}=   Run Keyword And Return Status    Element Should Be Visible   ${TABS_OPENED}//a[contains(@title, 'Search')]  20s
-    run keyword unless  ${IsVisible}        Search Salesforce
+    run keyword unless  ${IsVisible}        Search Salesforce      ${item}
     Wait Until Page Contains element    xpath=${TABS_OPENED}//a[contains(@title, 'Search')]    30S
 
 Select Account
@@ -286,7 +286,7 @@ Select Correct View Type
 Filter Opportunities By
     [Arguments]     ${field}    ${value}
     #${Count}=    get element count    ${RESULTS_TABLE}
-    Click Element      //input[@name='search-input']
+    Click Element      //input[contains(@name,'search-input')]
     Wait Until Page Contains Element        ${SEARCH_INPUT}     20s
     Input Text          xpath=${SEARCH_INPUT}      ${value}
     Press Key       xpath=${SEARCH_INPUT}     \\13

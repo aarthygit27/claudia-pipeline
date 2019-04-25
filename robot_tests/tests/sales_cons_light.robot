@@ -1,4 +1,5 @@
 *** Settings ***
+
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
@@ -7,7 +8,7 @@ Resource          ..${/}resources${/}sales_cons_light_variables.robot
 
 *** Test Cases ***
 Lightning: Create opportunity from Account
-    [Tags]    BQA-8272    LightningFail
+    [Tags]    BQA-8272    Lightning
     Go To Salesforce and Login into Lightning
     Go To Account    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer
