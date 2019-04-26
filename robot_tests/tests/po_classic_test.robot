@@ -403,4 +403,3 @@ Telia Robotics sitpo
     Add Telia Robotics    sitpo
     create order sitpo    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
-    checking the orchestration plan    ${order_id}
