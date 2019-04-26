@@ -1148,6 +1148,7 @@ view orchestration plan sitpo
     ${orchestration_plans}    set variable    //span[@class='listTitle'][text()='Orchestration Plans']
     ${orchestraion_plan_details}    set variable    //h2[text()='Orchestration Plan Detail']
     ${orchestration_plan_name}    set variable    //th[text()='Orchestration Plan Name']/../../tr/th[contains(@class,'dataCell')]/a
+    Log To Console    view orchestration plan sitpo
     sleep    60s
     Wait Until Element Is Visible    ${orchestration_plans}    60s
     click element    ${orchestration_plans}
