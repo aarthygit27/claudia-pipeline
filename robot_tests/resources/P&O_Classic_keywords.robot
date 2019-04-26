@@ -112,7 +112,7 @@ Add Muut asiantuntijapalvelut
     click button    ${product_id}
     sleep    10s
     Capture Page Screenshot
-    Click_Settings_new     Muut asiantuntijapalvelut
+    Click_Settings_new    Muut asiantuntijapalvelut
     #Click Button    ${SETTINGS}
     sleep    5s
     input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
@@ -964,22 +964,22 @@ Laskutuksen lisätieto_2
     ${heading}    Set Variable    //h2[contains(text(),'Updated Telia')]
     Capture Page Screenshot
     Wait Until Element Is Visible    ${Laskutuksen lisätieto_1}    60s
-    input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
+    input text    ${Laskutuksen lisätieto_1}    L1
     Capture Page Screenshot
     ${update}    Run Keyword And Return Status    Wait Until Element Is Visible    ${heading}    60s
     Capture Page Screenshot
-    Run Keyword If    ${update} == False    input text    ${Laskutuksen lisätieto_1}    test order by robot framework.L1
+    Run Keyword If    ${update} == False    input text    ${Laskutuksen lisätieto_1}    L1
     sleep    3s
-    Input Text    ${Laskutuksen lisätieto_2}    test order by robot framework.L2
+    Input Text    ${Laskutuksen lisätieto_2}    L2
     Capture Page Screenshot
     sleep    5s
     Capture Page Screenshot
     sleep    3s
-    input text    ${Laskutuksen lisätieto_3}    test order by robot framework.L3
+    input text    ${Laskutuksen lisätieto_3}    L3
     sleep    3s
-    input text    ${Laskutuksen lisätieto_4}    test order by robot framework.L4
+    input text    ${Laskutuksen lisätieto_4}    L4
     sleep    3s
-    input text    ${Laskutuksen lisätieto_5}    test order by robot framework.L5
+    input text    ${Laskutuksen lisätieto_5}    L5
     sleep    3s
 
 Add Telia Robotics
