@@ -945,7 +945,7 @@ Search and add Avainasiakaspalvelukeskus
 Add Telia Crowd Insights
     [Arguments]    ${env}=devpo
     Adding Product    Telia Crowd Insights
-    run keyword if     '${env}'=='sitpo'    Click_Settings    Telia Crowd Insights
+    run keyword if    '${env}'=='sitpo'    Click_Settings    Telia Crowd Insights
     ...    ELSE    Click_Settings_new    Telia Crowd Insights
     Laskutuksen lisätieto_2
     click element    ${X_BUTTON}
@@ -981,7 +981,7 @@ Laskutuksen lisätieto_2
 Add Telia Robotics
     [Arguments]    ${env}=devpo
     Adding Product    Telia Robotics
-    run keyword if     '${env}'=='sitpo'    Click_Settings    Telia Robotics
+    run keyword if    '${env}'=='sitpo'    Click_Settings    Telia Robotics
     ...    ELSE    Click_Settings_new    Telia Robotics
     Laskutuksen lisätieto_2
     click element    ${X_BUTTON}
@@ -996,7 +996,7 @@ Add Telia Sign
     @{cost}    Set Variable    62.00 €    225.00 €    625.00 €    10.00 €
     sleep    10s
     Adding Product    Telia Sign
-    run keyword if     '${env}'=='sitpo'    Click_Settings    Telia Sign
+    run keyword if    '${env}'=='sitpo'    Click_Settings    Telia Sign
     ...    ELSE    Click_Settings_new    Telia Sign
     Wait Until Element Is Visible    ${Paketti}    60s
     : FOR    ${i}    IN RANGE    9999
@@ -1037,6 +1037,7 @@ Login to Salesforce as Sales admin User sitpo
 
 create new opportunity sitpo
     [Arguments]    ${pricebook}
+    ${Details}    set variable    //span[@class='optionLabel'][text()='Details']
     ${opp_tab}    Set Variable    //span[text()='Opportunities']
     ${new_opportunity}=    set variable    //input[@name='newOpp']
     ${create_new}=    set variable    //div[@id='createNewButton']
@@ -1051,6 +1052,9 @@ create new opportunity sitpo
     ${contact}=    Set Variable    //input[@id='CF00N5800000CZNtx']
     ${opportunity_name}=    Set Variable    Test Robot Order_${DATE}
     log to console    new opportunity creation
+    sleep    10s
+    Wait Until Element Is Visible    ${Details}    60s
+    click element    ${Details}
     Wait Until Element Is Visible    ${opp_tab}    60s
     Click Element    ${opp_tab}
     Wait Until Element Is Visible    ${new_opportunity}
