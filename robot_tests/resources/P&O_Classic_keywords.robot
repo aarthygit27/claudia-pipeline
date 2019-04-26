@@ -1051,6 +1051,7 @@ create new opportunity sitpo
     ${contact}=    Set Variable    //input[@id='CF00N5800000CZNtx']
     ${opportunity_name}=    Set Variable    Test Robot Order_${DATE}
     log to console    new opportunity creation
+    Wait Until Element Is Visible    ${opp_tab}    60s
     Click Element    ${opp_tab}
     Wait Until Element Is Visible    ${new_opportunity}
     Click Element    ${new_opportunity}
