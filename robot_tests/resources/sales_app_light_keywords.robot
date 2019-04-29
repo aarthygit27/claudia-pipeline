@@ -478,6 +478,11 @@ Edit Opportunity
 Select option from Dropdown
     [Arguments]    ${list}    ${item}
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${item}
+    Scroll Page To Element    ${list}
+    ${element_position}    Get Vertical Position    ${list}
+    ${scroll_position}=    Evaluate    ${element_position}+ 5
+    Log To Console    ${scroll_position}
+    Scroll Page To Location    0    ${scroll_position}
     click visible element    ${list}
     Press Key    ${list}    ${item}
     Sleep    3s
