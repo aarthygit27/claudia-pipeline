@@ -1546,7 +1546,7 @@ UpdateAndAddSalesTypewith quantity
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Previous')]/../..//button[contains(@class,'form-control')][contains(text(),'Next')]
     ${contract_length}=    Set Variable    ${product_list}//following-sibling::td/select[contains(@ng-model,'p.ContractLength')]
     ${quantity}=    Set Variable    ${product_list}//following-sibling::td/input[@ng-model='p.Quantity']
-    log to console    UpdateAndAddSalesType
+    log to console    UpdateAndAddSalesType with quantity
     sleep    30s
     #${reporting}    Run Keyword And Return Status    Wait Until Page Contains    Suggested Reporting Products    60s
     #Run Keyword If    ${reporting} == True    Reporting Products
@@ -1642,7 +1642,9 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
 Reporting Products
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    Run Keyword If    ${status} == False    Reload Page
+    Log To Console    Reporting Products
+    Run Keyword If    ${status} == False    execute javascript    window.location.reload(true)
+    #Run Keyword If    ${status} == False    Reload Page
     sleep    20s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
