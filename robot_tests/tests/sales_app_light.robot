@@ -498,6 +498,6 @@ reload page test
     select frame    ${frame}
     sleep    10s
     Capture Page Screenshot
-    Get Window Size
+    # Window Size
     Execute Javascript    window.location.reload(false);
     Capture Page Screenshot
