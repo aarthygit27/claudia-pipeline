@@ -1,7 +1,8 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Resource          ../resources/sales_app_light_keywords.robot    #Test Teardown    Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
+Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 
@@ -55,7 +56,7 @@ Negative - Validate Opportunity cannot be created for Group account
     Validate Opportunity cannot be created    GROUPACCOUNT
 
 Closing active opportunity as cancelled
-    [Documentation]    Create new opportunity and cancel the opportunity and validate that
+    [Documentation]     Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
     [Tags]    BQA-8465    Lightning
     Go To Salesforce and Login into Lightning
