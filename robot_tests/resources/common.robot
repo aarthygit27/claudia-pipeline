@@ -74,7 +74,7 @@ Open Browser And Go To Login Page
     [Arguments]    ${page}=${LOGIN_PAGE}
     Open Browser    ${page}    ${BROWSER}
     Maximize Browser Window
-    log to console \ \ \     browser open
+    log to console    browser open
 
 Open Browser And Go To Login Page (Proxy)
     [Arguments]    ${page}=${LOGIN_PAGE}
