@@ -1633,7 +1633,7 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
     Wait Until Element Is Visible    ${SETTINGS}    60s
     click element    ${SETTINGS}
     sleep    4s
-    Select From List    ${Toimitustapa}    Vakiotoimitus
+    Select From List By Value    ${Toimitustapa}    Vakiotoimitus
     sleep    5s
     click element    ${X_BUTTON}
     Wait Until Element Is Visible    ${Next_Button}    60s
