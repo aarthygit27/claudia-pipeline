@@ -142,6 +142,7 @@ Change Account owner for Group Account
     Should Be Equal As Strings    ${original}    ${new_owner}
 
 Remove Account owner
+    [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
     [Tags]    BQA-8524    Lightning
     Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
