@@ -1643,7 +1643,7 @@ Reporting Products
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Log To Console    Reporting Products
-    Run Keyword If    ${status} == False    execute javascript    window.location.reload(true)
+    Run Keyword If    ${status} == False    execute javascript    window.location.reload(false)
     #Run Keyword If    ${status} == False    Reload Page
     sleep    20s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
