@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -293,7 +293,7 @@ Create B2B Order
     Go To Entity    ${oppo_name}
     ChangeThePriceBookToHDC    B2B Pricebook
     ##B2O pricebook
-    ClickingOnCPQ    ${oppo_name}
+    ClickingOnCPQ
     AddProductToCart    Alerta projektointi
     ##B2O Other Services
     Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
