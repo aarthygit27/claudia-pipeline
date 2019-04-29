@@ -7,7 +7,6 @@ Library           DateTime
 Library           Collections
 Resource          ..${/}resources${/}common_variables.robot    #Library    libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
 
-
 *** Keywords ***
 Click Visible Element
     [Arguments]    ${locator}
@@ -73,12 +72,9 @@ Logout From All Systems and Close Browser
 
 Open Browser And Go To Login Page
     [Arguments]    ${page}=${LOGIN_PAGE}
-    Run Keyword If    '${BEHIND_PROXY}'=='True'    Open Browser And Go To Login Page (Proxy)    ${page}
-    ...    ELSE    Open Browser    ${page}    ${BROWSER}
-    # Run Keyword If    '${BEHIND_PROXY}'=='True'    Set Window Size    ${1920}    ${1080}
-    # ...
-    ...    # ELSE    Maximize Browser Window
+    Open Browser    ${page}    ${BROWSER}
     Maximize Browser Window
+    log to console \ \ \     browser open
 
 Open Browser And Go To Login Page (Proxy)
     [Arguments]    ${page}=${LOGIN_PAGE}
