@@ -38,9 +38,9 @@ Go To Salesforce and Login into Lightning
     Go to Sales App
     Reset to Home
     Click Clear All Notifications
-    Sleep      30s
+    Sleep    30s
     ${error}=    Run Keyword And Return Status    Element Should Be Visible    //div[@class()='modal-container slds-modal__container']
-    Run Keyword If    ${error}    click button      //button[@title='OK']
+    Run Keyword If    ${error}    click button    //button[@title='OK']
 
 Go To Salesforce and Login into Lightning User
     [Arguments]    ${user}=DigiSales Admin User
@@ -278,16 +278,16 @@ Filter Opportunities By
 
 Go to More tab and select option
     [Arguments]    ${option}
-    Click Visible Element       //span[text()='More']
-    Sleep       5s
-    Wait Until Page Contains element        //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
-    Force click element           //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
-    Sleep       5s
-    Wait Until Page Contains Element            //span[text()='${option}']
+    Click Visible Element    //span[text()='More']
+    Sleep    5s
+    Wait Until Page Contains element    //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
+    Force click element    //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
+    Sleep    5s
+    Wait Until Page Contains Element    //span[text()='${option}']
 
 Go to Contacts
     ${isContactTabVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${CONTACTS_TAB}
-    run keyword unless      ${isContactTabVisible}      Go to More tab and select option        Contacts
+    run keyword unless    ${isContactTabVisible}    Go to More tab and select option    Contacts
     Click Visible Element    ${CONTACTS_TAB}
     Sleep    30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
@@ -904,6 +904,7 @@ Close Notification
     run keyword if    ${visible}    Click Element    xpath=${CLOSE_NOTIFICATION}
 
 Change to original owner
+    [Documentation]    We are changing the account owner to Sales Admin in case the account owner is GESB Integration
     Click Button    //button[@title='Change Owner']
     sleep    8s
     Element Should Be Enabled    //input[@title='Search People']
