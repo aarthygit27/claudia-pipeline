@@ -377,3 +377,29 @@ Telia Sign
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
+
+Telia Crowd Insights_sitpo
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    sitpo_classic
+    General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
+    Search Products    Telia Crowd Insights
+    Add Telia Crowd Insights    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Telia Sign sitpo
+    [Tags]    sitpo_classic
+    General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
+    Search Products    Telia Sign
+    Add Telia Sign    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Telia Robotics sitpo
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    sitpo_classic
+    General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
+    Search Products    Telia Robotics
+    Add Telia Robotics    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo

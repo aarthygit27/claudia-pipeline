@@ -1655,7 +1655,7 @@ Closing Opportunity as Won with FYR
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
     Go To Entity    ${oppo_name}
-    ClickingOnCPQ    ${oppo_name}
+    ClickingOnCPQ
     searching and adding Telia Viestintäpalvelu VIP (24 kk)
     updating settings Telia Viestintäpalvelu VIP (24 kk)
     #search products    Telia Taloushallinto XXL-paketti
