@@ -1658,7 +1658,8 @@ Closing Opportunity as Won with FYR
     ${FYR}=    set variable    //span[@title='FYR Total']/../div
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    ${oppo_name}    set variable    Test Robot Order_ 20190429-143334
     Go To Entity    ${oppo_name}
     ClickingOnCPQ
     searching and adding Telia Viestintäpalvelu VIP (24 kk)    Telia Viestintäpalvelu VIP (24 kk)
