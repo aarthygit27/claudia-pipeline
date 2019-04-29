@@ -1603,8 +1603,9 @@ Update closing dependencies
     click element    ${stage_name}    Closed Won
 
 searching and adding Telia Viestintäpalvelu VIP (24 kk)
+    [Arguments]    ${product_name}
     search products    Telia Viestintäpalvelu VIP (24 kk)
-    ${product}=    Set Variable    //div[@data-product-id='${Telia_Viestintäpalvelu_VIP}']/div/div/div/div/div/button
+    ${product}=    Set Variable    //span[@title='${product_name}']/../../..//button
     #select frame    xpath=//div[contains(@class,'slds')]/iframe
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
@@ -1642,7 +1643,7 @@ Closing Opportunity as Won with FYR
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
     Go To Entity    ${oppo_name}
     ClickingOnCPQ
-    searching and adding Telia Viestintäpalvelu VIP (24 kk)
+    searching and adding Telia Viestintäpalvelu VIP (24 kk)    Telia Viestintäpalvelu VIP (24 kk)
     updating settings Telia Viestintäpalvelu VIP (24 kk)
     #search products    Telia Taloushallinto XXL-paketti
     #Adding Telia Taloushallinto XXL-paketti
