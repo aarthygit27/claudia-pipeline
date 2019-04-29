@@ -38,6 +38,9 @@ Go To Salesforce and Login into Lightning
     Go to Sales App
     Reset to Home
     Click Clear All Notifications
+    Sleep      30s
+    ${error}=    Run Keyword And Return Status    Element Should Be Visible    //div[@class()='modal-container slds-modal__container']
+    Run Keyword If    ${error}    click button      //button[@title='OK']
 
 Go To Salesforce and Login into Lightning User
     [Arguments]    ${user}=DigiSales Admin User
@@ -273,7 +276,18 @@ Filter Opportunities By
     Force click element    ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
     #Run Keyword If    ${Count} > 1    click visible element    xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
+Go to More tab and select option
+    [Arguments]    ${option}
+    Click Visible Element       //span[text()='More']
+    Sleep       5s
+    Wait Until Page Contains element        //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
+    Force click element           //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
+    Sleep       5s
+    Wait Until Page Contains Element            //span[text()='${option}']
+
 Go to Contacts
+    ${isContactTabVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${CONTACTS_TAB}
+    run keyword unless      ${isContactTabVisible}      Go to More tab and select option        Contacts
     Click Visible Element    ${CONTACTS_TAB}
     Sleep    30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
