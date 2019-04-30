@@ -994,6 +994,7 @@ Add Telia Sign
     ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
     @{package}    Set Variable    paketti M    paketti L    paketti XL    paketti S
     @{cost}    Set Variable    62.00 €    225.00 €    625.00 €    10.00 €
+    ${recurring_cost}    Set Variable    //span[contains(@ng-class,'cpq-item-discount-price')]
     sleep    10s
     Adding Product    Telia Sign
     run keyword if    '${env}'=='sitpo'    Click_Settings    Telia Sign
@@ -1008,7 +1009,10 @@ Add Telia Sign
     \    Wait Until Element Is Visible    ${update}    60s
     \    #click element    //button[@ng-click='importedScope.close()']
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${money}    60s
-    \    Log To Console    package name = ${package_name} | Package cost = \ ${package_cost} | Status = ${status}
+    \    ${recurring_cost_value}    Get Text    ${recurring_cost}
+    \    Log To Console    package name = ${package_name} | Package cost = ${package_cost} | Status = ${status} | \ The recurring cost displayed is ${recurring_cost_value}
+    ${final package}    Evaluate    random.choice(${package})    random
+    Select From List By Value    ${Paketti}    ${final package}
     click element    ${X_BUTTON}
     sleep    15s
 
