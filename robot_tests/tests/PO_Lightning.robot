@@ -49,7 +49,7 @@ Product4:Ethernet Nordic E-Line EPL
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
     General Setup    B2O
-    Searching and adding product    Ethernet Nordic E-Line EPL
+    Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
     update_setting_Ethernet Nordic E-LAN EVP-LAN
     clicking on next button
     UpdateAndAddSalesTypeB2O
@@ -59,7 +59,7 @@ Product5: Ethernet Nordic E-LAN EVP-LAN
 
 Product6: Ethernet Nordic HUB/E-NNI
     General Setup    B2O
-    Searching and adding product    Ethernet Nordic E-Line EPL
+    Searching and adding product    Ethernet Nordic HUB/E-NNI
     update_setting_Ethernet Nordic HUB/E-NNI
     clicking on next button
     UpdateAndAddSalesTypeB2O

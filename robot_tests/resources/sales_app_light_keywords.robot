@@ -1641,14 +1641,16 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
 
 Reporting Products
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
-    #${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Log To Console    Reporting Products
-    #Run Keyword If    ${status} == False    execute javascript    window.location.reload(false);
+    Run Keyword If    ${status} == False    execute javascript    browser.runtime.reload()
     #Run Keyword If    ${status} == False    Reload Page
-    execute javascript    window.location.reload(false);
-    sleep    20s
+    execute javascript    window.stop();
+    #sleep    20s
+    #Wait Until Element Is Visible    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Force click element    ${next_button}
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
     unselect frame
