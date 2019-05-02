@@ -361,10 +361,11 @@ Telia Crowd Insights
 
 Telia Robotics
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO    POlatest
+    [Tags]    PO2new    PO    POlatest    robotics
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Robotics
     Add Telia Robotics
+    update telia robotics price devpo
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
@@ -397,9 +398,10 @@ Telia Sign sitpo
 
 Telia Robotics sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    sitpo_classic
+    [Tags]    sitpo_classic    robotics
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Robotics
     Add Telia Robotics    sitpo
+    update telia robotics price sitpo
     create order sitpo    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo

@@ -1012,6 +1012,7 @@ Add Telia Sign
     \    ${recurring_cost_value}    Get Text    ${recurring_cost}
     \    Log To Console    package name = ${package_name} | Package cost = ${package_cost} | Status = ${status} | \ The recurring cost displayed is ${recurring_cost_value}
     ${final package}    Evaluate    random.choice(${package})    random
+    Log    the package selected is "${final package}"
     Select From List By Value    ${Paketti}    ${final package}
     click element    ${X_BUTTON}
     sleep    15s
@@ -1165,5 +1166,40 @@ view orchestration plan sitpo
     sleep    10s
     Wait Until Element Is Visible    ${orchestraion_plan_details}    60s
     Execute Javascript    window.scrollTo(0,50)
+    sleep    10s
+    Capture Page Screenshot
+
+update telia robotics price sitpo
+    ${recurring charge}    Set Variable    //span[contains(@ng-class,'switchpaymentmode')]
+    ${adjustments}    Set Variable    //h2[text()='Adjustment']
+    ${price}    Set Variable    //input[@id='adjustment-input-01']
+    ${apply button}    Set Variable    //button[contains(text(),'Apply')]
+    Log To Console    update telia robotics price sitpo
+    Wait Until Element Is Visible    ${recurring charge}    60s
+    click element    ${recurring charge}
+    Wait Until Element Is Visible    ${adjustments}    60s
+    Wait Until Element Is Visible    ${price}    60s
+    input text    ${price}    30
+    click element    ${apply button}
+    sleep    10s
+    Capture Page Screenshot
+
+update telia robotics price devpo
+    ${recurring charge}    Set Variable    //span[contains(@ng-class,'switchpaymentmode')]
+    ${recurring_charge_edit}    Set Variable    //button[contains(@ng-click,'applyadjustment')]
+    ${adjustments}    Set Variable    //h2[text()='Adjustment']
+    ${price}    Set Variable    //input[@id='adjustment-input-01']
+    ${apply button}    Set Variable    //button[contains(text(),'Apply')]
+    ${charge_type_selector}    Set Variable    //button[contains(@ng-click,'dropdownAdjustmentOpen')]
+    ${amount}    set variable    //span[text()='Amount']
+    log to console    update telia robotics price devpo
+    Wait Until Element Is Visible    ${recurring charge}    60s
+    click element    ${recurring charge}
+    Wait Until Element Is Visible    ${recurring_charge_edit}    60s
+    click element    ${recurring_charge_edit}
+    Wait Until Element Is Visible    ${adjustments}    60s
+    Wait Until Element Is Visible    ${price}    60s
+    input text    ${price}    30
+    click element    ${apply button}
     sleep    10s
     Capture Page Screenshot
