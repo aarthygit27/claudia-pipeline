@@ -350,7 +350,8 @@ General test setup
     [Arguments]    ${target_account}    ${pricebook}    ${env}=devpo
     Log To Console    General test setup
     Log To Console    login
-    Go To Salesforce and Login2    Sales admin User sitpo
+    Run Keyword If    '${env}'=='sitpo'    Go To Salesforce and Login2    Sales admin User sitpo
+    ...    ELSE    Run Keyword    Go To Salesforce and Login2    Sales admin User devpo
     Log To Console    switching to classic
     switching to classic app
     #Go To    ${CLASSIC_APP}
