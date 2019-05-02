@@ -405,3 +405,12 @@ Telia Robotics sitpo
     update telia robotics price sitpo
     create order sitpo    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
+
+Telia Robotics devpo test
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    sitpo_classic    robotics
+    Go To Salesforce and Login2    Sales admin User devpo
+    sleep    10s
+    go to    https://telia-fi--devpo--vlocity-cmt.cs85.visual.force.com/apex/hybridcpq?id=0066E000006ZcPr
+    sleep    10s
+    update telia robotics price devpo

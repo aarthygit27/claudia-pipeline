@@ -1199,6 +1199,9 @@ update telia robotics price devpo
     Wait Until Element Is Visible    ${recurring_charge_edit}    60s
     click element    ${recurring_charge_edit}
     Wait Until Element Is Visible    ${adjustments}    60s
+    sleep    5s
+    click element    ${charge_type_selector}
+    click element    ${amount}
     Wait Until Element Is Visible    ${price}    60s
     input text    ${price}    30
     click element    ${apply button}
