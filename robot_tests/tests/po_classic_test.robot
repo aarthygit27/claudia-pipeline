@@ -361,7 +361,7 @@ Telia Crowd Insights
 
 Telia Robotics
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO    POlatest    robotics
+    [Tags]    PO2new    PO    POlatest    robotics_devpo
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Robotics
     Add Telia Robotics
@@ -398,7 +398,7 @@ Telia Sign sitpo
 
 Telia Robotics sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    sitpo_classic    robotics_devpo
+    [Tags]    sitpo_classic    robotics
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Robotics
     Add Telia Robotics    sitpo
