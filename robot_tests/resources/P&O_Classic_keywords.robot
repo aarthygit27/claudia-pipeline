@@ -1063,7 +1063,7 @@ create new opportunity sitpo
     click element    ${Details}
     Wait Until Element Is Visible    ${opp_tab}    60s
     Click Element    ${opp_tab}
-    Wait Until Element Is Visible    ${new_opportunity}
+    Wait Until Element Is Visible    ${new_opportunity}    60s
     Click Element    ${new_opportunity}
     Wait Until Element Is Visible    ${continue_button}    60s
     Capture Page Screenshot
