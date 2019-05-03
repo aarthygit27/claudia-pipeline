@@ -192,7 +192,8 @@ create order
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
     sleep    10s
-    Select From List By Value    ${sales_type}    New Money-New Services
+    ${status}    Run Keyword And Return Status    wait until element is visible    ${sales_type}    30s
+    Run Keyword If    ${status} == True    Select From List By Value    ${sales_type}    New Money-New Services
     Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
