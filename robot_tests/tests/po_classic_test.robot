@@ -361,7 +361,7 @@ Telia Crowd Insights
 
 Telia Robotics
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO    POlatest    robotics_devpo
+    [Tags]    PO2new    PO    POlatest    robotics
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Robotics
     Add Telia Robotics
