@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation     Suite description
-Test Setup        Open Browser And Go To Login Page
+Test Setup        #Open Browser And Go To Login Page
 Test Teardown     #Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
@@ -104,8 +104,17 @@ Product8: Telia Sign
     General Setup    B2B
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
+    update telia robotics price sitpo
     clicking on next button
     UpdateAndAddSalesTypeB2O    Telia Sign
     OpenQuoteButtonPage_release
     ClickingOnCPQ
     Create_Order
+
+calucation test
+    ${b}    set variable    1,500.01
+    ${d}    convert to number    ${b}
+    ${a}    set variable    900.00
+    ${e}    convert to number    ${a}
+    ${c}    Evaluate    ${d} + ${e}
+    log to console    ${c}
