@@ -192,7 +192,8 @@ create order
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
     sleep    10s
-    Select From List By Value    ${sales_type}    New Money-New Services
+    ${status}    Run Keyword And Return Status    wait until element is visible    ${sales_type}    30s
+    Run Keyword If    ${status} == True    Select From List By Value    ${sales_type}    New Money-New Services
     Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
@@ -350,7 +351,8 @@ General test setup
     [Arguments]    ${target_account}    ${pricebook}    ${env}=devpo
     Log To Console    General test setup
     Log To Console    login
-    Go To Salesforce and Login2    Sales admin User sitpo
+    Run Keyword If    '${env}'=='sitpo'    Go To Salesforce and Login2    Sales admin User sitpo
+    ...    ELSE    Run Keyword    Go To Salesforce and Login2    Sales admin User devpo
     Log To Console    switching to classic
     switching to classic app
     #Go To    ${CLASSIC_APP}
@@ -994,6 +996,7 @@ Add Telia Sign
     ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
     @{package}    Set Variable    paketti M    paketti L    paketti XL    paketti S
     @{cost}    Set Variable    62.00 €    225.00 €    625.00 €    10.00 €
+    ${recurring_cost}    Set Variable    //span[contains(@ng-class,'cpq-item-discount-price')]
     sleep    10s
     Adding Product    Telia Sign
     run keyword if    '${env}'=='sitpo'    Click_Settings    Telia Sign
@@ -1008,7 +1011,11 @@ Add Telia Sign
     \    Wait Until Element Is Visible    ${update}    60s
     \    #click element    //button[@ng-click='importedScope.close()']
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${money}    60s
-    \    Log To Console    package name = ${package_name} | Package cost = \ ${package_cost} | Status = ${status}
+    \    ${recurring_cost_value}    Get Text    ${recurring_cost}
+    \    Log To Console    package name = ${package_name} | Package cost = ${package_cost} | Status = ${status} | \ The recurring cost displayed is ${recurring_cost_value}
+    ${final package}    Evaluate    random.choice(${package})    random
+    Log    the package selected is "${final package}"
+    Select From List By Value    ${Paketti}    ${final package}
     click element    ${X_BUTTON}
     sleep    15s
 
@@ -1057,7 +1064,7 @@ create new opportunity sitpo
     click element    ${Details}
     Wait Until Element Is Visible    ${opp_tab}    60s
     Click Element    ${opp_tab}
-    Wait Until Element Is Visible    ${new_opportunity}
+    Wait Until Element Is Visible    ${new_opportunity}    60s
     Click Element    ${new_opportunity}
     Wait Until Element Is Visible    ${continue_button}    60s
     Capture Page Screenshot
@@ -1161,5 +1168,43 @@ view orchestration plan sitpo
     sleep    10s
     Wait Until Element Is Visible    ${orchestraion_plan_details}    60s
     Execute Javascript    window.scrollTo(0,50)
+    sleep    10s
+    Capture Page Screenshot
+
+update telia robotics price sitpo
+    ${recurring charge}    Set Variable    //span[contains(@ng-class,'switchpaymentmode')]
+    ${adjustments}    Set Variable    //h2[text()='Adjustment']
+    ${price}    Set Variable    //input[@id='adjustment-input-01']
+    ${apply button}    Set Variable    //button[contains(text(),'Apply')]
+    Log To Console    update telia robotics price sitpo
+    Wait Until Element Is Visible    ${recurring charge}    60s
+    click element    ${recurring charge}
+    Wait Until Element Is Visible    ${adjustments}    60s
+    Wait Until Element Is Visible    ${price}    60s
+    input text    ${price}    30
+    click element    ${apply button}
+    sleep    10s
+    Capture Page Screenshot
+
+update telia robotics price devpo
+    ${recurring charge}    Set Variable    //span[contains(@ng-class,'switchpaymentmode')]
+    ${recurring_charge_edit}    Set Variable    //button[contains(@ng-click,'applyadjustment')]
+    ${adjustments}    Set Variable    //h2[text()='Adjustment']
+    ${price}    Set Variable    //input[@id='adjustment-input-01']
+    ${apply button}    Set Variable    //button[contains(text(),'Apply')]
+    ${charge_type_selector}    Set Variable    //button[contains(@ng-click,'dropdownAdjustmentOpen')]
+    ${amount}    set variable    //span[text()='Amount']
+    log to console    update telia robotics price devpo
+    Wait Until Element Is Visible    ${recurring charge}    60s
+    click element    ${recurring charge}
+    Wait Until Element Is Visible    ${recurring_charge_edit}    60s
+    click element    ${recurring_charge_edit}
+    Wait Until Element Is Visible    ${adjustments}    60s
+    sleep    5s
+    click element    ${charge_type_selector}
+    click element    ${amount}
+    Wait Until Element Is Visible    ${price}    60s
+    input text    ${price}    30
+    click element    ${apply button}
     sleep    10s
     Capture Page Screenshot

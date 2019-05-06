@@ -143,7 +143,11 @@ Change Account owner for Group Account
     Should Be Equal As Strings    ${original}    ${new_owner}
 
 Remove Account owner
+<<<<<<< HEAD
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
+=======
+    [Documentation]    To Remove the Account owner( change to GESB integration)
+>>>>>>> chetan
     [Tags]    BQA-8524    Lightning
     Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -151,6 +155,10 @@ Remove Account owner
     ${ACCOUNT_OWNER}    Get Text    ${ownername}
     ${status}=    Run Keyword And Return Status    Should Not Be Equal As Strings    ${ACCOUNT_OWNER}    ${REMOVE_ACCOUNT}
     Run Keyword If    ${status} == False    Change to original owner
+<<<<<<< HEAD
+=======
+    Wait Until Element Is Visible    //button[@title='Change Owner']
+>>>>>>> chetan
     Click Button    //button[@title='Change Owner']
     sleep    8s
     Element Should Be Enabled    //input[@title='Search People']
@@ -488,3 +496,16 @@ Frame test
     Get Window Size
     #Set Window Size    1920    1080
     #Capture Page Screenshot
+
+reload page test
+    [Tags]    reloaded
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Go To Salesforce and Login into Lightning
+    Go To    https://telia-fi--release.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDYwRTAwMDAwQ25rZDYifSwic3RhdGUiOnt9fQ%3D%3D
+    Wait Until Element Is Visible    ${frame}    45s
+    select frame    ${frame}
+    sleep    10s
+    Capture Page Screenshot
+    # Window Size
+    Execute Javascript    window.location.reload(false);
+    Capture Page Screenshot

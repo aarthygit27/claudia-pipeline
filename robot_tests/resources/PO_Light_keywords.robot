@@ -328,3 +328,22 @@ update_setting_TeliaSign
     \    Log To Console    package name = ${package_name} | Package cost = \ ${package_cost} | Status = ${status}
     click element    ${closing}
     Unselect Frame
+
+update telia robotics price sitpo
+    ${iframe}    Set Variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${recurring charge}    Set Variable    //span[contains(@ng-class,'switchpaymentmode')]
+    ${adjustments}    Set Variable    //h2[text()='Adjustment']
+    ${price}    Set Variable    //input[@id='adjustment-input-01']
+    ${apply button}    Set Variable    //button[contains(text(),'Apply')]
+    Log To Console    update telia robotics price sitpo
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${recurring charge}    60s
+    click element    ${recurring charge}
+    Wait Until Element Is Visible    ${adjustments}    60s
+    Wait Until Element Is Visible    ${price}    60s
+    input text    ${price}    30
+    click element    ${apply button}
+    sleep    10s
+    Capture Page Screenshot
+    Unselect Frame

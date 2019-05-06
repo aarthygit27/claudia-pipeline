@@ -38,9 +38,9 @@ Go To Salesforce and Login into Lightning
     Go to Sales App
     Reset to Home
     Click Clear All Notifications
-    Sleep      30s
+    Sleep    30s
     ${error}=    Run Keyword And Return Status    Element Should Be Visible    //div[@class()='modal-container slds-modal__container']
-    Run Keyword If    ${error}    click button      //button[@title='OK']
+    Run Keyword If    ${error}    click button    //button[@title='OK']
 
 Go To Salesforce and Login into Lightning User
     [Arguments]    ${user}=DigiSales Admin User
@@ -278,16 +278,16 @@ Filter Opportunities By
 
 Go to More tab and select option
     [Arguments]    ${option}
-    Click Visible Element       //span[text()='More']
-    Sleep       5s
-    Wait Until Page Contains element        //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
-    Force click element           //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
-    Sleep       5s
-    Wait Until Page Contains Element            //span[text()='${option}']
+    Click Visible Element    //span[text()='More']
+    Sleep    5s
+    Wait Until Page Contains element    //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
+    Force click element    //*[@class='overflowNavItem slds-dropdown__item']//span[text()='${option}']/../..
+    Sleep    5s
+    Wait Until Page Contains Element    //span[text()='${option}']
 
 Go to Contacts
     ${isContactTabVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${CONTACTS_TAB}
-    run keyword unless      ${isContactTabVisible}      Go to More tab and select option        Contacts
+    run keyword unless    ${isContactTabVisible}    Go to More tab and select option    Contacts
     Click Visible Element    ${CONTACTS_TAB}
     Sleep    30s
     ${isVisible}=    Run Keyword And Return Status    Element Should Be Visible    //*[@title='Close this window']
@@ -909,6 +909,7 @@ Close Notification
     run keyword if    ${visible}    Click Element    xpath=${CLOSE_NOTIFICATION}
 
 Change to original owner
+    [Documentation]    We are changing the account owner to Sales Admin in case the account owner is GESB Integration
     Click Button    //button[@title='Change Owner']
     sleep    8s
     Element Should Be Enabled    //input[@title='Search People']
@@ -1550,7 +1551,7 @@ UpdateAndAddSalesTypewith quantity
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Previous')]/../..//button[contains(@class,'form-control')][contains(text(),'Next')]
     ${contract_length}=    Set Variable    ${product_list}//following-sibling::td/select[contains(@ng-model,'p.ContractLength')]
     ${quantity}=    Set Variable    ${product_list}//following-sibling::td/input[@ng-model='p.Quantity']
-    log to console    UpdateAndAddSalesType
+    log to console    UpdateAndAddSalesType with quantity
     sleep    30s
     #${reporting}    Run Keyword And Return Status    Wait Until Page Contains    Suggested Reporting Products    60s
     #Run Keyword If    ${reporting} == True    Reporting Products
@@ -1637,7 +1638,7 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
     Wait Until Element Is Visible    ${SETTINGS}    60s
     click element    ${SETTINGS}
     sleep    4s
-    Select From List    ${Toimitustapa}    Vakiotoimitus
+    Select From List By Value    ${Toimitustapa}    Vakiotoimitus
     sleep    5s
     click element    ${X_BUTTON}
     Wait Until Element Is Visible    ${Next_Button}    60s
@@ -1646,10 +1647,15 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
 Reporting Products
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    Run Keyword If    ${status} == False    Reload Page
-    sleep    20s
+    Log To Console    Reporting Products
+    Run Keyword If    ${status} == False    execute javascript    browser.runtime.reload()
+    #Run Keyword If    ${status} == False    Reload Page
+    execute javascript    window.stop();
+    #sleep    20s
+    #Wait Until Element Is Visible    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Force click element    ${next_button}
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
     unselect frame
@@ -1659,7 +1665,8 @@ Closing Opportunity as Won with FYR
     ${FYR}=    set variable    //span[@title='FYR Total']/../div
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    ${oppo_name}    set variable    Test Robot Order_ 20190429-143334
     Go To Entity    ${oppo_name}
     ClickingOnCPQ
     searching and adding Telia Viestintäpalvelu VIP (24 kk)    Telia Viestintäpalvelu VIP (24 kk)
