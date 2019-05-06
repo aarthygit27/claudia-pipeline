@@ -2041,3 +2041,9 @@ verifying Multibella order case
     \    ${product}    Set Variable    @{products}[i]
     \    ${present}    Run Keyword And Return Status    Should Be Equal As Strings    ${list_product}    ${product}
     \    log    @{list_products} is present ${present}
+
+
+Update Contact and Pricelist in Opportunity
+    [Documentation]    To update the contact and Pricelist values in existing opportunity
+    [Arguments]    ${pricelist}
+

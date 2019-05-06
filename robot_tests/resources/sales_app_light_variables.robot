@@ -3,7 +3,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu2
+${Password_merge}    PahaPassu1
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
@@ -20,7 +20,6 @@ ${SEARCH_RESULTS}    //div[contains(@class,'forceSearchScopesList')]//*[text()='
 ${TABLE_HEADER}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 #//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ENTITY_HEADER}    //header[@class='forceHighlightsPanel']
-${OPPORTUNITY_NAME}    TestOpportunity3
 ${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ACCOUNT_HEADER}    //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}    //div[@class='modal-container slds-modal__container']
