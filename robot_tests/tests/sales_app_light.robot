@@ -1,7 +1,8 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Resource          ../resources/sales_app_light_keywords.robot    #Test Teardown    Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
+Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 
@@ -55,7 +56,7 @@ Negative - Validate Opportunity cannot be created for Group account
     Validate Opportunity cannot be created    GROUPACCOUNT
 
 Closing active opportunity as cancelled
-    [Documentation]    Create new opportunity and cancel the opportunity and validate that
+    [Documentation]     Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
     [Tags]    BQA-8465    Lightning
     Go To Salesforce and Login into Lightning
@@ -143,13 +144,20 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
+<<<<<<< HEAD
+=======
+    [Tags]    BQA-8524    Lightning
+>>>>>>> 86e5cb74b936bad1a84b7849f57914cd33f3ecf0
     Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     sleep    10s
     ${ACCOUNT_OWNER}    Get Text    ${ownername}
     ${status}=    Run Keyword And Return Status    Should Not Be Equal As Strings    ${ACCOUNT_OWNER}    ${REMOVE_ACCOUNT}
     Run Keyword If    ${status} == False    Change to original owner
+<<<<<<< HEAD
     Wait Until Element Is Visible    //button[@title='Change Owner']    60s
+=======
+>>>>>>> 86e5cb74b936bad1a84b7849f57914cd33f3ecf0
     Click Button    //button[@title='Change Owner']
     sleep    8s
     Element Should Be Enabled    //input[@title='Search People']
@@ -500,3 +508,11 @@ reload page test
     # Window Size
     Execute Javascript    window.location.reload(false);
     Capture Page Screenshot
+
+Contract activation
+    Go To Salesforce and Login into Lightning
+    Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Contact for Account
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Update Contact and Pricelist in Opportunity     B2B
