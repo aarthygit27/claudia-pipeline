@@ -488,3 +488,11 @@ Frame test
     Get Window Size
     #Set Window Size    1920    1080
     #Capture Page Screenshot
+
+Contract activation
+    Go To Salesforce and Login into Lightning
+    Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Contact for Account
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Update Contact and Pricelist in Opportunity     B2B
