@@ -63,11 +63,12 @@ Login to Salesforce Lightning
     #log to console    ${password}
     Wait Until Page Contains Element    id=username    240s
     Input Text    id=username    ${username}
+    Sleep       5s
     Input text    id=password    ${password}
     Click Element    id=Login
-    Sleep    40s
-    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[@class='continue']
-    Run Keyword If    ${infoAvailable}    force click element    //a[@class='continue']
+    Sleep    60s
+    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[text()='Remind Me Later']
+    Run Keyword If    ${infoAvailable}    force click element    //a[text()='Remind Me Later']
     run keyword and ignore error    Check For Lightning Force
     ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${LIGHTNING_ICON}
     Run Keyword If    ${buttonNotAvailable}    reload page
@@ -2053,4 +2054,6 @@ verifying Multibella order case
 Update Contact and Pricelist in Opportunity
     [Documentation]    To update the contact and Pricelist values in existing opportunity
     [Arguments]    ${pricelist}
+    ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
+
 
