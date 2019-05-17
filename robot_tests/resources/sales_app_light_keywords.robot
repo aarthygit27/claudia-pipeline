@@ -274,7 +274,7 @@ Filter Opportunities By
     Press Key    xpath=${SEARCH_INPUT}    \\13
     Sleep    10s
     #get_all_links
-    Force click element    ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    Force click element             ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
     #Run Keyword If    ${Count} > 1    click visible element    xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
 Go to More tab and select option
@@ -440,6 +440,7 @@ Validate Closed Opportunity Details
     ${c_date} =    Convert Date    ${current_ts}    datetime
     ${oppo_close_date}=    Set Variable    //span[@title='Close Date']//following-sibling::div//span[text()='${c_date.day}.${c_date.month}.${c_date.year}']
     Go to Entity    ${opportunity_name}
+    Scroll Page To Element      ${oppo_close_date}
     Wait Until Page Contains Element    ${oppo_close_date}    60s
     Wait Until Page Contains Element    //span[text()='Edit Stage']/../preceding::span[text()='${stage}']    60s
     ${oppo_status}=    set variable if    '${stage}'== 'Closed Lost'    Lost    Cancelled
