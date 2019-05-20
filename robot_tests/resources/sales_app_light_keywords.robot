@@ -274,7 +274,7 @@ Filter Opportunities By
     Press Key    xpath=${SEARCH_INPUT}    \\13
     Sleep    10s
     #get_all_links
-    Force click element             ${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+    Force click element             //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a[contains(@class,'forceOutputLookup') and (@title='${value}')]
     #Run Keyword If    ${Count} > 1    click visible element    xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
 
 Go to More tab and select option
@@ -325,7 +325,7 @@ Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
     Sleep    20s
-    click element    //div[@title='${value}']/../../../a
+    Force click element       //div[@title='${value}']/../../../a
 
 Validate Master Contact Details
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
@@ -440,8 +440,10 @@ Validate Closed Opportunity Details
     ${c_date} =    Convert Date    ${current_ts}    datetime
     ${oppo_close_date}=    Set Variable    //span[@title='Close Date']//following-sibling::div//span[text()='${c_date.day}.${c_date.month}.${c_date.year}']
     Go to Entity    ${opportunity_name}
-    Scroll Page To Element      ${oppo_close_date}
-    Wait Until Page Contains Element    ${oppo_close_date}    60s
+    #Scroll Page To Element      ${oppo_close_date}
+    #Wait Until Page Contains Element    ${oppo_close_date}    60s
+    Scroll Page To Element      ${OPPORTUNITY_CLOSE_DATE}
+    Wait Until Page Contains Element    ${OPPORTUNITY_CLOSE_DATE}    60s
     Wait Until Page Contains Element    //span[text()='Edit Stage']/../preceding::span[text()='${stage}']    60s
     ${oppo_status}=    set variable if    '${stage}'== 'Closed Lost'    Lost    Cancelled
     ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${EDIT_STAGE_BUTTON}

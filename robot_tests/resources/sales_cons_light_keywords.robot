@@ -88,8 +88,8 @@ Search Salesforce
 
 Select Account
     [Arguments]    ${account_name}    ${type}
-    Wait Until Page Contains element    ${TABLE_HEADER}[@title='${account_name}']    30s
-    Click Element    ${TABLE_HEADER}[@title='${account_name}']
+    Wait Until Page Contains element        //div[@data-aura-class='forceSearchResultsRegion']//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a[@title='${account_name}']    30s
+    Click Element    //div[@data-aura-class='forceSearchResultsRegion']//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a[@title='${account_name}']
     Sleep    10s
     Account Should Be Open    ${account_name}
     #    To close the search tab
