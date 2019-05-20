@@ -32,7 +32,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
     ...    and then in My all open Opportunities section.
-    [Tags]    BQA-8393    LightningFail
+    [Tags]    BQA-8393    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -58,7 +58,7 @@ Negative - Validate Opportunity cannot be created for Group account
 Closing active opportunity as cancelled
     [Documentation]     Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8465    LightningFail
+    [Tags]    BQA-8465    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -67,7 +67,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8466    LightningFail
+    [Tags]    BQA-8466    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -144,7 +144,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    LightningFail
+    [Tags]    BQA-8524    Lightning
     Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     sleep    10s

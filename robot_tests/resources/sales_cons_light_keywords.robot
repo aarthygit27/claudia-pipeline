@@ -38,7 +38,8 @@ Login to Salesforce Lightning
     Wait Until Page Contains Element    id=username     240s
     Input Text    id=username    ${username}
     Input Password    id=password    ${password}
-    Click Element    id=Login
+    Click Element       id=Login
+    Sleep    60s
     run keyword and ignore error    Check For Lightning Force
     Wait Until Page Contains Element    xpath=${LIGHTNING_ICON}    120 seconds
 
