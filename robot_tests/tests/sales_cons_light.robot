@@ -13,7 +13,7 @@ Lightning: Create opportunity from Account
     Go To Account    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer
     Verify That Opportunity Is Found With Search And Go To Opportunity
-    Verify That Opportunity is Found From My All Open Opportunities
+    #Verify That Opportunity is Found From My All Open Opportunities
 
 Lightning: Add new contact - Master
     [Tags]    BQA-8262    Lightning
