@@ -8,7 +8,7 @@ Resource          ..${/}resources${/}sales_cons_light_variables.robot
 
 *** Test Cases ***
 Lightning: Create opportunity from Account
-    [Tags]    BQA-8272    LightningFail
+    [Tags]    BQA-8272    Lightning
     Go To Salesforce and Login into Lightning
     Go To Account    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer
@@ -28,7 +28,7 @@ Lightning: Add new contact - Non Person
     Create New NP Contact and Validate
 
 Lightning: Add new contact from accounts page
-    [Tags]    BQA-8265    LightningFail
+    [Tags]    BQA-8265    Lightning
     Go To Salesforce and Login into Lightning
     Go To Account    ${AP_CONTACT_ACCOUNTNAME}
     Create New Contact for Account and Validate
