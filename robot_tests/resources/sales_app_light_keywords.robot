@@ -118,6 +118,9 @@ Search Salesforce
     run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
     ${IsNotVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
     run keyword unless    ${IsNotVisible}    Search Salesforce    ${item}
+    ${NoResultFound}=    Run Keyword And Return Status      Element Should Be Visible     //div[contains(@class, 'noResultsMessage')]    60s
+    run keyword if   ${NoResultFound}      Search And Select the Entity        ${item}
+
 
 Select Entity
     [Arguments]    ${target_name}    ${type}
