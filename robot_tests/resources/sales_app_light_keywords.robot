@@ -600,7 +600,7 @@ Enter Mandatory Info on Meeting Form
     Input Text    ${city_input}    ${DEFAULT_CITY}
     sleep    5s
     Enter and Select Contact Meeting
-    sleep    5s
+    sleep    10s
 
 Enter Meeting Start and End Date
     ${date}=    Get Date From Future    1
