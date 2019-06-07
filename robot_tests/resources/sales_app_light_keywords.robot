@@ -2063,3 +2063,66 @@ Update Contact and Pricelist in Opportunity
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
 
 
+Navigate to Availability check
+    [Documentation]  In B2B account page click 360-view and availability check buttons
+    ${iframe}    Set Variable   //section[@class='tabs__content active uiTab']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Click Element   ${360_VIEW}
+    Wait Until Element Is Enabled    ${iframe}    60s
+    select frame    ${iframe}
+    Wait until page contains element   ${AVAILABILITY_CHECK_BUTTON}     60s
+    Click Button     ${AVAILABILITY_CHECK_BUTTON}
+    ${status}=  Run Keyword and return status   Wait until element is not visible   ${AVAILABILITY_CHECK_BUTTON}
+    Run Keyword if      ${status} == False  Click Button    ${AVAILABILITY_CHECK_BUTTON}
+    unselect frame
+
+Validate Address details
+    [Documentation]  Validate address in availability check
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${postal_code_field}    Set Variable    //input[@id="postalCodeCityForAddressA"]
+    ${address_field}    Set Variable    //input[@id='AddressA']
+    sleep   20s
+    Wait Until Element Is Enabled   ${iframe}   60s
+    select frame    ${iframe}
+    Wait until element is visible   //input[@id="postalCodeCityForAddressA"]    60s
+    Input Text  ${postal_code_field}    ${DEFAULT_POSTAL_CODE}
+    Input Text  ${address_field}    ${DEFAULT_ADDRESS}
+    Wait until page contains element    ${ADDRESS_VALIDATION_DROPDOWN}    30s
+    Click Element   ${ADDRESS_VALIDATION_DROPDOWN}
+    Click Element   //div[@id='Address Details_nextBtn']
+    unselect frame
+
+Select product available for the address and create an opportunity
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${days}     Set Variable    7
+    ${opport_name}=    Run Keyword    Create Unique Name    TestOpportunity
+    ${date}=    Get Date With Dashes    ${days}
+    Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}    ${date}
+    Wait Until Element Is Enabled   ${iframe}   60s
+    select frame    ${iframe}
+    Wait until page contains element    ${PRODUCT_CHECKBOX}      30s
+    sleep   5s
+    Click element   ${PRODUCT_CHECKBOX}
+    sleep   5s
+    Click element   //div[@id='ListofProductsAvailable_nextBtn']
+    sleep   5s
+    Wait until page contains element    ${NEW_OPPORTUNITY_RADIOBUTTON}
+    sleep   5s
+    Click element   ${NEW_OPPORTUNITY_RADIOBUTTON}
+    sleep   5s 
+    Click element   //div[@id='CreateOrUpdateOpp_nextBtn']
+    Wait until page contains element    //input[@id='Name']     30s
+    input text      //input[@id='Name']     ${opport_name}
+    Wait until page contains element    //textarea[@id='Description']   30s
+    input text  //textarea[@id='Description']   Testopportunity description
+    Wait until page contains element    //input[@id='CloseDate']    30s
+    input text  //input[@id='CloseDate']    ${OPPORTUNITY_CLOSE_DATE}
+    Click element   //div[@id='CreateB2BOpportunity_nextBtn']
+    unselect frame 
+    Wait until page contains element    //div[@class='slds-page-header__title slds-m-right--small slds-truncate slds-align-middle']/span[text()='${opport_name}']   30s
+    sleep   5s
+
+Check the CPQ-cart contains the wanted products
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Wait until page contains element    //button/span[text()='Telia Yritysinternet']    30s 
+    unselect frame
+    sleep   20s

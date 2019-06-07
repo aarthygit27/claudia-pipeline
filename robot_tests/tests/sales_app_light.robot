@@ -510,3 +510,12 @@ Contract activation
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Update Contact and Pricelist in Opportunity     B2B
+
+Automatic availability check B2B-Account
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to Availability check
+    Validate Address details
+    Select product available for the address and create an opportunity
+    ClickingOnCPQ
+    Check the CPQ-cart contains the wanted products

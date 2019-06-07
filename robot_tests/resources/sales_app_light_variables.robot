@@ -3,7 +3,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu1
+${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
@@ -192,3 +192,10 @@ ${NRC}            35
 ${RC}             50
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
+${360_VIEW}     //a[@title='360 View']
+${AVAILABILITY_CHECK_BUTTON}        //button[text()= 'Availability check']
+${DEFAULT_ADDRESS}      Teollisuuskatu 15
+${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='Teollisuuskatu 15']
+${PRODUCT_CHECKBOX}     //table/tbody/tr[3]/td[1]/label/input[@type='checkbox']
+${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']
+
