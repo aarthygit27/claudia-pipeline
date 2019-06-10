@@ -12,7 +12,7 @@ Library           AutoItLibrary
 *** Test Cases ***
 Product1:Telia Multiservice NNI
     General Setup    B2O
-    Searching and adding product    Multiservice NNI
+    Searching and adding product
     clicking on next button
     UpdateAndAddSalesTypeB2O
     OpenQuoteButtonPage_release

@@ -1,4 +1,4 @@
-﻿*** Variables ***
+*** Variables ***
 ${Multiservice NNI}    01u2600000Oy08YAAR
 ${Telia Ethernet Operator Subscription}    01u2600000OxiUNAAZ
 ${Ethernet Nordic Network Bridge}    01u2600000Ooy3jAAB
