@@ -1,12 +1,13 @@
 *** Settings ***
 Documentation     Suite description
-Test Setup        #Open Browser And Go To Login Page
+Test Setup        Open Browser And Go To Login Page
 Test Teardown     #Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
 Resource          ../resources/PO_Light_keywords.robot
+Library           AutoItLibrary
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
@@ -118,3 +119,18 @@ calucation test
     ${e}    convert to number    ${a}
     ${c}    Evaluate    ${d} + ${e}
     log to console    ${c}
+
+autoit test
+    Go To Salesforce and Login into Lightning    sitpo admin
+    sleep    10s
+    Go To    https://telia-fi--sitpo.lightning.force.com/lightning/r/Opportunity/0062600000Eb2wnAAB/view
+    sleep    10s
+    click element    //span[text()='Related']
+    sleep    20s
+    Scroll Page To Element    //div[@title='Upload Files']
+    Wait Until Element Is Visible    //div[@title='Upload Files']    20s
+    click element    //div[@title='Upload Files']
+    Win Wait Active    File Upload
+    Send    C:\Users\meb5053\Desktop\Book.xlsx
+    sleep    5s
+    Mouse Click    [CLASS:Button; INSTANCE:1]
