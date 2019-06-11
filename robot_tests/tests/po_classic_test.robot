@@ -462,3 +462,9 @@ Product7: Telia Ethernet subscription
     Add Telia Ethernet subscription    sitpo
     create order sitpo    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
+
+leadfiletest
+    sleep    10s
+    Go To    file:///C:/Users/meb5053/Desktop/LEADenv-webToLead.html
+    sleep    10s
+    Capture Page Screenshot

@@ -1067,6 +1067,7 @@ create new opportunity sitpo
     Wait Until Element Is Visible    ${new_opportunity}    60s
     Click Element    ${new_opportunity}
     Wait Until Element Is Visible    ${continue_button}    60s
+    sleep    10s
     Capture Page Screenshot
     Click Element    ${continue_button}
     Wait Until Page Contains Element    //label[text()='Account Name']    120s
@@ -1374,9 +1375,9 @@ Add Ethernet Nordic HUB/E-NNI
 
 Add Telia Ethernet subscription
     [Arguments]    ${env}=devpo
-    Adding Product    Telia Ethernet subscription
-    run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Telia Ethernet subscription
-    ...    ELSE    Click_Settings_new    Telia Ethernet subscription
+    Adding Product    Telia Ethernet Subscription
+    run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Telia Ethernet Subscription
+    ...    ELSE    Click_Settings_new    Telia Ethernet Subscription
     update_setting_Telia Ethernet subscription
     click element    ${X_BUTTON}
     sleep    15s
