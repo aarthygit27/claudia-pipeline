@@ -1264,7 +1264,7 @@ update_setting2
     Capture Page Screenshot
 
 update_setting_Ethernet Nordic E-LAN EVP-LAN
-    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5]
+    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5']
     Wait Until Element Is Visible    ${ Network bridge }    60s
     input text    ${ Network bridge }    This is a test opportunity
     helinsiki_address

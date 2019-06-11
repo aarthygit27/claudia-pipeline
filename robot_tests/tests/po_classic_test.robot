@@ -458,7 +458,7 @@ Product6: Ethernet Nordic HUB/E-NNI
 Product7: Telia Ethernet subscription
     [Tags]    sitpo_classic2
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
-    Search Products    Telia Ethernet subscription
+    Search Products    Telia Ethernet Subscription
     Add Telia Ethernet subscription    sitpo
     create order sitpo    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
