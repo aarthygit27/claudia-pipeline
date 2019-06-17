@@ -229,7 +229,7 @@ Lightning: Sales admin Change Account owner for group account
     #sleep    20s
 
 Create HDC Order
-    [Tags]    BQA-HDCOrder    LightningE2E
+    [Tags]    BQA-HDCOrder    Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #go to entity    319021811502
     #sleep    10s
@@ -275,7 +275,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder    LightningE2E
+    [Tags]    BQA-B2BOrder    Lightning
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -311,7 +311,7 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-B2OOrder    LightningE2E
+    [Tags]    BQA-B2OOrder    Lightning
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -340,7 +340,7 @@ Create B2O Order
     getOrderStatusAfterSubmitting
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    LightningE2E
+    [Tags]    BQA-8798    Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -355,7 +355,7 @@ createAOppoViaSVE
     validateCreatedOppoForFYR    ${fyr}
 
 Closing Opportunity as Won with FYR below 3 KEUR
-    [Tags]    BQA-8794    new
+    [Tags]    BQA-8794    Lightning
     Closing Opportunity as Won with FYR    8    No
     #${FYR}=    set variable    //span[@title='FYR Total']/../div
     #Go To Salesforce and Login into Lightning
@@ -377,7 +377,7 @@ Closing Opportunity as Won with FYR below 3 KEUR
     #Log to console    The FYR value is ${FYR_value}
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
-    [Tags]    BQA-8795    new
+    [Tags]    BQA-8795    Lightning
     ${Edit_continuation}=    Set Variable    //button[@title='Edit Create Continuation Sales Opportunity?']
     Closing Opportunity as Won with FYR    200    Yes
     sleep    10s
@@ -391,11 +391,11 @@ Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     Capture Page Screenshot
 
 Closing Opportunity as Won with FYR greater than 100KEUR
-    [Tags]    BQA-8796    new
+    [Tags]    BQA-8796    Lightning
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    new
+    [Tags]    BQA-9121    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
@@ -426,7 +426,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9122    new
+    [Tags]    BQA-9122    Lightning
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
@@ -458,7 +458,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
-    [Tags]    BQA-8560
+    [Tags]    BQA-8560      Lightning
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
     Go To Salesforce and Login into Lightning
     #Go To Entity    ${TEST_ACCOUNT_CONTACT}
