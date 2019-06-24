@@ -58,6 +58,10 @@ Login to Salesforce as DigiSales Lightning User
     [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${Password_merge}
     Login To Salesforce Lightning    ${username}    ${password}
 
+Login to Salesforce as DigiSales B2O User
+    [Arguments]    ${username}=${B2O_DIGISALES_LIGHT_USER}    ${password}=${B2O_DIGISALES_LIGHT_PASSWORD}
+    Login To Salesforce Lightning    ${username}    ${password}
+
 Login to Salesforce Lightning
     [Arguments]    ${username}    ${password}
     #log to console    ${password}
@@ -1085,7 +1089,7 @@ ChangeThePriceBookToHDC
 ClickingOnCPQ
     ##clcking on CPQ
     log to console    ClickingOnCPQ
-    click element    xpath=//a[@title='CPQ']
+    Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
     #wait until page contains element    xpath=//h1[text()='${b}']    30s
     sleep    40s
 
@@ -2078,18 +2082,58 @@ Navigate to Availability check
 Validate Address details
     [Documentation]  Validate address in availability check
     ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    ${postal_code_field}    Set Variable    //input[@id="postalCodeCityForAddressA"]
+    ${postal_code_field}    Set Variable    xpath=//input[@id="postalCodeCityForAddressA"]
     ${address_field}    Set Variable    //input[@id='AddressA']
-    sleep   20s
     Wait Until Element Is Enabled   ${iframe}   60s
     select frame    ${iframe}
-    Wait until element is visible   //input[@id="postalCodeCityForAddressA"]    60s
-    Input Text  ${postal_code_field}    ${DEFAULT_POSTAL_CODE}
-    Input Text  ${address_field}    ${DEFAULT_ADDRESS}
-    Wait until page contains element    ${ADDRESS_VALIDATION_DROPDOWN}    30s
-    Click Element   ${ADDRESS_VALIDATION_DROPDOWN}
+    ${status}=  Run Keyword and return status       Wait until element is visible   ${postal_code_field}    20s
+    Run Keyword If    ${status} == False    Execute Javascript    window.location.reload(false);
+    Run Keyword If    ${status} == False    Wait until element is visible   ${postal_code_field}    20s
+    Wait until keyword succeeds     30s     2s      Input Text  ${postal_code_field}    43500
+    Wait until keyword succeeds     30s     2s      Input Text  ${address_field}    ${DEFAULT_ADDRESS}
+    Wait element to load and click      ${ADDRESS_VALIDATION_DROPDOWN}
     Click Element   //div[@id='Address Details_nextBtn']
     unselect frame
+
+Validate point to point address details
+    [Documentation]     Validates point to point address details in B2O-account availability check 
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${postal_code_field_A}    Set Variable    //input[@id="postalCodeCityForAddressA"]
+    ${address_field_A}    Set Variable    //input[@id='AddressA']
+    ${postal_code_field_B}  Set Variable    //input[@id="postalCodeCityForAddressB"]
+    ${address_field_B}  Set Variable    //input[@id='AddressB']
+    ${street_address}   Set Variable    Teollisuuskatu 1
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled   ${iframe}   60s
+    Run Keyword If    ${status} == False    execute javascript    window.location.reload(false);
+    select frame    ${iframe}
+    Wait element to load and click   xpath=//input[@id="pointToPointInput"]
+    Wait until element is visible   //input[@id="postalCodeCityForAddressA"]    60s
+    Input Text  ${postal_code_field_A}    ${DEFAULT_POSTAL_CODE}
+    Input Text  ${address_field_A}    ${street_address}
+    Wait element to load and click      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='${street_address}']
+    Input Text  ${postal_code_field_B}  ${DEFAULT_POSTAL_CODE}
+    ${street_address}   Set Variable    Teollisuuskatu 23
+    Input Text  ${address_field_B}     ${street_address}
+    Wait element to load and click      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='${street_address}']
+    Click Element   //div[@id='Address Details_nextBtn']
+    unselect frame
+
+Select B2O product available and connect existing opportunity
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Enabled   ${iframe}   60s
+    select frame    ${iframe}
+    ScrollUntillFound    ${B2O_PRODUCT_CHECKBOX}
+    Wait until keyword succeeds     30s     2s    Click element   ${B2O_PRODUCT_CHECKBOX}
+    Click element   //div[@id='ListofProductsAvailable_nextBtn']
+    Wait element to load and click  ${EXISTING_OPPORTUNITY_RADIOBUTTON}
+    Click element   //div[@id='CreateOrUpdateOpp_nextBtn']
+    Wait until page contains element    ${EXISTING_OPPORTUNITY_TEXT_FIELD}
+    Wait until keyword succeeds     30s     2s      Input text  ${EXISTING_OPPORTUNITY_TEXT_FIELD}  ${OPPORTUNITY_NAME}
+    sleep   5s
+    Wait element to load and click  //*[@id="OpportunityResultList"]/div/ng-include/div/table/tbody/tr/td[1]/label/input
+    Click element   //div[@id='UpdateOpportunity_nextBtn']
+    unselect frame 
+    Wait until page contains element   xpath=//a[@title='CPQ']      60s
 
 Select product available for the address and create an opportunity
     ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
@@ -2099,16 +2143,9 @@ Select product available for the address and create an opportunity
     Set Test Variable    ${OPPORTUNITY_CLOSE_DATE}    ${date}
     Wait Until Element Is Enabled   ${iframe}   60s
     select frame    ${iframe}
-    Wait until page contains element    ${PRODUCT_CHECKBOX}      30s
-    sleep   5s
-    Click element   ${PRODUCT_CHECKBOX}
-    sleep   5s
+    Wait element to load and click      ${PRODUCT_CHECKBOX}
     Click element   //div[@id='ListofProductsAvailable_nextBtn']
-    sleep   5s
-    Wait until page contains element    ${NEW_OPPORTUNITY_RADIOBUTTON}
-    sleep   5s
-    Click element   ${NEW_OPPORTUNITY_RADIOBUTTON}
-    sleep   5s 
+    Wait element to load and click      ${NEW_OPPORTUNITY_RADIOBUTTON}
     Click element   //div[@id='CreateOrUpdateOpp_nextBtn']
     Wait until page contains element    //input[@id='Name']     30s
     input text      //input[@id='Name']     ${opport_name}
@@ -2118,11 +2155,19 @@ Select product available for the address and create an opportunity
     input text  //input[@id='CloseDate']    ${OPPORTUNITY_CLOSE_DATE}
     Click element   //div[@id='CreateB2BOpportunity_nextBtn']
     unselect frame 
-    Wait until page contains element    //div[@class='slds-page-header__title slds-m-right--small slds-truncate slds-align-middle']/span[text()='${opport_name}']   30s
-    sleep   5s
+    Wait until page contains element   xpath=//a[@title='CPQ']      60s
 
 Check the CPQ-cart contains the wanted products
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    Wait until page contains element    //button/span[text()='Telia Yritysinternet']    30s 
+    [Arguments]     ${product_name}
+    ${iframe}   Set Variable    xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is enabled   ${iframe}     30s
+    Wait until keyword succeeds     30s     2s      select frame    ${iframe}
+    Wait until keyword succeeds     3x     30s      Wait until page contains element    //button/span[text()='${product_name}']    30s 
     unselect frame
-    sleep   20s
+
+Wait element to load and click
+    [Arguments]     ${element}
+    ${status}=  Run Keyword and return status       Wait until page contains element    ${element}    30s
+    Run Keyword If    ${status} == False    Execute Javascript    window.location.reload(false);
+    Run Keyword If    ${status} == False    Wait until page contains element    ${element}    30s
+    Wait until keyword succeeds     30s     2s      Click Element   ${element}

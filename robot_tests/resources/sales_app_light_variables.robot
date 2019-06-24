@@ -194,8 +194,12 @@ ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
 ${360_VIEW}     //a[@title='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[text()= 'Availability check']
-${DEFAULT_ADDRESS}      Teollisuuskatu 15
-${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='Teollisuuskatu 15']
-${PRODUCT_CHECKBOX}     //table/tbody/tr[3]/td[1]/label/input[@type='checkbox']
+${DEFAULT_ADDRESS}      Korpijärventie 3
+${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='${DEFAULT_ADDRESS}']
+${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[6]/td[1]/label/input
 ${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']
-
+${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
+${B2O_DIGISALES_LIGHT_PASSWORD}     PahaPassu1
+${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input
+${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']
+${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']

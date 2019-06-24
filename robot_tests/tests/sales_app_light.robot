@@ -512,10 +512,23 @@ Contract activation
     Update Contact and Pricelist in Opportunity     B2B
 
 Automatic availability check B2B-Account
+    [Tags]     BQA-10225
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
     Validate Address details
     Select product available for the address and create an opportunity
     ClickingOnCPQ
-    Check the CPQ-cart contains the wanted products
+    Check the CPQ-cart contains the wanted products     Telia Yritysinternet Plus
+
+Automatic availability check B2O-Account
+    [Tags]     BQA-10225
+    Go To Salesforce and Login into Lightning   DigiSales B2O User
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer     ACTIVEACCOUNT
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to Availability check
+    Validate point to point address details
+    Select B2O product available and connect existing opportunity
+    ClickingOnCPQ
+    Check the CPQ-cart contains the wanted products     MetroEthernet Kapasiteetti
