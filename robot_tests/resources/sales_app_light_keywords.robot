@@ -96,6 +96,15 @@ Go to Entity
     Wait Until Keyword Succeeds    8 mins    40s    Search And Select the Entity    ${target}    ${type}
     Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
 
+getBusinessID
+    [Documentation]     Test to get credit score.
+    [Tags]  APITests
+    [Arguments]  ${b}=${argument}]
+    go to entity   ${b}  
+    wait until page contains element  //Span[text()='Business ID']/..//following-sibling::div[contains(@class,'itemBody')]/span/span   30s
+         ${business_id} =  get text  //span[text()='business id']/..//following-sibling::div[contains(@class,'itembody')]/span/span
+    [return] ${bid}
+
 Search And Select the Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     Reload page
@@ -1054,6 +1063,8 @@ ChangeThePriceBookToHDC
     sleep    10s
     execute javascript    window.scrollTo(0,0)
     sleep    5s
+
+
 
 ClickingOnCPQ
     ##clcking on CPQ

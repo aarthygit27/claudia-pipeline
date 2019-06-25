@@ -1781,10 +1781,10 @@ def Get_resource_availability_in_address():
     jsonni ={
   "GetAvailabilityOfAllRequest":{
         "requestId":"123456",
-        "townName":"Helsinki",
-        "postalCode":"00510",
-        "streetName":"Aleksis Kiven katu",
-        "streetNumber":"25"
+        "townName":"Helsinki",${city}
+        "postalCode":"00510",${postal_code}
+        "streetName":"Aleksis Kiven katu",${address},
+        "streetNumber":"25",${street_number}
     }
 }
 
@@ -1803,6 +1803,7 @@ def Get_resource_availability_in_address():
         return r.status_code
 
 def check_credit_score():
+    log to console
     url = "https://api-garden-test.teliacompany.com/v1/finland/creditscore"
     jsonni ={
 
@@ -1820,7 +1821,7 @@ def check_credit_score():
       "productCategory":"BroadbandLowRisk",
       "usage":"1",
      "version":"3",
-      "businessId":"1704967-9"
+      "businessId":${bid},
     }
 }
 
@@ -1830,7 +1831,6 @@ def check_credit_score():
     r = s.post(url, json=jsonni, headers=headers, verify=False)
     print(r)
     print(r.status_code)
-    print("[auth:setToken()] STATUS CODE: " + str(r.status_code))
     print("[auth:setToken()] RESPONSE: " + r.text)
 
     if r.status_code == 200:

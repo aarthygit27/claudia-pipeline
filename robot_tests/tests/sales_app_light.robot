@@ -176,6 +176,7 @@ Lightning: Sales admin Change Account owner for group account
     [Tags]    BQA-8526    Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
+    getBusinessID   Aacon Oy
     Change Account Owner
     #Create opportunity from Account for HDCFlow
     #    [Tags]    BQA-HDCOppo    Lightning2
@@ -207,7 +208,7 @@ Lightning: Sales admin Change Account owner for group account
     #Updating Setting Telia Colocation
     #UpdateAndAddSalesType    Telia Colocation
     #OpenQuoteButtonPage
-    #CreditScoreApproving
+    CreditScoreApproving
     #ClickonCreateOrderButton
     #NextButtonOnOrderPage
     #SearchAndSelectBillingAccount

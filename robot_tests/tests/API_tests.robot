@@ -5,6 +5,8 @@ Library           Collections
 Library           BuiltIn
 Resource          ../resources/API_keywords.robot
 Resource          ../resources/salesforce_keywords.robot
+Resource          ../tests/product_tests.robot
+Resource          ../tests/sales_app_light.robot
 Test Timeout      9 minutes
 
 *** Variables ***
