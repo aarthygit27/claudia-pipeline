@@ -192,3 +192,18 @@ ${NRC}            35
 ${RC}             50
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
+
+
+### Lead  Variables ###
+
+${lead_account_name}                Academic Work HR Services Oy
+${lead_business_id}                2733621-7
+${lead_email}                       kasibhotla.sreeramachandramurthy@teliacompany.com
+${convert_lead_btn}                 //div[@title='Convert Lead']
+${converting_lead_header}           //div[text()='Converting Lead']
+${lead_name_input}                  //div[@class="slds-text-title_caps"]//following-sibling::input
+${lead_desc_textarea}               //div[@class="slds-text-title_caps"]//following-sibling::textarea
+${lead_close_date}                  //input[@class="field input"]
+${converting_lead_dialogue}          //div[@class="convertSection"][text()='Converting Lead']
+${converting_lead_overlay}           //button[text()='Convert Lead']
+${lead_converted_h4}                //h4[text()='Lead Converted']
