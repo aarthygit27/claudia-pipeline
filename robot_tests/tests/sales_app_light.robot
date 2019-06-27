@@ -512,7 +512,7 @@ Contract activation
     Update Contact and Pricelist in Opportunity     B2B
 
 Automatic availability check B2B-Account
-    [Tags]     BQA-10225
+    [Tags]     BQA-10225    Summer-Test
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -522,7 +522,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products     Telia Yritysinternet Plus
 
 Automatic availability check B2O-Account
-    [Tags]     BQA-10225
+    [Tags]     BQA-10225    Summer-Test
     Go To Salesforce and Login into Lightning   DigiSales B2O User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
@@ -532,3 +532,31 @@ Automatic availability check B2O-Account
     Select B2O product available and connect existing opportunity
     ClickingOnCPQ
     Check the CPQ-cart contains the wanted products     MetroEthernet Kapasiteetti
+
+Delete all contracts from account
+    [Tags]  Summer-Test
+    Go To Salesforce and Login into Lightning User
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Delete all existing contracts from Accounts Related tab
+
+Check banner for customership and service contract
+    [Tags]  Summer-Test     BQA-10334
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Verify that warning banner is displayed on opportunity page
+    ClickingOnCPQ
+    Add product to cart (CPQ)     Telia Verkkotunnuspalvelu
+    Update products
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Check service contract is on Draft Status
+
+Create contact relationship for account
+    [Tags]  Summer-Test         BQA-10523
+    [Documentation]     Add new relationship for contact and check that account are displayed correctly on contact page.
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Contact for Account
+    Add relationship for the contact person
+    Go to Entity    ${contact_name}
+    Validate contact relationship

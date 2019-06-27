@@ -1154,8 +1154,8 @@ validateCreatedOppoForFYR
 AddProductToCart
     [Arguments]    ${pname}=${product_name}
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element    xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
-    input text    //div[contains(@class, 'cpq-searchbox')]//input    ${pname}
+    wait until page contains element    xpath=${CPQ_SEARCH_FIELD}    60s
+    input text    ${CPQ_SEARCH_FIELD}    ${pname}
     wait until page contains element    xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button    60s
     sleep    5s
     click element    xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
@@ -2171,3 +2171,100 @@ Wait element to load and click
     Run Keyword If    ${status} == False    Execute Javascript    window.location.reload(false);
     Run Keyword If    ${status} == False    Wait until page contains element    ${element}    30s
     Wait until keyword succeeds     30s     2s      Click Element   ${element}
+
+Verify that warning banner is displayed on opportunity page
+    [Documentation]     After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
+    Wait until element is visible   ${OPPORTUNITY_WARNING_BANNER}
+
+Add product to cart (CPQ)
+    [Documentation]     In the CPQ cart search for the wanted product and add it to the cart
+    [Arguments]    ${pname}=${product_name}
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    ${CPQ_SEARCH_FIELD}    60s
+    input text    ${CPQ_SEARCH_FIELD}    ${pname}
+    Wait element to load and click  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    wait until page contains element    //button/span[text()='${pname}']   60s
+    scrolluntillfound    ${CPQ_CART_NEXT_BUTTON}
+    click element    ${CPQ_CART_NEXT_BUTTON}
+    unselect frame
+    sleep    20s
+
+Update products
+    [Documentation]     Create Quote in draft status in the post-CPQ omniscript
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Enabled   ${iframe}   60s
+    select frame    ${iframe}
+    Wait until page contains element    ${SERVICE_CONTRACT_WARNING}
+    Wait element to load and click      ${SALES_TYPE_DROPDOWN}
+    Click element   ${NEW_MONEY_NEW_SERVICES}
+    Wait element to load and click  //form[@id="a1q0E000000i2dBQAQ-12"]/div/div/button
+    Wait element to load and click  //button[@id="View Quote"]
+    unselect frame
+    Wait until page contains element    //h1/div[@title='${OPPORTUNITY_NAME}']  30s
+
+Check service contract is on Draft Status
+    [Documentation]     On account page check service contracts and verify that created one is on draft status
+    Wait element to load and click  ${ACCOUNT_RELATED}
+    Wait element to load and click  //h2/a/span[text()='Contracts']
+    Wait until page contains element    //table/tbody/tr[2]/td[3]/span/span[text()='Service Contract']      30s
+    Wait until page contains element    //table/tbody/tr[2]/td[4]/span/a[text()='Telia Verkkotunnuspalvelu']    30s
+    Wait until page contains element    //table/tbody/tr[2]/td[5]/span/span[text()='Draft']     30s
+
+Delete all existing contracts from Accounts Related tab
+    [Documentation]    Used to delete all the existing contracts for the business account
+    Wait Until Element Is Visible    ${ACCOUNT_RELATED}    60s
+    Force click element    ${ACCOUNT_RELATED}
+    ScrollUntillFound    //span[text()='Contracts']/../../span/../../../a
+    ${status}=    Run Keyword And Return Status    Element Should Be Visible    //span[@title='Contracts']
+    Run Keyword If    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
+    Sleep    15s
+    #Force Click element             //span[@title='Contracts']//following::div/span[text()='View All']
+    Force Click element         //span[text()='View All']/span[text()='Contracts']
+    Sleep   10s
+    Wait Until Element Is Visible       ${contract_row}         60s
+    ${count}=       get element count       ${contract_row}
+    log to console          ${count}
+     : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    Delete all Contracts         ${contract_row} 
+
+Delete all Contracts
+    [Arguments]        ${contract_row}
+    ${IsVisible}=   Run Keyword And Return Status        element should be visible       ${contract_row}
+    Run Keyword if      ${IsVisible}       Delete row items         ${contract_row}
+
+Delete row items
+    [Arguments]        ${contract_row}
+    [Documentation]    Used to delete the individual row
+    Force Click element         ${contract_row}
+    wait until element is visible           //a[@title='Delete']
+    Force Click element         //a[@title='Delete']
+    wait until element is visible           //button[@title='Delete']           60s
+    Click element           //button[@title='Delete']
+    Sleep        20s
+
+Add relationship for the contact person
+    [Documentation]
+    Set Test Variable   ${contact_name}     ${AP_FIRST_NAME} ${AP_LAST_NAME}
+    #fix sleep to better solution
+    sleep   20s
+    Wait element to load and click  ${ACCOUNT_RELATED}
+    # //a[@title='Related']
+    Wait element to load and click  //a[@title='Add Relationship']
+    Wait until element is visible   //input[@title='Search Contacts']   30s
+    Input text  //input[@title='Search Contacts']   ${contact_name}
+    Wait element to load and click  //a[@role='option']/div/div[@title='${contact_name}']
+    Wait element to load and click  //span[text()='Account']/../..//div//li//a[@class='deleteAction']
+    Wait until keyword succeeds     30s     2s      Input text      //input[@title='Search Accounts']   Aacon Oy
+    Wait element to load and click  //input[@title='Search Accounts']/..//a[@role='option']/div/div[@title='Aacon Oy']
+    Wait until keyword succeeds     30s     2s      Click element   //button[@title='Save']
+    
+Validate contact relationship
+    [Documentation]
+    log to console      Validating contact relationship
+    Execute Javascript    window.location.reload(false);
+    Wait element to load and click  //a[@title='Related']
+    Wait element to load and click  //h2/a/span[text()='Related Accounts']
+    Wait until page contains element    //table/tbody/tr/th/span/a[text()='Aacon Oy']   20s 
+    Wait until page contains element    //table/tbody/tr/th/span/a[text()='Aarsleff Oy']    20s
+    Wait until page contains element    //table/tbody/tr[2]/td[2]/span/span/img[@class='slds-truncate checked']     20s
