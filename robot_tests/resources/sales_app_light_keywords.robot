@@ -2264,7 +2264,36 @@ Validate contact relationship
     log to console      Validating contact relationship
     Execute Javascript    window.location.reload(false);
     Wait element to load and click  //a[@title='Related']
-    Wait element to load and click  //h2/a/span[text()='Related Accounts']
-    Wait until page contains element    //table/tbody/tr/th/span/a[text()='Aacon Oy']   20s 
+    ScrollUntillFound   //h2/a/span[text()='Related Accounts']
+    Click element   //h2/a/span[text()='Related Accounts']
+    Wait until page contains element    //table/tbody/tr/th/span/a[text()='Aacon Oy']   20s
     Wait until page contains element    //table/tbody/tr/th/span/a[text()='Aarsleff Oy']    20s
     Wait until page contains element    //table/tbody/tr[2]/td[2]/span/span/img[@class='slds-truncate checked']     20s
+
+Navigate to related tab and add new team member
+    [Documentation]     Add new team member to account
+    Wait element to load and click  ${ACCOUNT_RELATED}
+    Wait element to load and click  //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
+    Wait until page contains element    //input[@title='Search People']
+    Input text  //input[@title='Search People']     Sales Admin
+    Wait element to load and click  //a[@role='option']/div/div[@title='Sales Admin']
+    Click element   //button[@title='Save']
+    sleep   10s 
+    
+Delete team member from account
+    Wait element to load and click  ${ACCOUNT_RELATED}
+    Wait element to load and click  //a/span[text()='Account Team Members']
+    Wait until page contains element    ${contract_row}    30s
+    Delete row items    ${contract_row}
+
+Change account owner to B2B_DIGISALES_LIGHT_USER
+    ${isAccountOwner}=  Run keyword and return status   Wait until page contains element    //div[@class='ownerName']/div/a[text()='B2Blightning DigiSales']    30s
+    Run Keyword if  ${isAccountOwner} == False      Open change owner view and fill the form
+
+Open change owner view and fill the form
+    Wait element to load and click  //button[@title='Change Owner']
+    Wait until page contains element    //input[@title='Search People']
+    Input text      //input[@title='Search People']     B2Blightning DigiSales
+    Wait element to load and click  //a[@role='option']/div/div[@title='B2Blightning DigiSales']
+    Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
+    sleep   30s 

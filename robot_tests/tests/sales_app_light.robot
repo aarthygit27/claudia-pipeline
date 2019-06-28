@@ -535,12 +535,14 @@ Automatic availability check B2O-Account
 
 Delete all contracts from account
     [Tags]  Summer-Test
+    [Documentation]     Delete all service contracts from account related tab
     Go To Salesforce and Login into Lightning User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
     [Tags]  Summer-Test     BQA-10334
+    [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -560,3 +562,17 @@ Create contact relationship for account
     Add relationship for the contact person
     Go to Entity    ${contact_name}
     Validate contact relationship
+
+Change business account owner
+    [Tags]  Summer-Test     BQA-10524
+    Go To Salesforce and Login into Lightning User
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Change account owner to B2B_DIGISALES_LIGHT_USER
+
+Add an account team member
+    [Tags]  Summer-Test     BQA-10524
+    [Documentation]     Adds some user as a team member to business account
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Navigate to related tab and add new team member
+    Delete team member from account
