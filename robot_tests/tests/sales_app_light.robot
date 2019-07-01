@@ -512,7 +512,7 @@ Contract activation
     Update Contact and Pricelist in Opportunity     B2B
 
 Automatic availability check B2B-Account
-    [Tags]     BQA-10225    Summer-Test
+    [Tags]     BQA-10225    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -522,7 +522,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products     Telia Yritysinternet Plus
 
 Automatic availability check B2O-Account
-    [Tags]     BQA-10225    Summer-Test
+    [Tags]     BQA-10225    Lightning
     Go To Salesforce and Login into Lightning   DigiSales B2O User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
@@ -534,14 +534,14 @@ Automatic availability check B2O-Account
     Check the CPQ-cart contains the wanted products     MetroEthernet Kapasiteetti
 
 Delete all contracts from account
-    [Tags]  Summer-Test
+    [Tags]  Lightning
     [Documentation]     Delete all service contracts from account related tab
     Go To Salesforce and Login into Lightning User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
-    [Tags]  Summer-Test     BQA-10334
+    [Tags]  Lightning     BQA-10334
     [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -554,7 +554,7 @@ Check banner for customership and service contract
     Check service contract is on Draft Status
 
 Create contact relationship for account
-    [Tags]  Summer-Test         BQA-10523
+    [Tags]  Lightning         BQA-10523
     [Documentation]     Add new relationship for contact and check that account are displayed correctly on contact page.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -564,13 +564,14 @@ Create contact relationship for account
     Validate contact relationship
 
 Change business account owner
-    [Tags]  Summer-Test     BQA-10524
+    [Tags]  Lightning     BQA-10524
+    [Documentation]     Change owner of the Business account to B2BDigisales Lightning user
     Go To Salesforce and Login into Lightning User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to B2B_DIGISALES_LIGHT_USER
 
 Add an account team member
-    [Tags]  Summer-Test     BQA-10524
+    [Tags]  Lightning     BQA-10524
     [Documentation]     Adds some user as a team member to business account
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
