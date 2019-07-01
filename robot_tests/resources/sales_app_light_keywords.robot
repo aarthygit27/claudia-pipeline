@@ -2154,7 +2154,8 @@ Select product available for the address and create an opportunity
     Wait until page contains element    //input[@id='CloseDate']    30s
     input text  //input[@id='CloseDate']    ${OPPORTUNITY_CLOSE_DATE}
     Click element   //div[@id='CreateB2BOpportunity_nextBtn']
-    ${isVisible}    Run Keyword and return status       element should be visible   //button[text()='Continue']
+    sleep   30s
+    ${isVisible}    Run Keyword and return status       Wait until page contains element   //button[text()='Continue']      30s
     Run Keyword If  ${isVisible}    Click element   //button[text()='Continue']
     unselect frame 
     Wait until page contains element   xpath=//a[@title='CPQ']      60s
@@ -2249,10 +2250,8 @@ Delete row items
 Add relationship for the contact person
     [Documentation]
     Set Test Variable   ${contact_name}     ${AP_FIRST_NAME} ${AP_LAST_NAME}
-    #fix sleep to better solution
     sleep   20s
     Wait element to load and click  ${ACCOUNT_RELATED}
-    # //a[@title='Related']
     Wait element to load and click  //a[@title='Add Relationship']
     Wait until element is visible   //input[@title='Search Contacts']   30s
     Input text  //input[@title='Search Contacts']   ${contact_name}
