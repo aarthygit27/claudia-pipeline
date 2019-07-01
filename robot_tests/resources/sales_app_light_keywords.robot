@@ -2154,6 +2154,8 @@ Select product available for the address and create an opportunity
     Wait until page contains element    //input[@id='CloseDate']    30s
     input text  //input[@id='CloseDate']    ${OPPORTUNITY_CLOSE_DATE}
     Click element   //div[@id='CreateB2BOpportunity_nextBtn']
+    ${isVisible}    Run Keyword and return status       element should be visible   //button[text()='Continue']
+    Run Keyword If  ${isVisible}    Click element   //button[text()='Continue']
     unselect frame 
     Wait until page contains element   xpath=//a[@title='CPQ']      60s
 
@@ -2194,10 +2196,11 @@ Update products
     ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Wait Until Element Is Enabled   ${iframe}   60s
     select frame    ${iframe}
-    Wait until page contains element    ${SERVICE_CONTRACT_WARNING}
+    Wait until page contains element    ${SERVICE_CONTRACT_WARNING}     30s
     Wait element to load and click      ${SALES_TYPE_DROPDOWN}
     Click element   ${NEW_MONEY_NEW_SERVICES}
     Wait element to load and click  //form[@id="a1q0E000000i2dBQAQ-12"]/div/div/button
+    sleep   20s
     Wait element to load and click  //button[@id="View Quote"]
     unselect frame
     Wait until page contains element    //h1/div[@title='${OPPORTUNITY_NAME}']  30s
