@@ -843,10 +843,10 @@ Add_child_product
 
 Click_Settings
     [Arguments]    ${product}
-    ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='${product}']
+    ${added_product}    Set Variable    //div[contains(@class,'children')]//span[text()='${product}']
     sleep    15s
     Capture Page Screenshot
-    Wait Until Element Is Visible    ${added_product}    45s
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${added_product}    45s
     Capture Page Screenshot
     Click Button    ${SETTINGS}
     #@{locators}=    Get Webelements    xpath=${element}
@@ -1040,7 +1040,7 @@ Click_Settings_new
     #Click Element    xpath=${element}
 
 Login to Salesforce as Sales admin User sitpo
-    Login To Salesforce    saleadm@teliacompany.com.sitpo    PahaPassu1
+    Login To Salesforce    saleadm@teliacompany.com.sitpo    PahaPassu5
 
 create new opportunity sitpo
     [Arguments]    ${pricebook}
@@ -1067,6 +1067,7 @@ create new opportunity sitpo
     Wait Until Element Is Visible    ${new_opportunity}    60s
     Click Element    ${new_opportunity}
     Wait Until Element Is Visible    ${continue_button}    60s
+    sleep    10s
     Capture Page Screenshot
     Click Element    ${continue_button}
     Wait Until Page Contains Element    //label[text()='Account Name']    120s
@@ -1112,7 +1113,8 @@ create order sitpo
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
     sleep    10s
-    Select From List By Value    ${sales_type}    New Money-New Services
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${sales_type}    10s
+    Run Keyword If    ${status} == True    Select From List By Value    ${sales_type}    New Money-New Services
     Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
@@ -1208,3 +1210,187 @@ update telia robotics price devpo
     click element    ${apply button}
     sleep    10s
     Capture Page Screenshot
+
+update_setting1
+    ${street_add1}    set variable    //input[@name='productconfig_field_1_0']
+    ${street_add2}    set variable    //input[@name='productconfig_field_1_1']
+    ${postal_code}    Set Variable    //input[@name='productconfig_field_1_3']
+    Wait Until Element Is Visible    ${street_add1}    60s
+    input text    ${street_add1}    This is a test opportunity
+    sleep    10s
+    input text    ${street_add2}    This is a test opportunity
+    sleep    10s
+    input text    ${postal_code}    00100
+    sleep    10s
+    Capture Page Screenshot
+
+update_setting2
+    ${street_add1-a}    set variable    //input[@name='productconfig_field_1_1']
+    ${street_add2-a}    set variable    //input[@name='productconfig_field_1_2']
+    ${postal_code-a}    set variable    //input[@name='productconfig_field_1_4']
+    ${city_town-a}    set variable    //input[@name='productconfig_field_1_5']
+    ${street_add1-b}    set variable    //input[@name='productconfig_field_1_8']
+    ${street_add2-b}    set variable    //input[@name='productconfig_field_1_9']
+    ${postal_code-b}    set variable    //input[@name='productconfig_field_1_11']
+    ${city_town-b}    set variable    //input[@name='productconfig_field_1_12']
+    Wait Until Element Is Visible    ${street_add1-a}    60s
+    input text    ${street_add1-a}    This is a test opportunity
+    sleep    10s
+    click element    ${street_add2-a}
+    sleep    10s
+    input text    ${street_add2-a}    This is a test opportunity
+    sleep    10s
+    click element    ${postal_code-a}
+    sleep    10s
+    input text    ${postal_code-a}    00100
+    sleep    10s
+    click element    ${city_town-a}
+    sleep    10s
+    input text    ${city_town-a}    helsinki
+    sleep    10s
+    input text    ${street_add1-a}    This is a test opportunity
+    sleep    10s
+    click element    ${street_add2-a}
+    sleep    10s
+    input text    ${street_add2-a}    This is a test opportunity
+    sleep    10s
+    click element    ${postal_code-a}
+    sleep    10s
+    input text    ${postal_code-a}    00100
+    sleep    10s
+    click element    ${city_town-a}
+    sleep    10s
+    input text    ${city_town-a}    helsinki
+    sleep    10s
+    Capture Page Screenshot
+
+update_setting_Ethernet Nordic E-LAN EVP-LAN
+    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5']
+    Wait Until Element Is Visible    ${ Network bridge }    60s
+    input text    ${ Network bridge }    This is a test opportunity
+    helinsiki_address
+    Capture Page Screenshot
+
+update_setting_Ethernet Nordic HUB/E-NNI
+    ${Service level}    Set Variable    //select[@name='productconfig_field_0_4']
+    ${platinum}    Set Variable    //select[@name='productconfig_field_0_4']//option[contains(text(),'Platinum')]
+    Wait Until Element Is Visible    ${Service level}    60s
+    click element    ${Service level}
+    click element    ${platinum}
+    sleep    5s
+    helinsiki_address
+    Capture Page Screenshot
+
+helinsiki_address
+    ${street_add1}    set variable    //input[@name='productconfig_field_1_0']
+    ${street_add2}    set variable    //input[@name='productconfig_field_1_1']
+    ${postal_code}    Set Variable    //input[@name='productconfig_field_1_3']
+    ${city}    set variable    //input[@name='productconfig_field_1_4']
+    sleep    10s
+    click element    ${street_add1}
+    sleep    10s
+    input text    ${street_add1}    This is a test opportunity
+    sleep    10s
+    click element    ${street_add2}
+    sleep    10s
+    input text    ${street_add2}    99
+    sleep    10s
+    input text    ${postal_code}    00100
+    sleep    10s
+    click element    ${city}
+    sleep    10s
+    input text    ${city}    helsinki
+    sleep    10s
+
+update_setting_Telia Ethernet subscription
+    ${E_NNI-ID}    Set Variable    //input[@name='productconfig_field_0_6']
+    ${E-NNI S-Tag VLAN}    Set Variable    //input[@name='productconfig_field_0_7']
+    ${Interface}    Set Variable    //select[@name='productconfig_field_0_8']
+    ${option}    Set Variable    ${Interface}//option[contains(text(),'10/100Base-TX')]
+    sleep    5s
+    Wait Until Element Is Visible    ${E_NNI-ID}    60s
+    Input Text    ${E_NNI-ID}    10
+    sleep    5s
+    Click Element    ${E-NNI S-Tag VLAN}
+    sleep    10s
+    input text    ${E-NNI S-Tag VLAN}    100
+    sleep    5s
+    Click Element    ${Interface}
+    Click Element    ${option}
+    helinsiki_address
+    Capture Page Screenshot
+
+Fill Laskutuksen lisätieto
+    ${Laskutuksen lisätieto 1}=    set variable    //input[@name='productconfig_field_0_0']
+    ${Laskutuksen lisätieto 2}=    set variable    //input[@name='productconfig_field_0_1']
+    ${Laskutuksen lisätieto 3}=    set variable    //input[@name='productconfig_field_0_2']
+    ${Laskutuksen lisätieto 4}=    set variable    //input[@name='productconfig_field_0_3']
+    ${Laskutuksen lisätieto 5}=    set variable    //input[@name='productconfig_field_0_4']
+    input text    ${Laskutuksen lisätieto 1}    test order by robot framework.L1
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 2}    test order by robot framework.L2
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 3}    test order by robot framework.L3
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 4}    test order by robot framework.L4
+    sleep    3s
+    input text    ${Laskutuksen lisätieto 5}    test order by robot framework.L5
+    sleep    3s
+
+Add Ethernet Nordic Network Bridge
+    [Arguments]    ${env}=devpo
+    Adding Product    Ethernet Nordic Network Bridge
+    run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Ethernet Nordic Network Bridge
+    ...    ELSE    Click_Settings_new    Ethernet Nordic Network Bridge
+    update_setting1
+    click element    ${X_BUTTON}
+    sleep    15s
+
+Add Ethernet Nordic E-Line EPL
+    [Arguments]    ${env}=devpo
+    Adding Product    Ethernet Nordic E-Line EPL
+    run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Ethernet Nordic E-Line EPL
+    ...    ELSE    Click_Settings_new    Ethernet Nordic E-Line EPL
+    update_setting2
+    click element    ${X_BUTTON}
+    sleep    15s
+
+Add Ethernet Nordic E-LAN EVP-LAN
+    [Arguments]    ${env}=devpo
+    Adding Product    Ethernet Nordic E-LAN EVP-LAN
+    run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Ethernet Nordic E-LAN EVP-LAN
+    ...    ELSE    Click_Settings_new    Ethernet Nordic E-LAN EVP-LAN
+    update_setting_Ethernet Nordic E-LAN EVP-LAN
+    click element    ${X_BUTTON}
+    sleep    15s
+
+Add Ethernet Nordic HUB/E-NNI
+    [Arguments]    ${env}=devpo
+    Adding Product    Ethernet Nordic HUB/E-NNI
+    run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Ethernet Nordic HUB/E-NNI
+    ...    ELSE    Click_Settings_new    Ethernet Nordic HUB/E-NNI
+    update_setting_Ethernet Nordic HUB/E-NNI
+    click element    ${X_BUTTON}
+    sleep    15s
+
+Add Telia Ethernet subscription
+    [Arguments]    ${env}=devpo
+    Adding Product    Telia Ethernet Subscription
+    run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Telia Ethernet Subscription
+    ...    ELSE    Click_Settings_new    Telia Ethernet Subscription
+    update_setting_Telia Ethernet subscription
+    click element    ${X_BUTTON}
+    sleep    15s
+
+Click_Settings_sitpo_SAP
+    [Arguments]    ${product}
+    ${added_product}    Set Variable    //button[contains(@class,'children')]//span[text()='${product}']
+    sleep    15s
+    Capture Page Screenshot
+    Wait Until Element Is Visible    ${added_product}    45s
+    Capture Page Screenshot
+    Click Button    ${SETTINGS}
+    #@{locators}=    Get Webelements    xpath=${element}
+    #${original}=    Create List
+    #: FOR    ${locator}    IN    @{locators}
+    #Click Element    xpath=${element}

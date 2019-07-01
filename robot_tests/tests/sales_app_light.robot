@@ -1,10 +1,11 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
+Library             test123.py
 
 *** Test Cases ***
 Add new contact - Master
@@ -229,7 +230,7 @@ Lightning: Sales admin Change Account owner for group account
     #sleep    20s
 
 Create HDC Order
-    [Tags]    BQA-HDCOrder    LightningE2E
+    [Tags]    BQA-HDCOrder    Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #go to entity    319021811502
     #sleep    10s
@@ -275,7 +276,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder    LightningE2E
+    [Tags]    BQA-B2BOrder    Lightning
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -311,7 +312,7 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-B2OOrder    LightningE2E
+    [Tags]    BQA-B2OOrder    Lightning
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -340,7 +341,7 @@ Create B2O Order
     getOrderStatusAfterSubmitting
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    LightningE2E
+    [Tags]    BQA-8798    Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -355,7 +356,7 @@ createAOppoViaSVE
     validateCreatedOppoForFYR    ${fyr}
 
 Closing Opportunity as Won with FYR below 3 KEUR
-    [Tags]    BQA-8794    new
+    [Tags]    BQA-8794    Lightning
     Closing Opportunity as Won with FYR    8    No
     #${FYR}=    set variable    //span[@title='FYR Total']/../div
     #Go To Salesforce and Login into Lightning
@@ -377,7 +378,7 @@ Closing Opportunity as Won with FYR below 3 KEUR
     #Log to console    The FYR value is ${FYR_value}
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
-    [Tags]    BQA-8795    new
+    [Tags]    BQA-8795    Lightning
     ${Edit_continuation}=    Set Variable    //button[@title='Edit Create Continuation Sales Opportunity?']
     Closing Opportunity as Won with FYR    200    Yes
     sleep    10s
@@ -391,11 +392,11 @@ Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     Capture Page Screenshot
 
 Closing Opportunity as Won with FYR greater than 100KEUR
-    [Tags]    BQA-8796    new
+    [Tags]    BQA-8796    Lightning
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    new
+    [Tags]    BQA-9121    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
@@ -426,7 +427,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9122    new
+    [Tags]    BQA-9122    Lightning
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
@@ -458,7 +459,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
-    [Tags]    BQA-8560
+    [Tags]    BQA-8560      Lightning
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
     Go To Salesforce and Login into Lightning
     #Go To Entity    ${TEST_ACCOUNT_CONTACT}
@@ -577,3 +578,560 @@ Add an account team member
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab and add new team member
     Delete team member from account
+
+Lead_Creation
+    [Tags]  SreeramE2E       Lightning
+
+    [Documentation]    This TC creates lead from the Web-to-lead form and validate the same in Claudia leads tab,
+    ...    convert it to opportunity
+
+    ${lead_file}  run keyword  open file from resources    lead_Release.html
+
+    go to  file:///${lead_file}
+
+    ${fname}  generate random string  3  [NUMBERS]F
+    ${lname}  generate random string  3  [NUMBERS]L
+    ${mobile}  create unique mobile number
+    ${title}  generate random string  5   [NUMBERS]abcdefghi
+    ${desc}  generate random string  10  [NUMBERS]abcdef
+
+    sleep   5s
+    enter random data to lead web form  ${fname}  ${lname}  ${lead_email}  ${mobile}  ${title}  ${desc}
+
+    go to  ${LOGIN_PAGE_APP}
+
+    login to salesforce as digisales lightning user vlocupgsandbox
+    go to entity  ${lead_account_name}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    open_todays_leads
+    force click element  //a[@title='${fname} ${lname}']
+    wait until page contains element  //span[text()='${fname} ${lname}']   30s
+    validate_Created_Lead   ${fname}  ${lname}  ${lead_email}  ${mobile}  ${title}  ${desc}
+    Edit_and_Select_Contact  ${contact_name}
+    scroll page to location  0  0
+    click element   ${convert_lead_btn}
+    wait until page contains element  ${converting_lead_header}   30s
+    input text  ${lead_name_input}   Lead_${fname}_${lname}
+    input text  ${lead_desc_textarea}    ${desc}
+    ${close_date}    get date from future    10
+    sleep  3s
+    input text  ${lead_close_date}   ${close_date}
+    click element  ${converting_lead_dialogue}
+    click element  ${converting_lead_overlay}
+    wait until page contains element  ${lead_converted_h4}      60s
+    wait until page contains element  //span[text()='Opportunity']//ancestor::div[@class="slds-box"]//a[text()='Lead_${fname}_${lname}']    30s
+    click element  //span[text()='Opportunity']//ancestor::div[@class="slds-box"]//a[text()='Lead_${fname}_${lname}']
+    wait until page contains element    //span[text()='Opportunity ID']     30s
+    scrolluntillfound  //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
+    page should contain element  //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
+
+
+create a b2b direct order
+    [Tags]  SreeramE2E       Lightning
+    #Login to Salesforce as DigiSales Lightning User
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Go To Entity   Ylöjärven Yrityspalvelu Oy
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   10s
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    Go To Entity     ${oppo_name}
+    ClickingOnCPQ  ${oppo_name}
+    AddProductToCart  Fiksunetti
+    Run Keyword If    '${r}'== 'b2b'    run keyword  UpdateAndAddSalesTypeandClickDirectOrder   Fiksunetti
+    openOrderFromDirecrOrder
+    getorderstatusbeforesubmitting
+    clickonsubmitorder
+    ${order_no}  run keyword  getorderstatusaftersubmitting
+    go to entity   ${order_no}
+    getMultibellaCaseGUIID   ${order_no}
+
+Add Oppo Team Member and Edit the Oppo with New Team Member
+    [Tags]  SreeramE2E       Lightning
+    [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B
+                    ...     and try modifying the oppo with newly added team member
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  Sales Admin
+    Go To Entity    Aarsleff Oy
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   10s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    go to entity  ${oppo_name}
+    #clickingoncpq  ${oppo_name}
+    logoutasuser  Sales Admin
+    sleep   10s
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  B2B DigiSales
+    go to entity  ${oppo_name}
+    changethepricelist  B2B  B2B
+    wait until page contains element  //li[text()='insufficient access rights on object id']   30s
+    page should contain element  //li[text()='insufficient access rights on object id']
+    click element  //span[text()='Cancel']/..
+    sleep  3s
+    reload page
+    logoutasuser  B2B DigiSales
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  Sales Admin
+    #AddOppoTeamMember  Oppo2349_2    B2O NetworkSales
+    AddOppoTeamMember  ${oppo_name}   B2B DigiSales
+    logoutAsUser  Sales Admin
+    sleep  10s
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  B2B DigiSales
+    go to entity  ${oppo_name}
+    changethepricelist  B2B  GTM
+
+
+AddProducrViaSVEandCPQFlow
+    [Tags]  SreeramE2E       Lightning
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   10s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    go to entity  ${oppo_name}
+    clickingOnSolutionValueEstimate   ${oppo_name}
+    ${fyr}  run keyword  addProductsViaSVE         ${product_name}
+    Go To Entity    ${oppo_name}
+    ${revenue_total}=  get text  //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span
+    ${fyr_total}=  get text  //span[@title='FYR Total']/../div[@class='slds-form-element__control']/Div/span
+    ${revenue_total}=  remove string  ${revenue_total}  ,00 €
+    ${revenue_total}=       Evaluate    '${revenue_total}'.replace(' ','')
+    log to console  ${revenue_total}.this is final revenue total
+    ${fyr_total}=  remove string  ${fyr_total}  ,00 €
+    ${fyr_total}=       Evaluate    '${fyr_total}'.replace(' ','')
+    log to console  ${revenue_total}.this is final revenue total
+    log to console  ${fyr}.this is output of addproductviasve keyword
+    should be equal as strings  ${fyr_total}  ${fyr}
+    should be equal as strings  ${revenue_total}  ${fyr}
+    #validateCreatedOppoForFYR  ${fyr}
+    ClickingOnCPQ  ${oppo_name}
+    AddProductToCart  Fiksunetti
+    Run Keyword If    '${r}'== 'b2b'    run keyword  UpdateAndAddSalesType   Fiksunetti
+    OpenQuoteButtonPage
+    #${quote_number}   run keyword   getQuoteNumber
+    #logoutAsUser  B2B DigiSales
+    #sleep   10s
+    #login to salesforce as digisales lightning user vlocupgsandbox
+    #openQuoteFromOppoRelated   ${oppo_name}   ${quote_number}
+    #CreditScoreApproving
+    #swithchtouser  B2B DigiSales
+    #openQuoteFromOppoRelated   ${oppo_name}   ${quote_number}
+    ClickonCreateOrderButton
+    ContractStateMessaging
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    clickOnSubmitOrder
+    ${order_no}  run keyword  getOrderStatusAfterSubmitting
+    go to entity   ${order_no}
+    getMultibellaCaseGUIID   ${order_no}
+
+
+CreateB2BHDCGTMOrder
+    [Tags]  SreeramE2E       Lightning
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    swithchtouser  B2B DigiSales
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   10s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    go to entity  ${oppo_name}
+    changethepricelist  B2B   GTM
+    clickingOnSolutionValueEstimate   ${oppo_name}
+    ${fyr}  run keyword   addProductsViaSVE      Telia Colocation
+    log to console  ${fyr}.this is total
+    ${GTM_limit}=  set variable  600000
+    ${result}=  evaluate  ${fyr} > ${GTM_limit}
+    log to console  ${result}.this is comparison
+    Run keyword If    ${result}=='True'   click on more actions
+    scrolluntillfound  //button[@title="Edit GTM Approval Request Justification"]
+    click element  //button[@title="Edit GTM Approval Request Justification"]
+    wait until page contains element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea   30s
+    force click element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
+    input text    //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea    Please APprove
+    click element  //button[@title="Save"]
+    scroll page to location  0  0
+    sleep  3s
+    wait until page contains element  //a[contains(@title, 'more actions')][1]   30s
+    force click element  //a[contains(@title, 'more actions')][1]
+    wait until page contains element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..   20s
+    page should contain element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..
+    force click element   //div[text()='Submit for HDC GTM Approval']
+    sleep  5s
+    reload page
+    scrolluntillfound  //span[text()='Pending Approval']
+    page should contain element  //span[text()='Pending Approval']
+    logoutAsUser  B2B DigiSales
+    sleep   10s
+    login to salesforce as digisales lightning user vlocupgsandbox
+    ApproveB2BGTMRequest  Leila Podduikin  ${oppo_name}
+    ApproveB2BGTMRequest  Tommi Mattila    ${oppo_name}
+    swithchtouser  B2B DigiSales
+    go to entity  ${oppo_name}
+    scrolluntillfound  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
+    page should contain element  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
+    ClickingOnCPQ    ${oppo_name}
+    #Adding Telia Colocation    Telia Colocation
+    #Updating Setting Telia Colocation
+    #UpdateAndAddSalesType    Telia Colocation
+    #OpenQuoteButtonPage
+    #sleep   15s
+    #go to entity  Oppo_ 20190428-002314
+    #changethepricelist  B2B   GTM
+    #clickingOnSolutionValueEstimate   Oppo_ 20190428-002314
+    #${fyr}  run keyword   addProductsViaSVE      Telia Colocation
+    #log to console  ${fyr}.this is total
+    #${GTM_limit}=  set variable  600000
+    #${result}=  evaluate  635000 > ${GTM_limit}
+    #log to console  ${result}.this is comparison
+    #go to entity  Oppo_ 20190428-002314
+    #Run keyword If    ${result}=='True'   click on more actions
+    ###scrolluntillfound  //button[@title="Edit GTM Approval Request Justification"]
+    ###click element  //button[@title="Edit GTM Approval Request Justification"]
+    ###wait until page contains element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea   30s
+    ###input text    //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea    Please APprove
+    ###click element  //button[@title="Save"]
+    ###scroll page to location  0  0
+    ###sleep  3s
+    ###wait until page contains element  //a[contains(@title, 'more actions')][1]   30s
+    ###force click element  //a[contains(@title, 'more actions')][1]
+    ###wait until page contains element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..   10s
+    ###page should contain element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..
+    ###force click element   //a[@title="Submit for HDC GTM Approval"]/div
+
+    #Leila Podduikin 1st approval
+    #Tommi Mattila  Final Approval
+    #scrolluntillfound  //span[text()='Items to Approve']
+    #click element  //span[text()='Items to Approve']/ancestor::div[contains(@class,'card__header')]//following::a[text()='Oppo_ 20190428-002314']
+    #wait until page contains element   //span[text()='Opportunity Approval']  60s
+    #click element  //div[text()='Approve']
+    #wait until page contains element  //h2[text()='Approve Opportunity']   30s
+    #wait until element is visible  //span[text()='Comments']/../following::textarea   30s
+    #input text  //span[text()='Comments']/../following::textarea   1st level Approval Done By Leila
+    #input text  //span[text()='Comments']/../following::textarea   Final level Approval Done By Tommi Mattila
+    #click element  //span[text()='Approve']
+    #swithchtouser  B2B DigiSales
+    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #log to console    ${contact_name}.this is name
+    #sleep   10s
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    #log to console    ${oppo_name}.this is opportunity
+    #go to entity  ${oppo_name}
+    #changethepricelist
+    #${fyr}  run keyword  addProductsViaSVE         ${product_name}
+
+createSalesProjectOppo
+    [Tags]  SreeramE2E       Lightning
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  B2B DigiSales
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   10s
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    Go To Entity     ${oppo_name}
+    ${case_number}=  run keyword  createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
+    log to console   ${case_number}.this is created case
+    logoutAsUser  B2B DigiSales
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  Anna Vierinen
+    openquotefromopporelated  ${oppo_name}  ${case_number}
+    #go to entity  ${case_number}
+    #sleep  15s
+    click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
+    wait until element is visible  //a[@class='select' and text()='New']   30
+    click element  //a[@class='select' and text()='New']
+    sleep  3s
+    #//a[text()='New']//ancestor::div[@data-aura-class='uiMenu']
+    click element  //a[@title="In Case Assessment"]
+    ${date}  get date from future  7
+    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
+    click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
+    Scroll Page To Location    0    1400
+    ##scroll element into view  //Span[text()='Support Case Cycle Time']
+    ##//a[@class='select' and text()='--None--']
+    wait until element is visible   //a[@class='select' and text()='--None--']
+    force click element  //a[@class='select' and text()='--None--']
+    click element  //a[@title='Sales Project']
+    click element  //button[@title='Save']/span
+    wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
+    force click element  //span[text()='Assign Support Resource' and @class='title']
+    wait until page contains element  //span[text()='Assigned Resource']  30s
+    input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
+    click element  //div[@title="B2B DigiSales"][1]
+    wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
+    click element  //a[@class='select' and text()='Solution Design']
+    click element  //a[@title="Sales Project"]
+    click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
+    #sleep   40s
+    #scrolluntillfound   //span[text()="Save"][1]/../..
+    #sleep   2s
+    scroll page to location  0  200
+    wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+    wait until element is visible  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+    click element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..
+    capture page screenshot
+    #go to entity   Oppo_ 20190427-010703
+    #${case_number}=  run keyword  createACaseFromOppoRelated  Oppo_ 20190427-010703  B2B Sales Expert Request
+    #log to console   ${case_number}.this is created case
+    #wait until page contains element  //span[text()='Commit Decision' and @class='title']   20s
+    #click element  //span[text()='Commit Decision' and @class='title']
+    #wait until page contains element  //div[text()='You are about to commit the case assessment decision and reassign the case to the designated case lead. Are you sure?']    20s
+    #click element  //span[text()='Next']/..
+    #sleep  5s
+    go to entity    ${oppo_name}
+    #sleep  10s
+    #scrolluntillfound  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+    page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+
+    #click on more actions
+    #wait until page contains element  //a[contains(@title, 'more actions')][1]
+    #//a[contains(@title, 'more actions')]/..   30s
+    #force click element  //a[contains(@title, 'more actions')][1]
+    #wait until page contains element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..   10s
+    #page should contain element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..
+    #force click element   //a[@title="B2B Sales Expert Request"]/div
+    #wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
+    #${case_number}=    Generate Random String    7    [NUMBERS]
+    #input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
+    #${date}=    Get Date From Future    7
+    #input text   //span[text()='Offer Date']/../following::div[@class='form-element']/input   ${date}
+    #scroll element into view  //span[text()='Type of Support Requested']/../following::textarea
+    #input text  //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
+    #scroll element into view  //span[text()='Sales Project']/../following::input[1]
+    #click element  //span[text()='Sales Project']/../following::input[1]
+    #click element  //span[text()='Save']/..
+    #capture page screenshot
+
+
+
+Create B2B Order
+    [Tags]  SreeramE2E       Lightning
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    SwithchToUser  B2B DigiSales
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   10s
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    go to entity   ${oppo_name}
+    ClickingOnCPQ  ${oppo_name}
+    AddProductToCart   Fiksunetti
+    Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Fiksunetti
+    OpenQuoteButtonPage
+    ClickonCreateOrderButton
+    ContractStateMessaging
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    getOrderStatusBeforeSubmitting
+    sleep  60s
+    clickOnSubmitOrder
+    ${order_no}  run keyword  getOrderStatusAfterSubmitting
+    go to entity   ${order_no}
+    getMultibellaCaseGUIID   ${order_no}
+
+#######please donot panic with Portal test cases #######
+
+createRFQviaOnline
+    [Tags]  SreeramE2E       B2OPortal
+    [Documentation]  this is to create RFQ via b2o Online portal
+
+    openOnlinePortal
+
+    ## RFQ Creation Starts ##
+
+    wait until page contains element   //span[text()='Offering']  60s
+    click element  //span[text()='Offering']
+    wait until page contains element   //h1[text()='Telia Offering']   60s
+    page should contain element   //h2[text()='None']
+    page should contain element   //h2[text()='Networking']
+    page should contain element   //h2[text()='Internet']
+    page should contain element   //h2[text()='Data centre']
+    click element  //h2[text()='Networking']
+    wait until page contains element  //h2[text()='Telia Networking products']   60s
+    click element  //span[contains(@class,'arrow-down telia-react-icon__sizeXs')]/..
+    click element  //div[text()='Finland']
+    #click element  //Span[text()='Postal code']
+    input text   //label[contains(@class,'postal-code')]//input   00250
+    wait until page contains element  //span[contains(@class,'darkGreen')]   5s
+    page should contain element   //span[contains(@class,'darkGreen')]
+    input text  //div[contains(@class,'street-address')]//input  Humalistonkatu 1a
+    click element    //div[text()='Humalistonkatu 1a']
+    input text   //label[contains(@class,'select-city')]//input   Helsinki
+    click element  //span[text()='Ethernet Nordic Network Bridge']/../../..//button[contains(@class,'select-product')]
+    wait until page contains element  //h1[text()='Select configuration']  90s
+    scrolluntillfound  //button[contains(@class,'configuration-send-rfq-button')]
+    click element  //button[contains(@class,'configuration-send-rfq-button')]
+    wait until page contains element  //h1[text()='Send request for quotation']   60s
+    page should contain element  //h2[text()='Installation information']
+    input text  //label[contains(@class,'company-name')]//input  Test COmpany A Party
+    input text  //label[contains(@class,'contact-name')]//input  Test Contact Person A Party
+    input text  //label[contains(@class,'contact-phone')]//input  +35811111111
+    input text  //label[contains(@class,'contact-email')]//input  test@test.com
+    input text  //label[contains(@class,'project-id')]//input     999999
+    scrolluntillfound  //div[text()='Send RFQ']
+    click element  //div[text()='Send RFQ']
+    wait until page contains element  //h1[text()='Thank you for your RFQ!' ]   60s
+    ${rfq_number}=  get text  //Span[text()='RFQ number']/..//h2
+    log to console   ${rfq_number}.this is rfq
+
+    ## RFQ Creation Ends ##
+
+    ## Logout from portal starts ##
+    click element  //span[@class='telia-react-element telia-react-color__purple telia-react-icon telia-icon--arrow-down telia-react-icon__sizeSm']
+    sleep  1s
+    click element  //span[text()='Logout']
+    sleep   5s
+    close browser
+    logout from all systems and close browser
+     ## Logout from portal ends ##
+
+     ## Login to Claudia Sitpo starts ##
+
+RFQValidationInClaudia
+    [Tags]  SreeramE2E       B2OPortal
+     login to salesforce as digisales lightning user sitposandbox
+
+     ## Search the Oppo based on the RFQ id received via portal starts ##
+
+     Search Salesforce  2019040000036072
+     wait until page contains element  //span[@title='2019040000036072']//ancestor::tbody//th//a  60s
+     click element  //span[@title='2019040000036072']//ancestor::tbody//th//a
+
+
+    ## Search the Oppo based on the RFQ id received via portal starts ##
+
+    ## Validate  the Oppo starts##
+    wait until page contains element  //span[text()='2019040000036072']  60s
+    page should contain element  //span[text()='2019040000036072']
+    scrolluntillfound  //span[text()='Price List']/..//following-sibling::div//a[text()='B2O']
+    page should contain element  //span[text()='Price List']/..//following-sibling::div//a[text()='B2O']
+    page should contain element   //span[text()='Price Book']/..//following-sibling::div//a[text()='Standard Price Book']
+    page should contain element   //span[text()='Source']/..//following-sibling::div//span[text()='B2O Self Care']
+    page should contain element   //span[text()='Visible to Portal']/..//following-sibling::div//img[@class=" checked"]
+    scrolluntillfound             //span[text()='Opportunity Record Type']/..//following-sibling::div//span[text()='B2O Opportunity']
+    page should contain element    //span[text()='Opportunity Record Type']/..//following-sibling::div//span[text()='B2O Opportunity']
+    page should contain element    //span[text()='Created By']/..//following-sibling::div//a[text()='Online Integration']
+
+    ## Validate  the Oppo ends##
+
+    ## Click on the CPQ from Oppo starts##
+
+     click element    xpath=//a[@title='CPQ']
+     sleep  20s
+    ## Click on the CPQ from Oppo ends##
+
+
+    select frame  //div[contains(@class,'slds')]/iframe
+    page should not contain element  //h2[text()='Required attribute missing for Ethernet Nordic Network Bridge.']
+    validateThePricesInTheCart  Ethernet Nordic Network Bridge
+    click element   //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    unselect frame
+
+    sleep  20s
+
+    UpdateAndAddSalesTypeB2O   Ethernet Nordic Network Bridge
+
+    openb2oquotebuttonpage
+
+
+    ## Open the Quote and make visisble to portal ##
+
+    wait until page contains element  //span[@class='title' and text()='Details']   30s
+    Reload Page
+    wait until page contains element  //span[@class='title' and text()='Details']   30s
+    click element    //span[@class='title' and text()='Details']
+    wait until page contains element  //span[text()='Quote Name']  30s
+    scrolluntillfound  //button[@title="Edit Visible to Portal"]
+    click element  //button[@title="Edit Visible to Portal"]
+    wait until page contains element  //span[text()='Visible to Portal']/../..//input  20
+    click element  //span[text()='Visible to Portal']/../..//input
+    scrolluntillfound  //span[text()='Save']/..
+    click element  //span[text()='Save']/..
+
+    ## Open the Quote and make visisble to portal ##
+
+createOrderFromQuoteinOnlinePortal
+   [Tags]  SreeramE2E       B2OPortal
+    openOnlinePortal
+    ## Search for the RFQ,Quote  ##
+    wait until page contains element   //span[text()='Offering']  60s
+    click element  //span[text()='Quotes and orders']
+    wait until page contains element  //h1[text()='Quotes and orders']   30s
+    input text  //input[contains(@class,'input_with_icon')]  2019040000036075
+    sleep  3s
+    click element  //span[text()='quotes and orders']
+    Scroll Page To Location    0    300
+    sleep  5s
+    #scrolluntillfound  //div[text()='ID']/../..//span[text()='2019040000036075']
+    #Scroll Page To Location    0    300
+    wait until page contains element  //span[text()='2019040000036075']/..  30s
+    wait until element is enabled  //span[text()='2019040000036075']/..  30s
+    click element  //span[text()='2019040000036075']/..
+
+    wait until page contains element  //span[text()='1 quotes received']  30s
+    scrolluntillfound  //h2[text()='Our offer']
+    click element  //button[contains(@class,'green telia-react-button')]
+    wait until page contains element  //button[contains(@class,'order-quote-test')]  30s
+    click element  //button[contains(@class,'order-quote-test')]
+
+    wait until page contains element  //h1[text()='Thank you for your order']  30s
+    page should contain element  //h1[text()='Thank you for your order']
+    ${order_number}=  get text  //span[text()='Order number']/../h2
+
+    ## Search for the RFQ,Quote  ##
+
+validateTheOrderCreatedViaPortalInClaudia
+    [Tags]  SreeramE2E       B2OPortal
+    login to salesforce as digisales lightning user sitposandbox
+    go to entity  319043010544
+    wait until page contains element  //span[@class='title' and text()='Details']  30s
+    click element  //span[@class='title' and text()='Details']
+    wait until page contains element  //span[text()='B2O Order']  30s
+    page should contain element  //span[text()='B2O Order']
+    scrolluntillfound  //span[text()='SAP Order Number']/..//span
+    ${sap_number}=  get text  //span[text()='SAP Order Number']/..//span
+    log to console  ${sap_number}
+
+
+
+
+DummyTestCaseForHDC
+  [Tags]  SreeramE2E       Lightning
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  B2B DigiSales
+    go to entity  ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   5s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    sleep   5s
+    ${billing_acc_name}    run keyword    CreateABillingAccount    ${vLocUpg_TEST_ACCOUNT}
+    log to console   ${billing_acc_name}
+    sleep  5s
+    go to entity  ${oppo_name}
+    clickingoncpq  ${oppo_name}
+    AddTeliaColocation  Telia Colocation   Cabinet 52 RU
+    UpdateAndAddSalesType    Telia Colocation
+    HDCOpenQuoteButtonPage
+    ${quote_no}  run keyword   getQuoteNumber
+    log to console  ${quote_no}.this is quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount  Aacon Oy
+    SelectingTechnicalContact     ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    #${billing_acc_name}
+    ReviewPage
+    ${order_no}   run keyword    ValidateTheOrchestrationPlan
+    log to conole  ${order_no} .this is order
+

@@ -211,3 +211,18 @@ ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/optio
 ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
 ${contract_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
+
+
+### Lead  Variables ###
+
+${lead_account_name}                Academic Work HR Services Oy
+${lead_business_id}                2733621-7
+${lead_email}                       kasibhotla.sreeramachandramurthy@teliacompany.com
+${convert_lead_btn}                 //div[@title='Convert Lead']
+${converting_lead_header}           //div[text()='Converting Lead']
+${lead_name_input}                  //div[@class="slds-text-title_caps"]//following-sibling::input
+${lead_desc_textarea}               //div[@class="slds-text-title_caps"]//following-sibling::textarea
+${lead_close_date}                  //input[@class="field input"]
+${converting_lead_dialogue}          //div[@class="convertSection"][text()='Converting Lead']
+${converting_lead_overlay}           //button[text()='Convert Lead']
+${lead_converted_h4}                //h4[text()='Lead Converted']
