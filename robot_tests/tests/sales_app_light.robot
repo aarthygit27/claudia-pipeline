@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-#Test Teardown     Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -577,6 +577,27 @@ Add an account team member
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab and add new team member
+    Delete team member from account
+
+Add an account team member as Sales Admin
+    [Tags]      Summer-Test     BQA-10727
+    [Documentation]     Log in as Sales Admin and then add some user as a team member for business account
+    Go To Salesforce and Login into Lightning User
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to related tab and add new team member
+
+Edit team member's role as Sales Admin
+    [Tags]      Summer-Test     BQA-10728
+    [Documentation]     Log in as Sales Admin and then edit existing team member's role for business account
+    Go To Salesforce and Login into Lightning User
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Change team member role from account
+
+Delete account team member as Sales Admin
+    [Tags]      Summer-Test
+    [Documentation]     Log in as Sales Admin and then delete team member from business account
+    Go To Salesforce and Login into Lightning User
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete team member from account
 
 Lead_Creation

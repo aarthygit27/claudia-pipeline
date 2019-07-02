@@ -1090,21 +1090,7 @@ ClickingOnCPQ
     [Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
-<<<<<<< HEAD
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
-    #wait until page contains element    xpath=//h1[text()='${b}']    30s
-    sleep    40s
-=======
-    click element    xpath=//a[@title='CPQ']
-    #wait until page contains element  xpath=//div[contains(@class,'slds')]/iframe   40s
-    #wait until page contains element    //div[@data-aura-class="lafPageHost"]/div[contains(@class,'oneAlohaPage')]    30s
-    sleep    20s
->>>>>>> 8464a7399429ee0a7498a48efb59276e8d4c6791
-
-clickingOnSolutionValueEstimate
-    [Arguments]    ${c}=${oppo_name}
-    log to console    ClickingOnSVE
-    click element    xpath=//a[@title='Solution Value Estimate']
     #wait until page contains element    xpath=//h1[text()='${b}']    30s
     sleep    40s
 
@@ -1161,18 +1147,6 @@ validateCreatedOppoForFYR
      page should contain element  //span[text()='New Money - New Services']/..//following-sibling::td/span[text()='${product_quantity},00']
 
 AddProductToCart
-<<<<<<< HEAD
-    [Arguments]    ${pname}=${product_name}
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element    xpath=${CPQ_SEARCH_FIELD}    60s
-    input text    ${CPQ_SEARCH_FIELD}    ${pname}
-    wait until page contains element    xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button    60s
-    sleep    5s
-    click element    xpath=//p[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
-    wait until page contains element    //div[@class='cpq-item-product']/div[@class='cpq-item-base-product']//following::div[@class='cpq-item-no-children']/span[normalize-space(.)='${pname}']    60s
-    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    click element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-=======
     [Arguments]   ${pname}=${product_name}
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
@@ -1185,7 +1159,6 @@ AddProductToCart
     scrolluntillfound  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     validateThePricesInTheCart   ${pname}
     click element   //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
->>>>>>> 8464a7399429ee0a7498a48efb59276e8d4c6791
     unselect frame
     sleep  60s
 
@@ -2343,6 +2316,20 @@ Delete team member from account
     Wait element to load and click  //a/span[text()='Account Team Members']
     Wait until page contains element    ${contract_row}    30s
     Delete row items    ${contract_row}
+    Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
+
+Change team member role from account
+    Wait element to load and click  ${ACCOUNT_RELATED}
+    Wait element to load and click  //a/span[text()='Account Team Members']
+    Wait until page contains element    ${contract_row}
+    Force Click element         ${contract_row}
+    Wait until element is visible   //a[@title='Edit']
+    Click element   //a[@title='Edit']
+    Wait element to load and click  //a[text()='--None--']
+    Wait element to load and click  //ul/li[2]/a[text()='Account Manager']
+    Click element   //button[@title='Save']
+    Wait until page contains element    //table/tbody/tr/td[2]/span/span[text()='Account Manager']      30s
+    sleep   10s
 
 Change account owner to B2B_DIGISALES_LIGHT_USER
     ${isAccountOwner}=  Run keyword and return status   Wait until page contains element    //div[@class='ownerName']/div/a[text()='B2Blightning DigiSales']    30s
