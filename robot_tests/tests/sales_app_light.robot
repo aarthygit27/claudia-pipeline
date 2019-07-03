@@ -577,6 +577,7 @@ Add an account team member
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab and add new team member
+    Validate that team member is created succesfully
     Delete team member from account
 
 Add an account team member as Sales Admin
@@ -585,12 +586,14 @@ Add an account team member as Sales Admin
     Go To Salesforce and Login into Lightning User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab and add new team member
+    Validate that team member is created succesfully
 
 Edit team member's role as Sales Admin
     [Tags]      Summer-Test     BQA-10728
     [Documentation]     Log in as Sales Admin and then edit existing team member's role for business account
     Go To Salesforce and Login into Lightning User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Validate that team member is created succesfully
     Change team member role from account
 
 Delete account team member as Sales Admin
@@ -598,6 +601,7 @@ Delete account team member as Sales Admin
     [Documentation]     Log in as Sales Admin and then delete team member from business account
     Go To Salesforce and Login into Lightning User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Validate that team member is created succesfully
     Delete team member from account
 
 Lead_Creation

@@ -2309,18 +2309,19 @@ Navigate to related tab and add new team member
     Input text  //input[@title='Search People']     Sales Admin
     Wait element to load and click  //a[@role='option']/div/div[@title='Sales Admin']
     Click element   //button[@title='Save']
-    sleep   10s 
-    
-Delete team member from account
+    sleep   10s
+
+Validate that team member is created succesfully
     Wait element to load and click  ${ACCOUNT_RELATED}
     Wait element to load and click  //a/span[text()='Account Team Members']
+    Wait until page contains element   //table/tbody/tr/th/span/span[text()='Sales,Admin']     30s
+    
+Delete team member from account
     Wait until page contains element    ${contract_row}    30s
     Delete row items    ${contract_row}
     Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
 
 Change team member role from account
-    Wait element to load and click  ${ACCOUNT_RELATED}
-    Wait element to load and click  //a/span[text()='Account Team Members']
     Wait until page contains element    ${contract_row}
     Force Click element         ${contract_row}
     Wait until element is visible   //a[@title='Edit']
