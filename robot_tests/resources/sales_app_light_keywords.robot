@@ -1434,27 +1434,27 @@ ReviewPage
     log to console    Exiting Review page
     sleep    30s
 
-ValidateTheOrchestrationPlan
-    #${order_number}    get text    //span[text()='Order']//following::div[@class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle"]/span[@data-aura-class="uiOutputText"]
-    #log to console    ${order_number}.this is order numner
-    scrolluntillfound    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
-    #execute javascript    window.scrollTo(0,2000)
-    #sleep    10s
-    log to console    plan validation
-    wait until page contains element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
-    click element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
-    sleep    10s
-    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
-    sleep    20s
-    page should contain element    //a[text()='Start']
-    page should contain element    //a[text()='Assetize Order']
-    page should contain element    //a[text()='Deliver Service']
-    page should contain element    //a[text()='Order Events Update']
-    page should contain element    //a[text()='Activate Billing']
-    #go back
-    sleep    3s
-    #click element    //th/div[@data-aura-class="forceOutputLookupWithPreview"]/a[@data-special-link="true" and text()='Telia Colocation']
-    unselect frame
+#ValidateTheOrchestrationPlan
+#    #${order_number}    get text    //span[text()='Order']//following::div[@class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle"]/span[@data-aura-class="uiOutputText"]
+#    #log to console    ${order_number}.this is order numner
+#    scrolluntillfound    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+#    #execute javascript    window.scrollTo(0,2000)
+#    #sleep    10s
+#    log to console    plan validation
+#    wait until page contains element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
+#    click element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+#    sleep    10s
+#    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+#    sleep    20s
+#    page should contain element    //a[text()='Start']
+#    page should contain element    //a[text()='Assetize Order']
+#    page should contain element    //a[text()='Deliver Service']
+#    page should contain element    //a[text()='Order Events Update']
+#    page should contain element    //a[text()='Activate Billing']
+#    #go back
+#    sleep    3s
+#    #click element    //th/div[@data-aura-class="forceOutputLookupWithPreview"]/a[@data-special-link="true" and text()='Telia Colocation']
+#    unselect frame
 
 CreateABillingAccount
     # go to particular account and create a billing accouint from there
