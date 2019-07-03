@@ -1094,33 +1094,6 @@ ClickingOnCPQ
     #wait until page contains element    xpath=//h1[text()='${b}']    30s
     sleep    40s
 
-addProductsViaSVE
-    [Arguments]    ${pname_sve}=${product_name}
-    log to console    ${pname_sve}.this is added via SVE
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    force click element    //div[@class='btn custom-button btn-primary pull-right']
-    sleep    5s
-    click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
-    input text    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']    ${pname_sve}
-    click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@type='number']
-    input text    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@type='number']    ${product_quantity}
-    click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.OneTimeTotalt']
-    input text    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.OneTimeTotalt']    ${NRC}
-    click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.RecurringTotalt']
-    input text    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.RecurringTotalt']    ${RC}
-    click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']
-    click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value}']
-    #click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.ContractLength']/option[@value='${contract_lenght}']
-    #click element    //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.ContractLength']/option[@value='${contract_lenght}']
-    ${fyr_value}=    evaluate    ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
-    ${revenue_value}=    evaluate    ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
-    page should contain element    //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
-    page should contain element    //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
-    click element    //button[normalize-space(.)='Save Changes']
-    unselect frame
-    sleep    30s
-    [Return]    ${fyr_value}
-
 validateCreatedOppoForFYR
      [Arguments]  ${fyr_value_oppo}= ${fyr_value}
      wait until page contains element  //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']   60s
@@ -2650,68 +2623,6 @@ ContractStateMessaging
     click element  //button[@class="form-control btn btn-primary ng-binding" and normalize-space(.)='Open Order']
     unselect frame
     sleep    30s
-NextButtonOnOrderPage
-    log to console    NextButtonOnOrderPage
-    #click on the next button from the cart
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element    //span[text()='Next']/..
-    click element    //span[text()='Next']/..
-    unselect frame
-    sleep    30s
-
-
-
-OrderNextStepsPage
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
-     wait until page contains element  //*[contains(text(),'close this window')]   60s
-     wait until page contains element  //*[@id="Close"]  60s
-     click element  //*[@id="Close"]
-     unselect frame
-     sleep  45s
-
-getOrderStatusBeforeSubmitting
-    wait until page contains element   //span[@class='title' and text()='Details']  60s
-    reload page
-    wait until page contains element   //span[@class='title' and text()='Details']  60s
-    click element    //span[@class='title' and text()='Details']
-    #//li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']   60s
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']   60s
-
-clickOnSubmitOrder
-    wait until page contains element  //a[@title='Submit Order']   60s
-    click element  //a[@title='Submit Order']
-    sleep   20s
-    execute javascript   window.location.reload(true)
-    sleep   20s
-
-getOrderStatusAfterSubmitting
-    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']   60s
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  60s
-    ${fulfilment_status} =  get text  //span[text()='Fulfilment Status']/../following-sibling::div/span/span
-    wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
-    ${status} =  get text  //span[text()='Status']/../following-sibling::div/span/span
-    should not be equal as strings  ${fulfilment_status}  Error
-    should not be equal as strings  ${status}  Error
-    ${order_no}   get text   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Order Number']/../following-sibling::div/span/span
-    log to console  ${order_no}.this is getorderstatusafgtersubmirting function
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
-    [Return]   ${order_no}
-
-getMultibellaCaseGUIID
-    [Arguments]  ${order_no}
-    go to entity  ${order_no}
-    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']   60s
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  60s
-    ${case_GUI_id}  get text  //span[text()='MultibellaCaseGuiId']/../..//span[@class='uiOutputText']
-    ${case_id}  get text  //span[text()='MultibellaCaseId']/../..//span[@class='uiOutputText']
-    should not be equal as strings  ${case_GUI_id}  ${EMPTY}
-    should not be equal as strings  ${case_id}  ${EMPTY}
-    log to console  ${case_GUI_id}.this is GUIId
-    log to console  ${case_id} .this is case id
-    [return]  ${case_GUI_id}
 
 openAssetviaOppoProductRelated
     [Arguments]    ${account_name}
