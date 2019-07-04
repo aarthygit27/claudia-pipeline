@@ -534,17 +534,19 @@ Automatic availability check B2O-Account
     ClickingOnCPQ
     Check the CPQ-cart contains the wanted products     MetroEthernet Kapasiteetti
 
-Delete all contracts from account
-    [Tags]  Lightning
-    [Documentation]     Delete all service contracts from account related tab
-    Go To Salesforce and Login into Lightning User
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    Delete all existing contracts from Accounts Related tab
+#Delete all contracts from account
+#    [Tags]  Lightning
+#    [Documentation]     Delete all service contracts from account related tab
+#    Go To Salesforce and Login into Lightning User
+#    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+#    Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
     [Tags]  Lightning     BQA-10334
     [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
     Go To Salesforce and Login into Lightning
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Delete all existing contracts from Accounts Related tab
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Verify that warning banner is displayed on opportunity page
