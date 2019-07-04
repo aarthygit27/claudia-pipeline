@@ -611,7 +611,7 @@ Delete account team member as Sales Admin
     Delete team member from account
 
 Add an account team member to Group
-    [Tags]      Summer-Test     BQA-10737   wip_anssi
+    [Tags]      Summer-Test     BQA-10737   Lightning
     [Documentation]     Log in as Sales Admin and add team member to concern/group
     Go To Salesforce and Login into Lightning User
     Go to Entity  YIT
@@ -619,7 +619,7 @@ Add an account team member to Group
     Validate that team member is created succesfully
 
 Group: Edit team member's role
-    [Tags]      Summer-Test     BQA-10738   wip_anssi
+    [Tags]      Summer-Test     BQA-10738   Lightning
     [Documentation]     Log in as Sales Admin. Go to group and edit existing team member's role.
     Go To Salesforce and Login into Lightning User
     Go to Entity  YIT
@@ -627,7 +627,7 @@ Group: Edit team member's role
     Change team member role from account
 
 Group: Delete team member
-    [Tags]      Summer-Test     BQA-10739   wip_anssi
+    [Tags]      Summer-Test     BQA-10739   Lightning
     [Documentation]     Log in as Sales Admin. Go to group and delete existing team member.
     Go To Salesforce and Login into Lightning User
     Go to Entity  YIT
