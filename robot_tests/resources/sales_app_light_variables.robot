@@ -24,7 +24,7 @@ ${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th/
 ${ACCOUNT_HEADER}    //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}    //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}    //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
-${ACCOUNT_RELATED}    //div[contains(@class,'active')]//span[text()='Related']//parent::a
+${ACCOUNT_RELATED}      //div[contains(@class,'active')]//span[text()='Related']//parent::a
 #${RELATED_OPPORTUNITY}    //*[@class='primaryField']
 ${RELATED_OPPORTUNITY}    //tbody
 ${OPPORTUNITY_PAGE}    //*[contains(@class,'slds-page-header')]

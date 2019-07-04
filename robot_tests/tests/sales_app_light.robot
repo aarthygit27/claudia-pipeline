@@ -544,9 +544,10 @@ Automatic availability check B2O-Account
 Check banner for customership and service contract
     [Tags]  Lightning1     BQA-10334
     [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all existing contracts from Accounts Related tab
+    Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Verify that warning banner is displayed on opportunity page
@@ -569,7 +570,7 @@ Create contact relationship for account
 Change business account owner
     [Tags]  Lightning     BQA-10524
     [Documentation]     Change owner of the Business account to B2BDigisales Lightning user
-    Go To Salesforce and Login into Lightning User
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to B2B_DIGISALES_LIGHT_USER
 
@@ -585,7 +586,7 @@ Add an account team member
 Add an account team member as Sales Admin
     [Tags]      Summer-Test     BQA-10727
     [Documentation]     Log in as Sales Admin and then add some user as a team member for business account
-    Go To Salesforce and Login into Lightning User
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab and add new team member
     Validate that team member is created succesfully
@@ -593,7 +594,7 @@ Add an account team member as Sales Admin
 Edit team member's role as Sales Admin
     [Tags]      Summer-Test     BQA-10728
     [Documentation]     Log in as Sales Admin and then edit existing team member's role for business account
-    Go To Salesforce and Login into Lightning User
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Validate that team member is created succesfully
     Change team member role from account
@@ -601,7 +602,7 @@ Edit team member's role as Sales Admin
 Delete account team member as Sales Admin
     [Tags]      Summer-Test
     [Documentation]     Log in as Sales Admin and then delete team member from business account
-    Go To Salesforce and Login into Lightning User
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Validate that team member is created succesfully
     Delete team member from account
