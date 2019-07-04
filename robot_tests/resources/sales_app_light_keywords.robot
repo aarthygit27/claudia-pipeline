@@ -1434,27 +1434,27 @@ ReviewPage
     log to console    Exiting Review page
     sleep    30s
 
-ValidateTheOrchestrationPlan
-    #${order_number}    get text    //span[text()='Order']//following::div[@class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle"]/span[@data-aura-class="uiOutputText"]
-    #log to console    ${order_number}.this is order numner
-    scrolluntillfound    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
-    #execute javascript    window.scrollTo(0,2000)
-    #sleep    10s
-    log to console    plan validation
-    wait until page contains element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
-    click element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
-    sleep    10s
-    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
-    sleep    20s
-    page should contain element    //a[text()='Start']
-    page should contain element    //a[text()='Assetize Order']
-    page should contain element    //a[text()='Deliver Service']
-    page should contain element    //a[text()='Order Events Update']
-    page should contain element    //a[text()='Activate Billing']
-    #go back
-    sleep    3s
-    #click element    //th/div[@data-aura-class="forceOutputLookupWithPreview"]/a[@data-special-link="true" and text()='Telia Colocation']
-    unselect frame
+#ValidateTheOrchestrationPlan
+#    #${order_number}    get text    //span[text()='Order']//following::div[@class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle"]/span[@data-aura-class="uiOutputText"]
+#    #log to console    ${order_number}.this is order numner
+#    scrolluntillfound    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+#    #execute javascript    window.scrollTo(0,2000)
+#    #sleep    10s
+#    log to console    plan validation
+#    wait until page contains element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a    30s
+#    click element    //th[@title='Orchestration Plan Name']//following::div[@class='outputLookupContainer forceOutputLookupWithPreview']/a
+#    sleep    10s
+#    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+#    sleep    20s
+#    page should contain element    //a[text()='Start']
+#    page should contain element    //a[text()='Assetize Order']
+#    page should contain element    //a[text()='Deliver Service']
+#    page should contain element    //a[text()='Order Events Update']
+#    page should contain element    //a[text()='Activate Billing']
+#    #go back
+#    sleep    3s
+#    #click element    //th/div[@data-aura-class="forceOutputLookupWithPreview"]/a[@data-special-link="true" and text()='Telia Colocation']
+#    unselect frame
 
 CreateABillingAccount
     # go to particular account and create a billing accouint from there
@@ -2217,37 +2217,37 @@ Check service contract is on Draft Status
     Wait until page contains element    //table/tbody/tr[2]/td[5]/span/span[text()='Draft']     30s
 
 Delete all existing contracts from Accounts Related tab
-    [Documentation]    Used to delete all the existing contracts for the business account
-    Wait Until Element Is Visible    ${ACCOUNT_RELATED}    60s
-    Force click element    ${ACCOUNT_RELATED}
-    ScrollUntillFound    //span[text()='Contracts']/../../span/../../../a
-    ${status}=    Run Keyword And Return Status    Element Should Be Visible    //span[@title='Contracts']
-    Run Keyword If    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
-    Sleep    15s
-    #Force Click element             //span[@title='Contracts']//following::div/span[text()='View All']
-    Force Click element         //span[text()='View All']/span[text()='Contracts']
-    Sleep   10s
-    Wait Until Element Is Visible       ${contract_row}         60s
-    ${count}=       get element count       ${contract_row}
-    log to console          ${count}
-     : FOR    ${i}    IN RANGE    9999
-    \    Exit For Loop If    ${i} > ${count}-1
-    \    Delete all Contracts         ${contract_row} 
+    [Documentation]         Used to delete all the existing contracts for the business account
+    wait until element is visible       ${ACCOUNT_RELATED}      60s
+    Force click element         ${ACCOUNT_RELATED}
+    ScrollUntillFound           //span[text()='Contracts']/../../span/../../../a
+    ${status}=      run keyword and return status       Element Should Be Visible       //span[@title='Contracts']
+    run keyword if      ${status}       Run Keyword With Delay      0.10s       Click Element       xpath=${ACCOUNT_RELATED}
+    Sleep       15s
+    #Force Click element             //span[@title='Contracts']//following::div/span[text()='View All']
+    Force click element         //span[text()='View All']/span[text()='Contracts']
+    Sleep       10s
+    Wait until element is visible       ${contract_row}     60s
+    ${count}=       get element count       ${contract_row}
+    log to console      ${count}
+    : FOR   ${i}    IN RANGE    9999
+    \   exit for loop if    ${i} >  ${count}-1
+    \   delete all contracts        ${contract_row}
 
 Delete all Contracts
-    [Arguments]        ${contract_row}
-    ${IsVisible}=   Run Keyword And Return Status        element should be visible       ${contract_row}
-    Run Keyword if      ${IsVisible}       Delete row items         ${contract_row}
+    [Arguments]     ${contract_row}
+    ${IsVisible}=   Run keyword and return status       element should be visible           ${contract_row}
+    run keyword if      ${IsVisible}        Delete row items        ${contract_row}
 
 Delete row items
-    [Arguments]        ${contract_row}
-    [Documentation]    Used to delete the individual row
-    Force Click element         ${contract_row}
-    wait until element is visible           //a[@title='Delete']
-    Force Click element         //a[@title='Delete']
-    wait until element is visible           //button[@title='Delete']           60s
-    Click element           //button[@title='Delete']
-    Sleep        20s
+    [Arguments]     ${contract_row}
+    [Documentation]     Used to delete the individual row
+    Force click element         ${contract_row}
+    wait until element is visible       //a[@title='Delete']
+    Force click element         //a[@title='Delete']
+    wait until element is visible    //button[@title='Delete']           60s
+    click element  //button[@title='Delete']
+    sleep       20s
 
 Add relationship for the contact person
     [Documentation]
