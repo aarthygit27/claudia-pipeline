@@ -542,7 +542,7 @@ Automatic availability check B2O-Account
 #    Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
-    [Tags]  Lightning     BQA-10334
+    [Tags]  Lightning1     BQA-10334
     [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
