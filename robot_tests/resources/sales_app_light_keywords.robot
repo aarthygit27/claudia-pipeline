@@ -34,6 +34,7 @@ Go To Salesforce and Login into Lightning
     [Documentation]    Go to Salesforce and then Login as DigiSales Lightning User, then switch to Sales App
     ...    and then select the Home Tab in Menu
     Go to Salesforce
+    Sleep   20s
     Run Keyword    Login to Salesforce as ${user}
     Go to Sales App
     Reset to Home
