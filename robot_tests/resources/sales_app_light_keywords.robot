@@ -2231,7 +2231,6 @@ Select rows to delete the contract
     \    Delete all Contracts         ${contract_row}
 
 Delete all existing contracts from Accounts Related tab
-    log to console          good
     wait until element is visible       ${ACCOUNT_RELATED}      60s
     Force click element         ${ACCOUNT_RELATED}
     ${status}=      run keyword and return status       Element Should Be Visible       //span[@title='Contracts']
