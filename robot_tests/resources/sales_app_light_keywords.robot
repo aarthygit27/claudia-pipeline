@@ -2158,8 +2158,8 @@ Select product available for the address and create an opportunity
     input text  //input[@id='CloseDate']    ${OPPORTUNITY_CLOSE_DATE}
     Click element   //div[@id='CreateB2BOpportunity_nextBtn']
     sleep   30s
-    ${isVisible}    Run Keyword and return status       Wait until page contains element   //button[text()='Continue']      30s
-    Run Keyword If  ${isVisible}    Click element   //button[text()='Continue']
+    ${isVisible}    Run Keyword and return status       Wait until page contains element   //div[@id='HTTPCreateOpportunityLineItems']/div/p/button[text()='Continue']      30s
+    Run Keyword If  ${isVisible}    Click element   //div[@id='HTTPCreateOpportunityLineItems']/div/p/button[text()='Continue']
     unselect frame 
     Wait until page contains element   xpath=//a[@title='CPQ']      60s
 
@@ -2224,12 +2224,12 @@ Select rows to delete the contract
     log to console          bad
     Force Click element         //span[text()='View All']/span[text()='Contracts']
     Sleep   10s
-    Wait Until Element Is Visible       ${contract_row}         60s
-    ${count}=       get element count       ${contract_row}
+    Wait Until Element Is Visible       ${table_row}         60s
+    ${count}=       get element count       ${table_row}
     log to console          ${count}
      : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > ${count}-1
-    \    Delete all Contracts         ${contract_row}
+    \    Delete all Contracts         ${table_row}
 
 Delete all existing contracts from Accounts Related tab
     wait until element is visible       ${ACCOUNT_RELATED}      60s
@@ -2241,14 +2241,14 @@ Delete all existing contracts from Accounts Related tab
     run keyword if         ${display}       Select rows to delete the contract
 
 Delete all Contracts
-    [Arguments]        ${contract_row}
-    ${IsVisible}=   Run Keyword And Return Status        element should be visible       ${contract_row}
-    Run Keyword if      ${IsVisible}       Delete row items         ${contract_row}
+    [Arguments]        ${table_row}
+    ${IsVisible}=   Run Keyword And Return Status        element should be visible       ${table_row}
+    Run Keyword if      ${IsVisible}       Delete row items         ${table_row}
 
 Delete row items
-    [Arguments]        ${contract_row}
+    [Arguments]        ${table_row}
     [Documentation]    Used to delete the individual row
-    Force Click element         ${contract_row}
+    Force Click element         ${table_row}
     wait until element is visible           //a[@title='Delete']
     Force Click element         //a[@title='Delete']
     wait until element is visible           //button[@title='Delete']           60s
@@ -2299,13 +2299,13 @@ Validate that team member is created succesfully
     Wait until page contains element   //table/tbody/tr/th/span/span[text()='Sales,Admin']     30s
     
 Delete team member from account
-    Wait until page contains element    ${contract_row}    30s
-    Delete row items    ${contract_row}
+    Wait until page contains element    ${table_row}    30s
+    Delete row items    ${table_row}
     Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
 
 Change team member role from account
-    Wait until page contains element    ${contract_row}
-    Force Click element         ${contract_row}
+    Wait until page contains element    ${table_row}
+    Force Click element         ${table_row}
     Wait until element is visible   //a[@title='Edit']
     Click element   //a[@title='Edit']
     Wait element to load and click  //a[text()='--None--']

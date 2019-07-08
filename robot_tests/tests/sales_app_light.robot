@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-#Test Teardown     Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -513,7 +513,7 @@ Contract activation
     Update Contact and Pricelist in Opportunity     B2B
 
 Automatic availability check B2B-Account
-    [Tags]     BQA-10225    Lightning
+    [Tags]     BQA-10225    Lightning   Summer-Test
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -523,7 +523,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products     Telia Yritysinternet Plus
 
 Automatic availability check B2O-Account
-    [Tags]     BQA-10225    Lightning
+    [Tags]     BQA-10225    Lightning   Summer-Test
     Go To Salesforce and Login into Lightning   DigiSales B2O User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
@@ -542,7 +542,7 @@ Automatic availability check B2O-Account
 #    Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
-    [Tags]  Lightning1     BQA-10334    Lightning
+    [Tags]  Lightning1     BQA-10334    Lightning   Summer-Test
     [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -574,13 +574,30 @@ Change business account owner
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to B2B_DIGISALES_LIGHT_USER
 
-Add an account team member
+Add an account team member as account owner
     [Tags]  Lightning     BQA-10524     Summer-Test
     [Documentation]     Adds some user as a team member to business account
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Add new team member
+    Validate that team member is created succesfully
+
+Edit team member's role as account owner
+    [Tags]  Summer-Test     noticket    Lightning
+    [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account. 
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Navigate to related tab
+    Validate that team member is created succesfully
+    Change team member role from account
+
+Delete team member as account owner
+    [Tags]  Summer-Test     noticket    Lightning
+    [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Navigate to related tab
     Validate that team member is created succesfully
     Delete team member from account
 

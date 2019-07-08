@@ -210,7 +210,7 @@ ${SALES_TYPE_DROPDOWN}      //table[@class='tg']/tbody//tr[2]/td[8]/select
 ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/option[@value='New Money-New Services']
 ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
-${contract_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
+${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
 
 
 ### Lead  Variables ###
