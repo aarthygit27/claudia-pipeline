@@ -416,6 +416,31 @@ Validate AP Contact Details
     #Click Visible Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
 
+Validate external contact data can not be modified
+    ${external_phone}   Set Variable    xpath=//span[text()='External Phone']/../..//span[contains(@class, 'is-read-only')]
+    ${external_title}   Set Variable    xpath=//span[text()='External Title']/../..//span[contains(@class, 'is-read-only')]
+    ${external_eMail}   Set Variable    xpath=//span[text()='External eMail']/../..//span[contains(@class, 'is-read-only')]
+    ${external_status}  Set Variable    xpath=//span[text()='External Status']/../..//span[contains(@class, 'is-read-only')]
+    ${external_office_name}  Set Variable    xpath=//span[text()='External Office Name']/../..//span[contains(@class, 'is-read-only')]
+    ${external_address}     Set Variable    xpath=//span[text()='External Address']/../..//span[contains(@class, 'is-read-only')]
+    ${contact_id}   Set Variable    //span[text()='Contact ID']/../..//span[contains(@class, 'is-read-only')]
+    ${ulm_id}   Set Variable    //span[text()='ULM id']/../..//span[contains(@class, 'is-read-only')]
+    ${external_id}      Set Variable    xpath=//span[text()='External_id']/../..//span[contains(@class, 'is-read-only')]
+    Wait element to load and click  //a[@title='New']
+    Wait until page contains element    //button/span[text()='Next']    30s
+    Click element   //button/span[text()='Next']
+    Wait until page contains element    ${external_phone}      30s
+    Wait until page contains element    ${external_title}      30s
+    Wait until page contains element    ${external_eMail}      30s
+    Wait until page contains element    ${external_status}      30s
+    Wait until page contains element    ${external_office_name}     30s
+    Wait until page contains element    ${external_address}     30s
+    Wait until page contains element    ${contact_id}     30s
+    Wait until page contains element    ${external_id}      30s
+    Wait until page contains element    ${ulm_id}       30s
+    sleep   10s
+    Click element    //button[@title='Cancel']
+
 Create Unique Mobile Number
     #${numbers}=    Generate Random String    6    [NUMBERS]
     #[Return]    +358888${numbers}

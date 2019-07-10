@@ -652,6 +652,13 @@ Group: Delete team member
     Validate that team member is created succesfully
     Delete team member from account
 
+Negative: Check external data is not editable when creating new contact
+    [Tags]      Summer-Test     noticket
+    [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
+    Go To Salesforce and Login into Lightning
+    Go to Contacts
+    Validate external contact data can not be modified
+
 Lead_Creation
     [Tags]  SreeramE2E       Lightning
 
