@@ -1088,7 +1088,7 @@ ChangeThePriceBookToHDC
     sleep    5s
 
 ClickingOnCPQ
-    [Arguments]    ${b}=${oppo_name}
+    #[Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
@@ -2280,10 +2280,13 @@ Validate contact relationship
     Wait until page contains element    //table/tbody/tr/th/span/a[text()='Aarsleff Oy']    20s
     Wait until page contains element    //table/tbody/tr[2]/td[2]/span/span/img[@class='slds-truncate checked']     20s
 
-Navigate to related tab and add new team member
-    [Documentation]     Add new team member to account
+Navigate to related tab
     Wait element to load and click  ${ACCOUNT_RELATED}
-    Wait element to load and click  //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
+
+Add new team member
+    [Documentation]     Add new team member to account
+    ScrollUntillFound  //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
+    Click element   //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']
     Input text  //input[@title='Search People']     Sales Admin
     Wait element to load and click  //a[@role='option']/div/div[@title='Sales Admin']
@@ -2291,8 +2294,8 @@ Navigate to related tab and add new team member
     sleep   10s
 
 Validate that team member is created succesfully
-    Wait element to load and click  ${ACCOUNT_RELATED}
-    Wait element to load and click  //a/span[text()='Account Team Members']
+    ScrollUntillFound  //a/span[text()='Account Team Members']
+    Click element   //a/span[text()='Account Team Members']
     Wait until page contains element   //table/tbody/tr/th/span/span[text()='Sales,Admin']     30s
     
 Delete team member from account

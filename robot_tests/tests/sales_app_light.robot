@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -542,7 +542,7 @@ Automatic availability check B2O-Account
 #    Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
-    [Tags]  Lightning1     BQA-10334
+    [Tags]  Lightning1     BQA-10334    Lightning
     [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -558,7 +558,7 @@ Check banner for customership and service contract
     Check service contract is on Draft Status
 
 Create contact relationship for account
-    [Tags]  Lightning         BQA-10523
+    [Tags]  Lightning         BQA-10523     Summer-Test
     [Documentation]     Add new relationship for contact and check that account are displayed correctly on contact page.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -568,42 +568,70 @@ Create contact relationship for account
     Validate contact relationship
 
 Change business account owner
-    [Tags]  Lightning     BQA-10524
+    [Tags]  Lightning     BQA-10736     Summer-Test
     [Documentation]     Change owner of the Business account to B2BDigisales Lightning user
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to B2B_DIGISALES_LIGHT_USER
 
 Add an account team member
-    [Tags]  Lightning     BQA-10524
+    [Tags]  Lightning     BQA-10524     Summer-Test
     [Documentation]     Adds some user as a team member to business account
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Navigate to related tab and add new team member
+    Navigate to related tab
+    Add new team member
     Validate that team member is created succesfully
     Delete team member from account
 
 Add an account team member as Sales Admin
-    [Tags]      Summer-Test     BQA-10727
+    [Tags]      Summer-Test     BQA-10727   Lightning
     [Documentation]     Log in as Sales Admin and then add some user as a team member for business account
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    Navigate to related tab and add new team member
+    Navigate to related tab
+    Add new team member
     Validate that team member is created succesfully
 
 Edit team member's role as Sales Admin
-    [Tags]      Summer-Test     BQA-10728
+    [Tags]      Summer-Test     BQA-10728   Lightning
     [Documentation]     Log in as Sales Admin and then edit existing team member's role for business account
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to related tab
     Validate that team member is created succesfully
     Change team member role from account
 
 Delete account team member as Sales Admin
-    [Tags]      Summer-Test
+    [Tags]      Summer-Test     BQA-10740   Lightning
     [Documentation]     Log in as Sales Admin and then delete team member from business account
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to related tab
+    Validate that team member is created succesfully
+    Delete team member from account
+
+Add an account team member to Group
+    [Tags]      Summer-Test     BQA-10737   Lightning
+    [Documentation]     Log in as Sales Admin and add team member to concern/group
+    Go To Salesforce and Login into Lightning User
+    Go to Entity  YIT
+    Add new team member
+    Validate that team member is created succesfully
+
+Group: Edit team member's role
+    [Tags]      Summer-Test     BQA-10738   Lightning
+    [Documentation]     Log in as Sales Admin. Go to group and edit existing team member's role.
+    Go To Salesforce and Login into Lightning User
+    Go to Entity  YIT
+    Validate that team member is created succesfully
+    Change team member role from account
+
+Group: Delete team member
+    [Tags]      Summer-Test     BQA-10739   Lightning
+    [Documentation]     Log in as Sales Admin. Go to group and delete existing team member.
+    Go To Salesforce and Login into Lightning User
+    Go to Entity  YIT
     Validate that team member is created succesfully
     Delete team member from account
 
