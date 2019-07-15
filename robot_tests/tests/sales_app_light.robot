@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-#Test Teardown     Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -146,25 +146,22 @@ Change Account owner for Group Account
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
     [Tags]    BQA-8524    Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    sleep    10s
     ${ACCOUNT_OWNER}    Get Text    ${ownername}
     ${status}=    Run Keyword And Return Status    Should Not Be Equal As Strings    ${ACCOUNT_OWNER}    ${REMOVE_ACCOUNT}
     Run Keyword If    ${status} == False    Change to original owner
     Wait Until Element Is Visible    //button[@title='Change Owner']    60s
     Click Button    //button[@title='Change Owner']
-    sleep    8s
+    sleep    10s
     Element Should Be Enabled    //input[@title='Search People']
     Wait Until Page Contains Element    //input[@title='Search People']    60s
     Input Text    //input[@title='Search People']    ${REMOVE_ACCOUNT}
     Select from Autopopulate List    //input[@title='Search People']    ${REMOVE_ACCOUNT}
-    Mouse Over    //button[@title='Change Owner']
     Click Element    //button[@title='Cancel']/following-sibling::button
-    sleep    10s
+    sleep    30s
     ${new_owner}=    Get Text    ${ownername}
     Should Be Equal As Strings    ${REMOVE_ACCOUNT}    ${new_owner}
-    Capture Page Screenshot
     #Change to original owner
 
 Lightning: Sales admin Change Account owner
@@ -180,6 +177,7 @@ Lightning: Sales admin Change Account owner for group account
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
+
     #Create opportunity from Account for HDCFlow
     #    [Tags]    BQA-HDCOppo    Lightning2
     #    #Login to Salesforce as DigiSales Lightning User
@@ -513,7 +511,7 @@ Contract activation
     Update Contact and Pricelist in Opportunity     B2B
 
 Automatic availability check B2B-Account
-    [Tags]     BQA-10225    Lightning
+    [Tags]     BQA-10225    Lightning   Summer-Test
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -523,7 +521,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products     Telia Yritysinternet Plus
 
 Automatic availability check B2O-Account
-    [Tags]     BQA-10225    Lightning
+    [Tags]     BQA-10225    Lightning   Summer-Test
     Go To Salesforce and Login into Lightning   DigiSales B2O User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
@@ -542,7 +540,7 @@ Automatic availability check B2O-Account
 #    Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
-    [Tags]  Lightning1     BQA-10334    Lightning
+    [Tags]  Lightning1     BQA-10334    Lightning   Summer-Test
     [Documentation]     Create new opportunity for account without service contract and verify that service contract draft is automatically created
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -574,13 +572,30 @@ Change business account owner
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to B2B_DIGISALES_LIGHT_USER
 
-Add an account team member
+Add an account team member as account owner
     [Tags]  Lightning     BQA-10524     Summer-Test
     [Documentation]     Adds some user as a team member to business account
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Add new team member
+    Validate that team member is created succesfully
+
+Edit team member's role as account owner
+    [Tags]  Summer-Test     noticket    Lightning
+    [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account. 
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Navigate to related tab
+    Validate that team member is created succesfully
+    Change team member role from account
+
+Delete team member as account owner
+    [Tags]  Summer-Test     noticket    Lightning
+    [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Navigate to related tab
     Validate that team member is created succesfully
     Delete team member from account
 
@@ -614,7 +629,7 @@ Delete account team member as Sales Admin
 Add an account team member to Group
     [Tags]      Summer-Test     BQA-10737   Lightning
     [Documentation]     Log in as Sales Admin and add team member to concern/group
-    Go To Salesforce and Login into Lightning User
+    Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Add new team member
     Validate that team member is created succesfully
@@ -622,7 +637,7 @@ Add an account team member to Group
 Group: Edit team member's role
     [Tags]      Summer-Test     BQA-10738   Lightning
     [Documentation]     Log in as Sales Admin. Go to group and edit existing team member's role.
-    Go To Salesforce and Login into Lightning User
+    Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Validate that team member is created succesfully
     Change team member role from account
@@ -630,10 +645,17 @@ Group: Edit team member's role
 Group: Delete team member
     [Tags]      Summer-Test     BQA-10739   Lightning
     [Documentation]     Log in as Sales Admin. Go to group and delete existing team member.
-    Go To Salesforce and Login into Lightning User
+    Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Validate that team member is created succesfully
     Delete team member from account
+
+Negative: Check external data is not editable when creating new contact
+    [Tags]      Summer-Test     noticket
+    [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
+    Go To Salesforce and Login into Lightning
+    Go to Contacts
+    Validate external contact data can not be modified
 
 Lead_Creation
     [Tags]  SreeramE2E       Lightning

@@ -416,6 +416,31 @@ Validate AP Contact Details
     #Click Visible Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
 
+Validate external contact data can not be modified
+    ${external_phone}   Set Variable    xpath=//span[text()='External Phone']/../..//span[contains(@class, 'is-read-only')]
+    ${external_title}   Set Variable    xpath=//span[text()='External Title']/../..//span[contains(@class, 'is-read-only')]
+    ${external_eMail}   Set Variable    xpath=//span[text()='External eMail']/../..//span[contains(@class, 'is-read-only')]
+    ${external_status}  Set Variable    xpath=//span[text()='External Status']/../..//span[contains(@class, 'is-read-only')]
+    ${external_office_name}  Set Variable    xpath=//span[text()='External Office Name']/../..//span[contains(@class, 'is-read-only')]
+    ${external_address}     Set Variable    xpath=//span[text()='External Address']/../..//span[contains(@class, 'is-read-only')]
+    ${contact_id}   Set Variable    //span[text()='Contact ID']/../..//span[contains(@class, 'is-read-only')]
+    ${ulm_id}   Set Variable    //span[text()='ULM id']/../..//span[contains(@class, 'is-read-only')]
+    ${external_id}      Set Variable    xpath=//span[text()='External_id']/../..//span[contains(@class, 'is-read-only')]
+    Wait element to load and click  //a[@title='New']
+    Wait until page contains element    //button/span[text()='Next']    30s
+    Click element   //button/span[text()='Next']
+    Wait until page contains element    ${external_phone}      30s
+    Wait until page contains element    ${external_title}      30s
+    Wait until page contains element    ${external_eMail}      30s
+    Wait until page contains element    ${external_status}      30s
+    Wait until page contains element    ${external_office_name}     30s
+    Wait until page contains element    ${external_address}     30s
+    Wait until page contains element    ${contact_id}     30s
+    Wait until page contains element    ${external_id}      30s
+    Wait until page contains element    ${ulm_id}       30s
+    sleep   10s
+    Click element    //button[@title='Cancel']
+
 Create Unique Mobile Number
     #${numbers}=    Generate Random String    6    [NUMBERS]
     #[Return]    +358888${numbers}
@@ -927,11 +952,9 @@ Change to original owner
     Element Should Be Enabled    //input[@title='Search People']
     Wait Until Page Contains Element    //input[@title='Search People']
     Input Text    //input[@title='Search People']    ${ACCOUNT_OWNER}
-    #select option from dropdown with force click element    //input[@title='Search People']    ${ACCOUNT_OWNER}
     Select from Autopopulate List    //input[@title='Search People']    ${ACCOUNT_OWNER}
-    Mouse Over    //button[@title='Change Owner']
     Click Element    //button[@title='Cancel']/following-sibling::button
-    sleep    10s
+    sleep    30s
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
@@ -2158,8 +2181,8 @@ Select product available for the address and create an opportunity
     input text  //input[@id='CloseDate']    ${OPPORTUNITY_CLOSE_DATE}
     Click element   //div[@id='CreateB2BOpportunity_nextBtn']
     sleep   30s
-    ${isVisible}    Run Keyword and return status       Wait until page contains element   //button[text()='Continue']      30s
-    Run Keyword If  ${isVisible}    Click element   //button[text()='Continue']
+    ${isVisible}    Run Keyword and return status       Wait until page contains element   //div[@id='HTTPCreateOpportunityLineItems']/div/p/button[text()='Continue']      30s
+    Run Keyword If  ${isVisible}    Click element   //div[@id='HTTPCreateOpportunityLineItems']/div/p/button[text()='Continue']
     unselect frame 
     Wait until page contains element   xpath=//a[@title='CPQ']      60s
 
@@ -2224,12 +2247,12 @@ Select rows to delete the contract
     log to console          bad
     Force Click element         //span[text()='View All']/span[text()='Contracts']
     Sleep   10s
-    Wait Until Element Is Visible       ${contract_row}         60s
-    ${count}=       get element count       ${contract_row}
+    Wait Until Element Is Visible       ${table_row}         60s
+    ${count}=       get element count       ${table_row}
     log to console          ${count}
      : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > ${count}-1
-    \    Delete all Contracts         ${contract_row}
+    \    Delete all Contracts         ${table_row}
 
 Delete all existing contracts from Accounts Related tab
     wait until element is visible       ${ACCOUNT_RELATED}      60s
@@ -2241,14 +2264,14 @@ Delete all existing contracts from Accounts Related tab
     run keyword if         ${display}       Select rows to delete the contract
 
 Delete all Contracts
-    [Arguments]        ${contract_row}
-    ${IsVisible}=   Run Keyword And Return Status        element should be visible       ${contract_row}
-    Run Keyword if      ${IsVisible}       Delete row items         ${contract_row}
+    [Arguments]        ${table_row}
+    ${IsVisible}=   Run Keyword And Return Status        element should be visible       ${table_row}
+    Run Keyword if      ${IsVisible}       Delete row items         ${table_row}
 
 Delete row items
-    [Arguments]        ${contract_row}
+    [Arguments]        ${table_row}
     [Documentation]    Used to delete the individual row
-    Force Click element         ${contract_row}
+    Force Click element         ${table_row}
     wait until element is visible           //a[@title='Delete']
     Force Click element         //a[@title='Delete']
     wait until element is visible           //button[@title='Delete']           60s
@@ -2299,13 +2322,13 @@ Validate that team member is created succesfully
     Wait until page contains element   //table/tbody/tr/th/span/span[text()='Sales,Admin']     30s
     
 Delete team member from account
-    Wait until page contains element    ${contract_row}    30s
-    Delete row items    ${contract_row}
+    Wait until page contains element    ${table_row}    30s
+    Delete row items    ${table_row}
     Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
 
 Change team member role from account
-    Wait until page contains element    ${contract_row}
-    Force Click element         ${contract_row}
+    Wait until page contains element    ${table_row}
+    Force Click element         ${table_row}
     Wait until element is visible   //a[@title='Edit']
     Click element   //a[@title='Edit']
     Wait element to load and click  //a[text()='--None--']
