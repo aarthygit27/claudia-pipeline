@@ -146,25 +146,22 @@ Change Account owner for Group Account
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
     [Tags]    BQA-8524    Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    sleep    10s
     ${ACCOUNT_OWNER}    Get Text    ${ownername}
     ${status}=    Run Keyword And Return Status    Should Not Be Equal As Strings    ${ACCOUNT_OWNER}    ${REMOVE_ACCOUNT}
     Run Keyword If    ${status} == False    Change to original owner
     Wait Until Element Is Visible    //button[@title='Change Owner']    60s
     Click Button    //button[@title='Change Owner']
-    sleep    8s
+    sleep    10s
     Element Should Be Enabled    //input[@title='Search People']
     Wait Until Page Contains Element    //input[@title='Search People']    60s
     Input Text    //input[@title='Search People']    ${REMOVE_ACCOUNT}
     Select from Autopopulate List    //input[@title='Search People']    ${REMOVE_ACCOUNT}
-    Mouse Over    //button[@title='Change Owner']
     Click Element    //button[@title='Cancel']/following-sibling::button
-    sleep    10s
+    sleep    30s
     ${new_owner}=    Get Text    ${ownername}
     Should Be Equal As Strings    ${REMOVE_ACCOUNT}    ${new_owner}
-    Capture Page Screenshot
     #Change to original owner
 
 Lightning: Sales admin Change Account owner
@@ -180,6 +177,7 @@ Lightning: Sales admin Change Account owner for group account
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
+
     #Create opportunity from Account for HDCFlow
     #    [Tags]    BQA-HDCOppo    Lightning2
     #    #Login to Salesforce as DigiSales Lightning User

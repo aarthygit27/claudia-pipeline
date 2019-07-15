@@ -952,11 +952,9 @@ Change to original owner
     Element Should Be Enabled    //input[@title='Search People']
     Wait Until Page Contains Element    //input[@title='Search People']
     Input Text    //input[@title='Search People']    ${ACCOUNT_OWNER}
-    #select option from dropdown with force click element    //input[@title='Search People']    ${ACCOUNT_OWNER}
     Select from Autopopulate List    //input[@title='Search People']    ${ACCOUNT_OWNER}
-    Mouse Over    //button[@title='Change Owner']
     Click Element    //button[@title='Cancel']/following-sibling::button
-    sleep    10s
+    sleep    30s
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
