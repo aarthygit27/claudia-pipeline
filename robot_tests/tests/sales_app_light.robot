@@ -603,7 +603,7 @@ Add an account team member as Sales Admin
     [Tags]      Summer-Test     BQA-10727   Lightning
     [Documentation]     Log in as Sales Admin and then add some user as a team member for business account
     Go To Salesforce and Login into Admin User
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Add new team member
     Validate that team member is created succesfully
@@ -612,7 +612,7 @@ Edit team member's role as Sales Admin
     [Tags]      Summer-Test     BQA-10728   Lightning
     [Documentation]     Log in as Sales Admin and then edit existing team member's role for business account
     Go To Salesforce and Login into Admin User
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Validate that team member is created succesfully
     Change team member role from account
@@ -621,7 +621,7 @@ Delete account team member as Sales Admin
     [Tags]      Summer-Test     BQA-10740   Lightning
     [Documentation]     Log in as Sales Admin and then delete team member from business account
     Go To Salesforce and Login into Admin User
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Validate that team member is created succesfully
     Delete team member from account
@@ -655,6 +655,26 @@ Negative: Check external data is not editable when creating new contact
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
     Go To Salesforce and Login into Lightning
     Go to Contacts
+    Navigate to create new contact
+    Validate external contact data can not be modified
+    Close contact form
+
+Negative: Check external data is not editable with existing contact
+    [Tags]      Summer-Test     noticket
+    [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
+    Go To Salesforce and Login into Lightning
+    Go to Entity    Matti Vauhkonen
+    Open edit contact form
+    Validate external contact data can not be modified
+    Close contact form
+
+Negative: Check external data is not editable from account contact relationship view
+    [Tags]      Summer-Test     noticket
+    [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
+    Go To Salesforce and Login into Lightning
+    Go to Entity    Matti Vauhkonen
+    Navigate to related tab
+    Click view contact relationship
     Validate external contact data can not be modified
 
 Lead_Creation

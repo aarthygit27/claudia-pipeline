@@ -416,6 +416,17 @@ Validate AP Contact Details
     #Click Visible Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
 
+Navigate to create new contact
+    Wait element to load and click  //a[@title='New']
+    Wait until page contains element    //button/span[text()='Next']    30s
+    Click element   //button/span[text()='Next']
+
+Open edit contact form
+    Click element   //a[@title='Edit']
+
+Close contact form
+    Click element    //button[@title='Cancel']
+
 Validate external contact data can not be modified
     ${external_phone}   Set Variable    xpath=//span[text()='External Phone']/../..//span[contains(@class, 'is-read-only')]
     ${external_title}   Set Variable    xpath=//span[text()='External Title']/../..//span[contains(@class, 'is-read-only')]
@@ -426,9 +437,6 @@ Validate external contact data can not be modified
     ${contact_id}   Set Variable    //span[text()='Contact ID']/../..//span[contains(@class, 'is-read-only')]
     ${ulm_id}   Set Variable    //span[text()='ULM id']/../..//span[contains(@class, 'is-read-only')]
     ${external_id}      Set Variable    xpath=//span[text()='External_id']/../..//span[contains(@class, 'is-read-only')]
-    Wait element to load and click  //a[@title='New']
-    Wait until page contains element    //button/span[text()='Next']    30s
-    Click element   //button/span[text()='Next']
     Wait until page contains element    ${external_phone}      30s
     Wait until page contains element    ${external_title}      30s
     Wait until page contains element    ${external_eMail}      30s
@@ -439,7 +447,13 @@ Validate external contact data can not be modified
     Wait until page contains element    ${external_id}      30s
     Wait until page contains element    ${ulm_id}       30s
     sleep   10s
-    Click element    //button[@title='Cancel']
+
+Click view contact relationship
+    Wait element to load and click  //span[@title='Related Accounts']/../../a
+    sleep   10s
+    Click element   ${table_row}
+    Wait until page contains element    //a[@title='View Relationship']
+    Click element   //a[@title='View Relationship']
 
 Create Unique Mobile Number
     #${numbers}=    Generate Random String    6    [NUMBERS]
