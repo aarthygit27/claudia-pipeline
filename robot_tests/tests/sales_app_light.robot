@@ -125,44 +125,23 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523    Lightning
-    Login to Salesforce as DigiSales Lightning User    ${SALES_ADMIN_APP_USER}    ${PASSWORD-SALESADMIN}
+    [Tags]    BQA-8523    Lightning     Summer-Test
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
-    sleep    10s
-    #Scroll Page To Location    0    1407.75
-    Wait Until Element Is Visible    //div[@class='ownerName']//a    30s
-    ${original}=    Get Text    //div[@class='ownerName']//a
-    Click Element    //div[@title='Change Owner']
-    sleep    8s
-    Element Should Be Enabled    //input[@title='Search People']
-    Wait Until Page Contains Element    //input[@title='Search People']
-    Input Text    //input[@title='Search People']    ${original}
-    Select from Autopopulate List    //input[@title='Search People']    ${original}
-    Click Button    //button[@title='Submit']
-    sleep    10s
-    ${new_owner}=    Get Text    //div[@class='ownerName']//a
-    Should Be Equal As Strings    ${original}    ${new_owner}
+    Check original account owner and change if necessary
+    Validate that account owner was changed successfully    ${NEW_OWNER}
+    Validate that account owner has changed in Account Hierarchy
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    Lightning
+    [Tags]    BQA-8524    Lightning     Summer-Test
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${ACCOUNT_OWNER}    Get Text    ${ownername}
     ${status}=    Run Keyword And Return Status    Should Not Be Equal As Strings    ${ACCOUNT_OWNER}    ${REMOVE_ACCOUNT}
     Run Keyword If    ${status} == False    Change to original owner
-    Wait Until Element Is Visible    //button[@title='Change Owner']    60s
-    Click Button    //button[@title='Change Owner']
-    sleep    10s
-    Element Should Be Enabled    //input[@title='Search People']
-    Wait Until Page Contains Element    //input[@title='Search People']    60s
-    Input Text    //input[@title='Search People']    ${REMOVE_ACCOUNT}
-    Select from Autopopulate List    //input[@title='Search People']    ${REMOVE_ACCOUNT}
-    Click Element    //button[@title='Cancel']/following-sibling::button
-    sleep    30s
-    ${new_owner}=    Get Text    ${ownername}
-    Should Be Equal As Strings    ${REMOVE_ACCOUNT}    ${new_owner}
-    #Change to original owner
+    Change account owner to  ${REMOVE_ACCOUNT}
+    Validate that account owner was changed successfully  ${REMOVE_ACCOUNT}
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
@@ -171,6 +150,7 @@ Lightning: Sales admin Change Account owner
     Go to Entity    Aacon Oy
     Change Account Owner
 
+#THIS IS A DUPLICATE
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
     [Tags]    BQA-8526    Lightning
@@ -570,7 +550,7 @@ Change business account owner
     [Documentation]     Change owner of the Business account to B2BDigisales Lightning user
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Change account owner to B2B_DIGISALES_LIGHT_USER
+    Change account owner to     B2Blightning DigiSales
 
 Add an account team member as account owner
     [Tags]  Lightning     BQA-10524     Summer-Test
@@ -651,7 +631,7 @@ Group: Delete team member
     Delete team member from account
 
 Negative: Check external data is not editable when creating new contact
-    [Tags]      Summer-Test     noticket
+    [Tags]      Summer-Test     noticket    Lightning
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -660,7 +640,7 @@ Negative: Check external data is not editable when creating new contact
     Close contact form
 
 Negative: Check external data is not editable with existing contact
-    [Tags]      Summer-Test     noticket
+    [Tags]      Summer-Test     noticket    Lightning
     [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
@@ -669,7 +649,7 @@ Negative: Check external data is not editable with existing contact
     Close contact form
 
 Negative: Check external data is not editable from account contact relationship view
-    [Tags]      Summer-Test     noticket
+    [Tags]      Summer-Test     noticket    Lightning
     [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen

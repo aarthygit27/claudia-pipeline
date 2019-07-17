@@ -961,14 +961,35 @@ Close Notification
 
 Change to original owner
     [Documentation]    We are changing the account owner to Sales Admin in case the account owner is GESB Integration
-    Click Button    //button[@title='Change Owner']
-    sleep    8s
-    Element Should Be Enabled    //input[@title='Search People']
-    Wait Until Page Contains Element    //input[@title='Search People']
-    Input Text    //input[@title='Search People']    ${ACCOUNT_OWNER}
-    Select from Autopopulate List    //input[@title='Search People']    ${ACCOUNT_OWNER}
-    Click Element    //button[@title='Cancel']/following-sibling::button
-    sleep    30s
+    Change account owner to  ${ACCOUNT_OWNER}
+
+Check original account owner and change if necessary
+    Wait Until Element Is Visible    //div[@class='ownerName']//a    30s
+    ${account_owner}=    Get Text    //div[@class='ownerName']//a
+    log to console  ${account_owner}
+    ${user_is_already_owner}=    Run Keyword And Return Status    Should Be Equal As Strings    ${account_owner}    Maris Steinbergs
+    Run Keyword If    ${user_is_already_owner}    Set Test Variable     ${NEW_OWNER}    B2Blightning DigiSales
+    ...     ELSE    Set Test Variable   ${NEW_OWNER}    Maris Steinbergs
+    Change account owner to     ${NEW_OWNER}
+
+Validate that account owner was changed successfully
+    [Documentation]     Validates that account owner change was successfull. Takes the name of the new owner as parameter.
+    [Arguments]     ${validated_owner}
+    ${new_owner}=    Get Text    //div[@class='ownerName']//a
+    log to console      ${new_owner}
+    Should Be Equal As Strings    ${validated_owner}    ${new_owner}
+
+Validate that account owner has changed in Account Hierarchy
+    [Documentation]     View account hierarchy and check that new owner is copied down in hierarchy
+    Wait element to load and click  //button[@title='View Account Hierarchy']
+    Wait element to load and click  //button[@title='Expand']
+    Wait until page contains element    //table/tbody/tr[1]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[2]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[3]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[4]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[5]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[6]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[7]/td[4]/span[text()='${NEW_OWNER}']   30s
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
@@ -2351,17 +2372,20 @@ Change team member role from account
     Wait until page contains element    //table/tbody/tr/td[2]/span/span[text()='Account Manager']      30s
     sleep   10s
 
-Change account owner to B2B_DIGISALES_LIGHT_USER
-    ${isAccountOwner}=  Run keyword and return status   Wait until page contains element    //div[@class='ownerName']/div/a[text()='B2Blightning DigiSales']    30s
-    Run Keyword if  ${isAccountOwner} == False      Open change owner view and fill the form
+Change account owner to
+    [Documentation]     Checks if account given as a parameter is already account owner and if not proceeds to change the account owner
+    [Arguments]     ${new_owner}
+    ${isAccountOwner}=  Run keyword and return status   Wait until page contains element    //div[@class='ownerName']/div/a[text()='${new_owner}']    30s
+    Run Keyword if  ${isAccountOwner} == False      Open change owner view and fill the form    ${new_owner}
 
 Open change owner view and fill the form
+    [Arguments]     ${username}
     Wait element to load and click  //button[@title='Change Owner']
     Wait until page contains element    //input[@title='Search People']
-    Input text      //input[@title='Search People']     B2Blightning DigiSales
-    Wait element to load and click  //a[@role='option']/div/div[@title='B2Blightning DigiSales']
+    Input text      //input[@title='Search People']     ${username}
+    Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
     Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
-    sleep   30s 
+    sleep   40s 
 
 Enter Random Data to Lead Web Form
     [Arguments]  ${fname}  ${lname}  ${email}  ${mobile}  ${title}  ${desc}
