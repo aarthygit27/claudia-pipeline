@@ -1058,13 +1058,15 @@ CreateAOppoFromAccount_HDC
     sleep    10s
     click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
     Capture Page Screenshot
-    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    Testing ${b}
-    wait until page contains element    //*[@title='Testing ${b}']/../../..    10s
-    click element    //*[@title='Testing ${b}']/../../..
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    Log to console    searching contact
+    wait until page contains element    //*[@title='${b}']/../../..    10s
+    Log to console   contact found
+    click element    //*[@title='${b}']/../../..
     sleep    2s
     input text    //textarea    ${oppo_name}.${close_date}.Description Testing
     click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
-    sleep    60s
+    sleep    30s
     [Return]    ${oppo_name}
 
 ChangeThePriceBookToHDC
