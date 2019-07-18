@@ -2341,13 +2341,22 @@ Validate contact relationship
 Navigate to related tab
     Wait element to load and click  ${ACCOUNT_RELATED}
 
+Add account owner to account team
+    ${account_owner}=    Get Text    //div[@class='ownerName']//a
+    Add new team member  ${account_owner}
+
+Validate that account owner can not be added to account team
+    Wait until page contains element    //ul[@class='errorsList']/li[text()='Cannot add account owner to account team']     30s
+    Wait until element is visible   //ul[@class='errorsList']/li[text()='Cannot add account owner to account team']     30s
+
 Add new team member
     [Documentation]     Add new team member to account
+    [Arguments]     ${new_team_member}
     ScrollUntillFound  //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
     Click element   //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']
-    Input text  //input[@title='Search People']     Sales Admin
-    Wait element to load and click  //a[@role='option']/div/div[@title='Sales Admin']
+    Input text  //input[@title='Search People']     ${new_team_member}
+    Wait element to load and click  //a[@role='option']/div/div[@title='${new_team_member}']
     Click element   //button[@title='Save']
     sleep   10s
 

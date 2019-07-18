@@ -558,7 +558,7 @@ Add an account team member as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Add new team member
+    Add new team member     Sales Admin
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
@@ -585,7 +585,7 @@ Add an account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Add new team member
+    Add new team member     Sales Admin
     Validate that team member is created succesfully
 
 Edit team member's role as Sales Admin
@@ -611,8 +611,25 @@ Add an account team member to Group
     [Documentation]     Log in as Sales Admin and add team member to concern/group
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
-    Add new team member
+    Add new team member     Sales Admin
     Validate that team member is created succesfully
+
+Negative: Try to add account owner to Account team
+    [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
+    [Tags]      Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    Go to Entity  Aacon Oy
+    Navigate to related tab
+    Add account owner to account team
+    Validate that account owner can not be added to account team
+
+Negative: Try to add group owner to group's account team
+    [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
+    [Tags]      Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    Go to Entity  YIT
+    Add account owner to account team
+    Validate that account owner can not be added to account team
 
 Group: Edit team member's role
     [Tags]      Summer-Test     BQA-10738   Lightning
