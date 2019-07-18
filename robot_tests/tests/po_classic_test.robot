@@ -381,7 +381,7 @@ Telia Sign
 
 Telia Crowd Insights_sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    sitpo_classic
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Crowd Insights
     Add Telia Crowd Insights    sitpo
@@ -389,7 +389,7 @@ Telia Crowd Insights_sitpo
     view orchestration plan sitpo
 
 Telia Sign sitpo
-    [Tags]    sitpo_classic
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Sign
     Add Telia Sign    sitpo
@@ -398,7 +398,7 @@ Telia Sign sitpo
 
 Telia Robotics sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    sitpo_classic    robotics
+    [Tags]    sitpo_classic_Latest    robotics
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Robotics
     Add Telia Robotics    sitpo
@@ -408,7 +408,7 @@ Telia Robotics sitpo
 
 Telia Multiservice NNI sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    robotics    sitpo_classic2
+    [Tags]    robotics    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Multiservice NNI
     Adding Product    Telia Multiservice NNI
@@ -416,7 +416,7 @@ Telia Multiservice NNI sitpo
     view orchestration plan sitpo
 
 Product2:Telia Ethernet Operator Subscription
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Operator Subscription
     Adding Product    Telia Ethernet Operator Subscription
@@ -424,7 +424,7 @@ Product2:Telia Ethernet Operator Subscription
     view orchestration plan sitpo
 
 Product3:Ethernet Nordic Network Bridge
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic Network Bridge
     Add Ethernet Nordic Network Bridge    sitpo
@@ -432,7 +432,7 @@ Product3:Ethernet Nordic Network Bridge
     view orchestration plan sitpo
 
 Product4:Ethernet Nordic E-Line EPL
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic E-Line EPL
     Add Ethernet Nordic E-Line EPL    sitpo
@@ -440,7 +440,7 @@ Product4:Ethernet Nordic E-Line EPL
     view orchestration plan sitpo
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic E-LAN EVP-LAN
     Add Ethernet Nordic E-LAN EVP-LAN    sitpo
@@ -448,7 +448,7 @@ Product5: Ethernet Nordic E-LAN EVP-LAN
     view orchestration plan sitpo
 
 Product6: Ethernet Nordic HUB/E-NNI
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic HUB/E-NNI
     Add Ethernet Nordic HUB/E-NNI    sitpo
@@ -456,7 +456,7 @@ Product6: Ethernet Nordic HUB/E-NNI
     view orchestration plan sitpo
 
 Product7: Telia Ethernet subscription
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Subscription
     Add Telia Ethernet subscription    sitpo

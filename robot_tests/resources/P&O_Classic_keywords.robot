@@ -24,7 +24,7 @@ create new opportunity
     ${continue_button}=    Set Variable    //input[@class='btn'][@title='Continue']
     ${opportunity_id}=    Set Variable    //input[@id='opp3']
     ${description}=    set variable    //textarea[@id='opp14']
-    ${status}=    Set Variable    //select[@id='opp11']
+    ${stage}=    Set Variable    //select[@id='opp11']
     ${closing_date}=    Set Variable    //input[@id='opp9']
     ${pricing_list}=    Set Variable    //span/input[@id='CF00N5800000DyL67']
     ${DATE}=    Get Current Date    result_format=%d%m%Y%H%M
@@ -40,17 +40,22 @@ create new opportunity
     Wait Until Page Contains Element    //label[text()='Account Name']    120s
     Input Text    ${opportunity_id}    ${opportunity_name}
     Input Text    ${description}    ${opportunity_name}
-    click element    ${status}
-    click element    ${status}/option[@value='Analyse Prospect']
+    click element    ${stage}
+    click element    ${stage}/option[@value='Analyse Prospect']
     input text    ${contact}    ${technical_contact}
     #contact_lookup
     sleep    5s
     ${close_date}=    Get Date From Future    30
-    Input Text    ${closing_date}    ${close_date}
+    Input Text    ${closing_dat e}    ${close_date}
     Input Text    ${pricing_list}    ${pricebook}
     Click Save Button
     sleep    5s
+    ${status}   Run Keyword and Return Status  Page Should contain Element   //h2[text()='Opportunity Edit']
+    Run Keyword if  ${status}  Select from list by index   //select[@id='CF00N5800000CZNtx_lkid']  1
+    ${status}   Run Keyword and Return Status  Page Should contain Element   //h2[text()='Opportunity Edit']
+    Run Keyword if  ${status}  Click Save Button
     [Return]    ${opportunity_name}
+
 
 Search Opportunity and click CPQ
     [Arguments]    ${opportunity_name}
@@ -172,7 +177,7 @@ Login to Salesforce And Close All Tabs2
     [Arguments]    ${user}
     Run Keyword    Login to Salesforce as ${user}
     Run Keyword and Ignore Error    Wait For Load
-    Close All Tabs
+    #Close All Tabs
 
 Login to Salesforce as Digisales User devpo
     Login To Salesforce    ${B2B_DIGISALES_USER_DEVPO}    ${PASSWORD_DEVPO}
@@ -353,8 +358,9 @@ General test setup
     Log To Console    login
     Run Keyword If    '${env}'=='sitpo'    Go To Salesforce and Login2    Sales admin User sitpo
     ...    ELSE    Run Keyword    Go To Salesforce and Login2    Sales admin User devpo
-    Log To Console    switching to classic
-    switching to classic app
+
+    #switching to classic
+    #Execute Manual step     switch
     #Go To    ${CLASSIC_APP}
     Log To Console    selecting account
     Go to Account2    ${target_account}
@@ -635,25 +641,43 @@ Account seletion
     Click Element    ${search_account_next_button}
 
 select order contacts
-    ${contact_search_title}=    Set Variable    //h3[text()='Contact Search']
-    ${contact_search}=    Set Variable    //input[@id='ContactName2']
+    #${contact_search_title}=    Set Variable    //h3[text()='Contact Search']
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
     ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
-    Wait Until Element Is Visible    ${contact_search_title}    120s
+    ${updateContactDR}=  Set Variable  //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+    #Wait Until Element Is Visible    ${contact_search_title}    120s
     Wait Until Element Is Visible    ${contact_search}    120s
     Input Text    ${contact_search}    ${technical_contact}
-    sleep    3s
-    Capture Page Screenshot
+    sleep  15s
+    Page should contain element   xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a  30s
+    Click Element  xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
+    Sleep   3s
     #${order_name}    set variable    //input[@id='OrderContactDetailsTypeAhead']
     #${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${order_name}    5s
     #run keyword if    ${status} == True    update order details
     Click Element    ${contact_next_button}
+    ${Status}=  Run Keyword and Return Status  Page should contain element  ${updateContactDR}
+    Run Keyword if   ${status}   Click Element  ${updateContactDR}
+
 
 Addtional data
     [Documentation]    Used for selecting \ requested action date
-    ${date_id}=    Set Variable    id=RequestedActionDate
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    sleep  120s
+    ${status}    Run Keyword and Return Status       Page should contain element    //input[@id='RequestedActionDate']
+    Log to console      ${status}
+    Run Keyword if  ${status}  Pick Action Date
+
+    Run Keyword Unless  ${status}       Click Element    ${additional_info_next_button}
+
+Pick Action Date
+    Log to console      picking date
+
+    ${date_id}=    Set Variable    //input[@id='RequestedActionDate']
     ${next_month}=    Set Variable    //button[@title='Next Month']
     ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
-    ${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    #${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
     Wait Until Element Is Visible    ${date_id}    120s
     Click Element    ${date_id}
     Wait Until Element Is Visible    ${next_month}    120s
@@ -898,11 +922,13 @@ Order events update
     sleep    10s
 
 switching to classic app
+#//img[@class='icon noicon']
     ${settings_classic}    set variable    //span[@id='userNavLabel']
     ${switch_lighting}    Set Variable    //a[@title='Switch to Lightning Experience']
     ${setting_lighting}    Set Variable    //span[contains(@class,'userProfileCardTriggerRoot')]
     ${switch_classic}    Set Variable    //a[text()='Switch to Salesforce Classic']
     ${search_button}    Set Variable    id=phSearchInput
+    Log To Console    switching to classic
     sleep    5s
     Wait Until Element Is Visible    ${settings_classic}    60s
     Click Element    ${settings_classic}
@@ -946,7 +972,9 @@ Search and add Avainasiakaspalvelukeskus
 
 Add Telia Crowd Insights
     [Arguments]    ${env}=devpo
+
     Adding Product    Telia Crowd Insights
+    sleep  10s
     run keyword if    '${env}'=='sitpo'    Click_Settings    Telia Crowd Insights
     ...    ELSE    Click_Settings_new    Telia Crowd Insights
     Laskutuksen lisätieto_2
@@ -1021,9 +1049,14 @@ Add Telia Sign
 
 Open Browser And Go To Login Page_PO
     [Arguments]    ${page}=${LOGIN_PAGE}
+    #Create Webdriver    Firefox
+    #Execute Manual Step  Change Proxy
+    #Go to  ${page}
     Open Browser    ${page}    ${BROWSER}
+
     Maximize Browser Window
     log to console    browser open
+
 
 Click_Settings_new
     [Arguments]    ${product}
@@ -1040,7 +1073,7 @@ Click_Settings_new
     #Click Element    xpath=${element}
 
 Login to Salesforce as Sales admin User sitpo
-    Login To Salesforce    saleadm@teliacompany.com.sitpo    PahaPassu5
+   Login To Salesforce    saleadm@teliacompany.com.sitpo    PahaPassu5
 
 create new opportunity sitpo
     [Arguments]    ${pricebook}
@@ -1101,14 +1134,12 @@ update order details
 create order sitpo
     [Arguments]    ${target_account}
     [Documentation]    Used to create order after adding the products to the cart
-    Log To Console    create order
-    ${cart_next_button}=    Set Variable    //button/span[text()='Next']
+     ${cart_next_button}=    Set Variable    //button/span[text()='Next']
     ${CPQ_next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     ${backCPQ}=    Set Variable    //button[@id='BackToCPQ']
     ${spinner}=    set variable    //div[contains(@class,'slds-spinner--brand')]
-    ${submit_order}=    Set Variable    //span[text()='Yes']
+
     ${sales_type}    set variable    //select[@ng-model='p.SalesType']
-    sleep    10s
     Wait Until Element Is Visible    ${cart_next_button}    120s
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
@@ -1122,30 +1153,47 @@ create order sitpo
     View Open Quote
     Wait Until Element Is Enabled    ${CPQ_BUTTON}    120s
     click button    ${CPQ_BUTTON}
+    Log To Console    create order
+    sleep    10s
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
     click element    ${CREATE_ORDER}
     sleep    10s
-    #Edit_Details
+    Wait Until Element is Visible  //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button
+    Click element   //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button
+#Edit_Details
     Wait Until Element Is Visible    ${cart_next_button}    120s
     click element    ${cart_next_button}
     sleep    10s
     Wait Until Element Is Not Visible    ${spinner}    120s
+    ${Status}=  Run Keyword and Return Status   Page should Contain element  //section[@id='OrderTypeCheck']/section/div/div/div/h1
+    Run Keyword if  ${Status}   Close and Submit
+    Run Keyword Unless  ${Status}   Enter Details
+
+Close and Submit
+    ${submit_order}=    Set Variable    //span[text()='Yes']
+    Click Element   //div[@id='Close']/p
+    ${status}   Run Keyword and Return Status  Page Should contain Element  ${submit_order}     30s
+    Run Keyword if    ${status}  click element    ${submit_order}
+    Run Keyword Unless   ${status}  Submit Order Page
+
+Enter Details
+
+    ${submit_order}=    Set Variable    //span[text()='Yes']
     Account seletion
     sleep    3s
-    select order contacts sitpo
+    select order contacts
     sleep    3s
     Addtional data
     sleep    3s
     Select Owner
-    sleep    3s
-    wait until element is visible    ${submit_order}    120s
-    click element    ${submit_order}
     sleep    10s
-    Capture Page Screenshot
+    ${status}   Run Keyword and Return Status  Page Should contain Element  ${submit_order}     30s
+    Run Keyword if    ${status}  click element    ${submit_order}
+    Run Keyword Unless   ${status}  Submit Order Page
 
 select order contacts sitpo
     #${contact_search_title}=    Set Variable    //h3[text()='Contact Search']
-    ${contact_search}=    Set Variable    //input[@id='ContactName']
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
     ${contact_next_button}=    Set Variable    //div[@id='Select Contact_nextBtn']
     #Wait Until Element Is Visible    ${contact_search_title}    120s
     Wait Until Element Is Visible    ${contact_search}    120s
@@ -1157,21 +1205,35 @@ select order contacts sitpo
     #run keyword if    ${status} == True    update order details
     Click Element    ${contact_next_button}
 
-view orchestration plan sitpo
-    ${orchestration_plans}    set variable    //span[@class='listTitle'][text()='Orchestration Plans']
-    ${orchestraion_plan_details}    set variable    //h2[text()='Orchestration Plan Detail']
-    ${orchestration_plan_name}    set variable    //th[text()='Orchestration Plan Name']/../../tr/th[contains(@class,'dataCell')]/a
-    Log To Console    view orchestration plan sitpo
-    sleep    60s
-    Wait Until Element Is Visible    ${orchestration_plans}    60s
-    click element    ${orchestration_plans}
-    Wait Until Element Is Visible    ${orchestration_plan_name}    20s
-    click element    ${orchestration_plan_name}
-    sleep    10s
-    Wait Until Element Is Visible    ${orchestraion_plan_details}    60s
-    Execute Javascript    window.scrollTo(0,50)
-    sleep    10s
+Submit Order Page
+
+    sleep   40s
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword unless   ${contains}   click element  //a[@class='switch-to-lightning']
+    sleep  40s
+    click element   //div[@title='Submit Order']
+    Log to console  submitted
     Capture Page Screenshot
+
+view orchestration plan sitpo
+    sleep    30s
+    #${orchestration_plans}    set variable    //span[@class='listTitle'][text()='Orchestration Plans']
+       # ${orchestration_plans}    set variable   //li[@class='slds-breadcrumb__item']/span
+        #${orchestraion_plan_details}    set variable    //h2[text()='Orchestration Plan Detail']
+        #${orchestraion_plan_details}    set variable    //span[text()='Details']
+        #${orchestration_plan_name}    set variable    //th[text()='Orchestration Plan Name']/../../tr/th[contains(@class,'dataCell')]/a
+        Log To Console    view orchestration plan sitpo
+
+       # Wait Until Element Is Visible    ${orchestration_plans}    120s
+       # click element    ${orchestration_plans}
+       # Wait Until Element Is Visible    ${orchestration_plan_name}    20s
+       # click element    ${orchestration_plan_name}
+        #sleep    10s
+        #Wait Until Element Is Visible    ${orchestraion_plan_details}    60s
+        Execute Javascript    window.scrollTo(0,100)
+        sleep    10s
+        Capture Page Screenshot
 
 update telia robotics price sitpo
     ${recurring charge}    Set Variable    //span[contains(@ng-class,'switchpaymentmode')]
@@ -1216,11 +1278,11 @@ update_setting1
     ${street_add2}    set variable    //input[@name='productconfig_field_1_1']
     ${postal_code}    Set Variable    //input[@name='productconfig_field_1_3']
     Wait Until Element Is Visible    ${street_add1}    60s
-    input text    ${street_add1}    This is a test opportunity
+    Press Key    ${street_add1}    This is a test opportunity
     sleep    10s
-    input text    ${street_add2}    This is a test opportunity
+    Press Key    ${street_add2}    This is a test opportunity
     sleep    10s
-    input text    ${postal_code}    00100
+    Press Key    ${postal_code}    00100
     sleep    10s
     Capture Page Screenshot
 
@@ -1265,15 +1327,15 @@ update_setting2
     Capture Page Screenshot
 
 update_setting_Ethernet Nordic E-LAN EVP-LAN
-    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5']
+    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_8']
     Wait Until Element Is Visible    ${ Network bridge }    60s
-    input text    ${ Network bridge }    This is a test opportunity
+    Press Key    ${ Network bridge }    This is a test opportunity
     helinsiki_address
     Capture Page Screenshot
 
 update_setting_Ethernet Nordic HUB/E-NNI
-    ${Service level}    Set Variable    //select[@name='productconfig_field_0_4']
-    ${platinum}    Set Variable    //select[@name='productconfig_field_0_4']//option[contains(text(),'Platinum')]
+    ${Service level}    Set Variable    //select[@name='productconfig_field_0_3']
+    ${platinum}    Set Variable    //select[@name='productconfig_field_0_3']//option[contains(text(),'Platinum')]
     Wait Until Element Is Visible    ${Service level}    60s
     click element    ${Service level}
     click element    ${platinum}
@@ -1289,17 +1351,17 @@ helinsiki_address
     sleep    10s
     click element    ${street_add1}
     sleep    10s
-    input text    ${street_add1}    This is a test opportunity
+    Press Key    ${street_add1}    This is a test opportunity
     sleep    10s
     click element    ${street_add2}
     sleep    10s
-    input text    ${street_add2}    99
+    Press Key    ${street_add2}    99
     sleep    10s
-    input text    ${postal_code}    00100
+    Press Key    ${postal_code}    00100
     sleep    10s
     click element    ${city}
     sleep    10s
-    input text    ${city}    helsinki
+    Press Key   ${city}    helsinki
     sleep    10s
 
 update_setting_Telia Ethernet subscription
@@ -1309,11 +1371,11 @@ update_setting_Telia Ethernet subscription
     ${option}    Set Variable    ${Interface}//option[contains(text(),'10/100Base-TX')]
     sleep    5s
     Wait Until Element Is Visible    ${E_NNI-ID}    60s
-    Input Text    ${E_NNI-ID}    10
+    Press Key    ${E_NNI-ID}    10
     sleep    5s
     Click Element    ${E-NNI S-Tag VLAN}
     sleep    10s
-    input text    ${E-NNI S-Tag VLAN}    100
+    Press Key    ${E-NNI S-Tag VLAN}    100
     sleep    5s
     Click Element    ${Interface}
     Click Element    ${option}
@@ -1385,9 +1447,9 @@ Add Telia Ethernet subscription
 Click_Settings_sitpo_SAP
     [Arguments]    ${product}
     ${added_product}    Set Variable    //button[contains(@class,'children')]//span[text()='${product}']
-    sleep    15s
+    sleep    20s
     Capture Page Screenshot
-    Wait Until Element Is Visible    ${added_product}    45s
+    #Wait Until Element Is Visible    ${added_product}    45s
     Capture Page Screenshot
     Click Button    ${SETTINGS}
     #@{locators}=    Get Webelements    xpath=${element}
