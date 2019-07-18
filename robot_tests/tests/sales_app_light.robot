@@ -277,7 +277,7 @@ Create HDC Order
 
 Create B2B Order
     [Tags]    BQA-B2BOrder    Lightning
-    #Login to Salesforce as DigiSales Lightning User
+     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
     #SLEEP    60S
@@ -292,18 +292,22 @@ Create B2B Order
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
-    ChangeThePriceBookToHDC    B2B Pricebook
+    Edit Opportunity values    Price List      B2B
+    #ChangeThePriceBookToHDC    B2B Pricebook
     ##B2O pricebook
-    ClickingOnCPQ
+    ClickingOnCPQ   ${oppo_name}
     AddProductToCart    Alerta projektointi
     ##B2O Other Services
     Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
     Run keyword If    '${r}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
-    #sleep    600s
+    ##sleep    600s
     ##B2O Other Services
-    OpenQuoteButtonPage
+    ##OpenQuoteButtonPage
+    View Open Quote
     #CreditScoreApproving
     ClickonCreateOrderButton
+    #ContractStateMessaging
+    OpenOrderPage
     NextButtonOnOrderPage
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
@@ -755,7 +759,7 @@ AddProducrViaSVEandCPQFlow
     OrderNextStepsPage
     clickOnSubmitOrder
     ${order_no}  run keyword  getOrderStatusAfterSubmitting
-    go to entity   ${order_no}
+    #go to entity   ${order_no}
     getMultibellaCaseGUIID   ${order_no}
 
 
@@ -865,7 +869,26 @@ createSalesProjectOppo
     sleep   10s
     ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     Go To Entity     ${oppo_name}
-    ${case_number}=  run keyword  createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
+
+    -------------------
+    ${oppo_name}  set variable  Test Robot Order_ 20190718-163154
+
+    Create Webdriver  Firefox
+    Execute Manual Step  Proxy
+
+    Go to   https://test.salesforce.com
+    Wait Until Element Is Visible   id=username   30s
+    Input Text  id=username   mmw9007@teliacompany.com.release
+    Input Text   id =password  Sriram@234
+    Click Element  id=Login
+
+    Execute Manual Step  if any
+
+    -------
+
+    ${case_number}=  run keyword      createACaseFromMore  ${oppo_name}  B2B Sales Expert Request
+
+    #createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
     log to console   ${case_number}.this is created case
     logoutAsUser  B2B DigiSales
     login to salesforce as digisales lightning user vlocupgsandbox
@@ -940,7 +963,7 @@ createSalesProjectOppo
 
 
 
-Create B2B Order
+#Create B2B Order
     [Tags]  SreeramE2E       Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     SwithchToUser  B2B DigiSales

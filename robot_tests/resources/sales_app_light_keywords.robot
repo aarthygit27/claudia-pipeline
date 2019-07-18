@@ -1069,6 +1069,24 @@ CreateAOppoFromAccount_HDC
     sleep    30s
     [Return]    ${oppo_name}
 
+Edit Opportunity values
+    [Arguments]    ${field}      ${value}
+    ${fieldProperty}=    Set Variable        //button[@title='Edit ${field}']
+    ${price_list_old}=     get text        //span[text()='Price List']//following::a
+    Log to console          ${price_list_old}
+    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
+    ScrollUntillFound       ${fieldProperty}
+    click element       ${fieldProperty}
+    Sleep       2s
+    ${status}    Run Keyword And Return Status    element should be visible      ${B2B_Price_list_delete_icon}
+    Run Keyword If    ${status} == True         click element           ${B2B_Price_list_delete_icon}
+    sleep    3s
+    input text    //input[contains(@title,'Search ${field}')]    ${value}
+    sleep    3s
+    click element    //*[@title='${value}']/../../..
+    click element    //button[@title='Save']
+    Sleep  10s
+
 ChangeThePriceBookToHDC
     [Arguments]    ${price_book}
     ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'B2B Pricebook')]/following::span[@class='deleteIcon']
@@ -1198,6 +1216,26 @@ UpdateAndAddSalesTypeB2O
     sleep    60s
 
 
+View Open Quote
+
+    ${open_quote}=    Set Variable    //button[@id='Open Quote']    #//button[@id='Open Quote']
+    ${view_quote}    Set Variable    //button[@id='View Quote']
+    ${quote}    Set Variable    //button[contains(@id,'Quote')]
+    ${central_spinner}    Set Variable    //div[@class='center-block spinner']
+    wait until element is not visible    ${central_spinner}    120s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    log to console    selected Create Quotation frame
+    Wait Until Element Is Visible    ${quote}    120s
+    ${quote_text}    get text    ${quote}
+    ${open}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    Open Quote
+    ${view}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    View Quote
+    Run Keyword If    ${open} == True    click element    ${open_quote}
+    Run Keyword If    ${view} == True    click element    ${view_quote}
+    unselect frame
+    sleep    20s
+
+
+
 OpenQuoteButtonPage
     #${open_quote}=    Set Variable    //*[@id="View Quote"]
     #${approval}=      Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
@@ -1308,7 +1346,9 @@ ClickonCreateOrderButton
     #//a[@title='CPQ']
     sleep    30s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    reload page
+    Log to console      Inside frame
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
+    Log to console      ${status}
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
     unselect frame
@@ -1316,9 +1356,14 @@ ClickonCreateOrderButton
 
 NextButtonOnOrderPage
     log to console    NextButtonOnOrderPage
+    sleep  30s
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element    //span[text()='Next']/..
+    Log to console      Inside frame
+    sleep  30s
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    Log to console      ${status}
+    wait until page contains element    //span[text()='Next']/..    60s
     click element    //span[text()='Next']/..
     unselect frame
     sleep    30s
@@ -2438,6 +2483,13 @@ openOrderFromDirecrOrder
     click element  //button[@id='View Order']
     unselect frame
 
+OpenOrderPage
+    Log to console      Open Order
+    select frame    //iframe[@title='accessibility title'][@scrolling='yes']
+    sleep  20s
+    force click element     //button[@class='form-control btn btn-primary ng-binding']
+    unselect frame
+
 
 getMultibellaCaseGUIID
     [Arguments]  ${order_no}
@@ -2627,7 +2679,10 @@ openQuoteFromOppoRelated
 ContractStateMessaging
     log to console    NextButtonOnOrderPage
     select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Log to console      Inside frame
+
     wait until page contains element   //button[@class="form-control btn btn-primary ng-binding" and normalize-space(.)='Open Order']
+    Log to console      Element found
     click element  //button[@class="form-control btn btn-primary ng-binding" and normalize-space(.)='Open Order']
     unselect frame
     sleep    30s
@@ -2838,6 +2893,46 @@ clickOnOfferingTab
     wait until page contains element  //h1[text()='Telia Offering']   30s
 
 
+createACaseFromMore
+    [Arguments]    ${oppo_name}   ${case_type}
+    log to console   ${case_type}.this is case type..${oppo_name}
+    go to entity  ${oppo_name}
+    #reload page
+    sleep  2s
+    Click element   //span[text()='More']
+    sleep   30s
+    ${status}  set variable     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
+    log to console      ${status}
+    force Click Element   //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
+    sleep  3s
+    Click Element   //div[text()='New']
+    wait until page contains element  //h2[text()='New Case']   60s
+    force click element  //span[text()='${case_type}']/../preceding-sibling::div
+    click element  //span[text()='Next']/..
+    wait until page contains element  //h2[text()='New Case: B2B Sales Expert Request']   60s
+    ${case_number}=    Generate Random String    7    [NUMBERS]
+    wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
+    input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
+
+    click element   //input[@title='Search Opportunities']
+    Press Key  //input[@title='Search Opportunities']   Test Robot Order_ 20190718-163154
+    sleep  20s
+    ${status}  set variable     run keyword and return status   page should contain  //div[@title='${oppo_name}']
+    log to console      ${status}
+    click element   //div[@title='${oppo_name}']
+
+    #scrolluntillfound  //label/span[text()='Type of Support Requested']
+    #Execute JavaScript  window.document.getElementsByClassName('modal-body scrollable slds-modal__content slds-p-around--medium')[0].scrollTop += 250
+    #scroll element into view  //label/span[text()='Type of Support Requested']
+    input text   //span[text()='Opportunity Value Estimate (€)']/../following-sibling::input   532
+    input text   //span[text()='Opportunity Description']/../following-sibling::textarea  Testing Description
+    input text   //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
+    #scroll element into view  //span[text()='Sales Project']/../following-sibling::input
+    #click element   //span[text()='Sales Project']/../following-sibling::input
+    click element  //span[text()='Save']/..
+    [Return]    ${case_number}
+
+
 createACaseFromOppoRelated
     [Arguments]    ${oppo_name}   ${case_type}
     log to console   ${case_type}.this is case type..${oppo_name}
@@ -2856,6 +2951,9 @@ createACaseFromOppoRelated
     ${case_number}=    Generate Random String    7    [NUMBERS]
     wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
     input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
+    click element   //input[@title='Search Opportunities']
+    wait until page contains element    //div[@title='${oppo_name}']
+    click element   //div[@title='${oppo_name}']
     #scrolluntillfound  //label/span[text()='Type of Support Requested']
     #Execute JavaScript  window.document.getElementsByClassName('modal-body scrollable slds-modal__content slds-p-around--medium')[0].scrollTop += 250
     #scroll element into view  //label/span[text()='Type of Support Requested']

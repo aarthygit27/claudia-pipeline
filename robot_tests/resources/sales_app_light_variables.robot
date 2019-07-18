@@ -189,7 +189,7 @@ ${p}              b2o
 ${product_name}    Telia Robotics
 ${product_quantity}    1
 ${NRC}            35
-${RC}             50
+${RC}             50000
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
 ${360_VIEW}     //a[@title='360 View']
