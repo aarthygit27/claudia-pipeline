@@ -195,17 +195,24 @@ Check For Lightning Force And Switch Back To Sales Console
     Run Keyword Unless    ${contains}    switching to classic app
 
 Switch to Classic
+    #//img[@class='icon noicon']
     ${settings_classic}    set variable    //span[@id='userNavLabel']
     ${switch_lighting}    Set Variable    //a[@title='Switch to Lightning Experience']
-    ${setting_lighting}    Set Variable    //span[contains(@class,'userProfileCardTriggerRoot')]
+    ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
     ${switch_classic}    Set Variable    //a[text()='Switch to Salesforce Classic']
     ${search_button}    Set Variable    id=phSearchInput
-    Wait Until Element Is Visible    ${setting_lighting}    60s
-    Log to console    Lightning setting found
-    force Click Element    ${setting_lighting}
+    Log To Console    switching to classic app
+    sleep    5s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${settings_classic}    60s
+    run keyword if    ${status} == True    Click Element    ${settings_classic}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${switch_lighting}    30s
+    run keyword if    ${status} == True    Click Element    ${switch_lighting}
+    sleep    5s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${setting_lighting}    60s
+    run keyword if    ${status} == True    Click Element    ${setting_lighting}
     sleep    10s
-    Wait Until Element Is Visible    ${switch_classic}    30s
-    Click Element    ${switch_classic}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${switch_classic}    30s
+    run keyword if    ${status} == True    Click Element    ${switch_classic}
     Wait Until Element Is Visible    ${search_button}    90s
 
 Check For Correct Dashboard Data
