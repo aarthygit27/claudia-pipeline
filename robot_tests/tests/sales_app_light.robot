@@ -558,6 +558,7 @@ Add an account team member as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
+    Navigate to Account team members page
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
@@ -567,6 +568,7 @@ Edit team member's role as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
+    Navigate to Account team members page
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -576,6 +578,7 @@ Delete team member as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
+    Navigate to Account team members page
     Validate that team member is created succesfully
     Delete team member from account
 
@@ -585,6 +588,7 @@ Add an account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
+    Navigate to Account team members page
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
@@ -594,6 +598,7 @@ Edit team member's role as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
+    Navigate to Account team members page
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -603,7 +608,8 @@ Delete account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Validate that team member is created succesfully
+    Navigate to Account team members page
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
 Add an account team member to Group
@@ -611,6 +617,7 @@ Add an account team member to Group
     [Documentation]     Log in as Sales Admin and add team member to concern/group
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
+    Navigate to Account team members page
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
@@ -636,6 +643,7 @@ Group: Edit team member's role
     [Documentation]     Log in as Sales Admin. Go to group and edit existing team member's role.
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
+    Navigate to Account team members page
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -644,7 +652,8 @@ Group: Delete team member
     [Documentation]     Log in as Sales Admin. Go to group and delete existing team member.
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
-    Validate that team member is created succesfully
+    Navigate to Account team members page
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
 Negative: Check external data is not editable when creating new contact
@@ -673,6 +682,24 @@ Negative: Check external data is not editable from account contact relationship 
     Navigate to related tab
     Click view contact relationship
     Validate external contact data can not be modified
+
+Add several team members to business account team
+    [Tags]  Summer-Test     BQA-5729
+    [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that 
+    ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
+    Go To Salesforce and Login into Admin User
+    Go to Entity  Digita Oy
+    Navigate to related tab
+    Navigate to Account team members page
+    Add new team member  Sales Admin    Account Manager
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
+    Add new team member  B2O NetworkSales   Account Manager
+    Validate that team member is created succesfully    B2O,NetworkSales    Account Manager
+    Add new team member  Forecast Test  ICT Architect
+    Validate that team member is created succesfully    Forecast,Test   ICT Architect
+    Try to add same team member twice   GESB Integration
+    Validate that same user can not be added twice to account team
+    Delete team member from account
 
 Lead_Creation
     [Tags]  SreeramE2E       Lightning

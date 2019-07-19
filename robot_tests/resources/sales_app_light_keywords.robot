@@ -2351,24 +2351,42 @@ Validate that account owner can not be added to account team
 
 Add new team member
     [Documentation]     Add new team member to account
-    [Arguments]     ${new_team_member}
-    ScrollUntillFound  //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
-    Click element   //span[text()='Account Team Members']/../../../../..//ul/li/a[@title='New']
+    [Arguments]     ${new_team_member}      ${role}=--None--
+    Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']
     Input text  //input[@title='Search People']     ${new_team_member}
     Wait element to load and click  //a[@role='option']/div/div[@title='${new_team_member}']
+    Wait element to load and click  //a[text()='--None--']
+    Wait element to load and click  //ul/li/a[text()='${role}']
     Click element   //button[@title='Save']
     sleep   10s
 
 Validate that team member is created succesfully
-    ScrollUntillFound  //a/span[text()='Account Team Members']
-    Click element   //a/span[text()='Account Team Members']
-    Wait until page contains element   //table/tbody/tr/th/span/span[text()='Sales,Admin']     30s
+    [Arguments]     ${name}=Sales,Admin     ${role}=
+    Wait until page contains element   //table/tbody/tr/th/span/span[text()='${name}']     30s
+    Wait until page contains element    //table/tbody/tr/th/span/span[text()='${name}']/../../../td[2]/span/span[text()='${role}']
+
+Navigate to Account team members page
+    ScrollUntillFound  //span[text()='Account Team Members']
+    Click element   //span[text()='Account Team Members']
+
+Try to add same team member twice
+    [Documentation]     Tries to add same user twice as a team member for business account.
+    [Arguments]     ${user}
+    Add new team member  ${user}
+    Add new team member  ${user}
     
+Validate that same user can not be added twice to account team
+    Wait until page contains element    //ul[@class='errorsList']/li[text()='Cannot create a duplicate entry']     30s
+    Wait until element is visible   //ul[@class='errorsList']/li[text()='Cannot create a duplicate entry']     30s
+    Click element   //button[@title='Cancel']
+
 Delete team member from account
-    Wait until page contains element    ${table_row}    30s
-    Delete row items    ${table_row}
-    Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
+    :FOR    ${i}    IN RANGE    999
+    \   ${no_team_members}=     Run keyword and return status   Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      10s
+    \   Exit For Loop If    ${no_team_members}
+    \   Wait until page contains element    ${table_row}    30s
+    \   Delete row items    ${table_row}
 
 Change team member role from account
     Wait until page contains element    ${table_row}
