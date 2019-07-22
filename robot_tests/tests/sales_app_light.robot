@@ -555,7 +555,8 @@ Add an account team member as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Add new team member
+    Navigate to Account team members page
+    Add new team member     Sales Admin
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
@@ -564,6 +565,7 @@ Edit team member's role as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
+    Navigate to Account team members page
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -573,7 +575,8 @@ Delete team member as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Validate that team member is created succesfully
+    Navigate to Account team members page
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
 Add an account team member as Sales Admin
@@ -582,7 +585,8 @@ Add an account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Add new team member
+    Navigate to Account team members page
+    Add new team member     Sales Admin
     Validate that team member is created succesfully
 
 Edit team member's role as Sales Admin
@@ -591,6 +595,7 @@ Edit team member's role as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
+    Navigate to Account team members page
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -600,22 +605,42 @@ Delete account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Validate that team member is created succesfully
+    Navigate to Account team members page
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
 Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
     [Tags]    Summer-Test    BQA-10737    Lightning
     Go To Salesforce and Login into Admin User
-    Go to Entity    YIT
-    Add new team member
+    Go to Entity  YIT
+    Navigate to Account team members page
+    Add new team member     Sales Admin
     Validate that team member is created succesfully
+
+Negative: Try to add account owner to Account team
+    [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
+    [Tags]      Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    Go to Entity  Aacon Oy
+    Navigate to related tab
+    Add account owner to account team
+    Validate that account owner can not be added to account team
+
+Negative: Try to add group owner to group's account team
+    [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
+    [Tags]      Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    Go to Entity  YIT
+    Add account owner to account team
+    Validate that account owner can not be added to account team
 
 Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
     [Tags]    Summer-Test    BQA-10738    Lightning
     Go To Salesforce and Login into Admin User
-    Go to Entity    YIT
+    Go to Entity  YIT
+    Navigate to Account team members page
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -623,8 +648,9 @@ Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
     [Tags]    Summer-Test    BQA-10739    Lightning
     Go To Salesforce and Login into Admin User
-    Go to Entity    YIT
-    Validate that team member is created succesfully
+    Go to Entity  YIT
+    Navigate to Account team members page
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
 Negative: Check external data is not editable when creating new contact
@@ -653,6 +679,24 @@ Negative: Check external data is not editable from account contact relationship 
     Navigate to related tab
     Click view contact relationship
     Validate external contact data can not be modified
+
+Add several team members to business account team
+    [Tags]  Summer-Test     BQA-5729
+    [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that 
+    ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
+    Go To Salesforce and Login into Admin User
+    Go to Entity  Digita Oy
+    Navigate to related tab
+    Navigate to Account team members page
+    Add new team member  Sales Admin    Account Manager
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
+    Add new team member  B2O NetworkSales   Account Manager
+    Validate that team member is created succesfully    B2O,NetworkSales    Account Manager
+    Add new team member  Forecast Test  ICT Architect
+    Validate that team member is created succesfully    Forecast,Test   ICT Architect
+    Try to add same team member twice   GESB Integration
+    Validate that same user can not be added twice to account team
+    Delete team member from account
 
 Lead_Creation
     [Documentation]    This TC creates lead from the Web-to-lead form and validate the same in Claudia leads tab,
