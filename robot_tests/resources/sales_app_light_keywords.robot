@@ -1059,7 +1059,6 @@ CreateAOppoFromAccount_HDC
     click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
     Capture Page Screenshot
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
-    Log to console    searching contact
     wait until page contains element    //*[@title='${b}']/../../..    10s
     Log to console   contact found
     click element    //*[@title='${b}']/../../..
@@ -2486,8 +2485,12 @@ openOrderFromDirecrOrder
 OpenOrderPage
     Log to console      Open Order
     select frame    //iframe[@title='accessibility title'][@scrolling='yes']
+    Log to console  Inside frame
     sleep  20s
-    force click element     //button[@class='form-control btn btn-primary ng-binding']
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
+    Log to console      ${status}
+    wait until element is visible   //button[contains(text(),'Open Order')]    60s
+    click element    //button[contains(text(),'Open Order')]
     unselect frame
 
 
@@ -2508,7 +2511,7 @@ getMultibellaCaseGUIID
 
 SwithchToUser
     [Arguments]  ${user}
-    #log to console   ${user}.this is user
+    log to console   ${user}.this is user
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${user}
     sleep  3s
@@ -2521,6 +2524,7 @@ SwithchToUser
     wait until page contains element  //div[text()='User Detail']   60s
     click element  //div[text()='User Detail']
     wait until page contains element  //div[@id="setupComponent"]   60s
+    Wait until element is visible  //div[contains(@class,'iframe')]/iframe  60s
     select frame  //div[contains(@class,'iframe')]/iframe
     wait until page contains element  //td[@class="pbButton"]/input[@title='Login']   60s
     force click element  //td[@class="pbButton"]/input[@title='Login']
@@ -2534,10 +2538,20 @@ SwithchToUser
 
 logoutAsUser
     [Arguments]  ${user}
+    [Documentation]     Logout through seetings button as direct logout is not available in some pages.
+    ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
+    sleep  20s
+    #wait until page contains element  //a[text()='Log out as ${user}']   60s
+    #${visible}   set variable   Run Keyword and return status   Wait Until Element Is Visible  //a[text()='Log out as ${user}']   30s
+    #Log to console     status is  ${visible}
+    #Run Keyword if   ${status}  force click element  //a[text()='Log out as ${user}']
+    ${count}  set variable  Get Element Count   ${setting_lighting}
+    Log to console  ${count}
+    force click element   ${setting_lighting}
+    wait until element is visible   //a[text()='Log Out']  60s
+    click element  //a[text()='Log Out']
     sleep  10s
-    wait until page contains element  //a[text()='Log out as ${user}']   60s
-    page should contain element  //a[text()='Log out as ${user}']
-    force click element  //a[text()='Log out as ${user}']
+
 
 
 ChangeThePriceList
@@ -2650,6 +2664,7 @@ addProductsViaSVE
 ApproveB2BGTMRequest
     [Arguments]  ${Approver_name}  ${oppo_name}
     swithchtouser  ${Approver_name}
+    Log to console  ${Approver_name} has to approve
     scrolluntillfound  //span[text()='Items to Approve']
     click element  //span[text()='Items to Approve']/ancestor::div[contains(@class,'card__header')]//following::a[text()='${oppo_name}']
     wait until page contains element   //span[text()='Opportunity Approval']  60s
@@ -2660,6 +2675,7 @@ ApproveB2BGTMRequest
     #input text  //span[text()='Comments']/../following::textarea   1st level Approval Done By Leila
     input text  //span[text()='Comments']/../following::textarea   Approved
     click element  //span[text()='Approve']
+    Log to console      approved
     logoutAsUser  ${Approver_name}
     sleep  10s
     login to salesforce as digisales lightning user vlocupgsandbox
@@ -2673,8 +2689,8 @@ openQuoteFromOppoRelated
     wait until page contains element  //span[text()='Opportunity Team']   30s
     scrolluntillfound  //a[text()='${quote_no}']
     click element  //a[text()='${quote_no}']
-    wait until page contains element  //span[text()='Quote Number']/..//span[@class="uiOutputText"]   60s
-    page should contain element  //span[text()='Quote Number']/..//span[@class="uiOutputText"]
+    #wait until page contains element  //span[text()='${quote_no}']/..//span[@class="uiOutputText"]   60s
+    #page should contain element  //span[text()='${quote_no}']/..//span[@class="uiOutputText"]
 
 ContractStateMessaging
     log to console    NextButtonOnOrderPage
@@ -2895,10 +2911,8 @@ clickOnOfferingTab
 
 createACaseFromMore
     [Arguments]    ${oppo_name}   ${case_type}
+
     log to console   ${case_type}.this is case type..${oppo_name}
-    go to entity  ${oppo_name}
-    #reload page
-    sleep  2s
     Click element   //span[text()='More']
     sleep   30s
     ${status}  set variable     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
@@ -2913,23 +2927,24 @@ createACaseFromMore
     ${case_number}=    Generate Random String    7    [NUMBERS]
     wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
     input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
-
     click element   //input[@title='Search Opportunities']
-    Press Key  //input[@title='Search Opportunities']   Test Robot Order_ 20190718-163154
-    sleep  20s
-    ${status}  set variable     run keyword and return status   page should contain  //div[@title='${oppo_name}']
-    log to console      ${status}
-    click element   //div[@title='${oppo_name}']
-
+    Input Text  //input[@title='Search Opportunities']   ${oppo_name}
+    sleep   10s
+    Wait until page contains element    //div[@title='${oppo_name}'][@class='primaryLabel slds-truncate slds-lookup__result-text']  60s
+    scroll element into view    //div[@title='${oppo_name}'][@class='primaryLabel slds-truncate slds-lookup__result-text']
+    Set focus to element    //div[@title='${oppo_name}'][@class='primaryLabel slds-truncate slds-lookup__result-text']
+    Wait until element is visible  //div[@title='${oppo_name}'][@class='primaryLabel slds-truncate slds-lookup__result-text']   30s
+    ${count}  set variable  Get Element Count   //div[@title='${oppo_name}'][@class='primaryLabel slds-truncate slds-lookup__result-text']
+    Log to console  ${count}
+    force click element   //div[@title='${oppo_name}'][@class='primaryLabel slds-truncate slds-lookup__result-text']
     #scrolluntillfound  //label/span[text()='Type of Support Requested']
     #Execute JavaScript  window.document.getElementsByClassName('modal-body scrollable slds-modal__content slds-p-around--medium')[0].scrollTop += 250
     #scroll element into view  //label/span[text()='Type of Support Requested']
     input text   //span[text()='Opportunity Value Estimate (€)']/../following-sibling::input   532
     input text   //span[text()='Opportunity Description']/../following-sibling::textarea  Testing Description
     input text   //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
-    #scroll element into view  //span[text()='Sales Project']/../following-sibling::input
-    #click element   //span[text()='Sales Project']/../following-sibling::input
-    click element  //span[text()='Save']/..
+    Log to console  to save
+    click element  //button[@title='Save']
     [Return]    ${case_number}
 
 

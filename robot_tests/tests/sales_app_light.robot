@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -74,6 +74,7 @@ Closing active opportunity as lost
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Cancel Opportunity and Validate    ${OPPORTUNITY_NAME}    Closed Lost
 
+Check Attributes/Business Account are named right in Sales Force UI
 Check Attributes/Business Account are named right in Sales Force UI
     [Documentation]    To Verify the Business Account Attributes Are Named Right
     [Tags]    BQA-8484    Lightning
@@ -788,6 +789,7 @@ CreateB2BHDCGTMOrder
     force click element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
     input text    //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea    Please APprove
     click element  //button[@title="Save"]
+    Log to console  To be submitted for approval
     scroll page to location  0  0
     sleep  3s
     wait until page contains element  //a[contains(@title, 'more actions')][1]   30s
@@ -795,19 +797,22 @@ CreateB2BHDCGTMOrder
     wait until page contains element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..   20s
     page should contain element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..
     force click element   //div[text()='Submit for HDC GTM Approval']
+    Log to console      Submitted for approval
     sleep  5s
     reload page
     scrolluntillfound  //span[text()='Pending Approval']
     page should contain element  //span[text()='Pending Approval']
+    Log to console  Pending approval
     logoutAsUser  B2B DigiSales
     sleep   10s
     login to salesforce as digisales lightning user vlocupgsandbox
     ApproveB2BGTMRequest  Leila Podduikin  ${oppo_name}
     ApproveB2BGTMRequest  Tommi Mattila    ${oppo_name}
-    swithchtouser  B2B DigiSales
+    #swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
     scrolluntillfound  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
     page should contain element  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
+    Log to console      Status Approved
     ClickingOnCPQ    ${oppo_name}
     #Adding Telia Colocation    Telia Colocation
     #Updating Setting Telia Colocation
@@ -860,6 +865,7 @@ CreateB2BHDCGTMOrder
     #${fyr}  run keyword  addProductsViaSVE         ${product_name}
 
 createSalesProjectOppo
+
     [Tags]  SreeramE2E       Lightning
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
@@ -869,25 +875,9 @@ createSalesProjectOppo
     sleep   10s
     ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     Go To Entity     ${oppo_name}
-
-    -------------------
-    ${oppo_name}  set variable  Test Robot Order_ 20190718-163154
-
-    Create Webdriver  Firefox
-    Execute Manual Step  Proxy
-
-    Go to   https://test.salesforce.com
-    Wait Until Element Is Visible   id=username   30s
-    Input Text  id=username   mmw9007@teliacompany.com.release
-    Input Text   id =password  Sriram@234
-    Click Element  id=Login
-
-    Execute Manual Step  if any
-
-    -------
-
+#reload page
+    sleep  2s
     ${case_number}=  run keyword      createACaseFromMore  ${oppo_name}  B2B Sales Expert Request
-
     #createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
     log to console   ${case_number}.this is created case
     logoutAsUser  B2B DigiSales
@@ -895,7 +885,7 @@ createSalesProjectOppo
     swithchtouser  Anna Vierinen
     openquotefromopporelated  ${oppo_name}  ${case_number}
     #go to entity  ${case_number}
-    #sleep  15s
+    sleep  15s
     click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
     wait until element is visible  //a[@class='select' and text()='New']   30
     click element  //a[@class='select' and text()='New']
@@ -904,21 +894,25 @@ createSalesProjectOppo
     click element  //a[@title="In Case Assessment"]
     ${date}  get date from future  7
     input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
-    click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
+    force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
     Scroll Page To Location    0    1400
-    ##scroll element into view  //Span[text()='Support Case Cycle Time']
-    ##//a[@class='select' and text()='--None--']
+##scroll element into view  //Span[text()='Support Case Cycle Time']
+##//a[@class='select' and text()='--None--']
     wait until element is visible   //a[@class='select' and text()='--None--']
     force click element  //a[@class='select' and text()='--None--']
     click element  //a[@title='Sales Project']
     click element  //button[@title='Save']/span
+    Log to console      Case Saved
+    Scroll Page To Location    0    0
     wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
     force click element  //span[text()='Assign Support Resource' and @class='title']
     wait until page contains element  //span[text()='Assigned Resource']  30s
     input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
-    click element  //div[@title="B2B DigiSales"][1]
+    sleep  10s
+    click element  //div[@title="B2B DigiSales"]
     wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
     click element  //a[@class='select' and text()='Solution Design']
+    sleep  5s
     click element  //a[@title="Sales Project"]
     click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
     #sleep   40s
