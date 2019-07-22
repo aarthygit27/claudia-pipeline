@@ -579,7 +579,7 @@ Delete team member as account owner
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Navigate to Account team members page
-    Validate that team member is created succesfully
+    Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
 Add an account team member as Sales Admin

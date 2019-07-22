@@ -2352,6 +2352,7 @@ Validate that account owner can not be added to account team
 Add new team member
     [Documentation]     Add new team member to account
     [Arguments]     ${new_team_member}      ${role}=--None--
+    Wait until page contains element    //ul/li/a[@title='New']     30s
     Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']
     Input text  //input[@title='Search People']     ${new_team_member}
