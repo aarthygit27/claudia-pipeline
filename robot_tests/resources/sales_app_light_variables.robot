@@ -7,7 +7,8 @@ ${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
-${CLASSIC_MENU}    //*[@id="userNav"]
+#${CLASSIC_MENU}    //*[@id="userNav"]
+${CLASSIC_MENU}     //a[@class="switch-to-lightning"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
 ${APP_LAUNCHER}    //button[contains(@class,'salesforceIdentityAppLauncherHeader')]
@@ -17,10 +18,10 @@ ${SALES_APP_HOME}    //a[@title='Home']
 #${SEARCH_SALESFORCE}    //*[@title='Search Salesforce' or @title='Search Opportunities and more']
 ${SEARCH_SALESFORCE}    //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
 ${SEARCH_RESULTS}    //div[contains(@class,'forceSearchScopesList')]//*[text()='Search Results']
-${TABLE_HEADER}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+#${TABLE_HEADER}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 #//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ENTITY_HEADER}    //header[@class='forceHighlightsPanel']
-${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${TABLE_HEADER}    ///div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a
 ${ACCOUNT_HEADER}    //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}    //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}    //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
@@ -47,7 +48,8 @@ ${ACCOUNT_NAME_FIELD}    //input[@title='Search Accounts']
 ${MASTER_PHONE_NUM_FIELD}    //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_PRIMARY_EMAIL_FIELD}    //span[contains(text(),'Primary eMail')]/../following-sibling::input[@type='email']
 ${MASTER_EMAIL_FIELD}    //div[@id='email']
-${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
+#${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
+${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
 ${DETAILS_TAB}    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
 ${DEFAULT_EMAIL}    d@email.com
@@ -79,17 +81,22 @@ ${subject_call_type}    //*[@title='${customer_Call}']
 ${Meeting}        Meeting
 ${customer_Call}    Customer Call
 ${meeting_text}    //*[(text()='Meeting')]
-${meeting_select_dropdown}    //div/ul/li[2]/a[(text()='Meeting')]
+#${meeting_select_dropdown}    //div/ul/li[2]/a[(text()='Meeting')]
+${meeting_select_dropdown}      //a[contains(text(),"Meeting")]
 ${reason_select_dropdown}    //*[text()='Reason']/..//following::div/div/div/div/a
 ${reason_select_dropdown_value}    //a[(text()='Solution Design')]
 ${meeting_start_time}    9:00
 ${meeting_end_time}    10:00
-${meeting_start_date_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[1]/label//following-sibling::input
-${meeting_start_time_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[2]/div/label//following-sibling::input
+#${meeting_start_date_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[1]/label//following-sibling::input
+${meeting_start_date_input}    //legend[contains(text(),"Start")]//following::input[@class="slds-input"]
+#${meeting_start_time_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[2]/div/label//following-sibling::input
+${meeting_start_time_input}     //legend[contains(text(),"Start")]//following::input[@class="slds-input slds-combobox__input"]
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[5]/div[1]/div/div/fieldset/div/div[2]/div[1]/input
-${meeting_end_date_input}    //*[text()='End']//following::div/div/label[text()='Date']//following-sibling::input
+#${meeting_end_date_input}    //*[text()='End']//following::div/div/label[text()='Date']//following-sibling::input
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[1]/input
-${meeting_end_time_input}    //*[text()='End']//following::div/div/label[text()='Time']//following-sibling::input
+${meeting_end_date_input}   //*[text()='End']//following::input[@class="slds-input"]
+${meeting_end_time_input}   //*[text()='End']//following::input[@class="slds-input slds-combobox__input"]
+#${meeting_end_time_input}    //*[text()='End']//following::div/div/label[text()='Time']//following-sibling::input
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[2]/div/input
 ${city_input}     //span[text()='Location']//following::input[@class=' input']
 #//*[@class='label inputLabel uiLabel-left form-element__label uiLabel']//span[text()='Location']//following::input[@class=' input']
@@ -100,7 +107,7 @@ ${start_date_form_span}    //div[@class='slds-form-element slds-form-element_rea
 ${end_date_form_span}    //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='End']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${location_form_span}    //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='Location']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${save_button_create}    //div/div[3]/div/div/div[2]/div[2]/button
-${success_message_anchor}    //div[contains(text(),'You have an upcoming Event')]
+${success_message_anchor}     //*[contains(text(),'You have an upcoming event with ')]
 #//*[contains(text(),'You have an upcoming Event with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${meeting_outcome_edit_button}    //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/button
 ${meeting_outcome_select}    //*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div/div/a
@@ -120,8 +127,10 @@ ${save_task_button}    //div/div[3]/div/div/div[2]/div[2]/button
 ${suucess_msg_task_anchor}    //div[contains(text(),'You have an upcoming Task with')]
 #//*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${TEST_ACCOUNT_CONTACT}    Aacon Oy
-${contact_name_form}    //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
+${TEST_CONTACT}     Aarsleff Oy
+#${contact_name_form}    //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
 ${related_to}     //span[@class='data-social-photo-guid-0c81cbe7-ad99-4592-a537-f11c4b51aaee photoContainer forceSocialPhoto_v2 forceOutputLookup']/../a[text()]
+${contact_name_form}    //span[@class="title"]//following::div[@class="runtime_sales_activitiesManyWhoName"]
 ${DEFAULT_CITY}    HELSINKI
 #CPQ
 ${CPQ_BUTTON}     //a[@title='CPQ']
@@ -172,8 +181,8 @@ ${ACCOUNT_OWNER}    Sales Admin
 ${ACCOUNT_LIST}    //a[@data-refid='recordId']/../../parent::tr
 ${ACCOUNT_NAME}    (//tr//a[@data-refid='recordId'])
 ${ACCOUNTS_LINK}    //div[@class='bBottom']//span[text()='Accounts']
-${CHANGE_OWNER}    //button[@title='Change Owner']
-${SEARCH_PEOPLE}    //input[@title='Search People']
+${CHANGE_OWNER}   //div[@class="slds-form-element__control slds-grid itemBody"]//button[@title='Change Owner']
+${SEARCH_PEOPLE}  //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
 #${OWNER_NAME}    //div[contains(@class,'primaryLabel')]
 ${CHANGE_OWNER_BUTTON}    //div[contains(@class,'forceModalActionContainer')]//button[@title='Change Owner']
 #//button[@title='Cancel']/following-sibling::button

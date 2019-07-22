@@ -219,9 +219,9 @@ ScrollUntillFound
     #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
     : FOR    ${i}    IN RANGE    9999
     \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-    \    Execute JavaScript    window.scrollTo(0,${i}*200)
     \    Sleep    5s
     \    Exit For Loop If    ${status}
+    \    Execute JavaScript    window.scrollTo(0,${i}*200)
 
 Verify That Opportunity Is Saved And Data Is Correct
     [Arguments]    ${element}    ${account_name}=${LIGHTNING_TEST_ACCOUNT}
@@ -324,17 +324,23 @@ Create New Master Contact
     Input Text    ${MASTER_PHONE_NUM_FIELD}    ${MASTER_PHONE_NUM}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${MASTER_PRIMARY_EMAIL}
     #Input Text    ${MASTER_EMAIL_FIELD}    ${MASTER_EMAIL}
-    Select from Autopopulate List    ${ACCOUNT_NAME_FIELD}    ${MASTER_ACCOUNT_NAME}
+    Select from search List   ${ACCOUNT_NAME_FIELD}    ${MASTER_ACCOUNT_NAME}
     Click Element    ${SAVE_BUTTON}
     Sleep    10s
     #Validate Master Contact Details    ${CONTACT_DETAILS}
 
+Select from search List
+    [Arguments]    ${field}    ${value}
+    Input Text    ${field}    ${value}
+    Sleep    10s
+    Press Enter On   ${field}
+    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${value}']
+    Sleep    2s
 Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
     Sleep    20s
-    Click element       //div[@title='${value}']/../../../a
-
+    Click Visible element     //div[@title='${value}']/../../../a
 Validate Master Contact Details
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}']
     ${account_name}=    Set Variable    //span[text()='Account Name']//following::a[text()='${MASTER_ACCOUNT_NAME}']
@@ -637,7 +643,7 @@ Enter Mandatory Info on Meeting Form
     input text    xpath=${SUBJECT_INPUT}    ${task_subject}
     sleep    5s
     click element    xpath=${EVENT_TYPE}
-    click element    xpath=${meeting_select_dropdown}
+    Click Visible Element   xpath=${meeting_select_dropdown}
     sleep    5s
     Select option from Dropdown with Force Click Element    ${reason_select_dropdown}    ${reason_select_dropdown_value}
     #click element    xpath=${reason_select_dropdown}
@@ -653,12 +659,17 @@ Enter Meeting Start and End Date
     ${date}=    Get Date From Future    1
     Set Test Variable    ${meeting_start_DATE}    ${date}
     #log to console    ${meeting_start_DATE}
+    Clear Element Text   ${meeting_start_date_input}
+    sleep  3s
     Input Text    ${meeting_start_date_input}    ${meeting_start_DATE}
+    Click Element     ${meeting_start_time_input}
     clear element text    ${meeting_start_time_input}
     input text    ${meeting_start_time_input}    ${meeting_start_time}
     ${date}=    Get Date From Future    2
     Set Test Variable    ${meeting_end_DATE}    ${date}
     Input Text    ${meeting_end_date_input}    ${meeting_end_DATE}
+    Click Element    ${meeting_end_time_input}
+    sleep  3s
     clear element text    ${meeting_end_time_input}
     input text    ${meeting_end_time_input}    ${meeting_end_time}
 
@@ -667,7 +678,7 @@ Save Meeting and click on Suucess Message
     Force click element    ${save_button_create}
     sleep    30s
     #click element    ${success_message_anchor}
-    Force click element    ${success_message_anchor}
+    click visible element  ${success_message_anchor}
     sleep    10s
 
 Validate Created Meeting
@@ -794,7 +805,7 @@ Create New Master Contact With All Details
     Input Text    ${MASTER_PHONE_NUM_FIELD}    ${MASTER_PHONE_NUM}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${MASTER_PRIMARY_EMAIL}
     Input Text    ${EMAIL_ID_FIELD}    ${MASTER_PRIMARY_EMAIL}
-    Select from Autopopulate List    ${ACCOUNT_NAME_FIELD}    ${MASTER_ACCOUNT_NAME}
+    Select from search List   ${ACCOUNT_NAME_FIELD}    ${MASTER_ACCOUNT_NAME}
     Input Text    ${BUSINESS_CARD_FIELD}    ${BUSINESS_CARD}
     Select option from Dropdown with Force Click Element    ${STATUS}    ${STATUS_ACTIVE}
     Select option from Dropdown with Force Click Element    ${PREFERRED_CONTACT_CHANNEL}    ${PREFERRED_CONTACT_CHANNEL_LETTER}
@@ -961,7 +972,47 @@ Close Notification
 
 Change to original owner
     [Documentation]    We are changing the account owner to Sales Admin in case the account owner is GESB Integration
-    Change account owner to  ${ACCOUNT_OWNER}
+    #Change account owner to  ${ACCOUNT_OWNER}
+     Wait Until Element Is Visible    //*[@data-key="change_owner"]  30s
+     Click element   //*[@data-key="change_owner"]
+     sleep    8s
+     Element Should Be Enabled    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
+     Wait Until Page Contains Element    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]    60s
+    #Input Text    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]   ${ACCOUNT_OWNER}
+     Select from Autopopulate List    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]   ${ACCOUNT_OWNER}
+     Click Element   //*[text()="Change Account Owner"]//following::span[text()="Change Owner"]
+     : FOR    ${i}    IN RANGE    10
+     \   ${new_owner}=   Get Text    ${ownername}
+     \   ${status}=    Run Keyword And Return Status    Should Be Equal As Strings  ${REMOVE_ACCOUNT}   ${new_owner}
+     \   Run Keyword If   ${status} == False      reload page
+     \   Wait Until Page Contains Element   ${ownername}   120s
+     \   Exit For Loop If    ${status}
+     log to console   ${new_owner}
+     sleep  120s
+
+
+Remove change account owner
+    ${ACCOUNT_OWNER}    Get Text    ${ownername}
+    ${status}=    Run Keyword And Return Status    Should Not Be Equal As Strings    ${ACCOUNT_OWNER}    ${REMOVE_ACCOUNT}
+    Run Keyword If    ${status} == False    Change to original owner
+    Wait Until Element Is Visible   //button[@title='Change Owner']//*[@class="slds-button__icon"]  10s
+    click element     //div[@class="slds-form-element__control slds-grid itemBody"]//button[@title='Change Owner']
+    sleep   8s
+    Element Should Be Enabled     //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
+    Wait Until Page Contains Element    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]    60s
+    Input Text    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]   ${REMOVE_ACCOUNT}
+    Select from Autopopulate List    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]   ${REMOVE_ACCOUNT}
+    sleep  30s
+    Click Element   //*[text()="Change Account Owner"]//following::span[text()="Change Owner"]
+    : FOR    ${i}    IN RANGE    10
+    \   ${new_owner}=    Get Text    ${ownername}
+    \   ${status}=    Run Keyword And Return Status    Should Be Equal As Strings  ${REMOVE_ACCOUNT}   ${new_owner}
+    \   Run Keyword If   ${status} == False      reload page
+    \   Wait Until Page Contains Element   ${ownername}   120s
+    \   Exit For Loop If    ${status}
+    Should Be Equal As Strings    ${REMOVE_ACCOUNT}    ${new_owner}
+    Capture Page Screenshot
+
 
 Check original account owner and change if necessary
     Wait Until Element Is Visible    //div[@class='ownerName']//a    30s
@@ -1116,9 +1167,9 @@ CreateAOppoFromAccount_HDC
     sleep    10s
     click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
     Capture Page Screenshot
-    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    Testing ${b}
-    wait until page contains element    //*[@title='Testing ${b}']/../../..    10s
-    click element    //*[@title='Testing ${b}']/../../..
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    wait until page contains element    //*[@title='${b}']/../../..    10s
+    click element    //*[@title='${b}']/../../..
     sleep    2s
     input text    //textarea    ${oppo_name}.${close_date}.Description Testing
     click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
@@ -1144,6 +1195,30 @@ ChangeThePriceBookToHDC
     sleep    10s
     execute javascript    window.scrollTo(0,0)
     sleep    5s
+
+
+Update Pricelist in Opportunity
+    [Arguments]    ${price_lists}
+    ${Price List}    set variable    //span[contains(text(),'Price List')]/../../button
+    ${price_list_old}=     get text    //span[text()='Price List']//following::a
+    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
+    ${edit pricelist}    Set Variable    //button[@title='Edit Price List']
+    Log To Console    Change Price list
+    ScrollUntillFound   ${edit pricelist}
+    click element      ${edit pricelist}
+    ScrollUntillFound   ${B2B_Price_list_delete_icon}
+    Log to console  Delete Action element found
+    #click element   ${B2B_Price_list_delete_icon}
+    log to console    ${price_lists}
+    ${elementToClick}=  set variable   //span[text()='${price_lists}']//following::a[1]
+    ${element_xpath}=    Replace String    ${elementToClick}    \"    \\\"
+    Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep    2s
+    Log to console  Clicked
+    input text    //input[@title='Search Price Lists']    ${price_lists}
+    sleep    3s
+    click element    //*[@title='${price_lists}']/../../..
+    click element    //button[@title='Save']
 
 ClickingOnCPQ
     #[Arguments]    ${b}=${oppo_name}
@@ -2561,6 +2636,7 @@ ChangeThePriceList
     page should contain element  //span[text()='Price Book']//following::a[text()='Standard Price Book']
     click element    //button[@title="Edit Price List"]
     #sleep    10s
+    ScrollUntillFound  //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
     wait until page contains element  //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]   20s
     click element    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
     sleep    3s

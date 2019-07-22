@@ -94,9 +94,9 @@ Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
     [Tags]    BQA-7948    Lightning
     Go To Salesforce and Login into Lightning
-    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
-    Go to Entity    ${TEST_ACCOUNT_CONTACT}
+    Go to Entity    ${TEST_CONTACT}
     Create a Meeting
 
 Lightning: Create Call from Account
@@ -137,11 +137,9 @@ Remove Account owner
     [Tags]    BQA-8524    Lightning     Summer-Test
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    ${ACCOUNT_OWNER}    Get Text    ${ownername}
-    ${status}=    Run Keyword And Return Status    Should Not Be Equal As Strings    ${ACCOUNT_OWNER}    ${REMOVE_ACCOUNT}
-    Run Keyword If    ${status} == False    Change to original owner
-    Change account owner to  ${REMOVE_ACCOUNT}
-    Validate that account owner was changed successfully  ${REMOVE_ACCOUNT}
+    Remove change account owner
+    #Change account owner to  ${REMOVE_ACCOUNT}
+    #Validate that account owner was changed successfully  ${REMOVE_ACCOUNT}
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
@@ -233,7 +231,8 @@ Create HDC Order
     ${billing_acc_name}    run keyword    CreateABillingAccount
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
-    ChangeThePriceBookToHDC    HDC Pricebook B2B
+    #ChangeThePriceBookToHDC    HDC Pricebook B2
+    Update Pricelist in Opportunity  B2B
     ClickingOnCPQ    ${oppo_name}
     Adding Telia Colocation    Telia Colocation
     Updating Setting Telia Colocation
@@ -750,6 +749,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     sleep  3s
     reload page
     logoutasuser  B2B DigiSales
+    sleep  10s
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  Sales Admin
     #AddOppoTeamMember  Oppo2349_2    B2O NetworkSales
