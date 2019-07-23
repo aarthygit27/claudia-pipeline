@@ -277,7 +277,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder    Lightning
+    [Tags]    BQA-B2BOrder    TestRun
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -718,7 +718,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]  SreeramE2E       Lightning
+    [Tags]  SreeramE2E       TestRun
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -765,7 +765,7 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]  SreeramE2E       Lightning
+    [Tags]  SreeramE2E       Lightning   TestRun
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     swithchtouser  B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -866,6 +866,38 @@ CreateB2BHDCGTMOrder
 
 createSalesProjectOppo
 
+    [Tags]  TestRun       Lightning
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  B2B DigiSales
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    Log to console      Create Contact
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep   10s
+    Log to console      create oppurtunity
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    Go To Entity     ${oppo_name}
+    sleep  2s
+    Log to console      addproductsviasve
+    clickingOnSolutionValueEstimate     ${oppo_name}
+    addProductsViaSVE   Subscriptions and networks
+    Log to console  Create case
+    ${case_number}=  run keyword      Create case from more actions
+    log to console   ${case_number}.this is created case
+    logoutAsUser  B2B DigiSales
+    login to salesforce as digisales lightning user vlocupgsandbox
+    swithchtouser  Anna Vierinen
+    openquotefromopporelated  ${oppo_name}  ${case_number}
+    SalesProjectOppurtunity     ${case_number}
+    go to entity    ${oppo_name}
+    page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+
+
+
+
+
+#createSalesProjectOppo
+
     [Tags]  SreeramE2E       Lightning
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
@@ -912,8 +944,12 @@ createSalesProjectOppo
     click element  //div[@title="B2B DigiSales"]
     wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
     click element  //a[@class='select' and text()='Solution Design']
+    sleep   10s
+    wait until element is visible   //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+    click element  //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+
     sleep  5s
-    click element  //a[@title="Sales Project"]
+    #click element  //a[@title="Sales Project"]
     click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
     #sleep   40s
     #scrolluntillfound   //span[text()="Save"][1]/../..

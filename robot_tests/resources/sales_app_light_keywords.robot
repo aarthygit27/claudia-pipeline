@@ -2692,6 +2692,46 @@ openQuoteFromOppoRelated
     #wait until page contains element  //span[text()='${quote_no}']/..//span[@class="uiOutputText"]   60s
     #page should contain element  //span[text()='${quote_no}']/..//span[@class="uiOutputText"]
 
+SalesProjectOppurtunity
+
+    [Arguments]  ${case_number}
+
+    sleep  15s
+    click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
+    #wait until element is visible  //a[@class='select' and text()='New']   30
+    #click element  //a[@class='select' and text()='New']
+    #sleep  3s
+    #click element  //a[@title="In Case Assessment"]
+    ${date}  get date from future  7
+    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
+    force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
+    Scroll Page To Location    0    1400
+    wait until element is visible   //a[@class='select' and text()='--None--']
+    force click element  //a[@class='select' and text()='--None--']
+    click element  //a[@title='Sales Project']
+    click element  //button[@title='Save']/span
+    Log to console      Case Saved
+    Scroll Page To Location    0    0
+    wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
+    force click element  //span[text()='Assign Support Resource' and @class='title']
+    wait until page contains element  //span[text()='Assigned Resource']  30s
+    input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
+    sleep  10s
+    click element  //div[@title="B2B DigiSales"]
+    wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
+    click element  //a[@class='select' and text()='Solution Design']
+    sleep   10s
+    wait until element is visible   //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+    click element  //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+    sleep  5s
+
+    click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
+    scroll page to location  0  200
+    wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+    wait until element is visible  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+    click element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..
+    capture page screenshot
+
 ContractStateMessaging
     log to console    NextButtonOnOrderPage
     select frame    xpath=//div[contains(@class,'slds')]/iframe
@@ -2908,6 +2948,28 @@ clickOnOfferingTab
     click element  //span[text()='Offering']
     wait until page contains element  //h1[text()='Telia Offering']   30s
 
+Create case from more actions
+
+    wait until page contains element  //a[contains(@title, 'more actions')][1]   30s
+    force click element  //a[contains(@title, 'more actions')][1]
+    capture page screenshot
+    wait until element is visible   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..   30s
+    #page should contain element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..
+    force click element   //a[@title="B2B Sales Expert Request"]/div
+    wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
+    ${case_number}=    Generate Random String    7    [NUMBERS]
+    input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
+    Force click element  //span[text()='Subscriptions and Networks']/../following::input[1]
+    ${date}=    Get Date From Future    7
+    input text   //span[text()='Offer Date']/../following::div[@class='form-element']/input   ${date}
+    scroll element into view  //span[text()='Type of Support Requested']/../following::textarea
+    input text  //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
+    Scroll Page To Location  0  200
+    #scroll element into view  //span[text()='Sales Project']/../following::input[1]
+    click element  //span[text()='Sales Project']/../following::input[1]
+    wait until element is visible   //button[@class='slds-button slds-button_brand cuf-publisherShareButton undefined uiButton']//span[text()='Save']   60s
+    click element  //button[@class='slds-button slds-button_brand cuf-publisherShareButton undefined uiButton']//span[text()='Save']
+    [Return]    ${case_number}
 
 createACaseFromMore
     [Arguments]    ${oppo_name}   ${case_type}
@@ -2977,7 +3039,7 @@ createACaseFromOppoRelated
     input text   //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
     #scroll element into view  //span[text()='Sales Project']/../following-sibling::input
     #click element   //span[text()='Sales Project']/../following-sibling::input
-    click element  //span[text()='Save']/..
+    click element  //span[text()='Save']/..scroll page to location
     [Return]    ${case_number}
 
 
