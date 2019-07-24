@@ -487,6 +487,15 @@ Edit Opportunity
     [Arguments]    ${opportunity}
     Go to Entity    ${opportunity}
 
+Scroll Page To Element
+    [Arguments]    ${element}
+    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
+    : FOR    ${i}    IN RANGE    99
+    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+    \    Execute JavaScript    window.scrollTo(0,100)
+    \    Sleep    5s
+    \    Exit For Loop If    ${status}
+
 Select option from Dropdown
     [Arguments]    ${list}    ${item}
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${item}
@@ -2484,11 +2493,12 @@ openOrderFromDirecrOrder
 
 OpenOrderPage
     Log to console      Open Order
+    Reload page
+    sleep   10s
     select frame    //iframe[@title='accessibility title'][@scrolling='yes']
-    Log to console  Inside frame
-    sleep  20s
-    ${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
-    Log to console      ${status}
+    #${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
+    Current frame should contain  Open Order
+    set focus to element    //button[contains(text(),'Open Order')]
     wait until element is visible   //button[contains(text(),'Open Order')]    60s
     click element    //button[contains(text(),'Open Order')]
     unselect frame
@@ -2718,11 +2728,13 @@ SalesProjectOppurtunity
     input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
     sleep  10s
     click element  //div[@title="B2B DigiSales"]
-    wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
-    click element  //a[@class='select' and text()='Solution Design']
+    #wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
+    #click element  //a[@class='select' and text()='Solution Design']
     sleep   10s
-    wait until element is visible   //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
-    click element  //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+    #wait until element is visible   //div[@class='select-options']//ul//li[5]/a  60s
+    #force click element  //div[@class='select-options']//ul//li[5]/a
+    Select option from Dropdown with Force Click Element    //a[@class='select']   //div[@class='select-options']//ul//li[6]/a[@title='Sales Project']
+    log to console      dropdown selected
     sleep  5s
 
     click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
@@ -2731,6 +2743,19 @@ SalesProjectOppurtunity
     wait until element is visible  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
     click element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..
     capture page screenshot
+    Log to console      enter comments
+    sleep   10s
+    Force click element     //span[text()='Comment']
+    Input Text      //textarea[@class=' textarea']      Test Comments
+    Log to console      save comments
+    sleep   10s
+    Force click element  //button[@class='slds-button slds-button--brand cuf-publisherShareButton MEDIUM uiButton']/span
+    sleep   10s
+    Wait until element is visible   //span[text()='Commit Decision']    60s
+    Force click element  //span[text()='Commit Decision']
+    sleep   15s
+    Wait until element is visible   //button[@title='Next']     30s
+    force click element  //button[@title='Next']
 
 ContractStateMessaging
     log to console    NextButtonOnOrderPage

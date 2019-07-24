@@ -72,7 +72,10 @@ Logout From All Systems and Close Browser
 
 Open Browser And Go To Login Page
     [Arguments]    ${page}=${LOGIN_PAGE}
+    #Create Webdriver  Firefox
+    #Execute Manual Step  Proxy
     Open Browser    ${page}    ${BROWSER}
+    #Go to   ${page}
     Maximize Browser Window
     log to console    browser open
 
