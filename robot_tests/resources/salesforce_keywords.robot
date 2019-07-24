@@ -186,10 +186,28 @@ Change Stage To
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Value For Attribute    Stage    ${stage}
 
 Check For Lightning Force And Switch Back To Sales Console
+
     Sleep    15s
     ${url}=    Get Location
+    Log to console  ${url}
     ${contains}=    Evaluate    'lightning' in '${url}'
-    Run Keyword If    ${contains}    Go To    https://cs80.salesforce.com/console
+    Log to Console  ${contains}
+    Run Keyword If    ${contains}    Switch to Classic
+    Run Keyword Unless  ${contains}     switching to classic app
+
+Switch to Classic
+    ${settings_classic}    set variable    //span[@id='userNavLabel']
+    ${switch_lighting}    Set Variable    //a[@title='Switch to Lightning Experience']
+    ${setting_lighting}    Set Variable    //span[contains(@class,'userProfileCardTriggerRoot')]
+    ${switch_classic}    Set Variable    //a[text()='Switch to Salesforce Classic']
+    ${search_button}    Set Variable    id=phSearchInput
+    Wait Until Element Is Visible    ${setting_lighting}    60s
+    Log to console  Lightning setting found
+    force Click Element    ${setting_lighting}
+    sleep    10s
+    Wait Until Element Is Visible    ${switch_classic}    30s
+    Click Element    ${switch_classic}
+    Wait Until Element Is Visible    ${search_button}    90s
 
 Check For Correct Dashboard Data
     [Arguments]    ${main_dashboard}    ${sales_team_test_name}    ${manager_dashboard}=Operator Sales Manager Dashboard    ${team_dashboard}=My Operator Sales Dashboard    ${team_view_dashboard}=Operator Team View Dashboard
@@ -416,6 +434,7 @@ Close All Specific Tabs
     Should Be Equal As Integers    ${current}    ${0}
 
 Close All Tabs
+    Log to console  7
     ${menu_open}=    Run Keyword And Return Status    Page Should Contain Element    //div[contains(@class,'x-tab-tabmenu-right') and contains(@class,'x-tab-tabmenu-show')]
     Run Keyword Unless    ${menu_open}    Click Element    //div[@class='x-tab-tabmenu-right']
     Click Element    //span[text()='Close all primary tabs']
@@ -1032,12 +1051,13 @@ Login As Digisales Manager And Approve Quote
 
 Login to Salesforce
     [Arguments]    ${username}=${B2B_DIGISALES_USER}    ${password}=${PASSWORD}
+
     Wait Until Page Contains Element    id=username
     Input Text    id=username    ${username}
     Input Password    id=password    ${password}
     Click Element    id=Login
     Check For Lightning Force And Switch Back To Sales Console
-    Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    60s
+    Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    120s
 
 Login to Salesforce And Go To Sales Application
     Login to Salesforce

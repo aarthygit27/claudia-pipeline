@@ -8,7 +8,8 @@ ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 ${bid}  account name
 #Digia Oyj
-${CLASSIC_MENU}    //*[@id="userNav"]
+#${CLASSIC_MENU}    //*[@id="userNav"]
+${CLASSIC_MENU}     //a[@class="switch-to-lightning"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
 ${APP_LAUNCHER}    //button[contains(@class,'salesforceIdentityAppLauncherHeader')]
@@ -18,15 +19,14 @@ ${SALES_APP_HOME}    //a[@title='Home']
 #${SEARCH_SALESFORCE}    //*[@title='Search Salesforce' or @title='Search Opportunities and more']
 ${SEARCH_SALESFORCE}    //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
 ${SEARCH_RESULTS}    //div[contains(@class,'forceSearchScopesList')]//*[text()='Search Results']
-${TABLE_HEADER}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+#${TABLE_HEADER}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 #//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ENTITY_HEADER}    //header[@class='forceHighlightsPanel']
-${OPPORTUNITY_NAME}    TestOpportunity3
-${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a
 ${ACCOUNT_HEADER}    //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}    //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}    //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
-${ACCOUNT_RELATED}    //div[contains(@class,'active')]//span[text()='Related']//parent::a
+${ACCOUNT_RELATED}      //div[contains(@class,'active')]//span[text()='Related']//parent::a
 #${RELATED_OPPORTUNITY}    //*[@class='primaryField']
 ${RELATED_OPPORTUNITY}    //tbody
 ${OPPORTUNITY_PAGE}    //*[contains(@class,'slds-page-header')]
@@ -49,7 +49,8 @@ ${ACCOUNT_NAME_FIELD}    //input[@title='Search Accounts']
 ${MASTER_PHONE_NUM_FIELD}    //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_PRIMARY_EMAIL_FIELD}    //span[contains(text(),'Primary eMail')]/../following-sibling::input[@type='email']
 ${MASTER_EMAIL_FIELD}    //div[@id='email']
-${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
+#${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
+${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
 ${DETAILS_TAB}    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
 ${DEFAULT_EMAIL}    d@email.com
@@ -81,17 +82,22 @@ ${subject_call_type}    //*[@title='${customer_Call}']
 ${Meeting}        Meeting
 ${customer_Call}    Customer Call
 ${meeting_text}    //*[(text()='Meeting')]
-${meeting_select_dropdown}    //div/ul/li[2]/a[(text()='Meeting')]
+#${meeting_select_dropdown}    //div/ul/li[2]/a[(text()='Meeting')]
+${meeting_select_dropdown}      //a[contains(text(),"Meeting")]
 ${reason_select_dropdown}    //*[text()='Reason']/..//following::div/div/div/div/a
 ${reason_select_dropdown_value}    //a[(text()='Solution Design')]
 ${meeting_start_time}    9:00
 ${meeting_end_time}    10:00
-${meeting_start_date_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[1]/label//following-sibling::input
-${meeting_start_time_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[2]/div/label//following-sibling::input
+#${meeting_start_date_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[1]/label//following-sibling::input
+${meeting_start_date_input}    //legend[contains(text(),"Start")]//following::input[@class="slds-input"]
+#${meeting_start_time_input}    //div/div[5]/div[1]/div/div/fieldset/div/div[2]/div/label//following-sibling::input
+${meeting_start_time_input}     //legend[contains(text(),"Start")]//following::input[@class="slds-input slds-combobox__input"]
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[5]/div[1]/div/div/fieldset/div/div[2]/div[1]/input
-${meeting_end_date_input}    //*[text()='End']//following::div/div/label[text()='Date']//following-sibling::input
+#${meeting_end_date_input}    //*[text()='End']//following::div/div/label[text()='Date']//following-sibling::input
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[1]/input
-${meeting_end_time_input}    //*[text()='End']//following::div/div/label[text()='Time']//following-sibling::input
+${meeting_end_date_input}   //*[text()='End']//following::input[@class="slds-input"]
+${meeting_end_time_input}   //*[text()='End']//following::input[@class="slds-input slds-combobox__input"]
+#${meeting_end_time_input}    //*[text()='End']//following::div/div/label[text()='Time']//following-sibling::input
 #//div/div[3]/div/div/div[1]/section/div/section/div/div/section/div[6]/div[1]/div/div/fieldset/div/div[2]/div/input
 ${city_input}     //span[text()='Location']//following::input[@class=' input']
 #//*[@class='label inputLabel uiLabel-left form-element__label uiLabel']//span[text()='Location']//following::input[@class=' input']
@@ -102,7 +108,7 @@ ${start_date_form_span}    //div[@class='slds-form-element slds-form-element_rea
 ${end_date_form_span}    //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='End']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${location_form_span}    //div[@class='slds-form-element slds-form-element_readonly slds-hint-parent']/span[text()='Location']/../div/div[@class='slds-form-element__static slds-truncate']/span
 ${save_button_create}    //div/div[3]/div/div/div[2]/div[2]/button
-${success_message_anchor}    //div[contains(text(),'You have an upcoming Event')]
+${success_message_anchor}     //*[contains(text(),'You have an upcoming event with ')]
 #//*[contains(text(),'You have an upcoming Event with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${meeting_outcome_edit_button}    //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/button
 ${meeting_outcome_select}    //*[text()='Meeting Outcome']/../../div[@class='uiMenu']/div/div/div/a
@@ -122,8 +128,10 @@ ${save_task_button}    //div/div[3]/div/div/div[2]/div[2]/button
 ${suucess_msg_task_anchor}    //div[contains(text(),'You have an upcoming Task with')]
 #//*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${TEST_ACCOUNT_CONTACT}    Aacon Oy
-${contact_name_form}    //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
+${TEST_CONTACT}     Aarsleff Oy
+#${contact_name_form}    //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
 ${related_to}     //span[@class='data-social-photo-guid-0c81cbe7-ad99-4592-a537-f11c4b51aaee photoContainer forceSocialPhoto_v2 forceOutputLookup']/../a[text()]
+${contact_name_form}    //span[@class="title"]//following::div[@class="runtime_sales_activitiesManyWhoName"]
 ${DEFAULT_CITY}    HELSINKI
 #CPQ
 ${CPQ_BUTTON}     //a[@title='CPQ']
@@ -167,15 +175,15 @@ ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
-${PASSWORD-SALESADMIN}    PahaPassu3
-${REMOVE_ACCOUNT}    Gesb Integration
+${PASSWORD-SALESADMIN}    PahaPassu1
+${REMOVE_ACCOUNT}    GESB Integration
 ${ownername}      //div[@class='ownerName']
 ${ACCOUNT_OWNER}    Sales Admin
 ${ACCOUNT_LIST}    //a[@data-refid='recordId']/../../parent::tr
 ${ACCOUNT_NAME}    (//tr//a[@data-refid='recordId'])
 ${ACCOUNTS_LINK}    //div[@class='bBottom']//span[text()='Accounts']
-${CHANGE_OWNER}    //button[@title='Change Owner']
-${SEARCH_PEOPLE}    //input[@title='Search People']
+${CHANGE_OWNER}   //div[@class="slds-form-element__control slds-grid itemBody"]//button[@title='Change Owner']
+${SEARCH_PEOPLE}  //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
 #${OWNER_NAME}    //div[contains(@class,'primaryLabel')]
 ${CHANGE_OWNER_BUTTON}    //div[contains(@class,'forceModalActionContainer')]//button[@title='Change Owner']
 #//button[@title='Cancel']/following-sibling::button
@@ -194,3 +202,37 @@ ${NRC}            35
 ${RC}             50
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
+${360_VIEW}     //a[@title='360 View']
+${AVAILABILITY_CHECK_BUTTON}        //button[text()= 'Availability check']
+${DEFAULT_ADDRESS}      Korpijärventie 3
+${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='${DEFAULT_ADDRESS}']
+${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[6]/td[1]/label/input
+${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']
+${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
+${B2O_DIGISALES_LIGHT_PASSWORD}     PahaPassu1
+${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input
+${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']
+${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
+${OPPORTUNITY_WARNING_BANNER}   //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account does not have an active customership contract, please conclude an agreement with the customer before accepting orders for the Account.']
+${SERVICE_CONTRACT_WARNING}     //div/div/small[text()='Selected Account does not have an active service contract for one or more of the selected offerings, a draft agreement and service contract has been automatically created']
+${STATUS_DRAFT_ELEMENT}     //span[text()='Status']/../../div[2]/span/span[text()='Draft']
+${SALES_TYPE_DROPDOWN}      //table[@class='tg']/tbody//tr[2]/td[8]/select
+${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/option[@value='New Money-New Services']
+${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
+${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
+
+
+### Lead  Variables ###
+
+${lead_account_name}                Academic Work HR Services Oy
+${lead_business_id}                2733621-7
+${lead_email}                       kasibhotla.sreeramachandramurthy@teliacompany.com
+${convert_lead_btn}                 //div[@title='Convert Lead']
+${converting_lead_header}           //div[text()='Converting Lead']
+${lead_name_input}                  //div[@class="slds-text-title_caps"]//following-sibling::input
+${lead_desc_textarea}               //div[@class="slds-text-title_caps"]//following-sibling::textarea
+${lead_close_date}                  //input[@class="field input"]
+${converting_lead_dialogue}          //div[@class="convertSection"][text()='Converting Lead']
+${converting_lead_overlay}           //button[text()='Convert Lead']
+${lead_converted_h4}                //h4[text()='Lead Converted']

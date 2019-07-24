@@ -1,7 +1,7 @@
 *** Settings ***
-Suite Teardown    Close All Browsers    # Suite Setup
+#Suite Teardown    Close All Browsers    # Suite Setup
 Test Setup        Open Browser And Go To Login Page_PO
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ..${/}resources${/}salesforce_keywords.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
 Resource          ..${/}resources${/}uad_keywords.robot
@@ -361,10 +361,11 @@ Telia Crowd Insights
 
 Telia Robotics
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO    POlatest
+    [Tags]    PO2new    PO    POlatest    robotics
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Robotics
     Add Telia Robotics
+    update telia robotics price devpo
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
@@ -377,3 +378,93 @@ Telia Sign
     create order    ${DEVPO_ACCOUNT}
     ${order_id}=    Complete Order
     checking the orchestration plan    ${order_id}
+
+Telia Crowd Insights_sitpo
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
+    Search Products    Telia Crowd Insights
+    Add Telia Crowd Insights    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Telia Sign sitpo
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
+    Search Products    Telia Sign
+    Add Telia Sign    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Telia Robotics sitpo
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    sitpo_classic_Latest    robotics
+    General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
+    Search Products    Telia Robotics
+    Add Telia Robotics    sitpo
+    update telia robotics price sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Telia Multiservice NNI sitpo
+    [Documentation]    Ordering Other Operation and Support Services
+    [Tags]    robotics    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
+    Search Products    Telia Multiservice NNI
+    Adding Product    Telia Multiservice NNI
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Product2:Telia Ethernet Operator Subscription
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
+    Search Products    Telia Ethernet Operator Subscription
+    Adding Product    Telia Ethernet Operator Subscription
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Product3:Ethernet Nordic Network Bridge
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
+    Search Products    Ethernet Nordic Network Bridge
+    Add Ethernet Nordic Network Bridge    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Product4:Ethernet Nordic E-Line EPL
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
+    Search Products    Ethernet Nordic E-Line EPL
+    Add Ethernet Nordic E-Line EPL    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Product5: Ethernet Nordic E-LAN EVP-LAN
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
+    Search Products    Ethernet Nordic E-LAN EVP-LAN
+    Add Ethernet Nordic E-LAN EVP-LAN    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Product6: Ethernet Nordic HUB/E-NNI
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
+    Search Products    Ethernet Nordic HUB/E-NNI
+    Add Ethernet Nordic HUB/E-NNI    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Product7: Telia Ethernet subscription
+    [Tags]    sitpo_classic_Latest
+    General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
+    Search Products    Telia Ethernet Subscription
+    Add Telia Ethernet subscription    sitpo
+    create order sitpo    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+leadfiletest
+    sleep    10s
+    Go To    file:///C:/Users/meb5053/Desktop/LEADenv-webToLead.html
+    sleep    10s
+    Capture Page Screenshot

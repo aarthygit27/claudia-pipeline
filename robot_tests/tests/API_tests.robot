@@ -5,9 +5,6 @@ Library           Collections
 Library           BuiltIn
 Resource          ../resources/API_keywords.robot
 Resource          ../resources/salesforce_keywords.robot
-#Resource          ../tests/product_tests.robot
-#Resource          ../tests/sales_app_light.robot
-Resource          ../resources/API_variables.robot
 Test Timeout      9 minutes
 
 *** Variables ***
@@ -24,10 +21,9 @@ API_credit_scoring
 ULM_Add_User
     [Documentation]    Test create, update ULM endpoint.
     [Tags]    APITests  wip
-    Authenticate To API ULM  ${ULM}
-#    Create New User to Existing Company ULM
-#    Create primary user to a company
-#    Update ULM Request
+    Authenticate To API ULM
+    Create New User to Existing Company ULM
+    Update ULM Request
 
 NGSF_Create_Service_Order
     [Documentation]    Test create NGSF endpoint.
@@ -87,16 +83,5 @@ ECM_Notify_document
     [Documentation]     Test create SAP endpoint.
     [Tags]  APITests
     Authenticate To ECM Notify
-    Notify ECM document
+#    Notify ECM document
 
-Manual_availability
-    [Documentation]     Test search to check manually the avilability of services in the address.
-    [Tags]  APITests
-    Authenticate To Sproject Manual availability
-    Post Sproject Manual availability
-
-Create_Billing_Account
-    [Documentation]     Test search to check manually the avilability of services in the address.
-    [Tags]  APITests
-    Authenticate To create billing account
-    Create Billing account for the business account
