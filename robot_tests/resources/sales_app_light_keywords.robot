@@ -129,10 +129,12 @@ Search Salesforce
 Select Entity
     [Arguments]    ${target_name}    ${type}
     ${element_catenate} =    set variable    [@title='${target_name}']
-    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
-    Sleep    15s
-    Click Element    ${TABLE_HEADER}${element_catenate}
-    #Press key    ${TABLE_HEADER}${element_catenate}    //13
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Select task}    100s
+    Run Keyword If   ${status}   Click Visible Element    ${TABLE_HEADERForEvent}${element_catenate}
+    Run Keyword unless   ${status}    Click Visible Element    ${TABLE_HEADER}${element_catenate}
+    #Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    #Sleep    15s
+    #Click Element    ${TABLE_HEADER}${element_catenate}
     Sleep    15s
     Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
     ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
@@ -1051,17 +1053,23 @@ Change Account Owner
     #sleep    5s
     #Clear Element Text    ${SEARCH_OWNER}
     ${NewOwner}=    set variable if    '${CurrentOwnerName}'== 'Sales Admin'    B2B DigiSales    Sales Admin
-    Input Text    xpath=${SEARCH_OWNER}    ${NewOwner}
-    Sleep    2s
-    Press Enter On    ${SEARCH_OWNER}
-    Sleep    5s
+    Select from Autopopulate List    ${SEARCH_OWNER}     ${NewOwner}
+    #Input Text    xpath=${SEARCH_OWNER}    ${NewOwner}
+    #Sleep    2s
+    #Press Enter On    ${SEARCH_OWNER}
+    #Sleep    5s
     #Wait Until Page Contains element    //a[@title='${NewOwner}']    120s
-    Force click element    //a[text()='${NewOwner}']
+    #Click Visible Element     //a[text()='${NewOwner}']
     #Wait Until Page Contains Element    ${NEW_OWNER_SELECTED}    10s
     #Select option from Dropdown with Force Click Element    ${SEARCH_OWNER}    //*[@title='${NewOwner}']
     Click Visible Element    ${CHANGE_OWNER_BUTTON}
     Sleep    20s
-    ${NEW_OWNER_REFLECTED}=    Get Text    ${OWNER_NAME}
+    : FOR    ${i}    IN RANGE    10
+    \   ${NEW_OWNER_REFLECTED}=    Get Text    ${OWNER_NAME}
+    \   ${status}=    Run Keyword And Return Status    Should Be Equal As Strings  ${NEW_OWNER_REFLECTED}    ${NewOwner}
+    \   Run Keyword If   ${status} == False      reload page
+    \   Wait Until Page Contains Element   ${OWNER_NAME}   120s
+    \   Exit For Loop If    ${status}
     Should Be Equal As Strings    ${NEW_OWNER_REFLECTED}    ${NewOwner}    #${OWNER_OPTIONS}=    Set Variable    (//a[@role='option' and not(contains(., '${CurrentOwnerName}'))])    #${Count}=
     ...    # get element count    ${OWNER_OPTIONS}    #Log To Console    No of options available as new owner:${Count}    #${SELECT_NEW_OWNER}=    catenate
     ...    # ${OWNER_OPTIONS}    [1]    #Run Keyword If    ${Count}!=0    Click Element    ${SELECT_NEW_OWNER}

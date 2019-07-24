@@ -10,7 +10,7 @@ Resource          ..${/}resources${/}common_variables.robot    #Library    libs.
 *** Keywords ***
 Click Visible Element
     [Arguments]    ${locator}
-    Wait Until Element Is Visible    ${locator}    15 s
+    Wait Until Element Is Visible    ${locator}    60s
     Click Element    ${locator}
 
 Create Unique Email

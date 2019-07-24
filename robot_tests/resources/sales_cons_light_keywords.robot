@@ -210,7 +210,7 @@ Close All Tabs
     #Should Be Equal As Integers     ${current}    0
     @{locators}=     Get Webelements    xpath=${TABS_OPENED}//div[contains(@class,'close')]
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}   IN    @{locators}
     \       Run Keyword and Ignore Error    Close Tab
 
 Close Tab
@@ -301,7 +301,7 @@ Click specific element
     [Arguments]     ${element}
     @{locators}=     Get Webelements    xpath=${element}
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}  IN    @{locators}
     Click Element     xpath=${element}
 
 Go to Contacts

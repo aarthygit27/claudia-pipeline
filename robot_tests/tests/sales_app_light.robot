@@ -92,7 +92,7 @@ Check Attributes/Contact Person are named right
 
 Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
-    [Tags]    BQA-7948    Lightning
+    [Tags]    TestRun   BQA-7948    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -101,11 +101,11 @@ Lightning: Create Meeting from Account
 
 Lightning: Create Call from Account
     [Documentation]    To create call for a account
-    [Tags]    BQA-8085    Lightning
+    [Tags]   TestRun   BQA-8085    Lightning
     Go To Salesforce and Login into Lightning
-    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
-    Go to Entity    ${TEST_ACCOUNT_CONTACT}
+    Go to Entity    ${TEST_CONTACT}
     Create a Call
 
 Lightning: Create Task from Account
@@ -143,7 +143,7 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8525    Lightning
+    [Tags]       TestRun    BQA-8525    Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
@@ -151,7 +151,7 @@ Lightning: Sales admin Change Account owner
 
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8526    Lightning
+    [Tags]   TestRun   BQA-8526    Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
