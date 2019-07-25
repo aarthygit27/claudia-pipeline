@@ -2352,6 +2352,7 @@ Validate that account owner can not be added to account team
 Add new team member
     [Documentation]     Add new team member to account
     [Arguments]     ${new_team_member}      ${role}=--None--
+    sleep   10s
     Wait until page contains element    //ul/li/a[@title='New']     30s
     Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']
@@ -2413,7 +2414,15 @@ Open change owner view and fill the form
     Input text      //input[@title='Search People']     ${username}
     Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
     Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
-    sleep   40s 
+    sleep   40s
+
+Navigate to Account History
+    ScrollUntillFound  //a/span[text()='Account History']
+    Click element   //a/span[text()='Account History']
+
+Validate that Account history contains record
+    [Arguments]     ${user}
+    Wait until page contains element    //table/tbody/tr[1]/td[5]//span[text()='${user}']
 
 Enter Random Data to Lead Web Form
     [Arguments]  ${fname}  ${lname}  ${email}  ${mobile}  ${title}  ${desc}

@@ -684,7 +684,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]  Summer-Test     BQA-5729
+    [Tags]  Summer-Test     BQA-5729    Lightning
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that 
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
@@ -700,6 +700,27 @@ Add several team members to business account team
     Try to add same team member twice   GESB Integration
     Validate that same user can not be added twice to account team
     Delete team member from account
+
+Group: Account team member is added as group owner
+    [Documentation]     Account team member is added as group owner. History is checked and it should contain record about changing the owner.
+    ...     Check that new owner is removed from the account team.
+    [Tags]      Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    Go to Entity  Digita
+    Navigate to Account team members page
+    Add new team member     Sales Admin
+    Validate that team member is created succesfully  Sales,Admin
+    Go to Entity  Digita
+    Change account owner to     Sales Admin
+    Validate that account owner was changed successfully  Sales Admin
+    Navigate to Account team members page
+    Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
+    Go to Entity  Digita
+    Navigate to Account History
+    Validate that Account history contains record   Sales Admin
+    Go to Entity  Digita
+    Change account owner to  B2Blightning DigiSales
+    Validate that account owner was changed successfully  B2Blightning DigiSales
 
 Lead_Creation
     [Tags]  SreeramE2E       Lightning
