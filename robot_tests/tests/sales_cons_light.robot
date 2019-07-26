@@ -22,7 +22,7 @@ Lightning: Add new contact - Master
     Create New Master Contact and Validate
 
 Lightning: Add new contact - Non Person
-    [Tags]   TestRun   BQA-8263    Lightning
+    [Tags]    BQA-8263    Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New NP Contact and Validate

@@ -341,7 +341,7 @@ Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
     Press Enter On   ${field}
-    Click Visible Element   //div[contains(@class,'primaryLabel') and @title='${value}']
+    Click Visible Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
     Sleep    2s
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
     #Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      60s

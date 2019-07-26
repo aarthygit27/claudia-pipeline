@@ -18,11 +18,11 @@ ${SALES_APP_HOME}    //a[@title='Home']
 #${SEARCH_SALESFORCE}    //*[@title='Search Salesforce' or @title='Search Opportunities and more']
 ${SEARCH_SALESFORCE}    //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
 ${SEARCH_RESULTS}    //div[contains(@class,'forceSearchScopesList')]//*[text()='Search Results']
-${TABLE_HEADER}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${TABLE_HEADERForEvent}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 #//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ENTITY_HEADER}    //header[@class='forceHighlightsPanel']
 ${Select task}       //*[@title="Start Date & Time"]
-${TABLE_HEADERForEvent}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a
+${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a
 ${ACCOUNT_HEADER}    //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}    //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}    //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button

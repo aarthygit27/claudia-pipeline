@@ -129,12 +129,13 @@ Search Salesforce
 Select Entity
     [Arguments]    ${target_name}    ${type}
     ${element_catenate} =    set variable    [@title='${target_name}']
-    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Select task}    100s
-    Run Keyword If   ${status}   Click Visible Element    ${TABLE_HEADERForEvent}${element_catenate}
-    Run Keyword unless   ${status}    Click Visible Element    ${TABLE_HEADER}${element_catenate}
-    #Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
     #Sleep    15s
-    #Click Element    ${TABLE_HEADER}${element_catenate}
+    #${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Select task}    100s
+    #Run Keyword If   ${status}   Click Visible Element    ${TABLE_HEADERForEvent}${element_catenate}
+    #Run Keyword unless   ${status}    Click Visible Element    ${TABLE_HEADER}${element_catenate}
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    Sleep    15s
+    Click Element    ${TABLE_HEADER}${element_catenate}
     Sleep    15s
     Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
     ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
@@ -221,8 +222,8 @@ ScrollUntillFound
     : FOR    ${i}    IN RANGE    9999
     \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
     \    Sleep    5s
-    \    Exit For Loop If    ${status}
     \    Execute JavaScript    window.scrollTo(0,${i}*200)
+    \    Exit For Loop If    ${status}
 
 Verify That Opportunity Is Saved And Data Is Correct
     [Arguments]    ${element}    ${account_name}=${LIGHTNING_TEST_ACCOUNT}
@@ -637,7 +638,7 @@ Create Unique Task Subject
 click Meeting Link on Page
     click Element    ${NEW_EVENT_LABEL}
     #Sleep    10s
-    Wait Until Page Contains element    xpath=${SUBJECT_INPUT}    40s
+    Wait Until Page Contains element    xpath=${SUBJECT_INPUT}    100s
 
 Enter Mandatory Info on Meeting Form
     [Arguments]    ${task_subject}
