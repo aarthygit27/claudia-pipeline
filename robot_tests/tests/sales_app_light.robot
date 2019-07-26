@@ -713,7 +713,7 @@ create a b2b direct order
     getMultibellaCaseGUIID   ${order_no}
 
 Add Oppo Team Member and Edit the Oppo with New Team Member
-    [Tags]  SreeramE2E       Lightning
+    [Tags]  SreeramE2E       Lightning      TestRun
     [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B
                     ...     and try modifying the oppo with newly added team member
     login to salesforce as digisales lightning user vlocupgsandbox
@@ -731,7 +731,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
-    Edit Opportunity values     B2B  B2B
+    Edit Opportunity values     Price List  B2B
     #changethepricelist  B2B  B2B
     wait until page contains element  //li[text()='insufficient access rights on object id']   30s
     page should contain element  //li[text()='insufficient access rights on object id']
@@ -749,7 +749,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
     #changethepricelist  B2B  GTM
-    Edit Opportunity values     B2B  B2B
+    Edit Opportunity values     Price List  B2B
 
 
 AddProducrViaSVEandCPQFlow
