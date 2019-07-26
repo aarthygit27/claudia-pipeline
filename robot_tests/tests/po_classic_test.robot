@@ -440,7 +440,7 @@ Product4:Ethernet Nordic E-Line EPL
     view orchestration plan sitpo
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
-    [Tags]    sitpo_classic_Latest
+    [Tags]    sitpo_classic_TestRun
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic E-LAN EVP-LAN
     Add Ethernet Nordic E-LAN EVP-LAN    sitpo
@@ -456,7 +456,7 @@ Product6: Ethernet Nordic HUB/E-NNI
     view orchestration plan sitpo
 
 Product7: Telia Ethernet subscription
-    [Tags]    sitpo_classic_Latest
+    [Tags]    sitpo_classic_TestRun
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Subscription
     Add Telia Ethernet subscription    sitpo
