@@ -487,14 +487,7 @@ Edit Opportunity
     [Arguments]    ${opportunity}
     Go to Entity    ${opportunity}
 
-Scroll Page To Element
-    [Arguments]    ${element}
-    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
-    : FOR    ${i}    IN RANGE    99
-    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-    \    Execute JavaScript    window.scrollTo(0,100)
-    \    Sleep    5s
-    \    Exit For Loop If    ${status}
+
 
 Select option from Dropdown
     [Arguments]    ${list}    ${item}
@@ -1417,21 +1410,66 @@ getOrderStatusAfterSubmitting
 
 SearchAndSelectBillingAccount
     execute javascript    window.location.reload(true)
-    sleep    60s
+    sleep    30s
     log to console    SearchAndSelectBillingAccount
     #Selecting the billingAC FLow chart page
     #log to console    entering billingAC page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element    //*[@id="ExtractAccount"]    30s
+    wait until element is visible    //*[@id="ExtractAccount"]    30s
     click element    //*[@id="ExtractAccount"]
-    wait until page contains element    //label[normalize-space(.)='Select Account']    30s
-    wait until page contains element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
-    click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    wait until element is visible    //label[normalize-space(.)='Select Account']    30s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until element is visible    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    force click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     sleep    2s
     click element    //*[@id="SearchAccount_nextBtn"]
     log to console    Exiting billingAC page
     unselect frame
     sleep    30s
+
+
+select order contacts- HDC
+    [Arguments]    ${d}= ${contact_technical}
+    #${contact_search_title}=    Set Variable    //h3[text()='Contact Search']
+    ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
+    ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
+    ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+    #Wait Until Element Is Visible    ${contact_search_title}    120s
+    #Reload page
+    #sleep   15s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Technical COntact page
+    Wait Until Element Is Visible    ${contact_search}    120s
+    Input Text    ${contact_search}   ${d}
+    sleep    15s
+    Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    sleep   10s
+    Wait until element is visible  //input[@id='OCEmail']   30s
+    Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
+    #Wait until element is visible    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
+    #Click Element    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
+    Sleep    5s
+    Execute JavaScript    window.scrollTo(0,200)
+    Wait Until element is visible   ${Technical_contact_search}     30s
+    Input text   ${Technical_contact_search}  ${d}
+    sleep  10s
+    Wait until element is visible   css=.typeahead .ng-binding  30s
+    Click element   css=.typeahead .ng-binding
+    sleep  10s
+    Wait until element is visible  //input[@id='TCEmail']   30s
+    Input Text   //input[@id='TCEmail']   primaryemail@noemail.com
+    Execute JavaScript    window.scrollTo(0,200)
+    #Wait until element is visible       xpath=//ng-form[@id='TechnicalContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
+    #click element   xpath=//ng-form[@id='TechnicalContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
+    sleep  10s
+    #${order_name}    set variable    //input[@id='OrderContactDetailsTypeAhead']
+    #${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${order_name}    5s
+    #run keyword if    ${status} == True    update order details
+    Click Element    ${contact_next_button}
+    unselect frame
+    sleep   10s
 
 SelectingTechnicalContact
     [Arguments]    ${d}= ${contact_technical}
@@ -1462,6 +1500,7 @@ RequestActionDate
     ${date_requested}=    Get Current Date    result_format=%m-%d-%Y
     #log to console    ${d}
     input text    //*[@id="RequestedActionDate"]    ${date_requested}
+    sleep  10s
     click element    //*[@id="Additional data_nextBtn"]
     unselect frame
     log to console    Exiting    Requested Action Date page
@@ -1472,12 +1511,22 @@ SelectOwnerAccountInfo
     log to console    Select Owner Account FLow Chart Page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     log to console    entering Owner Account page
-    wait until page contains element    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
-    click element    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
-    click element    //*[@id="BuyerIsPayer"]//following-sibling::span
+    Scroll Page To Element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    Log to console      Selecting Billing account
+    sleep   10s
+    force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep  10s
+    unselect frame
+    Scroll Page To Element       //*[@id="BuyerIsPayer"]//following-sibling::span
+    sleep  10s
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is visible    //*[@id="BuyerIsPayer"]//following-sibling::span
+    Log to console   Click BIP
+    force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
     click element    //*[@id="SelectedBuyerAccount_nextBtn"]
     unselect frame
-    log to console    Exiting    owner Account page
+    log to console    Exiting owner Account page
     sleep    30s
 
 ReviewPage
@@ -1485,7 +1534,7 @@ ReviewPage
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     log to console    entering Review page
     wait until page contains element    //*[@id="SubmitInstruction"]/div/p/h3/strong[contains(text(),'successfully')]    30s
-    click element    //*[@id="DecomposeOrder"]
+    click element    //span[text()='Yes']
     unselect frame
     log to console    Exiting Review page
     sleep    30s
@@ -1592,15 +1641,20 @@ search products
     sleep    10s
     input text    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    ${product}
 
+
 Adding Telia Colocation
-    [Arguments]    ${product}
-    ##enter searcing product and click on add to cart and click on next button
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element    xpath=//p[normalize-space(.) = '${product}']/../../../div[@class='slds-tile__detail']/div/div/button    60s    #xpath=//p[normalize-space(.) = '${product}']/../../../div[@class='slds-tile__detail']/div/div/button
-    sleep    10s
-    click element    xpath=//p[normalize-space(.) = '${product}']/../../../div[@class='slds-tile__detail']/div/div/button
-    Capture Page Screenshot
+    [Arguments]   ${pname}=${product_name}
+    Log to console      adding product
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
+    input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
+    wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
+    sleep   5s
+    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     unselect frame
+    #wait until page contains element  //div[@class='cpq-item-product']/div[@class='cpq-item-base-product']//following::div[@class='cpq-item-no-children']/span[normalize-space(.)='${pname}']   60s
+
 
 Adding Telia Taloushallinto XXL-paketti
     ${productid}=    Set Variable    01u58000005pgbPAAQ
@@ -2900,8 +2954,9 @@ ChangeOrderReviewPage
     log to console    Exiting Review page
 
 
+
 ValidateTheOrchestrationPlan
-    ${order_number}   get text  //span[text()='Order']//following::div[@class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle"]/span[@data-aura-class="uiOutputText"]
+    ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
     log to console  ${order_number}.this is order numner
     scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     #execute javascript    window.scrollTo(0,2000)
@@ -2912,11 +2967,11 @@ ValidateTheOrchestrationPlan
     sleep    10s
     select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
     sleep    20s
-    page should contain element    //a[text()='Start']
-    page should contain element    //a[text()='Assetize Order']
-    page should contain element    //a[text()='Deliver Service']
-    page should contain element    //a[text()='Order Events Update']
-    page should contain element    //a[text()='Activate Billing']
+    Element should be visible    //a[text()='Start']
+    Element should be visible    //a[text()='Assetize Order']
+    Element should be visible    //a[text()='Deliver Service']
+    Element should be visible    //a[text()='Order Events Update']
+    Element should be visible   //a[text()='Activate Billing']
     #go back
     sleep   3s
     #click element  //th/div[@data-aura-class="forceOutputLookupWithPreview"]/a[@data-special-link="true" and text()='Telia Colocation']

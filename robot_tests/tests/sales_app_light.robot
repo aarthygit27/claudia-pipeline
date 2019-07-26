@@ -230,7 +230,7 @@ Lightning: Sales admin Change Account owner for group account
     #click element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
     #sleep    20s
 
-Create HDC Order
+Create HDC Order -old
     [Tags]    BQA-HDCOrder    Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #go to entity    319021811502
@@ -276,8 +276,41 @@ Create HDC Order
     ReviewPage
     ValidateTheOrchestrationPlan
 
+Create HDC Order
+
+    [Tags]    BQA-HDCOrder    Lightning     TestRun
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    Edit Opportunity values    Price List      B2B
+    #ChangeThePriceBookToHDC    HDC Pricebook B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    View Open Quote
+    #sleep    40s
+    ClickonCreateOrderButton
+    OpenOrderPage
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount
+    select order contacts- HDC  ${contact_name}
+     #SelectingTechnicalContact    ${contact_name}
+
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    #${billing_acc_name}
+    ReviewPage
+    ValidateTheOrchestrationPlan
+
 Create B2B Order
-    [Tags]    BQA-B2BOrder    TestRun
+    [Tags]    BQA-B2BOrder
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -698,7 +731,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
-    changethepricelist  B2B  B2B
+    Edit Opportunity values     B2B  B2B
+    #changethepricelist  B2B  B2B
     wait until page contains element  //li[text()='insufficient access rights on object id']   30s
     page should contain element  //li[text()='insufficient access rights on object id']
     click element  //span[text()='Cancel']/..
@@ -714,7 +748,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
-    changethepricelist  B2B  GTM
+    #changethepricelist  B2B  GTM
+    Edit Opportunity values     B2B  B2B
 
 
 AddProducrViaSVEandCPQFlow
@@ -866,7 +901,7 @@ CreateB2BHDCGTMOrder
 
 createSalesProjectOppo
 
-    [Tags]  TestRun       Lightning
+    [Tags]         Lightning
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
