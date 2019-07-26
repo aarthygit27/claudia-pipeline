@@ -975,7 +975,12 @@ Check original account owner and change if necessary
 Validate that account owner was changed successfully
     [Documentation]     Validates that account owner change was successfull. Takes the name of the new owner as parameter.
     [Arguments]     ${validated_owner}
-    ${new_owner}=    Get Text    //div[@class='ownerName']//a
+    Compare owner names  ${validated_owner}
+
+Compare owner names
+    [Arguments]     ${validated_owner}
+    Wait until page contains element   //div[@class='ownerName']//a    30s
+    ${new_owner}=       Get Text    //div[@class='ownerName']//a
     log to console      ${new_owner}
     Should Be Equal As Strings    ${validated_owner}    ${new_owner}
 
@@ -2343,6 +2348,7 @@ Navigate to related tab
 
 Add account owner to account team
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
+    Navigate to Account team members page
     Add new team member  ${account_owner}
 
 Validate that account owner can not be added to account team

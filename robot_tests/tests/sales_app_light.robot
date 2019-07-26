@@ -656,6 +656,17 @@ Group: Delete team member
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
+Negative: Try to add same team member twice to account team
+    [Documentation]     Expected result: It's not possible to add same team member twice to business account's account team.
+    [Tags]  Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to related tab
+    Navigate to Account team members page
+    Try to add same team member twice  B2Blightning DigiSales
+    Validate that same user can not be added twice to account team
+    Delete team member from account
+
 Negative: Check external data is not editable when creating new contact
     [Tags]      Summer-Test     noticket    Lightning
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
