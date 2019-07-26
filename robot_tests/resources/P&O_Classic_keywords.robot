@@ -1147,7 +1147,7 @@ create order sitpo
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
     click element    ${CREATE_ORDER}
     sleep    10s
-    Wait Until Element is Visible    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button
+    Wait Until Element is Visible    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button    60s
     Click element    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button
     #Edit_Details
     Wait Until Element Is Visible    ${cart_next_button}    120s
@@ -1313,7 +1313,7 @@ update_setting2
     Capture Page Screenshot
 
 update_setting_Ethernet Nordic E-LAN EVP-LAN
-    ${ Network bridge }    set variable    //input[@class='slds-input ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched']
+    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5']
     Wait Until Element Is Visible    ${ Network bridge }    60s
     Press Key    ${ Network bridge }    This is a test opportunity
     helinsiki_address
