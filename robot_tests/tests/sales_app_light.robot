@@ -512,10 +512,10 @@ Automatic availability check B2O-Account
     ClickingOnCPQ
     Check the CPQ-cart contains the wanted products     MetroEthernet Kapasiteetti
 
-#Delete all contracts from account
+# Delete all contracts from account
 #    [Tags]  Lightning
 #    [Documentation]     Delete all service contracts from account related tab
-#    Go To Salesforce and Login into Lightning User
+#    Go To Salesforce and Login into Admin User
 #    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
 #    Delete all existing contracts from Accounts Related tab
 
@@ -732,6 +732,17 @@ Group: Account team member is added as group owner
     Go to Entity  Digita
     Change account owner to  B2Blightning DigiSales
     Validate that account owner was changed successfully  B2Blightning DigiSales
+
+Negative: Try to change account owner different from the group account owner
+    [Documentation]     Log in as sales admin and find Business account from group hierarchy. Try to change the Business Account owner different from
+    ...     the group account owner. This should not be possible.
+    [Tags]  Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    ${group_account_owner}=    Set variable     Maris Steinbergs
+    Go to Entity  YIT Oyj
+    Compare owner names  ${group_account_owner}
+    Change account owner to  Sales Admin
+    Validate that account owner cannot be different from the group account owner
 
 Lead_Creation
     [Tags]  SreeramE2E       Lightning

@@ -2422,6 +2422,10 @@ Open change owner view and fill the form
     Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
     sleep   40s
 
+Validate that account owner cannot be different from the group account owner
+    Wait until page contains element    //span[text()='Owner ID: Account Owner cannot be different from the Group Account owner']   30s
+    Click element   //button[@title='Cancel']
+
 Navigate to Account History
     ScrollUntillFound  //a/span[text()='Account History']
     Click element   //a/span[text()='Account History']
