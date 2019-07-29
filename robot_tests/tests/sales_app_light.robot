@@ -10,7 +10,7 @@ Resource          ../resources/multibella_keywords.robot
 *** Test Cases ***
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details.
-    [Tags]    BQA-8396    Lightning
+    [Tags]    BQA-8396    Lightning  commit_check
     Go To Salesforce and Login into Lightning
     Create New Master Contact
     Validate Master Contact Details
@@ -33,7 +33,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
     ...    and then in My all open Opportunities section.
-    [Tags]    BQA-8393    Lightning
+    [Tags]    BQA-8393    Lightning     commit_check
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -253,7 +253,7 @@ Create HDC Order -old
 
 Create HDC Order
 
-    [Tags]    BQA-HDCOrder    Lightning     TestRun
+    [Tags]    BQA-HDCOrder    Lightning     commit_check
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -285,7 +285,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder
+    [Tags]    BQA-B2BOrder  commit_check
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -795,7 +795,7 @@ create a b2b direct order
     getMultibellaCaseGUIID    ${order_no}
 
 Add Oppo Team Member and Edit the Oppo with New Team Member
-    [Tags]  SreeramE2E       Lightning      TestRun
+    [Tags]  SreeramE2E       Lightning      commit_check
     [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B
                     ...     and try modifying the oppo with newly added team member
     login to salesforce as digisales lightning user vlocupgsandbox
@@ -835,7 +835,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]  SreeramE2E
+    [Tags]  SreeramE2E  commit_check
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -882,7 +882,7 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]  SreeramE2E       Lightning
+    [Tags]  SreeramE2E       Lightning  commit_check
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     swithchtouser  B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -983,7 +983,7 @@ CreateB2BHDCGTMOrder
 
 createSalesProjectOppo
 
-    [Tags]         Lightning
+    [Tags]         Lightning    commit_check
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
