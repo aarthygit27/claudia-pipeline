@@ -351,7 +351,7 @@ window sizing
 
 Telia Crowd Insights
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO    POlatest    crowd
+    [Tags]    PO2new    PO    devpo&failedsitpo    crowd
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Crowd Insights
     Add Telia Crowd Insights
@@ -361,7 +361,7 @@ Telia Crowd Insights
 
 Telia Robotics
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    PO2new    PO    POlatest    robotics
+    [Tags]    PO2new    PO    devpo&failedsitpo    robotics
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Robotics
     Add Telia Robotics
@@ -371,7 +371,7 @@ Telia Robotics
     checking the orchestration plan    ${order_id}
 
 Telia Sign
-    [Tags]    PO2new    PO    POlatest
+    [Tags]    PO2new    PO    devpo&failedsitpo
     General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Sign
     Add Telia Sign
@@ -456,7 +456,7 @@ Product6: Ethernet Nordic HUB/E-NNI
     view orchestration plan sitpo
 
 Product7: Telia Ethernet subscription
-    [Tags]    sitpo_classic_TestRun
+    [Tags]    sitpo_classic_TestRun     devpo&failedsitpo
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Subscription
     Add Telia Ethernet subscription    sitpo
