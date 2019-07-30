@@ -1,7 +1,7 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    release
+${ENVIRONMENT}    devbase
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
@@ -56,7 +56,7 @@ ${DEFAULT_EMAIL}    d@email.com
 #${MASTER_MOBILE_NUM}    +358999888001
 #${MASTER_FIRST_NAME}    SATEST
 #${MASTER_LAST_NAME}    SACONTACT
-${MASTER_ACCOUNT_NAME}    Aktia Fondbolag Ab
+${MASTER_ACCOUNT_NAME}    Admisol Oy
 ${MASTER_PHONE_NUM}    +358968372101
 ${MASTER_EMAIL}    saemail@telia.com
 ${NP_EMAIL_FIELD}    //input[@type='email']
@@ -174,7 +174,7 @@ ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
-${PASSWORD-SALESADMIN}    PahaPassu1
+${PASSWORD-SALESADMIN}    PahaPassu2
 ${REMOVE_ACCOUNT}    GESB Integration
 ${ownername}      //div[@class='ownerName']
 ${ACCOUNT_OWNER}    Sales Admin
@@ -191,7 +191,7 @@ ${SEARCH_OWNER}    //input[@title='Search People']
 ${OWNER_NAME}     //div[@class='ownerName']//a
 ${NEW_OWNER_SELECTED}    //span[@class='pillText']
 ${CLOSE_NOTIFICATION}    //button[@title='Dismiss notification']
-${SALES_ADMIN_USER_RELEASE}    saleadm@teliacompany.com.release
+${SALES_ADMIN_USER_RELEASE}    saleadm@teliacompany.com.devbase
 #### SVE,B2B,B2,HDC Orders
 ${r}              b2b
 ${p}              b2o
@@ -208,7 +208,7 @@ ${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scop
 ${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[6]/td[1]/label/input
 ${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']
 ${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
-${B2O_DIGISALES_LIGHT_PASSWORD}     PahaPassu1
+${B2O_DIGISALES_LIGHT_PASSWORD}     PahaPassu2
 ${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input
 ${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']
 ${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
