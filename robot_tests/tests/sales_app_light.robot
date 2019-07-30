@@ -10,21 +10,21 @@ Resource          ../resources/multibella_keywords.robot
 *** Test Cases ***
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details.
-    [Tags]    BQA-8396    Lightning  commit_check
+    [Tags]    BQA-8396    Lightning  Sanity
     Go To Salesforce and Login into Lightning
     Create New Master Contact
     Validate Master Contact Details
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395    Lightning
+    [Tags]    BQA-8395    Lightning        Sanity
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact Details
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
-    [Tags]    BQA-8394    Lightning
+    [Tags]    BQA-8394    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
@@ -33,7 +33,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
     ...    and then in My all open Opportunities section.
-    [Tags]    BQA-8393    Lightning     commit_check
+    [Tags]    BQA-8393    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -43,7 +43,7 @@ Create opportunity from Account
 Negative - Validate Opportunity cannot be created for Passive account
     [Documentation]    Select the Passive account and validate that the Opportunity creation
     ...    throws an error
-    [Tags]    BQA-8457    Lightning
+    [Tags]    BQA-8457    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer    PASSIVEACCOUNT
@@ -51,7 +51,7 @@ Negative - Validate Opportunity cannot be created for Passive account
 Negative - Validate Opportunity cannot be created for Group account
     [Documentation]    Select the Group account and validate that the new opportunity button
     ...    is not displayed
-    [Tags]    BQA-8464    Lightning
+    [Tags]    BQA-8464    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created    GROUPACCOUNT
@@ -59,7 +59,7 @@ Negative - Validate Opportunity cannot be created for Group account
 Closing active opportunity as cancelled
     [Documentation]    Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8465    Lightning
+    [Tags]    BQA-8465    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -68,7 +68,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8466    Lightning
+    [Tags]    BQA-8466    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -76,14 +76,14 @@ Closing active opportunity as lost
 
 Check Attributes/Business Account are named right in Sales Force UI
     [Documentation]    To Verify the Business Account Attributes Are Named Right
-    [Tags]    BQA-8484    Lightning
+    [Tags]    BQA-8484    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    Lightning
+    [Tags]    BQA-8483    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
@@ -92,7 +92,7 @@ Check Attributes/Contact Person are named right
 
 Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
-    [Tags]    BQA-7948    Lightning
+    [Tags]    BQA-7948    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -101,7 +101,7 @@ Lightning: Create Meeting from Account
 
 Lightning: Create Call from Account
     [Documentation]    To create call for a account
-    [Tags]    BQA-8085    Lightning
+    [Tags]    BQA-8085    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -110,7 +110,7 @@ Lightning: Create Call from Account
 
 Lightning: Create Task from Account
     [Documentation]    To create task for a account
-    [Tags]    BQA-8463    Lightning
+    [Tags]    BQA-8463    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create New Contact for Account
@@ -125,7 +125,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523    Lightning    Summer-Test
+    [Tags]    BQA-8523    Lightning    Summer-Test      Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -134,7 +134,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    Lightning    Summer-Test
+    [Tags]    BQA-8524    Lightning    Summer-Test      Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Remove change account owner
@@ -143,7 +143,7 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8525    Lightning
+    [Tags]    BQA-8525    Lightning     Sanity
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
@@ -151,7 +151,7 @@ Lightning: Sales admin Change Account owner
 
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8526    Lightning
+    [Tags]    BQA-8526    Lightning     Sanity
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     getBusinessID   Aacon Oy
@@ -253,7 +253,7 @@ Create HDC Order -old
 
 Create HDC Order
 
-    [Tags]    BQA-HDCOrder    Lightning     commit_check
+    [Tags]    BQA-HDCOrder    Lightning     Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -285,7 +285,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder  commit_check
+    [Tags]    BQA-B2BOrder  Sanity
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -325,7 +325,7 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-B2OOrder    Lightning
+    [Tags]    BQA-B2OOrder    Lightning     Sanity
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -354,7 +354,7 @@ Create B2O Order
     getOrderStatusAfterSubmitting
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    Lightning
+    [Tags]    BQA-8798    Lightning     Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -409,7 +409,7 @@ Closing Opportunity as Won with FYR greater than 100KEUR
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    Lightning
+    [Tags]    BQA-9121    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
@@ -440,7 +440,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9122    Lightning
+    [Tags]    BQA-9122    Lightning         Sanity
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
@@ -472,7 +472,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
-    [Tags]    BQA-8560    Lightning
+    [Tags]    BQA-8560    Lightning         Sanity
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
     Go To Salesforce and Login into Lightning
     #Go To Entity    ${TEST_ACCOUNT_CONTACT}
@@ -526,7 +526,7 @@ Contract activation
     Update Contact and Pricelist in Opportunity    B2B
 
 Automatic availability check B2B-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test
+    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -536,7 +536,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products    Telia Yritysinternet Plus
 
 Automatic availability check B2O-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test
+    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
     Go To Salesforce and Login into Lightning    DigiSales B2O User
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -555,7 +555,7 @@ Automatic availability check B2O-Account
 
 Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
-    [Tags]    Lightning1    BQA-10334    Lightning    Summer-Test
+    [Tags]    Lightning1    BQA-10334    Lightning    Summer-Test       Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all existing contracts from Accounts Related tab
@@ -571,7 +571,7 @@ Check banner for customership and service contract
 
 Create contact relationship for account
     [Documentation]    Add new relationship for contact and check that account are displayed correctly on contact page.
-    [Tags]    Lightning    BQA-10523    Summer-Test
+    [Tags]    Lightning    BQA-10523    Summer-Test     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Contact for Account
@@ -581,14 +581,14 @@ Create contact relationship for account
 
 Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
-    [Tags]    Lightning    BQA-10736    Summer-Test
+    [Tags]    Lightning    BQA-10736    Summer-Test     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to    B2Blightning DigiSales
 
 Add an account team member as account owner
     [Documentation]    Adds some user as a team member to business account
-    [Tags]    Lightning    BQA-10524    Summer-Test
+    [Tags]    Lightning    BQA-10524    Summer-Test     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -598,7 +598,7 @@ Add an account team member as account owner
 
 Edit team member's role as account owner
     [Documentation]    Log in as B2B-sales user and edit team member's role when you are the owner of the account.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]    Summer-Test    noticket    Lightning      Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -608,7 +608,7 @@ Edit team member's role as account owner
 
 Delete team member as account owner
     [Documentation]    Log in as B2B-sales user and remove team member when you are the owner of the account.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]    Summer-Test    noticket    Lightning      Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -618,7 +618,7 @@ Delete team member as account owner
 
 Add an account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then add some user as a team member for business account
-    [Tags]    Summer-Test    BQA-10727    Lightning
+    [Tags]    Summer-Test    BQA-10727    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -628,7 +628,7 @@ Add an account team member as Sales Admin
 
 Edit team member's role as Sales Admin
     [Documentation]    Log in as Sales Admin and then edit existing team member's role for business account
-    [Tags]    Summer-Test    BQA-10728    Lightning
+    [Tags]    Summer-Test    BQA-10728    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -638,7 +638,7 @@ Edit team member's role as Sales Admin
 
 Delete account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then delete team member from business account
-    [Tags]    Summer-Test    BQA-10740    Lightning
+    [Tags]    Summer-Test    BQA-10740    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -648,7 +648,7 @@ Delete account team member as Sales Admin
 
 Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
-    [Tags]    Summer-Test    BQA-10737    Lightning
+    [Tags]    Summer-Test    BQA-10737    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Navigate to Account team members page
@@ -657,7 +657,7 @@ Add an account team member to Group
 
 Negative: Try to add account owner to Account team
     [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
-    [Tags]      Summer-Test     Lightning
+    [Tags]      Summer-Test     Lightning       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Aacon Oy
     Navigate to related tab
@@ -666,7 +666,7 @@ Negative: Try to add account owner to Account team
 
 Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
-    [Tags]      Summer-Test     Lightning
+    [Tags]      Summer-Test     Lightning       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Add account owner to account team
@@ -674,7 +674,7 @@ Negative: Try to add group owner to group's account team
 
 Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
-    [Tags]    Summer-Test    BQA-10738    Lightning
+    [Tags]    Summer-Test    BQA-10738    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Navigate to Account team members page
@@ -683,7 +683,7 @@ Group: Edit team member's role
 
 Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
-    [Tags]    Summer-Test    BQA-10739    Lightning
+    [Tags]    Summer-Test    BQA-10739    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Navigate to Account team members page
@@ -692,7 +692,7 @@ Group: Delete team member
 
 Negative: Check external data is not editable when creating new contact
     [Documentation]    Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]    Summer-Test    noticket    Lightning      Sanity
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Navigate to create new contact
@@ -701,7 +701,7 @@ Negative: Check external data is not editable when creating new contact
 
 Negative: Check external data is not editable with existing contact
     [Documentation]    Search contact with external data. Click edit and chect that external data fields are read-only.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]    Summer-Test    noticket    Lightning      Sanity
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
     Open edit contact form
@@ -710,7 +710,7 @@ Negative: Check external data is not editable with existing contact
 
 Negative: Check external data is not editable from account contact relationship view
     [Documentation]    Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]    Summer-Test    noticket    Lightning      Sanity
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
     Navigate to related tab
@@ -718,7 +718,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]  Summer-Test     BQA-5729
+    [Tags]  Summer-Test     BQA-5729        Sanity
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
@@ -775,7 +775,7 @@ Lead_Creation
     page should contain element    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
 
 create a b2b direct order
-    [Tags]    SreeramE2E    Lightning
+    [Tags]    SreeramE2E    Lightning       Sanity
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    Ylöjärven Yrityspalvelu Oy
@@ -795,7 +795,7 @@ create a b2b direct order
     getMultibellaCaseGUIID    ${order_no}
 
 Add Oppo Team Member and Edit the Oppo with New Team Member
-    [Tags]  SreeramE2E       Lightning      commit_check
+    [Tags]  SreeramE2E       Lightning      Sanity
     [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B
                     ...     and try modifying the oppo with newly added team member
     login to salesforce as digisales lightning user vlocupgsandbox
@@ -835,7 +835,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]  SreeramE2E  commit_check
+    [Tags]  SreeramE2E          Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -982,8 +982,7 @@ CreateB2BHDCGTMOrder
     #${fyr}  run keyword  addProductsViaSVE         ${product_name}
 
 createSalesProjectOppo
-
-    [Tags]         Lightning    commit_check
+    [Tags]         Lightning    Sanity
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
@@ -1013,127 +1012,127 @@ createSalesProjectOppo
 
 
 
-#createSalesProjectOppo
-
-    [Tags]  SreeramE2E       Lightning
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  B2B DigiSales
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
-    sleep   10s
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
-    Go To Entity     ${oppo_name}
-#reload page
-    sleep  2s
-    ${case_number}=  run keyword      createACaseFromMore  ${oppo_name}  B2B Sales Expert Request
-    #createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
-    log to console   ${case_number}.this is created case
-    logoutAsUser  B2B DigiSales
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  Anna Vierinen
-    openquotefromopporelated  ${oppo_name}  ${case_number}
-    #go to entity  ${case_number}
-    sleep  15s
-    click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
-    wait until element is visible  //a[@class='select' and text()='New']   30
-    click element  //a[@class='select' and text()='New']
-    sleep  3s
-    #//a[text()='New']//ancestor::div[@data-aura-class='uiMenu']
-    click element  //a[@title="In Case Assessment"]
-    ${date}  get date from future  7
-    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
-    force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
-    Scroll Page To Location    0    1400
-##scroll element into view  //Span[text()='Support Case Cycle Time']
-##//a[@class='select' and text()='--None--']
-    wait until element is visible   //a[@class='select' and text()='--None--']
-    force click element  //a[@class='select' and text()='--None--']
-    click element  //a[@title='Sales Project']
-    click element  //button[@title='Save']/span
-    Log to console      Case Saved
-    Scroll Page To Location    0    0
-    wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
-    force click element  //span[text()='Assign Support Resource' and @class='title']
-    wait until page contains element  //span[text()='Assigned Resource']  30s
-    input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
-    sleep  10s
-    click element  //div[@title="B2B DigiSales"]
-    wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
-    click element  //a[@class='select' and text()='Solution Design']
-    sleep   10s
-    wait until element is visible   //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
-    click element  //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
-
-    sleep  5s
-    #click element  //a[@title="Sales Project"]
-    click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
-    #sleep   40s
-    #scrolluntillfound   //span[text()="Save"][1]/../..
-    #sleep   2s
-    scroll page to location  0  200
-    wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
-    wait until element is visible  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
-    click element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..
-    capture page screenshot
-    #go to entity   Oppo_ 20190427-010703
-    #${case_number}=  run keyword  createACaseFromOppoRelated  Oppo_ 20190427-010703  B2B Sales Expert Request
-    #log to console   ${case_number}.this is created case
-    #wait until page contains element  //span[text()='Commit Decision' and @class='title']   20s
-    #click element  //span[text()='Commit Decision' and @class='title']
-    #wait until page contains element  //div[text()='You are about to commit the case assessment decision and reassign the case to the designated case lead. Are you sure?']    20s
-    #click element  //span[text()='Next']/..
-    #sleep  5s
-    go to entity    ${oppo_name}
-    #sleep  10s
-    #scrolluntillfound  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
-    page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
-
-    #click on more actions
-    #wait until page contains element  //a[contains(@title, 'more actions')][1]
-    #//a[contains(@title, 'more actions')]/..   30s
-    #force click element  //a[contains(@title, 'more actions')][1]
-    #wait until page contains element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..   10s
-    #page should contain element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..
-    #force click element   //a[@title="B2B Sales Expert Request"]/div
-    #wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
-    #${case_number}=    Generate Random String    7    [NUMBERS]
-    #input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
-    #${date}=    Get Date From Future    7
-    #input text   //span[text()='Offer Date']/../following::div[@class='form-element']/input   ${date}
-    #scroll element into view  //span[text()='Type of Support Requested']/../following::textarea
-    #input text  //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
-    #scroll element into view  //span[text()='Sales Project']/../following::input[1]
-    #click element  //span[text()='Sales Project']/../following::input[1]
-    #click element  //span[text()='Save']/..
-    #capture page screenshot
+##createSalesProjectOppo
+#
+#    [Tags]  SreeramE2E       Lightning
+#    login to salesforce as digisales lightning user vlocupgsandbox
+#    swithchtouser  B2B DigiSales
+#    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+#    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+#    log to console    ${contact_name}.this is name
+#    sleep   10s
+#    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+#    Go To Entity     ${oppo_name}
+##reload page
+#    sleep  2s
+#    ${case_number}=  run keyword      createACaseFromMore  ${oppo_name}  B2B Sales Expert Request
+#    #createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
+#    log to console   ${case_number}.this is created case
+#    logoutAsUser  B2B DigiSales
+#    login to salesforce as digisales lightning user vlocupgsandbox
+#    swithchtouser  Anna Vierinen
+#    openquotefromopporelated  ${oppo_name}  ${case_number}
+#    #go to entity  ${case_number}
+#    sleep  15s
+#    click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
+#    wait until element is visible  //a[@class='select' and text()='New']   30
+#    click element  //a[@class='select' and text()='New']
+#    sleep  3s
+#    #//a[text()='New']//ancestor::div[@data-aura-class='uiMenu']
+#    click element  //a[@title="In Case Assessment"]
+#    ${date}  get date from future  7
+#    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
+#    force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
+#    Scroll Page To Location    0    1400
+###scroll element into view  //Span[text()='Support Case Cycle Time']
+###//a[@class='select' and text()='--None--']
+#    wait until element is visible   //a[@class='select' and text()='--None--']
+#    force click element  //a[@class='select' and text()='--None--']
+#    click element  //a[@title='Sales Project']
+#    click element  //button[@title='Save']/span
+#    Log to console      Case Saved
+#    Scroll Page To Location    0    0
+#    wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
+#    force click element  //span[text()='Assign Support Resource' and @class='title']
+#    wait until page contains element  //span[text()='Assigned Resource']  30s
+#    input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
+#    sleep  10s
+#    click element  //div[@title="B2B DigiSales"]
+#    wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
+#    click element  //a[@class='select' and text()='Solution Design']
+#    sleep   10s
+#    wait until element is visible   //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+#    click element  //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+#
+#    sleep  5s
+#    #click element  //a[@title="Sales Project"]
+#    click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
+#    #sleep   40s
+#    #scrolluntillfound   //span[text()="Save"][1]/../..
+#    #sleep   2s
+#    scroll page to location  0  200
+#    wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+#    wait until element is visible  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+#    click element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..
+#    capture page screenshot
+#    #go to entity   Oppo_ 20190427-010703
+#    #${case_number}=  run keyword  createACaseFromOppoRelated  Oppo_ 20190427-010703  B2B Sales Expert Request
+#    #log to console   ${case_number}.this is created case
+#    #wait until page contains element  //span[text()='Commit Decision' and @class='title']   20s
+#    #click element  //span[text()='Commit Decision' and @class='title']
+#    #wait until page contains element  //div[text()='You are about to commit the case assessment decision and reassign the case to the designated case lead. Are you sure?']    20s
+#    #click element  //span[text()='Next']/..
+#    #sleep  5s
+#    go to entity    ${oppo_name}
+#    #sleep  10s
+#    #scrolluntillfound  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+#    page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+#
+#    #click on more actions
+#    #wait until page contains element  //a[contains(@title, 'more actions')][1]
+#    #//a[contains(@title, 'more actions')]/..   30s
+#    #force click element  //a[contains(@title, 'more actions')][1]
+#    #wait until page contains element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..   10s
+#    #page should contain element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..
+#    #force click element   //a[@title="B2B Sales Expert Request"]/div
+#    #wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
+#    #${case_number}=    Generate Random String    7    [NUMBERS]
+#    #input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
+#    #${date}=    Get Date From Future    7
+#    #input text   //span[text()='Offer Date']/../following::div[@class='form-element']/input   ${date}
+#    #scroll element into view  //span[text()='Type of Support Requested']/../following::textarea
+#    #input text  //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
+#    #scroll element into view  //span[text()='Sales Project']/../following::input[1]
+#    #click element  //span[text()='Sales Project']/../following::input[1]
+#    #click element  //span[text()='Save']/..
+#    #capture page screenshot
 
 
 
 #Create B2B Order
-    [Tags]  SreeramE2E       Lightning
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    SwithchToUser  B2B DigiSales
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
-    sleep   10s
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
-    go to entity   ${oppo_name}
-    ClickingOnCPQ  ${oppo_name}
-    AddProductToCart   Fiksunetti
-    Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Fiksunetti
-    OpenQuoteButtonPage
-    ClickonCreateOrderButton
-    ContractStateMessaging
-    NextButtonOnOrderPage
-    OrderNextStepsPage
-    getOrderStatusBeforeSubmitting
-    sleep  60s
-    clickOnSubmitOrder
-    ${order_no}  run keyword  getOrderStatusAfterSubmitting
-    go to entity   ${order_no}
-    getMultibellaCaseGUIID   ${order_no}
+#    [Tags]  SreeramE2E       Lightning
+#    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+#    SwithchToUser  B2B DigiSales
+#    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+#    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+#    log to console    ${contact_name}.this is name
+#    sleep   10s
+#    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+#    go to entity   ${oppo_name}
+#    ClickingOnCPQ  ${oppo_name}
+#    AddProductToCart   Fiksunetti
+#    Run Keyword If    '${r}'== 'b2b'    run keyword    UpdateAndAddSalesType    Fiksunetti
+#    OpenQuoteButtonPage
+#    ClickonCreateOrderButton
+#    ContractStateMessaging
+#    NextButtonOnOrderPage
+#    OrderNextStepsPage
+#    getOrderStatusBeforeSubmitting
+#    sleep  60s
+#    clickOnSubmitOrder
+#    ${order_no}  run keyword  getOrderStatusAfterSubmitting
+#    go to entity   ${order_no}
+#    getMultibellaCaseGUIID   ${order_no}
 
 #######please donot panic with Portal test cases #######
 
