@@ -558,7 +558,7 @@ Add an account team member as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
@@ -568,7 +568,7 @@ Edit team member's role as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -578,7 +578,7 @@ Delete team member as account owner
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
@@ -588,7 +588,7 @@ Add an account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
@@ -598,7 +598,7 @@ Edit team member's role as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -608,7 +608,7 @@ Delete account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
@@ -617,7 +617,7 @@ Add an account team member to Group
     [Documentation]     Log in as Sales Admin and add team member to concern/group
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
@@ -643,7 +643,7 @@ Group: Edit team member's role
     [Documentation]     Log in as Sales Admin. Go to group and edit existing team member's role.
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -652,7 +652,7 @@ Group: Delete team member
     [Documentation]     Log in as Sales Admin. Go to group and delete existing team member.
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
@@ -662,7 +662,7 @@ Negative: Try to add same team member twice to account team
     Go To Salesforce and Login into Admin User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Try to add same team member twice  B2Blightning DigiSales
     Validate that same user can not be added twice to account team
     Delete team member from account
@@ -701,7 +701,7 @@ Add several team members to business account team
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita Oy
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member  Sales Admin    Account Manager
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Add new team member  B2O NetworkSales   Account Manager
@@ -718,13 +718,13 @@ Group: Account team member is added as group owner
     [Tags]      Summer-Test     Lightning
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully  Sales,Admin
     Go to Entity  Digita
     Change account owner to     Sales Admin
     Validate that account owner was changed successfully  Sales Admin
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
     Go to Entity  Digita
     Navigate to Account History
@@ -743,6 +743,36 @@ Negative: Try to change account owner different from the group account owner
     Compare owner names  ${group_account_owner}
     Change account owner to  Sales Admin
     Validate that account owner cannot be different from the group account owner
+
+Mobile coverage request redirects to Tellu
+    [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
+    [Tags]  Summer-Test     Lightning
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    Wait element to load and click  //a[@title='Mobile Coverage Request']
+    Validate that Tellu login page opens
+
+Manual availability check redirects to Tellu
+    [Documentation]     Check that manual availability check button from the opportunity page redirects to Tellu-system login.
+    [Tags]  Summer-Test     Lightning
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    Wait element to load and click  //a[@title='Manual Availability Check']
+    Validate that Tellu login page opens
+
+Investment redirects to Tellu
+    [Documentation]     In opportunity view clicking investment button redirects to Tellu-system login
+    [Tags]      Summer-Test     Lightning
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    Wait element to load and click  //a[@title='Investment']
+    Validate that Tellu login page opens
 
 Lead_Creation
     [Tags]  SreeramE2E       Lightning

@@ -211,6 +211,7 @@ ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/optio
 ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
 ${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
+${test_opportunity}     //table/tbody/tr/td/span/span[text()='Analyse Prospect']/../../../th/span/a[contains(text(), TestOpportunity)]
 
 
 ### Lead  Variables ###

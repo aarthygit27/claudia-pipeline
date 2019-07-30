@@ -2365,7 +2365,7 @@ Add new team member
     Input text  //input[@title='Search People']     ${new_team_member}
     Wait element to load and click  //a[@role='option']/div/div[@title='${new_team_member}']
     Wait element to load and click  //a[text()='--None--']
-    Wait element to load and click  //ul/li/a[text()='${role}']
+    Click element  //ul/li/a[@title='${role}']
     Click element   //button[@title='Save']
     sleep   10s
 
@@ -2374,9 +2374,10 @@ Validate that team member is created succesfully
     Wait until page contains element   //table/tbody/tr/th/span/span[text()='${name}']     30s
     Wait until page contains element    //table/tbody/tr/th/span/span[text()='${name}']/../../../td[2]/span/span[text()='${role}']
 
-Navigate to Account team members page
-    ScrollUntillFound  //span[text()='Account Team Members']
-    Click element   //span[text()='Account Team Members']
+Navigate to view
+    [Arguments]     ${title}
+    ScrollUntillFound  //span[text()='${title}']
+    Click element   //span[text()='${title}']
 
 Try to add same team member twice
     [Documentation]     Tries to add same user twice as a team member for business account.
@@ -2433,6 +2434,13 @@ Navigate to Account History
 Validate that Account history contains record
     [Arguments]     ${user}
     Wait until page contains element    //table/tbody/tr[1]/td[5]//span[text()='${user}']
+
+Validate that Tellu login page opens
+    [Documentation]     Validate that Tellu login page opens in new window.
+    sleep   10s
+    Select Window   NEW
+    Title should be     Teamworks Process Server Console
+    Wait until page contains element    //form[@name='login']       30s
 
 Enter Random Data to Lead Web Form
     [Arguments]  ${fname}  ${lname}  ${email}  ${mobile}  ${title}  ${desc}
