@@ -1907,19 +1907,21 @@ updating settings Telia Viestintäpalvelu VIP (24 kk)
     Click Element    ${Next_Button}
 
 Reporting Products
-    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${next_button}=    Set Variable    //div[@class='vlc-cancel pull-left col-md-1 col-xs-12 ng-scope']//following::div[1]/button[1]
+    Reload Page
+    sleep  20s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Log To Console    Reporting Products
     Run Keyword If    ${status} == False    execute javascript    browser.runtime.reload()
     #Run Keyword If    ${status} == False    Reload Page
     execute javascript    window.stop();
-    #sleep    20s
+    sleep    20s
     #Wait Until Element Is Visible    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    Force click element    ${next_button}
     Wait Until Element Is Visible    ${next_button}    60s
-    click element    ${next_button}
+    Force click element    ${next_button}
+    #click element    ${next_button}
     unselect frame
 
 Closing Opportunity as Won with FYR
@@ -1927,10 +1929,15 @@ Closing Opportunity as Won with FYR
     ${FYR}=    set variable    //span[@title='FYR Total']/../div
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact_name}.this is name
+    sleep    10s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    ${oppo_name}    set variable    Test Robot Order_ 20190429-143334
+    #${oppo_name}    set variable    Test Robot Order_ 20190730-114111
+    Log to console    ${oppo_name}
     Go To Entity    ${oppo_name}
-    ClickingOnCPQ
+    ClickingOnCPQ   ${oppo_name}
     searching and adding Telia Viestintäpalvelu VIP (24 kk)    Telia Viestintäpalvelu VIP (24 kk)
     updating settings Telia Viestintäpalvelu VIP (24 kk)
     #search products    Telia Taloushallinto XXL-paketti
