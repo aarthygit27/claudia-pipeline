@@ -2348,7 +2348,7 @@ Navigate to related tab
 
 Add account owner to account team
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member  ${account_owner}
 
 Validate that account owner can not be added to account team
