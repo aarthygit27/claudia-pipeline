@@ -76,14 +76,14 @@ Closing active opportunity as lost
 
 Check Attributes/Business Account are named right in Sales Force UI
     [Documentation]    To Verify the Business Account Attributes Are Named Right
-    [Tags]    BQA-8484    Lightning     Sanity
+    [Tags]    BQA-8484    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    Lightning     Sanity
+    [Tags]    BQA-8483    Lightning
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
@@ -252,7 +252,6 @@ Create HDC Order -old
     ValidateTheOrchestrationPlan
 
 Create HDC Order
-
     [Tags]    BQA-HDCOrder    Lightning     Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -285,7 +284,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder  Sanity
+    [Tags]    BQA-B2BOrder      Sanity
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -529,7 +528,7 @@ Contract activation
     Update Contact and Pricelist in Opportunity    B2B
 
 Automatic availability check B2B-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
+    [Tags]    BQA-10225    Lightning    Summer-Test
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -539,7 +538,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products    Telia Yritysinternet Plus
 
 Automatic availability check B2O-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
+    [Tags]    BQA-10225    Lightning    Summer-Test
     Go To Salesforce and Login into Lightning    DigiSales B2O User
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -885,7 +884,7 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]  SreeramE2E       Lightning  TestCheck
+    [Tags]  SreeramE2E       Lightning      TestCheck
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     swithchtouser  B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
