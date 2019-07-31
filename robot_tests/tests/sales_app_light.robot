@@ -369,7 +369,7 @@ createAOppoViaSVE
     validateCreatedOppoForFYR    ${fyr}
 
 Closing Opportunity as Won with FYR below 3 KEUR
-    [Tags]    BQA-8794    Lightning
+    [Tags]    BQA-8794    Lightning  TestCheck
     Closing Opportunity as Won with FYR    8    No
     #${FYR}=    set variable    //span[@title='FYR Total']/../div
     #Go To Salesforce and Login into Lightning
@@ -392,20 +392,23 @@ Closing Opportunity as Won with FYR below 3 KEUR
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     [Tags]    BQA-8795    Lightning
-    ${Edit_continuation}=    Set Variable    //button[@title='Edit Create Continuation Sales Opportunity?']
-    Closing Opportunity as Won with FYR    200    Yes
+    ${Edit_continuation}=    Set Variable    //span[text()='Edit Create Continuation Sales Opportunity?']
+    #Closing Opportunity as Won with FYR    200    Yes
+    Execute Manual step     edit
     sleep    10s
-    Execute Javascript    window.scrollTo(0,125)
+    scroll page to element   ${Edit_continuation}
+    sleep  10s
     Click Element    ${Edit_continuation}
-    Execute Javascript    window.scrollTo(0,125)
+    #Execute Javascript    window.scrollTo(0,125)
     sleep    3s
-    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
+    select option from dropdown  (//a[contains(text(),'--None--')])[6]
+    #Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
     click element    //span[contains(text(),'Save')]
     sleep    5s
     Capture Page Screenshot
 
 Closing Opportunity as Won with FYR greater than 100KEUR
-    [Tags]    BQA-8796    Lightning
+    [Tags]    BQA-8796    Lightning    TestCheck
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
@@ -882,7 +885,7 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]  SreeramE2E       Lightning  commit_check
+    [Tags]  SreeramE2E       Lightning  TestCheck
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     swithchtouser  B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
