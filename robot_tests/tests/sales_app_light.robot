@@ -746,12 +746,15 @@ Negative: Try to change account owner different from the group account owner
 
 Mobile coverage request redirects to Tellu
     [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
-    [Tags]  Summer-Test     Lightning
+    [Tags]  Summer-Test1     Lightning
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
-    Wait element to load and click  //a[@title='Mobile Coverage Request']
+    ${status}=  Run keyword and return status    Wait element to load and click  //a[@title='Mobile Coverage Request']
+    Run keyword if      ${status} == False    Force click element  //a[@title='Show 9 more actions']
+    Run keyword if      ${status} == False    Click element   //a[@title='Mobile Coverage Request']
+    Sleep   10s
     Validate that Tellu login page opens
 
 Manual availability check redirects to Tellu
