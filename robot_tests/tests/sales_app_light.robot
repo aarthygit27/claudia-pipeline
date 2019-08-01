@@ -391,19 +391,16 @@ Closing Opportunity as Won with FYR below 3 KEUR
     #Log to console    The FYR value is ${FYR_value}
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
-    [Tags]    BQA-8795    Lightning
-    ${Edit_continuation}=    Set Variable    //span[text()='Edit Create Continuation Sales Opportunity?']
-    #Closing Opportunity as Won with FYR    200    Yes
-    Execute Manual step     edit
+    [Tags]    BQA-8795    Lightning     TestCheck
+    ${Edit_continuation}=    Set Variable    //div[@class='slds-form-element slds-form-element_readonly slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element']/div/button[@title='Edit Create Continuation Sales Opportunity?']
+    Closing Opportunity as Won with FYR    200    Yes
     sleep    10s
-    scroll page to element   ${Edit_continuation}
-    sleep  10s
-    Click Element    ${Edit_continuation}
-    #Execute Javascript    window.scrollTo(0,125)
-    sleep    3s
-    select option from dropdown  (//a[contains(text(),'--None--')])[6]
+    Execute Javascript    window.scrollTo(0,600)
+    Click element   ${Edit_continuation}
+    Select option from Dropdown with Force Click Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    //div[@class='select-options']/ul/li//a[@title='--None--']
+    sleep  5s
     #Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
-    click element    //span[contains(text(),'Save')]
+    click element    //div[@class='footer active']//div[@class='actionsContainer']/button[@title='Save']/span
     sleep    5s
     Capture Page Screenshot
 

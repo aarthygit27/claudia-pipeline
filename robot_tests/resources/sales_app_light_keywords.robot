@@ -1744,8 +1744,7 @@ CreateABillingAccount
     [Return]    Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
 
 Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    [Arguments]    ${username}=mmw9007@teliacompany.com.release    ${password}=Sriram@234    #${B2B_DIGISALES_LIGHT_USER}
-    #${Password_merge}
+    [Arguments]        ${username}= ${B2B_DIGISALES_LIGHT_USER}   ${password}= ${Password_merge}  #${username}=mmw9007@teliacompany.com.release    #${password}=Sriram@234
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce as DigiSales Admin User Release
