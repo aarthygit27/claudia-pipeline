@@ -2439,6 +2439,7 @@ Validate that Tellu login page opens
     [Documentation]     Validate that Tellu login page opens in new window.
     sleep   10s
     Select Window   NEW
+    Maximize browser window
     Title should be     Teamworks Process Server Console
     Wait until page contains element    //form[@name='login']       30s
 
