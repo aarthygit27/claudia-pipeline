@@ -1,7 +1,7 @@
 *** Settings ***
-Suite Teardown    Close All Browsers    #Close All Browsers | # Suite Setup
+#Suite Teardown    Close All Browsers    # Suite Setup
 Test Setup        Open Browser And Go To Login Page_PO
-Test Teardown     Logout From All Systems and Close Browser    # Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ..${/}resources${/}salesforce_keywords.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
 Resource          ..${/}resources${/}uad_keywords.robot
@@ -448,7 +448,7 @@ Product5: Ethernet Nordic E-LAN EVP-LAN
     view orchestration plan sitpo
 
 Product6: Ethernet Nordic HUB/E-NNI
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_Latest
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic HUB/E-NNI
     Add Ethernet Nordic HUB/E-NNI    sitpo
@@ -456,7 +456,7 @@ Product6: Ethernet Nordic HUB/E-NNI
     view orchestration plan sitpo
 
 Product7: Telia Ethernet subscription
-    [Tags]    sitpo_classic2
+    [Tags]    sitpo_classic_TestRun     devpo&failedsitpo
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Subscription
     Add Telia Ethernet subscription    sitpo
