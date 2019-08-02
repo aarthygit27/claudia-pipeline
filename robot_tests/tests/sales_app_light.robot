@@ -550,11 +550,12 @@ Change business account owner
     [Documentation]     Change owner of the Business account to B2BDigisales Lightning user
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Change account owner to     B2Blightning DigiSales
+    Change account owner to     B2B Lightning
+    Validate that account owner was changed successfully    B2B Lightning
 
 Add an account team member as account owner
     [Tags]  Lightning     BQA-10524     Summer-Test
-    [Documentation]     Adds some user as a team member to business account
+    [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -663,7 +664,7 @@ Negative: Try to add same team member twice to account team
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab
     Navigate to view    Account Team Members
-    Try to add same team member twice  B2Blightning DigiSales
+    Try to add same team member twice  B2B Lightning
     Validate that same user can not be added twice to account team
     Delete team member from account
 
@@ -730,8 +731,8 @@ Group: Account team member is added as group owner
     Navigate to Account History
     Validate that Account history contains record   Sales Admin
     Go to Entity  Digita
-    Change account owner to  B2Blightning DigiSales
-    Validate that account owner was changed successfully  B2Blightning DigiSales
+    Change account owner to  B2B Lightning
+    Validate that account owner was changed successfully  B2B Lightning
 
 Negative: Try to change account owner different from the group account owner
     [Documentation]     Log in as sales admin and find Business account from group hierarchy. Try to change the Business Account owner different from

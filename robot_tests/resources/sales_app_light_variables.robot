@@ -165,7 +165,7 @@ ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
-${PASSWORD-SALESADMIN}    PahaPassu1
+${PASSWORD-SALESADMIN}    PahaPassu2
 ${REMOVE_ACCOUNT}    GESB Integration
 ${ownername}      //div[@class='ownerName']
 ${ACCOUNT_OWNER}    Sales Admin
