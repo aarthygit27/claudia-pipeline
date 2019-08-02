@@ -210,7 +210,7 @@ Close All Tabs
     #Should Be Equal As Integers     ${current}    0
     @{locators}=     Get Webelements    xpath=${TABS_OPENED}//div[contains(@class,'close')]
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}   IN    @{locators}
     \       Run Keyword and Ignore Error    Close Tab
 
 Close Tab
@@ -301,7 +301,7 @@ Click specific element
     [Arguments]     ${element}
     @{locators}=     Get Webelements    xpath=${element}
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}  IN    @{locators}
     Click Element     xpath=${element}
 
 Go to Contacts
@@ -331,6 +331,7 @@ Create New Master Contact and Validate
     Input Text           ${FIRST_NAME_FIELD}         ${CONTACT_FIRST_NAME}
     Input Text           ${LAST_NAME_FIELD}          ${CONTACT_LAST_NAME}
     Select from Autopopulate List       ${ACCOUNT_NAME}         ${CONTACT_ACCOUNTNAME}
+    sleep  10s
     Input Text              xpath=${PRIMARY_EMAIL}          ${CONTACT_PRIMARY_EMAIL}
     Click Element                           ${SAVE_BUTTON}
     Sleep       10s
@@ -339,9 +340,12 @@ Create New Master Contact and Validate
 Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
+    Press Enter On   ${field}
+    Click Visible Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
+    Sleep    2s
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
-    Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      240s
-    Click Element                   //div[contains(@class,'primaryLabel') and @title='${value}']
+    #Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      60s
+    #Click Element                   //div[contains(@class,'primaryLabel') and @title='${value}']
 
 
 Validate Contact Details
@@ -376,7 +380,8 @@ Create New NP Contact and Validate
     Input Text                              ${FIRST_NAME_FIELD}       ${NP_CONTACT_FIRSTNAME}
     Input Text                              ${LAST_NAME_FIELD}        ${NP_CONTACT_LASTNAME}
     Select from Autopopulate List           ${ACCOUNT_NAME}           ${NP_CONTACT_ACCOUNTNAME}
-    Input Text                              xpath=${PRIMARY_EMAIL}    ${NP_CONTACT_EMAIL}
+    Input Text                              ${PRIMARY_EMAIL}          ${NP_CONTACT_EMAIL}
+    sleep  10s
     Click Element                           ${SAVE_BUTTON}
     Sleep                                   10s
     Validate NP Contact Details             ${CONTACT_DETAILS}
