@@ -335,10 +335,10 @@ Update_settings
     ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
     sleep    10s
     Capture Page Screenshot
-    sleep    10s
-    Wait Until Element Is Visible    ${Hinnoitteluperuste}    30s
-    click element    ${Hinnoitteluperuste}
-    click element    ${Hinnoitteluperuste}/option[contains(text(),'${option}')]
+    Wait until element is visible   ${Hinnoitteluperuste}  60s
+    ${status}=     Run Keyword and Return status  Element should be enabled  ${Hinnoitteluperuste}
+    Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}
+    Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}/option[contains(text(),'${option}')]
     sleep   5s
     click element    ${Henkilötyöaika}
     input text    ${Henkilötyöaika}    10
@@ -853,6 +853,8 @@ select order contacts
     Page should contain element    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
     Click Element    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
     Sleep    10s
+    Wait until element is visible  //input[@id='OCEmail']   30s
+    Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
     #${order_name}    set variable    //input[@id='OrderContactDetailsTypeAhead']
     #${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${order_name}    5s
     #run keyword if    ${status} == True    update order details
@@ -1394,15 +1396,21 @@ create order sitpo
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
     sleep    10s
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${sales_type}    10s
-    Run Keyword If    ${status} == True    Select From List By Value    ${sales_type}    New Money-New Services
+
+    ${Count}=  GetElement Count    //select[@ng-model='p.SalesType']
+    Log to console      No of products is ${count}
+    Run Keyword IF  ${Count} != 1   Select From List By Value    (//select[@ng-model='p.SalesType'])[1]    New Money-New Services
+    Run Keyword IF  ${Count} != 1     Select From List By Value    (//select[@ng-model='p.SalesType'])[2]    New Money-New Services
+    ...     ELSE    Select From List By Value    ${sales_type}    New Money-New Services
+
+
     Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
     Credit score validation
     View Open Quote
-    Wait Until Element Is Enabled    ${CPQ_BUTTON}    120s
-    click button    ${CPQ_BUTTON}
+    Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
+    click button    //td[@id='topButtonRow']//input[@title='CPQ']
     Log To Console    create order
     sleep    10s
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
@@ -1431,15 +1439,18 @@ create order sitpo - Professional Products
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
     sleep    10s
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${sales_type}    10s
-    Run Keyword If    ${status} == True    Select From List By Value    ${sales_type}    New Money-New Services
+    ${Count}=  GetElement Count    //select[@ng-model='p.SalesType']
+    Log to console      No of products is ${count}
+    Run Keyword IF  ${Count} != 1   Select From List By Value    (//select[@ng-model='p.SalesType'])[1]    New Money-New Services
+    Run Keyword IF  ${Count} != 1     Select From List By Value    (//select[@ng-model='p.SalesType'])[2]    New Money-New Services
+    ...     ELSE    Select From List By Value    ${sales_type}    New Money-New Services
     Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
     Credit score validation
     View Open Quote
-    Wait Until Element Is Enabled    ${CPQ_BUTTON}    120s
-    click button    ${CPQ_BUTTON}
+    Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
+    click button    //td[@id='topButtonRow']//input[@title='CPQ']
     Log To Console    create order
     sleep    10s
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
