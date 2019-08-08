@@ -2440,6 +2440,7 @@ Validate that Tellu login page opens
     sleep   10s
     Select Window   NEW
     Maximize browser window
+    Execute Javascript    window.location.reload(false);
     # Title should be     Teamworks Process Server Console
     Wait until page contains element    //form[@name='login']       30s
 
