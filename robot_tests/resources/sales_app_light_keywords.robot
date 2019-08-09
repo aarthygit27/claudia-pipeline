@@ -1187,7 +1187,7 @@ CreateAOppoFromAccount_HDC
 
 Edit Opportunity values
     [Arguments]    ${field}      ${value}
-    ${fieldProperty}=    Set Variable        //button[@title='Edit ${field}']
+    ${fieldProperty}=    Set Variable        //div[@class='slds-form-element slds-form-element_readonly slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element']//following::button[@title='Edit ${field}']
     ${price_list_old}=     get text        //span[text()='Price List']//following::a
     Log to console          ${price_list_old}
     ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]

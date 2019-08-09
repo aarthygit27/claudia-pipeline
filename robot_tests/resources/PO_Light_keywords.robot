@@ -9,14 +9,15 @@ General Setup
     [Arguments]    ${price_list}
     Go To Salesforce and Login into Lightning    sitpo admin
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    ${oppo_name}    set variable    Test Robot Order_ 20190516-070324
-    sleep    5s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Testing Chetan
+    #${oppo_name}    set variable    Test Robot Order_ 20190809-150440
+    #sleep    5s
     Go To Entity    ${oppo_name}
     sleep    5s
-    updating close date
-    Change Price list    ${price_list}
-    ClickingOnCPQ
+    #updating close date
+    Edit Opportunity values     Price List  B2B
+    ClickingOnCPQ   ${oppo_name}
+    sleep  15s
 
 Login to Salesforce as sitpo admin
     Login To Salesforce Lightning    ${SALES_ADMIN_SITPO}    ${PASSWORD_SALESADMIN_SITPO}
@@ -125,21 +126,305 @@ update_setting1
     click element    ${closing}
 
 Searching and adding product
-    [Arguments]    ${products}
-    ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
-    ${next_button}    set variable    //span[contains(text(),'Next')]
-    ${prod}    Create List    ${products}
-    Log To Console    Searching and adding product
-    Log To Console    product name ${products}
-    search products    ${products}
-    Adding Products    ${products}
-    Wait Until Element Is Enabled    ${iframe}    60s
-    select frame    ${iframe}
-    Scroll Page To Location    0    100
-    #Click Element    ${next_button}
-    #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
-    #Run Keyword If    ${status} == True    click element    ${next_button}
-    Unselect Frame
+    [Arguments]   ${pname}=${product_name}
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
+    input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
+    wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
+    sleep   5s
+    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    sleep  15s
+    Click Settings
+    Unselect frame
+    sleep  20s
+
+Search and add product
+
+   [Documentation]  Search and add products without clickings etting button
+   [Arguments]   ${pname}=${product_name}
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
+    input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
+    wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
+    sleep   5s
+    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    sleep  15s
+    Click Settings
+    Unselect frame
+    sleep  20s
+
+
+Add Avainasiakaspalvelukeskus
+
+    [Documentation]    This is to add Avainasiakaspalvelukeskus to cart
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product}=  set variable   //div[contains(text(),'Avainasiakaspalvelukeskus')]//following::button[1]
+    sleep  10s
+    click button  ${product}
+    sleep   10s
+    Unselect frame
+
+
+Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
+
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep   15s
+    Click Button    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[1]
+    Unselect frame
+
+Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
+
+    [Documentation]    This is to add Avainasiakaspalvelukeskus lisätyöt kertapalvelu to cart and click grand child settings button
+
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
+    sleep    15s
+    click button    ${product_id}
+    sleep  15s
+    Click Button  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
+    Unselect frame
+
+Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep    15s
+    click button    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[1]
+    Unselect frame
+
+Add Hallinta ja Tuki
+
+    [Documentation]    This is to add Hallinta ja Tuki to cart
+    ${product}=  set variable   //div[contains(text(),'Hallinta ja Tuki')]//following::button[1]
+    sleep  10s
+    click button  ${product}
+    sleep   10s
+
+Add Hallinta ja Tuki jatkuva palvelu
+    [Documentation]    This is to add Hallinta ja Tuki jatkuva palvelu
+    ...    to cart and fill the required details for grand child product
+
+    ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep    15s
+    Click Button   //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[1]
+
+
+Add Hallinta ja Tuki kertapalvelu
+    [Documentation]    This is to add Hallinta ja Tuki kertapalvelu
+    ...    to cart and fill the required details for grand child product
+
+    ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep    15s
+    Click button  //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
+
+
+Add Hallinta ja Tuki varallaolo ja matkustus
+    [Documentation]    This is to add Hallinta ja Tuki varallaolo ja matkustus
+    ...    to cart and fill the required details for grand child product
+
+    ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep    15s
+    Click Button   //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[1]
+
+
+Add Toimenpide XS
+    [Documentation]    This is to Add Toimenpide XS
+    ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep   10s
+    Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
+
+
+Add Toimenpide S
+    [Documentation]    This is to Add Toimenpide S
+    ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide S')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep   20s
+    Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
+
+
+Add Toimenpide M
+    [Documentation]    This is to Add Toimenpide M
+    ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide M')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep   20s
+    Click Button  //div[contains(text(),'Toimenpide M')]//following::button[1]
+
+
+
+Add Toimenpide L
+    [Documentation]    This is to Add Toimenpide L
+    ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide L')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep   20s
+    Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
+
+
+Add Toimenpide XL
+    [Documentation]    This is to Add Toimenpide XL
+    ...    to cart and fill the required details
+    ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XL')]//following::button[1]
+    sleep    10s
+    click button    ${product_id}
+    sleep   20s
+    Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
+
+
+
+Add_child_product
+    [Arguments]    ${child_product}
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${child_cart}=    set variable    //div[@class='cpq-item-no-children'][contains(text(),'${child_product}')]/../../../div/button
+    sleep    10s
+    Click Element    ${child_cart}
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    sleep    15s
+    click button    ${CHILD_SETTINGS}
+    sleep    15s
+    Unselect frame
+
+Click Settings
+
+    Reload page
+    sleep  15s
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe     60s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is visible   ${SETTINGS}   60s
+    Click Button    ${SETTINGS}
+    sleep  10s
+
+update setting common
+    [Arguments]    ${option}    ${cbox}
+
+    ${Hinnoitteluperuste}=    Set Variable    //select[@name='productconfig_field_0_0']
+    ${Henkilötyöaika}=    Set Variable    //input[@name='productconfig_field_0_1']
+    ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
+    ${Laskuttaminen}=    Set Variable    //select[contains(@name,'productconfig_field_0_3')]
+    ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
+    sleep    25s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Capture Page Screenshot
+    Wait until element is visible   ${Hinnoitteluperuste}  60s
+    ${status}=     Run Keyword and Return status  Element should be enabled  ${Hinnoitteluperuste}
+    Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}
+    Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}/option[contains(text(),'${option}')]
+    sleep   5s
+    click element    ${Henkilötyöaika}
+    input text    ${Henkilötyöaika}    10
+    sleep    5s
+    click element    ${Palveluaika}
+    sleep    5s
+    click element    ${Palveluaika}//option[contains(text(),'arkisin 8-16')]
+    sleep    5s
+    Run Keyword And Ignore Error    click element    ${Laskuttaminen}
+    sleep    5s
+    Run Keyword And Ignore Error    click element    ${Laskuttaminen}/option[contains(text(),'Laskutus heti')]
+    sleep    5s
+    ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
+    Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
+    #Fill Laskutuksen lisätieto
+    click element    ${X_BUTTON}
+    unselect frame
+    sleep    15s
+
+
+Update setting Telia Arkkitehti jatkuva palvelu
+    [Arguments]    ${option}    ${cbox}
+    [Documentation]    ${option}= to select the option in \ Hinnoitteluperuste --> d or h
+    ...    ${cbox}= to select the checkbox \ Työtilaus vaadittu \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yes--> to check the check box
+    ...    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ no--> not to check the checkbox
+
+    ${Hinnoitteluperuste}=    Set Variable    //select[@name='productconfig_field_0_0']
+    ${Henkilötyöaika}=    Set Variable    //input[@name='productconfig_field_0_3']
+    ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_1')]
+    ${Laskuttaminen}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
+    ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Capture Page Screenshot
+    sleep    10s
+    Wait Until Element Is Visible    ${Hinnoitteluperuste}    30s
+    click element    ${Hinnoitteluperuste}
+    click element    ${Hinnoitteluperuste}/option[contains(text(),'${option}')]
+    sleep   5s
+    click element    ${Henkilötyöaika}
+    input text    ${Henkilötyöaika}    10
+    sleep    5s
+    click element    ${Palveluaika}
+    sleep    5s
+    click element    ${Palveluaika}//option[contains(text(),'arkisin 8-16')]
+    sleep    5s
+    Run Keyword And Ignore Error    click element    ${Laskuttaminen}
+    sleep    5s
+    Run Keyword And Ignore Error    click element    ${Laskuttaminen}/option[contains(text(),'Laskutus heti')]
+    sleep    5s
+    ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
+    Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
+    #Fill Laskutuksen lisätieto -- Not Mandatory
+    click element    ${X_BUTTON}
+    sleep    15s
+    Unselect frame
+
+Update setting Muut asiantuntijapalvelut
+
+
+    ${Laskutettava_toimenpide}=    Set Variable    //textarea[@name='productconfig_field_0_0']
+    ${Kustannus}=    set variable    //input[@name='productconfig_field_0_1']
+    ${Kilometrikorvaus}=    set variable    //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
+    #${Kilometrit}=    set variable    //input[contains(@class,'ng-valid')][@value='0']
+    ${Kilometrit}=    set variable     //input[@name='productconfig_field_0_6']
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    sleep    5s
+    input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
+    sleep    5s
+    click element    ${X_BUTTON}
+    sleep    10s
+    click element    ${Kilometrikorvaus}
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    sleep    10s
+    click element    ${CHILD_SETTINGS}
+    sleep    10s
+    input text    ${Kilometrit}    100
+    sleep    5s
+    #Fill Laskutuksen lisätieto
+    sleep    5s
+    click element    ${X_BUTTON}
+    Unselect frame
+
+Update setting Telia Palvelunhallintakeskus
+
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_1']
+    ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
+
+    Wait Until Element Is Visible    ${Palvelunhallintakeskus}    30s
+    click element    ${Palvelunhallintakeskus}
+    click element    ${Palvelunhallintakeskus}//option[contains(text(),'Olemassaoleva avainasiakaspalvelukeskus')]
+    sleep    5s
+    click element    ${Työtilaus vaadittu}
+    #Fill Laskutuksen lisätieto
+    click element    ${X_BUTTON}
+    unselect frame
+    sleep    15s
 
 clicking on next button
     ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
@@ -150,26 +435,227 @@ clicking on next button
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${next_button}    60s
     Run Keyword If    ${status} == True    click element    ${next_button}
     Unselect Frame
+    sleep  10s
+
+Update Product
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${Count}=  GetElement Count     ${sales_type}
+    Log to console      No of products is ${count}
+    Run Keyword IF  ${Count} != 1   Select From List By Value    (//select[@ng-model='p.SalesType'])[1]    New Money-New Services
+    Run Keyword IF  ${Count} != 1     Select From List By Value    (//select[@ng-model='p.SalesType'])[2]    New Money-New Services
+    Run Keyword IF  ${count} == 1     Select From List By Value    ${sales_type}    New Money-New Services
+    Capture Page Screenshot
+    click button    ${CPQ_next_button}
 
 Create_Order
-    #UpdateAndAddSalesTypeB2O
-    #OpenQuoteButtonPage_release
-    #ClickingOnCPQ
+
+    View Open Quote
     Wait Until Element Is Visible    //div[@title='CPQ']    120s
     ${status}    Run Keyword And Return Status    Force click element    //div[@title='CPQ']
     run keyword if    ${status} == False    Run Keywords    reload page    Wait Until Element Is Visible    //div[@title='CPQ']    60s
     ...    Click Element    //div[@title='CPQ']
     ClickonCreateOrderButton
+    OpenOrderPage
     NextButtonOnOrderPage
-    account selection
-    select order contacts    sitpo test
-    #SelectingTechnicalContact    sitpo test
-    #${contact_name}
-    RequestActionDate
-    Select owner    Billing Aacon Oy
-    #${billing_acc_name}
-    submit order
-    Orchestration_plan_details
+    Select Account
+    sleep  5s
+    select contact
+    sleep  5s
+    Select Date
+    sleep  5s
+    Select account Owner
+    Submit Order Button
+    view orchestration plan details
+
+Create_Order for multiple products
+    [Arguments]    ${prod_1}  ${prod_2}
+    View Open Quote
+    Wait Until Element Is Visible    //div[@title='CPQ']    120s
+    ${status}    Run Keyword And Return Status    Force click element    //div[@title='CPQ']
+    run keyword if    ${status} == False    Run Keywords    reload page    Wait Until Element Is Visible    //div[@title='CPQ']    60s
+    ...    Click Element    //div[@title='CPQ']
+    ClickonCreateOrderButton
+    OpenOrderPage
+    NextButtonOnOrderPage
+    Select Account
+    sleep  5s
+    select contact
+    sleep  5s
+    Select Date for multiple products    ${prod_1}  ${prod_2}
+    sleep  5s
+    Select account Owner
+    Submit Order Button
+    view orchestration plan details
+
+
+Select Account
+
+    [Documentation]    This is to search and select the account
+    ${account_name}=    Set Variable    //p[contains(text(),'Search')]
+    ${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
+    ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    sleep    3s
+    wait until element is visible   //div[@class='iframe-parent slds-template_iframe slds-card']/iframe    60s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Wait Until Element Is Visible    ${account_name}    120s
+    click element    ${account_name}
+    sleep    3s
+    Wait Until Element Is Visible    ${account_checkbox}    120s
+    click element    ${account_checkbox}
+    sleep    3s
+    Capture Page Screenshot
+    Wait Until Element Is Visible    ${search_account_next_button}    120s
+    Click Element    ${search_account_next_button}
+    Unselect frame
+    sleep  10s
+
+
+select contact
+
+    ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
+    ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
+    ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe   30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Technical COntact page
+    Wait Until Element Is Visible    ${contact_search}    120s
+    Input Text    ${contact_search}   ${technical_contact}
+    sleep    15s
+    Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    sleep   10s
+    Wait until element is visible  //input[@id='OCEmail']   30s
+    Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
+    Sleep    5s
+    Execute JavaScript    window.scrollTo(0,200)
+    sleep  10s
+    Click Element    ${contact_next_button}
+    unselect frame
+    sleep   10s
+
+Select Date
+
+    [Documentation]    Used for selecting \ requested action date
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    sleep    120s
+    ${status}    Run Keyword and Return Status    Page should contain element    //input[@id='RequestedActionDate']
+    Log to console    ${status}
+    Run Keyword if    ${status}   Pick Date without product
+    Run Keyword Unless    ${status}    Click Element    ${additional_info_next_button}
+    Unselect frame
+
+Pick Date without product
+
+    Log to console    picking date
+    ${date_id}=    Set Variable    //input[@id='RequestedActionDate']
+    ${next_month}=    Set Variable    //button[@title='Next Month']
+    ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    #${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${date_id}    120s
+    Click Element    ${date_id}
+    Wait Until Element Is Visible    ${next_month}    120s
+    Click Button    ${next_month}
+    click element    ${firstday}
+    sleep    10s
+    Capture Page Screenshot
+    Click Element    ${additional_info_next_button}
+
+select Date for multiple products
+
+    [Arguments]   ${prod_1}   ${prod_2}
+    [Documentation]    Used for selecting \ requested action date for each parent product
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    sleep    30s
+    ${status}    Run Keyword and Return Status    Element should be visible    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_1}')]//following::input[2]
+    Log to console    ${prod_1}
+    Run Keyword if    ${status}    Pick Date with product    ${prod_1}
+    ${status}    Run Keyword and Return Status    Element should be visible   //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_2}')]//following::input[2]
+    Log to console    ${prod_2}
+    Run Keyword if    ${status}    Pick Date with product     ${prod_2}
+    sleep  10s
+    Click Element    ${additional_info_next_button}
+    Unselect frame
+
+Pick date with product
+
+    [Arguments]    ${product}
+    Log to console    picking date
+    ${date_id}=    Set Variable    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${product}')]//following::input[2]
+    ${next_month}=    Set Variable    //button[@title='Next Month']
+    ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    #${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${date_id}    120s
+    Click Element    ${date_id}
+    Wait Until Element Is Visible    ${next_month}    120s
+    Click Button    ${next_month}
+    click element    ${firstday}
+    sleep    10s
+    Capture Page Screenshot
+
+
+
+Select account Owner
+
+    log to console    Select Owner Account FLow Chart Page
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Owner Account page
+    ${owner_account}=    Set Variable    //ng-form[@id='BuyerAccount']//span[@class='slds-checkbox--faux']
+    ${buyer_payer}=    Set Variable    //input[@id='BuyerIsPayer']/../span
+    ${buyer_account_next_button}=    Set Variable    //div[@id='SelectedBuyerAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${buyer_payer}    120s
+    Click Element    ${owner_account}
+    sleep    3s
+    click element    ${buyer_payer}
+    sleep    3s
+    Capture Page Screenshot
+    Wait Until Element Is Visible    ${buyer_account_next_button}    120s
+    click element    ${buyer_account_next_button}
+    unselect frame
+    log to console    Exiting owner Account page
+    sleep    30s
+
+
+
+Submit for Approval
+
+    sleep    40s
+    ${status}   set variable  Run keyword and return status   Page contains element   //div[text()='Submit for Approval']
+    Run Keyword if   {status}   Click element   //div[text()='Submit for Approval']
+    Wait until page contains element //h2[text()='Submit for Approval']
+    Input Text   //textarea[@role='textbox']  submit
+    click element  //span[text()='Submit']
+
+Submit Order Button
+    click element    //div[@title='Submit Order']
+    Log to console    submitted
+    sleep  10s
+    Capture Page Screenshot
+    ${status} =  Run Keyword and Return Status   Page should contain element     //h2[text()='Submit Order']
+    Run Keyword if  ${status}   click element   //button[text()='Submit']
+    sleep  20s
+
+view orchestration plan details
+
+    ${Orchestration Plan}   set variable   //span[@class='slds-card__header-title slds-truncate slds-m-right--xx-small'][text()='Orchestration Plans']
+    ${title}  set variable  //span[@class='slds-truncate'][text()='Orchestration Plan Name']
+    ${plan number}   set variable   //span[@class='slds-truncate'][text()='Orchestration Plan Name']//following::a[1]
+    Execute Javascript    window.scrollTo(0,200)
+    Wait until element is visible       ${Orchestration Plan}  60s
+
+    Force Click element   ${Orchestration Plan}
+    Wait until element is visible  ${title}  60s
+    Wait until element is visible  ${plan number}  60s
+    Click element  ${plan number}
+
+    Execute Javascript    window.scrollTo(0,200)
+    sleep    10s
+    Capture Page Screenshot
 
 update_setting2
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe

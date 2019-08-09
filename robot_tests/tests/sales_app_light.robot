@@ -288,22 +288,13 @@ Create B2B Order
     [Tags]    BQA-B2BOrder  commit_check
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #GO TO ENTITY    Oppo_ 20190217-191125
-    #SLEEP    60S
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    #${sc_name}    run keyword    createAAgreement    Service Contract
-    #${billing_acc_name}    run keyword    CreateABillingAccount
-    #capture page screenshot
-    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    #capture page screenshot
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
     Edit Opportunity values    Price List      B2B
-    #ChangeThePriceBookToHDC    B2B Pricebook
-    ##B2O pricebook
     ClickingOnCPQ   ${oppo_name}
     AddProductToCart    Alerta projektointi
     ##B2O Other Services

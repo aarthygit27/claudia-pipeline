@@ -33,3 +33,13 @@ ${Online Asiantuntijapalvelut}    01u58000005pgPjAAI
 ${PASSWORD_SALESADMIN_SITPO}    PahaPassu5
 ${SALES_ADMIN_SITPO}    saleadm@teliacompany.com.sitpo
 ${Telia Sign}     01u2600000Q4Is6AAF
+${SETTINGS}   //button[@title='Settings']
+${X_BUTTON}       //span[contains(text(),'Close')]/..
+${CHILD_SETTINGS}    //div[@ng-if='!importedScope.isProvisioningStatusDeleted(childProd, attrs.provisioningStatus)']//button[@title='Settings']
+${SPINNER_SMALL}    //div[contains(@class,'small button-spinner')]
+${sales_type}    set variable    //select[@ng-model='p.SalesType']
+${CPQ_next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+${account_name}=    Set Variable    //p[contains(text(),'Search')]
+${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
+${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+${technical_contact}    John Doe

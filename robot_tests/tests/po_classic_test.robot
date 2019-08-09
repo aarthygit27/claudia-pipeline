@@ -66,8 +66,7 @@ Test scenario 4: Key Customer Service Desk
     Add Telia Palvelunhallintakeskus    sitpo
     #Search and add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus
-    Add  Avainasiakaspalvelukeskus jatkuva palvelu
-    Add Avainasiakaspalvelukeskus jatkuva palvelu   sitpo
+    Add Avainasiakaspalvelukeskus jatkuva palvelu
     Capture Page Screenshot
     #create order    ${DEVPO_ACCOUNT}
     #${order_id}=    Complete Order

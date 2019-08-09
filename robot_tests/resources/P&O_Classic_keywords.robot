@@ -905,7 +905,7 @@ Addtional data_2
     Click Element    ${additional_info_next_button}
 
 
-Pick Action Date - Professional Products
+Pick Action Date with product
       [Arguments]    ${product}
     Log to console    picking date
     ${date_id}=    Set Variable    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${product}')]//following::input[2]
@@ -1409,6 +1409,9 @@ create order sitpo
     sleep    10s
     Credit score validation
     View Open Quote
+    sleep  10s
+    ${status}   set variable  Run Keyword and return status    Page should contain element  //div[@title='CPQ']
+    Run keyword if  ${status}   switch to classic
     Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
     click button    //td[@id='topButtonRow']//input[@title='CPQ']
     Log To Console    create order
@@ -1426,6 +1429,18 @@ create order sitpo
     ${Status}=    Run Keyword and Return Status    Page should Contain element    //section[@id='OrderTypeCheck']/section/div/div/div/h1
     Run Keyword if    ${Status}    Close and Submit
     Run Keyword Unless    ${Status}    Enter Details
+
+switch to classic
+
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${setting_lighting}    60s
+    run keyword if    ${status} == True    Click Element    ${setting_lighting}
+    sleep    10s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${switch_classic}    30s
+    run keyword if    ${status} == True    Click Element    ${switch_classic}
+    sleep  30s
+    Search Salesforce    ${opportunity_name}
+    Wait Until Element Is Visible    ${opportunity_search}    30s
+    Click Element    ${opportunity_search}
 
 create order sitpo - Professional Products
     [Arguments]    ${target_account}    ${Product_count}    ${prod_1}   ${prod_2}
@@ -1473,8 +1488,8 @@ Close and Submit
     Click Element    //div[@id='Close']/p
     ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
     Run Keyword if    ${status}    click element    ${submit_order}
-    #Run Keyword Unless    ${status}    Submit Order Page
-    Run Keyword Unless    ${status}    click element   //div[@id='Clone']//following::input[1]
+    Run Keyword Unless    ${status}    Submit Order Page
+    #Run Keyword Unless    ${status}    click element   //div[@id='Clone']//following::input[1]
 
 Enter Details -Professional Products
     [Arguments]        ${Product_count}     ${prod_1}   ${prod_2}
@@ -1494,7 +1509,8 @@ Enter Details -Professional Products
     ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
     Run Keyword if    ${status}    click element    ${submit_order}
     sleep   10s
-    Run Keyword Unless    ${status}    click element   //div[@id='Clone']//following::input[1]
+    Run Keyword Unless    ${status}    Submit Order Page
+    #click element   //div[@id='Clone']//following::input[1]
 
 Enter Details
     ${submit_order}=    Set Variable    //span[text()='Yes']
@@ -1509,7 +1525,8 @@ Enter Details
     ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
     Run Keyword if    ${status}    click element    ${submit_order}
     sleep   10s
-    Run Keyword Unless    ${status}    click element   //div[@id='Clone']//following::input[1]
+    Run Keyword Unless    ${status}   Submit Order Page
+    #click element   //div[@id='Clone']//following::input[1]
 
 select order contacts sitpo
     #${contact_search_title}=    Set Variable    //h3[text()='Contact Search']
