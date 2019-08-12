@@ -186,27 +186,33 @@ Change Stage To
     Run Inside Iframe    ${OPPORTUNITY_FRAME}    Select Value For Attribute    Stage    ${stage}
 
 Check For Lightning Force And Switch Back To Sales Console
-
     Sleep    15s
     ${url}=    Get Location
-    Log to console  ${url}
+    Log to console    ${url}
     ${contains}=    Evaluate    'lightning' in '${url}'
-    Log to Console  ${contains}
+    Log to Console    ${contains}
     Run Keyword If    ${contains}    Switch to Classic
-    Run Keyword Unless  ${contains}     switching to classic app
+    Run Keyword Unless    ${contains}    switching to classic app
 
 Switch to Classic
+    #//img[@class='icon noicon']
     ${settings_classic}    set variable    //span[@id='userNavLabel']
     ${switch_lighting}    Set Variable    //a[@title='Switch to Lightning Experience']
-    ${setting_lighting}    Set Variable    //span[contains(@class,'userProfileCardTriggerRoot')]
+    ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
     ${switch_classic}    Set Variable    //a[text()='Switch to Salesforce Classic']
     ${search_button}    Set Variable    id=phSearchInput
-    Wait Until Element Is Visible    ${setting_lighting}    60s
-    Log to console  Lightning setting found
-    force Click Element    ${setting_lighting}
+    Log To Console    switching to classic app
+    sleep    5s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${settings_classic}    60s
+    run keyword if    ${status} == True    Click Element    ${settings_classic}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${switch_lighting}    30s
+    run keyword if    ${status} == True    Click Element    ${switch_lighting}
+    sleep    5s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${setting_lighting}    60s
+    run keyword if    ${status} == True    Click Element    ${setting_lighting}
     sleep    10s
-    Wait Until Element Is Visible    ${switch_classic}    30s
-    Click Element    ${switch_classic}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${switch_classic}    30s
+    run keyword if    ${status} == True    Click Element    ${switch_classic}
     Wait Until Element Is Visible    ${search_button}    90s
 
 Check For Correct Dashboard Data
@@ -434,7 +440,7 @@ Close All Specific Tabs
     Should Be Equal As Integers    ${current}    ${0}
 
 Close All Tabs
-    Log to console  7
+    Log to console    7
     ${menu_open}=    Run Keyword And Return Status    Page Should Contain Element    //div[contains(@class,'x-tab-tabmenu-right') and contains(@class,'x-tab-tabmenu-show')]
     Run Keyword Unless    ${menu_open}    Click Element    //div[@class='x-tab-tabmenu-right']
     Click Element    //span[text()='Close all primary tabs']
@@ -1051,10 +1057,11 @@ Login As Digisales Manager And Approve Quote
 
 Login to Salesforce
     [Arguments]    ${username}=${B2B_DIGISALES_USER}    ${password}=${PASSWORD}
-
-    Wait Until Page Contains Element    id=username
+    sleep    10s
+    Wait Until Page Contains Element    id=username    30s
     Input Text    id=username    ${username}
     Input Password    id=password    ${password}
+    sleep    10s
     Click Element    id=Login
     Check For Lightning Force And Switch Back To Sales Console
     Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    120s

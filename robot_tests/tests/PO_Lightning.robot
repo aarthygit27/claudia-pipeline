@@ -12,70 +12,49 @@ Library           AutoItLibrary
 *** Test Cases ***
 Product1:Telia Multiservice NNI
     General Setup    B2O
-    Searching and adding product
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Searching and adding product    Multiservice NNI
+    Product_updation    Multiservice NNI
     Create_Order
 
 Product2:Telia Ethernet Operator Subscription
     General Setup    B2O
     Searching and adding product    Telia Ethernet Operator Subscription
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Telia Ethernet Operator Subscription
     Create_Order
 
 Product3:Ethernet Nordic Network Bridge
     General Setup    B2O
     Searching and adding product    Ethernet Nordic Network Bridge
     update_setting1
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Ethernet Nordic Network Bridge
     Create_Order
 
 Product4:Ethernet Nordic E-Line EPL
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-Line EPL
     update_setting2
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Ethernet Nordic E-Line EPL
     Create_Order
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
     update_setting_Ethernet Nordic E-LAN EVP-LAN
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Ethernet Nordic E-LAN EVP-LAN
     Create_Order
 
 Product6: Ethernet Nordic HUB/E-NNI
     General Setup    B2O
     Searching and adding product    Ethernet Nordic HUB/E-NNI
     update_setting_Ethernet Nordic HUB/E-NNI
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Ethernet Nordic HUB/E-NNI
     Create_Order
 
 Product7: Telia Ethernet subscription
     General Setup    B2O
     Searching and adding product    Telia Ethernet subscription
     update_setting_Telia Ethernet subscription
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Telia Ethernet subscription
     Create_Order
 
 Product8: TeliaRobotics
@@ -83,54 +62,44 @@ Product8: TeliaRobotics
     General Setup    B2B
     Searching and adding product    Telia Robotics
     update_setting_TeliaRobotics
-    clicking on next button
-    UpdateAndAddSalesTypeB2O
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Telia Robotics
     Create_Order
 
 Product8: Telia Crowd Insights
-    [Tags]    TeliaRobotics
+    [Tags]    Telia Crowd Insights
     General Setup    B2B
     Searching and adding product    Telia Crowd Insights
     update_setting_TeliaRobotics
-    clicking on next button
-    UpdateAndAddSalesTypeB2O    Telia Crowd Insights
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Telia Crowd Insights
     Create_Order
 
 Product8: Telia Sign
-    [Tags]    TeliaRobotics
+    [Tags]    TeliaSign
     General Setup    B2B
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
-    update telia robotics price sitpo
-    clicking on next button
-    UpdateAndAddSalesTypeB2O    Telia Sign
-    OpenQuoteButtonPage_release
-    ClickingOnCPQ
+    Product_updation    Telia Sign
     Create_Order
 
-calucation test
-    ${b}    set variable    1,500.01
-    ${d}    convert to number    ${b}
-    ${a}    set variable    900.00
-    ${e}    convert to number    ${a}
-    ${c}    Evaluate    ${d} + ${e}
-    log to console    ${c}
-
-autoit test
+cpq test
+    [Tags]    cpq_test
     Go To Salesforce and Login into Lightning    sitpo admin
-    sleep    10s
-    Go To    https://telia-fi--sitpo.lightning.force.com/lightning/r/Opportunity/0062600000Eb2wnAAB/view
-    sleep    10s
-    click element    //span[text()='Related']
-    sleep    20s
-    Scroll Page To Element    //div[@title='Upload Files']
-    Wait Until Element Is Visible    //div[@title='Upload Files']    20s
-    click element    //div[@title='Upload Files']
-    Win Wait Active    File Upload
-    Send    C:\Users\meb5053\Desktop\Book.xlsx
+    Go To    https://telia-fi--sitpo.lightning.force.com/lightning/r/Quote/0Q026000000GimnCAC/view
     sleep    5s
-    Mouse Click    [CLASS:Button; INSTANCE:1]
+    Capture Page Screenshot
+    Create_Order
+
+IP VPN
+    [Tags]    ipvpn
+    General Setup    B2O
+    Searching and adding product    Telia Unmanaged IP VPN
+    Product_updation    Telia Unmanaged IP VPN
+    Create_Order
+
+Telia Ethernet capacity
+    [Tags]    ethcapacity
+    General Setup    B2O
+    Searching and adding product    Telia Ethernet Capacity
+    updating setting telia ethernet capacity
+    Product_updation    Telia Ethernet Capacity
+    Create_Order

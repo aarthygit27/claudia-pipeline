@@ -7,8 +7,7 @@ ${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
-#${CLASSIC_MENU}    //*[@id="userNav"]
-${CLASSIC_MENU}     //a[@class="switch-to-lightning"]
+${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
 ${APP_LAUNCHER}    //button[contains(@class,'salesforceIdentityAppLauncherHeader')]
@@ -199,7 +198,7 @@ ${p}              b2o
 ${product_name}    Telia Robotics
 ${product_quantity}    1
 ${NRC}            35
-${RC}             50
+${RC}             50000
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
 ${360_VIEW}     //a[@title='360 View']
