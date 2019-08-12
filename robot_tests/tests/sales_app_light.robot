@@ -154,7 +154,6 @@ Lightning: Sales admin Change Account owner for group account
     [Tags]    BQA-8526    Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
-    getBusinessID   Aacon Oy
     Change Account Owner
     #Create opportunity from Account for HDCFlow
     #    [Tags]    BQA-HDCOppo    Lightning2
@@ -682,7 +681,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]  Summer-Test     BQA-5729
+    [Tags]  Summer-Test     BQA-5729    Lightning
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
