@@ -22,7 +22,7 @@ Test scenario 1:Telia Architect
     Add Telia Arkkitehti jatkuva palvelu    sitpo
     sleep    10s
     Search Products    ${prod_2}
-    Add Muut asiantuntijapalvelut   sitpo
+    Ad d Muut asiantuntijapalvelut  sitpo
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 

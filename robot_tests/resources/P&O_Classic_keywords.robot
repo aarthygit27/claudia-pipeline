@@ -501,7 +501,6 @@ General test setup
     Go to Account2    ${target_account}
     ${new_opportunity_name}=    Run Keyword If    '${env}'=='sitpo'    create new opportunity sitpo    ${pricebook}
     ...    ELSE    Run Keyword    create new opportunity    ${pricebook}
-    #${new_opportunity_name}=    Set Variable    Test Robot Order_260420191705
     sleep    10s
     Log    the opportunity id is ${new_opportunity_name}
     Search Opportunity and click CPQ    ${new_opportunity_name}
@@ -853,8 +852,8 @@ select order contacts
     Page should contain element    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
     Click Element    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
     Sleep    10s
-    Wait until element is visible  //input[@id='OCEmail']   30s
-    Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
+    #Wait until element is visible  //input[@id='OCEmail']   30s
+    #Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
     #${order_name}    set variable    //input[@id='OrderContactDetailsTypeAhead']
     #${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${order_name}    5s
     #run keyword if    ${status} == True    update order details
@@ -1411,7 +1410,7 @@ create order sitpo
     View Open Quote
     sleep  10s
     ${status}   set variable  Run Keyword and return status    Page should contain element  //div[@title='CPQ']
-    Run keyword if  ${status}   switch to classic
+    Run keyword if  ${status}   go to classic
     Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
     click button    //td[@id='topButtonRow']//input[@title='CPQ']
     Log To Console    create order
@@ -1430,7 +1429,7 @@ create order sitpo
     Run Keyword if    ${Status}    Close and Submit
     Run Keyword Unless    ${Status}    Enter Details
 
-switch to classic
+go to classic
 
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${setting_lighting}    60s
     run keyword if    ${status} == True    Click Element    ${setting_lighting}

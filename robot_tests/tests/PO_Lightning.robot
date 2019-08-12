@@ -10,74 +10,90 @@ Resource          ../resources/PO_Light_keywords.robot
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
-    General Setup    B2O
-    Searching and adding product    Multiservice NNI
-    Product_updation    Multiservice NNI
+    #General Setup    B2O
+    Go to   https://telia-fi--sitpo.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tc2l0cG8ubGlnaHRuaW5nLmZvcmNlLmNvbS9hcGV4L3Zsb2NpdHlfY210X19oeWJyaWRjcHE%2FaWQ9MDA2MjYwMDAwMEZRQ0FBIn0sInN0YXRlIjp7fX0%3D
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   saleadm@teliacompany.com.sitpo
+    Input Text   id =password  PahaPassu5
+    Click Element  id=Login
+    Execute Manual step  pages
+    Search and add product    Telia Multiservice NNI
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
 Product2:Telia Ethernet Operator Subscription
     General Setup    B2O
-    Searching and adding product    Telia Ethernet Operator Subscription
-    Product_updation    Telia Ethernet Operator Subscription
+    Search and add product    Telia Ethernet Operator Subscription
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
 Product3:Ethernet Nordic Network Bridge
     General Setup    B2O
     Searching and adding product    Ethernet Nordic Network Bridge
     update_setting1
-    Product_updation    Ethernet Nordic Network Bridge
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
 Product4:Ethernet Nordic E-Line EPL
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-Line EPL
     update_setting2
-    Product_updation    Ethernet Nordic E-Line EPL
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
     update_setting_Ethernet Nordic E-LAN EVP-LAN
-    Product_updation    Ethernet Nordic E-LAN EVP-LAN
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
 Product6: Ethernet Nordic HUB/E-NNI
     General Setup    B2O
     Searching and adding product    Ethernet Nordic HUB/E-NNI
     update_setting_Ethernet Nordic HUB/E-NNI
-    Product_updation    Ethernet Nordic HUB/E-NNI
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
 Product7: Telia Ethernet subscription
-    General Setup    B2O
+    General Setup    B2B
     Searching and adding product    Telia Ethernet subscription
     update_setting_Telia Ethernet subscription
-    Product_updation    Telia Ethernet subscription
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
-Product8: TeliaRobotics
-    [Tags]    TeliaRobotics
+Product8: Telia Robotics
+    [Tags]    TeliaRobotics B2B_Lightning
     General Setup    B2B
     Searching and adding product    Telia Robotics
     update_setting_TeliaRobotics
-    Product_updation    Telia Robotics
+    clicking on next button
+    UpdateAndAddSalesType  Telia Robotics
     Create_Order
 
 Product8: Telia Crowd Insights
-    [Tags]    Telia Crowd Insights
+    [Tags]    Telia Crowd Insights  B2B_Lightning
     General Setup    B2B
     Searching and adding product    Telia Crowd Insights
     update_setting_TeliaRobotics
-    Product_updation    Telia Crowd Insights
+    clicking on next button
+    UpdateAndAddSalesType  Telia Crowd Insights
     Create_Order
 
 Product8: Telia Sign
-    [Tags]    TeliaSign
+    [Tags]    Telia Sign    B2B_Lightning
     General Setup    B2B
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
-    Product_updation    Telia Sign
+    clicking on next button
+    UpdateAndAddSalesType  Telia Sign
     Create_Order
 
 cpq test
@@ -105,15 +121,10 @@ Telia Ethernet capacity
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]  Trial Run
+    [Tags]   Run    B2B_Lightning
     ${prod_1}   set variable   Telia Arkkitehti jatkuva palvelu
     ${prod_2}   set variable    Muut asiantuntijapalvelut
-    #General Setup    b2b
-    Wait Until element is visible   id=username     30s
-    Input Text  id=username   saleadm@teliacompany.com.sitpo
-    Input Text   id =password  PahaPassu5
-    Click Element  id=Login
-    Execute Manual step  pages
+    General Setup    B2B
     Searching and adding product    Telia Arkkitehti jatkuva palvelu
     Update setting Telia Arkkitehti jatkuva palvelu  d    yes
     Searching and adding product  Muut asiantuntijapalvelut
@@ -124,10 +135,10 @@ Test scenario 1:Telia Architect
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
-    [Tags]  Trial Run
+    [Tags]  Trial Run   B2B_Lightning
     ${prod_1}   set variable   Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}   set variable    Telia Projektijohtaminen varallaolo ja matkustus
-    General Setup    b2b
+    General Setup    B2B
     Searching and adding product   Telia Projektijohtaminen jatkuva palvelu
     update setting common   d    yes
     Searching and adding product  Telia Projektijohtaminen varallaolo ja matkustus
@@ -140,10 +151,10 @@ Test scenario 2: Telia Project management
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]  Trial Run
+    [Tags]   Run    B2B_Lightning
     ${prod_1}   set variable   Telia Konsultointi jatkuva palvelu
     ${prod_2}   set variable    Telia Konsultointi varallaolo ja matkustus
-    General Setup    b2b
+    General Setup    B2B
     Searching and adding product   Telia Konsultointi jatkuva palvelu
     update setting common   d    yes
     Searching and adding product  Telia Konsultointi varallaolo ja matkustus
@@ -154,8 +165,8 @@ Test scenario 3:Telia Consulting
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request. Product Removed
-    [Tags]  Trial Run
-    General Setup    b2b
+    [Tags]  Trial Run   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
@@ -167,8 +178,8 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]
-    General Setup    b2b
+    [Tags]  Run   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
@@ -180,8 +191,8 @@ Test scenario 8: Key Customer Service Desk Additional Work
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
-    [Tags]
-    General Setup    b2b
+    [Tags]  Run  B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
@@ -193,8 +204,8 @@ Test scenario 9: Key Customer Service Desk
 
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
-    [Tags]    Trial Run
-    General Setup    b2b
+    [Tags]    Trial Run    B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product     Koulutus jatkuva palvelu
@@ -205,8 +216,8 @@ Test scenario 10:Training
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
-    [Tags]
-    General Setup    b2b
+    [Tags]   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product     Koulutus kertapalvelu
@@ -217,8 +228,8 @@ Test scenario 11:Training
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
-    [Tags]    BQA-9198    PO1    Rerun
-    General Setup    b2b
+    [Tags]    BQA-9198    PO1    B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product     Koulutus varallaolo ja matkustus
@@ -229,8 +240,8 @@ Test scenario 12:Training
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]  Trial Run
-    General Setup    b2b
+    [Tags]  Trial Run   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add_child_product        Jatkuvuudenhallinta jatkuva palvelu
@@ -241,8 +252,8 @@ Test scenario 13:Continuity Management Service
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]
-    General Setup    b2b
+    [Tags]   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta kertapalvelu
@@ -253,8 +264,8 @@ Test scenario 14:Continuity Management Service
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]
-    General Setup    b2b
+    [Tags]  B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
@@ -265,8 +276,8 @@ Test scenario 15:Continuity Management Service
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
-    [Tags]  Trial Run
-    General Setup    b2b
+    [Tags]  Trial Run   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product   Palvelujohtaminen jatkuva palvelu
@@ -277,8 +288,8 @@ Test scenario 16:Service Lead Service
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
-    [Tags]
-    General Setup    b2b
+    [Tags]  B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product   Palvelujohtaminen kertapalvelu
@@ -289,9 +300,9 @@ Test scenario 17:Service Lead Service
 
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
-    [Tags]
+    [Tags]  B2B_Lightning
 
-    General Setup    b2b
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product   Palvelujohtaminen varallaolo ja matkustus
@@ -302,21 +313,21 @@ Test scenario 18: Service Lead Service
 
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
-    [Tags]  Trial Run
-    General Setup    b2b
+    [Tags]  Trial Run   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
     Add Hallinta ja Tuki jatkuva palvelu
     update setting common   h    no
     clicking on next button
-    UpdateAndAddSalesType  Telia Palvelunhallintakeskus
+    UpdateAndAddSalesType for 2 products  Telia Palvelunhallintakeskus  Hallinta ja Tuki jatkuva palvelu
     Create_Order
 
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
-    [Tags]
-    General Setup    b2b
+    [Tags]  B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
@@ -328,8 +339,8 @@ Test scenario 20:Operation and Support Service
 
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
-    [Tags]
-    General Setup    b2b
+    [Tags]  B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
@@ -341,8 +352,8 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]  Trial Run
-    General Setup    b2b
+    [Tags]  Trial Run   B2B_Lightning
+    General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Search and add product   Asiantuntijakäynti

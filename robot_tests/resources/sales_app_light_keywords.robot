@@ -2715,8 +2715,9 @@ openOrderFromDirecrOrder
 OpenOrderPage
     Log to console      Open Order
     Reload page
-    sleep   10s
+    sleep   45s
     select frame    //iframe[@title='accessibility title'][@scrolling='yes']
+    sleep   10s
 
     #${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
     Current frame should contain  Open Order

@@ -15,7 +15,7 @@ General Setup
     Go To Entity    ${oppo_name}
     sleep    5s
     #updating close date
-    Edit Opportunity values     Price List  B2B
+    Edit Opportunity values     Price List  ${price_list}
     ClickingOnCPQ   ${oppo_name}
     sleep  15s
 
@@ -115,7 +115,7 @@ update_setting1
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
-    Click Element    ${setting}
+    #Click Element    ${setting}
     Wait Until Element Is Visible    ${street_add1}    60s
     input text    ${street_add1}    This is a test opportunity
     sleep    10s
@@ -151,7 +151,7 @@ Search and add product
     sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep  15s
-    Click Settings
+    #Click Settings
     Unselect frame
     sleep  20s
 
@@ -199,96 +199,104 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Unselect frame
 
 Add Hallinta ja Tuki
-
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     [Documentation]    This is to add Hallinta ja Tuki to cart
     ${product}=  set variable   //div[contains(text(),'Hallinta ja Tuki')]//following::button[1]
     sleep  10s
     click button  ${product}
     sleep   10s
+    Unselect frame
 
 Add Hallinta ja Tuki jatkuva palvelu
     [Documentation]    This is to add Hallinta ja Tuki jatkuva palvelu
     ...    to cart and fill the required details for grand child product
-
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep    15s
     Click Button   //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[1]
-
+    Unselect frame
 
 Add Hallinta ja Tuki kertapalvelu
     [Documentation]    This is to add Hallinta ja Tuki kertapalvelu
     ...    to cart and fill the required details for grand child product
-
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep    15s
     Click button  //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
-
+    Unselect frame
 
 Add Hallinta ja Tuki varallaolo ja matkustus
     [Documentation]    This is to add Hallinta ja Tuki varallaolo ja matkustus
     ...    to cart and fill the required details for grand child product
 
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep    15s
     Click Button   //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[1]
-
+    Unselect frame
+    Unselect frame
 
 Add Toimenpide XS
     [Documentation]    This is to Add Toimenpide XS
     ...    to cart and fill the required details
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep   10s
     Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
-
+    Unselect frame
 
 Add Toimenpide S
     [Documentation]    This is to Add Toimenpide S
     ...    to cart and fill the required details
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide S')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
-
+    Unselect frame
 
 Add Toimenpide M
     [Documentation]    This is to Add Toimenpide M
     ...    to cart and fill the required details
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide M')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide M')]//following::button[1]
-
+    Unselect frame
 
 
 Add Toimenpide L
     [Documentation]    This is to Add Toimenpide L
     ...    to cart and fill the required details
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide L')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
-
+    Unselect frame
 
 Add Toimenpide XL
     [Documentation]    This is to Add Toimenpide XL
     ...    to cart and fill the required details
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XL')]//following::button[1]
     sleep    10s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
-
+    Unselect frame
 
 
 Add_child_product
@@ -448,6 +456,17 @@ Update Product
     Capture Page Screenshot
     click button    ${CPQ_next_button}
 
+UpdatePageNextButton
+
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    log to console    UpdateAndAddSalesType
+    sleep    30s
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    click element    ${next_button}
+    unselect frame
+    sleep    60s
+
 Create_Order
 
     View Open Quote
@@ -540,7 +559,7 @@ Select Date
     [Documentation]    Used for selecting \ requested action date
     ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    sleep    120s
+    sleep    60s
     ${status}    Run Keyword and Return Status    Page should contain element    //input[@id='RequestedActionDate']
     Log to console    ${status}
     Run Keyword if    ${status}   Pick Date without product
@@ -627,32 +646,29 @@ Submit for Approval
     sleep    40s
     ${status}   set variable  Run keyword and return status   Page contains element   //div[text()='Submit for Approval']
     Run Keyword if   {status}   Click element   //div[text()='Submit for Approval']
-    Wait until page contains element //h2[text()='Submit for Approval']
+    Wait until page contains element  //h2[text()='Submit for Approval']
     Input Text   //textarea[@role='textbox']  submit
     click element  //span[text()='Submit']
 
 Submit Order Button
-    click element    //div[@title='Submit Order']
+    Wait until element is visible   //div[@title='Submit Order']    60s
     Log to console    submitted
+    Click element  //div[@title='Submit Order']
     sleep  10s
     Capture Page Screenshot
     ${status} =  Run Keyword and Return Status   Page should contain element     //h2[text()='Submit Order']
     Run Keyword if  ${status}   click element   //button[text()='Submit']
-    sleep  20s
+    sleep  90s
 
 view orchestration plan details
-
-    ${Orchestration Plan}   set variable   //span[@class='slds-card__header-title slds-truncate slds-m-right--xx-small'][text()='Orchestration Plans']
-    ${title}  set variable  //span[@class='slds-truncate'][text()='Orchestration Plan Name']
-    ${plan number}   set variable   //span[@class='slds-truncate'][text()='Orchestration Plan Name']//following::a[1]
-    Execute Javascript    window.scrollTo(0,200)
-    Wait until element is visible       ${Orchestration Plan}  60s
-
-    Force Click element   ${Orchestration Plan}
-    Wait until element is visible  ${title}  60s
-    Wait until element is visible  ${plan number}  60s
-    Click element  ${plan number}
-
+    Reload page
+    sleep  20s
+    ${plan}     set variable    //a[@class='textUnderline outputLookupLink slds-truncate forceOutputLookup'][contains(text(),'Plan')]
+    Scroll Page to element   ${plan}
+    sleep  15s
+    Page should contain element   ${plan}
+    Click element   ${plan}
+    sleep  20s
     Execute Javascript    window.scrollTo(0,200)
     sleep    10s
     Capture Page Screenshot
@@ -671,7 +687,7 @@ update_setting2
     ${city_town-b}    set variable    //input[@name='productconfig_field_1_12']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
-    Click Element    ${setting}
+    #Click Element    ${setting}
     Wait Until Element Is Visible    ${street_add1-a}    60s
     input text    ${street_add1-a}    This is a test opportunity
     sleep    10s
@@ -710,7 +726,7 @@ update_setting_Ethernet Nordic E-LAN EVP-LAN
     ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5]
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
-    Click Element    ${setting}
+    #Click Element    ${setting}
     Wait Until Element Is Visible    ${ Network bridge }    60s
     input text    ${ Network bridge }    This is a test opportunity
     helinsiki_address
@@ -725,7 +741,7 @@ update_setting_Ethernet Nordic HUB/E-NNI
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
-    Click Element    ${setting}
+    #Click Element    ${setting}
     Wait Until Element Is Visible    ${Service level}    60s
     click element    ${Service level}
     click element    ${platinum}
@@ -765,7 +781,7 @@ update_setting_Telia Ethernet subscription
     ${setting}    Set Variable    //button[@title='Settings']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
-    Click Element    ${setting}
+    #Click Element    ${setting}
     sleep    5s
     Wait Until Element Is Visible    ${E_NNI-ID}    60s
     Input Text    ${E_NNI-ID}    10
@@ -789,7 +805,7 @@ update_setting_TeliaRobotics
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     Wait Until Element Is Visible    ${setting}    60s
-    Click Element    ${setting}
+    #Click Element    ${setting}
     Fill Laskutuksen lisätieto
     click element    ${closing}
     Unselect Frame
@@ -824,7 +840,7 @@ update_setting_TeliaSign
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     Wait Until Element Is Visible    ${setting}    60s
-    Click Element    ${setting}
+    #Click Element    ${setting}
     Wait Until Element Is Visible    ${Paketti}    60s
     : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > 3
@@ -944,7 +960,7 @@ updating setting telia ethernet capacity
     ${city_town-b}    set variable    //input[@name='productconfig_field_1_10']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
-    Click Element    ${setting}
+    #Click Element    ${setting}
     Wait Until Element Is Visible    ${street_add1-a}    60s
     input text    ${street_add1-a}    This is a test opportunity
     sleep    10s
