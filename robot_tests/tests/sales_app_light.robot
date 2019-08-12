@@ -747,7 +747,7 @@ Negative: Try to change account owner different from the group account owner
 
 Mobile coverage request redirects to Tellu
     [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
-    [Tags]  Summer-Test1     Lightning      BQA-10955
+    [Tags]  Summer-Test      BQA-10955      wip
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -760,7 +760,7 @@ Mobile coverage request redirects to Tellu
 
 Manual availability check redirects to Tellu
     [Documentation]     Check that manual availability check button from the opportunity page redirects to Tellu-system login.
-    [Tags]  Summer-Test     Lightning       BQA-10954
+    [Tags]  Summer-Test       BQA-10954     wip
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -770,13 +770,25 @@ Manual availability check redirects to Tellu
 
 Investment redirects to Tellu
     [Documentation]     In opportunity view clicking investment button redirects to Tellu-system login
-    [Tags]      Summer-Test     Lightning   BQA-10953
+    [Tags]      Summer-Test   BQA-10953     wip
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
     Wait element to load and click  //a[@title='Investment']
     Validate that Tellu login page opens
+
+Price input for unmodeled products in omniscript
+    [Tags]  Summer-Test     BQA-9160    Lightning
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer     ACTIVEACCOUNT
+    ClickingOnCPQ
+    Add product to cart (CPQ)  Datainfo DaaS-palvelu
+    Update products OTC and RC
+    Check prices are correct in quote line items
+    Go to Entity  ${OPPORTUNITY_NAME}
+    Check opportunity value is correct
 
 Lead_Creation
     [Tags]  SreeramE2E       Lightning

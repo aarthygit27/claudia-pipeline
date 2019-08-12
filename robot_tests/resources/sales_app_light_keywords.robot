@@ -2272,6 +2272,32 @@ Update products
     unselect frame
     Wait until page contains element    //h1/div[@title='${OPPORTUNITY_NAME}']  30s
 
+Update products OTC and RC
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Enabled   ${iframe}   60s
+    select frame    ${iframe}
+    Input Text  //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[4]/input      200
+    Input Text  //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[5]/input      200
+    Wait element to load and click      //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[8]/select
+    Click element   //table[@class='tg']/tbody//tr[3]/td[8]/select/option[@value='New Money-New Services']
+    Wait element to load and click  //form[@id="a1q4E000002zpz1QAA-12"]/div/div/button
+    sleep   20s
+    Wait element to load and click  //button[@id="View Quote"]
+    unselect frame
+    sleep   10s
+
+Check prices are correct in quote line items
+    sleep   10s
+    Wait until page contains element   //a/span[text()='Quote Line Items']      30s
+    Force click element   //a/span[text()='Quote Line Items']
+    Wait until element is visible   //table/tbody/tr/td[5]/span/span[text()='200,00 €']     30s
+    Wait until element is visible   //table/tbody/tr/td[6]/span/span[text()='200,00 €']     30s
+
+Check opportunity value is correct
+    ScrollUntillFound    //h3/button/span[text()='Opportunity Value and FYR']
+    Wait until page contains element    //span[text()='OneTime Total']/../../../div/div[2]/span/span[text()='200,00 €']     30s
+    Wait until page contains element    //span[text()='Recurring Total']/../../../div/div[2]/span/span[text()='200,00 €']   30s
+
 Check service contract is on Draft Status
     [Documentation]     On account page check service contracts and verify that created one is on draft status
     Wait element to load and click  ${ACCOUNT_RELATED}
