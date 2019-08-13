@@ -10,13 +10,7 @@ Resource          ../resources/PO_Light_keywords.robot
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
-    #General Setup    B2O
-    Go to   https://telia-fi--sitpo.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tc2l0cG8ubGlnaHRuaW5nLmZvcmNlLmNvbS9hcGV4L3Zsb2NpdHlfY210X19oeWJyaWRjcHE%2FaWQ9MDA2MjYwMDAwMEZRQ0FBIn0sInN0YXRlIjp7fX0%3D
-    Wait Until element is visible   id=username     30s
-    Input Text  id=username   saleadm@teliacompany.com.sitpo
-    Input Text   id =password  PahaPassu5
-    Click Element  id=Login
-    Execute Manual step  pages
+    General Setup    B2O
     Search and add product    Telia Multiservice NNI
     clicking on next button
     UpdatePageNextButton
@@ -121,7 +115,7 @@ Telia Ethernet capacity
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]   Run    B2B_Lightning
+    [Tags]   Run    B2B_Lightning_check
     ${prod_1}   set variable   Telia Arkkitehti jatkuva palvelu
     ${prod_2}   set variable    Muut asiantuntijapalvelut
     General Setup    B2B
