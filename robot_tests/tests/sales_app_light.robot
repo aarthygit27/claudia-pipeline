@@ -369,7 +369,7 @@ createAOppoViaSVE
     validateCreatedOppoForFYR    ${fyr}
 
 Closing Opportunity as Won with FYR below 3 KEUR
-    [Tags]    BQA-8794    Lightning  TestCheck
+    [Tags]    BQA-8794     TestCheck
     Closing Opportunity as Won with FYR    8    No
     #${FYR}=    set variable    //span[@title='FYR Total']/../div
     #Go To Salesforce and Login into Lightning
@@ -391,7 +391,7 @@ Closing Opportunity as Won with FYR below 3 KEUR
     #Log to console    The FYR value is ${FYR_value}
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
-    [Tags]    BQA-8795    Lightning     TestCheck
+    [Tags]    BQA-8795       TestCheck
     ${Edit_continuation}=    Set Variable    //div[@class='slds-form-element slds-form-element_readonly slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element']/div/button[@title='Edit Create Continuation Sales Opportunity?']
     Closing Opportunity as Won with FYR    200    Yes
     sleep    10s
@@ -405,7 +405,7 @@ Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     Capture Page Screenshot
 
 Closing Opportunity as Won with FYR greater than 100KEUR
-    [Tags]    BQA-8796    Lightning    TestCheck
+    [Tags]    BQA-8796       TestCheck
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
