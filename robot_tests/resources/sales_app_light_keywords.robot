@@ -968,7 +968,7 @@ Check original account owner and change if necessary
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
     log to console  ${account_owner}
     ${user_is_already_owner}=    Run Keyword And Return Status    Should Be Equal As Strings    ${account_owner}    Maris Steinbergs
-    Run Keyword If    ${user_is_already_owner}    Set Test Variable     ${NEW_OWNER}    B2Blightning DigiSales
+    Run Keyword If    ${user_is_already_owner}    Set Test Variable     ${NEW_OWNER}    B2B Lightning
     ...     ELSE    Set Test Variable   ${NEW_OWNER}    Maris Steinbergs
     Change account owner to     ${NEW_OWNER}
 
@@ -991,10 +991,6 @@ Validate that account owner has changed in Account Hierarchy
     Wait until page contains element    //table/tbody/tr[1]/td[4]/span[text()='${NEW_OWNER}']   30s
     Wait until page contains element    //table/tbody/tr[2]/td[4]/span[text()='${NEW_OWNER}']   30s
     Wait until page contains element    //table/tbody/tr[3]/td[4]/span[text()='${NEW_OWNER}']   30s
-    Wait until page contains element    //table/tbody/tr[4]/td[4]/span[text()='${NEW_OWNER}']   30s
-    Wait until page contains element    //table/tbody/tr[5]/td[4]/span[text()='${NEW_OWNER}']   30s
-    Wait until page contains element    //table/tbody/tr[6]/td[4]/span[text()='${NEW_OWNER}']   30s
-    Wait until page contains element    //table/tbody/tr[7]/td[4]/span[text()='${NEW_OWNER}']   30s
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
