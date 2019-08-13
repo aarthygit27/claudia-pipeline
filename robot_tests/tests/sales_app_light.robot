@@ -125,7 +125,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523    Lightning1    Summer-Test
+    [Tags]    BQA-8523    Lightning    Summer-Test
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -134,7 +134,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    Lightning1    Summer-Test
+    [Tags]    BQA-8524    Lightning    Summer-Test
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Remove change account owner
@@ -143,7 +143,7 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8525    Lightning1
+    [Tags]    BQA-8525    Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
@@ -151,7 +151,7 @@ Lightning: Sales admin Change Account owner
 
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8526    Lightning1
+    [Tags]    BQA-8526    Lightning
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
@@ -554,7 +554,7 @@ Automatic availability check B2O-Account
 
 Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
-    [Tags]    Lightning1    BQA-10334    Lightning1    Summer-Test
+    [Tags]    Lightning1    BQA-10334    Lightning    Summer-Test
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all existing contracts from Accounts Related tab
@@ -580,7 +580,7 @@ Create contact relationship for account
 
 Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
-    [Tags]    Lightning1    BQA-10736    Summer-Test
+    [Tags]    Lightning    BQA-10736    Summer-Test
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to    B2Blightning DigiSales
@@ -617,7 +617,7 @@ Delete team member as account owner
 
 Add an account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then add some user as a team member for business account
-    [Tags]    Summer-Test    BQA-10727    Lightning1
+    [Tags]    Summer-Test    BQA-10727    Lightning
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -627,7 +627,7 @@ Add an account team member as Sales Admin
 
 Edit team member's role as Sales Admin
     [Documentation]    Log in as Sales Admin and then edit existing team member's role for business account
-    [Tags]    Summer-Test    BQA-10728    Lightning1
+    [Tags]    Summer-Test    BQA-10728    Lightning
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -637,7 +637,7 @@ Edit team member's role as Sales Admin
 
 Delete account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then delete team member from business account
-    [Tags]    Summer-Test    BQA-10740    Lightning1
+    [Tags]    Summer-Test    BQA-10740    Lightning
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -647,7 +647,7 @@ Delete account team member as Sales Admin
 
 Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
-    [Tags]    Summer-Test    BQA-10737    Lightning1
+    [Tags]    Summer-Test    BQA-10737    Lightning
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Navigate to Account team members page
@@ -656,7 +656,7 @@ Add an account team member to Group
 
 Negative: Try to add account owner to Account team
     [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
-    [Tags]      Summer-Test     Lightning1
+    [Tags]      Summer-Test     Lightning
     Go To Salesforce and Login into Admin User
     Go to Entity  Aacon Oy
     Navigate to related tab
@@ -665,7 +665,7 @@ Negative: Try to add account owner to Account team
 
 Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
-    [Tags]      Summer-Test     Lightning1
+    [Tags]      Summer-Test     Lightning
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Add account owner to account team
@@ -673,7 +673,7 @@ Negative: Try to add group owner to group's account team
 
 Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
-    [Tags]    Summer-Test    BQA-10738    Lightning1
+    [Tags]    Summer-Test    BQA-10738    Lightning
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Navigate to Account team members page
@@ -682,7 +682,7 @@ Group: Edit team member's role
 
 Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
-    [Tags]    Summer-Test    BQA-10739    Lightning1
+    [Tags]    Summer-Test    BQA-10739    Lightning
     Go To Salesforce and Login into Admin User
     Go to Entity  YIT
     Navigate to Account team members page
@@ -717,7 +717,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]  Summer-Test     BQA-5729    Lightning1
+    [Tags]  Summer-Test     BQA-5729    Lightning
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User

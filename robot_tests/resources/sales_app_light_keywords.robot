@@ -483,6 +483,7 @@ Cancel Opportunity and Validate
     #click visible element    //div[@class="uiInput uiInput--default"]//a[@class="select"]
     #Press Key    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
     #Click Element    //a[@title="${stage}"]
+    Sleep  30s
     Save
     Validate error message
     Cancel and save
