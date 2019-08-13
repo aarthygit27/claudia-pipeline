@@ -115,7 +115,7 @@ Telia Ethernet capacity
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]   Run    B2B_Lightning_check
+        [Tags]   Run    B2B_Lightning_check
     ${prod_1}   set variable   Telia Arkkitehti jatkuva palvelu
     ${prod_2}   set variable    Muut asiantuntijapalvelut
     General Setup    B2B

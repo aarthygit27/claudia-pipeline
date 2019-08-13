@@ -362,7 +362,7 @@ Add Telia Konsultointi jatkuva palvelu
     [Arguments]    ${env}=devpo
     Adding Product    Telia Konsultointi jatkuva palvelu
     run keyword if    '${env}'=='sitpo'    Click_Settings_sitpo_SAP    Telia Konsultointi jatkuva palvelu
-    ...    ELSE    Click_Settings_new    Telia Konsultointi jatkuva palvelu
+    ...    ELSE    Click_Settings_Telia Konsultointi jatkuva palvelunew    Telia Konsultointi jatkuva palvelu
     #Click_Settings_new    Telia Konsultointi jatkuva palvelu
     Update_settings    d    yes
 

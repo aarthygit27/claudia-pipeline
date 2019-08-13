@@ -1,7 +1,7 @@
 *** Settings ***
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
-Resource          ../resources/multibella_keywords.robot
+Resource          ../resourceGeneral Setups/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
 
 *** Keywords ***
@@ -126,6 +126,7 @@ update_setting1
     click element    ${closing}
 
 Searching and adding product
+
     [Arguments]   ${pname}=${product_name}
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
@@ -313,10 +314,10 @@ Add_child_product
 
 Click Settings
 
-    Reload page
+    #Reload page
     sleep  15s
-    Wait until element is visible   //div[contains(@class,'slds')]/iframe     60s
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    #Wait until element is visible   //div[contains(@class,'slds')]/iframe     60s
+    #select frame  xpath=//div[contains(@class,'slds')]/iframe
     Wait until element is visible   ${SETTINGS}   60s
     Click Button    ${SETTINGS}
     sleep  10s
@@ -477,6 +478,25 @@ Create_Order
     ClickonCreateOrderButton
     OpenOrderPage
     NextButtonOnOrderPage
+
+    Wait Until Element Is Not Visible    ${spinner}    120s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    ${Status}=    Run Keyword and Return Status    Element should be visible     //section[@id='OrderTypeCheck']/section/div/div/div/h1
+    Run Keyword if    ${Status}    Close and Submit
+    Run Keyword Unless    ${Status}    Enter Details
+
+Close and Submit
+
+    ${submit_order}=    Set Variable    //span[text()='Yes']
+    Click Element    //div[@id='Close']/p
+    sleep  15s
+    ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
+    Run Keyword if    ${status}    click element    ${submit_order}
+    Run Keyword Unless    ${status}    Submit Order Button
+
+
+Enter Details
+
     Select Account
     sleep  5s
     select contact
