@@ -210,7 +210,7 @@ Close All Tabs
     #Should Be Equal As Integers     ${current}    0
     @{locators}=     Get Webelements    xpath=${TABS_OPENED}//div[contains(@class,'close')]
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}   IN    @{locators}
     \       Run Keyword and Ignore Error    Close Tab
 
 Close Tab
@@ -301,7 +301,7 @@ Click specific element
     [Arguments]     ${element}
     @{locators}=     Get Webelements    xpath=${element}
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}  IN    @{locators}
     Click Element     xpath=${element}
 
 Go to Contacts
@@ -341,7 +341,7 @@ Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
     Press Enter On   ${field}
-    Click Visible Element   //div[contains(@class,'primaryLabel') and @title='${value}']
+    Click Visible Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
     Sleep    2s
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
     #Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      60s

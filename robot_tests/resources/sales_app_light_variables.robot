@@ -7,8 +7,7 @@ ${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
-#${CLASSIC_MENU}    //*[@id="userNav"]
-${CLASSIC_MENU}     //a[@class="switch-to-lightning"]
+${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
 ${APP_LAUNCHER}    //button[contains(@class,'salesforceIdentityAppLauncherHeader')]
@@ -18,9 +17,10 @@ ${SALES_APP_HOME}    //a[@title='Home']
 #${SEARCH_SALESFORCE}    //*[@title='Search Salesforce' or @title='Search Opportunities and more']
 ${SEARCH_SALESFORCE}    //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
 ${SEARCH_RESULTS}    //div[contains(@class,'forceSearchScopesList')]//*[text()='Search Results']
-#${TABLE_HEADER}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${TABLE_HEADERForEvent}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 #//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ENTITY_HEADER}    //header[@class='forceHighlightsPanel']
+${Select task}       //*[@title="Start Date & Time"]
 ${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a
 ${ACCOUNT_HEADER}    //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}    //div[@class='modal-container slds-modal__container']
@@ -198,7 +198,7 @@ ${p}              b2o
 ${product_name}    Telia Robotics
 ${product_quantity}    1
 ${NRC}            35
-${RC}             50
+${RC}             50000
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
 ${360_VIEW}     //a[@title='360 View']

@@ -2,7 +2,7 @@
 ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${ENVIRONMENT_CONSOLE}                      release
-${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
+${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
 ${PASSWORDCONSOLE}                          PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
@@ -40,8 +40,8 @@ ${CONTACT_ACCOUNTNAME}                      Aacon Oy
 #${CONTACT_EMAIL}                            master1@email.com
 ${CONTACT_MOBILE}                            +358222222222
 ${MOBILE_NUM}                               //input[@class=' input' and @type='tel']
-${FIRST_NAME_FIELD}                               //input[@placeholder='First Name']
-${LAST_NAME_FIELD}                                //input[@placeholder='Last Name']
+${FIRST_NAME_FIELD}                         //input[@placeholder='First Name']
+${LAST_NAME_FIELD}                          //input[@placeholder='Last Name']
 ${ACCOUNT_NAME}                             //input[@title='Search Accounts']
 ${PRIMARY_EMAIL}                            //input[@type='email']
 ${SAVE_BUTTON}                              //button[@title="Save"]
