@@ -1019,28 +1019,29 @@ Check original account owner and change if necessary
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
     log to console    ${account_owner}
     ${user_is_already_owner}=    Run Keyword And Return Status    Should Be Equal As Strings    ${account_owner}    Maris Steinbergs
-    Run Keyword If    ${user_is_already_owner}    Set Test Variable    ${NEW_OWNER}    B2Blightning DigiSales
-    ...    ELSE    Set Test Variable    ${NEW_OWNER}    Maris Steinbergs
-    Change account owner to    ${NEW_OWNER}
+    Run Keyword If    ${user_is_already_owner}    Set Test Variable     ${NEW_OWNER}    B2B Lightning
+    ...     ELSE    Set Test Variable   ${NEW_OWNER}    Maris Steinbergs
+    Change account owner to     ${NEW_OWNER}
 
 Validate that account owner was changed successfully
-    [Arguments]    ${validated_owner}
-    [Documentation]    Validates that account owner change was successfull. Takes the name of the new owner as parameter.
-    ${new_owner}=    Get Text    //div[@class='ownerName']//a
-    log to console    ${new_owner}
+    [Documentation]     Validates that account owner change was successfull. Takes the name of the new owner as parameter.
+    [Arguments]     ${validated_owner}
+    Compare owner names  ${validated_owner}
+
+Compare owner names
+    [Arguments]     ${validated_owner}
+    Wait until page contains element   //div[@class='ownerName']//a    30s
+    ${new_owner}=       Get Text    //div[@class='ownerName']//a
+    log to console      ${new_owner}
     Should Be Equal As Strings    ${validated_owner}    ${new_owner}
 
 Validate that account owner has changed in Account Hierarchy
-    [Documentation]    View account hierarchy and check that new owner is copied down in hierarchy
-    Wait element to load and click    //button[@title='View Account Hierarchy']
-    Wait element to load and click    //button[@title='Expand']
-    Wait until page contains element    //table/tbody/tr[1]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[2]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[3]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[4]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[5]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[6]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[7]/td[4]/span[text()='${NEW_OWNER}']    30s
+    [Documentation]     View account hierarchy and check that new owner is copied down in hierarchy
+    Wait element to load and click  //button[@title='View Account Hierarchy']
+    Wait element to load and click  //button[@title='Expand']
+    Wait until page contains element    //table/tbody/tr[1]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[2]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[3]/td[4]/span[text()='${NEW_OWNER}']   30s
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
@@ -2336,6 +2337,32 @@ Update products
     unselect frame
     Wait until page contains element    //h1/div[@title='${OPPORTUNITY_NAME}']    30s
 
+Update products OTC and RC
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Enabled   ${iframe}   60s
+    select frame    ${iframe}
+    Input Text  //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[4]/input      200
+    Input Text  //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[5]/input      200
+    Wait element to load and click      //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[8]/select
+    Click element   //table[@class='tg']/tbody//tr[3]/td[8]/select/option[@value='New Money-New Services']
+    Wait element to load and click  //form[@id="a1q4E000002zpz1QAA-12"]/div/div/button
+    sleep   20s
+    Wait element to load and click  //button[@id="View Quote"]
+    unselect frame
+    sleep   10s
+
+Check prices are correct in quote line items
+    sleep   10s
+    Wait until page contains element   //a/span[text()='Quote Line Items']      30s
+    Force click element   //a/span[text()='Quote Line Items']
+    Wait until element is visible   //table/tbody/tr/td[5]/span/span[text()='200,00 €']     30s
+    Wait until element is visible   //table/tbody/tr/td[6]/span/span[text()='200,00 €']     30s
+
+Check opportunity value is correct
+    ScrollUntillFound    //h3/button/span[text()='Opportunity Value and FYR']
+    Wait until page contains element    //span[text()='OneTime Total']/../../../div/div[2]/span/span[text()='200,00 €']     30s
+    Wait until page contains element    //span[text()='Recurring Total']/../../../div/div[2]/span/span[text()='200,00 €']   30s
+
 Check service contract is on Draft Status
     [Documentation]    On account page check service contracts and verify that created one is on draft status
     Wait element to load and click    ${ACCOUNT_RELATED}
@@ -2410,6 +2437,7 @@ Navigate to related tab
 
 Add account owner to account team
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
+    Navigate to view    Account Team Members
     Add new team member  ${account_owner}
 
 Validate that account owner can not be added to account team
@@ -2419,13 +2447,14 @@ Validate that account owner can not be added to account team
 Add new team member
     [Documentation]     Add new team member to account
     [Arguments]     ${new_team_member}      ${role}=--None--
+    sleep   10s
     Wait until page contains element    //ul/li/a[@title='New']     30s
     Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']
     Input text  //input[@title='Search People']     ${new_team_member}
     Wait element to load and click  //a[@role='option']/div/div[@title='${new_team_member}']
     Wait element to load and click  //a[text()='--None--']
-    Wait element to load and click  //ul/li/a[text()='${role}']
+    Click element  //ul/li/a[@title='${role}']
     Click element   //button[@title='Save']
     sleep   10s
 
@@ -2434,9 +2463,10 @@ Validate that team member is created succesfully
     Wait until page contains element   //table/tbody/tr/th/span/span[text()='${name}']     30s
     Wait until page contains element    //table/tbody/tr/th/span/span[text()='${name}']/../../../td[2]/span/span[text()='${role}']
 
-Navigate to Account team members page
-    ScrollUntillFound  //span[text()='Account Team Members']
-    Click element   //span[text()='Account Team Members']
+Navigate to view
+    [Arguments]     ${title}
+    ScrollUntillFound  //span[text()='${title}']
+    Click element   //span[text()='${title}']
 
 Try to add same team member twice
     [Documentation]     Tries to add same user twice as a team member for business account.
@@ -2477,10 +2507,31 @@ Open change owner view and fill the form
     [Arguments]    ${username}
     Wait element to load and click    //button[@title='Change Owner']
     Wait until page contains element    //input[@title='Search People']
-    Input text    //input[@title='Search People']    ${username}
-    Wait element to load and click    //a[@role='option']/div/div[@title='${username}']
-    Click element    //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
-    sleep    40s
+    Input text      //input[@title='Search People']     ${username}
+    Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
+    Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
+    sleep   40s
+
+Validate that account owner cannot be different from the group account owner
+    Wait until page contains element    //span[text()='Owner ID: Account Owner cannot be different from the Group Account owner']   30s
+    Click element   //button[@title='Cancel']
+
+Navigate to Account History
+    ScrollUntillFound  //a/span[text()='Account History']
+    Click element   //a/span[text()='Account History']
+
+Validate that Account history contains record
+    [Arguments]     ${user}
+    Wait until page contains element    //table/tbody/tr[1]/td[5]//span[text()='${user}']
+
+Validate that Tellu login page opens
+    [Documentation]     Validate that Tellu login page opens in new window.
+    sleep   10s
+    Select Window   NEW
+    Maximize browser window
+    Execute Javascript    window.location.reload(false);
+    # Title should be     Teamworks Process Server Console
+    Wait until page contains element    //form[@name='login']       30s
 
 Enter Random Data to Lead Web Form
     [Arguments]    ${fname}    ${lname}    ${email}    ${mobile}    ${title}    ${desc}

@@ -125,7 +125,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523    Lightning    Summer-Test
+    [Tags]    BQA-8523    Lightning     Summer-Test     BQA-10932
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -508,13 +508,14 @@ Automatic availability check B2O-Account
     Validate point to point address details
     Select B2O product available and connect existing opportunity
     ClickingOnCPQ
-    Check the CPQ-cart contains the wanted products    MetroEthernet Kapasiteetti
-    #Delete all contracts from account
-    #    [Tags]    Lightning
-    #    [Documentation]    Delete all service contracts from account related tab
-    #    Go To Salesforce and Login into Lightning User
-    #    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    #    Delete all existing contracts from Accounts Related tab
+    Check the CPQ-cart contains the wanted products     MetroEthernet Kapasiteetti
+
+# Delete all contracts from account
+#    [Tags]  Lightning
+#    [Documentation]     Delete all service contracts from account related tab
+#    Go To Salesforce and Login into Admin User
+#    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+#    Delete all existing contracts from Accounts Related tab
 
 Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
@@ -547,35 +548,36 @@ Change business account owner
     [Tags]    Lightning    BQA-10736    Summer-Test
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Change account owner to    B2Blightning DigiSales
+    Change account owner to     B2B Lightning
+    Validate that account owner was changed successfully    B2B Lightning
 
 Add an account team member as account owner
-    [Documentation]    Adds some user as a team member to business account
-    [Tags]    Lightning    BQA-10524    Summer-Test
+    [Tags]  Lightning     BQA-10524     Summer-Test
+    [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
-    [Documentation]    Log in as B2B-sales user and edit team member's role when you are the owner of the account.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]  Summer-Test     BQA-10948    Lightning
+    [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account. 
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully
     Change team member role from account
 
 Delete team member as account owner
-    [Documentation]    Log in as B2B-sales user and remove team member when you are the owner of the account.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]  Summer-Test     Lightning   BQA-10949
+    [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
@@ -585,7 +587,7 @@ Add an account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
@@ -595,7 +597,7 @@ Edit team member's role as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -605,7 +607,7 @@ Delete account team member as Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
@@ -613,14 +615,14 @@ Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
     [Tags]    Summer-Test    BQA-10737    Lightning
     Go To Salesforce and Login into Admin User
-    Go to Entity  YIT
-    Navigate to Account team members page
+    Go to Entity  Digita
+    Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully
 
 Negative: Try to add account owner to Account team
     [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
-    [Tags]      Summer-Test     Lightning
+    [Tags]      Summer-Test     Lightning   BQA-10952
     Go To Salesforce and Login into Admin User
     Go to Entity  Aacon Oy
     Navigate to related tab
@@ -629,9 +631,9 @@ Negative: Try to add account owner to Account team
 
 Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
-    [Tags]      Summer-Test     Lightning
+    [Tags]      Summer-Test     Lightning   BQA-10951
     Go To Salesforce and Login into Admin User
-    Go to Entity  YIT
+    Go to Entity  Digita
     Add account owner to account team
     Validate that account owner can not be added to account team
 
@@ -639,8 +641,8 @@ Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
     [Tags]    Summer-Test    BQA-10738    Lightning
     Go To Salesforce and Login into Admin User
-    Go to Entity  YIT
-    Navigate to Account team members page
+    Go to Entity  Digita
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully
     Change team member role from account
 
@@ -648,14 +650,25 @@ Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
     [Tags]    Summer-Test    BQA-10739    Lightning
     Go To Salesforce and Login into Admin User
-    Go to Entity  YIT
-    Navigate to Account team members page
+    Go to Entity  Digita
+    Navigate to view    Account Team Members
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
 
+Negative: Try to add same team member twice to account team
+    [Documentation]     Expected result: It's not possible to add same team member twice to business account's account team.
+    [Tags]  Summer-Test     Lightning
+    Go To Salesforce and Login into Admin User
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to related tab
+    Navigate to view    Account Team Members
+    Try to add same team member twice  B2B Lightning
+    Validate that same user can not be added twice to account team
+    Delete team member from account
+
 Negative: Check external data is not editable when creating new contact
-    [Documentation]    Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]      Summer-Test     BQA-10945    Lightning
+    [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Navigate to create new contact
@@ -663,8 +676,8 @@ Negative: Check external data is not editable when creating new contact
     Close contact form
 
 Negative: Check external data is not editable with existing contact
-    [Documentation]    Search contact with external data. Click edit and chect that external data fields are read-only.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]      Summer-Test     BQA-10946    Lightning
+    [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
     Open edit contact form
@@ -672,8 +685,8 @@ Negative: Check external data is not editable with existing contact
     Close contact form
 
 Negative: Check external data is not editable from account contact relationship view
-    [Documentation]    Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
-    [Tags]    Summer-Test    noticket    Lightning
+    [Tags]      Summer-Test     BQA-10947    Lightning
+    [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
     Navigate to related tab
@@ -681,22 +694,99 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]  Summer-Test     BQA-5729
-    [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
+    [Tags]  Summer-Test     BQA-1937    Lightning
+    [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that 
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita Oy
     Navigate to related tab
-    Navigate to Account team members page
+    Navigate to view    Account Team Members
     Add new team member  Sales Admin    Account Manager
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Add new team member  B2O NetworkSales   Account Manager
     Validate that team member is created succesfully    B2O,NetworkSales    Account Manager
-    Add new team member  Forecast Test  ICT Architect
-    Validate that team member is created succesfully    Forecast,Test   ICT Architect
+    Add new team member  B2B Lightning  ICT Architect
+    Validate that team member is created succesfully    B2B,Lightning   ICT Architect
     Try to add same team member twice   GESB Integration
     Validate that same user can not be added twice to account team
     Delete team member from account
+
+Group: Account team member is added as group owner
+    [Documentation]     Account team member is added as group owner. History is checked and it should contain record about changing the owner.
+    ...     Check that new owner is removed from the account team.
+    [Tags]      Summer-Test     Lightning   BQA-10933
+    Go To Salesforce and Login into Admin User
+    Go to Entity  Digita
+    Navigate to view    Account Team Members
+    Add new team member     Sales Admin
+    Validate that team member is created succesfully  Sales,Admin
+    Go to Entity  Digita
+    Change account owner to     Sales Admin
+    Validate that account owner was changed successfully  Sales Admin
+    Navigate to view    Account Team Members
+    Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
+    Go to Entity  Digita
+    Navigate to Account History
+    Validate that Account history contains record   Sales Admin
+    Go to Entity  Digita
+    Change account owner to  B2B Lightning
+    Validate that account owner was changed successfully  B2B Lightning
+
+Negative: Try to change account owner different from the group account owner
+    [Documentation]     Log in as sales admin and find Business account from group hierarchy. Try to change the Business Account owner different from
+    ...     the group account owner. This should not be possible.
+    [Tags]  Summer-Test     Lightning   BQA-10968
+    Go To Salesforce and Login into Admin User
+    ${group_account_owner}=    Set variable     Maris Steinbergs
+    Go to Entity  YIT Oyj
+    Compare owner names  ${group_account_owner}
+    Change account owner to  Sales Admin
+    Validate that account owner cannot be different from the group account owner
+
+Mobile coverage request redirects to Tellu
+    [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
+    [Tags]  Summer-Test      BQA-10955      wip
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    ${status}=  Run keyword and return status    Wait element to load and click  //a[@title='Mobile Coverage Request']
+    Run keyword if      ${status} == False    Force click element  //a[@title='Show 9 more actions']
+    Run keyword if      ${status} == False    Click element   //a[@title='Mobile Coverage Request']
+    Sleep   10s
+    Validate that Tellu login page opens
+
+Manual availability check redirects to Tellu
+    [Documentation]     Check that manual availability check button from the opportunity page redirects to Tellu-system login.
+    [Tags]  Summer-Test       BQA-10954     wip
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    Wait element to load and click  //a[@title='Manual Availability Check']
+    Validate that Tellu login page opens
+
+Investment redirects to Tellu
+    [Documentation]     In opportunity view clicking investment button redirects to Tellu-system login
+    [Tags]      Summer-Test   BQA-10953     wip
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    Wait element to load and click  //a[@title='Investment']
+    Validate that Tellu login page opens
+
+Price input for unmodeled products in omniscript
+    [Tags]  Summer-Test     BQA-9160    Lightning
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer     ACTIVEACCOUNT
+    ClickingOnCPQ
+    Add product to cart (CPQ)  Datainfo DaaS-palvelu
+    Update products OTC and RC
+    Check prices are correct in quote line items
+    Go to Entity  ${OPPORTUNITY_NAME}
+    Check opportunity value is correct
 
 Lead_Creation
     [Documentation]    This TC creates lead from the Web-to-lead form and validate the same in Claudia leads tab,
