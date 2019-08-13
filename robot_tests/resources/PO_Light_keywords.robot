@@ -400,7 +400,7 @@ Update setting Muut asiantuntijapalvelut
     ${Kustannus}=    set variable    //input[@name='productconfig_field_0_1']
     ${Kilometrikorvaus}=    set variable    //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
     #${Kilometrit}=    set variable    //input[contains(@class,'ng-valid')][@value='0']
-    ${Kilometrit}=    set variable     //input[@name='productconfig_field_0_6']
+    ${Kilometrit}=    set variable     //input[@name='productconfig_field_0_4']
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep    5s
     input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
@@ -412,6 +412,7 @@ Update setting Muut asiantuntijapalvelut
     sleep    10s
     click element    ${CHILD_SETTINGS}
     sleep    10s
+    Wait until element is visible  ${Kilometrit}  60s
     input text    ${Kilometrit}    100
     sleep    5s
     #Fill Laskutuksen lisätieto
