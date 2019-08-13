@@ -479,7 +479,7 @@ Create_Order
     OpenOrderPage
     NextButtonOnOrderPage
 
-    #Wait Until Element Is Not Visible    ${spinner}    120s
+
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     ${Status}=    Run Keyword and Return Status    Element should be visible     //section[@id='OrderTypeCheck']/section/div/div/div/h1
     Run Keyword if    ${Status}    Close and Submit

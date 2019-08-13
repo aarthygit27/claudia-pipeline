@@ -10,6 +10,7 @@ Resource          ../resources/PO_Light_keywords.robot
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
+    [Tags]    Submit issue
     General Setup    B2O
     Search and add product    Telia Multiservice NNI
     clicking on next button
@@ -17,6 +18,7 @@ Product1:Telia Multiservice NNI
     Create_Order
 
 Product2:Telia Ethernet Operator Subscription
+    [Tags]    Submit issue
     General Setup    B2O
     Search and add product    Telia Ethernet Operator Subscription
     clicking on next button
@@ -129,7 +131,7 @@ Test scenario 1:Telia Architect
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
-    [Tags]  Trial Run   B2B_Lightning_check
+    [Tags]  Trial Run
     ${prod_1}   set variable   Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}   set variable    Telia Projektijohtaminen varallaolo ja matkustus
     General Setup    B2B
@@ -145,7 +147,7 @@ Test scenario 2: Telia Project management
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]   Run    B2B_Lightning
+    [Tags]   Run    B2B_Lightning_check
     ${prod_1}   set variable   Telia Konsultointi jatkuva palvelu
     ${prod_2}   set variable    Telia Konsultointi varallaolo ja matkustus
     General Setup    B2B
