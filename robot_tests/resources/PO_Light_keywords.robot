@@ -472,10 +472,9 @@ UpdatePageNextButton
 Create_Order
 
     View Open Quote
-    Wait Until Element Is Visible    //div[@title='CPQ']    120s
-    ${status}    Run Keyword And Return Status    Force click element    //div[@title='CPQ']
-    run keyword if    ${status} == False    Run Keywords    reload page    Wait Until Element Is Visible    //div[@title='CPQ']    60s
-    ...    Click Element    //div[@title='CPQ']
+    Reload page
+    Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
+    Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrderButton
     OpenOrderPage
     NextButtonOnOrderPage
@@ -511,10 +510,9 @@ Enter Details
 Create_Order for multiple products
     [Arguments]    ${prod_1}  ${prod_2}
     View Open Quote
-    Wait Until Element Is Visible    //div[@title='CPQ']    120s
-    ${status}    Run Keyword And Return Status    Force click element    //div[@title='CPQ']
-    run keyword if    ${status} == False    Run Keywords    reload page    Wait Until Element Is Visible    //div[@title='CPQ']    60s
-    ...    Click Element    //div[@title='CPQ']
+    Reload page
+    Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
+    Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrderButton
     OpenOrderPage
     NextButtonOnOrderPage
