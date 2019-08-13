@@ -117,11 +117,11 @@ update_setting1
     Select Frame    ${iframe}
     #Click Element    ${setting}
     Wait Until Element Is Visible    ${street_add1}    60s
-    input text    ${street_add1}    This is a test opportunity
+    Press Key    ${street_add1}    This is a test opportunity
     sleep    10s
-    input text    ${street_add2}    This is a test opportunity
+    Press Key     ${street_add2}    This is a test opportunity
     sleep    10s
-    input text    ${postal_code}    00100
+    Press Key    ${postal_code}    00100
     sleep    10s
     click element    ${closing}
 
@@ -709,33 +709,33 @@ update_setting2
     Select Frame    ${iframe}
     #Click Element    ${setting}
     Wait Until Element Is Visible    ${street_add1-a}    60s
-    input text    ${street_add1-a}    This is a test opportunity
+    Press Key     ${street_add1-a}    This is a test opportunity
     sleep    10s
     click element    ${street_add2-a}
     sleep    10s
-    input text    ${street_add2-a}    This is a test opportunity
+    Press Key    ${street_add2-a}    This is a test opportunity
     sleep    10s
     click element    ${postal_code-a}
     sleep    10s
-    input text    ${postal_code-a}    00100
+    Press Key     ${postal_code-a}    00100
     sleep    10s
     click element    ${city_town-a}
     sleep    10s
-    input text    ${city_town-a}    helsinki
+    Press Key     ${city_town-a}    helsinki
     sleep    10s
-    input text    ${street_add1-a}    This is a test opportunity
+    Press Key    ${street_add1-a}    This is a test opportunity
     sleep    10s
     click element    ${street_add2-a}
     sleep    10s
-    input text    ${street_add2-a}    This is a test opportunity
+    Press Key    ${street_add2-a}    This is a test opportunity
     sleep    10s
     click element    ${postal_code-a}
     sleep    10s
-    input text    ${postal_code-a}    00100
+    Press Key    ${postal_code-a}    00100
     sleep    10s
     click element    ${city_town-a}
     sleep    10s
-    input text    ${city_town-a}    helsinki
+    Press Key     ${city_town-a}    helsinki
     sleep    10s
     click element    ${closing}
 
@@ -748,7 +748,7 @@ update_setting_Ethernet Nordic E-LAN EVP-LAN
     Select Frame    ${iframe}
     #Click Element    ${setting}
     Wait Until Element Is Visible    ${ Network bridge }    60s
-    input text    ${ Network bridge }    This is a test opportunity
+    Press Key    ${ Network bridge }    This is a test opportunity
     helinsiki_address
     click element    ${closing}
     Unselect Frame
@@ -778,17 +778,17 @@ helinsiki_address
     sleep    10s
     click element    ${street_add1}
     sleep    10s
-    input text    ${street_add1}    This is a test opportunity
+    Press Key     ${street_add1}    This is a test opportunity
     sleep    10s
     click element    ${street_add2}
     sleep    10s
-    input text    ${street_add2}    99
+    Press Key     ${street_add2}    99
     sleep    10s
-    input text    ${postal_code}    00100
+    Press Key     ${postal_code}    00100
     sleep    10s
     click element    ${city}
     sleep    10s
-    input text    ${city}    helsinki
+    Press Key    ${city}    helsinki
     sleep    10s
 
 update_setting_Telia Ethernet subscription
@@ -804,11 +804,11 @@ update_setting_Telia Ethernet subscription
     #Click Element    ${setting}
     sleep    5s
     Wait Until Element Is Visible    ${E_NNI-ID}    60s
-    Input Text    ${E_NNI-ID}    10
+    Press Key     ${E_NNI-ID}    10
     sleep    5s
     Click Element    ${E-NNI S-Tag VLAN}
     sleep    10s
-    input text    ${E-NNI S-Tag VLAN}    100
+    Press Key     ${E-NNI S-Tag VLAN}    100
     sleep    5s
     Click Element    ${Interface}
     Click Element    ${option}
@@ -836,15 +836,15 @@ Fill Laskutuksen lisätieto
     ${Laskutuksen lisätieto 3}=    set variable    //input[@name='productconfig_field_0_2']
     ${Laskutuksen lisätieto 4}=    set variable    //input[@name='productconfig_field_0_3']
     ${Laskutuksen lisätieto 5}=    set variable    //input[@name='productconfig_field_0_4']
-    input text    ${Laskutuksen lisätieto 1}    test order by robot framework.L1
+    Press Key     ${Laskutuksen lisätieto 1}    test order by robot framework.L1
     sleep    3s
-    input text    ${Laskutuksen lisätieto 2}    test order by robot framework.L2
+    Press Key    ${Laskutuksen lisätieto 2}    test order by robot framework.L2
     sleep    3s
-    input text    ${Laskutuksen lisätieto 3}    test order by robot framework.L3
+    Press Key     ${Laskutuksen lisätieto 3}    test order by robot framework.L3
     sleep    3s
-    input text    ${Laskutuksen lisätieto 4}    test order by robot framework.L4
+    Press Key    ${Laskutuksen lisätieto 4}    test order by robot framework.L4
     sleep    3s
-    input text    ${Laskutuksen lisätieto 5}    test order by robot framework.L5
+    Press Key   ${Laskutuksen lisätieto 5}    test order by robot framework.L5
     sleep    3s
 
 update_setting_TeliaSign
