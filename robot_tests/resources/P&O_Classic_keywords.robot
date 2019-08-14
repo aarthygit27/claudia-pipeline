@@ -866,14 +866,14 @@ Addtional data - Professional Products
     [Arguments]   ${prod_1}   ${prod_2}
     [Documentation]    Used for selecting \ requested action date for each parent product
     ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
-    sleep    120s
+    sleep    60s
 
     ${status}    Run Keyword and Return Status    Page should contain element    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_1}')]//following::input[2]
     Log to console    ${prod_1}
-    Run Keyword if    ${status}    Pick Action Date - Professional Products    ${prod_1}
+    Run Keyword if    ${status}    Pick Action Date with product    ${prod_1}
     ${status}    Run Keyword and Return Status    Page should contain element    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_2}')]//following::input[2]
     Log to console    ${prod_2}
-    Run Keyword if    ${status}    Pick Action Date - Professional Products     ${prod_2}
+    Run Keyword if    ${status}    Pick Action Date with product     ${prod_2}
     sleep  10s
     Click Element    ${additional_info_next_button}
 
@@ -1476,6 +1476,12 @@ create order sitpo - Professional Products
     sleep    10s
     Credit score validation
     View Open Quote
+    sleep  10s
+
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword if    ${contains}    go to classic
+
     Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
     click button    //td[@id='topButtonRow']//input[@title='CPQ']
     Log To Console    create order
@@ -1494,14 +1500,22 @@ create order sitpo - Professional Products
     Run Keyword if    ${Status}    Close and Submit
     Run Keyword Unless    ${Status}    Enter Details -Professional Products  ${Product_count}  ${prod_1}   ${prod_2}
 
+
 Close and Submit
 
     ${submit_order}=    Set Variable    //span[text()='Yes']
     Click Element    //div[@id='Close']/p
+
     ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
     Run Keyword if    ${status}    click element    ${submit_order}
-    Run Keyword Unless    ${status}    Submit Order Page
-    #Run Keyword Unless    ${status}    click element   //div[@id='Clone']//following::input[1]
+    sleep   10s
+
+    ${status}    Run Keyword and Return Status    Page Should contain Element   //div[@id='Clone']//following::input[1]
+    Run Keyword if  ${status}  click element  //div[@id='Clone']//following::input[1]
+
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword if    ${contains}    click element    //div[@title='Submit Order']
 
 Enter Details -Professional Products
     [Arguments]        ${Product_count}     ${prod_1}   ${prod_2}
@@ -1518,11 +1532,17 @@ Enter Details -Professional Products
     sleep    3s
     Select Owner
     sleep    10s
+
     ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
     Run Keyword if    ${status}    click element    ${submit_order}
     sleep   10s
-    Run Keyword Unless    ${status}    Submit Order Page
-    #click element   //div[@id='Clone']//following::input[1]
+
+    ${status}    Run Keyword and Return Status    Page Should contain Element   //div[@id='Clone']//following::input[1]
+    Run Keyword if  ${status}  click element  //div[@id='Clone']//following::input[1]
+
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword if    ${contains}    click element    //div[@title='Submit Order']
 
 Enter Details
     ${submit_order}=    Set Variable    //span[text()='Yes']
@@ -1534,11 +1554,20 @@ Enter Details
     sleep    3s
     Select Owner
     sleep    10s
+
     ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
     Run Keyword if    ${status}    click element    ${submit_order}
     sleep   10s
-    Run Keyword Unless    ${status}   Submit Order Page
-    #click element   //div[@id='Clone']//following::input[1]
+
+    ${status}    Run Keyword and Return Status    Page Should contain Element   //div[@id='Clone']//following::input[1]
+    Run Keyword if  ${status}  click element  //div[@id='Clone']//following::input[1]
+
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword if    ${contains}    click element    //div[@title='Submit Order']
+
+
+
 
 select order contacts sitpo
     #${contact_search_title}=    Set Variable    //h3[text()='Contact Search']

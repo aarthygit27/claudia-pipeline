@@ -14,7 +14,7 @@ Resource          ..${/}resources${/}common.robot
 *** Test Cases ***
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]    BQA-8504    PO1    PO
+    [Tags]    BQA-8504    PO1    Classic_run
     ${prod_1}   set variable   Telia Arkkitehti jatkuva palvelu
     ${prod_2}   set variable    Muut asiantuntijapalvelut
     General test setup    Aacon Oy    b2b    sitpo
@@ -29,7 +29,7 @@ Test scenario 1:Telia Architect
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
-    [Tags]    BQA-8790    PO1    Rerun
+    [Tags]    BQA-8790    PO1    Classic_run
     ${prod_1}   set variable   Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}   set variable    Telia Projektijohtaminen varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -42,7 +42,7 @@ Test scenario 2: Telia Project management
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]    BQA-9189    PO1    Rerun
+    [Tags]    BQA-9189    PO1    Classic_run
     ${prod_1}   set variable   Telia Konsultointi jatkuva palvelu
     ${prod_2}   set variable    Telia Konsultointi varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -50,9 +50,6 @@ Test scenario 3:Telia Consulting
     Add Telia Konsultointi jatkuva palvelu   sitpo
     Search Products    Telia Konsultointi varallaolo ja matkustus
     Add Telia Konsultointi varallaolo ja matkustus   sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -64,13 +61,9 @@ Test scenario 4: Key Customer Service Desk
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
-    #Search and add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus jatkuva palvelu
     Capture Page Screenshot
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -85,9 +78,6 @@ Test scenario 5: Key Customer Service Desk
     Search and add Avainasiakaspalvelukeskus
     Search Products    Avainasiakaspalvelukeskus kertapalvelu
     Add Avainasiakaspalvelukeskus kertapalvelu  sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -101,11 +91,7 @@ Test scenario 6: Key Customer Service Desk
     Add Telia Palvelunhallintakeskus    sitpo
     sleep    10s
     Add Avainasiakaspalvelukeskus
-    #Search Products    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus  sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -119,12 +105,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
     Add Telia Palvelunhallintakeskus    sitpo
     sleep    10s
     Add Avainasiakaspalvelukeskus
-    #Search and add Avainasiakaspalvelukeskus
-    #Search Products    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu   sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -139,9 +120,6 @@ Test scenario 8: Key Customer Service Desk Additional Work
     sleep    10s
     Add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu  sitpo
-     #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -155,11 +133,7 @@ Test scenario 9: Key Customer Service Desk
     Add Telia Palvelunhallintakeskus    sitpo
     sleep    10s
     Add Avainasiakaspalvelukeskus
-    #Search Products    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus  sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -173,9 +147,6 @@ Test scenario 10:Training
     Add Telia Palvelunhallintakeskus    sitpo
     Search Products    Koulutus jatkuva palvelu
     Add Koulutus jatkuva palvelu    sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -189,9 +160,6 @@ Test scenario 11:Training
     Add Telia Palvelunhallintakeskus    sitpo
     Search Products    Koulutus kertapalvelu
     Add Koulutus kertapalvelu   sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -205,9 +173,6 @@ Test scenario 12:Training
     Add Telia Palvelunhallintakeskus    sitpo
     Search Products    Koulutus varallaolo ja matkustus
     Add Koulutus varallaolo ja matkustus    sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -221,9 +186,6 @@ Test scenario 13:Continuity Management Service
     Add Telia Palvelunhallintakeskus    sitpo
     Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
     Add Jatkuvuudenhallinta jatkuva palvelu
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -237,9 +199,6 @@ Test scenario 14:Continuity Management Service
     Add Telia Palvelunhallintakeskus    sitpo
     Add_child_product    Jatkuvuudenhallinta kertapalvelu
     Add Jatkuvuudenhallinta kertapalvelu
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -249,14 +208,10 @@ Test scenario 15:Continuity Management Service
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Jatkuvuudenhallinta varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
-    #General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
     Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
     Add Jatkuvuudenhallinta varallaolo ja matkustus
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -266,14 +221,10 @@ Test scenario 16:Service Lead Service
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Palvelujohtaminen kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
-    #General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
     Search Products    Palvelujohtaminen jatkuva palvelu
     Add Palvelujohtaminen jatkuva palvelu   sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -283,14 +234,10 @@ Test scenario 17:Service Lead Service
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Palvelujohtaminen kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
-    #General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
     Search Products    Palvelujohtaminen kertapalvelu
     Add Palvelujohtaminen kertapalvelu  sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
@@ -300,14 +247,10 @@ Test scenario 18: Service Lead Service
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Palvelujohtaminen varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
-    #General test setup    ${DEVPO_ACCOUNT}    b2b
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
     Search Products    Palvelujohtaminen varallaolo ja matkustus
     Add Palvelujohtaminen varallaolo ja matkustus   sitpo
-    #create order    ${DEVPO_ACCOUNT}
-    #${order_id}=    Complete Order
-    #checking the orchestration plan    ${order_id}
     create order sitpo - Professional Products    Aacon Oy   2   ${prod_1}  ${prod_2}
     view orchestration plan sitpo
 
