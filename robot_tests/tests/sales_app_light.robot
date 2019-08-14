@@ -411,8 +411,10 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     [Tags]    BQA-9121    Lightning
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    #${oppo_name}    set variable    Oppo_ 20190301-113538
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #log to console    ${contact_name}.this is name
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Testing Contact_ 20190731-171453
+    #${oppo_name}    set variable    Test Robot Order_ 20190813-125942
     sleep    5s
     Go To Entity    ${oppo_name}
     sleep    5s
@@ -422,19 +424,32 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     sleep    10s
     #clickingOnSolutionValueEstimate    ${oppo_name}
     ClickingOnCPQ    ${oppo_name}
-    search products    Telia Yritysinternet Plus
-    Adding Yritysinternet Plus
-    search products    DataNet Multi
-    Adding DataNet Multi
-    UpdateAndAddSalesType for 2 products    Telia Yritysinternet Plus    DataNet Multi
+    sleep   30s
+    #Log to console      Inside frame
+    #sleep  30s
+    #${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    #Log to console      ${status}
+    #wait until page contains element    //span[text()='Next']/..    60s
+    #click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    search products  Telia Yritysinternet Plus
+    Adding Yritysinternet Plus  Telia Yritysinternet Plus
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    Log to console      ${status}
+    wait until page contains element    //span[text()='Next']/..    60s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #search products    DataNet Multi
+    #Adding DataNet Multi  DataNet Multi
+    sleep   20s
+    UpdateAndAddSalesType for 2 products    Telia Yritysinternet Plus    #DataNet Multi
     OpenQuoteButtonPage_release
     sleep    10s
-    ${quote_number}    Run Keyword    preview and submit quote
+    ${quote_number}    Run Keyword    preview and submit quote  ${oppo_name}
     Opportunity status
-    Create contract    ${TEST_ACCOUNT_CONTACT}    ${oppo_name}
+    #Create contract    ${TEST_ACCOUNT_CONTACT}    ${oppo_name}
     Create Order from quote    ${quote_number}    ${oppo_name}
     View order and send summary
-    sleep    10s
+    sleep    30s
     Go to Entity    ${oppo_name}
     Closing the opportunity    No
 
@@ -442,22 +457,23 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     [Tags]    BQA-9122    Lightning
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
-    ...    Telia Sopiva Enterprise    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
-    ...    Telia Sopiva Enterprise - Lisäkirjaus    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
+    ...    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
+    ...    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
     ${Submit Order}    set variable    //div[@title='Submit Order']
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    #${oppo_name}    set variable    Oppo_ 20190301-113538
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}      run keyword    CreateAOppoFromAccount_HDC     Testing Contact_ 20190731-171453
+    #${oppo_name}    set variable    Test Robot Order_ 20190808-114344
     sleep    5s
-    Go To Entity    ${oppo_name}
+    Go To Entity   ${oppo_name}
     sleep    5s
     ClickingOnCPQ    ${oppo_name}
     sleep    10s
     Searching and adding multiple products    @{products}
     Updating sales type multiple products    @{products}
     OpenQuoteButtonPage_release
-    preview and submit quote
+    preview and submit quote  ${oppo_name}
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     OrderNextStepsPage
@@ -467,8 +483,8 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     click element    ${Submit Order}
     sleep    60s
     Capture Page Screenshot
-    ${multibella_GuiID}    Get Multibella id
-    verifying Multibella order case    ${multibella_GuiID}    @{products}
+    #${multibella_GuiID}    Get Multibella id
+    #verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
     [Tags]    BQA-8560    Lightning

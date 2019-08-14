@@ -483,6 +483,7 @@ Cancel Opportunity and Validate
     #click visible element    //div[@class="uiInput uiInput--default"]//a[@class="select"]
     #Press Key    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
     #Click Element    //a[@title="${stage}"]
+    Sleep  30s
     Save
     Validate error message
     Cancel and save
@@ -538,15 +539,33 @@ Edit Opportunity
 Select option from Dropdown
     [Arguments]    ${list}    ${item}
     #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${item}
-    Scroll Page To Element    ${list}
-    ${element_position}    Get Vertical Position    ${list}
-    ${scroll_position}=    Evaluate    ${element_position}+ 5
-    Log To Console    ${scroll_position}
-    Scroll Page To Location    0    ${scroll_position}
-    click visible element    ${list}
+    #Scroll Page To Element    ${list}
+    #${element_position}    Get Vertical Position    ${list}
+    #${scroll_position}=    Evaluate    ${element_position}+ 5
+    #Log To Console    ${scroll_position}
+    #Scroll Page To Location    0    ${scroll_position}
+    #click visible element    ${list}
+    ScrollUntillFound  ${list}
+    force click element   ${list}
     Press Key    ${list}    ${item}
     Sleep    3s
     force click element    //a[@title='${item}']
+    sleep  20s
+
+Select option from Dropdown if not able to edit the element from the list
+    [Arguments]    ${list}    ${item}   ${element}
+    ScrollUntillFound  //button[text()="View all dependencies"]//following::span[text()="Opportunity Complete"]
+    Sleep   20s
+    Wait Until Page Contains Element    //div[@class="slds-form-element__control"]//span[text()="Create Continuation Sales Opportunity?"]//following::button[text()="View all dependencies"]    60s
+    force click element    //div[@class="slds-form-element__control"]//span[text()="Create Continuation Sales Opportunity?"]//following::button[text()="View all dependencies"]
+    sleep  20s
+    Click Element   //label[text()="Stage"]//following::input[@name="StageName"]
+    sleep  10s
+    Press Key    //label[text()="Stage"]//following::input[@name="StageName"]    ${element}
+    Sleep    10s
+    force click element    //a[@title='${element}']
+    Sleep  20s
+    Click Element   //span[text()="Apply"]
 
 Verify That Opportunity is Not Found under My All Open Opportunities
     [Arguments]    ${opportunity}
@@ -1128,14 +1147,19 @@ CreateAContactFromAccount_HDC
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     force click element    //Span[text()='Name']//following::input[@placeholder="Last Name"]
-    #input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${a}
-    #sleep    2s
+    input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${a}
+    sleep    2s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    30s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
-    #sleep    2s
+    Sleep  10s
+    clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       kasibhotla.sreeramachandramurthy@teliacompany.com
+    sleep    5s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
     ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
+    Sleep  30s
     log to console    ${IsErrorVisible}
     Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${a}
     [Return]    Testing ${a}
@@ -1155,9 +1179,15 @@ reEnterContactData
     sleep    2s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
     sleep    2s
+    clear element text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       kasibhotla.sreeramachandramurthy@teliacompany.com
+    Sleep  2s
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
     sleep    5s
     ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
+    Sleep  30s
     log to console    ${IsErrorVisible}
     Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${random_name}
     #sleep    10s
@@ -1177,9 +1207,12 @@ CreateAOppoFromAccount_HDC
     sleep    10s
     click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
     Capture Page Screenshot
-    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
-    wait until page contains element    //*[@title='${b}']/../../..    10s
-    click element    //*[@title='${b}']/../../..
+    Select from search List   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    #input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    #wait until page contains element    //*[@title='${b}']/../../..    10s
+    #press enter on  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
+    #click element   //h2[contains(text(),"Contact Results")]//following::*[@title='Testing Contact_ 20190731-171453']/../../..
+    #click element    //*[@title='${b}']/../../..
     sleep    2s
     input text    //textarea    ${oppo_name}.${close_date}.Description Testing
     click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
@@ -1379,26 +1412,26 @@ View Open Quote
 
 OpenQuoteButtonPage
     #${open_quote}=    Set Variable    //*[@id="View Quote"]
-    #${approval}=      Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
+    #${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
     #Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected final page frame
-    #${button_present}=  run keyword and return status  element should be visible   //*[@id="View Quote"]
-    #run keyword if  ${button_present}=='True'   force click element  ${button_present}
-    #log to console   ${button_present}
-    #${open_button_present}=  run keyword and return status  element should be visible  //*[@id="Open Quote"]
-    #log to console   ${open_button_present}
-    #run keyword if  ${button_present}=='True'  force click element  ${open_button_present}
-    #click element  //*[@id="Open Quote"]
+    #${button_present}=    run keyword and return status    element should be visible    //*[@id="View Quote"]
+    #run keyword if    ${button_present}=='True'    force click element    ${button_present}
+    #log to console    ${button_present}
+    #${open_button_present}=    run keyword and return status    element should be visible    //*[@id="Open Quote"]
+    #log to console    ${open_button_present}
+    #run keyword if    ${button_present}=='True'    force click element    ${open_button_present}
+    #click element    //*[@id="Open Quote"]
     #wait until page contains element    //*[@id="View Quote"]    60s
     #log to console    wait completed before open quote click
     #wait until element is visible    //*[@id="View Quote"]    30s
-    #wait until element is enabled    //*[@id="View Quote"]   20s
+    #wait until element is enabled    //*[@id="View Quote"]    20s
     #log to console    element visible next step
     #click element    //*[@id="View Quote"]
-    scrolluntillfound  //*[@id="Open Quote"]
-    sleep  2s
-    click element  //*[@id="Open Quote"]
+    scrolluntillfound    //*[@id="Open Quote"]
+    sleep    2s
+    click element    //*[@id="Open Quote"]
     unselect frame
     sleep    20s
 
@@ -1477,8 +1510,8 @@ CreditScoreApproving
 ClickonCreateOrderButton
     log to console    ClickonCreateOrderButton
     #clicking on CPQ after credit score approval and click create order button this cpq not able to click so work on hold
-    #click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    #sleep   10s
+    #click element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    #sleep    10s
     wait until page contains element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    30s
     #//a[@title='CPQ']    30s
     ##${expiry} =    get text    //*[text()='Expiration Date']
@@ -1492,9 +1525,21 @@ ClickonCreateOrderButton
     Log to console      ${status}
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
+    Sleep  30s
     unselect frame
+    Sleep  60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Sleep  60s
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible    //p[text()="Order Products must have a unit price."]    100s
+    Run Keyword If   ${status}   Order Products must have a unit price
     sleep    30s
-
+    unselect frame
+Order Products must have a unit price
+    Sleep  30s
+    wait until page contains element    //button[text()="Continue"]  60s
+    click element   //button[text()="Continue"]
+    Sleep  60s
+    unselect frame
 NextButtonOnOrderPage
     log to console    NextButtonOnOrderPage
     sleep  30s
@@ -1518,13 +1563,16 @@ OrderNextStepsPage
     sleep    45s
 
 getOrderStatusBeforeSubmitting
-    wait until page contains element   //span[@class='title' and text()='Details']  60s
-    reload page
-    wait until page contains element   //span[@class='title' and text()='Details']  60s
+    wait until page contains element    //span[@class='title' and text()='Details']    60s
+    : FOR    ${i}    IN RANGE    10
+    \   ${status}=    Run Keyword And Return Status   wait until page contains element  //span[@class='title' and text()='Details']    60s
+    \   Run Keyword If   ${status} == False      reload page
+    \   Exit For Loop If    ${status}
     click element    //span[@class='title' and text()='Details']
+    #click element   //span[text()="Mark Status as Complete"]/following::span[@class='title' and text()='Details']
     #//li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']   60s
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']   60s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']    60s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']    60s
 
 clickOnSubmitOrder
     wait until page contains element  //a[@title='Submit Order']   60s
@@ -1546,7 +1594,6 @@ getOrderStatusAfterSubmitting
     log to console  ${order_no}.this is getorderstatusafgtersubmirting function
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
-
 
 SearchAndSelectBillingAccount
     execute javascript    window.location.reload(true)
@@ -1843,17 +1890,22 @@ UpdateAndAddSalesTypewith quantity
     sleep    60s
 
 OpenQuoteButtonPage_release
-    ${open_quote}=    Set Variable    //*[@id="View Quote"]
+    ${Viwe_quote}=    Set Variable    //button[@title="View Quote"]
+    ${open_quote}=    Set Variable   //button[@title="Open Quote"]
     ${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
     log to console    OpenQuoteButtonPage
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected final page frame
     log to console    wait completed before view quote click
-    wait until element is visible    ${open_quote}    30s
-    wait until element is enabled    ${open_quote}    20s
-    log to console    element visible next step
-    click element    ${open_quote}
+    sleep  60s
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Viwe_quote}    100s
+    Run Keyword If   ${status}   Click Visible Element    ${Viwe_quote}
+    Run Keyword unless   ${status}    Click Visible Element   ${open_quote}
+    #wait until element is visible    ${open_quote}    30s
+    #wait until element is enabled    ${open_quote}    20s
+    #log to console    element visible next step
+    #click element    ${open_quote}
     unselect frame
     sleep    60s
 
@@ -1867,15 +1919,18 @@ Closing the opportunity
     Log To Console    The current stage is ${stage}
     Capture Page Screenshot
     click element    ${EDIT_STAGE_BUTTON}
+    Sleep  30s
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    Closed Won
     Execute Javascript    window.scrollTo(0,600)
-    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}
+    Select option from Dropdown if not able to edit the element from the list    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}   Closed Won
+    Select option from Dropdown   //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}
     Wait Until Page Contains Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    60s
     Execute Javascript    window.scrollTo(0,9000)
     #Get Text    //span[contains(text(),'Service Address Street')]/../../span
     Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    08 Other
     input text    //span[text()='Close Comment']/../../textarea    this is a test opportunity to closed won
-    click element    //span[contains(text(),'Save')]
+    sleep  30s
+    click element    //span[text()='Products With Manual Pricing']//following::span[text()='Save']
 
 Update closing dependencies
     ${stage_name}=    set variable    //input[@name='StageName']
@@ -1961,16 +2016,16 @@ Editing Win prob
     ${win_prob}    set variable    //span[contains(text(),'Win Probability %')]/../../div/div/div/div
     ${save_button}    set variable    //span[text()='Save']
     click element    ${win_prob_edit}
-    execute javascript
     Wait Until Element Is Visible    ${win_prob}    60s
-    Execute Javascript    window.scrollTo(0,200)
+    Execute Javascript    window.scrollTo(0,300)
     click element    ${win_prob}
+    sleep  10s
     click element    //li/a[@title='10%']
     #run keyword if    ${save} == yes    click element    ${save_button}
 
 Adding partner and competitor
     [Documentation]    Used to add partner and competitor for a existing opportunity
-    ${save_button}    set variable    //span[text()='Save']
+    ${save_button}    set variable      //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     ${competitor_list}    set variable    //ul[contains(@id,'source-list')]/li/div/span/span[text()='Accenture']
     ${partner_list}=    set variable    //ul[contains(@id,'source-list')]/li/div/span/span[text()='Accenture Oy']
     ${competitor_list_add}    set variable    //div[text()='Competitor']/../div/div/div/lightning-button-icon/button[@title='Move selection to Chosen']
@@ -1987,13 +2042,16 @@ Adding partner and competitor
     Capture Page Screenshot
 
 Adding Yritysinternet Plus
-    ${product}=    Set Variable    //div[@data-product-id='${Yritysinternet_Plus}']/div/div/div/div/div/button
+    [Arguments]    ${Yritysinternet_Plus}
+    #${product}=    Set Variable    //div[@data-product-id='${Yritysinternet_Plus}']/div/div/div/div/div/button
+    ${product}=    Set Variable    //span[@title='${Yritysinternet_Plus}']/../../..//button
     ${SETTINGS}=    Set Variable    //button[@title='Settings']
     ${Liittymän_nopeus}    Set Variable    //select[@name='productconfig_field_0_0']
     ${Palvelutaso}    Set Variable    //select[@name='productconfig_field_0_1']
     ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
+    Sleep  30s
     Wait Until Element Is Visible    ${SETTINGS}    60s
     click element    ${SETTINGS}
     Wait Until Element Is Visible    ${Liittymän_nopeus}    60s
@@ -2002,46 +2060,53 @@ Adding Yritysinternet Plus
     Select From List By Value    ${Palvelutaso}    A24h
     sleep    3s
     click element    ${X_BUTTON}
+    Sleep  30s
     unselect frame
 
 Adding DataNet Multi
-    ${product}=    Set Variable    //div[@data-product-id='${DataNet_Multi}']/div/div/div/div/div/button
+    [Arguments]    ${DataNet_Multi}
+    ${product}=    Set Variable    //span[@title='${DataNet_Multi}']/../../..//button
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
-    sleep    5s
-    Click Element    ${next_button}
+    sleep    30s
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    Log to console      ${status}
+    wait until page contains element    //span[text()='Next']/..    60s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #Click Visible Element   ${next_button}
 
 UpdateAndAddSalesType for 2 products
-    [Arguments]    ${product1}    ${product2}
+    [Arguments]    ${product1}    #${product2}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
     ${product_1}=    Set Variable    //td[normalize-space(.)='${product1}']
-    ${product_2}=    Set Variable    //td[normalize-space(.)='${product2}']
+    #${product_2}=    Set Variable    //td[normalize-space(.)='${product2}']
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     log to console    UpdateAndAddSalesType for 2 products
     sleep    30s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Run Keyword If    ${status} == False    Reload Page
-    sleep    20s
+    sleep    60s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until page contains element    ${update_order}    60s
     log to console    selected new frame
     wait until page contains element    ${product_1}    70s
-    click element    ${product_1} //following-sibling::td/select[contains(@class,'required')]
+    click element    ${product_1}//following-sibling::td/select[contains(@class,'required')]
     sleep    2s
     click element    ${product_1}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     sleep    5s
-    wait until page contains element    ${product_2}    70s
-    click element    ${product_2} //following-sibling::td/select[contains(@class,'required')]
-    sleep    2s
-    click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    #wait until page contains element    ${product_2}    70s
+    #click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]
+    #sleep    2s
+    #click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
     Unselect Frame
-    sleep    5s
+    sleep    20s
 
 preview and submit quote
+    [Arguments]    ${oppo_FOR}
     ${preview_quote}    Set Variable    //div[@title='Preview Quote']
     ${send_quote}    Set Variable    //div[@title='Send Quote Email']
     ${quote_n}    Set Variable    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div
@@ -2064,24 +2129,49 @@ preview and submit quote
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Capture Page Screenshot
-    Click Element    ${send_mail}
+    Sleep  30s
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${send_mail}    100s
+    Run Keyword If   ${status}   Click Visible Element    ${send_mail}
+    Run Keyword unless   ${status}  approve the quote   ${oppo_FOR}
+    #Click Element    ${send_mail}
     Unselect Frame
     sleep    10s
     ${Quote_Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${submitted}    60s
     Log To Console    Quote is submitted: \ \ ${Quote_Status}
     [Return]    ${quote_number}
 
+approve the quote
+    [Arguments]    ${oppo_FOR}
+    logoutAsUser   DigiSales Lightning User
+    sleep  60s
+    login to salesforce as digisales admin user
+    swithchtouser    B2B DigiSales
+    : FOR    ${i}    IN RANGE    10
+    \   ${status}=  Run Keyword And Return Status   Element Should Be Visible    //a[@href="/lightning/o/Quote/home"]/span/span[contains(text(),"Quotes")]    100s
+    \   Run Keyword If   ${status}   Click Visible Element    //a[@href="/lightning/o/Quote/home"]/span/span[contains(text(),"Quotes")]
+    \   Run Keyword unless   ${status}  Click Visible Element  //one-app-nav-bar-menu-button/a/span[contains(text(),"Show More")]
+    \   Sleep  30s
+    \   Exit For Loop If    ${status}
+	Sleep  20s
+    Input Text    //input[@name="Quote-search-input"]
+    Click Element   //a[contains(text(),"${oppo_FOR}")]
+    creditscoreapproving
+    logoutAsUser  B2B DigiSales
+    login to salesforce as digisales Lightning User
 Sending quote as email
     ${spinner}    Set Variable    //div[contains(@class,'slds-spinner--large')]
     ${send_mail}    Set Variable    //p[text()='Send Email']
     ${iframe}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Sleep  40s
     ${status}    Wait Until Element Is Enabled    ${iframe}    60s
     Run Keyword If    ${status} == False    Reload Page
     Wait Until Element Is Enabled    ${iframe}    60s
     select frame    ${iframe}
+    Sleep  30s
     Wait Until Element Is Visible    ${send_mail}    60s
     Capture Page Screenshot
     Click Element    ${send_mail}
+    Unselect Frame
 
 verifying quote and opportunity status
     [Arguments]    ${oppo_name}
@@ -2159,8 +2249,12 @@ Create Order from quote
     Wait Until Element Is Visible    ${create_order}    60s
     click element    ${create_order}
     Unselect Frame
-    sleep    15s
-
+    sleep  60s
+    select frame    ${frame}
+    Wait Until Element Is Visible    //button[contains(text(),"Open Order")]    60s
+    Click Element    //button[contains(text(),"Open Order")]
+    Sleep   20s
+    Unselect Frame
 Opportunity status
     ${oppo_status}    Set Variable    //a[@aria-selected='true'][@title='Negotiate and Close']
     sleep    10s
@@ -2170,20 +2264,29 @@ Opportunity status
 
 View order and send summary
     ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    ${view_button}    Set Variable    //button[@title='View']
+    ${view_button}    Set Variable    //div[@class="slds-button-group"]//button[@title="View"]
     ${preview_order}    Set Variable    //a/div[@title='Preview Order Summary']
     ${send_order_summary}    Set Variable    //a/div[@title='Send Order Summary Email']
     ${submit_order}    Set Variable    //a/div[@title='Submit Order']
     ${order_progress}    Set Variable    //a[@title='In Progress'][@aria-selected='true']
+    Sleep  30s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}
     Run Keyword If    ${status} == False    Reload Page
-    sleep    20s
     Wait Until Element Is Enabled    ${frame}    60s
+    Sleep  30s
     select frame    ${frame}
-    Wait Until Element Is Visible    ${view_button}    60s
-    click element    ${view_button}
+    Log to console      Inside frame
+    ${status}   set variable    Run Keyword and return status    Frame should contain    ${view_button}    View
+    Log to console      ${status}
+    Sleep  100s
+    Wait Until Element Is Visible       ${view_button}     60s
+    click element   ${view_button}
     Unselect Frame
-    sleep    10s
+    #sleep  40s
+    #Wait Until Element Is Visible    //div[@id="Close"]   60s
+    #click element   //div[@id="Close"]
+    #Unselect Frame
+    sleep    20s
     wait until element is visible    ${preview_order}    120s
     click element    ${preview_order}
     sleep    7s
@@ -2192,15 +2295,16 @@ View order and send summary
     Wait Until Element Is Visible    ${send_order_summary}    60s
     click element    ${send_order_summary}
     Sending quote as email
+    Sleep  40s
     Wait Until Element Is Visible    ${submit_order}    60s
     click element    ${submit_order}
-    sleep    10s
+    sleep    30s
     Wait Until Element Is Visible    ${order_progress}    60s
     Capture Page Screenshot
 
 Adding Products
     [Arguments]    ${product-id}
-    ${product}=    Set Variable    //div[@data-product-id='${product-id}']/div/div/div/div/div/button
+    ${product}=    Set Variable    //span[normalize-space(.)= '${product-id}']/../../../div[@class='slds-tile__detail']/div/div/button
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
     unselect frame
@@ -2215,6 +2319,7 @@ Updating sales type multiple products
     ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     ${prod}    create list    @{products}
     ${count}    Get Length    ${prod}
+    Sleep  20s
     log to console    Updating sales type multiple products
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}    60s
     Run Keyword If    ${status} == False    Reload Page
@@ -2228,7 +2333,7 @@ Updating sales type multiple products
     \    wait until page contains element    ${update_order}    60s
     \    log to console    selected new frame
     \    Wait Until Element Is Visible    ${product_list}//following-sibling::td/select[contains(@class,'required')]    120s
-    \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]
+    \    click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     \    sleep    2s
     \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     log    Completed updating the sales type
@@ -2255,7 +2360,7 @@ Searching and adding multiple products
     : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > ${count}-1
     \    ${product_name}    Set Variable    @{products}[${i}]
-    \    ${product_id}    Set Variable    ${${product_name}}
+    \    ${product_id}    Set Variable    ${product_name}
     \    Log To Console    product name ${product_name}
     \    search products    ${product_name}
     \    Log To Console    Product id ${product_id}
@@ -2267,6 +2372,7 @@ Searching and adding multiple products
     #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True    click element    ${next_button}
     Unselect Frame
+    Sleep  60s
 
 Preview order summary and verify order
     [Arguments]    @{products}
@@ -2757,10 +2863,12 @@ UpdateAndAddSalesTypeandClickDirectOrder
     sleep    60s
 
 openOrderFromDirecrOrder
-    select frame    //div[contains(@class,'iframe')]/iframe
-    wait until page contains element    //span[text()='Click View Order button to close this process & navigate to the Order Screen.']    45s
-    page should contain element    //button[@id='View Order']
-    click element    //button[@id='View Order']
+    #select frame  //div[contains(@class,'iframe')]/iframe
+    select frame   //div[@class="windowViewMode-normal oneContent active lafPageHost"]/div[@class="oneAlohaPage"]/force-aloha-page/div[contains(@class,'iframe')]/iframe
+    #wait until page contains element   //span[text()='Click View Quote button to close this process & navigate to the Quote Screen.']    60s
+    page should contain element  //button[@title='View Order']
+    Click Visible Element  //button[@title='View Order']
+    Sleep   20s
     unselect frame
 
 OpenOrderPage
