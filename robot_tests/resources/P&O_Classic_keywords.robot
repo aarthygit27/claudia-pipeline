@@ -1408,11 +1408,16 @@ create order sitpo
     sleep    10s
     Credit score validation
     View Open Quote
-    sleep  10s
-    ${status}   set variable  Run Keyword and return status    Page should contain element  //div[@title='CPQ']
-    Run keyword if  ${status}   go to classic
-    Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
-    click button    //td[@id='topButtonRow']//input[@title='CPQ']
+    sleep  20s
+
+
+    ${status}   set variable   Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
+    Run Keyword if   ${status}  click button    //td[@id='topButtonRow']//input[@title='CPQ']
+
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword if    ${contains}    go to classic
+
     Log To Console    create order
     sleep    10s
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
@@ -1437,9 +1442,17 @@ go to classic
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${switch_classic}    30s
     run keyword if    ${status} == True    Click Element    ${switch_classic}
     sleep  30s
-    Search Salesforce    ${opportunity_name}
-    Wait Until Element Is Visible    ${opportunity_search}    30s
-    Click Element    ${opportunity_search}
+    Wait until element is visible      //input[@id='phSearchInput']     60s
+    Input Text  //input[@id='phSearchInput']  Test Robot Order_130820191648
+    wait until element is visible   //div[@id='searchButtonContainer']  30s
+    click Visible Element  //div[@id='searchButtonContainer']
+    sleep  10s
+    wait until element is visible   //tr[@class='dataRow even last first highlight']/th/a[text()='Test Robot Order_130820191648']   30s
+    click element   //tr[@class='dataRow even last first highlight']/th/a[text()='Test Robot Order_130820191648']
+    Wait Until Element Is Visible    ${cpq}    30s
+    Click Element    ${cpq}
+
+
 
 create order sitpo - Professional Products
     [Arguments]    ${target_account}    ${Product_count}    ${prod_1}   ${prod_2}

@@ -26,6 +26,7 @@ Product2:Telia Ethernet Operator Subscription
     Create_Order
 
 Product3:Ethernet Nordic Network Bridge
+    [Tags]    Submit issue
     General Setup    B2O
     Searching and adding product    Ethernet Nordic Network Bridge
     update_setting1
@@ -34,6 +35,7 @@ Product3:Ethernet Nordic Network Bridge
     Create_Order
 
 Product4:Ethernet Nordic E-Line EPL
+    [Tags]    Product not available
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-Line EPL
     update_setting2
@@ -42,6 +44,7 @@ Product4:Ethernet Nordic E-Line EPL
     Create_Order
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
+    [Tags]    continue
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
     update_setting_Ethernet Nordic E-LAN EVP-LAN
@@ -161,7 +164,7 @@ Test scenario 3:Telia Consulting
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request. Product Removed
-    [Tags]  Trial Run   B2B_Lightning_Run
+    [Tags]  Trial Run   B2B_Lightning_Rerun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus

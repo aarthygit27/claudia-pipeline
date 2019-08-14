@@ -425,7 +425,7 @@ Update setting Telia Palvelunhallintakeskus
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_1']
     ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
-
+    sleep  15s
     Wait Until Element Is Visible    ${Palvelunhallintakeskus}    30s
     click element    ${Palvelunhallintakeskus}
     click element    ${Palvelunhallintakeskus}//option[contains(text(),'Olemassaoleva avainasiakaspalvelukeskus')]
@@ -439,7 +439,8 @@ Update setting Telia Palvelunhallintakeskus
 clicking on next button
     ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
     ${next_button}    set variable    //span[contains(text(),'Next')]
-    Wait Until Element Is Enabled    ${iframe}    60s
+    Reload page
+    Wait Until Element Is Enabled    ${iframe}    90s
     select frame    ${iframe}
     Scroll Page To Location    0    100
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${next_button}    60s
@@ -535,6 +536,7 @@ Select Account
     ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
     sleep    3s
     reload page
+    sleep  10s
     wait until element is visible   //div[@class='iframe-parent slds-template_iframe slds-card']/iframe    60s
     select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
     Wait Until Element Is Visible    ${account_name}    120s
@@ -671,6 +673,7 @@ Submit for Approval
     click element  //span[text()='Submit']
 
 Submit Order Button
+    Reload page
     Wait until element is visible   //div[@title='Submit Order']    60s
     Log to console    submitted
     Click element  //div[@title='Submit Order']
@@ -743,7 +746,8 @@ update_setting_Ethernet Nordic E-LAN EVP-LAN
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${setting}    Set Variable    //button[@title='Settings']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
-    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5]
+    ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5']
+
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     #Click Element    ${setting}
