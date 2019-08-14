@@ -537,8 +537,8 @@ Select Account
     sleep    3s
     reload page
     sleep  10s
-    wait until element is visible   //div[@class='iframe-parent slds-template_iframe slds-card']/iframe    60s
-    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    wait until element is visible   //div[contains(@class,'slds')]/iframe  60s
+    select frame  //div[contains(@class,'slds')]/iframe
     Wait Until Element Is Visible    ${account_name}    120s
     click element    ${account_name}
     sleep    3s
