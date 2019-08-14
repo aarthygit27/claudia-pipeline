@@ -131,7 +131,7 @@ Add Muut asiantuntijapalvelut
     ${Kustannus}=    set variable    //input[@name='productconfig_field_0_1']
     ${Kilometrikorvaus}=    set variable    //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
     #${Kilometrit}=    set variable    //input[contains(@class,'ng-valid')][@value='0']
-    ${Kilometrit}=    set variable     //input[@name='productconfig_field_0_6']
+    ${Kilometrit}=    set variable     //input[@name='productconfig_field_0_4']
     sleep    25s
     Adding Product    Muut asiantuntijapalvelut
     sleep    10s

@@ -14,7 +14,7 @@ Resource          ..${/}resources${/}common.robot
 *** Test Cases ***
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]    BQA-8504    PO1    Classic_run
+    [Tags]    BQA-8504    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Arkkitehti jatkuva palvelu
     ${prod_2}   set variable    Muut asiantuntijapalvelut
     General test setup    Aacon Oy    b2b    sitpo
@@ -97,7 +97,7 @@ Test scenario 6: Key Customer Service Desk
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work Continuous Service
-    [Tags]    BQA-9193    PO1    Rerun
+    [Tags]    BQA-9193    PO1    Classictest
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -111,7 +111,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]    BQA-9194    PO1    PO
+    [Tags]    BQA-9194    PO1    Classictest
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -125,7 +125,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
-    [Tags]    BQA-9195    PO1    Rerun
+    [Tags]    BQA-9195    PO1    Classictest
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
