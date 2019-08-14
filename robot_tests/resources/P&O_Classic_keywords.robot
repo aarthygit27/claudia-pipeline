@@ -1410,13 +1410,14 @@ create order sitpo
     View Open Quote
     sleep  20s
 
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword if    ${contains}    go to classic
 
     ${status}   set variable   Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
     Run Keyword if   ${status}  click button    //td[@id='topButtonRow']//input[@title='CPQ']
 
-    ${url}=    Get Location
-    ${contains}=    Evaluate    'lightning' in '${url}'
-    Run Keyword if    ${contains}    go to classic
+
 
     Log To Console    create order
     sleep    10s
@@ -1448,13 +1449,14 @@ go to classic
 
 
     Wait until element is visible      //input[@id='phSearchInput']     60s
-    Input Text  //input[@id='phSearchInput']  Test Robot Order_140820191258
+    Input Text  //input[@id='phSearchInput']  ${new_opportunity_name}
+    sleep  10s
     wait until element is visible   //div[@id='searchButtonContainer']  30s
     Force Click element  //div[@id='searchButtonContainer']
     sleep  10s
-    wait until element is visible   //div[@class='list1']/div/div[2]/div/div[2]/table/tbody/tr[2]/th/a[text()='Test Robot Order_140820191258']  30s
-    click element   //div[@class='list1']/div/div[2]/div/div[2]/table/tbody/tr[2]/th/a[text()='Test Robot Order_140820191258']
-
+    wait until element is visible   //div[@class='list1']/div/div[2]/div/div[2]/table/tbody/tr[2]/th/a[text()='${new_opportunity_name}']  30s
+    click element   //div[@class='list1']/div/div[2]/div/div[2]/table/tbody/tr[2]/th/a[text()='${new_opportunity_name}']
+    sleep  10s
 
 
 
