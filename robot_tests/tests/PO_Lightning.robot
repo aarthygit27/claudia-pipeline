@@ -227,7 +227,7 @@ Test scenario 11:Training
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
-    [Tags]    BQA-9198    PO1    B2B_Lightning_Run
+    [Tags]    BQA-9198    PO1    B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -239,7 +239,7 @@ Test scenario 12:Training
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]  Trial Run   B2B_Lightning_Run
+    [Tags]  Trial Run   B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -251,7 +251,7 @@ Test scenario 13:Continuity Management Service
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]   B2B_Lightning_Run
+    [Tags]   B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -263,7 +263,7 @@ Test scenario 14:Continuity Management Service
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]  B2B_Lightning_Run
+    [Tags]  B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -275,7 +275,7 @@ Test scenario 15:Continuity Management Service
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
-    [Tags]  Trial Run   B2B_Lightning_Run
+    [Tags]  Trial Run   B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -287,7 +287,7 @@ Test scenario 16:Service Lead Service
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
-    [Tags]  B2B_Lightning_Run
+    [Tags]  B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -299,7 +299,7 @@ Test scenario 17:Service Lead Service
 
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
-    [Tags]  B2B_Lightning_Run
+    [Tags]  B2B_Lightning_ReRun
 
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
@@ -312,7 +312,7 @@ Test scenario 18: Service Lead Service
 
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
-    [Tags]  Trial Run   B2B_Lightning_Run
+    [Tags]  Trial Run   B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -325,7 +325,7 @@ Test scenario 19:Operation and Support Service
 
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
-    [Tags]  B2B_Lightning_Run
+    [Tags]  B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -338,7 +338,7 @@ Test scenario 20:Operation and Support Service
 
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
-    [Tags]  B2B_Lightning_Run
+    [Tags]  B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -351,7 +351,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]  Trial Run   B2B_Lightning_Run
+    [Tags]  Trial Run   B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus

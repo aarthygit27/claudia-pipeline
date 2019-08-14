@@ -1435,22 +1435,26 @@ create order sitpo
     Run Keyword Unless    ${Status}    Enter Details
 
 go to classic
+    ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
+    ${switch_classic}    Set Variable    //a[text()='Switch to Salesforce Classic']
 
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${setting_lighting}    60s
-    run keyword if    ${status} == True    Click Element    ${setting_lighting}
-    sleep    10s
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${switch_classic}    30s
-    run keyword if    ${status} == True    Click Element    ${switch_classic}
-    sleep  30s
+    ${count}  set variable  Get Element Count   ${setting_lighting}
+    Log to console  ${count}
+    force click element   ${setting_lighting}
+
+    ${count}  set variable  Get Element Count   ${switch_classic}
+    Log to console  ${count}
+    force click element   ${switch_classic}
+
+
     Wait until element is visible      //input[@id='phSearchInput']     60s
-    Input Text  //input[@id='phSearchInput']  Test Robot Order_130820191648
+    Input Text  //input[@id='phSearchInput']  Test Robot Order_140820191258
     wait until element is visible   //div[@id='searchButtonContainer']  30s
-    click Visible Element  //div[@id='searchButtonContainer']
+    Force Click element  //div[@id='searchButtonContainer']
     sleep  10s
-    wait until element is visible   //tr[@class='dataRow even last first highlight']/th/a[text()='Test Robot Order_130820191648']   30s
-    click element   //tr[@class='dataRow even last first highlight']/th/a[text()='Test Robot Order_130820191648']
-    Wait Until Element Is Visible    ${cpq}    30s
-    Click Element    ${cpq}
+    wait until element is visible   //div[@class='list1']/div/div[2]/div/div[2]/table/tbody/tr[2]/th/a[text()='Test Robot Order_140820191258']  30s
+    click element   //div[@class='list1']/div/div[2]/div/div[2]/table/tbody/tr[2]/th/a[text()='Test Robot Order_140820191258']
+
 
 
 
