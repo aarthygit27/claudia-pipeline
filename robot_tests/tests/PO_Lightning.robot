@@ -177,7 +177,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]  Run   B2B_Lightning_Run
+    [Tags]  Run   B2B_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -190,7 +190,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
-    [Tags]  Run  B2B_Lightning_Run
+    [Tags]  Run  B2B_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -203,7 +203,7 @@ Test scenario 9: Key Customer Service Desk
 
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
-    [Tags]    Trial Run    B2B_Lightning_Run
+    [Tags]    Trial Run    B2B_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -215,7 +215,7 @@ Test scenario 10:Training
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
-    [Tags]   B2B_Lightning_Run
+    [Tags]   B2B_ReRun
     General Setup    B2B
     Searching and adding product   Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
