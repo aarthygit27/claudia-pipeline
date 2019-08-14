@@ -534,11 +534,8 @@ Select Account
     ${account_name}=    Set Variable    //p[contains(text(),'Search')]
     ${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
     ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
-    sleep    3s
-    reload page
-    sleep  10s
-    wait until element is visible   //div[contains(@class,'slds')]/iframe  60s
-    select frame  //div[contains(@class,'slds')]/iframe
+
+
     Wait Until Element Is Visible    ${account_name}    120s
     click element    ${account_name}
     sleep    3s
