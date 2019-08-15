@@ -205,7 +205,7 @@ Lightning: Sales admin Change Account owner for group account
     #sleep    20s
 
 Create HDC Order -old
-    [Tags]    BQA-HDCOrder    Lightning
+    [Tags]    BQA-HDCOrder
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #go to entity    319021811502
     #sleep    10s
@@ -251,7 +251,6 @@ Create HDC Order -old
     ValidateTheOrchestrationPlan
 
 Create HDC Order
-
     [Tags]    BQA-HDCOrder    Lightning     commit_check
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -276,7 +275,6 @@ Create HDC Order
     SearchAndSelectBillingAccount
     select order contacts- HDC  ${contact_name}
      #SelectingTechnicalContact    ${contact_name}
-
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}
     #${billing_acc_name}
@@ -284,7 +282,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder  commit_check
+    [Tags]    BQA-B2BOrder       commit_check
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -940,7 +938,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]  SreeramE2E  commit_check
+    [Tags]  SreeramE2E  commit_check    Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -1087,7 +1085,6 @@ CreateB2BHDCGTMOrder
     #${fyr}  run keyword  addProductsViaSVE         ${product_name}
 
 createSalesProjectOppo
-
     [Tags]         Lightning    commit_check
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
@@ -1113,13 +1110,7 @@ createSalesProjectOppo
     SalesProjectOppurtunity     ${case_number}
     go to entity    ${oppo_name}
     page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
-
-
-
-
-
-#createSalesProjectOppo
-
+    #createSalesProjectOppo
     [Tags]  SreeramE2E       Lightning
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
@@ -1129,7 +1120,7 @@ createSalesProjectOppo
     sleep   10s
     ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     Go To Entity     ${oppo_name}
-#reload page
+    #reload page
     sleep  2s
     ${case_number}=  run keyword      createACaseFromMore  ${oppo_name}  B2B Sales Expert Request
     #createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
@@ -1215,7 +1206,7 @@ createSalesProjectOppo
 
 
 
-#Create B2B Order
+Create B2B Order
     [Tags]  SreeramE2E       Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     SwithchToUser  B2B DigiSales
