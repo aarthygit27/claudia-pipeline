@@ -707,7 +707,7 @@ Group: Delete team member
 
 Negative: Try to add same team member twice to account team
     [Documentation]     Expected result: It's not possible to add same team member twice to business account's account team.
-    [Tags]  Summer-Test     Lightning
+    [Tags]  Summer-Test     Lightning   BQA-11052
     Go To Salesforce and Login into Admin User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab
