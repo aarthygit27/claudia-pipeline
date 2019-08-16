@@ -1282,7 +1282,7 @@ Update Pricelist in Opportunity
     click element    //button[@title='Save']
 
 ClickingOnCPQ
-    [Arguments]    ${b}=${oppo_name}
+    # [Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
