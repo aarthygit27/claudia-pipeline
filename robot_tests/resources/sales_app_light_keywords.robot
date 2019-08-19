@@ -513,7 +513,7 @@ Validate Closed Opportunity Details
     Sleep  10s
     #Press ESC On    //span[text()='Review the following errors']
     #click element    //*[@title='Cancel']
-    Click element   //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
+     Click element   //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
 Save
     click element    //button[@title='Save']
     sleep    2s
@@ -531,7 +531,8 @@ Cancel and save
     Input Text    //label//span[contains(text(),"Close Comment")]/../following::textarea    Cancelling the opportunity
     Click Element    //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
     Click Element    //a[@title="09 Customer Postponed"]
-    Save
+    Sleep  10s
+    Click element  //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     Sleep    2s
 
 Edit Opportunity
