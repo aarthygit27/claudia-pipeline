@@ -325,7 +325,7 @@ Create New Master Contact
     Input Text    ${LAST_NAME_FIELD}    ${MASTER_LAST_NAME}
     Input Text    ${MASTER_PHONE_NUM_FIELD}    ${MASTER_PHONE_NUM}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${MASTER_PRIMARY_EMAIL}
-    #Input Text    ${MASTER_EMAIL_FIELD}    ${MASTER_EMAIL}
+    Input Text    ${MASTER_EMAIL_FIELD}    ${MASTER_EMAIL}
     Select from search List   ${ACCOUNT_NAME_FIELD}    ${MASTER_ACCOUNT_NAME}
     Click Element    ${SAVE_BUTTON}
     Sleep    10s
@@ -350,10 +350,10 @@ Validate Master Contact Details
     ${mobile_number}=    Set Variable    //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM}']
     ${phone_number}=    Set Variable    //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM}']
     ${primary_email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
-    #${email}=    Set Variable    //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
+    ${email}=    Set Variable           //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
     Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
     Click Visible element    ${DETAILS_TAB}
-    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${primary_email}
+    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${primary_email}    ${email}
     #Wait Until Page Contains Element    ${element}${phone_number}
     #Wait Until Page Contains Element    ${element}${email}
 
