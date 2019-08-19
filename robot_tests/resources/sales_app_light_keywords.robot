@@ -484,7 +484,7 @@ Cancel Opportunity and Validate
     #Press Key    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
     #Click Element    //a[@title="${stage}"]
     Sleep  30s
-    Save
+    Click element   //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     Validate error message
     Cancel and save
     Validate Closed Opportunity Details    ${opportunity}    ${stage}
@@ -509,9 +509,11 @@ Validate Closed Opportunity Details
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    Closed Won
     Save
     Wait Until Page Contains Element    //span[text()='Review the following errors']    60s
-    Press ESC On    //span[text()='Review the following errors']
-    click element    //*[@title='Cancel']
-
+    Click element   //button[@title="Close"]
+    Sleep  10s
+    #Press ESC On    //span[text()='Review the following errors']
+    #click element    //*[@title='Cancel']
+    Click element   //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
 Save
     click element    //button[@title='Save']
     sleep    2s
