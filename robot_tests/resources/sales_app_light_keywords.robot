@@ -115,7 +115,7 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
-    #Sleep    2s
+    Sleep    2s
     Press Enter On    ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
@@ -185,7 +185,7 @@ Select Quick Action Value For Attribute
     [Arguments]    ${field}    ${value}
     Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']    60s
     Force Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
-    Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]
+    Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]  60s
     Force Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
 
 Fill Mandatory Classification
@@ -230,7 +230,7 @@ Verify That Opportunity Is Saved And Data Is Correct
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
     ${oppo_date}=    Set Variable    //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
-    #ScrollUntillFound    ${element}${oppo_name}
+    ScrollUntillFound    ${element}${oppo_name}
     Run Keyword And Continue On Failure    Scroll Page To Element    ${element}${oppo_name}
     Wait Until Page Contains Element    ${element}${oppo_name}    60s
     Run keyword and ignore error    Click element    ${element}${oppo_name}
@@ -358,11 +358,12 @@ Validate Master Contact Details
     #Wait Until Page Contains Element    ${element}${email}
 
 Validate Contact Details
-    [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
+    [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}   ${primary_email}  ${email}
     Wait Until Page Contains Element    ${element}${contact_name}    240s
     Wait Until Page Contains Element    ${element}${account_name}    240s
     Wait Until Page Contains Element    ${element}${mobile_number}    240s
-    Wait Until Page Contains Element    ${element}${email}    240s
+    Wait Until Page Contains Element    ${element}${primary_email}    240s
+    Wait Until Page Contains Element    ${element}${email}            240s
 
 Create New NP Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
@@ -406,6 +407,7 @@ Create New Contact for Account
     Set Test Variable    ${AP_LAST_NAME}    Test ${first_name}
     Set Test Variable    ${AP_EMAIL}    ${email_id}
     Set Test Variable    ${AP_MOBILE_NUM}    ${mobile_num}
+    Set Test Variable    ${Ap_mail}        kasibhotla.sreeramachandramurthy@teliacompany.com
     click element    ${AP_NEW_CONTACT}
     #Sleep    2s
     Click Visible Element    ${AP_MOBILE_FIELD}
@@ -413,17 +415,19 @@ Create New Contact for Account
     Input Text    ${FIRST_NAME_FIELD}    ${AP_FIRST_NAME}
     Input Text    ${LAST_NAME_FIELD}    ${AP_LAST_NAME}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${AP_EMAIL}
+    Input Text    ${MASTER_EMAIL_FIELD}     ${Ap_mail}
     Click Element    ${AP_SAVE_BUTTON}
     Sleep    2s
-
+    [Return]    ${AP_FIRST_NAME}${AP_LAST_NAME}
 Validate AP Contact Details
     Go To Entity    ${AP_FIRST_NAME} ${AP_LAST_NAME}    ${SEARCH_SALESFORCE}
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${AP_FIRST_NAME} ${AP_LAST_NAME}']
     ${account_name}=    Set Variable    //span[text()='Account Name']//following::a[text()='${AP_ACCOUNT_NAME}']
     ${mobile_number}=    Set Variable    //span[text()='Mobile']//following::span//span[@class="uiOutputPhone" and text()='${AP_MOBILE_NUM}']
-    ${email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${AP_EMAIL}']
+    ${Primary email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${AP_EMAIL}']
+    ${mail}=             Set Variable    //span[text()='Primary eMail']//following::a[text()='${Ap_mail}']
     #Click Visible Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
+    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${Primary email}   ${mail}
 
 Navigate to create new contact
     Wait element to load and click    //a[@title='New']
@@ -1237,7 +1241,8 @@ Edit Opportunity values
     input text    //input[contains(@title,'Search ${field}')]    ${value}
     sleep    3s
     click element    //*[@title='${value}']/../../..
-    click element    //button[@title='Save']
+    Sleep  10s
+    click element    //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     Sleep  10s
 
 ChangeThePriceBookToHDC
@@ -1285,7 +1290,7 @@ Update Pricelist in Opportunity
     click element    //button[@title='Save']
 
 ClickingOnCPQ
-    # [Arguments]    ${b}=${oppo_name}
+    [Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
@@ -1571,7 +1576,7 @@ getOrderStatusBeforeSubmitting
     \   ${status}=    Run Keyword And Return Status   wait until page contains element  //span[@class='title' and text()='Details']    60s
     \   Run Keyword If   ${status} == False      reload page
     \   Exit For Loop If    ${status}
-    click element    //span[@class='title' and text()='Details']
+    click element    //span[text()="Processed"]//following::li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #click element   //span[text()="Mark Status as Complete"]/following::span[@class='title' and text()='Details']
     #//li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']    60s
@@ -2020,7 +2025,7 @@ Editing Win prob
     ${save_button}    set variable    //span[text()='Save']
     click element    ${win_prob_edit}
     Wait Until Element Is Visible    ${win_prob}    60s
-    Execute Javascript    window.scrollTo(0,300)
+    Execute Javascript    window.scrollTo(0,200)
     click element    ${win_prob}
     sleep  10s
     click element    //li/a[@title='10%']
@@ -2034,10 +2039,12 @@ Adding partner and competitor
     ${competitor_list_add}    set variable    //div[text()='Competitor']/../div/div/div/lightning-button-icon/button[@title='Move selection to Chosen']
     ${partner_list_add}    set variable    //div[text()='Partner']/../div/div/div/lightning-button-icon/button[@title='Move selection to Chosen']
     Execute Javascript    window.scrollTo(0,1700)
+    Sleep  10s
     click element    ${competitor_list}
     click element    ${competitor_list_add}
     Capture Page Screenshot
     Execute Javascript    window.scrollTo(0,1900)
+    Sleep  10s
     click element    ${partner_list}
     click element    ${partner_list_add}
     Capture Page Screenshot
@@ -2068,7 +2075,8 @@ Adding Yritysinternet Plus
 
 Adding DataNet Multi
     [Arguments]    ${DataNet_Multi}
-    ${product}=    Set Variable    //span[@title='${DataNet_Multi}']/../../..//button
+    #${product}=    Set Variable    //span[@title='${DataNet_Multi}']/../../..//button
+    ${product}=    Set Variable  //div[@class="slds-col slds-small-size_4-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-text-align_right cpq-product-actions"]//following::span[@title='${DataNet_Multi}']/../../..//button/..
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
@@ -2080,10 +2088,10 @@ Adding DataNet Multi
     #Click Visible Element   ${next_button}
 
 UpdateAndAddSalesType for 2 products
-    [Arguments]    ${product1}    #${product2}
+    [Arguments]    ${product1}    ${product2}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
     ${product_1}=    Set Variable    //td[normalize-space(.)='${product1}']
-    #${product_2}=    Set Variable    //td[normalize-space(.)='${product2}']
+    ${product_2}=    Set Variable    //td[normalize-space(.)='${product2}']
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     log to console    UpdateAndAddSalesType for 2 products
     sleep    30s
@@ -2099,10 +2107,10 @@ UpdateAndAddSalesType for 2 products
     sleep    2s
     click element    ${product_1}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     sleep    5s
-    #wait until page contains element    ${product_2}    70s
-    #click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]
-    #sleep    2s
-    #click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    wait until page contains element    ${product_2}    70s
+    click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
     Unselect Frame
@@ -2124,6 +2132,7 @@ preview and submit quote
     Capture Page Screenshot
     Execute Javascript    window.scrollTo(0,200)
     Capture Page Screenshot
+    Sleep  10s
     Go Back
     Click Element    ${send_quote}
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
