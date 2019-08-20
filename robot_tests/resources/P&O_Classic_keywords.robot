@@ -499,9 +499,11 @@ General test setup
     switching to classic app
     Log To Console    selecting account
     Go to Account2    ${target_account}
-    ${new_opportunity_name}=    Run Keyword If    '${env}'=='sitpo'    create new opportunity sitpo    ${pricebook}
+    ${opportunity}=    Run Keyword If    '${env}'=='sitpo'    create new opportunity sitpo    ${pricebook}
     ...    ELSE    Run Keyword    create new opportunity    ${pricebook}
     sleep    10s
+    Set Test Variable    ${new_opportunity_name}   ${opportunity}
+
     Log    the opportunity id is ${new_opportunity_name}
     Search Opportunity and click CPQ    ${new_opportunity_name}
 

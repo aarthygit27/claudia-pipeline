@@ -484,6 +484,7 @@ Create_Order
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     ${Status}=    Run Keyword and Return Status    Element should be visible     //section[@id='OrderTypeCheck']/section/div/div/div/h1
     Run Keyword if    ${Status}    Close and Submit
+    Unselect frame
     Run Keyword Unless    ${Status}    Enter Details
 
 Close and Submit
@@ -534,7 +535,9 @@ Select Account
     ${account_name}=    Set Variable    //p[contains(text(),'Search')]
     ${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
     ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
-
+    sleep    3s
+    wait until element is visible   //div[@class='iframe-parent slds-template_iframe slds-card']/iframe    60s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
 
     Wait Until Element Is Visible    ${account_name}    120s
     click element    ${account_name}
