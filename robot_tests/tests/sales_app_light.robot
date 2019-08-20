@@ -331,7 +331,8 @@ Create B2O Order
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
-    ChangeThePriceBookToHDC    B2O pricebook
+    Edit Opportunity values    Price List      B2O
+    #ChangeThePriceBookToHDC    B2O pricebook
     ##B2B Pricebook
     ClickingOnCPQ    ${oppo_name}
     AddProductToCart    B2O Other Services

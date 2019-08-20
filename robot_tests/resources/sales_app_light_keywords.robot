@@ -120,6 +120,7 @@ Search Salesforce
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
     ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    sleep       20s
     run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
     ${IsNotVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
     run keyword unless    ${IsNotVisible}    Search Salesforce    ${item}
@@ -394,10 +395,11 @@ Validate NP Contact Details
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}']
     ${account_name}=    Set Variable    //span[text()='Account Name']//following::a[text()='${NP_ACCOUNT_NAME}']
     ${mobile_number}=    Set Variable    //span[text()='Mobile']//following::span//span[text()='${NP_MOBILE_NUM}']
+    ${primary_email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
     ${email}=    Set Variable    //span[text()='Email']//following::a[text()='${NP_EMAIL}']
     Go to Entity    Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}
     Click Visible Element    ${DETAILS_TAB}
-    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
+    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}     ${primary_email}       ${email}
 
 Create New Contact for Account
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
