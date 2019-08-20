@@ -418,7 +418,7 @@ Create New Contact for Account
     Input Text    ${MASTER_EMAIL_FIELD}     ${Ap_mail}
     Click Element    ${AP_SAVE_BUTTON}
     Sleep    2s
-    [Return]    ${AP_FIRST_NAME}${AP_LAST_NAME}
+    [Return]    ${AP_FIRST_NAME} ${AP_LAST_NAME}
 Validate AP Contact Details
     Go To Entity    ${AP_FIRST_NAME} ${AP_LAST_NAME}    ${SEARCH_SALESFORCE}
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${AP_FIRST_NAME} ${AP_LAST_NAME}']
@@ -1202,9 +1202,11 @@ reEnterContactData
 CreateAOppoFromAccount_HDC
     [Arguments]    ${b}=${contact_name}
     log to console    this is to create a Oppo from contact for HDC flow.${b}.contact
+    Sleep  10s
     ${oppo_name}    create unique name    Test Robot Order_
-    wait until page contains element    //li/a/div[text()='New Opportunity']    60s
-    force click element    //li/a/div[text()='New Opportunity']
+    wait until page contains element    //li/a[@title="New Opportunity"]   60s
+    #force click element    //li/a/div[text()='New Opportunity']
+    click element    //li/a[@title="New Opportunity"]
     sleep    30s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    40s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    ${oppo_name}
@@ -2748,10 +2750,17 @@ Change account owner to
 
 Open change owner view and fill the form
     [Arguments]    ${username}
-    Wait element to load and click    //button[@title='Change Owner']
-    Wait until page contains element    //input[@title='Search People']
-    Input text      //input[@title='Search People']     ${username}
-    Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
+    #Wait element to load and click    //button[@title='Change Owner']
+    #Wait until page contains element    //input[@title='Search People']
+    Wait element to load and click      //div[@class="slds-form-element__control slds-grid itemBody"]//button[@title='Change Owner']
+    Wait until page contains element    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
+    input text     //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]    ${username}
+    Sleep  10s
+    Press Enter On   //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
+    Sleep    10s
+    Click element    //a[text()='${username}']
+    sleep  10s
+    #Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
     Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
     sleep   40s
 
