@@ -10,21 +10,21 @@ Resource          ../resources/multibella_keywords.robot
 *** Test Cases ***
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details.
-    [Tags]    BQA-8396  Lightning  commit_check
+    [Tags]    BQA-8396  Lightning  Sanity
     Go To Salesforce and Login into Lightning
     Create New Master Contact
     Validate Master Contact Details
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395  Lightning
+    [Tags]    BQA-8395  Lightning       Sanity
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact Details
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
-    [Tags]    BQA-8394  Lightning
+    [Tags]    BQA-8394  Lightning       Sanity
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
@@ -33,7 +33,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
     ...    and then in My all open Opportunities section.
-    [Tags]    BQA-8393    Lightning     commit_check
+    [Tags]    BQA-8393    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -43,7 +43,7 @@ Create opportunity from Account
 Negative - Validate Opportunity cannot be created for Passive account
     [Documentation]    Select the Passive account and validate that the Opportunity creation
     ...    throws an error
-    [Tags]    BQA-8457    Lightning
+    [Tags]    BQA-8457    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer    PASSIVEACCOUNT
@@ -51,7 +51,7 @@ Negative - Validate Opportunity cannot be created for Passive account
 Negative - Validate Opportunity cannot be created for Group account
     [Documentation]    Select the Group account and validate that the new opportunity button
     ...    is not displayed
-    [Tags]    BQA-8464    Lightning
+    [Tags]    BQA-8464    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created    GROUPACCOUNT
@@ -59,7 +59,7 @@ Negative - Validate Opportunity cannot be created for Group account
 Closing active opportunity as cancelled
     [Documentation]    Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8465    Lightning
+    [Tags]    BQA-8465    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -68,7 +68,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8466    Lightning
+    [Tags]    BQA-8466    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -76,14 +76,14 @@ Closing active opportunity as lost
 
 Check Attributes/Business Account are named right in Sales Force UI
     [Documentation]    To Verify the Business Account Attributes Are Named Right
-    [Tags]    BQA-8484    Lightning
+    [Tags]    BQA-8484    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    Lightning
+    [Tags]    BQA-8483    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
@@ -92,7 +92,7 @@ Check Attributes/Contact Person are named right
 
 Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
-    [Tags]    BQA-7948    Lightning
+    [Tags]    BQA-7948    Lightning        Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -101,7 +101,7 @@ Lightning: Create Meeting from Account
 
 Lightning: Create Call from Account
     [Documentation]    To create call for a account
-    [Tags]    BQA-8085    Lightning
+    [Tags]    BQA-8085    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -110,7 +110,7 @@ Lightning: Create Call from Account
 
 Lightning: Create Task from Account
     [Documentation]    To create task for a account
-    [Tags]    BQA-8463    Lightning
+    [Tags]    BQA-8463    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Create New Contact for Account
@@ -125,7 +125,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523  Lightning     Summer-Test     BQA-10932
+    [Tags]    BQA-8523  Lightning     Summer-Test     BQA-10932     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -134,7 +134,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    Lightning    Summer-Test
+    [Tags]    BQA-8524    Lightning    Summer-Test      Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Remove change account owner
@@ -143,7 +143,7 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8525    Lightning
+    [Tags]    BQA-8525    Lightning     Sanity
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
@@ -151,7 +151,7 @@ Lightning: Sales admin Change Account owner
 
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8526    Lightning
+    [Tags]    BQA-8526    Lightning         Sanity
     Login to Salesforce as DigiSales Admin user
     Go to Entity    Aacon Oy
     Change Account Owner
@@ -251,7 +251,7 @@ Create HDC Order -old
     ValidateTheOrchestrationPlan
 
 Create HDC Order
-    [Tags]    BQA-HDCOrder    Lightning     commit_check
+    [Tags]    BQA-HDCOrder    Lightning     commit_check        Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -282,7 +282,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder       commit_check
+    [Tags]    BQA-B2BOrder       commit_check       Sanity
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -322,7 +322,7 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-B2OOrder    Lightning
+    [Tags]    BQA-B2OOrder    Lightning         Sanity
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -351,7 +351,7 @@ Create B2O Order
     getOrderStatusAfterSubmitting
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    Lightning
+    [Tags]    BQA-8798    Lightning         Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -406,7 +406,7 @@ Closing Opportunity as Won with FYR greater than 100KEUR
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    Lightning
+    [Tags]    BQA-9121    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -452,7 +452,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9122    Lightning
+    [Tags]    BQA-9122    Lightning     Sanity
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
@@ -485,7 +485,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     #verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
-    [Tags]    BQA-8560    Lightning
+    [Tags]    BQA-8560    Lightning     Sanity
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
     Go To Salesforce and Login into Lightning
     #Go To Entity    ${TEST_ACCOUNT_CONTACT}
@@ -539,7 +539,7 @@ Contract activation
     Update Contact and Pricelist in Opportunity    B2B
 
 Automatic availability check B2B-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test
+    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -549,7 +549,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products    Telia Yritysinternet Plus
 
 Automatic availability check B2O-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test
+    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
     Go To Salesforce and Login into Lightning    DigiSales B2O User
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -569,7 +569,7 @@ Automatic availability check B2O-Account
 
 Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
-    [Tags]    Lightning    BQA-10334    Lightning    Summer-Test
+    [Tags]    Lightning    BQA-10334    Lightning    Summer-Test        Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all existing contracts from Accounts Related tab
@@ -585,7 +585,7 @@ Check banner for customership and service contract
 
 Create contact relationship for account
     [Documentation]    Add new relationship for contact and check that account are displayed correctly on contact page.
-    [Tags]    Lightning    BQA-10523    Summer-Test
+    [Tags]    Lightning    BQA-10523    Summer-Test     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Contact for Account
@@ -595,14 +595,14 @@ Create contact relationship for account
 
 Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
-    [Tags]    Lightning    BQA-10736    Summer-Test
+    [Tags]    Lightning    BQA-10736    Summer-Test     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to     B2B Lightning
     Validate that account owner was changed successfully    B2B Lightning
 
 Add an account team member as account owner
-    [Tags]  Lightning     BQA-10524     Summer-Test
+    [Tags]  Lightning     BQA-10524     Summer-Test     Sanity
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -612,7 +612,7 @@ Add an account team member as account owner
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
-    [Tags]  Summer-Test     BQA-10948    Lightning
+    [Tags]  Summer-Test     BQA-10948    Lightning      Sanity
     [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -622,7 +622,7 @@ Edit team member's role as account owner
     Change team member role from account
 
 Delete team member as account owner
-    [Tags]  Summer-Test     Lightning   BQA-10949
+    [Tags]  Summer-Test     Lightning   BQA-10949       Sanity
     [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -633,7 +633,7 @@ Delete team member as account owner
 
 Add an account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then add some user as a team member for business account
-    [Tags]    Summer-Test    BQA-10727    Lightning
+    [Tags]    Summer-Test    BQA-10727    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -643,7 +643,7 @@ Add an account team member as Sales Admin
 
 Edit team member's role as Sales Admin
     [Documentation]    Log in as Sales Admin and then edit existing team member's role for business account
-    [Tags]    Summer-Test    BQA-10728    Lightning
+    [Tags]    Summer-Test    BQA-10728    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -653,7 +653,7 @@ Edit team member's role as Sales Admin
 
 Delete account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then delete team member from business account
-    [Tags]    Summer-Test    BQA-10740    Lightning
+    [Tags]    Summer-Test    BQA-10740    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -663,7 +663,7 @@ Delete account team member as Sales Admin
 
 Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
-    [Tags]    Summer-Test    BQA-10737    Lightning
+    [Tags]    Summer-Test    BQA-10737    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
     Navigate to view    Account Team Members
@@ -672,7 +672,7 @@ Add an account team member to Group
 
 Negative: Try to add account owner to Account team
     [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
-    [Tags]      Summer-Test     Lightning   BQA-10952
+    [Tags]      Summer-Test     Lightning   BQA-10952       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Aacon Oy
     Navigate to related tab
@@ -681,7 +681,7 @@ Negative: Try to add account owner to Account team
 
 Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
-    [Tags]      Summer-Test     Lightning   BQA-10951
+    [Tags]      Summer-Test     Lightning   BQA-10951       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
     Add account owner to account team
@@ -689,7 +689,7 @@ Negative: Try to add group owner to group's account team
 
 Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
-    [Tags]    Summer-Test    BQA-10738    Lightning
+    [Tags]    Summer-Test    BQA-10738    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
     Navigate to view    Account Team Members
@@ -698,7 +698,7 @@ Group: Edit team member's role
 
 Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
-    [Tags]    Summer-Test    BQA-10739    Lightning
+    [Tags]    Summer-Test    BQA-10739    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
     Navigate to view    Account Team Members
@@ -707,7 +707,7 @@ Group: Delete team member
 
 Negative: Try to add same team member twice to account team
     [Documentation]     Expected result: It's not possible to add same team member twice to business account's account team.
-    [Tags]  Summer-Test     Lightning   BQA-11052
+    [Tags]  Summer-Test     Lightning   BQA-11052       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab
@@ -717,7 +717,7 @@ Negative: Try to add same team member twice to account team
     Delete team member from account
 
 Negative: Check external data is not editable when creating new contact
-    [Tags]      Summer-Test     BQA-10945    Lightning
+    [Tags]      Summer-Test     BQA-10945    Lightning      Sanity
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -726,7 +726,7 @@ Negative: Check external data is not editable when creating new contact
     Close contact form
 
 Negative: Check external data is not editable with existing contact
-    [Tags]      Summer-Test     BQA-10946    Lightning
+    [Tags]      Summer-Test     BQA-10946    Lightning      Sanity
     [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
@@ -735,7 +735,7 @@ Negative: Check external data is not editable with existing contact
     Close contact form
 
 Negative: Check external data is not editable from account contact relationship view
-    [Tags]      Summer-Test     BQA-10947    Lightning
+    [Tags]      Summer-Test     BQA-10947    Lightning      Sanity
     [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
@@ -744,7 +744,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]  Summer-Test     BQA-10937    Lightning
+    [Tags]  Summer-Test     BQA-10937    Lightning      Sanity
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
@@ -764,7 +764,7 @@ Add several team members to business account team
 Group: Account team member is added as group owner
     [Documentation]     Account team member is added as group owner. History is checked and it should contain record about changing the owner.
     ...     Check that new owner is removed from the account team.
-    [Tags]      Summer-Test     Lightning   BQA-10933
+    [Tags]      Summer-Test     Lightning   BQA-10933       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
     Navigate to view    Account Team Members
@@ -785,7 +785,7 @@ Group: Account team member is added as group owner
 Negative: Try to change account owner different from the group account owner
     [Documentation]     Log in as sales admin and find Business account from group hierarchy. Try to change the Business Account owner different from
     ...     the group account owner. This should not be possible.
-    [Tags]  Summer-Test     Lightning   BQA-10968
+    [Tags]  Summer-Test     Lightning   BQA-10968       Sanity
     Go To Salesforce and Login into Admin User
     ${group_account_owner}=    Set variable     Maris Steinbergs
     Go to Entity  YIT Oyj
@@ -827,7 +827,7 @@ Investment redirects to Tellu
     Validate that Tellu login page opens
 
 Price input for unmodeled products in omniscript
-    [Tags]  Summer-Test     BQA-9160    Lightning
+    [Tags]  Summer-Test     BQA-9160    Lightning       Sanity
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
@@ -878,7 +878,7 @@ Lead_Creation
     page should contain element    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
 
 create a b2b direct order
-    [Tags]    SreeramE2E  Lightning
+    [Tags]    SreeramE2E  Lightning     Sanity
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    Ylöjärven Yrityspalvelu Oy
@@ -898,7 +898,7 @@ create a b2b direct order
     getMultibellaCaseGUIID    ${order_no}
 
 Add Oppo Team Member and Edit the Oppo with New Team Member
-    [Tags]  SreeramE2E       Lightning      commit_check
+    [Tags]  SreeramE2E       Lightning      commit_check        Sanity
     [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B
                     ...     and try modifying the oppo with newly added team member
     login to salesforce as digisales lightning user vlocupgsandbox
@@ -938,7 +938,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]  SreeramE2E  commit_check    Lightning
+    [Tags]  SreeramE2E  commit_check    Lightning       Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -985,7 +985,7 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]  SreeramE2E       Lightning  TestCheck
+    [Tags]  SreeramE2E       Lightning  TestCheck       Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     swithchtouser  B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -1085,7 +1085,7 @@ CreateB2BHDCGTMOrder
     #${fyr}  run keyword  addProductsViaSVE         ${product_name}
 
 createSalesProjectOppo
-    [Tags]         Lightning    commit_check
+    [Tags]         Lightning    commit_check        Sanity
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
@@ -1207,7 +1207,7 @@ createSalesProjectOppo
 
 
 Create B2B Order
-    [Tags]  SreeramE2E       Lightning
+    [Tags]  SreeramE2E       Lightning      Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     SwithchToUser  B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
