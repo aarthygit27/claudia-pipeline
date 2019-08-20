@@ -44,7 +44,7 @@ Product4:Ethernet Nordic E-Line EPL
     Create_Order
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
-    [Tags]    continue
+    [Tags]    Submit issue
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
     update_setting_Ethernet Nordic E-LAN EVP-LAN
@@ -53,6 +53,7 @@ Product5: Ethernet Nordic E-LAN EVP-LAN
     Create_Order
 
 Product6: Ethernet Nordic HUB/E-NNI
+    [Tags]    Submit issue
     General Setup    B2O
     Searching and adding product    Ethernet Nordic HUB/E-NNI
     update_setting_Ethernet Nordic HUB/E-NNI
@@ -61,8 +62,8 @@ Product6: Ethernet Nordic HUB/E-NNI
     Create_Order
 
 Product7: Telia Ethernet subscription
-    General Setup    B2B
-    Searching and adding product    Telia Ethernet subscription
+    General Setup    B2O
+    Searching and adding product    Telia Ethernet Subscription
     update_setting_Telia Ethernet subscription
     clicking on next button
     UpdatePageNextButton

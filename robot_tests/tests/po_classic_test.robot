@@ -29,7 +29,7 @@ Test scenario 1:Telia Architect
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
-    [Tags]    BQA-8790    PO1    Classic_run
+    [Tags]    BQA-8790    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}   set variable    Telia Projektijohtaminen varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -42,7 +42,7 @@ Test scenario 2: Telia Project management
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]    BQA-9189    PO1    Classic_B2B
+    [Tags]    BQA-9189    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Konsultointi jatkuva palvelu
     ${prod_2}   set variable    Telia Konsultointi varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -97,7 +97,7 @@ Test scenario 6: Key Customer Service Desk
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work Continuous Service
-    [Tags]    BQA-9193    PO1    Classic_B2B
+    [Tags]    BQA-9193    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -111,7 +111,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]    BQA-9194    PO1    Classic_B2B
+    [Tags]    BQA-9194    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -125,7 +125,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
-    [Tags]    BQA-9195    PO1    Classic_B2B
+    [Tags]    BQA-9195    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -139,7 +139,7 @@ Test scenario 9: Key Customer Service Desk
 
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
-    [Tags]    BQA-9196    PO1    Classic_B2B
+    [Tags]    BQA-9196    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Koulutus jatkuva palvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -152,7 +152,7 @@ Test scenario 10:Training
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
-    [Tags]    BQA-9197    PO1    Classic_B2B
+    [Tags]    BQA-9197    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Koulutus kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -165,7 +165,7 @@ Test scenario 11:Training
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
-    [Tags]    BQA-9198    PO1    Classic_B2B
+    [Tags]    BQA-9198    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Koulutus varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -178,7 +178,7 @@ Test scenario 12:Training
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    BQA-9199    PO1    Classic_B2B
+    [Tags]    BQA-9199    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Jatkuvuudenhallinta jatkuva palvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -191,7 +191,7 @@ Test scenario 13:Continuity Management Service
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    BQA-9200    PO1    Classic_B2B
+    [Tags]    BQA-9200    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Jatkuvuudenhallinta kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -204,7 +204,7 @@ Test scenario 14:Continuity Management Service
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    BQA-9201    PO1    Classic_B2B
+    [Tags]    BQA-9201    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Jatkuvuudenhallinta varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -217,7 +217,7 @@ Test scenario 15:Continuity Management Service
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
-    [Tags]    BQA-9202    PO1    PO
+    [Tags]    BQA-9202    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Palvelujohtaminen kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -230,7 +230,7 @@ Test scenario 16:Service Lead Service
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
-    [Tags]    BQA-9203    PO1    PO
+    [Tags]    BQA-9203    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Palvelujohtaminen kertapalvelu
     General test setup    Aacon Oy    b2b   sitpo
@@ -243,7 +243,7 @@ Test scenario 17:Service Lead Service
 
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
-    [Tags]    BQA-9204    PO1    Rerun
+    [Tags]    BQA-9204    PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Palvelujohtaminen varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo
@@ -256,7 +256,7 @@ Test scenario 18: Service Lead Service
 
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
-    [Tags]    BQA-9205    PO1    Rerun
+    [Tags]    BQA-9205    PO1    Classic_Rerun
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
@@ -267,7 +267,7 @@ Test scenario 19:Operation and Support Service
 
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
-    [Tags]    BQA-9206    PO1    PO
+    [Tags]    BQA-9206    PO1    Classic_Rerun
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
@@ -278,7 +278,7 @@ Test scenario 20:Operation and Support Service
 
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
-    [Tags]    BQA-9207    PO1    Rerun
+    [Tags]    BQA-9207    PO1    Classic_Rerun
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
@@ -289,7 +289,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    BQA-9208    PO1    Rerun
+    [Tags]    BQA-9208    PO1    Classic_Rerun
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo

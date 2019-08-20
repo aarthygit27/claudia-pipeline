@@ -605,6 +605,7 @@ Pick Date without product
     Capture Page Screenshot
     Click Element    ${additional_info_next_button}
 
+
 select Date for multiple products
 
     [Arguments]   ${prod_1}   ${prod_2}
@@ -683,6 +684,25 @@ Submit Order Button
     Run Keyword if  ${status}   click element   //button[text()='Submit']
     sleep  90s
 
+Enter Group id
+    Wait until element is visible   //span[text()='Cancel']   30s
+    Click element   //span[text()='Cancel']
+    Wait until element is visible   //div[contains(@class,'active')]//span[text()='Details']//parent::a  60s
+    click element   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    Wait until element is visible      //span[text()='Edit Group Billing ID']  60s
+    Click element  //span[text()='Edit Group Billing ID']//span[text()='Edit Group Billing ID']
+    Wait until element is visible   //input[@title='Search Group Billing IDs']  60s
+    Input Text  //input[@title='Search Group Billing IDs']     Sales test
+    Wait until element is visible   //div[@title='Sales test']
+    Click element   //div[@title='Sales test']
+    ScrollUntillFound  //label/span[text()='Desired Installation Date']
+    sleep  10s
+    Click element  //label/span[text()='Desired Installation Date']//following::div/a
+    Click element   //a[@title='Go to next month']
+    Click element  //span[@class='slds-day weekday DESKTOP uiDayInMonthCell--default'][text()='1']
+    Click element  //button[@title='Save']
+
+
 view orchestration plan details
     Reload page
     sleep  20s
@@ -758,8 +778,8 @@ update_setting_Ethernet Nordic E-LAN EVP-LAN
     Unselect Frame
 
 update_setting_Ethernet Nordic HUB/E-NNI
-    ${Service level}    Set Variable    //select[@name='productconfig_field_0_4']
-    ${platinum}    Set Variable    //select[@name='productconfig_field_0_4']//option[contains(text(),'Platinum')]
+    ${Service level}    Set Variable    //select[@name='productconfig_field_0_3']
+    ${platinum}    Set Variable    //select[@name='productconfig_field_0_3']//option[contains(text(),'Platinum')]
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${setting}    Set Variable    //button[@title='Settings']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
@@ -779,6 +799,7 @@ helinsiki_address
     ${street_add2}    set variable    //input[@name='productconfig_field_1_1']
     ${postal_code}    Set Variable    //input[@name='productconfig_field_1_3']
     ${city}    set variable    //input[@name='productconfig_field_1_4']
+    ${country}  set variable   //select[@name='productconfig_field_1_5']
     sleep    10s
     click element    ${street_add1}
     sleep    10s
@@ -794,6 +815,8 @@ helinsiki_address
     sleep    10s
     Press Key    ${city}    helsinki
     sleep    10s
+    Click element   ${country}
+    sleep  10s
 
 update_setting_Telia Ethernet subscription
     ${E_NNI-ID}    Set Variable    //input[@name='productconfig_field_0_6']

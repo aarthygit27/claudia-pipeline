@@ -560,7 +560,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
     sleep    10s
     click button    ${product_id}
-    sleep    15s
+    sleep    30s
     Click Button   //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
     Update_settings    h    no
 
