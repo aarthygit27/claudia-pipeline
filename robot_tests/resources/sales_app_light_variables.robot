@@ -1,7 +1,7 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    devbase
+${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
@@ -47,7 +47,7 @@ ${LAST_NAME_FIELD}    //input[@placeholder='Last Name']
 ${ACCOUNT_NAME_FIELD}    //input[@title='Search Accounts']
 ${MASTER_PHONE_NUM_FIELD}    //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_PRIMARY_EMAIL_FIELD}    //span[contains(text(),'Primary eMail')]/../following-sibling::input[@type='email']
-${MASTER_EMAIL_FIELD}    //div[@id='email']
+${MASTER_EMAIL_FIELD}    //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
 #${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
 ${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
@@ -56,7 +56,7 @@ ${DEFAULT_EMAIL}    d@email.com
 #${MASTER_MOBILE_NUM}    +358999888001
 #${MASTER_FIRST_NAME}    SATEST
 #${MASTER_LAST_NAME}    SACONTACT
-${MASTER_ACCOUNT_NAME}    Admisol Oy
+${MASTER_ACCOUNT_NAME}    Aktia Fondbolag Ab
 ${MASTER_PHONE_NUM}    +358968372101
 ${MASTER_EMAIL}    saemail@telia.com
 ${NP_EMAIL_FIELD}    //input[@type='email']
@@ -191,7 +191,7 @@ ${SEARCH_OWNER}    //input[@title='Search People']
 ${OWNER_NAME}     //div[@class='ownerName']//a
 ${NEW_OWNER_SELECTED}    //span[@class='pillText']
 ${CLOSE_NOTIFICATION}    //button[@title='Dismiss notification']
-${SALES_ADMIN_USER_RELEASE}    saleadm@teliacompany.com.devbase
+${SALES_ADMIN_USER_RELEASE}    saleadm@teliacompany.com.release
 #### SVE,B2B,B2,HDC Orders
 ${r}              b2b
 ${p}              b2o
@@ -220,6 +220,7 @@ ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/optio
 ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
 ${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
+${test_opportunity}     //table/tbody/tr/td/span/span[text()='Analyse Prospect']/../../../th/span/a[contains(text(), TestOpportunity)]
 
 
 ### Lead  Variables ###

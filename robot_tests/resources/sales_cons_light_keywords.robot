@@ -340,6 +340,7 @@ Create New Master Contact and Validate
 Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
+    Sleep  10s
     Press Enter On   ${field}
     Click Visible Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
     Sleep    2s
