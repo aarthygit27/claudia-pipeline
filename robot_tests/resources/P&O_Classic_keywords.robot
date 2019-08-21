@@ -791,6 +791,7 @@ Add Toimenpide L
     [Documentation]    This is to Add Toimenpide L
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyu2QAA']/div/div/div/div/div/button
+
     sleep    10s
     click button    ${product_id}
     Click_Settings_new    Toimenpide L
@@ -800,6 +801,7 @@ Add Toimenpide L sitpo
     [Documentation]    This is to Add Toimenpide L
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide L')]//following::button[1]
+    Execute Javascript    window.scrollTo(0,250)
     sleep    10s
     click button    ${product_id}
     sleep   10s
@@ -810,6 +812,7 @@ Add Toimenpide XL
     [Documentation]    This is to Add Toimenpide XL
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000004jyugQAA']/div/div/div/div/div/button
+
     sleep    10s
     click button    ${product_id}
     Click_Settings_new    Toimenpide XL

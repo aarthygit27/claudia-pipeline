@@ -71,7 +71,7 @@ Product7: Telia Ethernet subscription
     Create_Order
 
 Product8: Telia Robotics
-    [Tags]    TeliaRobotics    B2B_Lightning_Run
+    [Tags]    TeliaRobotics    B2B_other
     General Setup    B2B
     Searching and adding product    Telia Robotics
     update_setting_TeliaRobotics
@@ -80,7 +80,7 @@ Product8: Telia Robotics
     Create_Order
 
 Product8: Telia Crowd Insights
-    [Tags]    Telia Crowd Insights    B2B_Lightning_Run
+    [Tags]    Telia Crowd Insights    B2B_other
     General Setup    B2B
     Searching and adding product    Telia Crowd Insights
     update_setting_TeliaRobotics
@@ -89,7 +89,7 @@ Product8: Telia Crowd Insights
     Create_Order
 
 Product8: Telia Sign
-    [Tags]    Telia Sign    B2B_Lightning_Run
+    [Tags]    Telia Sign    B2B_other
     General Setup    B2B
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
