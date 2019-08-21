@@ -363,7 +363,7 @@ Validate Contact Details
     Wait Until Page Contains Element    ${element}${contact_name}    240s
     Wait Until Page Contains Element    ${element}${account_name}    240s
     Wait Until Page Contains Element    ${element}${mobile_number}    240s
-    run keyword unless      ${primary_email}=='false'              Wait Until Page Contains Element    ${element}${primary_email}    240s
+    Wait Until Page Contains Element    ${element}${primary_email}    240s
     Wait Until Page Contains Element    ${element}${email}            240s
 
 Validate NP Contact Details
