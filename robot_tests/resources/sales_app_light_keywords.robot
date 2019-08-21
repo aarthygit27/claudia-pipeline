@@ -366,6 +366,13 @@ Validate Contact Details
     run keyword unless      ${primary_email}=='false'              Wait Until Page Contains Element    ${element}${primary_email}    240s
     Wait Until Page Contains Element    ${element}${email}            240s
 
+Validate NP Contact Details
+    [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}   ${email}
+    Wait Until Page Contains Element    ${element}${contact_name}    240s
+    Wait Until Page Contains Element    ${element}${account_name}    240s
+    Wait Until Page Contains Element    ${element}${mobile_number}    240s
+    Wait Until Page Contains Element    ${element}${email}            240s
+
 Create New NP Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
@@ -398,7 +405,7 @@ Validate NP Contact Details
     ${email}=    Set Variable    //span[text()='Email']//following::a[text()='${NP_EMAIL}']
     Go to Entity    Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}
     Click Visible Element    ${DETAILS_TAB}
-    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}     'false'      ${email}
+    Validate NP Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}     ${email}
 
 Create New Contact for Account
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
@@ -420,6 +427,7 @@ Create New Contact for Account
     Click Element    ${AP_SAVE_BUTTON}
     Sleep    2s
     [Return]    ${AP_FIRST_NAME} ${AP_LAST_NAME}
+
 Validate AP Contact Details
     Go To Entity    ${AP_FIRST_NAME} ${AP_LAST_NAME}    ${SEARCH_SALESFORCE}
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${AP_FIRST_NAME} ${AP_LAST_NAME}']
