@@ -106,14 +106,15 @@ cpq test
     Create_Order
 
 IP VPN
-    [Tags]    ipvpn
+    [Tags]    B2O_Lightning
     General Setup    B2O
     Searching and adding product    Telia Unmanaged IP VPN
-    Product_updation    Telia Unmanaged IP VPN
+    clicking on next button
+    UpdatePageNextButton
     Create_Order
 
 Telia Ethernet capacity
-    [Tags]    ethcapacity
+    [Tags]    uNAVAILABLE - VERIFIED IN BOTH B2O AND B2B
     General Setup    B2O
     Searching and adding product    Telia Ethernet Capacity
     updating setting telia ethernet capacity

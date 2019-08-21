@@ -289,7 +289,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    BQA-9208    PO1    Failed_Rerun
+    [Tags]    BQA-9208    PO1    Remaining Classic B2B
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
@@ -392,7 +392,7 @@ Telia Sign
 
 Telia Crowd Insights_sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    sitpo_classic_Latest
+    [Tags]    sitpo_classic_Latest      Remaining Classic B2B
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Crowd Insights
     Add Telia Crowd Insights    sitpo
@@ -400,7 +400,7 @@ Telia Crowd Insights_sitpo
     view orchestration plan sitpo
 
 Telia Sign sitpo
-    [Tags]    sitpo_classic_Latest
+    [Tags]    sitpo_classic_Latest  Remaining Classic B2B
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Sign
     Add Telia Sign    sitpo
@@ -409,7 +409,7 @@ Telia Sign sitpo
 
 Telia Robotics sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    sitpo_classic_Latest    robotics
+    [Tags]    sitpo_classic_Latest    Remaining Classic B2B
     General test setup    ${DEVPO_ACCOUNT}    b2b    sitpo
     Search Products    Telia Robotics
     Add Telia Robotics    sitpo
@@ -419,59 +419,59 @@ Telia Robotics sitpo
 
 Telia Multiservice NNI sitpo
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    robotics    sitpo_classic_Latest
+    [Tags]    CLASSIC B2O
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Multiservice NNI
     Adding Product    Telia Multiservice NNI
-    create order sitpo    ${DEVPO_ACCOUNT}
+    create order B2O    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
 
 Product2:Telia Ethernet Operator Subscription
-    [Tags]    sitpo_classic_Latest
+    [Tags]    CLASSIC B2O
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Operator Subscription
     Adding Product    Telia Ethernet Operator Subscription
-    create order sitpo    ${DEVPO_ACCOUNT}
+    create order B2O   ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
 
 Product3:Ethernet Nordic Network Bridge
-    [Tags]    sitpo_classic_Latest
+    [Tags]    CLASSIC B2O
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic Network Bridge
     Add Ethernet Nordic Network Bridge    sitpo
-    create order sitpo    ${DEVPO_ACCOUNT}
+    create order B2O    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
 
 Product4:Ethernet Nordic E-Line EPL
-    [Tags]    sitpo_classic_Latest
+    [Tags]    sitpo_classic_Latest-product unavailable
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic E-Line EPL
     Add Ethernet Nordic E-Line EPL    sitpo
-    create order sitpo    ${DEVPO_ACCOUNT}
+    create order B2O    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
-    [Tags]    sitpo_classic_TestRun
+    [Tags]    CLASSIC B2O
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic E-LAN EVP-LAN
     Add Ethernet Nordic E-LAN EVP-LAN    sitpo
-    create order sitpo    ${DEVPO_ACCOUNT}
+    create order B2O    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
 
 Product6: Ethernet Nordic HUB/E-NNI
-    [Tags]    sitpo_classic_Latest
+    [Tags]    CLASSIC B2O
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Ethernet Nordic HUB/E-NNI
     Add Ethernet Nordic HUB/E-NNI    sitpo
-    create order sitpo    ${DEVPO_ACCOUNT}
+    create order B2O    ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
 
 Product7: Telia Ethernet subscription
-    [Tags]    sitpo_classic_TestRun     devpo&failedsitpo
+    [Tags]    CLASSIC B2O
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Subscription
     Add Telia Ethernet subscription    sitpo
-    create order sitpo    ${DEVPO_ACCOUNT}
+    create order B2O     ${DEVPO_ACCOUNT}
     view orchestration plan sitpo
 
 leadfiletest
