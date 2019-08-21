@@ -10,7 +10,7 @@ Resource          ../resources/PO_Light_keywords.robot
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
-    [Tags]    B2O_Lightning
+    [Tags]    B2O_Lightning_EXCLUDE
     General Setup    B2O
     Search and add product    Telia Multiservice NNI
     clicking on next button
