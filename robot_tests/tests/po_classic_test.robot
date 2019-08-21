@@ -289,7 +289,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    BQA-9208    PO1    Failed_Rerun
+    [Tags]    BQA-9208    PO1    Remaining_Classic
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
