@@ -680,27 +680,51 @@ Submit Order Button
     Click element  //div[@title='Submit Order']
     sleep  10s
     Capture Page Screenshot
-    ${status} =  Run Keyword and Return Status   Page should contain element     //h2[text()='Submit Order']
-    Run Keyword if  ${status}   click element   //button[text()='Submit']
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    ${status} =    Run Keyword and Return status  Page should contain element   //div[text()='Please add Group Billing ID.']
+    Run Keyword if   ${status}  Enter Group id and submit
+    Run Keyword unless   ${status}   click element   //button[text()='Submit']
     sleep  90s
 
-Enter Group id
-    Wait until element is visible   //span[text()='Cancel']   30s
-    Click element   //span[text()='Cancel']
-    Wait until element is visible   //div[contains(@class,'active')]//span[text()='Details']//parent::a  60s
-    click element   //div[contains(@class,'active')]//span[text()='Details']//parent::a
-    Wait until element is visible      //span[text()='Edit Group Billing ID']  60s
-    Click element  //span[text()='Edit Group Billing ID']//span[text()='Edit Group Billing ID']
+Enter Group id and submit
+
+    ${cancel}=  set variable    //span[text()='Cancel']
+    ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    ${Group id}=  set variable   //span[text()='Edit Group Billing ID']
+    ${Installation date}=  set variable   //label/span[text()='Desired Installation Date']
+
+    Wait until element is visible   ${cancel}   30s
+    Click element   ${cancel}
+    sleep  10s
+    Wait until element is visible   ${Detail}  60s
+    click element   ${Detail}
+    sleep  10s
+    Scroll Page To Element   ${Group id}
+    Wait until element is visible      ${Group id}  60s
+    set focus to element  ${Group id}
+    Force Click element  ${Group id}
     Wait until element is visible   //input[@title='Search Group Billing IDs']  60s
     Input Text  //input[@title='Search Group Billing IDs']     Sales test
     Wait until element is visible   //div[@title='Sales test']
     Click element   //div[@title='Sales test']
-    ScrollUntillFound  //label/span[text()='Desired Installation Date']
     sleep  10s
-    Click element  //label/span[text()='Desired Installation Date']//following::div/a
+    Scroll Page To Element  ${Installation date}
+    Wait until element is visible   ${Installation date}   60s
+    Log to console  Installation date
+    set focus to element   ${Installation date}
+    Force Click element  //label/span[text()='Desired Installation Date']//following::div/a
     Click element   //a[@title='Go to next month']
-    Click element  //span[@class='slds-day weekday DESKTOP uiDayInMonthCell--default'][text()='1']
+    Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
+    Click element  //tr[@class='calRow'][2]/td[1]/span
     Click element  //button[@title='Save']
+    sleep  10s
+    Wait until element is visible   //div[@title='Submit Order']    60s
+    Click element  //div[@title='Submit Order']
+    sleep  10s
+    Capture Page Screenshot
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    click element   //button[text()='Submit']
+    sleep  90s
 
 
 view orchestration plan details
@@ -826,6 +850,8 @@ update_setting_Telia Ethernet subscription
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     ${setting}    Set Variable    //button[@title='Settings']
+    ${Pricing area matrix}  set variable    //select[@name='productconfig_field_2_1']
+    ${pricing area}  set variable  //select[@name='productconfig_field_2_3']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     #Click Element    ${setting}
@@ -840,7 +866,16 @@ update_setting_Telia Ethernet subscription
     Click Element    ${Interface}
     Click Element    ${option}
     helinsiki_address
+    Click element  ${Pricing area matrix}
+    sleep  5s
+    Click element  //select[@name='productconfig_field_2_1']/option[2]
+    sleep  5s
+    Click element  ${pricing area}
+    sleep  5s
+    Click element  //select[@name='productconfig_field_2_3']/option[2]
+    sleep  5s
     click element    ${closing}
+    sleep  5s
     Unselect Frame
 
 update_setting_TeliaRobotics
