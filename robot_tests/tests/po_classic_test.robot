@@ -289,10 +289,16 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    BQA-9208    PO1    Classic_Rerun
+    [Tags]    BQA-9208    PO1    Failed_Rerun
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
+    Add Hallinta ja Tuki
+    Add Toimenpide XS sitpo
+    Add Toimenpide S sitpo
+    Add Toimenpide M sitpo
+    Add Toimenpide L sitpo
+    Add Toimenpide XL sitpo
     Search Products    Asiantuntijakäynti
     Adding Product   Asiantuntijakäynti
     Search Products    Pikatoimituslisä
@@ -301,17 +307,6 @@ Test scenario 22 Other:Operation and Support Services
     Add Events jatkuva palvelu     d   sitpo
     Search Products    Events jatkuva palvelu
     Add Events jatkuva palvelu    h  sitpo
-    Add Hallinta ja Tuki
-    #Search Products    Toimenpide XS
-    Add Toimenpide XS sitpo
-    #Search Products    Toimenpide S
-    Add Toimenpide S sitpo
-    #Search Products    Toimenpide M
-    Add Toimenpide M sitpo
-    #Search Products    Toimenpide L
-    Add Toimenpide L sitpo
-    #Search Products    Toimenpide XL
-    Add Toimenpide XL sitpo
     create order sitpo    Aacon Oy
     view orchestration plan sitpo
 

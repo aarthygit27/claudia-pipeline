@@ -10,7 +10,7 @@ Resource          ../resources/PO_Light_keywords.robot
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
-    [Tags]    Submit issue
+    [Tags]    B2O_Lightning
     General Setup    B2O
     Search and add product    Telia Multiservice NNI
     clicking on next button
@@ -18,7 +18,7 @@ Product1:Telia Multiservice NNI
     Create_Order
 
 Product2:Telia Ethernet Operator Subscription
-    [Tags]    Submit issue
+    [Tags]    B2O_Lightning
     General Setup    B2O
     Search and add product    Telia Ethernet Operator Subscription
     clicking on next button
@@ -26,7 +26,7 @@ Product2:Telia Ethernet Operator Subscription
     Create_Order
 
 Product3:Ethernet Nordic Network Bridge
-    [Tags]    Submit issue
+    [Tags]    B2O_Lightning
     General Setup    B2O
     Searching and adding product    Ethernet Nordic Network Bridge
     update_setting1
@@ -44,7 +44,7 @@ Product4:Ethernet Nordic E-Line EPL
     Create_Order
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
-    [Tags]    Submit issue
+    [Tags]    B2O_Lightning
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
     update_setting_Ethernet Nordic E-LAN EVP-LAN
@@ -53,7 +53,7 @@ Product5: Ethernet Nordic E-LAN EVP-LAN
     Create_Order
 
 Product6: Ethernet Nordic HUB/E-NNI
-    [Tags]    Submit issue
+    [Tags]    B2O_Lightning
     General Setup    B2O
     Searching and adding product    Ethernet Nordic HUB/E-NNI
     update_setting_Ethernet Nordic HUB/E-NNI
@@ -62,6 +62,7 @@ Product6: Ethernet Nordic HUB/E-NNI
     Create_Order
 
 Product7: Telia Ethernet subscription
+    [Tags]    B2O_Lightning
     General Setup    B2O
     Searching and adding product    Telia Ethernet Subscription
     update_setting_Telia Ethernet subscription
@@ -353,12 +354,6 @@ Test scenario 22 Other:Operation and Support Services
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
-    Search and add product    Asiantuntijakäynti
-    Search and add product    Pikatoimituslisä
-    Searching and adding product    Events jatkuva palvelu
-    update setting common    d    no
-    Searching and adding product    Events jatkuva palvelu
-    update setting common    h    no
     Add Hallinta ja Tuki
     Add Toimenpide XS
     update setting common    h    no
@@ -369,6 +364,12 @@ Test scenario 22 Other:Operation and Support Services
     Add Toimenpide L
     update setting common    h    no
     Add Toimenpide XL
+    update setting common    h    no
+    Search and add product    Asiantuntijakäynti
+    Search and add product    Pikatoimituslisä
+    Searching and adding product    Events jatkuva palvelu
+    update setting common    d    no
+    Searching and adding product    Events jatkuva palvelu
     update setting common    h    no
     clicking on next button
     UpdateAndAddSalesType    Telia Palvelunhallintakeskus
