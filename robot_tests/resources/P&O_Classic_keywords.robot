@@ -1388,6 +1388,46 @@ update order details
     input text    ${order_name}    John Doe
     input text    ${order_email}    abc@test.com
 
+create order B2O
+     [Arguments]    ${target_account}
+    [Documentation]    Salestype addition removed for B20 products
+    ${cart_next_button}=    Set Variable    //button/span[text()='Next']
+    ${CPQ_next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${backCPQ}=    Set Variable    //button[@id='BackToCPQ']
+    ${spinner}=    set variable    //div[contains(@class,'slds-spinner--brand')]
+    ${sales_type}    set variable    //select[@ng-model='p.SalesType']
+    Wait Until Element Is Visible    ${cart_next_button}    120s
+    click element    ${cart_next_button}
+    Wait Until Element Is Visible    ${backCPQ}    240s
+    sleep    10s
+    Capture Page Screenshot
+    click button    ${CPQ_next_button}
+    sleep    10s
+    Credit score validation
+    View Open Quote
+    sleep  20s
+    ${url}=    Get Location
+    ${contains}=    Evaluate    'lightning' in '${url}'
+    Run Keyword if    ${contains}    go to classic
+    ${status}   set variable   Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
+    Run Keyword if   ${status}  click button    //td[@id='topButtonRow']//input[@title='CPQ']
+    Log To Console    create order
+    sleep    10s
+    Wait Until Element Is Visible    ${CREATE_ORDER}    120s
+    click element    ${CREATE_ORDER}
+    sleep    10s
+    Wait Until Element is Visible    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button    60s
+    Click element    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button
+    #Edit_Details
+    Wait Until Element Is Visible    ${cart_next_button}    120s
+    click element    ${cart_next_button}
+    sleep    10s
+    Wait Until Element Is Not Visible    ${spinner}    120s
+    ${Status}=    Run Keyword and Return Status    Page should Contain element    //section[@id='OrderTypeCheck']/section/div/div/div/h1
+    Run Keyword if    ${Status}    Close and Submit
+    Run Keyword Unless    ${Status}    Enter Details
+
+
 create order sitpo
     [Arguments]    ${target_account}
     [Documentation]    Used to create order after adding the products to the cart
