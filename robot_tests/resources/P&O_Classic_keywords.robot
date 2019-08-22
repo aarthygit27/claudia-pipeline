@@ -748,6 +748,7 @@ Add Toimenpide XS sitpo
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible  //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Update_settings    h    no
 
 Add Toimenpide S
@@ -768,6 +769,7 @@ Add Toimenpide S sitpo
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible  //div[contains(text(),'Toimenpide S')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Update_settings    h    no
 
 Add Toimenpide M
@@ -788,6 +790,7 @@ Add Toimenpide M sitpo
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible   //div[contains(text(),'Toimenpide M')]//following::button[1]   30s
     Click Button  //div[contains(text(),'Toimenpide M')]//following::button[1]
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Update_settings    h    no
 
 Add Toimenpide L
@@ -810,6 +813,7 @@ Add Toimenpide L sitpo
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible   //div[contains(text(),'Toimenpide L')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Update_settings    h    no
 
 Add Toimenpide XL
@@ -831,6 +835,7 @@ Add Toimenpide XL sitpo
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible   //div[contains(text(),'Toimenpide XL')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Update_settings    h    no
 
 Account seletion
@@ -1801,8 +1806,8 @@ update_setting_Telia Ethernet subscription
     ${E-NNI S-Tag VLAN}    Set Variable    //input[@name='productconfig_field_0_7']
     ${Interface}    Set Variable    //select[@name='productconfig_field_0_8']
     ${option}    Set Variable    ${Interface}//option[contains(text(),'10/100Base-TX')]
-    ${PAM}  set variable        //select[@name='productconfig_field_2_1']
-    ${PAM_option}    set variable   //select[@name='productconfig_field_2_1']/option[2]
+    ${PAM}  set variable        //select[@name='productconfig_field_2_0']
+    ${PAM_option}    set variable   //select[@name='productconfig_field_2_0']/option[2]
     ${Pricing_Area}  set variable       //select[@name='productconfig_field_2_3']
     ${PA_Option}  set variable   //select[@name='productconfig_field_2_3']/option[2]
     sleep    5s

@@ -1503,7 +1503,7 @@ NextButtonOnOrderPage
     sleep  30s
     ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
     Log to console      ${status}
-    wait until page contains element    //span[text()='Next']/..    60s
+    wait until element is visible    //span[text()='Next']/..    60s
     click element    //span[text()='Next']/..
     unselect frame
     sleep    30s

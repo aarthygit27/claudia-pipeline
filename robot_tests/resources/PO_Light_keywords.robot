@@ -113,6 +113,7 @@ update_setting1
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${setting}    Set Variable    //button[@title='Settings']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    ${city}    set variable    //input[@name='productconfig_field_1_4']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     #Click Element    ${setting}
@@ -123,6 +124,9 @@ update_setting1
     sleep    10s
     Press Key    ${postal_code}    00100
     sleep    10s
+    click element    ${city}
+    sleep    10s
+    Press Key    ${city}    helsinki
     click element    ${closing}
 
 Searching and adding product
@@ -470,6 +474,9 @@ UpdatePageNextButton
     unselect frame
     sleep    60s
 
+
+
+
 Create_Order
 
     View Open Quote
@@ -479,8 +486,6 @@ Create_Order
     ClickonCreateOrderButton
     OpenOrderPage
     NextButtonOnOrderPage
-
-
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     ${Status}=    Run Keyword and Return Status    Element should be visible     //section[@id='OrderTypeCheck']/section/div/div/div/h1
     Run Keyword if    ${Status}    Close and Submit
@@ -490,11 +495,14 @@ Create_Order
 Close and Submit
 
     ${submit_order}=    Set Variable    //span[text()='Yes']
-    Click Element    //div[@id='Close']/p
+    ${status}   set variable   Run Keyword and Return Status   Frame should contain   //div[@id='Close']/p   Close
+    Run Keyword if   ${status}   Click Element    //div[@id='Close']/p
     sleep  15s
+    Unselect frame
     ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
     Run Keyword if    ${status}    click element    ${submit_order}
     Run Keyword Unless    ${status}    Submit Order Button
+    view orchestration plan details
 
 
 Enter Details
@@ -684,7 +692,7 @@ Submit Order Button
     ${status} =    Run Keyword and Return status  Page should contain element   //div[text()='Please add Group Billing ID.']
     Run Keyword if   ${status}  Enter Group id and submit
     Run Keyword unless   ${status}   click element   //button[text()='Submit']
-    sleep  90s
+    sleep  30s
 
 Enter Group id and submit
 
@@ -850,7 +858,7 @@ update_setting_Telia Ethernet subscription
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     ${setting}    Set Variable    //button[@title='Settings']
-    ${Pricing area matrix}  set variable    //select[@name='productconfig_field_2_1']
+    ${Pricing area matrix}  set variable    //select[@name='productconfig_field_2_0']
     ${pricing area}  set variable  //select[@name='productconfig_field_2_3']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
@@ -868,7 +876,7 @@ update_setting_Telia Ethernet subscription
     helinsiki_address
     Click element  ${Pricing area matrix}
     sleep  5s
-    Click element  //select[@name='productconfig_field_2_1']/option[2]
+    Click element  //select[@name='productconfig_field_2_0']/option[2]
     sleep  5s
     Click element  ${pricing area}
     sleep  5s
