@@ -745,7 +745,8 @@ Add Toimenpide XS sitpo
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     sleep    10s
     click button    ${product_id}
-    sleep   10s
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    Wait until element is visible  //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Update_settings    h    no
 
@@ -764,7 +765,8 @@ Add Toimenpide S sitpo
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide S')]//following::button[1]
     sleep    10s
     click button    ${product_id}
-    sleep   10s
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    Wait until element is visible  //div[contains(text(),'Toimenpide S')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
     Update_settings    h    no
 
@@ -783,7 +785,8 @@ Add Toimenpide M sitpo
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide M')]//following::button[1]
     sleep    10s
     click button    ${product_id}
-    sleep   10s
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    Wait until element is visible   //div[contains(text(),'Toimenpide M')]//following::button[1]   30s
     Click Button  //div[contains(text(),'Toimenpide M')]//following::button[1]
     Update_settings    h    no
 
@@ -804,7 +807,8 @@ Add Toimenpide L sitpo
     Execute Javascript    window.scrollTo(0,250)
     sleep    10s
     click button    ${product_id}
-    sleep   10s
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    Wait until element is visible   //div[contains(text(),'Toimenpide L')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
     Update_settings    h    no
 
@@ -824,7 +828,8 @@ Add Toimenpide XL sitpo
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XL')]//following::button[1]
     sleep    10s
     click button    ${product_id}
-    sleep   10s
+    Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    Wait until element is visible   //div[contains(text(),'Toimenpide XL')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
     Update_settings    h    no
 
@@ -1410,7 +1415,7 @@ create order B2O
     ${contains}=    Evaluate    'lightning' in '${url}'
     Run Keyword if    ${contains}    go to classic
     ${status}   set variable   Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
-    Run Keyword if   ${status}  click button    //td[@id='topButtonRow']//input[@title='CPQ']
+    Run Keyword if   ${status}  Force click element    //td[@id='topButtonRow']//input[@title='CPQ']
     Log To Console    create order
     sleep    10s
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
@@ -1796,6 +1801,10 @@ update_setting_Telia Ethernet subscription
     ${E-NNI S-Tag VLAN}    Set Variable    //input[@name='productconfig_field_0_7']
     ${Interface}    Set Variable    //select[@name='productconfig_field_0_8']
     ${option}    Set Variable    ${Interface}//option[contains(text(),'10/100Base-TX')]
+    ${PAM}  set variable        //select[@name='productconfig_field_2_1']
+    ${PAM_option}    set variable   //select[@name='productconfig_field_2_1']/option[2]
+    ${Pricing_Area}  set variable       //select[@name='productconfig_field_2_3']
+    ${PA_Option}  set variable   //select[@name='productconfig_field_2_3']/option[2]
     sleep    5s
     Wait Until Element Is Visible    ${E_NNI-ID}    60s
     Press Key    ${E_NNI-ID}    10
@@ -1807,6 +1816,15 @@ update_setting_Telia Ethernet subscription
     Click Element    ${Interface}
     Click Element    ${option}
     helinsiki_address
+    sleep  5s
+    Click element   ${PAM}
+    sleep  5s
+    click element  ${PAM_option}
+    sleep  5s
+    click element  ${Pricing_Area}
+    sleep  5s
+    click element  ${PA_Option}
+    sleep  5s
     Capture Page Screenshot
 
 
