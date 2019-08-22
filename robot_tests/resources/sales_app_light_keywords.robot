@@ -494,8 +494,8 @@ Cancel Opportunity and Validate
     Sleep    2s
     Press Enter On    ${SEARCH_SALESFORCE}
     Sleep       60s
-    Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
-    Entity Should Be Open    //h1//span[text()='${target_name}']
+    Wait Until Page Contains element    //h1//span[text()='${opportunity}']    400s
+    Entity Should Be Open    //h1//span[text()='${opportunity}']
     click visible element    ${EDIT_STAGE_BUTTON}
     sleep    5s
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
@@ -1307,7 +1307,7 @@ Update Pricelist in Opportunity
     click element    //button[@title='Save']
 
 ClickingOnCPQ
-    #[Arguments]    ${b}=${oppo_name}
+    [Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
