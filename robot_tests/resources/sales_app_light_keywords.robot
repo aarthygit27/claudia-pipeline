@@ -398,7 +398,7 @@ Create New NP Contact
     Press Enter On    ${SAVE_BUTTON}
     Sleep    2s
 
-Validate NP Contact Details
+Validate NP Contact
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}']
     ${account_name}=    Set Variable    //span[text()='Account Name']//following::a[text()='${NP_ACCOUNT_NAME}']
     ${mobile_number}=    Set Variable    //span[text()='Mobile']//following::span//span[text()='${NP_MOBILE_NUM}']
@@ -489,7 +489,13 @@ Validate Opportunity cannot be created
 
 Cancel Opportunity and Validate
     [Arguments]    ${opportunity}    ${stage}
-    Go to Entity    ${opportunity}
+    #Go to Entity    ${opportunity}
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${opportunity}
+    Sleep    2s
+    Press Enter On    ${SEARCH_SALESFORCE}
+    Sleep       60s
+    Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
+    Entity Should Be Open    //h1//span[text()='${target_name}']
     click visible element    ${EDIT_STAGE_BUTTON}
     sleep    5s
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
@@ -1301,37 +1307,66 @@ Update Pricelist in Opportunity
     click element    //button[@title='Save']
 
 ClickingOnCPQ
-    [Arguments]    ${b}=${oppo_name}
+    #[Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
     log to console    ClickingOnCPQ
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
     #wait until page contains element    xpath=//h1[text()='${b}']    30s
     sleep    40s
 
+#validateCreatedOppoForFYR
+#    [Arguments]    ${fyr_value_oppo}= ${fyr_value}
+#    wait until page contains element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']    60s
+#    page should contain element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']
+#    page should contain element    //span[@title='FYR Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']
+#    ScrollUntillFound    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+#    sleep    5s
+#    page should contain element    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${fyr_value_oppo},00 €']
+#    page should contain element    //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${fyr_value_oppo},00 €']
+#    ${monthly_charge_total}=    evaluate    (${RC}*${product_quantity})
+#    #${mrc_form}=    get text    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/div/span
+#    #should be equal as strings    ${monthly_charge_total}    ${mrc_form}
+#    page should contain element    //span[text()='Monthly Charge Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${monthly_charge_total},00 €']
+#    ${one_time_total}=    evaluate    (${NRC}*${product_quantity})
+#    #${nrc_form}=    get text    //span[@title='FYR Total']/../div[@class='slds-form-element__control']/div/span
+#    #should be equal as strings    ${one_time_total}    ${nrc_form}
+#    page should contain element    //span[text()='One Time Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${one_time_total},00 €']
+#    click element    //span[text()='Related']
+#    sleep    5s
+#    log to console    related clicked
+#    ScrollUntillFound    //a[text()='${product_name}']
+#    page should contain element    //a[text()='${product_name}']
+#    page should contain element    //span[text()='New Money - New Services']
+#    page should contain element    //span[text()='New Money - New Services']/..//following-sibling::td/span[text()='${product_quantity},00']
+
+
+
 validateCreatedOppoForFYR
     [Arguments]    ${fyr_value_oppo}= ${fyr_value}
-    wait until page contains element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']    60s
-    page should contain element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']
-    page should contain element    //span[@title='FYR Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']
+    #wait until page contains element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']    60s
+    wait until page contains element    //span[text()="Revenue Total"]/../div/div/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]  60s
+    page should contain element    //span[text()="Revenue Total"]/../div/div/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
+    page should contain element    //span[text()="FYR Total"]/../div/div/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
     ScrollUntillFound    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
     sleep    5s
-    page should contain element    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${fyr_value_oppo},00 €']
-    page should contain element    //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${fyr_value_oppo},00 €']
+    page should contain element    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
+    page should contain element    //span[text()='FYR Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
     ${monthly_charge_total}=    evaluate    (${RC}*${product_quantity})
     #${mrc_form}=    get text    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/div/span
     #should be equal as strings    ${monthly_charge_total}    ${mrc_form}
-    page should contain element    //span[text()='Monthly Charge Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${monthly_charge_total},00 €']
+    page should contain element    //span[text()='Recurring Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${monthly_charge_total},00 €"]
     ${one_time_total}=    evaluate    (${NRC}*${product_quantity})
     #${nrc_form}=    get text    //span[@title='FYR Total']/../div[@class='slds-form-element__control']/div/span
     #should be equal as strings    ${one_time_total}    ${nrc_form}
-    page should contain element    //span[text()='One Time Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${one_time_total},00 €']
+    page should contain element    //span[text()='OneTime Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${one_time_total},00 €"]
     click element    //span[text()='Related']
     sleep    5s
     log to console    related clicked
     ScrollUntillFound    //a[text()='${product_name}']
     page should contain element    //a[text()='${product_name}']
     page should contain element    //span[text()='New Money - New Services']
-    page should contain element    //span[text()='New Money - New Services']/..//following-sibling::td/span[text()='${product_quantity},00']
+    page should contain element    //span[text()='New Money - New Services']//following::span[@class="slds-truncate uiOutputNumber"][text()="${product_quantity},00"]
+
 
 AddProductToCart
     [Arguments]   ${pname}=${product_name}
@@ -2036,7 +2071,7 @@ Editing Win prob
     ${save_button}    set variable    //span[text()='Save']
     click element    ${win_prob_edit}
     Wait Until Element Is Visible    ${win_prob}    60s
-    Execute Javascript    window.scrollTo(0,200)
+    Execute Javascript    window.scrollTo(0,300)
     click element    ${win_prob}
     sleep  10s
     click element    //li/a[@title='10%']
@@ -2544,6 +2579,7 @@ Select product available for the address and create an opportunity
     Run Keyword If    ${isVisible}    Click element    //div[@id='HTTPCreateOpportunityLineItems']/div/p/button[text()='Continue']
     unselect frame
     Wait until page contains element    xpath=//a[@title='CPQ']    60s
+    CLICK ELEMENT     xpath=//a[@title='CPQ']
 
 Check the CPQ-cart contains the wanted products
     [Arguments]    ${product_name}
@@ -2625,30 +2661,34 @@ Check service contract is on Draft Status
     Wait until page contains element    //table/tbody/tr[2]/td[4]/span/a[text()='Telia Verkkotunnuspalvelu']    30s
     Wait until page contains element    //table/tbody/tr[2]/td[5]/span/span[text()='Draft']    30s
 
-Select rows to delete the contract
+Select rows to delete the entities
+    [Arguments]         ${entities}
     [Documentation]    Used to delete all the existing contracts for the business account
     #ScrollUntillFound    //span[text()='Contracts']/../../span/../../../a
     #Force Click element    //span[@title='Contracts']//following::div/span[text()='View All']
     log to console    bad
-    Force Click element    //span[text()='View All']/span[text()='Contracts']
+    Force Click element    //span[text()='View All']/span[text()='${entities}']
     Sleep    10s
     Wait Until Element Is Visible    ${table_row}    60s
     ${count}=    get element count    ${table_row}
     log to console    ${count}
     : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > ${count}-1
-    \    Delete all Contracts    ${table_row}
+    \    Delete all entities    ${table_row}
 
-Delete all existing contracts from Accounts Related tab
+Delete all entities from Accounts Related tab
+    [Arguments]     ${entities}
     wait until element is visible    ${ACCOUNT_RELATED}    60s
     Force click element    ${ACCOUNT_RELATED}
-    ${status}=    run keyword and return status    Element Should Be Visible    //span[@title='Contracts']
+    ${status}=    run keyword and return status    Element Should Be Visible    //span[@title='${entities}']
     run keyword if    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
     Sleep    15s
-    ${display}=    run keyword and return status    Element Should Be Visible    //span[text()='View All']/span[text()='Contracts']
-    run keyword if    ${display}    Select rows to delete the contract
+    Sleep    15s
+    ScrollUntillFound    //span[contains(text(),'${entities}')]/../../span/../../../a
+    ${display}=    run keyword and return status    Element Should Be Visible    //span[text()='View All']/span[contains(text(),'${entities}')]
+    run keyword if    ${display}    Select rows to delete the entities     ${entities}
 
-Delete all Contracts
+Delete all entities
     [Arguments]    ${table_row}
     ${IsVisible}=    Run Keyword And Return Status    element should be visible    ${table_row}
     Run Keyword if    ${IsVisible}    Delete row items    ${table_row}
@@ -2767,7 +2807,8 @@ Open change owner view and fill the form
     Sleep  10s
     Press Enter On   //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
     Sleep    10s
-    Click element    //a[text()='${username}']
+    Click element   //a[text()="Full Name"]//following::a[text()='${username}']
+    #Click element    //a[text()='${username}']
     sleep  10s
     #Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
     Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
