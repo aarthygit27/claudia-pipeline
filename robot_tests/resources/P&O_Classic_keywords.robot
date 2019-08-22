@@ -1577,6 +1577,7 @@ Close and Submit
     ${url}=    Get Location
     ${contains}=    Evaluate    'lightning' in '${url}'
     Run Keyword if    ${contains}    click element    //div[@title='Submit Order']
+    view orchestration plan details
 
 Enter Details -Professional Products
     [Arguments]        ${Product_count}     ${prod_1}   ${prod_2}
