@@ -289,7 +289,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    BQA-9208    PO1    Rerun_Failed
+    [Tags]    BQA-9208    Pending_Classic
     General test setup    Aacon Oy    b2b   sitpo
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
@@ -463,7 +463,7 @@ Product6: Ethernet Nordic HUB/E-NNI
     view orchestration plan sitpo
 
 Product7: Telia Ethernet subscription
-    [Tags]    Rerun_Failed
+    [Tags]    Pending_Classic
     General test setup    ${DEVPO_ACCOUNT}    b2o    sitpo
     Search Products    Telia Ethernet Subscription
     Add Telia Ethernet subscription    sitpo

@@ -127,7 +127,9 @@ update_setting1
     click element    ${city}
     sleep    10s
     Press Key    ${city}    helsinki
+    Capture Page Screenshot
     click element    ${closing}
+    unselect frame
 
 Searching and adding product
 
@@ -792,6 +794,7 @@ update_setting2
     sleep    10s
     Press Key     ${city_town-a}    helsinki
     sleep    10s
+    Capture Page Screenshot
     click element    ${closing}
 
 update_setting_Ethernet Nordic E-LAN EVP-LAN
@@ -823,6 +826,7 @@ update_setting_Ethernet Nordic HUB/E-NNI
     click element    ${platinum}
     sleep    5s
     helinsiki_address
+    Capture Page Screenshot
     click element    ${closing}
     Unselect Frame
 
