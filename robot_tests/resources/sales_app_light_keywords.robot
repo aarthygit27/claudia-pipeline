@@ -115,8 +115,9 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
-    Sleep    2s
-    Press Enter On    ${SEARCH_SALESFORCE}
+    Sleep    30s
+    Force click element       //a[contains(@class,'SEARCH_OPTION')]
+    #Press Enter On    ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
     ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
@@ -339,6 +340,7 @@ Select from search List
     Press Enter On   ${field}
     Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${value}']
     Sleep    2s
+
 Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
@@ -489,13 +491,13 @@ Validate Opportunity cannot be created
 
 Cancel Opportunity and Validate
     [Arguments]    ${opportunity}    ${stage}
-    #Go to Entity    ${opportunity}
-    Input Text    xpath=${SEARCH_SALESFORCE}    ${opportunity}
-    Sleep    2s
-    Press Enter On    ${SEARCH_SALESFORCE}
-    Sleep       60s
-    Wait Until Page Contains element    //h1//span[text()='${opportunity}']    400s
-    Entity Should Be Open    //h1//span[text()='${opportunity}']
+    Go to Entity    ${opportunity}
+#    Input Text    xpath=${SEARCH_SALESFORCE}    ${opportunity}
+#    Sleep    2s
+#    Press Enter On    ${SEARCH_SALESFORCE}
+#    Sleep       60s
+#    Wait Until Page Contains element    //h1//span[text()='${opportunity}']    400s
+#    Entity Should Be Open    //h1//span[text()='${opportunity}']
     click visible element    ${EDIT_STAGE_BUTTON}
     sleep    5s
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
@@ -533,6 +535,7 @@ Validate Closed Opportunity Details
     #Press ESC On    //span[text()='Review the following errors']
     #click element    //*[@title='Cancel']
      Click element   //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
+
 Save
     click element    //button[@title='Save']
     sleep    2s
@@ -548,11 +551,12 @@ Cancel and save
     Scroll Page To Location    0    3000
     Click element    //a[contains(text(),"Close Comment")]
     Input Text    //label//span[contains(text(),"Close Comment")]/../following::textarea    Cancelling the opportunity
-    Click Element    //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
-    Click Element    //a[@title="09 Customer Postponed"]
+    Force click element    //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
+    Sleep   10s
+    click element    //a[@title="09 Customer Postponed"]
     Sleep  10s
     Click element  //span[text()='Products With Manual Pricing']//following::span[text()='Save']
-    Sleep    2s
+    Sleep    10s
 
 Edit Opportunity
     [Arguments]    ${opportunity}
@@ -1072,10 +1076,24 @@ Validate that account owner was changed successfully
     [Arguments]     ${validated_owner}
     Compare owner names  ${validated_owner}
 
+#Compare owner names
+#    [Arguments]     ${validated_owner}
+#    Wait until page contains element   //div[@class='ownerName']//a    30s
+#    ${new_owner}=       Get Text    //div[@class='ownerName']//a
+#    log to console      ${new_owner}
+#    Should Be Equal As Strings    ${validated_owner}    ${new_owner}
+
+
 Compare owner names
     [Arguments]     ${validated_owner}
-    Wait until page contains element   //div[@class='ownerName']//a    30s
-    ${new_owner}=       Get Text    //div[@class='ownerName']//a
+    : FOR    ${i}    IN RANGE    10
+    \   ${new_owner}=    Get Text    //div[@class='ownerName']//a
+    \   ${status}=    Run Keyword And Return Status    Should Be Equal As Strings  ${validated_owner}   ${new_owner}
+    \   Run Keyword If   ${status} == False      reload page
+    \   Wait Until Page Contains Element   //div[@class='ownerName']//a   120s
+    \   Exit For Loop If    ${status}
+    #Wait until page contains element   //div[@class='ownerName']//a    30s
+    #${new_owner}=       Get Text    //div[@class='ownerName']//a
     log to console      ${new_owner}
     Should Be Equal As Strings    ${validated_owner}    ${new_owner}
 
@@ -1622,9 +1640,10 @@ getOrderStatusBeforeSubmitting
     \   ${status}=    Run Keyword And Return Status   wait until page contains element  //span[@class='title' and text()='Details']    60s
     \   Run Keyword If   ${status} == False      reload page
     \   Exit For Loop If    ${status}
-    click element    //span[text()="Processed"]//following::li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    #click element    //span[text()="Processed"]//following::li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #click element   //span[text()="Mark Status as Complete"]/following::span[@class='title' and text()='Details']
     #//li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    Click element       //a[@class='tabHeader']/span[text()='Details']
     wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']    60s
     wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']    60s
 
@@ -2066,14 +2085,15 @@ Editing Win prob
     ...
     ...    ${save}--> yes if there is nothing else to edit
     ...    no --> if there are other fields to edit
-    ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
-    ${win_prob}    set variable    //span[contains(text(),'Win Probability %')]/../../div/div/div/div
+    ${win_prob_edit}=    Set Variable    //button[@title='Edit Win Probability %']
+    ${win_prob}    set variable    //span[text()='Win Probability %']/../../div/div/div/div
     ${save_button}    set variable    //span[text()='Save']
+    ScrollUntillFound       ${win_prob_edit}
     click element    ${win_prob_edit}
     Wait Until Element Is Visible    ${win_prob}    60s
-    Execute Javascript    window.scrollTo(0,300)
-    click element    ${win_prob}
-    sleep  10s
+    #Execute Javascript    window.scrollTo(0,300)
+    Force click element    ${win_prob}
+    Wait Until Element Is Visible         //li/a[@title='10%']      60s
     click element    //li/a[@title='10%']
     #run keyword if    ${save} == yes    click element    ${save_button}
 
@@ -2667,7 +2687,8 @@ Select rows to delete the entities
     #ScrollUntillFound    //span[text()='Contracts']/../../span/../../../a
     #Force Click element    //span[@title='Contracts']//following::div/span[text()='View All']
     log to console    bad
-    Force Click element    //span[text()='View All']/span[text()='${entities}']
+    #Force Click element    //span[text()='View All']/span[text()='${entities}']
+    Force click element    //span[contains(text(),"${entities}")]/../../span[text()='View All']
     Sleep    10s
     Wait Until Element Is Visible    ${table_row}    60s
     ${count}=    get element count    ${table_row}
@@ -2727,7 +2748,8 @@ Validate contact relationship
     Wait until page contains element    //table/tbody/tr[2]/td[2]/span/span/img[@class='slds-truncate checked']    20s
 
 Navigate to related tab
-    Wait element to load and click    ${ACCOUNT_RELATED}
+    Wait Until Element Is Visible    ${ACCOUNT_RELATED}    60s
+    Force click element    ${ACCOUNT_RELATED}
 
 Add account owner to account team
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
@@ -3033,7 +3055,8 @@ ChangeThePriceList
     input text    //input[@title='Search Price Lists']    ${price_list_new}
     sleep    3s
     click element    //*[@title='${price_list_new}']/../../..
-    click element    //button[@title='Save']
+    #click element    //button[@title='Save']
+    click element       //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     sleep    3s
     execute javascript    window.scrollTo(0,0)
     page should contain element  //span[@class='test-id__field-label' and text()='Price List']/../..//a[text()='${price_list_new}']

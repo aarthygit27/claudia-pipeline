@@ -17,7 +17,7 @@ Add new contact - Master
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395  Lightning       Sanity      fix
+    [Tags]    BQA-8395  Lightning       Sanity
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact
@@ -63,7 +63,7 @@ Closing active opportunity as cancelled
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
-    Cancel Opportunity and Validate    ${OPPORTUNITY_NAME}    Cancelled
+    Cancel Opportunity and Validate     ${OPPORTUNITY_NAME}     Cancelled
 
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
@@ -125,7 +125,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523  Lightning     Summer-Test     BQA-10932     Sanity      fix
+    [Tags]    BQA-8523  Lightning     Summer-Test     BQA-10932
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -282,7 +282,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder       commit_check       Sanity
+    [Tags]    BQA-B2BOrder       commit_check       Sanity      fix
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -338,7 +338,9 @@ Create B2O Order
     AddProductToCart    B2O Other Services
     ##Alerta projektointi
     Run Keyword If    '${p}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
-    Run keyword If    '${p}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
+    #Run keyword If    '${p}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
+    Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
+    click element    xpath=//button[normalize-space(.)='Next']
     #sleep    600s
     ##B2O Other Services
     #OpenQuoteButtonPage
@@ -353,7 +355,7 @@ Create B2O Order
     getOrderStatusAfterSubmitting
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    Lightning         Sanity      fix
+    [Tags]    BQA-8798    Lightning         Sanity
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -506,7 +508,8 @@ HDC - Complete Sales Process: UAT/Sanity Regression
     wait until element is visible    ${win_prob_edit}    20s
     click element    ${win_prob_edit}
     Adding partner and competitor
-    ChangeThePriceBookToHDC    HDC Pricebook B2B
+    #ChangeThePriceBookToHDC    HDC Pricebook B2B
+    Edit Opportunity values         Price List      B2B
 
 Frame test
     [Tags]    frame
@@ -608,9 +611,12 @@ Change business account owner
     Validate that account owner was changed successfully    B2B Lightning
 
 Add an account team member as account owner
-    [Tags]  Lightning     BQA-10524     Summer-Test     Sanity      fix
+    [Tags]  Lightning     BQA-10524     Summer-Test     Sanity
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Admin User
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Change account owner to     B2B Lightning
+    Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Navigate to view    Account Team Members
@@ -618,7 +624,7 @@ Add an account team member as account owner
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
-    [Tags]  Summer-Test     BQA-10948    Lightning      Sanity      fix
+    [Tags]  Summer-Test     BQA-10948    Lightning      Sanity
     [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -628,7 +634,7 @@ Edit team member's role as account owner
     Change team member role from account
 
 Delete team member as account owner
-    [Tags]  Summer-Test     Lightning   BQA-10949       Sanity      fix
+    [Tags]  Summer-Test     Lightning   BQA-10949       Sanity
     [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -649,7 +655,7 @@ Add an account team member as Sales Admin
 
 Edit team member's role as Sales Admin
     [Documentation]    Log in as Sales Admin and then edit existing team member's role for business account
-    [Tags]    Summer-Test    BQA-10728    Lightning     Sanity      fix
+    [Tags]    Summer-Test    BQA-10728    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -659,7 +665,7 @@ Edit team member's role as Sales Admin
 
 Delete account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then delete team member from business account
-    [Tags]    Summer-Test    BQA-10740    Lightning     Sanity      fix
+    [Tags]    Summer-Test    BQA-10740    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -723,7 +729,7 @@ Negative: Try to add same team member twice to account team
     Delete team member from account
 
 Negative: Check external data is not editable when creating new contact
-    [Tags]      Summer-Test     BQA-10945    Lightning      Sanity      fix
+    [Tags]      Summer-Test     BQA-10945    Lightning      Sanity
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -732,7 +738,7 @@ Negative: Check external data is not editable when creating new contact
     Close contact form
 
 Negative: Check external data is not editable with existing contact
-    [Tags]      Summer-Test     BQA-10946    Lightning      Sanity      fix
+    [Tags]      Summer-Test     BQA-10946    Lightning
     [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
@@ -770,7 +776,7 @@ Add several team members to business account team
 Group: Account team member is added as group owner
     [Documentation]     Account team member is added as group owner. History is checked and it should contain record about changing the owner.
     ...     Check that new owner is removed from the account team.
-    [Tags]      Summer-Test     Lightning   BQA-10933       Sanity      fix
+    [Tags]      Summer-Test     Lightning   BQA-10933       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
     Navigate to view    Account Team Members
@@ -837,7 +843,7 @@ Price input for unmodeled products in omniscript
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
-    ClickingOnCPQ
+    ClickingOnCPQ       ${OPPORTUNITY_NAME}
     Add product to cart (CPQ)  Datainfo DaaS-palvelu
     Update products OTC and RC
     Check prices are correct in quote line items
@@ -920,8 +926,9 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     #clickingoncpq  ${oppo_name}
     logoutasuser  Sales Admin
     sleep   10s
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  B2B DigiSales
+    Login to Salesforce as DigiSales Lightning User
+    #login to salesforce as digisales lightning user vlocupgsandbox
+    #swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
     Edit Opportunity values     Price List  B2B
     #changethepricelist  B2B  B2B
@@ -930,15 +937,17 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     click element  //span[text()='Cancel']/..
     sleep  3s
     reload page
-    logoutasuser  B2B DigiSales
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  Sales Admin
+    #logoutasuser  B2B DigiSales
+    Login to Salesforce as DigiSales Admin User
+    #login to salesforce as digisales lightning user vlocupgsandbox
+    #swithchtouser  Sales Admin
     #AddOppoTeamMember  Oppo2349_2    B2O NetworkSales
     AddOppoTeamMember  ${oppo_name}   B2B DigiSales
-    logoutAsUser  Sales Admin
+    #logoutAsUser  Sales Admin
     sleep  10s
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  B2B DigiSales
+    Login to Salesforce as DigiSales Lightning User
+    #login to salesforce as digisales lightning user vlocupgsandbox
+    #swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
     #changethepricelist  B2B  GTM
     Edit Opportunity values     Price List  B2B
@@ -1003,7 +1012,8 @@ CreateB2BHDCGTMOrder
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     go to entity  ${oppo_name}
-    changethepricelist  B2B   GTM
+    Edit Opportunity values    Price List      GTM
+    #changethepricelist  B2B   GTM
     clickingOnSolutionValueEstimate   ${oppo_name}
     ${fyr}  run keyword   addProductsViaSVE      Telia Colocation
     log to console  ${fyr}.this is total
@@ -1214,7 +1224,7 @@ createSalesProjectOppo
 
 
 
-Create B2B Order
+Create B2B Order - Multibella
     [Tags]  SreeramE2E       Lightning      Sanity      fix
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #SwithchToUser  B2B DigiSales
