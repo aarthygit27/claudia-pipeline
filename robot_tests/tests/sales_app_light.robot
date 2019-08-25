@@ -59,7 +59,7 @@ Negative - Validate Opportunity cannot be created for Group account
 Closing active opportunity as cancelled
     [Documentation]    Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8465    Lightning     Sanity      fix
+    [Tags]    BQA-8465    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -68,7 +68,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8466    Lightning     Sanity      fix
+    [Tags]    BQA-8466    Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -1129,95 +1129,93 @@ createSalesProjectOppo
     go to entity    ${oppo_name}
     page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
     #createSalesProjectOppo
-    [Tags]  SreeramE2E       Lightning
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  B2B DigiSales
-    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
-    sleep   10s
-    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
-    Go To Entity     ${oppo_name}
-    #reload page
-    sleep  2s
-    ${case_number}=  run keyword      createACaseFromMore  ${oppo_name}  B2B Sales Expert Request
-    #createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
-    log to console   ${case_number}.this is created case
-    logoutAsUser  B2B DigiSales
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  Anna Vierinen
-    openquotefromopporelated  ${oppo_name}  ${case_number}
-    #go to entity  ${case_number}
-    sleep  15s
-    click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
-    wait until element is visible  //a[@class='select' and text()='New']   30
-    click element  //a[@class='select' and text()='New']
-    sleep  3s
-    #//a[text()='New']//ancestor::div[@data-aura-class='uiMenu']
-    click element  //a[@title="In Case Assessment"]
-    ${date}  get date from future  7
-    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
-    force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
-    Scroll Page To Location    0    1400
-##scroll element into view  //Span[text()='Support Case Cycle Time']
-##//a[@class='select' and text()='--None--']
-    wait until element is visible   //a[@class='select' and text()='--None--']
-    force click element  //a[@class='select' and text()='--None--']
-    click element  //a[@title='Sales Project']
-    click element  //button[@title='Save']/span
-    Log to console      Case Saved
-    Scroll Page To Location    0    0
-    wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
-    force click element  //span[text()='Assign Support Resource' and @class='title']
-    wait until page contains element  //span[text()='Assigned Resource']  30s
-    input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
-    sleep  10s
-    click element  //div[@title="B2B DigiSales"]
-    wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
-    click element  //a[@class='select' and text()='Solution Design']
-    sleep   10s
-    wait until element is visible   //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
-    click element  //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
-
-    sleep  5s
-    #click element  //a[@title="Sales Project"]
-    click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
-    #sleep   40s
-    #scrolluntillfound   //span[text()="Save"][1]/../..
-    #sleep   2s
-    scroll page to location  0  200
-    wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
-    wait until element is visible  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
-    click element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..
-    capture page screenshot
-    #go to entity   Oppo_ 20190427-010703
-    #${case_number}=  run keyword  createACaseFromOppoRelated  Oppo_ 20190427-010703  B2B Sales Expert Request
-    #log to console   ${case_number}.this is created case
-    #wait until page contains element  //span[text()='Commit Decision' and @class='title']   20s
-    #click element  //span[text()='Commit Decision' and @class='title']
-    #wait until page contains element  //div[text()='You are about to commit the case assessment decision and reassign the case to the designated case lead. Are you sure?']    20s
-    #click element  //span[text()='Next']/..
-    #sleep  5s
-    go to entity    ${oppo_name}
-    #sleep  10s
-    #scrolluntillfound  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
-    page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
-
-    #click on more actions
-    #wait until page contains element  //a[contains(@title, 'more actions')][1]
-    #//a[contains(@title, 'more actions')]/..   30s
-    #force click element  //a[contains(@title, 'more actions')][1]
-    #wait until page contains element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..   10s
-    #page should contain element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..
-    #force click element   //a[@title="B2B Sales Expert Request"]/div
-    #wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
-    #${case_number}=    Generate Random String    7    [NUMBERS]
-    #input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
-    #${date}=    Get Date From Future    7
-    #input text   //span[text()='Offer Date']/../following::div[@class='form-element']/input   ${date}
-    #scroll element into view  //span[text()='Type of Support Requested']/../following::textarea
-    #input text  //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
-    #scroll element into view  //span[text()='Sales Project']/../following::input[1]
+#    [Tags]  SreeramE2E       Lightning
+#    login to salesforce as digisales lightning user vlocupgsandbox
+#    swithchtouser  B2B DigiSales
+#    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+#    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+#    log to console    ${contact_name}.this is name
+#    sleep   10s
+#    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+#    Go To Entity     ${oppo_name}
+#    #reload page
+#    sleep  2s
+#    ${case_number}=  run keyword      createACaseFromMore  ${oppo_name}  B2B Sales Expert Request
+#    #createACaseFromOppoRelated  ${oppo_name}  B2B Sales Expert Request
+#    log to console   ${case_number}.this is created case
+#    logoutAsUser  B2B DigiSales
+#    login to salesforce as digisales lightning user vlocupgsandbox
+#    swithchtouser  Anna Vierinen
+#    openquotefromopporelated  ${oppo_name}  ${case_number}
+#    #go to entity  ${case_number}
+#    sleep  15s
+#    click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
+#    wait until element is visible  //a[@class='select' and text()='New']   30
+#    click element  //a[@class='select' and text()='New']
+#    sleep  3s
+#    #//a[text()='New']//ancestor::div[@data-aura-class='uiMenu']
+#    click element  //a[@title="In Case Assessment"]
+#    ${date}  get date from future  7
+#    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
+#    force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
+#    Scroll Page To Location    0    1400
+###scroll element into view  //Span[text()='Support Case Cycle Time']
+###//a[@class='select' and text()='--None--']
+#    wait until element is visible   //a[@class='select' and text()='--None--']
+#    force click element  //a[@class='select' and text()='--None--']
+#    click element  //a[@title='Sales Project']
+#    click element  //button[@title='Save']/span
+#    Log to console      Case Saved
+#    Scroll Page To Location    0    0
+#    wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
+#    force click element  //span[text()='Assign Support Resource' and @class='title']
+#    wait until page contains element  //span[text()='Assigned Resource']  30s
+#    input text   //span[text()='Assigned Resource']/../following::input[@title="Search People"]   B2B DigiSales
+#    sleep  10s
+#    click element  //div[@title="B2B DigiSales"]
+#    wait until element is visible  //a[@class='select' and text()='Solution Design']   20s
+#    click element  //a[@class='select' and text()='Solution Design']
+#    sleep   10s
+#    wait until element is visible   //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+#    click element  //div[@class='select-options']//ul//li/a[contains(text(),'Sales Project')]
+#    sleep  5s
+#    #click element  //a[@title="Sales Project"]
+#    click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
+#    #sleep   40s
+#    #scrolluntillfound   //span[text()="Save"][1]/../..
+#    #sleep   2s
+#    scroll page to location  0  200
+#    wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+#    wait until element is visible  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
+#    click element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..
+#    capture page screenshot
+#    #go to entity   Oppo_ 20190427-010703
+#    #${case_number}=  run keyword  createACaseFromOppoRelated  Oppo_ 20190427-010703  B2B Sales Expert Request
+#    #log to console   ${case_number}.this is created case
+#    #wait until page contains element  //span[text()='Commit Decision' and @class='title']   20s
+#    #click element  //span[text()='Commit Decision' and @class='title']
+#    #wait until page contains element  //div[text()='You are about to commit the case assessment decision and reassign the case to the designated case lead. Are you sure?']    20s
+#    #click element  //span[text()='Next']/..
+#    #sleep  5s
+#    go to entity    ${oppo_name}
+#    #sleep  10s
+#    #scrolluntillfound  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+#    page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+#    #click on more actions
+#    #wait until page contains element  //a[contains(@title, 'more actions')][1]
+#    #//a[contains(@title, 'more actions')]/..   30s
+#    #force click element  //a[contains(@title, 'more actions')][1]
+#    #wait until page contains element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..   10s
+#    #page should contain element   //div/div[@role="menu"]//a[@title="B2B Sales Expert Request"][1]/..
+#    #force click element   //a[@title="B2B Sales Expert Request"]/div
+#    #wait until page contains element  //span[text()='Subject']/../following-sibling::input   60s
+#    #${case_number}=    Generate Random String    7    [NUMBERS]
+#    #input text  //span[text()='Subject']/../following-sibling::input   ${case_number}
+#    #${date}=    Get Date From Future    7
+#    #input text   //span[text()='Offer Date']/../following::div[@class='form-element']/input   ${date}
+#    #scroll element into view  //span[text()='Type of Support Requested']/../following::textarea
+#    #input text  //span[text()='Type of Support Requested']/../following::textarea   Dummy Text
+#    #scroll element into view  //span[text()='Sales Project']/../following::input[1]
     #click element  //span[text()='Sales Project']/../following::input[1]
     #click element  //span[text()='Save']/..
     #capture page screenshot
