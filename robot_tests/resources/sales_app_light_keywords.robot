@@ -1452,10 +1452,10 @@ UpdateAndAddSalesTypeB2O
     Wait Until Element Is Not Visible    ${spinner}    60s
     #wait until page contains element    xpath=//h1[normalize-space(.) = 'Update Products']    60s
     sleep    10s
-    wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
-    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
-    sleep    2s
-    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    #wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
+    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
+    #sleep    2s
+    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
     click element    xpath=//button[normalize-space(.)='Next']
     unselect frame
@@ -2086,11 +2086,13 @@ Editing Win prob
     ...    ${save}--> yes if there is nothing else to edit
     ...    no --> if there are other fields to edit
     ${win_prob_edit}=    Set Variable    //button[@title='Edit Win Probability %']
-    ${win_prob}    set variable    //span[text()='Win Probability %']/../../div/div/div/div
+    ${win_prob}    set variable    //span[text()='Win Probability %']/../../div/div/div/div/a
     ${save_button}    set variable    //span[text()='Save']
+    sleep       20s
     ScrollUntillFound       ${win_prob_edit}
     click element    ${win_prob_edit}
     Wait Until Element Is Visible    ${win_prob}    60s
+    ScrollUntillFound       ${win_prob}
     #Execute Javascript    window.scrollTo(0,300)
     Force click element    ${win_prob}
     Wait Until Element Is Visible         //li/a[@title='10%']      60s

@@ -322,7 +322,7 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-B2OOrder    Lightning         Sanity      fix
+    [Tags]    BQA-B2OOrder    Lightning         Sanity      fix     test
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -338,9 +338,7 @@ Create B2O Order
     AddProductToCart    B2O Other Services
     ##Alerta projektointi
     Run Keyword If    '${p}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
-    #Run keyword If    '${p}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
-    Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
-    click element    xpath=//button[normalize-space(.)='Next']
+    Run keyword If    '${p}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
     #sleep    600s
     ##B2O Other Services
     #OpenQuoteButtonPage
@@ -410,7 +408,7 @@ Closing Opportunity as Won with FYR greater than 100KEUR
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    Lightning     Sanity      fix
+    [Tags]    BQA-9121    Lightning     Sanity      fix     test
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
