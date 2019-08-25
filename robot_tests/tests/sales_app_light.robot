@@ -745,7 +745,7 @@ Negative: Check external data is not editable with existing contact
     Close contact form
 
 Negative: Check external data is not editable from account contact relationship view
-    [Tags]      Summer-Test     BQA-10947    Lightning      Sanity
+    [Tags]      Summer-Test     BQA-10947    Lightning
     [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
     Go To Salesforce and Login into Lightning
     Go to Entity    Matti Vauhkonen
