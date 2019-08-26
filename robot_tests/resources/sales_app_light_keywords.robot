@@ -1363,6 +1363,7 @@ View Open Quote
     ${quote}    Set Variable    //button[contains(@id,'Quote')]
     ${central_spinner}    Set Variable    //div[@class='center-block spinner']
     wait until element is not visible    ${central_spinner}    120s
+    sleep  10s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected Create Quotation frame
     Wait Until Element Is Visible    ${quote}    120s
