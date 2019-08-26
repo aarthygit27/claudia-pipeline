@@ -42,7 +42,7 @@ Test scenario 2: Telia Project management
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]    BQA-9189    PO1    Classic_Rerun
+    [Tags]    BQA-9190   PO1    Classic_Rerun
     ${prod_1}   set variable   Telia Konsultointi jatkuva palvelu
     ${prod_2}   set variable    Telia Konsultointi varallaolo ja matkustus
     General test setup    Aacon Oy    b2b   sitpo

@@ -74,7 +74,7 @@ Search Products
     sleep    10s
     Wait Until Page Contains Element    //input[@placeholder='Search']    45s
     #click element    //input[@placeholder='Search']
-    sleep    10s
+    #sleep    10s
     input text    //input[@placeholder='Search']    ${product_name}
     Capture Page Screenshot
 
@@ -234,7 +234,7 @@ create order
     Run Keyword If    ${status} == True    Select From List By Value    ${sales_type}    New Money-New Services
     Capture Page Screenshot
     click button    ${CPQ_next_button}
-    sleep    10s
+    #sleep    10s
     Credit score validation
     View Open Quote
     Wait Until Element Is Enabled    ${CPQ_BUTTON}    120s
@@ -767,6 +767,7 @@ Add Toimenpide S sitpo
     sleep    10s
     click button    ${product_id}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+
     Wait until element is visible  //div[contains(text(),'Toimenpide S')]//following::button[1]  30s
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
@@ -788,6 +789,7 @@ Add Toimenpide M sitpo
     sleep    10s
     click button    ${product_id}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
+    sleep    30s
     Wait until element is visible   //div[contains(text(),'Toimenpide M')]//following::button[1]   30s
     Click Button  //div[contains(text(),'Toimenpide M')]//following::button[1]
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
@@ -812,6 +814,7 @@ Add Toimenpide L sitpo
     click button    ${product_id}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible   //div[contains(text(),'Toimenpide L')]//following::button[1]  30s
+    sleep    30s
     Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Update_settings    h    no
@@ -830,10 +833,12 @@ Add Toimenpide XL sitpo
     [Documentation]    This is to Add Toimenpide XL
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XL')]//following::button[1]
-    sleep    10s
+    sleep    30s
+    Execute Javascript    window.scrollTo(0,250)
     click button    ${product_id}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible   //div[contains(text(),'Toimenpide XL')]//following::button[1]  30s
+    sleep    30s
     Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Update_settings    h    no
@@ -1213,7 +1218,7 @@ Credit score validation
     wait until element is not visible    ${central_spinner}    120s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${next_but}    60s
     Run Keyword If    ${status} == True    click element    ${next_but}
-    sleep    5s
+    #sleep    5s
 
 View Open Quote
     ${open_quote}=    Set Variable    //button[@id='Open Quote']    #//button[@id='Open Quote']
@@ -1355,7 +1360,7 @@ create new opportunity sitpo
     ${contact}=    Set Variable    //input[@id='CF00N5800000CZNtx']
     ${opportunity_name}=    Set Variable    Test Robot Order_${DATE}
     log to console    new opportunity creation
-    sleep    10s
+    #sleep    10s
     Wait Until Element Is Visible    ${Details}    60s
     click element    ${Details}
     Wait Until Element Is Visible    ${opp_tab}    60s
@@ -1363,7 +1368,7 @@ create new opportunity sitpo
     Wait Until Element Is Visible    ${new_opportunity}    60s
     Click Element    ${new_opportunity}
     Wait Until Element Is Visible    ${continue_button}    60s
-    sleep    10s
+    #sleep    10s
     Capture Page Screenshot
     Click Element    ${continue_button}
     Wait Until Page Contains Element    //label[text()='Account Name']    120s
@@ -1389,7 +1394,8 @@ Adding Product
     [Arguments]    ${product_name}
     ${product}    set variable    //span[@title='${product_name}']/../../..//button
     log to console    adding products and updating configuration
-    sleep    10s
+    #sleep    10s
+    Wait until element is visible   ${product}  30s
     click button    ${product}
 
 update order details
@@ -1409,7 +1415,7 @@ create order B2O
     Wait Until Element Is Visible    ${cart_next_button}    120s
     click element    ${cart_next_button}
     Wait Until Element Is Visible    ${backCPQ}    240s
-    sleep    10s
+    #sleep    10s
     Capture Page Screenshot
     click button    ${CPQ_next_button}
     sleep    10s
@@ -1422,10 +1428,10 @@ create order B2O
     ${status}   set variable   Wait Until Element Is Enabled    //td[@id='topButtonRow']//input[@title='CPQ']    120s
     Run Keyword if   ${status}  Force click element    //td[@id='topButtonRow']//input[@title='CPQ']
     Log To Console    create order
-    sleep    10s
+    #sleep    10s
     Wait Until Element Is Visible    ${CREATE_ORDER}    120s
     click element    ${CREATE_ORDER}
-    sleep    10s
+    #sleep    10s
     Wait Until Element is Visible    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button    60s
     Click element    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button
     #Edit_Details
@@ -1577,7 +1583,7 @@ Close and Submit
     ${url}=    Get Location
     ${contains}=    Evaluate    'lightning' in '${url}'
     Run Keyword if    ${contains}    click element    //div[@title='Submit Order']
-    view orchestration plan details
+
 
 Enter Details -Professional Products
     [Arguments]        ${Product_count}     ${prod_1}   ${prod_2}

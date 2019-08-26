@@ -34,12 +34,12 @@ Go To Salesforce and Login into Lightning
     [Documentation]    Go to Salesforce and then Login as DigiSales Lightning User, then switch to Sales App
     ...    and then select the Home Tab in Menu
     Go to Salesforce
-    Sleep    20s
+    #Sleep    20s
     Run Keyword    Login to Salesforce as ${user}
     Go to Sales App
     Reset to Home
     Click Clear All Notifications
-    Sleep    30s
+    #Sleep    30s
     ${error}=    Run Keyword And Return Status    Element Should Be Visible    //div[@class()='modal-container slds-modal__container']
     Run Keyword If    ${error}    click button    //button[@title='OK']
 
@@ -71,7 +71,7 @@ Login to Salesforce Lightning
     Sleep    5s
     Input text    id=password    ${password}
     Click Element    id=Login
-    Sleep    60s
+    Sleep    20s
     ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[text()='Remind Me Later']
     Run Keyword If    ${infoAvailable}    force click element    //a[text()='Remind Me Later']
     run keyword and ignore error    Check For Lightning Force
@@ -134,9 +134,9 @@ Select Entity
     #Run Keyword If   ${status}   Click Visible Element    ${TABLE_HEADERForEvent}${element_catenate}
     #Run Keyword unless   ${status}    Click Visible Element    ${TABLE_HEADER}${element_catenate}
     Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
-    Sleep    15s
+    #Sleep    15s
     Click Element    ${TABLE_HEADER}${element_catenate}
-    Sleep    15s
+    #Sleep    15s
     Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
     ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
     run keyword Unless    ${ISOpen}    Search And Select the Entity    ${target_name}    ${type}
@@ -1167,7 +1167,7 @@ CreateAOppoFromAccount_HDC
     ${oppo_name}    create unique name    Test Robot Order_
     wait until page contains element    //li/a/div[text()='New Opportunity']    60s
     force click element    //li/a/div[text()='New Opportunity']
-    sleep    30s
+    #sleep    30s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    40s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    ${oppo_name}
     sleep    3s
@@ -1182,7 +1182,7 @@ CreateAOppoFromAccount_HDC
     sleep    2s
     input text    //textarea    ${oppo_name}.${close_date}.Description Testing
     click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
-    sleep    60s
+    sleep    5s
     [Return]    ${oppo_name}
 
 Edit Opportunity values
@@ -1201,7 +1201,7 @@ Edit Opportunity values
     sleep    3s
     click element    //*[@title='${value}']/../../..
     click element    //button[@title='Save']
-    Sleep  10s
+    Sleep  5s
 
 ChangeThePriceBookToHDC
     [Arguments]    ${price_book}
@@ -1253,7 +1253,7 @@ ClickingOnCPQ
     log to console    ClickingOnCPQ
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
     #wait until page contains element    xpath=//h1[text()='${b}']    30s
-    sleep    40s
+    #sleep    40s
 
 validateCreatedOppoForFYR
     [Arguments]    ${fyr_value_oppo}= ${fyr_value}
@@ -1372,7 +1372,7 @@ View Open Quote
     Run Keyword If    ${open} == True    click element    ${open_quote}
     Run Keyword If    ${view} == True    click element    ${view_quote}
     unselect frame
-    sleep    20s
+    #sleep    20s
 
 
 
@@ -1479,12 +1479,8 @@ ClickonCreateOrderButton
     #click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #sleep   10s
     wait until page contains element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    30s
-    #//a[@title='CPQ']    30s
-    ##${expiry} =    get text    //*[text()='Expiration Date']
-    ##log to console    ${expiry}
     force click element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
-    #//a[@title='CPQ']
-    sleep    30s
+    sleep    15s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
     ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
@@ -1492,21 +1488,24 @@ ClickonCreateOrderButton
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
     unselect frame
-    sleep    30s
+    #sleep    30s
 
 NextButtonOnOrderPage
     log to console    NextButtonOnOrderPage
-    sleep  30s
+    #Reload page
+    sleep  15s
+    Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
-    sleep  30s
+    #sleep  10s
     ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
     Log to console      ${status}
-    wait until element is visible    //span[text()='Next']/..    60s
-    click element    //span[text()='Next']/..
+    #wait until element is visible    //span[text()='Next']/..    60s
+    set focus to element    //span[text()='Next']/..
+    click element  //span[text()='Next']/..
     unselect frame
-    sleep    30s
+    #sleep    30s
 
 OrderNextStepsPage
     select frame    xpath=//div[contains(@class,'slds')]/iframe
@@ -2713,16 +2712,16 @@ openOrderFromDirecrOrder
     unselect frame
 
 OpenOrderPage
-    Log to console      Open Order
-    Reload page
-    sleep   45s
-    select frame    //iframe[@title='accessibility title'][@scrolling='yes']
-    sleep   10s
 
-    #${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
-    Current frame should contain  Open Order
+    #Reload page
+    sleep   15s
+    Wait until element is visible  //iframe[@title='accessibility title'][@scrolling='yes']   30s
+    select frame    //iframe[@title='accessibility title'][@scrolling='yes']
+    Log to console      Open Order
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
+    #Current frame should contain  Open Order
     set focus to element    //button[contains(text(),'Open Order')]
-    wait until element is visible   //button[contains(text(),'Open Order')]    60s
+    #wait until element is visible   //button[contains(text(),'Open Order')]    60s
     click element    //button[contains(text(),'Open Order')]
     unselect frame
 

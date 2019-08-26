@@ -10,12 +10,12 @@ Resource          ../resources/PO_Light_keywords.robot
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
-    [Tags]    B2O_Lightning
+    [Tags]    B2O_Lightning     Test_time
     General Setup    B2O
     Search and add product    Telia Multiservice NNI
     clicking on next button
     UpdatePageNextButton
-    Create_Order
+    Create_ Order
 
 Product2:Telia Ethernet Operator Subscription
     [Tags]    B2O_Lightning
