@@ -115,9 +115,8 @@ Search Salesforce
     [Arguments]    ${item}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
-    Sleep    30s
-    Force click element       //a[contains(@class,'SEARCH_OPTION')]
-    #Press Enter On    ${SEARCH_SALESFORCE}
+    Sleep    2s
+    Press Enter On    ${SEARCH_SALESFORCE}
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
     ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
