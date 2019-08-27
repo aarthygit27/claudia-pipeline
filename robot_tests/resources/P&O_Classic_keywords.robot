@@ -333,29 +333,29 @@ Update_settings
     ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
     ${Laskuttaminen}=    Set Variable    //select[contains(@name,'productconfig_field_0_3')]
     ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
-    sleep    10s
+    #sleep    10s
     Capture Page Screenshot
     Wait until element is visible   ${Hinnoitteluperuste}  60s
     ${status}=     Run Keyword and Return status  Element should be enabled  ${Hinnoitteluperuste}
     Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}
     Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}/option[contains(text(),'${option}')]
-    sleep   5s
+    Wait until element is visible   ${Henkilötyöaika}  30S
     click element    ${Henkilötyöaika}
     input text    ${Henkilötyöaika}    10
-    sleep    5s
+    Wait until element is visible   ${Palveluaika}  30S
     click element    ${Palveluaika}
-    sleep    5s
+    Wait until element is visible   ${Palveluaika}//option[contains(text(),'arkisin 8-16')]  30S
     click element    ${Palveluaika}//option[contains(text(),'arkisin 8-16')]
-    sleep    5s
+    Wait until element is visible   ${Laskuttaminen}  30S
     Run Keyword And Ignore Error    click element    ${Laskuttaminen}
-    sleep    5s
+    Wait until element is visible   ${Laskuttaminen}/option[contains(text(),'Laskutus heti')]  30S
     Run Keyword And Ignore Error    click element    ${Laskuttaminen}/option[contains(text(),'Laskutus heti')]
-    sleep    5s
+    #Wait until element is visible
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
     Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
     Fill Laskutuksen lisätieto
     click element    ${X_BUTTON}
-    sleep    15s
+    #sleep    15s
 
 Add Telia Konsultointi jatkuva palvelu
     [Documentation]    This is to add Telia Konsultointi jatkuva palvelu to cart and fill the required details
@@ -439,9 +439,9 @@ Add Hallinta ja Tuki jatkuva palvelu
     ...    to cart and fill the required details for grand child product
 
     ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[1]
-    sleep    10s
+    Wait until element is visible  ${product_id}  30s
     click button    ${product_id}
-    sleep    15s
+    sleep    5s
     Click Button   //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[1]
     Update_settings    h    no
 
@@ -450,9 +450,9 @@ Add Hallinta ja Tuki kertapalvelu
     ...    to cart and fill the required details for grand child product
 
     ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
-    sleep    10s
+    Wait until element is visible  ${product_id}  30s
     click button    ${product_id}
-    sleep    15s
+    sleep    5s
     Click button  //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
     Update_settings    h    no
 
@@ -461,9 +461,9 @@ Add Hallinta ja Tuki varallaolo ja matkustus
     ...    to cart and fill the required details for grand child product
 
     ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[1]
-    sleep    10s
+    Wait until element is visible  ${product_id}  30s
     click button    ${product_id}
-    sleep    15s
+    sleep    5s
     Click Button   //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[1]
     Update_settings    h    no
 
@@ -471,9 +471,9 @@ Add Avainasiakaspalvelukeskus
 
     [Documentation]    This is to add Avainasiakaspalvelukeskus to cart
     ${product}=  set variable   //div[contains(text(),'Avainasiakaspalvelukeskus')]//following::button[1]
-    sleep  10s
+    Wait until element is visible  ${product}  30s
     click button  ${product}
-    sleep   10s
+    sleep   5s
 
 
 
@@ -482,7 +482,7 @@ Add Avainasiakaspalvelukeskus jatkuva palvelu
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='${Avainasiakaspalvelukeskus jatkuva palvelu}']/div/div/div/div/div/button
     ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus jatkuva palvelu']
-    sleep    10s
+    Wait until element is visible  ${product_id}  30s
     click button    ${product_id}
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
     Run Keyword If    ${status} == False    click button    ${product_id}
@@ -501,7 +501,7 @@ General test setup
     Go to Account2    ${target_account}
     ${opportunity}=    Run Keyword If    '${env}'=='sitpo'    create new opportunity sitpo    ${pricebook}
     ...    ELSE    Run Keyword    create new opportunity    ${pricebook}
-    sleep    10s
+    #sleep    10s
     Set Test Variable    ${new_opportunity_name}   ${opportunity}
 
     Log    the opportunity id is ${new_opportunity_name}
@@ -511,9 +511,9 @@ Add Avainasiakaspalvelukeskus kertapalvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus kertapalvelu to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='${Avainasiakaspalvelukeskus kertapalvelu}']/div/div/div/div/div/button
     ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus kertapalvelu']
-    sleep    10s
+    Wait Until Element Is Visible   ${product_id}  30s
     click button    ${product_id}
-    sleep    15s
+    #sleep    5s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
     Run Keyword If    ${status} == False    click button    ${product_id}
     Wait Until Element Is Visible    ${added_product}    20s
@@ -524,9 +524,9 @@ Add Avainasiakaspalvelukeskus varallaolo ja matkustus
     [Documentation]    This is to add Avainasiakaspalvelukeskus varallaolo ja matkustus to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TvFzQAK']/div/div/div/div/div/button
     ${added_product}    Set Variable    //div[contains(@class,'cpq-item-no-children')]//span[text()='Avainasiakaspalvelukeskus varallaolo ja matkustus']
-    sleep    10s
+    Wait Until Element Is Visible   ${product_id}  30s
     click button    ${product_id}
-    sleep    15s
+    #sleep    15s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${added_product}    20s
     Run Keyword If    ${status} == False    click button    ${product_id}
     Wait Until Element Is Visible    ${added_product}    20s
@@ -543,11 +543,11 @@ Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     #Run Keyword If    ${status} == False    click button    ${product_id}
     #Wait Until Element Is Visible    ${added_product}    20s
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[1]
-    sleep    10s
+    Wait Until Element Is Visible   ${product_id}  30s
     click button    ${product_id}
     sleep    10s
     Click Button  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[1]
-    sleep   5s
+    #sleep   5s
     Update_settings    h    no
 
 
@@ -558,9 +558,9 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus lisätyöt kertapalvelu to cart and fill the required details
     [Arguments]    ${env}=devpo
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
-    sleep    10s
+    Wait Until Element Is Visible   ${product_id}  30s
     click button    ${product_id}
-    sleep    30s
+    sleep    5s
     Click Button   //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
     Update_settings    h    no
 
@@ -574,9 +574,9 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     #Run Keyword If    ${status} == False    click button    ${product_id}
     #Wait Until Element Is Visible    ${added_product}    20s
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[1]
-    sleep    10s
+    Wait Until Element Is Visible   ${product_id}  30s
     click button    ${product_id}
-    sleep    15s
+    sleep    5s
     click button    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[1]
     Update_settings    h    no
 
@@ -614,21 +614,21 @@ Add Koulutus varallaolo ja matkustus
 Add Jatkuvuudenhallinta jatkuva palvelu
     [Documentation]    This is to add Jatkuvuudenhallinta jatkuva palvelu
     ...    to cart and fill the required details
-    sleep    10s
+    Wait until element is visible  ${CHILD_SETTINGS}  30s
     click button    ${CHILD_SETTINGS}
     Update_settings    h    no
 
 Add Jatkuvuudenhallinta kertapalvelu
     [Documentation]    This is to add Jatkuvuudenhallinta kertapalvelu
     ...    to cart and fill the required details
-    sleep    10s
+    Wait until element is visible  ${CHILD_SETTINGS}  30s
     click button    ${CHILD_SETTINGS}
     Update_settings    h    no
 
 Add Jatkuvuudenhallinta varallaolo ja matkustus
     [Documentation]    This is to Add Jatkuvuudenhallinta varallaolo ja matkustus
     ...    to cart and fill the required details
-    sleep    10s
+    Wait until element is visible  ${CHILD_SETTINGS}  30s
     click button    ${CHILD_SETTINGS}
     Update_settings    h    no
 
@@ -698,14 +698,14 @@ Add Asiantuntijakäynti
     [Documentation]    This is to Add Asiantuntijakäynti
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003Tw07QAC']/div/div/div/div/div/button
-    sleep    10s
+    Wait until element is visible  ${product_id}  30s
     click button    ${product_id}
 
 Add Pikatoimituslisä
     [Documentation]    This is to Add Pikatoimituslisä
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwJaQAK']/div/div/div/div/div/button
-    sleep    10s
+    Wait until element is visible  ${product_id}  30s
     click button    ${product_id}
 
 
@@ -715,7 +715,7 @@ Add Events jatkuva palvelu_devpo
     [Documentation]    This is to Add Events jatkuva palvelu for devpo
     ...    to cart and fill the required details
     ${product_id}=    Set Variable    //div[@data-product-id='01u6E000003TwJkQAK']/div/div/div/div/div/button
-    sleep    10s
+    Wait until element is visible  ${ADD_CART}  30s
     click button    ${ADD_CART}
     Click_Settings_new    Events jatkuva palvelu
     Update_settings    ${Hinnoitteluperuste}    no
@@ -996,15 +996,15 @@ Add Telia Domain Service Name
     Wait Until Element Is Visible    ${Asiakkaan_verkkotunnus_Field}    240s
     click element    ${Asiakkaan_verkkotunnus_Field}
     input text    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
-    Wait Until Element Is Visible    ${Käyttäjä_lisätieto_field}    240s
-    click element    ${Käyttäjä_lisätieto_field}
-    input text    ${Käyttäjä_lisätieto_field}    This is the test order created by robot framework.L1
-    Wait Until Element Is Visible    ${Linkittyvä_tuote_field}    240s
-    click element    ${Linkittyvä_tuote_field}
-    input text    ${Linkittyvä_tuote_field}    This is the test order created by robot framework.L2
-    Wait Until Element Is Visible    ${Sisäinen_kommentti_field}    240s
-    click element    ${Sisäinen_kommentti_field}
-    input text    ${Sisäinen_kommentti_field}    This is the test order created by robot framework.L3
+    #Wait Until Element Is Visible    ${Käyttäjä_lisätieto_field}    240s
+    #click element    ${Käyttäjä_lisätieto_field}
+    #input text    ${Käyttäjä_lisätieto_field}    This is the test order created by robot framework.L1
+    #Wait Until Element Is Visible    ${Linkittyvä_tuote_field}    240s
+    #click element    ${Linkittyvä_tuote_field}
+    #input text    ${Linkittyvä_tuote_field}    This is the test order created by robot framework.L2
+    #Wait Until Element Is Visible    ${Sisäinen_kommentti_field}    240s
+    #click element    ${Sisäinen_kommentti_field}
+    #input text    ${Sisäinen_kommentti_field}    This is the test order created by robot framework.L3
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
     click element    ${Finnish_Domain_Service_Add_To_Cart}
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Settings_Icon}    240s
@@ -1130,7 +1130,7 @@ Login to Salesforce as Sales admin User devpo
 Add_child_product
     [Arguments]    ${child_product}
     ${child_cart}=    set variable    //div[@class='cpq-item-no-children'][contains(text(),'${child_product}')]/../../../div/button
-    sleep    10s
+    Wait until element is visible  ${child_cart}  30s
     Click Element    ${child_cart}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     sleep    10s
