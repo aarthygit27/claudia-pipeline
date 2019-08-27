@@ -371,21 +371,21 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]    Trial Run    B2B_Lightning_ReRun    sitpo22
+    [Tags]    Trial Run    B2B_Lightning_ReRun
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
     Add Toimenpide XS
-    update setting common    h    no
+    update setting Toimenpide    h    no
     Add Toimenpide S
-    update setting common    h    no
+    update setting Toimenpide    h    no
     Add Toimenpide M
-    update setting common    h    no
+    update setting Toimenpide    h    no
     Add Toimenpide L
-    update setting common    h    no
+    update setting Toimenpide   h    no
     Add Toimenpide XL
-    update setting common    h    no
+    update setting Toimenpide    h    no
     Search and add product    Asiantuntijakäynti
     Search and add product    Pikatoimituslisä
     Searching and adding product    Events jatkuva palvelu

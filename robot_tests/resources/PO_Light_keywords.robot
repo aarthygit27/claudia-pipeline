@@ -256,7 +256,7 @@ Add Toimenpide XS
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
-    sleep    10s
+    Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     click button    ${product_id}
     sleep   10s
     Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
@@ -358,6 +358,37 @@ update setting common
     Wait until element is visible   ${Laskuttaminen}/option[contains(text(),'Laskutus heti')]  30s
     Run Keyword And Ignore Error    click element     ${Laskuttaminen}/option[contains(text(),'Laskutus heti')]
     #Wait until element is visible   ${Työtilaus vaadittu}   30s
+    ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
+    Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
+    #Fill Laskutuksen lisätieto
+    click element    ${X_BUTTON}
+    Wait until element is not visible  ${X_BUTTON}  30s
+    unselect frame
+    sleep    5s
+
+update setting Toimenpide
+
+    [Arguments]    ${option}    ${cbox}
+
+    ${Hinnoitteluperuste}=    Set Variable    //select[@name='productconfig_field_0_0']
+    ${Henkilötyöaika}=    Set Variable    //input[@name='productconfig_field_0_1']
+    ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
+    ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
+    Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Capture Page Screenshot
+    Wait until element is visible   ${Hinnoitteluperuste}  60s
+    ${status}=     Run Keyword and Return status  Element should be enabled  ${Hinnoitteluperuste}
+    Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}
+    Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}/option[contains(text(),'${option}')]
+    Wait until element is visible   ${Henkilötyöaika}  30s
+    click element    ${Henkilötyöaika}
+    Press Key    ${Henkilötyöaika}    10
+    Wait until element is visible   ${Palveluaika}  30s
+    click element    ${Palveluaika}
+    Wait until element is visible   ${Palveluaika}//option[contains(text(),'arkisin 8-16')]   30s
+    click element     ${Palveluaika}//option[contains(text(),'arkisin 8-16')]
+
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
     Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
     #Fill Laskutuksen lisätieto
