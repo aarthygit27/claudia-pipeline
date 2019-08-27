@@ -15,7 +15,7 @@ Product1:Telia Multiservice NNI
     Search and add product    Telia Multiservice NNI
     clicking on next button
     UpdatePageNextButton
-    Create_ Order
+    Create_Order
 
 Product2:Telia Ethernet Operator Subscription
     [Tags]    B2O_Lightning
@@ -97,13 +97,7 @@ Product8: Telia Sign
     UpdateAndAddSalesType    Telia Sign
     Create_Order
 
-cpq test
-    [Tags]    cpq_test
-    Go To Salesforce and Login into Lightning    sitpo admin
-    Go To    https://telia-fi--sitpo.lightning.force.com/lightning/r/Quote/0Q026000000GimnCAC/view
-    sleep    5s
-    Capture Page Screenshot
-    Create_Order
+
 
 IP VPN
     [Tags]    B2O_Lightning
@@ -112,6 +106,32 @@ IP VPN
     clicking on next button
     UpdatePageNextButton
     Create_Order
+
+Telia Domain Name Service - P&O create new order
+    [Documentation]    To create new P&O order adding Telia Domain Name Service
+    [Tags]    BQA-8513    PO
+    General Setup    B2B
+    Searching and adding product    Telia Domain Name Service
+    update_setting_Telia Domain Name Service
+    clicking on next button
+    UpdateAndAddSalesType    Telia Domain Name Service
+    Create_Order
+
+Test : Telia IP VPN NNI
+    [Tags]    IPVPN    BQA-9002
+    General test setup    ${DEVPO_ACCOUNT}    B2O
+    Search Products    Telia IP VPN NNI \
+    Add Telia IP VPN NNI    ${TELIA_VPN_NNI}
+    create order B2O    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
+
+Test : Telia IP VPN ACCESS
+    [Tags]    IPVPN    BQA-9002
+    General test setup    ${DEVPO_ACCOUNT}    B2O
+    Search Products    Telia IP VPN Access
+    Add Telia IP VPN ACCESS    ${TELIA_VPN_ACCESS}
+    create order B2O    ${DEVPO_ACCOUNT}
+    view orchestration plan sitpo
 
 Telia Ethernet capacity
     [Tags]    uNAVAILABLE - VERIFIED IN BOTH B2O AND B2B

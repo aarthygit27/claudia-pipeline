@@ -33,7 +33,7 @@ ${Online Asiantuntijapalvelut}    01u58000005pgPjAAI
 ${PASSWORD_SALESADMIN_SITPO}    PahaPassu5
 ${SALES_ADMIN_SITPO}    saleadm@teliacompany.com.sitpo
 ${Telia Sign}     01u2600000Q4Is6AAF
-${SETTINGS}   //button[@title='Settings']
+#${SETTINGS}   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[3]
 ${X_BUTTON}       //span[contains(text(),'Close')]/..
 ${CHILD_SETTINGS}    //div[@ng-if='!importedScope.isProvisioningStatusDeleted(childProd, attrs.provisioningStatus)']//button[@title='Settings']
 ${SPINNER_SMALL}    //div[contains(@class,'small button-spinner')]
