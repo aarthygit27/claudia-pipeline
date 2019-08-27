@@ -395,3 +395,4 @@ Test scenario 22 Other:Operation and Support Services
     clicking on next button
     UpdateAndAddSalesType    Telia Palvelunhallintakeskus
     Create_Order
+

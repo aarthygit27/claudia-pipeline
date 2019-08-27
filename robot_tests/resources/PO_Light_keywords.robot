@@ -830,8 +830,8 @@ view orchestration plan details
     Reload page
     sleep  20s
     ${plan}     set variable    //a[@class='textUnderline outputLookupLink slds-truncate forceOutputLookup'][contains(text(),'Plan')]
-    #Scroll Page to element   ${plan}
-    Execute JavaScript    window.scrollTo(0,1200)
+    Scroll Page to element   ${plan}
+    #Execute JavaScript    window.scrollTo(0,1200)
     Page should contain element   ${plan}
     Click element   ${plan}
     sleep  10s
@@ -1045,22 +1045,20 @@ update_setting_TeliaSign
 update_setting_Telia Domain Name Service
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    ${Asiakkaan_verkkotunnus_field}
+    ${Finnish_Domain_Service_Add_To_Cart}    //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
+    ${Finnish_Domain_Service_Settings_Icon}    //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//*[@alt='settings']/..
+    ${Verkotunnus_Field}    //select[@name='productconfig_field_0_0']
+    ${Verkotunnus_option}    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.FI']
+    ${Voimassaoloaika_Field}    //select[contains(@name,'productconfig_field_0_1')]
+    ${Voimassaoloaika_option}    //select[contains(@name,'productconfig_field_0_1')]//option[text()='5']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     Wait Until Element Is Visible    ${Asiakkaan_verkkotunnus_Field}    240s
     click element    ${Asiakkaan_verkkotunnus_Field}
     input text    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
-    #Wait Until Element Is Visible    ${Käyttäjä_lisätieto_field}    240s
-    #click element    ${Käyttäjä_lisätieto_field}
-    #input text    ${Käyttäjä_lisätieto_field}    This is the test order created by robot framework.L1
-    #Wait Until Element Is Visible    ${Linkittyvä_tuote_field}    240s
-    #click element    ${Linkittyvä_tuote_field}
-    #input text    ${Linkittyvä_tuote_field}    This is the test order created by robot framework.L2
-    #Wait Until Element Is Visible    ${Sisäinen_kommentti_field}    240s
-    #click element    ${Sisäinen_kommentti_field}
-    #input text    ${Sisäinen_kommentti_field}    This is the test order created by robot framework.L3
     click element    ${closing}
-        Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
+    Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
     click element    ${Finnish_Domain_Service_Add_To_Cart}
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Settings_Icon}    240s
     force click element    ${Finnish_Domain_Service_Settings_Icon}
