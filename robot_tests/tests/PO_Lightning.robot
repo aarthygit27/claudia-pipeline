@@ -143,7 +143,7 @@ Telia Ethernet capacity
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]    Run    sitpo22
+    [Tags]    Run    sitpo22  testtime
     ${prod_1}    set variable    Telia Arkkitehti jatkuva palvelu
     ${prod_2}    set variable    Muut asiantuntijapalvelut
     General Setup    B2B
@@ -160,7 +160,7 @@ Test scenario 2: Telia Project management
     [Tags]    Trial Run    sitpo22
     ${prod_1}    set variable    Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}    set variable    Telia Projektijohtaminen varallaolo ja matkustus
-    General Setup    B2B
+    General Setup  B2B
     Searching and adding product    Telia Projektijohtaminen jatkuva palvelu
     update setting common    d    yes
     Searching and adding product    Telia Projektijohtaminen varallaolo ja matkustus

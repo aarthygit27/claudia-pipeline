@@ -8,7 +8,7 @@ Resource          ../resources/PO_Lighting_variables.robot
 General Setup
     [Arguments]    ${price_list}
     Go To Salesforce and Login into Lightning    sitpo admin
-    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    Go To Entity    Betonimestarit Oy
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Testing Chetan
     Go To Entity    ${oppo_name}
     #sleep    5s
@@ -492,8 +492,8 @@ UpdatePageNextButton
 Create_Order
 
     View Open Quote
-    Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
-    Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
+    #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
+    #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrderButton
     OpenOrderPage
     NextButtonOnOrderPage
@@ -510,11 +510,13 @@ Close and Submit
     ${submit_order}=    Set Variable    //span[text()='Yes']
     ${status}   set variable   Run Keyword and Return Status   Frame should contain   //div[@id='Close']/p   Close
     Run Keyword if   ${status}   Click Element    //div[@id='Close']/p
+    sleep  10s
     #sleep  15s
     Unselect frame
-    ${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
-    Run Keyword if    ${status}    click element    ${submit_order}
-    Run Keyword Unless    ${status}    Submit Order Button
+    #${status}    Run Keyword and Return Status    Page Should contain Element    ${submit_order}    30s
+    #Run Keyword if    ${status}    click element    ${submit_order}
+    #Run Keyword Unless    ${status}    Submit Order Button
+    Submit Order Button
     view orchestration plan details
 
 

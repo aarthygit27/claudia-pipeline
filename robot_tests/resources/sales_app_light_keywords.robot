@@ -1117,9 +1117,6 @@ CreateAContactFromAccount_HDC
     ${a}    create unique name    Contact_
     force click element    //li/a/div[text()='New Contact']
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    60s
-    #click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
-    #sleep    3s
-    #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    Testing
     #sleep    5s
@@ -2718,7 +2715,8 @@ OpenOrderPage
     select frame    //iframe[@title='accessibility title'][@scrolling='yes']
     Log to console      Open Order
     ${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
-    #Current frame should contain  Open Order
+    #Current frame should contain  Open
+    Wait until element is visible   //button[contains(text(),'Open Order')]  60s
     set focus to element    //button[contains(text(),'Open Order')]
     #wait until element is visible   //button[contains(text(),'Open Order')]    60s
     click element    //button[contains(text(),'Open Order')]
