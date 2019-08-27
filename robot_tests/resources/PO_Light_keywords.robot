@@ -267,7 +267,7 @@ Add Toimenpide S
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide S')]//following::button[1]
-    sleep    10s
+    Wait until element is visible   ${product_id}   30s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
@@ -278,7 +278,7 @@ Add Toimenpide M
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide M')]//following::button[1]
-    sleep    10s
+    Wait until element is visible   ${product_id}   30s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide M')]//following::button[1]
@@ -290,7 +290,7 @@ Add Toimenpide L
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide L')]//following::button[1]
-    sleep    10s
+    Wait until element is visible  ${product_id}   30s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
@@ -301,7 +301,7 @@ Add Toimenpide XL
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XL')]//following::button[1]
-    sleep    10s
+    Wait until element is visible  ${product_id}   30s
     click button    ${product_id}
     sleep   20s
     Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
