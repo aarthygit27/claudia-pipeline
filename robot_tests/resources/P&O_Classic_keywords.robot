@@ -1435,7 +1435,7 @@ create order B2O
     Wait Until Element is Visible    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button    60s
     Click element    //div[@class='col-md-3 col-sm-3 col-xs-12 vlc-next pull-right']//button
     #Edit_Details
-    Wait Until Element Is Visible    ${cart_next_button}    120s
+    Wait Until Element Is Enabled    ${cart_next_button}    120s
     click element    ${cart_next_button}
     sleep    10s
     Wait Until Element Is Not Visible    ${spinner}    120s

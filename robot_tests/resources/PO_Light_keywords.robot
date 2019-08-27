@@ -214,6 +214,7 @@ Add Hallinta ja Tuki
     Wait until element is visible   ${product}  30s
     click button  ${product}
     sleep   5s
+    Capture Page Screenshot
     Unselect frame
 
 Add Hallinta ja Tuki jatkuva palvelu
@@ -259,6 +260,7 @@ Add Toimenpide XS
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     click button    ${product_id}
     sleep   10s
+    Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Unselect frame
 
@@ -270,6 +272,7 @@ Add Toimenpide S
     Wait until element is visible   ${product_id}   30s
     click button    ${product_id}
     sleep   20s
+    Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
     Unselect frame
 
@@ -293,6 +296,7 @@ Add Toimenpide L
     Wait until element is visible  ${product_id}   30s
     click button    ${product_id}
     sleep   20s
+    Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
     Unselect frame
 
@@ -304,6 +308,7 @@ Add Toimenpide XL
     Wait until element is visible  ${product_id}   30s
     click button    ${product_id}
     sleep   20s
+    Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
     Unselect frame
 
@@ -647,7 +652,7 @@ Enter technical contact
 Enter Main User
 
     ${Main_user_serach}=  set variable  //input[@id='MainContactTA']
-    Wait Until element is visible   ${Technical_contact_search}     30s
+    Wait Until element is visible   ${Main_user_serach}     30s
     Input text   ${Main_user_serach}  John Doe
     #sleep  10s
     Wait until element is visible   css=.typeahead .ng-binding  30s
@@ -1045,32 +1050,32 @@ update_setting_TeliaSign
 update_setting_Telia Domain Name Service
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
-    ${Asiakkaan_verkkotunnus_field}
-    ${Finnish_Domain_Service_Add_To_Cart}    //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
-    ${Finnish_Domain_Service_Settings_Icon}    //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//*[@alt='settings']/..
-    ${Verkotunnus_Field}    //select[@name='productconfig_field_0_0']
-    ${Verkotunnus_option}    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.FI']
-    ${Voimassaoloaika_Field}    //select[contains(@name,'productconfig_field_0_1')]
-    ${Voimassaoloaika_option}    //select[contains(@name,'productconfig_field_0_1')]//option[text()='5']
+    ${Asiakkaan_verkkotunnus_field}  set variable   //input[@name='productconfig_field_1_0']
+    ${Finnish_Domain_Service_Add_To_Cart}   set variable   //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
+    ${Finnish_Domain_Service_Settings_Icon}   set variable     //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//*[@alt='settings']/..
+    ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
+    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.FI']
+    ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_1')]
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_1')]//option[text()='5']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     Wait Until Element Is Visible    ${Asiakkaan_verkkotunnus_Field}    240s
     click element    ${Asiakkaan_verkkotunnus_Field}
-    input text    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
+    Press key    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
     click element    ${closing}
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
     click element    ${Finnish_Domain_Service_Add_To_Cart}
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Settings_Icon}    240s
     force click element    ${Finnish_Domain_Service_Settings_Icon}
-    Wait for element to appear    10s
+    Wait Until Element Is Visible   ${Verkotunnus_Field}   10s
     press enter on    ${Verkotunnus_Field}
-    Wait for element to appear    2s
+    Wait Until Element Is Visible   ${Verkotunnus_option}   2s
     click element    ${Verkotunnus_option}
-    Wait for element to appear    5s
+    Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
     press enter on    ${Voimassaoloaika_Field}
-    Wait for element to appear    2s
+    Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
     click element    ${Voimassaoloaika_option}
-    Wait for element to appear    10s
+    #Wait Until Element Is Visible    10s
     click element    ${closing}
     Unselect Frame
 
