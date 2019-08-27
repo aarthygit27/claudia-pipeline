@@ -141,7 +141,7 @@ Searching and adding product
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
-    #sleep  15s
+    sleep  5s
     Click Settings  ${pname}
     Unselect frame
     #sleep  20s
@@ -438,7 +438,7 @@ Update setting Telia Palvelunhallintakeskus
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_1']
     ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
-    sleep  15s
+    #sleep  15s
     Wait Until Element Is Visible    ${Palvelunhallintakeskus}    30s
     click element    ${Palvelunhallintakeskus}
     click element    ${Palvelunhallintakeskus}//option[contains(text(),'Olemassaoleva avainasiakaspalvelukeskus')]
@@ -523,11 +523,8 @@ Close and Submit
 Enter Details
 
     Select Account
-    #sleep  5s
     select contact
-    #sleep  5s
     Select Date
-    #sleep  5s
     Select account Owner
     Submit Order Button
     view orchestration plan details
@@ -535,9 +532,8 @@ Enter Details
 Create_Order for multiple products
     [Arguments]    ${prod_1}  ${prod_2}
     View Open Quote
-    #Reload page
-    Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
-    Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
+    #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
+    #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrderButton
     OpenOrderPage
     NextButtonOnOrderPage
@@ -592,7 +588,7 @@ select contact
     #sleep   10s
     Wait until element is visible  //input[@id='OCEmail']   30s
     Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
-    #Sleep    5s
+    Sleep    5s
     ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
     Run Keyword if  ${status}  Enter technical contact
     Execute JavaScript    window.scrollTo(0,200)
