@@ -396,3 +396,44 @@ Test scenario 22 Other:Operation and Support Services
     UpdateAndAddSalesType    Telia Palvelunhallintakeskus
     Create_Order
 
+testing
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   saleadm@teliacompany.com.sitpo
+    Input Text   id =password  PahaPassu5
+    Click Element  id=Login
+    Execute Manual step  pages
+    Add Toimenpide XS
+
+
+Product Monitor - B2B
+    [Documentation]    Monitor time taken to add product to cart through Keyword_Monitor.py script
+    [Tags]      Monitor_B2B
+    General Setup    B2B
+    Search and add product      Telia Palvelunhallintakeskus
+    Search and add product      Telia Projektijohtaminen jatkuva palvelu
+    Search and add product      Muut asiantuntijapalvelut
+    Search and add product	    Telia Arkkitehti jatkuva palvelu
+    Search and add product	    Telia Projektijohtaminen varallaolo ja matkustus
+    Search and add product		Telia Konsultointi jatkuva palvelu
+    Search and add product		Telia Konsultointi varallaolo ja matkustus
+    Search and add product		Telia Crowd Insights
+    Search and add product		Telia Sign
+    Search and add product		Telia Robotics
+
+
+Product Monitor - B2O
+    [Documentation]    Monitor time taken to add product to cart through Keyword_Monitor.py script
+    [Tags]      Monitor_B2O
+    General Setup    B2O
+    Search and add product      Telia Multiservice NNI
+    Search and add product      Telia Ethernet Operator Subscription
+    Search and add product      Ethernet Nordic Network Bridge
+    Search and add product	    Ethernet Nordic E-LAN EVP-LAN
+    Search and add product	    Ethernet Nordic HUB/E-NNI
+    Search and add product		Telia Ethernet Subscription
+
+Product Monitor  - Single Product
+    [Documentation]    Monitor time taken to add product to cart through Keyword_Monitor.py script
+    [Tags]      Monitor_B2B
+    General Setup    B2B
+    Search and add product      Telia Palvelunhallintakeskus
