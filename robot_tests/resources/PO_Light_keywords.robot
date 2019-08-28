@@ -141,7 +141,7 @@ Searching and adding product
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
-    sleep  5s
+    sleep  15s  # Better to have sleep time as it takes time to load
     Click Settings  ${pname}
     Unselect frame
     #sleep  20s
@@ -256,6 +256,8 @@ Add Toimenpide XS
     [Documentation]    This is to Add Toimenpide XS
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Execute JavaScript   window.scrollTo(0,500)
+    Log to console  select product
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     click button    ${product_id}
@@ -624,10 +626,11 @@ select contact
     #sleep   10s
     Wait until element is visible  //input[@id='OCEmail']   30s
     Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
-    Sleep    5s
+
     ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
     Run Keyword if  ${status}  Enter technical contact
     Execute JavaScript    window.scrollTo(0,200)
+    Sleep    5s
     #sleep  10s
     Wait until element is visible   ${contact_next_button}  30s
     Click Element    ${contact_next_button}

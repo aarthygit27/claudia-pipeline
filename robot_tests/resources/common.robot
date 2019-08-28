@@ -77,6 +77,7 @@ Open Browser And Go To Login Page
     Open Browser    ${page}    ${BROWSER}
     #Go to   ${page}
     Maximize Browser Window
+
     log to console    browser open
 
 Open Browser And Go To Login Page (Proxy)

@@ -18,7 +18,7 @@ Go to Sales App
 
 Switch to SalesApp
     [Documentation]    Go to App launcher and click on SalesApp
-    Click Element    ${APP_LAUNCHER}
+    Click Element    Todays Page
     Wait until Page Contains Element    ${SALES_APP_LINK}    60s
     Click Element    ${SALES_APP_LINK}
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s

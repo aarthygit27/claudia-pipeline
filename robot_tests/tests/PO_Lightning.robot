@@ -109,7 +109,7 @@ IP VPN
 
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    BQA-8513    PO
+    [Tags]    BQA-8513    PO  submit issue- contact
     General Setup    B2B
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service
@@ -185,7 +185,7 @@ Test scenario 3:Telia Consulting
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request. Product Removed
-    [Tags]    Trial Run    B2B_Lightning_Rerun    sitpo22
+    [Tags]    Trial Run    B2B_Lightning_Rerun    sitpo22   Monitor
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
