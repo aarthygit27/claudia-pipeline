@@ -159,6 +159,7 @@ Search and add product
     Wait until element is visible  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    Wait until element is visible   //span[text()='${pname}']   30s
     #sleep  15s
     #Click Settings
     Unselect frame
