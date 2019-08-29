@@ -2094,7 +2094,7 @@ Editing Win prob
     ScrollUntillFound       ${win_prob}
     #Execute Javascript    window.scrollTo(0,300)
     Force click element    ${win_prob}
-    Wait Until Element Is Visible         //li/a[@title='10%']      60s
+    Wait Until Element Is Visible         //li/a[@title='10%']      100s
     click element    //li/a[@title='10%']
     #run keyword if    ${save} == yes    click element    ${save_button}
 
@@ -2116,6 +2116,7 @@ Adding partner and competitor
     click element    ${partner_list_add}
     Capture Page Screenshot
     click element    ${save_button}
+    Sleep  30s
     Capture Page Screenshot
 
 Adding Yritysinternet Plus

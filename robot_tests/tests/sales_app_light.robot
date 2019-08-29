@@ -282,7 +282,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder       commit_check       Sanity      fix
+    [Tags]    BQA-B2BOrder       commit_check       Sanity
      #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -337,7 +337,7 @@ Create B2O Order
     ClickingOnCPQ    ${oppo_name}
     AddProductToCart    B2O Other Services
     ##Alerta projektointi
-    Run Keyword If    '${p}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
+    #Run Keyword If    '${p}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
     Run keyword If    '${p}'== 'b2o'    run keyword    UpdateAndAddSalesTypeB2O    B2O Other Services
     #sleep    600s
     ##B2O Other Services
@@ -478,7 +478,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     NextButtonOnOrderPage
     OrderNextStepsPage
     Preview order summary and verify order    @{products}
-    Sleep       30s
+    Sleep       50s
     go back
     Wait Until Element Is Visible    ${Submit Order}
     Sleep       30s
@@ -932,7 +932,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     #changethepricelist  B2B  B2B
     wait until page contains element  //li[text()='insufficient access rights on object id']   30s
     page should contain element  //li[text()='insufficient access rights on object id']
-    click element  //span[text()='Cancel']/..
+    #click element  //span[text()='Cancel']/..
+    click element     //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
     sleep  3s
     reload page
     #logoutasuser  B2B DigiSales
@@ -1024,7 +1025,7 @@ CreateB2BHDCGTMOrder
     wait until page contains element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea   30s
     force click element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
     input text    //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea    Please APprove
-    click element  //button[@title="Save"]
+    click element  /span[text()='Products With Manual Pricing']//following::span[text()='Save']
     Log to console  To be submitted for approval
     scroll page to location  0  0
     sleep  3s
