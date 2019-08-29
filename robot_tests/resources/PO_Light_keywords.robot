@@ -266,7 +266,7 @@ Add Toimenpide XS
     Scroll Page To Element   ${product_id}
 
     click button    ${product_id}
-    sleep   10s
+    sleep   30s
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Unselect frame
@@ -281,6 +281,8 @@ Add Toimenpide S
     sleep   20s
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
+    sleep  5s
+
     Unselect frame
 
 Add Toimenpide M
