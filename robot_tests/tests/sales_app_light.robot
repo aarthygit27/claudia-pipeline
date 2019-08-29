@@ -322,7 +322,7 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-B2OOrder    Lightning         Sanity      fix     test
+    [Tags]    BQA-B2OOrder    Lightning         Sanity      sensitive     test
     #Login to Salesforce as DigiSales Lightning User
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -408,7 +408,7 @@ Closing Opportunity as Won with FYR greater than 100KEUR
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    Lightning     Sanity      fix     test
+    [Tags]    BQA-9121    Lightning     Sanity      sensitive       test
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -602,7 +602,7 @@ Create contact relationship for account
 
 Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
-    [Tags]    Lightning    BQA-10736    Summer-Test     Sanity      fix
+    [Tags]    Lightning    BQA-10736    Summer-Test     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to     B2B Lightning

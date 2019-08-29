@@ -2163,7 +2163,7 @@ UpdateAndAddSalesType for 2 products
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     log to console    UpdateAndAddSalesType for 2 products
     sleep    30s
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe   60s
     Run Keyword If    ${status} == False    Reload Page
     sleep    60s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
