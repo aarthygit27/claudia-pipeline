@@ -71,7 +71,7 @@ Search Products
     [Arguments]    ${product_name}
     #Wait Until Page Contains Element    //span[text()='PRODUCTS']    45s
     Log To Console    Search Products
-    sleep    10s
+    #sleep    10s
     Wait Until Page Contains Element    //input[@placeholder='Search']    45s
     #click element    //input[@placeholder='Search']
     #sleep    10s

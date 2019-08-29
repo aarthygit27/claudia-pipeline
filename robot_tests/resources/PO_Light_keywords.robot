@@ -13,7 +13,7 @@ General Setup
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Testing Chetan
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a
-    Log to console          ${price_list_old}
+    Log to console      old pricelist is ${price_list_old}
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${price_list_old}    ${price_list}
     Run Keyword If    ${compare}== False   Edit Opportunity values     Price List  ${price_list}
     ClickingOnCPQ   ${oppo_name}

@@ -433,7 +433,7 @@ Product Monitor - B2O
     Search and add product	    Ethernet Nordic HUB/E-NNI
     Search and add product		Telia Ethernet Subscription
 
-Product Monitor  - Single Product
+Product Monitor - Single Product
     [Documentation]    Monitor time taken to add product to cart through Keyword_Monitor.py script
     [Tags]      Monitor_B2B
     General Setup    B2B
