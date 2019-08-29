@@ -70,6 +70,51 @@ Product7: Telia Ethernet subscription
     UpdatePageNextButton
     Create_Order
 
+Test : IP VPN
+    #Group id not required
+    [Tags]    B2O_Lightning
+    General Setup    B2O
+    Search and add product    Telia Unmanaged IP VPN
+    clicking on next button
+    UpdatePageNextButton
+    Create_Order
+
+
+
+Test : Telia IP VPN NNI
+    [Tags]    IPVPN    BQA-9002  uNAVAILABLE - VERIFIED IN BOTH B2O AND B2B
+    General Setup     B2O
+    Search and add product    Telia IP VPN NNI
+    clicking on next button
+    UpdateAndAddSalesType    Telia IP VPN NNI
+    Create_Order
+
+Test : Telia IP VPN ACCESS
+    [Tags]    IPVPN    BQA-9002  uNAVAILABLE - VERIFIED IN BOTH B2O AND B2B
+    General Setup     B2O
+    Search and add product    Telia IP VPN ACCESS
+    clicking on next button
+    UpdateAndAddSalesType    Telia IP VPN ACCESS
+    Create_Order
+
+Telia Ethernet capacity
+    [Tags]    uNAVAILABLE - VERIFIED IN BOTH B2O AND B2B
+    General Setup    B2O
+    Searching and adding product    Telia Ethernet Capacity
+    updating setting telia ethernet capacity
+    Product_updation    Telia Ethernet Capacity
+    Create_Order
+
+Telia Domain Name Service - P&O create new order
+    [Documentation]    To create new P&O order adding Telia Domain Name Service
+    [Tags]    BQA-8513    PO  submit issue- contact
+    General Setup    B2B
+    Searching and adding product    Telia Domain Name Service
+    update_setting_Telia Domain Name Service
+    clicking on next button
+    UpdateAndAddSalesType    Telia Domain Name Service
+    Create_Order
+
 Product8: Telia Robotics
     [Tags]    TeliaRobotics    B2B_other
     General Setup    B2B
@@ -95,50 +140,6 @@ Product8: Telia Sign
     update_setting_TeliaSign
     clicking on next button
     UpdateAndAddSalesType    Telia Sign
-    Create_Order
-
-
-
-IP VPN
-    [Tags]    B2O_Lightning
-    General Setup    B2O
-    Searching and adding product    Telia Unmanaged IP VPN
-    clicking on next button
-    UpdatePageNextButton
-    Create_Order
-
-Telia Domain Name Service - P&O create new order
-    [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    BQA-8513    PO  submit issue- contact
-    General Setup    B2B
-    Searching and adding product    Telia Domain Name Service
-    update_setting_Telia Domain Name Service
-    clicking on next button
-    UpdateAndAddSalesType    Telia Domain Name Service
-    Create_Order
-
-Test : Telia IP VPN NNI
-    [Tags]    IPVPN    BQA-9002
-    General test setup    ${DEVPO_ACCOUNT}    B2O
-    Search Products    Telia IP VPN NNI \
-    Add Telia IP VPN NNI    ${TELIA_VPN_NNI}
-    create order B2O    ${DEVPO_ACCOUNT}
-    view orchestration plan sitpo
-
-Test : Telia IP VPN ACCESS
-    [Tags]    IPVPN    BQA-9002
-    General test setup    ${DEVPO_ACCOUNT}    B2O
-    Search Products    Telia IP VPN Access
-    Add Telia IP VPN ACCESS    ${TELIA_VPN_ACCESS}
-    create order B2O    ${DEVPO_ACCOUNT}
-    view orchestration plan sitpo
-
-Telia Ethernet capacity
-    [Tags]    uNAVAILABLE - VERIFIED IN BOTH B2O AND B2B
-    General Setup    B2O
-    Searching and adding product    Telia Ethernet Capacity
-    updating setting telia ethernet capacity
-    Product_updation    Telia Ethernet Capacity
     Create_Order
 
 Test scenario 1:Telia Architect

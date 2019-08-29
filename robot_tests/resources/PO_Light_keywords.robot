@@ -6,14 +6,16 @@ Resource          ../resources/PO_Lighting_variables.robot
 
 *** Keywords ***
 General Setup
+
     [Arguments]    ${price_list}
     Go To Salesforce and Login into Lightning    sitpo admin
     Go To Entity    Betonimestarit Oy
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Testing Chetan
     Go To Entity    ${oppo_name}
-    #sleep    5s
-    #updating close date
-    Edit Opportunity values     Price List  ${price_list}
+    ${price_list_old}=     get text        //span[text()='Price List']//following::a
+    Log to console          ${price_list_old}
+    ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${price_list_old}    ${price_list}
+    Run Keyword If    ${compare}== False   Edit Opportunity values     Price List  ${price_list}
     ClickingOnCPQ   ${oppo_name}
     sleep  15s
 
@@ -236,7 +238,7 @@ Add Hallinta ja Tuki kertapalvelu
     ${product_id}=    Set Variable    //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
-    sleep    5s
+    sleep    10s
     Click button  //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
     Unselect frame
 
@@ -261,6 +263,8 @@ Add Toimenpide XS
     Log to console  select product
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
+    Scroll Page To Element   ${product_id}
+
     click button    ${product_id}
     sleep   10s
     Capture Page Screenshot
