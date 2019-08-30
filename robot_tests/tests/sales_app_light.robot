@@ -643,7 +643,7 @@ Delete team member as account owner
 
 Add an account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then add some user as a team member for business account
-    [Tags]    Summer-Test    BQA-10727    Lightning     Sanity      fix
+    [Tags]    Summer-Test    BQA-10727    Lightning     Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -936,13 +936,15 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     click element     //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
     sleep  3s
     reload page
-    #logoutasuser  B2B DigiSales
+    Sleep  10s
+    logoutasuser  B2B DigiSales
+    sleep  10s
     Login to Salesforce as DigiSales Admin User
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  Sales Admin
     #AddOppoTeamMember  Oppo2349_2    B2O NetworkSales
     AddOppoTeamMember  ${oppo_name}   B2B DigiSales
-    #logoutAsUser  Sales Admin
+    logoutAsUser  Sales Admin
     sleep  10s
     Login to Salesforce as DigiSales Lightning User
     #login to salesforce as digisales lightning user vlocupgsandbox
@@ -1025,7 +1027,7 @@ CreateB2BHDCGTMOrder
     wait until page contains element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea   30s
     force click element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
     input text    //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea    Please APprove
-    click element  /span[text()='Products With Manual Pricing']//following::span[text()='Save']
+    click element  //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     Log to console  To be submitted for approval
     scroll page to location  0  0
     sleep  3s

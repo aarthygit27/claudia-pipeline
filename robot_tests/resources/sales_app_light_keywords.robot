@@ -1271,8 +1271,8 @@ Edit Opportunity values
     Sleep       2s
     ${status}    Run Keyword And Return Status    element should be visible      ${B2B_Price_list_delete_icon}
     Run Keyword If    ${status} == True         click element           ${B2B_Price_list_delete_icon}
-    sleep    3s
-    wait until element is visible    //input[contains(@title,'Search ${field}')]  60s
+    sleep    10s
+    wait until page contains element     //input[contains(@title,'Search ${field}')]  60s
     input text    //input[contains(@title,'Search ${field}')]    ${value}
     sleep    3s
     click element    //*[@title='${value}']/../../..
