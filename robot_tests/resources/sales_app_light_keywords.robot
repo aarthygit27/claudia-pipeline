@@ -120,6 +120,7 @@ Search Salesforce
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
     ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    sleep       20s
     run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
     ${IsNotVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
     run keyword unless    ${IsNotVisible}    Search Salesforce    ${item}
@@ -1274,8 +1275,8 @@ Edit Opportunity values
     Sleep       2s
     ${status}    Run Keyword And Return Status    element should be visible      ${B2B_Price_list_delete_icon}
     Run Keyword If    ${status} == True         click element           ${B2B_Price_list_delete_icon}
-    sleep    3s
-    wait until element is visible       //input[contains(@title,'Search ${field}')]         60s
+    sleep    10s
+    wait until page contains element     //input[contains(@title,'Search ${field}')]  60s
     input text    //input[contains(@title,'Search ${field}')]    ${value}
     sleep    3s
     click element    //*[@title='${value}']/../../..
@@ -2120,6 +2121,7 @@ Adding partner and competitor
     click element    ${partner_list_add}
     Capture Page Screenshot
     click element    ${save_button}
+    Sleep  30s
     Capture Page Screenshot
 
 Adding Yritysinternet Plus
@@ -2146,8 +2148,8 @@ Adding Yritysinternet Plus
 
 Adding DataNet Multi
     [Arguments]    ${DataNet_Multi}
-    ${product}=    Set Variable    //span[@title='${Yritysinternet_Plus}']/../../..//button
-    #${product}=    Set Variable  //div[@class="slds-col slds-small-size_4-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-text-align_right cpq-product-actions"]//following::span[@title='${DataNet_Multi}']/../../..//button
+    #${product}=    Set Variable    //span[@title='${DataNet_Multi}']/../../..//button
+    ${product}=    Set Variable  //div[@class="slds-col slds-small-size_4-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-text-align_right cpq-product-actions"]//following::span[@title='${DataNet_Multi}']/../../..//button/..
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
@@ -2166,7 +2168,7 @@ UpdateAndAddSalesType for 2 products
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     log to console    UpdateAndAddSalesType for 2 products
     sleep    30s
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe   60s
     Run Keyword If    ${status} == False    Reload Page
     sleep    60s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
