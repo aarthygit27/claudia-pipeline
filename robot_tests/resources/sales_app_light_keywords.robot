@@ -120,7 +120,6 @@ Search Salesforce
     #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
     Sleep    2s
     ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
-    sleep       20s
     run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
     ${IsNotVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
     run keyword unless    ${IsNotVisible}    Search Salesforce    ${item}
@@ -231,7 +230,11 @@ Verify That Opportunity Is Saved And Data Is Correct
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
     ${oppo_date}=    Set Variable    //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
-    ScrollUntillFound    ${element}${oppo_name}
+    Wait Until Page Contains Element        //th[@title="Close Date"]/div       60s
+    #ScrollUntillFound    ${element}${oppo_name}
+    ${status}=  run keyword and return status       Element Should Be Visible       //span[text()="Sorted Ascending"]
+    Run Keyword If      ${status}       click element       //th[@title="Close Date"]/div
+    scrolluntillfound       ${element}${oppo_name}
     Run Keyword And Continue On Failure    Scroll Page To Element    ${element}${oppo_name}
     Wait Until Page Contains Element    ${element}${oppo_name}    60s
     Run keyword and ignore error    Click element    ${element}${oppo_name}
@@ -1272,6 +1275,7 @@ Edit Opportunity values
     ${status}    Run Keyword And Return Status    element should be visible      ${B2B_Price_list_delete_icon}
     Run Keyword If    ${status} == True         click element           ${B2B_Price_list_delete_icon}
     sleep    3s
+    wait until element is visible       //input[contains(@title,'Search ${field}')]         60s
     input text    //input[contains(@title,'Search ${field}')]    ${value}
     sleep    3s
     click element    //*[@title='${value}']/../../..
@@ -2142,8 +2146,8 @@ Adding Yritysinternet Plus
 
 Adding DataNet Multi
     [Arguments]    ${DataNet_Multi}
-    #${product}=    Set Variable    //span[@title='${DataNet_Multi}']/../../..//button
-    ${product}=    Set Variable  //div[@class="slds-col slds-small-size_4-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-text-align_right cpq-product-actions"]//following::span[@title='${DataNet_Multi}']/../../..//button/..
+    ${product}=    Set Variable    //span[@title='${Yritysinternet_Plus}']/../../..//button
+    #${product}=    Set Variable  //div[@class="slds-col slds-small-size_4-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-text-align_right cpq-product-actions"]//following::span[@title='${DataNet_Multi}']/../../..//button
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}

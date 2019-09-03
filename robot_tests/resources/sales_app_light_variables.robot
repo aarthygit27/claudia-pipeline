@@ -4,8 +4,9 @@ ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
-${LIGHTNING_TEST_ACCOUNT}       Aarsleff Oy
-${vLocUpg_TEST_ACCOUNT}    Aacon Oy
+${LIGHTNING_TEST_ACCOUNT}       Abloy Oy
+${vLocUpg_TEST_ACCOUNT}    Administer Oy
+${CONTRACT_ACCOUNT}     Affecto Oy
 #Digia Oyj
 ${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']

@@ -478,7 +478,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     NextButtonOnOrderPage
     OrderNextStepsPage
     Preview order summary and verify order    @{products}
-    Sleep       30s
+    Sleep       60s
     go back
     Wait Until Element Is Visible    ${Submit Order}
     Sleep       30s
@@ -576,8 +576,8 @@ Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
     [Tags]    Lightning    BQA-10334    Lightning    Summer-Test        Sanity      fix
     Go To Salesforce and Login into Admin User
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    Delete all entities from Accounts Related tab      Contacts
+    Go To Entity    ${CONTRACT_ACCOUNT}
+    Delete all entities from Accounts Related tab      Contracts
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
