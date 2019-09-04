@@ -2665,7 +2665,7 @@ Update products OTC and RC
     Wait element to load and click      //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[8]/select
     Click element   //table[@class='tg']/tbody//tr[3]/td[8]/select/option[@value='New Money-New Services']
     Wait element to load and click  //form[@id="a1q4E000002zpz1QAA-12"]/div/div/button
-    sleep   20s
+    sleep   60s
     ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Viwe_quote}    100s
     Run Keyword If   ${status}   Wait element to load and click    ${Viwe_quote}
     Run Keyword unless   ${status}    Wait element to load and click   ${open_quote}
