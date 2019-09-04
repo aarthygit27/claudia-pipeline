@@ -408,7 +408,7 @@ Closing Opportunity as Won with FYR greater than 100KEUR
     Closing Opportunity as Won with FYR    300    Yes
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    Lightning     Sanity      fix     test
+    [Tags]    BQA-9121    Lightning          fix     test
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
