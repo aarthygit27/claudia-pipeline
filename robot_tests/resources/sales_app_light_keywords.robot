@@ -1246,9 +1246,11 @@ Update Pricelist in Opportunity
 
 ClickingOnCPQ
     [Arguments]    ${b}=${oppo_name}
-    ##clcking on CPQ
+
     log to console    ClickingOnCPQ
-    Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
+    Wait until element is visible   xpath=//a[@title='CPQ']  30s
+    click element    xpath=//a[@title='CPQ']
+    #Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
     #wait until page contains element    xpath=//h1[text()='${b}']    30s
     #sleep    40s
 
@@ -1329,7 +1331,10 @@ UpdateAndAddSalesType
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     sleep    2s
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
-    click element    ${next_button}
+    ${status}   set variable    Run Keyword and return status    Frame should contain    ${next_button}    Next
+    Log to console      ${status}
+    Wait until element is visible   ${next_button}   30s
+    Force click element    ${next_button}
     unselect frame
     #sleep    60s
 
@@ -1361,7 +1366,9 @@ View Open Quote
     ${quote}    Set Variable    //button[contains(@id,'Quote')]
     ${central_spinner}    Set Variable    //div[@class='center-block spinner']
     wait until element is not visible    ${central_spinner}    120s
-    sleep  10s
+    sleep  3s
+    #Reload page
+    Wait until element is visible  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe   30s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected Create Quotation frame
     Wait Until Element Is Visible    ${quote}    120s
@@ -1477,8 +1484,8 @@ ClickonCreateOrderButton
     #clicking on CPQ after credit score approval and click create order button this cpq not able to click so work on hold
     #click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #sleep   10s
-    wait until page contains element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    30s
-    force click element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
+    wait until page contains element    //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    30s
+    force click element    //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
     sleep    15s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
@@ -1500,7 +1507,7 @@ NextButtonOnOrderPage
     #sleep  10s
     ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
     Log to console      ${status}
-    #wait until element is visible    //span[text()='Next']/..    60s
+    wait until element is visible    //span[text()='Next']/..    60s
     set focus to element    //span[text()='Next']/..
     click element  //span[text()='Next']/..
     unselect frame

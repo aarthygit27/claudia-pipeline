@@ -9,8 +9,8 @@ General Setup
 
     [Arguments]    ${price_list}
     Go To Salesforce and Login into Lightning    sitpo admin
-    Go To Entity    Betonimestarit Oy
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Testing Chetan
+    Go To Entity    ${test_account}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    B2O Contact
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a
     Log to console      old pricelist is ${price_list_old}
@@ -99,7 +99,7 @@ Orchestration_plan_details
     ${plan}    Set Variable    //th/div/a[contains(text(),'Plan')]
     ${orchestration plan}    Set Variable    //span[text()='Orchestration Plan']
     Wait Until Element Is Visible    ${orchestration plan name}    60s
-    Scroll Page To Element    ${plan}
+    ScrollUntillFound   ${plan}
     Click Element    ${plan}
     #sleep    10s
     Wait Until Element Is Visible    ${orchestration plan}    60s
@@ -135,11 +135,15 @@ Searching and adding product
     [Arguments]   ${pname}=${product_name}
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${status}   set variable    Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
+    Log to console      ${status}
+
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
     Click element  //div[contains(@class, 'cpq-searchbox')]//input
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
+
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
@@ -268,7 +272,7 @@ Add Toimenpide XS
     click button    ${product_id}
     sleep   30s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[1]
+    Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[3]
     Unselect frame
 
 Add Toimenpide S
@@ -280,7 +284,7 @@ Add Toimenpide S
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide S')]//following::button[1]
+    Click Button  //div[contains(text(),'Toimenpide S')]//following::button[3]
     sleep  5s
 
     Unselect frame
@@ -293,7 +297,7 @@ Add Toimenpide M
     Wait until element is visible   ${product_id}   30s
     click button    ${product_id}
     sleep   20s
-    Click Button  //div[contains(text(),'Toimenpide M')]//following::button[1]
+    Click Button  //div[contains(text(),'Toimenpide M')]//following::button[3]
     Unselect frame
 
 
@@ -306,7 +310,7 @@ Add Toimenpide L
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide L')]//following::button[1]
+    Click Button  //div[contains(text(),'Toimenpide L')]//following::button[3]
     Unselect frame
 
 Add Toimenpide XL
@@ -318,9 +322,34 @@ Add Toimenpide XL
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[1]
+    Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[3]
     Unselect frame
 
+Add Events jatkuva palvelu
+
+    [Documentation]   This is to  Add Events jatkuva palvelu  using Add to cart button
+
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product_id}=    Set Variable    //div[contains(text(),'Events jatkuva palvelu')]//following::button[1]
+    Wait until element is visible  ${product_id}   30s
+    click button    ${product_id}
+    sleep   20s
+    Capture Page Screenshot
+    Click Button  //div[contains(text(),'Events jatkuva palvelu')]//following::button[3]
+    Unselect frame
+
+Add Events kertapalvelu
+
+    [Documentation]   This is to  Add Events kertapalvelu  using Add to cart button
+
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product_id}=    Set Variable    //div[contains(text(),'Events kertapalvelu')]//following::button[1]
+    Wait until element is visible  ${product_id}   30s
+    click button    ${product_id}
+    sleep   20s
+    Capture Page Screenshot
+    Click Button  //div[contains(text(),'Events kertapalvelu')]//following::button[3]
+    Unselect frame
 
 Add_child_product
     [Arguments]    ${child_product}
@@ -348,11 +377,6 @@ Click Settings
 update setting common
     [Arguments]    ${option}    ${cbox}
 
-    ${Hinnoitteluperuste}=    Set Variable    //select[@name='productconfig_field_0_0']
-    ${Henkilötyöaika}=    Set Variable    //input[@name='productconfig_field_0_1']
-    ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
-    ${Laskuttaminen}=    Set Variable    //select[contains(@name,'productconfig_field_0_3')]
-    ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Capture Page Screenshot
@@ -384,10 +408,7 @@ update setting Toimenpide
 
     [Arguments]    ${option}    ${cbox}
 
-    ${Hinnoitteluperuste}=    Set Variable    //select[@name='productconfig_field_0_0']
-    ${Henkilötyöaika}=    Set Variable    //input[@name='productconfig_field_0_1']
-    ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
-    ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
+
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Capture Page Screenshot
@@ -418,13 +439,8 @@ Update setting Telia Arkkitehti jatkuva palvelu
     ...    ${cbox}= to select the checkbox \ Työtilaus vaadittu \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ yes--> to check the check box
     ...    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ no--> not to check the checkbox
 
-    ${Hinnoitteluperuste}=    Set Variable    //select[@name='productconfig_field_0_0']
-    ${Henkilötyöaika}=    Set Variable    //input[@name='productconfig_field_0_3']
-    ${Palveluaika}=    Set Variable    //select[contains(@name,'productconfig_field_0_1')]
-    ${Laskuttaminen}=    Set Variable    //select[contains(@name,'productconfig_field_0_2')]
-    ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
-    Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
 
+    Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Capture Page Screenshot
     #sleep    10s
@@ -453,15 +469,11 @@ Update setting Telia Arkkitehti jatkuva palvelu
 
 Update setting Muut asiantuntijapalvelut
 
-
-    ${Laskutettava_toimenpide}=    Set Variable    //textarea[@name='productconfig_field_0_0']
-    ${Kustannus}=    set variable    //input[@name='productconfig_field_0_1']
-    ${Kilometrikorvaus}=    set variable    //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
-    #${Kilometrit}=    set variable    //input[contains(@class,'ng-valid')][@value='0']
-    ${Kilometrit}=    set variable     //input[@name='productconfig_field_0_4']
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep    5s
-    input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
+    #input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
+    # field is not available now. Configurations changed (9/5/2019)
+    Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
     sleep    10s
@@ -473,7 +485,7 @@ Update setting Muut asiantuntijapalvelut
     Wait until element is visible  ${Kilometrit}  60s
     input text    ${Kilometrit}    100
     sleep    5s
-    #Fill Laskutuksen lisätieto
+    Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
     Unselect frame
@@ -500,7 +512,10 @@ clicking on next button
     Reload page
     Wait Until Element Is Enabled    ${iframe}    90s
     select frame    ${iframe}
+    sleep  30s
+
     Scroll Page To Location    0    100
+
     Wait Until Element Is Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True
     click element    ${next_button}
@@ -626,7 +641,7 @@ select contact
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     log to console    entering Technical COntact page
     Wait Until Element Is Visible    ${contact_search}    120s
-    Input Text    ${contact_search}   ${technical_contact}
+    Input Text    ${contact_search}   B2O Contact  # For Telia Communication Oy Account
     #sleep    15s
     Wait until element is visible   css=.typeahead .ng-binding   30s
     Click element   css=.typeahead .ng-binding
@@ -648,7 +663,7 @@ Enter technical contact
     ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
     Execute JavaScript    window.scrollTo(0,200)
     Wait Until element is visible   ${Technical_contact_search}     30s
-    Input text   ${Technical_contact_search}  John Doe
+    Input text   ${Technical_contact_search}  B2O Contact  # Contact of TeliaCommunication Oy account
     #sleep  10s
     Wait until element is visible   css=.typeahead .ng-binding  30s
     Click element   css=.typeahead .ng-binding
@@ -663,7 +678,7 @@ Enter Main User
 
     ${Main_user_serach}=  set variable  //input[@id='MainContactTA']
     Wait Until element is visible   ${Main_user_serach}     30s
-    Input text   ${Main_user_serach}  John Doe
+    Input text   ${Main_user_serach}  B2O Contact
     #sleep  10s
     Wait until element is visible   css=.typeahead .ng-binding  30s
     Click element   css=.typeahead .ng-binding
@@ -805,7 +820,7 @@ Enter Group id and submit
     ${cancel}=  set variable    //span[text()='Cancel']
     ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
     ${Group id}=  set variable   //span[text()='Edit Group Billing ID']
-    ${Installation date}=  set variable   //label/span[text()='Desired Installation Date']
+    ${Installation date}=  set variable   //div/span[text()='Desired Installation Date']
 
     Wait until element is visible   ${cancel}   30s
     Click element   ${cancel}
@@ -813,23 +828,27 @@ Enter Group id and submit
     Wait until element is visible   ${Detail}  60s
     Force click element   ${Detail}
     #sleep  10s
-    Execute JavaScript    window.scrollTo(0,500)
-    Wait until element is visible      ${Group id}  60s
-    set focus to element  ${Group id}
-    Force Click element  ${Group id}
-    Wait until element is visible   //input[@title='Search Group Billing IDs']  60s
-    Input Text  //input[@title='Search Group Billing IDs']     Sales test
-    Wait until element is visible   //div[@title='Sales test']
-    Click element   //div[@title='Sales test']
-    sleep  10s
-    Execute JavaScript    window.scrollTo(0,1000)
+    Execute JavaScript    window.scrollTo(0,1500)
     Wait until element is visible   ${Installation date}   60s
     Log to console  Installation date
     set focus to element   ${Installation date}
-    Force Click element  //label/span[text()='Desired Installation Date']//following::div/a
+    Click element  //div/span[text()='Desired Installation Date']//following::button[1]
+    sleep  3s
+    Wait until element is visible   //label/span[text()='Desired Installation Date']//following::input[1]  30s
+    Force Click element  //label/span[text()='Desired Installation Date']//following::input[1]
     Click element   //a[@title='Go to next month']
     Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
     Click element  //tr[@class='calRow'][2]/td[1]/span
+    Execute JavaScript    window.scrollTo(0,1700)
+    #Wait until element is visible      ${Group id}  60s
+    #set focus to element  ${Group id}
+    #Force Click element  ${Group id}
+    Wait until element is visible   //input[@title='Search Group Billing IDs']  60s
+    Input Text  //input[@title='Search Group Billing IDs']     ${group_billing_id}
+    Wait until element is visible   //div[@title='${group_billing_id}']   50s
+    Click element   //div[@title='${group_billing_id}']
+    Wait until element is visible   //button[@title='Save']  30s
+
     Click element  //button[@title='Save']
     sleep  5s
     Wait until element is visible   //div[@title='Submit Order']    60s
@@ -844,10 +863,10 @@ Enter Group id and submit
 view orchestration plan details
     Reload page
     sleep  20s
-    ${plan}     set variable    //a[@class='textUnderline outputLookupLink slds-truncate forceOutputLookup'][contains(text(),'Plan')]
+    ${plan}     set variable    //a[contains(@class,'textUnderline outputLookupLink')][contains(text(),'Plan')]
+
     Scroll Page to element   ${plan}
     #Execute JavaScript    window.scrollTo(0,1200)
-    Page should contain element   ${plan}
     Click element   ${plan}
     sleep  10s
     Execute Javascript    window.scrollTo(0,200)
@@ -906,19 +925,30 @@ update_setting_Ethernet Nordic E-LAN EVP-LAN
     ${setting}    Set Variable    //button[@title='Settings']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     ${ Network bridge }    set variable    //input[@name='productconfig_field_0_5']
-
+    ${pricing area}  set variable  //select[@name='productconfig_field_2_1']
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     #Click Element    ${setting}
     Wait Until Element Is Visible    ${ Network bridge }    60s
     Press Key    ${ Network bridge }    This is a test opportunity
     helinsiki_address
+    Wait until element is visible   ${pricing area}  30s
+    Click element  ${pricing area}
+    sleep  5s
+    Click element  //select[@name='productconfig_field_2_1']/option[2]
+    sleep  3s
     click element    ${closing}
-    Unselect Frame
+    Unselect frame
+
+
+
+
+
+
 
 update_setting_Ethernet Nordic HUB/E-NNI
-    ${Service level}    Set Variable    //select[@name='productconfig_field_0_3']
-    ${platinum}    Set Variable    //select[@name='productconfig_field_0_3']//option[contains(text(),'Platinum')]
+    ${Service level}    Set Variable    //select[@name='productconfig_field_0_4']
+    ${platinum}    Set Variable    //select[@name='productconfig_field_0_4']//option[contains(text(),'Platinum')]
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${setting}    Set Variable    //button[@title='Settings']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
@@ -932,6 +962,12 @@ update_setting_Ethernet Nordic HUB/E-NNI
     helinsiki_address
     Capture Page Screenshot
     click element    ${closing}
+    Wait until element is visible   //div[normalize-space(.) = 'CPE for Nordic HUB E-NNI']//following::button[1]
+    click element  //div[normalize-space(.) = 'CPE for Nordic HUB E-NNI']//following::button[1]
+    Wait until element is visible  //select[@name='productconfig_field_0_0']  30s
+    Click element  //select[@name='productconfig_field_0_0']
+    Click element   //select[@name='productconfig_field_0_0']//option[contains(text(),'Multi')]
+    click element    ${closing}
     Unselect Frame
 
 helinsiki_address
@@ -942,20 +978,33 @@ helinsiki_address
     ${country}  set variable   //select[@name='productconfig_field_1_5']
     Wait until element is visible   ${street_add1}  30s
     click element    ${street_add1}
-
+    sleep  3s
     Press Key     ${street_add1}    This is a test opportunity
     Wait until element is visible   ${street_add2}  30s
     click element    ${street_add2}
 
     Press Key     ${street_add2}    99
+    sleep  3s
     Wait until element is visible    ${postal_code}  30s
     click element   ${postal_code}
     Press Key     ${postal_code}    00100
+    Press Key     ${postal_code}    00100
+    sleep  3s
     Wait until element is visible   ${city}  30s
     click element    ${city}
     Press Key    ${city}    helsinki
+    Press Key    ${city}    helsinki
+    sleep  3s
+
     Wait until element is visible    ${country}  30s
     Click element   ${country}
+    Log to console   verify if address is populated properly
+    ${code}  get text  ${postal_code}
+    ${compare}=    Run Keyword And Return Status    Should Not Be Empty   ${code}
+    Run Keyword If    ${compare}== False   Press Key    ${postal_code}    00100
+    ${city_value}   get text  ${city}
+    ${compare}=    Run Keyword And Return Status    Should Not Be Empty   ${city_value}
+    Run Keyword If    ${compare}== False   Press Key    ${city}    helsinki
     sleep  10s
 
 update_setting_Telia Ethernet subscription
@@ -1009,11 +1058,12 @@ update_setting_TeliaRobotics
     Unselect Frame
 
 Fill Laskutuksen lisätieto
-    ${Laskutuksen lisätieto 1}=    set variable    //input[@name='productconfig_field_0_0']
-    ${Laskutuksen lisätieto 2}=    set variable    //input[@name='productconfig_field_0_1']
-    ${Laskutuksen lisätieto 3}=    set variable    //input[@name='productconfig_field_0_2']
-    ${Laskutuksen lisätieto 4}=    set variable    //input[@name='productconfig_field_0_3']
-    ${Laskutuksen lisätieto 5}=    set variable    //input[@name='productconfig_field_0_4']
+
+    ${Laskutuksen lisätieto 1}=    set variable    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Laskutuksen lisätieto 1']]//following::input[1]
+	${Laskutuksen lisätieto 2}=    set variable    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Laskutuksen lisätieto 2']]//following::input[1]
+	${Laskutuksen lisätieto 3}=    set variable    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Laskutuksen lisätieto 3']]//following::input[1]
+	${Laskutuksen lisätieto 4}=    set variable    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Laskutuksen lisätieto 4']]//following::input[1]
+	${Laskutuksen lisätieto 5}=    set variable    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Laskutuksen lisätieto 5']]//following::input[1]
     Press Key     ${Laskutuksen lisätieto 1}    test order by robot framework.L1
     sleep    3s
     Press Key    ${Laskutuksen lisätieto 2}    test order by robot framework.L2
@@ -1086,6 +1136,20 @@ update_setting_Telia Domain Name Service
     Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
     click element    ${Voimassaoloaika_option}
     #Wait Until Element Is Visible    10s
+    click element    ${closing}
+    Unselect Frame
+
+Update Setting Ethernet Operator Subscription
+
+    ${iframe}    Set Variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${redundancy}  set variable  //form[@name='productconfig']//following::label[text()[normalize-space() = 'Redundancy']]//following::select[1]
+
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${redundancy}  30s
+    Click element  ${redundancy}
+    Click element  ${redundancy}/option[2]
+    Wait Until Element Is Enabled    ${closing}    60s
     click element    ${closing}
     Unselect Frame
 

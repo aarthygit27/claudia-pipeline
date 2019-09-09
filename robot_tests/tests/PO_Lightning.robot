@@ -47,7 +47,7 @@ Product5: Ethernet Nordic E-LAN EVP-LAN
     [Tags]    B2O_Lightning
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
-    update_setting_Ethernet Nordic E-LAN EVP-LAN
+    Update_setting_Ethernet Nordic E-LAN EVP-LAN
     clicking on next button
     UpdatePageNextButton
     Create_Order
@@ -71,7 +71,7 @@ Product7: Telia Ethernet subscription
     Create_Order
 
 Test : IP VPN
-    #Group id not required
+
     [Tags]    B2O_Lightning
     General Setup    B2O
     Search and add product    Telia Unmanaged IP VPN
@@ -373,6 +373,7 @@ Test scenario 21:Operation and Support Service
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
     [Tags]      B2B_Lightning_ReRun   Last_product
+
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -389,9 +390,11 @@ Test scenario 22 Other:Operation and Support Services
     update setting Toimenpide    h    no
     Search and add product    Asiantuntijakäynti
     Search and add product    Pikatoimituslisä
-    Searching and adding product    Events jatkuva palvelu
+    #Searching and adding product    Events jatkuva palvelu
+    Add Events jatkuva palvelu
     update setting common    d    no
-    Searching and adding product    Events jatkuva palvelu
+    #Searching and adding product    Events jatkuva palvelu
+    Add Events kertapalvelu
     update setting common    h    no
     clicking on next button
     UpdateAndAddSalesType    Telia Palvelunhallintakeskus
@@ -400,10 +403,10 @@ Test scenario 22 Other:Operation and Support Services
 testing
     Wait Until element is visible   id=username     30s
     Input Text  id=username   saleadm@teliacompany.com.sitpo
-    Input Text   id =password  PahaPassu5
+    Input Text   id =password  PahaPassu6
     Click Element  id=Login
     Execute Manual step  pages
-    Add Toimenpide XS
+    view orchestration plan details
 
 
 Product Monitor - B2B
@@ -438,3 +441,6 @@ Product Monitor - Single Product
     [Tags]      Monitor_B2B
     General Setup    B2B
     Search and add product      Telia Palvelunhallintakeskus
+
+Delete old orders
+

@@ -101,6 +101,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
     ${prod_1}   set variable   Telia Palvelunhallintakeskus
     ${prod_2}   set variable    Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     General test setup    Betonimestarit Oy    b2b   sitpo
+    Reload page
     Search Products    Telia Palvelunhallintakeskus
     Add Telia Palvelunhallintakeskus    sitpo
     sleep    10s

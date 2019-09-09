@@ -133,7 +133,7 @@ Scroll Page To Element
     #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
     : FOR    ${i}    IN RANGE    99
     \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
-    \    Execute JavaScript    window.scrollTo(0,100)
+    \    Execute JavaScript    window.scrollTo(0,${i}*100)
     \    Sleep    5s
     \    Exit For Loop If    ${status}
 
