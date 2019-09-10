@@ -1505,6 +1505,7 @@ OpenQuoteButtonPage
     #wait until element is enabled    //*[@id="View Quote"]    20s
     #log to console    element visible next step
     #click element    //*[@id="View Quote"]
+    Sleep    60s
     scrolluntillfound    //*[@id="Open Quote"]
     sleep    2s
     click element    //*[@id="Open Quote"]
@@ -1588,12 +1589,12 @@ ClickonCreateOrderButton
     #clicking on CPQ after credit score approval and click create order button this cpq not able to click so work on hold
     #click element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #sleep    10s
-    wait until page contains element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    30s
-    #//a[@title='CPQ']    30s
+    #wait until page contains element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    30s
+    wait until page contains element        //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']       60s
     ##${expiry} =    get text    //*[text()='Expiration Date']
     ##log to console    ${expiry}
-    force click element    //li/span[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
-    #//a[@title='CPQ']
+    force click element    //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
+    #force click element       //a[@title='CPQ']
     sleep    30s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
@@ -1647,7 +1648,10 @@ getOrderStatusBeforeSubmitting
     #click element    //span[text()="Processed"]//following::li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
     #click element   //span[text()="Mark Status as Complete"]/following::span[@class='title' and text()='Details']
     #//li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    Click element       //a[@class='tabHeader']/span[text()='Details']
+    reload page
+    Wait Until Element Is Visible    //a[@title='Details']   60s
+    Sleep   10s
+    Click Element    //a[@title='Details']
     wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']    60s
     wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']    60s
 
@@ -1655,12 +1659,14 @@ clickOnSubmitOrder
     wait until page contains element  //a[@title='Submit Order']   60s
     click element  //a[@title='Submit Order']
     sleep   20s
+    click element   //button[text()='Submit']
+    Sleep       20s
     execute javascript   window.location.reload(true)
     sleep   20s
 
 getOrderStatusAfterSubmitting
-    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']   60s
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    wait until page contains element    //a[@title='Details']   60s
+    click element     //a[@title='Details']
     wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  60s
     ${fulfilment_status} =  get text  //span[text()='Fulfilment Status']/../following-sibling::div/span/span
     wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
@@ -1868,8 +1874,8 @@ CreateABillingAccount
     unselect frame
     [Return]    Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
 
-Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    [Arguments]        ${username}= ${B2B_DIGISALES_LIGHT_USER}   ${password}= ${Password_merge}  #${username}=mmw9007@teliacompany.com.release    #${password}=Sriram@234
+Login to Salesforce as System Admin
+    [Arguments]        ${username}= ${SYSTEM_ADMIN_USER}   ${password}= ${SYSTEM_ADMIN_PWD}  #${username}=mmw9007@teliacompany.com.release    #${password}=Sriram@234
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce as DigiSales Admin User Release
@@ -3170,7 +3176,7 @@ ApproveB2BGTMRequest
     Log to console      approved
     logoutAsUser  ${Approver_name}
     sleep  10s
-    login to salesforce as digisales lightning user vlocupgsandbox
+    Login to Salesforce as System Admin
 
 
 openQuoteFromOppoRelated

@@ -174,6 +174,8 @@ ${day}            12
 ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
+${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
+${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
 ${PASSWORD-SALESADMIN}    PahaPassu2
 ${REMOVE_ACCOUNT}    GESB Integration

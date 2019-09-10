@@ -252,7 +252,8 @@ Create HDC Order -old
 
 Create HDC Order
     [Tags]    BQA-HDCOrder    Lightning     commit_check        Sanity
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
@@ -283,8 +284,8 @@ Create HDC Order
 
 Create B2B Order
     [Tags]    BQA-B2BOrder       commit_check       Sanity
-     #Login to Salesforce as DigiSales Lightning User
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
     #SLEEP    60S
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -323,8 +324,8 @@ Create B2B Order
 
 Create B2O Order
     [Tags]    BQA-B2OOrder    Lightning         Sanity      fix     test
-    #Login to Salesforce as DigiSales Lightning User
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
@@ -354,7 +355,8 @@ Create B2O Order
 
 createAOppoViaSVE
     [Tags]    BQA-8798    Lightning         Sanity
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
@@ -862,7 +864,8 @@ Lead_Creation
     sleep    5s
     enter random data to lead web form    ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
     go to    ${LOGIN_PAGE_APP}
-    login to salesforce as digisales lightning user vlocupgsandbox
+    Login to Salesforce as DigiSales Lightning User
+    #login to salesforce as digisales lightning user vlocupgsandbox
     go to entity    ${lead_account_name}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     open_todays_leads
@@ -889,8 +892,8 @@ Lead_Creation
 
 create a b2b direct order
     [Tags]    SreeramE2E  Lightning     Sanity
-    #Login to Salesforce as DigiSales Lightning User
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    Ylöjärven Yrityspalvelu Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
@@ -956,7 +959,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 AddProducrViaSVEandCPQFlow
     [Tags]  SreeramE2E  commit_check    Lightning       Sanity
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
@@ -1044,7 +1048,8 @@ CreateB2BHDCGTMOrder
     Log to console  Pending approval
     logoutAsUser  B2B DigiSales
     sleep   10s
-    login to salesforce as digisales lightning user vlocupgsandbox
+    Login to Salesforce as System Admin
+    #login to salesforce as digisales lightning user vlocupgsandbox
     ApproveB2BGTMRequest  Leila Podduikin  ${oppo_name}
     ApproveB2BGTMRequest  Tommi Mattila    ${oppo_name}
     #swithchtouser  B2B DigiSales
@@ -1105,8 +1110,9 @@ CreateB2BHDCGTMOrder
 
 createSalesProjectOppo
     [Tags]         Lightning    commit_check        Sanity
-    login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  B2B DigiSales
+    Login to Salesforce as DigiSales Lightning User
+    #login to salesforce as digisales lightning user vlocupgsandbox
+    #swithchtouser  B2B DigiSales
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
     Log to console      Create Contact
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -1123,7 +1129,8 @@ createSalesProjectOppo
     ${case_number}=  run keyword      Create case from more actions
     log to console   ${case_number}.this is created case
     logoutAsUser  B2B DigiSales
-    login to salesforce as digisales lightning user vlocupgsandbox
+    Login to Salesforce as System Admin
+    #login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  Anna Vierinen
     openquotefromopporelated  ${oppo_name}  ${case_number}
     SalesProjectOppurtunity     ${case_number}
@@ -1388,7 +1395,7 @@ validateTheOrderCreatedViaPortalInClaudia
 
 DummyTestCaseForHDC
     [Tags]    SreeramE2E    Lightning
-    login to salesforce as digisales lightning user vlocupgsandbox
+    Login to Salesforce as System Admin
     swithchtouser    B2B DigiSales
     go to entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -1423,3 +1430,4 @@ Delete All the Oppotunities in Account
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all entities from Accounts Related tab       Opportunities
+
