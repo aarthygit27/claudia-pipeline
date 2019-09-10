@@ -2155,7 +2155,7 @@ Adding Yritysinternet Plus
 Adding DataNet Multi
     [Arguments]    ${DataNet_Multi}
     #${product}=    Set Variable    //span[@title='${DataNet_Multi}']/../../..//button
-    ${product}=    Set Variable  //div[@class="slds-col slds-small-size_4-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-text-align_right cpq-product-actions"]//following::span[@title='${DataNet_Multi}']/../../..//button/..
+    ${product}=    Set Variable  //span[text()="HUOM! Pilotointiryhmän käyttöön DataNet Multi tilauslomake (nk. Kevytmallinnettu)"]//following::span[3][@title='${DataNet_Multi}']/../../..//button
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
@@ -2662,6 +2662,8 @@ Update products
 
 Update products OTC and RC
     ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${Viwe_quote}=    Set Variable    //button[@title="View Quote"]
+    ${open_quote}=    Set Variable   //button[@title="Open Quote"]
     Wait Until Element Is Enabled   ${iframe}   60s
     select frame    ${iframe}
     Input Text  //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[4]/input      200
@@ -2669,8 +2671,11 @@ Update products OTC and RC
     Wait element to load and click      //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[8]/select
     Click element   //table[@class='tg']/tbody//tr[3]/td[8]/select/option[@value='New Money-New Services']
     Wait element to load and click  //form[@id="a1q4E000002zpz1QAA-12"]/div/div/button
-    sleep   20s
-    Wait element to load and click  //button[@id="View Quote"]
+    sleep   60s
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Viwe_quote}    100s
+    Run Keyword If   ${status}   Wait element to load and click    ${Viwe_quote}
+    Run Keyword unless   ${status}    Wait element to load and click   ${open_quote}
+    #Wait element to load and click  //button[@id="View Quote"]
     unselect frame
     sleep   10s
 
