@@ -1112,7 +1112,7 @@ createSalesProjectOppo
     go to entity    ${oppo_name}
     page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
     #createSalesProjectOppo
-    [Tags]  SreeramE2E       Lightning
+    #[Tags]  SreeramE2E       Lightning
     login to salesforce as digisales lightning user vlocupgsandbox
     swithchtouser  B2B DigiSales
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
