@@ -1134,6 +1134,7 @@ CreateAContactFromAccount_HDC
     ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
     log to console    ${IsErrorVisible}
     Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${a}
+    log to console    ${contact_name}.this is name
     [Return]    Testing ${a}
 
 reEnterContactData
@@ -1180,6 +1181,7 @@ CreateAOppoFromAccount_HDC
     input text    //textarea    ${oppo_name}.${close_date}.Description Testing
     click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
     sleep    5s
+    log to console    ${oppo_name}.this is opportunity
     [Return]    ${oppo_name}
 
 Edit Opportunity values
@@ -1751,6 +1753,8 @@ CreateABillingAccount
 Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     [Arguments]        ${username}= ${B2B_DIGISALES_LIGHT_USER}   ${password}= ${Password_merge}  #${username}=mmw9007@teliacompany.com.release    #${password}=Sriram@234
     Login To Salesforce Lightning    ${username}    ${password}
+
+
 
 Login to Salesforce as DigiSales Admin User Release
     Login To Salesforce Lightning    ${SALES_ADMIN_USER_RELEASE}    ${PASSWORD-SALESADMIN}
@@ -2773,10 +2777,10 @@ SwithchToUser
     page should contain element  //a[text()='Log out as ${user}']
 
 logoutAsUser
-    [Arguments]  ${user}
+    #[Arguments]  ${user}
     [Documentation]     Logout through seetings button as direct logout is not available in some pages.
     ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
-    sleep  20s
+    sleep  10s
     #wait until page contains element  //a[text()='Log out as ${user}']   60s
     #${visible}   set variable   Run Keyword and return status   Wait Until Element Is Visible  //a[text()='Log out as ${user}']   30s
     #Log to console     status is  ${visible}
@@ -3252,6 +3256,158 @@ createACaseFromMore
     click element  //button[@title='Save']
     [Return]    ${case_number}
 
+
+Create Pricing Request
+    ${More}   set variable   //a[contains(@title,'more actions')]
+    ${Create Pricing List}   set variable  //div[@class='branding-actions actionMenu']//following::a[@title='Create Pricing Request']
+    Wait until element is visible  ${More}  30S
+    cLICK ELEMENT   ${More}
+    Wait until element is visible    ${Create Pricing List}   30s
+    Click element  ${Create Pricing List}
+    sleep  5s    # for the page to load
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    #Wait until element is visible  //section[@class='slds-page-header vlc-slds-page--header ng-scope']//following::h1[contains(text(),'Pricing Request')]  60s
+    Wait until element is visible   //input[@id='Subject']  30s
+    Input Text   //input[@id='Subject']  Test Pricing Request
+    Click element   //label[@class='slds-checkbox']/span[1]
+    Input Text  //input[@id='OtherReason']  Test
+    execute javascript    window.scrollTo(0,200)
+    Click Element  //input[@id='PricingNeededBy']
+    Wait until element is visible  //button[@title='Next Month']  30s
+    Click element  //button[@title='Next Month']
+    Click element  //table[@class='slds-datepicker__month nds-datepicker__month']/tbody/tr[1]/td[1]/span[1]
+    Wait until element is visible   //p[text()='Create Pricing Request']  30s
+    Click element  //p[text()='Create Pricing Request']
+    Unselect Frame
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]   30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Request and the status is ${Case_status}
+    Capture Page Screenshot
+
+
+Create Pricing Escalation
+
+    ${More_actions}   set variable  //a[contains(@title,'more actions')]
+    ${CPE}    set variable   //a[@title='Create Pricing Escalation']
+    Reload Page
+    Wait until element is visible   ${More_actions}  30s
+    set focus to element  ${More_actions}
+    Force Click element  ${More_actions}
+    Wait until element is visible  ${CPE}   30s
+    Click element  ${CPE}
+    sleep  5s
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Wait until element is visible  //input[@id='Subject']  20s
+    Input Text   //input[@id='Subject']  Test Subject
+    Click element  //input[@id='Type'][@type='checkbox']//following::span[text()='Mobile']
+    Click element  //input[@id='ReasonCategories'][@type='checkbox']//following::span[text()='Revenue']
+    Input text  //textarea[@id='Comments']  Test Comments
+    Click element  //input[@id='EndorserLookup']
+    Wait until element is visible  //li[contains(text(),'Endorser Automation')]  30s
+    Click element  //li[contains(text(),'Endorser Automation')]
+    Click element  //input[@id='ApproverLookup']
+    Wait until element is visible  //li[contains(text(),'Approver Automation')]  30s
+    Click element  //li[contains(text(),'Approver Automation')]
+    Click element     //input[@id='NotifyLookup']
+    Wait until element is visible  //li[contains(text(),'Notifier Automation')]  30s
+    Click element  //li[contains(text(),'Notifier Automation')]
+    execute javascript    window.scrollTo(0,300)
+    Wait until element is visible  //p[text()='Create Pricing Escalation']  30s
+    Click element  //p[text()='Create Pricing Escalation']
+    Unselect frame
+    Sleep  5s
+    execute javascript    window.scrollTo(0,200)
+    Capture Page Screenshot
+    Reload Page
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    [Return]  ${Case_number}
+
+
+
+Submit for approval
+
+    ${More_actions}   set variable  //span[contains(text(),'more actions')]
+    Wait until element is visible   ${More_actions}  30s
+    set focus to element  ${More_actions}
+    Force Click element  ${More_actions}
+    Click element  //a[@title='Submit for Approval']
+    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']   30s
+    Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Submit
+    Click element  //span[text()='Submit']
+    Capture Page Screenshot
+    sleep  5s
+    Reload page
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    logoutAsUser
+
+
+Case Approval By Endorser
+    [Arguments]   ${Case_number}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${Endorser_User}  ${Endorser_PW}
+    Wait until element is visible  //span[text()='Items to Approve']  30s
+    #Click element  //a[text()='00031101']
+    Wait until element is visible  //a[text()='${Case_number}']  30s
+    Click element  //a[text()='${Case_number}']
+    sleep  5s
+    Wait until element is visible  //div[@title='Approve']  30s
+    Capture Page Screenshot
+    Click element  //div[@title='Approve']
+    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  30s
+    Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Approved by Endorser
+    Click element  //span[text()='Approve']
+    Capture Page Screenshot
+    logoutAsUser
+
+Case Approval By Approver
+     [Arguments]   ${Case_number}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
+    Wait until element is visible  //span[text()='Items to Approve']  30s
+    #Click element  //a[text()='00031101']
+    Wait until element is visible  //a[text()='${Case_number}']  30s
+    Click element  //a[text()='${Case_number}']
+    sleep  5s
+    Wait until element is visible  //div[@title='Approve']  30s
+    Capture Page Screenshot
+    Click element  //div[@title='Approve']
+    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  30s
+    Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Approved by Approver
+    Click element  //span[text()='Approve']
+    Capture Page Screenshot
+    logoutAsUser
+
+Verify case Status
+    [Arguments]   ${Case_number}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    #Reload page
+    Search Salesforce    ${Case_number}
+    ${element_catenate} =    set variable    [@title='${Case_number}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    #Sleep    15s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    sleep  10s
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    logoutAsUser
+
+Case Not visible to Normal User
+     [Arguments]   ${Case_number}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${Case_number}
+    Press Enter On    ${SEARCH_SALESFORCE}
+    sleep  10s
+    Capture Page Screenshot
 
 createACaseFromOppoRelated
     [Arguments]    ${oppo_name}   ${case_type}

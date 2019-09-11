@@ -4,6 +4,14 @@ ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
+${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
+${SYSTEM_ADMIN_PWD}          PahaPassu1
+${PM_User}  pmauto@teliacompany.com.release
+${PM_PW}  PahaPassu1
+${Endorser_User}  endorserauto@teliacompany.com.release
+${Endorser_PW}  PahaPassu1
+${Approver_User}  approverauto@teliacompany.com.release
+${Approver_PW}  PahaPassu1
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
@@ -173,8 +181,10 @@ ${day}            12
 ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
+${PM_username}
+${PM_password}
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
-${PASSWORD-SALESADMIN}    PahaPassu1
+${PASSWORD-SALESADMIN}    PahaPassu2
 ${REMOVE_ACCOUNT}    GESB Integration
 ${ownername}      //div[@class='ownerName']
 ${ACCOUNT_OWNER}    Sales Admin

@@ -10,7 +10,7 @@ General Setup
     [Arguments]    ${price_list}
     Go To Salesforce and Login into Lightning    sitpo admin
     Go To Entity    ${test_account}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    B2O Contact
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    testing Chetan
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a
     Log to console      old pricelist is ${price_list_old}

@@ -208,21 +208,6 @@ Lightning: Sales admin Change Account owner for group account
 Create HDC Order -old
     [Tags]    BQA-HDCOrder    Lightning
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #go to entity    319021811502
-    #sleep    10s
-    #${order_number}    run keyword    getOrderStatusAfterSubmitting
-    #ValidateTheOrchestrationPlan
-    #go to entity    ${order_number}
-    #openAssetviaOppoProductRelated
-    #sleep    300s
-    #click element    //span[@class='title' and text()='Assets']
-    #sleep    3s
-    #click element    //div[@data-aura-class="forceOutputLookupWithPreview"]/a[text()='Telia Colocation']
-    ##${business_acc_name}    run keyword    CreateBusinessAccount
-    ##log to console    ${business_acc_name}.this is business account
-    #Execute javascript    document.body.style.transform = 'scale(0.8)';
-    #document.body.style.zoom="50%"
-    #Go To Entity    ${business_acc_name}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
@@ -1294,3 +1279,28 @@ DummyTestCaseForHDC
     ReviewPage
     ${order_no}    run keyword    ValidateTheOrchestrationPlan
     log to conole    ${order_no} .this is order
+
+
+Pricing Escalation
+    [Tags]   BQA-11368
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    logoutAsUser
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    Go To Entity  ${oppo_name}
+    Create Pricing Request
+    ${Case_number}   run keyword   Create Pricing Escalation
+    Submit for approval
+    Case Approval By Endorser   ${Case_number}
+    Case Approval By Approver   ${Case_number}
+    Verify case Status  ${Case_number}
+    Case Not visible to Normal User  ${Case_number}
+
+
+Testing
+
+    Verify case Status  00031115
+    Case Not visible to Normal User  00031115
+
