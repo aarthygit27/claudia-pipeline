@@ -1131,7 +1131,8 @@ createSalesProjectOppo
     logoutAsUser  B2B DigiSales
     Login to Salesforce as System Admin
     #login to salesforce as digisales lightning user vlocupgsandbox
-    swithchtouser  Anna Vierinen
+    swithchtouser      B2B DigiSales
+    #swithchtouser  Anna Vierinen
     openquotefromopporelated  ${oppo_name}  ${case_number}
     SalesProjectOppurtunity     ${case_number}
     go to entity    ${oppo_name}
@@ -1227,7 +1228,6 @@ createSalesProjectOppo
     #click element  //span[text()='Sales Project']/../following::input[1]
     #click element  //span[text()='Save']/..
     #capture page screenshot
-
 
 
 Create B2B Order - Multibella
@@ -1426,7 +1426,7 @@ DummyTestCaseForHDC
     log to console    ${order_no} .this is order
 
 Delete All the Oppotunities in Account
-    [Tags]    SreeramE2E    Lightning       Sanity
+    [Tags]       Lightning       Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Delete all entities from Accounts Related tab       Opportunities

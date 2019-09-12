@@ -2702,17 +2702,18 @@ Check service contract is on Draft Status
 Select rows to delete the entities
     [Arguments]         ${entities}
     [Documentation]    Used to delete all the existing contracts for the business account
-    #ScrollUntillFound    //span[text()='Contracts']/../../span/../../../a
-    #Force Click element    //span[@title='Contracts']//following::div/span[text()='View All']
-    log to console    bad
     #Force Click element    //span[text()='View All']/span[text()='${entities}']
     Force click element    //span[contains(text(),"${entities}")]/../../span[text()='View All']
     Sleep    10s
-    Wait Until Element Is Visible    ${table_row}    60s
-    ${count}=    get element count    ${table_row}
-    log to console    ${count}
-    : FOR    ${i}    IN RANGE    9999
-    \    Exit For Loop If    ${i} > ${count}-1
+    wait until element is visible           //h1[@title='${entities}']
+    #Wait Until Element Is Visible    ${table_row}    60s
+    #${count}=    get element count    ${table_row}
+    : FOR    ${i}    IN RANGE    1000
+    #\    Exit For Loop If    ${i} > ${count}-1
+    \   Wait Until Element Is Visible    ${table_row}    60s
+    \   ${count}=    get element count    ${table_row}
+    \   log to console       ${count}
+    \    exit for loop if       ${count}==0
     \    Delete all entities    ${table_row}
 
 Delete all entities from Accounts Related tab
@@ -2999,8 +3000,8 @@ OpenOrderPage
 getMultibellaCaseGUIID
     [Arguments]  ${order_no}
     go to entity  ${order_no}
-    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']   60s
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    wait until page contains element    //span[text()='Details']   60s
+    click element     //span[text()='Details']
     wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  60s
     ${case_GUI_id}  get text  //span[text()='MultibellaCaseGuiId']/../..//span[@class='uiOutputText']
     ${case_id}  get text  //span[text()='MultibellaCaseId']/../..//span[@class='uiOutputText']
@@ -3196,9 +3197,8 @@ openQuoteFromOppoRelated
     #page should contain element  //span[text()='${quote_no}']/..//span[@class="uiOutputText"]
 
 SalesProjectOppurtunity
-
     [Arguments]  ${case_number}
-
+    reload page
     sleep  15s
     click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
     #wait until element is visible  //a[@class='select' and text()='New']   30
@@ -3206,13 +3206,17 @@ SalesProjectOppurtunity
     #sleep  3s
     #click element  //a[@title="In Case Assessment"]
     ${date}  get date from future  7
-    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
+    Wait Until Element Is Visible    //span[text()='Offer Date']/../following-sibling::div/input    60s
+    Input Text    xpath=//span[text()='Offer Date']/../following-sibling::div/input    ${date}
+    #Input Quick Action Value For Attribute    Offer Date    ${date}
+    #input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
     force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
     Scroll Page To Location    0    1400
     wait until element is visible   //a[@class='select' and text()='--None--']
     force click element  //a[@class='select' and text()='--None--']
-    click element  //a[@title='Sales Project']
-    click element  //button[@title='Save']/span
+    click element   //a[@title='Sales Project']
+    Sleep   10s
+    force click element     //div[@class='actionsContainer']//button[@title='Save']
     Log to console      Case Saved
     Scroll Page To Location    0    0
     wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
@@ -3229,7 +3233,6 @@ SalesProjectOppurtunity
     Select option from Dropdown with Force Click Element    //a[@class='select']   //div[@class='select-options']//ul//li[6]/a[@title='Sales Project']
     log to console      dropdown selected
     sleep  5s
-
     click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
     scroll page to location  0  200
     wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
