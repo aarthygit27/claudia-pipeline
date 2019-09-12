@@ -231,11 +231,7 @@ Verify That Opportunity Is Saved And Data Is Correct
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
     ${oppo_date}=    Set Variable    //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
-    #Wait Until Page Contains Element        //th[@title="Close Date"]/div       60s
-    #ScrollUntillFound    ${element}${oppo_name}
-    #${status}=  run keyword and return status       Element Should Be Visible       //span[text()="Sorted Ascending"]
-    #Run Keyword If      ${status}       click element       //th[@title="Close Date"]/div
-    scrolluntillfound       ${element}${oppo_name}
+    ScrollUntillFound    ${element}${oppo_name}
     Run Keyword And Continue On Failure    Scroll Page To Element    ${element}${oppo_name}
     Wait Until Page Contains Element    ${element}${oppo_name}    60s
     Run keyword and ignore error    Click element    ${element}${oppo_name}
