@@ -3622,5 +3622,5 @@ Create Investment Case
     cLICK ELEMENT   ${More}
     Wait until element is visible    ${Create Investment}   30s
     Click element  ${Create Investment}
-    Click element  ${Create Investment}
+    Click element  ${Create Investment}19463093
     sleep  5s    # for the page to load
