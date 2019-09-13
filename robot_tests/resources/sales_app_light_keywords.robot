@@ -35,7 +35,8 @@ Go To Salesforce and Login into Lightning
     ...    and then select the Home Tab in Menu
     Go to Salesforce
     #Sleep    20s
-    Run Keyword    Login to Salesforce as ${user}
+    #Run Keyword    Login to Salesforce as ${user}
+    Login To Salesforce Lightning   ${B2B_DIGISALES_LIGHT_USER}   ${Password_merge}
     Go to Sales App
     Reset to Home
     Click Clear All Notifications
@@ -1119,22 +1120,17 @@ CreateAContactFromAccount_HDC
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    60s
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    Testing
-    #sleep    5s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']    30s
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
-    #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
     force click element    //Span[text()='Name']//following::input[@placeholder="Last Name"]
-    #input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${a}
-    #sleep    2s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    30s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
-    #sleep    2s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
     ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
     log to console    ${IsErrorVisible}
     Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${a}
-    log to console    ${contact_name}.this is name
+    log to console    Testing ${a}.this is name
     [Return]    Testing ${a}
 
 reEnterContactData
@@ -1159,6 +1155,10 @@ reEnterContactData
     Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${random_name}
     #sleep    10s
 
+CreateOppoforB2O
+
+
+
 CreateAOppoFromAccount_HDC
     [Arguments]    ${b}=${contact_name}
     log to console    this is to create a Oppo from contact for HDC flow.${b}.contact
@@ -1176,7 +1176,8 @@ CreateAOppoFromAccount_HDC
     Capture Page Screenshot
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
     wait until page contains element    //*[@title='${b}']/../../..    10s
-    click element    //*[@title='${b}']/../../..
+    Set Focus to element   //*[@title='${b}']/../../..
+    Force click element    //*[@title='${b}']/../../..
     sleep    2s
     input text    //textarea    ${oppo_name}.${close_date}.Description Testing
     click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
@@ -1948,12 +1949,9 @@ Closing Opportunity as Won with FYR
     ClickingOnCPQ   ${oppo_name}
     searching and adding Telia Viestintäpalvelu VIP (24 kk)    Telia Viestintäpalvelu VIP (24 kk)
     updating settings Telia Viestintäpalvelu VIP (24 kk)
-    #search products    Telia Taloushallinto XXL-paketti
-    #Adding Telia Taloushallinto XXL-paketti
     UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    ${quantity}
     OpenQuoteButtonPage_release
     Go To Entity    ${oppo_name}
-    #Closing the opportunity    ${continuation}
     sleep    15s
     Capture Page Screenshot
     ${FYR_value}=    get text    ${FYR}
@@ -2785,7 +2783,7 @@ logoutAsUser
     #${visible}   set variable   Run Keyword and return status   Wait Until Element Is Visible  //a[text()='Log out as ${user}']   30s
     #Log to console     status is  ${visible}
     #Run Keyword if   ${status}  force click element  //a[text()='Log out as ${user}']
-    ${count}  set variable  Get Element Count   ${setting_lighting}
+    ${count}  Run Keyword and Return Status  Get Element Count   ${setting_lighting}
     Log to console  ${count}
     force click element   ${setting_lighting}
     wait until element is visible   //a[text()='Log Out']  60s
@@ -3351,13 +3349,26 @@ Submit for approval
 
 
 Case Approval By Endorser
-    [Arguments]   ${Case_number}
+    [Arguments]   ${Case_number}   ${oppo_name}
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${Endorser_User}  ${Endorser_PW}
+    Log to console  Logged in as Endorser
+    Check for Notification  ${Case_number}
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
     Click element  //a[text()='${Case_number}']
-    sleep  5s
+    sleep  10s
+    Click element  //a[text()='${Case_number}']
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
+    ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
+    Should be equal   ${oppo_name}   ${oppo}
+    Log to console  Linked Opportunity is ${oppo}
+    Go back
+    Sleep  10s
     Wait until element is visible  //div[@title='Approve']  30s
     Capture Page Screenshot
     Click element  //div[@title='Approve']
@@ -3368,13 +3379,28 @@ Case Approval By Endorser
     logoutAsUser
 
 Case Approval By Approver
-     [Arguments]   ${Case_number}
+     [Arguments]   ${Case_number}  ${oppo_name}
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
+    Log to console  Logged in as Approver
+    Check for Notification  ${Case_number}
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
     Click element  //a[text()='${Case_number}']
+    sleep  10s
+    Click element  //a[text()='${Case_number}']
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
+    ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
+    Should be equal   ${oppo_name}   ${oppo}
+    Log to console  Opportunity Validation is Sucessful
     sleep  5s
+    Log to console  Linked Opportunity is ${oppo}
+    Go back
+    Sleep  10s
     Wait until element is visible  //div[@title='Approve']  30s
     Capture Page Screenshot
     Click element  //div[@title='Approve']
@@ -3384,9 +3410,76 @@ Case Approval By Approver
     Capture Page Screenshot
     logoutAsUser
 
-Verify case Status
+Case Rejection By Approver
+     [Arguments]   ${Case_number}  ${oppo_name}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
+    Log to console  Logged in as Approver
+    Check for Notification  ${Case_number}
+    Wait until element is visible  //span[text()='Items to Approve']  30s
+    #Click element  //a[text()='00031101']
+    Wait until element is visible  //a[text()='${Case_number}']  30s
+    Click element  //a[text()='${Case_number}']
+    sleep  10s
+    Click element  //a[text()='${Case_number}']
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
+    ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
+    Should be equal   ${oppo_name}   ${oppo}
+    Log to console  Opportunity Validation is Sucessful
+    sleep  5s
+    Log to console  Linked Opportunity is ${oppo}
+    Go back
+    Wait until element is visible  //div[@title='Reject']  30s
+    Capture Page Screenshot
+    Click element  //div[@title='Reject']
+    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  30s
+    Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Rejected
+    Click element  //span[text()='Reject']
+    Capture Page Screenshot
+    logoutAsUser
+
+
+
+Check for Notification
+    [Arguments]   ${Case_number}   ${status}=${EMPTY}
+    Wait until element is visible  //div[@class='headerButtonBody']  60s
+    Click element  //div[@class='headerButtonBody']
+    Wait until element is visible  //div[@class='notification-content']/div/span[contains(text(),${Case_number})]   30s
+    ${Notification}   Run keyword   Get text  //div[@class='notification-content']/span[contains(text(),${Case_number})]/../span
+    ${Notification_2}  Run keyword   Get text  //div[@class='notification-content']/span[contains(text(),${Case_number})]
+    Run Keyword If  ${status} == Rejected   Should end with     ${Notification}    is rejected
+    Run Keyword Unless  ${status} == Rejected   Should end with     ${Notification}    is requesting approval for case
+    Capture Page Screenshot
+    Log to console   ${Notification}
+    Log to console    ${Notification_2}
+    Click element  //button[@title='Close']
+
+
+Verify case Status by PM
     [Arguments]   ${Case_number}
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    Log to console  Logged in as Pm to verify the Case Status
+    #Reload page
+    Search Salesforce    ${Case_number}
+    ${element_catenate} =    set variable    [@title='${Case_number}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    #Sleep    15s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    sleep  10s
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    logoutAsUser
+
+Verify case Status by Endorser
+    [Arguments]   ${Case_number}  ${status}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Endorser_User}  ${Endorser_PW}
+    Log to console  Logged in as Endorser to verify the Case Status
+    Check for Notification  ${Case_number}   ${status}
     #Reload page
     Search Salesforce    ${Case_number}
     ${element_catenate} =    set variable    [@title='${Case_number}']
@@ -3402,11 +3495,13 @@ Verify case Status
 
 Case Not visible to Normal User
      [Arguments]   ${Case_number}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2B_DIGISALES_LIGHT_USER}   ${Password_merge}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${Case_number}
     Press Enter On    ${SEARCH_SALESFORCE}
     sleep  10s
+    Page should not contain  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[text()='${Case_number}']
+    Log to console  Case Not visible to Normal User
     Capture Page Screenshot
 
 createACaseFromOppoRelated
@@ -3441,8 +3536,91 @@ createACaseFromOppoRelated
     click element  //span[text()='Save']/..scroll page to location
     [Return]    ${case_number}
 
+Click Manual Availabilty
+    ${Manual_availability_button}   set variable  //div[text()='Manual Availability (Sproject)']
+    Wait until element is visible   ${Manual_availability_button}  30s
+    Click element  ${Manual_availability_button}
+    sleep  10s
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    sleep  5s
+    ${count}  Run Keyword and Return Status  Get Element Count   //select[@id='Product Segment']
+    Log to console  ${count}
+    force click element   //select[@id='Product Segment']
+    #Wait until element is visible  //select[@id='Product Segment']   30s
+    #Click element  //select[@id='Product Segment']
+    Wait until element is visible  //select[@id='Product Segment']/option[3]  30s
+    Click element   //select[@id='Product Segment']/option[3]
+    Wait until element is visible  //div[@id='Product_nextBtn']  30s
+    Click element   //div[@id='Product_nextBtn']
+
+Fill Request Form
+
+    Log to console   Fiiling Manual Availability form
+    ${street}  set variable   //input[@id='Street Name Site A']
+    ${Building Number}  set variable  //input[@id='Building Number Site A']
+    ${Postal code}  set variable  //input[@id='Postal Code Site A']
+    ${city}  set variable  //input[@id='City Site A']
+    ${speed}  set variable  //select[@id='Speed']
+    ${product}  set variable   //input[@id='TypeAhead']
+    Wait until element is visible   ${street}    30s
+    Input Text  ${street}   Street
+    Input Text   ${Building Number}  4
+    Input Text   ${Postal code}  001100
+    Input Text    ${city}   Helsinsiki
+    Click element    ${speed}
+    Wait until element is visible  //select[@id='Speed']/option[2]  20s
+    Click element  //select[@id='Speed']/option[2]
+    Execute JavaScript    window.scrollTo(0,500)
+    Wait until element is visible  ${product}  30s
+    Click element    ${product}
+    Input Text   ${product}   Telia Unmanaged IP VPN
+    Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    Click element  //div[@id ='Address_nextBtn']/p
+    ${Send Request}  set variable  //p[text()='Send Request']
+    Wait until element is visible   ${Send Request}  30s
+    Click element  ${Send Request}
+    sleep  5s
+    Wait until element is visible   //ng-form[@id='Request Complated']/div/p/p  30s
+    ${Message}   Run keyword   Get Text  //ng-form[@id='Request Complated']/div/p/p
+    Should contain    ${Message}   request has been sent successfully to Sproject
+    Wait until element is visible  //div[@id='Send Manual Availability Request_nextBtn']/p  30s
+    Click element  //div[@id='Send Manual Availability Request_nextBtn']/p
+
+
+
+Verify Opportunity
+
+    Wait until element is visible  //div[@id='GetBackToOpportunity']  30s
+    Click element  //div[@id='GetBackToOpportunity']
+    Unselect Frame
+    Navigate to related tab
+    Wait until element is visible  //a[@title='Manual Availability Checks']  30s
+    Click element  //a[@title='Manual Availability Checks']
+    Capture Page Screenshot
+    Wait until element is visible   //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[2]/span/span  30s
+    ${status}  Run Keyword  Get Text  //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[2]/span/span
+    ${Product}  Run Keyword  Get Text  //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[4]/span/span
+    ${Document_id}  Run Keyword  Get Text  //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[6]/span/span
+    Log to console  Status and Document id Of Manual Availabilty Request for the product ${Product} is ${status}, ${Document_id}
+
+
+
+
 
 click on more actions
     wait until page contains element  //a[contains(@title, 'more actions')][1]   30s
     force click element  //a[contains(@title, 'more actions')][1]
     capture page screenshot
+
+
+Create Investment Case
+    ${More}   set variable   //a[contains(@title,'more actions')]
+    ${Create Investment}   set variable  //div[@class='branding-actions actionMenu']//following::a[@title='Create Investment']
+    Wait until element is visible  ${More}  30S
+    cLICK ELEMENT   ${More}
+    Wait until element is visible    ${Create Investment}   30s
+    Click element  ${Create Investment}
+    Click element  ${Create Investment}
+    sleep  5s    # for the page to load

@@ -8,9 +8,9 @@ Resource          ../resources/PO_Lighting_variables.robot
 General Setup
 
     [Arguments]    ${price_list}
-    Go To Salesforce and Login into Lightning    sitpo admin
+    Go To Salesforce and Login into Lightning    #sitpo admin
     Go To Entity    ${test_account}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    testing Chetan
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a
     Log to console      old pricelist is ${price_list_old}
@@ -130,6 +130,30 @@ update_setting1
     click element    ${closing}
     unselect frame
 
+AddToCart with product_id
+
+    [Documentation]  Search and add products with product id and click settings
+    [Arguments]   ${pname}  ${p_id}
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${status}      Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
+    Log to console      ${status}
+
+    Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
+    Click element  //div[contains(@class, 'cpq-searchbox')]//input
+    input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
+
+    Wait until element is visible   xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button   60s
+    #sleep   5s
+    click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
+    sleep  15s  # Better to have sleep time as it takes time to load
+    Click Settings  ${pname}
+    Unselect frame
+
+
+
 Searching and adding product
     [Documentation]  Search and add products and click settings
     [Arguments]   ${pname}=${product_name}
@@ -151,6 +175,25 @@ Searching and adding product
     Click Settings  ${pname}
     Unselect frame
     #sleep  20s
+
+AddProductToCart with product_id
+    [Documentation]  Search and add products with product id and click settings
+    [Arguments]   ${p_id}  ${pname}
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${status}   set variable    Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
+    Log to console      ${status}
+
+    Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
+    Click element  //div[contains(@class, 'cpq-searchbox')]//input
+    input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
+
+    Wait until element is visible   xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button   60s
+    #sleep   5s
+    click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
+    Unselect frame
 
 Search and add product
 
@@ -514,7 +557,7 @@ clicking on next button
     select frame    ${iframe}
     sleep  30s
 
-    Scroll Page To Location    0    100
+    #Scroll Page To Location    0    100
 
     Wait Until Element Is Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True

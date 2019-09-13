@@ -20,7 +20,8 @@ Product1:Telia Multiservice NNI
 Product2:Telia Ethernet Operator Subscription
     [Tags]    B2O_Lightning
     General Setup    B2O
-    Search and add product    Telia Ethernet Operator Subscription
+    Searching and adding product    Telia Ethernet Operator Subscription
+    Update Setting Ethernet Operator Subscription
     clicking on next button
     UpdatePageNextButton
     Create_Order
@@ -142,15 +143,31 @@ Product8: Telia Sign
     UpdateAndAddSalesType    Telia Sign
     Create_Order
 
+Product9: Telia ACE
+    [Tags]    Telia ACE    B2B_other
+    General Setup    B2B
+    Searching and adding product    Telia ACE
+    clicking on next button
+    UpdateAndAddSalesType    Telia ACE
+    Create_Order
+
+Product10: Genesys PureCloud
+    [Tags]    Genesys PureCloud   B2B_other
+    General Setup    B2B
+    Searching and adding product    Genesys PureCloud
+    clicking on next button
+    UpdateAndAddSalesType    Genesys PureCloud
+    Create_Order
+
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
     [Tags]    Run    sitpo22  testtime
     ${prod_1}    set variable    Telia Arkkitehti jatkuva palvelu
     ${prod_2}    set variable    Muut asiantuntijapalvelut
     General Setup    B2B
-    Searching and adding product    Telia Arkkitehti jatkuva palvelu
+    AddToCart with product_id    Telia Arkkitehti jatkuva palvelu   01u6E000007Roo5
     Update setting Telia Arkkitehti jatkuva palvelu    d    yes
-    Searching and adding product    Muut asiantuntijapalvelut
+    AddToCart with product_id    Muut asiantuntijapalvelut   01u6E000007RosF
     Update setting Muut asiantuntijapalvelut
     clicking on next button
     UpdateAndAddSalesType    Telia Arkkitehti jatkuva palvelu
@@ -162,9 +179,9 @@ Test scenario 2: Telia Project management
     ${prod_1}    set variable    Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}    set variable    Telia Projektijohtaminen varallaolo ja matkustus
     General Setup  B2B
-    Searching and adding product    Telia Projektijohtaminen jatkuva palvelu
+    AddToCart with product_id    Telia Projektijohtaminen jatkuva palvelu  01u6E000007Roon
     update setting common    d    yes
-    Searching and adding product    Telia Projektijohtaminen varallaolo ja matkustus
+    AddToCart with product_id    Telia Projektijohtaminen varallaolo ja matkustus    01u6E000007RopK
     update setting common    h    yes
     clicking on next button
     UpdateAndAddSalesType    Telia Projektijohtaminen jatkuva palvelu
@@ -176,7 +193,7 @@ Test scenario 3:Telia Consulting
     ${prod_1}    set variable    Telia Konsultointi jatkuva palvelu
     ${prod_2}    set variable    Telia Konsultointi varallaolo ja matkustus
     General Setup    B2B
-    Searching and adding product    Telia Konsultointi jatkuva palvelu
+    AddToCart with product_id    Telia Konsultointi jatkuva palvelu   01u6E000007Ror1
     update setting common    d    yes
     Searching and adding product    Telia Konsultointi varallaolo ja matkustus
     update setting common    h    yes
@@ -188,7 +205,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request. Product Removed
     [Tags]    Trial Run    B2B_Lightning_Rerun    sitpo22   Monitor
     General Setup    B2B
-    Searching and adding product    Telia Palvelunhallintakeskus
+    AddToCart with product_id    Telia Palvelunhallintakeskus   01u6E000007RotD
     Update setting Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu

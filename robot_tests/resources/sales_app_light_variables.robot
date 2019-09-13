@@ -1,7 +1,8 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    release
+#${ENVIRONMENT}    release
+${ENVIRONMENT}    fESIT
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
@@ -218,7 +219,7 @@ ${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scop
 ${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[6]/td[1]/label/input
 ${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']
 ${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
-${B2O_DIGISALES_LIGHT_PASSWORD}     PahaPassu1
+${B2O_DIGISALES_LIGHT_PASSWORD}     PahaPassu2
 ${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input
 ${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']
 ${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
@@ -230,7 +231,7 @@ ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/optio
 ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
 ${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
-
+${B2O Account}      Digita Oy
 
 ### Lead  Variables ###
 

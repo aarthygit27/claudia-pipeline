@@ -1,17 +1,20 @@
 *** Settings ***
 Test Setup        Run Keywords    Open Browser And Go To Login Page
 ...               AND    Go to Salesforce And Login
-Test Teardown     Close Browser
+#Test Teardown     Close Browser
 Force Tags        Performance
 Resource          ..${/}resources${/}salesforce_keywords.robot
 
+
 *** Variables ***
-${PRODUCT}        Telia Yritysinternet
+#${PRODUCT}        Telia Yritysinternet
+${PRODUCT}   Telia Projektijohtaminen jatkuva palvelu
 ${PERFORMANCE_TIMEOUT}    60 seconds
 
 *** Test Cases ***
 Single Product Monitor: Telia Yritysinternet
     [Tags]    single_product    yritysinternet
+
     Create Product Order    ${PRODUCT}    Single
 
 Single Product Monitor: Telia Maksupääte

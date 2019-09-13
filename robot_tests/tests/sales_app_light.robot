@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -1293,14 +1293,62 @@ Pricing Escalation
     Create Pricing Request
     ${Case_number}   run keyword   Create Pricing Escalation
     Submit for approval
-    Case Approval By Endorser   ${Case_number}
-    Case Approval By Approver   ${Case_number}
-    Verify case Status  ${Case_number}
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Approval By Approver   ${Case_number}  ${oppo_name}
+    Verify case Status by PM ${Case_number}
+    Verify case Status by Endorser ${Case_number}
     Case Not visible to Normal User  ${Case_number}
+
+Pricing Escalation - Rejection
+    [Tags]   BQA-11386
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    logoutAsUser
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    Go To Entity  ${oppo_name}
+    Create Pricing Request
+    ${Case_number}   run keyword   Create Pricing Escalation
+    Submit for approval
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Rejection By Approver   ${Case_number}  ${oppo_name}
+    #Verify case Status by PM  ${Case_number}  Rejected    --- Not notified. Raised Bug
+    Verify case Status by Endorser  ${Case_number}   Rejected
+    Case Not visible to Normal User  ${Case_number}
+
+
+Investment Process - B2B
+
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    Go To Entity  ${oppo_name}
+    Create Investment Case
+
+
+Manual Availability - B2O
+
+    [Tags]   BQA-11380
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go To Entity    ${B2O Account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
+    Go To Entity    ${oppo_name}
+    Click Manual Availabilty
+    Fill Request Form
+    Verify Opportunity
+
+
+
+
+
+
 
 
 Testing
 
-    Verify case Status  00031115
-    Case Not visible to Normal User  00031115
+    Verify case Status by Endorser  00031128
 
