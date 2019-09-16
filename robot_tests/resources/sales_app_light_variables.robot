@@ -9,6 +9,11 @@ ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pmauto@teliacompany.com.${ENVIRONMENT}
 ${PM_PW}  PahaPassu1
+${B2O_PM_User}   b2opmauto@teliacompany.com.${ENVIRONMENT}
+${B2O_Approver_User}  b2oapproverauto@teliacompany.com.${ENVIRONMENT}
+${B2O_PM_PW}   PahaPassu1
+${B2O_Approver_PW}  PahaPassu1
+
 ${Endorser_User}  endorserauto@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
 ${Approver_User}  approverauto@teliacompany.com.${ENVIRONMENT}
@@ -232,6 +237,13 @@ ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
 ${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
 ${B2O Account}      Digita Oy
+${Pricing Comments}   Pricing Comments Testing
+${Ebit Value}  20
+${B2B_Contract_Length}  125
+${B2O_Contract_Length}   185
+${B2B_Max_contract_len}  120
+${B2O_Max_contract_len}  180
+
 
 ### Lead  Variables ###
 

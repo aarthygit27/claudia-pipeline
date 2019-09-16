@@ -155,7 +155,7 @@ Create New Opportunity For Customer
     Fill Mandatory Classification
     Click Save Button
     Sleep    10s
-    Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'    Validate Opportunity cannot be created    PASSIVEACCOUNT
+    Run Keyword If    '${Case}'=='PASSIVEACCOUNT'    Validate Opportunity cannot be created    PASSIVEACCOUNT
     ...    ELSE    Run Keyword Unless    ${expect_error}    Verify That Opportunity Creation Succeeded
 
 Click New Item For Account
@@ -3329,7 +3329,7 @@ Create Pricing Escalation
 
 
 Submit for approval
-
+    [Arguments]       ${case_type}
     ${More_actions}   set variable  //span[contains(text(),'more actions')]
     Wait until element is visible   ${More_actions}  30s
     set focus to element  ${More_actions}
@@ -3344,7 +3344,7 @@ Submit for approval
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number for ${case_type}  and the status is ${Case_status}
     logoutAsUser
 
 
@@ -3353,6 +3353,7 @@ Case Approval By Endorser
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${Endorser_User}  ${Endorser_PW}
     Log to console  Logged in as Endorser
     Check for Notification  ${Case_number}  ${EMPTY}
+    Check for alert in Chatter Box   ${Case_number}
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
@@ -3384,6 +3385,7 @@ Case Approval By Approver
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
     Log to console  Logged in as Approver
     Check for Notification  ${Case_number}
+    Check for alert in Chatter Box   ${Case_number}
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
@@ -3402,6 +3404,13 @@ Case Approval By Approver
     Log to console  Linked Opportunity is ${oppo}
     Go back
     Sleep  10s
+    Page should contain element  //div[@class='approval-comments']/ul/li/article/div[2]/div/span
+    ${Endorser_Comments}  Get text   //div[@class='approval-comments']/ul/li/article/div[2]/div/span
+    Log to console  Endorser comment is visible and the comment given is ${Endorser_Comments}
+    Page should contain element  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
+    ${Pricing Comments}  Get text  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
+    Log to console  Pricing comments is visible and the comment is ${Pricing Comments}
+    Captue Page Screenshot
     Wait until element is visible  //div[@title='Approve']  30s
     Capture Page Screenshot
     Click element  //div[@title='Approve']
@@ -3459,8 +3468,22 @@ Check for Notification
     Capture Page Screenshot
     Log to console   ${Notification}
     Log to console    ${Notification_2}
+    Captue Page Screenshot
     sleep  2s
     Force Click element  //button[@title='Close']
+
+Check for alert in Chatter Box
+
+    [Arguments]   ${Case_number}
+    ${sort}  set variable   //input[@name='sort']
+    ${sort_option}  set variable   //span[@title='Latest Posts']
+    WAit until element is visible    ${sort}  30s
+    Click element    ${sort}
+    Click element    ${sort_option}
+    Page should contain  element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
+    Page should contain   requested approval for this case from
+    Captue Page Screenshot
+    Log to console    There is an alert in the Chatter about new investment
 
 
 Verify case Status by PM
@@ -3621,6 +3644,8 @@ click on more actions
 
 
 Create Investment Case
+
+    [Arguments]   ${Account_Type}
     ${More}   set variable   //a[contains(@title,'more actions')]
     ${Create Investment}   set variable  //div[@class='branding-actions actionMenu']//following::a[@title='Create Investment']
     Wait until element is visible  ${More}  30S
@@ -3629,21 +3654,21 @@ Create Investment Case
     Force click element    ${More}
     Wait until element is visible    ${Create Investment}   30s
     Click element  ${Create Investment}
-
-    sleep  5s    # for the page to load
-    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
-    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
-    Fill Investment Info
+    sleep  10s    # for the page to load
+    Reload page
+    sleep  10s
+    Fill Investment Info   ${Account_Type}
     Unselect frame
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]   30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
     Log to console   ${Case_number} is the Case number for Investment Request and the status is ${Case_status}
+    logoutAsUser
     [Return]    ${case_number}
 
 
 Fill Investment Info
-
+    [Arguments]   ${Account_Type}
     ${Type}   set variable  //select[@id='Type']
     ${Type_Option}  set variable   //select[@id='Type']/option[@label='Mobile']
     ${Subject}  set variable   //input[@id='Subject']
@@ -3662,13 +3687,17 @@ Fill Investment Info
     ${Button}  set variable   //div[@id='InvestmentInfo_nextBtn']
     ${Telia_Pays}  set variable  //input[@id='TeliaPaysOne']
     ${Full_Inv_Value}  set variable  2000
-    ${contract_Len_Value}  set variable  123
+    ${contract_Len_Value}  set variable  ${${Account_Type}_Contract_Length}
     ${Cust_pay_val}  set variable  10
     ${Cust_pay_total}  Run keyword   evaluate  (${contract_Len_Value}*${Cust_pay_val})
     ${Telia_pay_expected_val}   Run keyword    evaluate   (${Full_Inv_Value}-${Cust_pay_total})
     Log to console   ${Telia_pay_expected_val}
-    Wait until element is visible  ${Type}  30s
-    Click element  ${Type}
+    sleep  10s
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    ${count}  Run Keyword and Return Status  Get Element Count   ${Type}
+    Log to console    ${count}
+    Force click element    ${Type}
     Click element  ${Type_Option}
     Input Text  ${Subject}  Test Subject
     Input Text  ${Summary}   Test Summary
@@ -3693,7 +3722,7 @@ Fill Investment Info
     Click element  ${Button}
     Wait until element is visible  //button[@id='alert-ok-button']  30s
     Click element  //button[@id='alert-ok-button']
-    Page should contain element   //small[text()='Maximum contract length is 120 months.']
+    Page should contain element   //small[text()='Maximum contract length is ${${Account_Type}_Max_contract_len} months.']
     Log to console   Contract length maximum validation is successful
     Clear Element text  ${Contract_length}
     Input Text  ${Contract_length}  100
@@ -3703,8 +3732,10 @@ Fill Investment Info
 
 
 Submit created Investment
-    [Arguments]    ${oppo_name}   ${case_Number}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    [Arguments]    ${oppo_name}   ${case_Number}  ${Account_Type}
+    # Login and select the case
+    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2O_PM_User}   ${B2O_PM_PW}
+    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}   ${PM_PW}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
     Press Enter On    ${SEARCH_SALESFORCE}
@@ -3714,6 +3745,16 @@ Submit created Investment
     ${element_catenate} =    set variable    [@title='${case_Number}']
     Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
     Click Element    ${TABLE_HEADER}${element_catenate}
+    #Verify it the opportunity details are visible
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
+    ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
+    Should be equal   ${oppo_name}   ${oppo}
+    Log to console  Linked Opportunity is ${oppo}
+
 
 
     ${More_actions}   set variable  //span[contains(text(),'more actions')]
@@ -3727,8 +3768,8 @@ Submit created Investment
     select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
     Execute JavaScript    window.scrollTo(0,1000)
     Wait until element is visible   //textarea[@id='PricingComments']  30s
-    Input Text  //textarea[@id='PricingComments']  Testing
-    Input Text  //input[@id='Ebit']   20
+    Input Text  //textarea[@id='PricingComments']    ${Pricing Comments}
+    Input Text  //input[@id='Ebit']   ${Ebit Value}
     Click element  //select[@id='ApprovalActionB2B']
     Click element  //select[@id='ApprovalActionB2B']//option[@label='Prepare for Endorsement']
 
@@ -3750,4 +3791,4 @@ Submit created Investment
     Wait until element is visible   //p[text()='Save']  30s
     Click element  //p[text()='Save']
     Unselect frame
-    Submit for approval
+    Submit for approval  Investment Case

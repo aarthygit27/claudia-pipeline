@@ -170,7 +170,7 @@ Test scenario 1:Telia Architect
     AddToCart with product_id    Muut asiantuntijapalvelut   01u6E000007RosF
     Update setting Muut asiantuntijapalvelut
     clicking on next button
-    UpdateAndAddSalesType    Telia Arkkitehti jatkuva palvelu
+    UpdateAndAddSalesType for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
 
 Test scenario 2: Telia Project management
@@ -184,7 +184,7 @@ Test scenario 2: Telia Project management
     AddToCart with product_id    Telia Projektijohtaminen varallaolo ja matkustus    01u6E000007RopK
     update setting common    h    yes
     clicking on next button
-    UpdateAndAddSalesType    Telia Projektijohtaminen jatkuva palvelu
+    UpdateAndAddSalesType for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
 
 Test scenario 3:Telia Consulting
@@ -198,7 +198,7 @@ Test scenario 3:Telia Consulting
     Searching and adding product    Telia Konsultointi varallaolo ja matkustus
     update setting common    h    yes
     clicking on next button
-    UpdateAndAddSalesType    Telia Konsultointi jatkuva palvelu
+    UpdateAndAddSalesType for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
 
 Test scenario 7: Key Customer Service Desk Additional Work
