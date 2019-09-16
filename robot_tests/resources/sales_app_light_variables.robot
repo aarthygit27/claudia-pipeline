@@ -7,11 +7,11 @@ ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
-${PM_User}  pmauto@teliacompany.com.release
+${PM_User}  pmauto@teliacompany.com.${ENVIRONMENT}
 ${PM_PW}  PahaPassu1
-${Endorser_User}  endorserauto@teliacompany.com.release
+${Endorser_User}  endorserauto@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
-${Approver_User}  approverauto@teliacompany.com.release
+${Approver_User}  approverauto@teliacompany.com.${ENVIRONMENT}
 ${Approver_PW}  PahaPassu1
 ${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy

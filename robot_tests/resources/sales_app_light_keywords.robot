@@ -3352,7 +3352,7 @@ Case Approval By Endorser
     [Arguments]   ${Case_number}   ${oppo_name}
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${Endorser_User}  ${Endorser_PW}
     Log to console  Logged in as Endorser
-    Check for Notification  ${Case_number}
+    Check for Notification  ${Case_number}  ${EMPTY}
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
@@ -3376,6 +3376,7 @@ Case Approval By Endorser
     Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Approved by Endorser
     Click element  //span[text()='Approve']
     Capture Page Screenshot
+    sleep  5s
     logoutAsUser
 
 Case Approval By Approver
@@ -3408,6 +3409,7 @@ Case Approval By Approver
     Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Approved by Approver
     Click element  //span[text()='Approve']
     Capture Page Screenshot
+    sleep  5s
     logoutAsUser
 
 Case Rejection By Approver
@@ -3439,6 +3441,7 @@ Case Rejection By Approver
     Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Rejected
     Click element  //span[text()='Reject']
     Capture Page Screenshot
+    sleep  5s
     logoutAsUser
 
 
@@ -3447,15 +3450,17 @@ Check for Notification
     [Arguments]   ${Case_number}   ${status}=${EMPTY}
     Wait until element is visible  //div[@class='headerButtonBody']  60s
     Click element  //div[@class='headerButtonBody']
+    Click element  //div[@class='headerButtonBody']
     Wait until element is visible  //div[@class='notification-content']/div/span[contains(text(),${Case_number})]   30s
     ${Notification}   Run keyword   Get text  //div[@class='notification-content']/span[contains(text(),${Case_number})]/../span
     ${Notification_2}  Run keyword   Get text  //div[@class='notification-content']/span[contains(text(),${Case_number})]
-    Run Keyword If  ${status} == Rejected   Should end with     ${Notification}    is rejected
-    Run Keyword Unless  ${status} == Rejected   Should end with     ${Notification}    is requesting approval for case
+    Run Keyword If  '${status}' == 'Rejected'  Should end with     ${Notification}    is rejected
+    Run Keyword If  '${status}' == '${EMPTY}'   Should end with     ${Notification}    is requesting approval for case
     Capture Page Screenshot
     Log to console   ${Notification}
     Log to console    ${Notification_2}
-    Click element  //button[@title='Close']
+    sleep  2s
+    Force Click element  //button[@title='Close']
 
 
 Verify case Status by PM
@@ -3619,8 +3624,130 @@ Create Investment Case
     ${More}   set variable   //a[contains(@title,'more actions')]
     ${Create Investment}   set variable  //div[@class='branding-actions actionMenu']//following::a[@title='Create Investment']
     Wait until element is visible  ${More}  30S
-    cLICK ELEMENT   ${More}
+    ${count}  Run Keyword and Return Status  Get Element Count   ${More}
+    Log to console    ${count}
+    Force click element    ${More}
     Wait until element is visible    ${Create Investment}   30s
     Click element  ${Create Investment}
-    Click element  ${Create Investment}19463093
+
     sleep  5s    # for the page to load
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Fill Investment Info
+    Unselect frame
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]   30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number for Investment Request and the status is ${Case_status}
+    [Return]    ${case_number}
+
+
+Fill Investment Info
+
+    ${Type}   set variable  //select[@id='Type']
+    ${Type_Option}  set variable   //select[@id='Type']/option[@label='Mobile']
+    ${Subject}  set variable   //input[@id='Subject']
+    ${Summary}   set variable    //textarea[@id='Summary']
+    ${Full_Investment}  set variable    //input[@id='FullInvestmentEur']
+    ${Contract_length}  set variable   //input[@id='ContractLength']
+    ${Payment_Method}   set variable  //select[@id='PaymentMethod']
+    ${Payment_Option}  set variable   //select[@id='PaymentMethod']/option[@label='Monthly payment']
+    ${Payment_Option_2}   set variable   //select[@id='PaymentMethod']/option[@label='One time']
+    ${Customer_Pays}  set variable  //input[@id='CustomerPaysMonthlyEur']
+    ${Decision}   set variable  //textarea[@id='DecisionArgument']
+    ${Mobile_Coverage}  set variable  //input[@id='MobileCoverageNo']
+    ${Attachment}  set variable   //input[@type='file']
+    #${File_Path}   set variable    C:\\Users\\Ram\\work\\aarthy\\claudia-pipeline_rt\\robot_tests\\resources\\Input.txt
+    ${File_Path}   set variable    ${CURDIR}\\..\\resources\\Input.txt
+    ${Button}  set variable   //div[@id='InvestmentInfo_nextBtn']
+    ${Telia_Pays}  set variable  //input[@id='TeliaPaysOne']
+    ${Full_Inv_Value}  set variable  2000
+    ${contract_Len_Value}  set variable  123
+    ${Cust_pay_val}  set variable  10
+    ${Cust_pay_total}  Run keyword   evaluate  (${contract_Len_Value}*${Cust_pay_val})
+    ${Telia_pay_expected_val}   Run keyword    evaluate   (${Full_Inv_Value}-${Cust_pay_total})
+    Log to console   ${Telia_pay_expected_val}
+    Wait until element is visible  ${Type}  30s
+    Click element  ${Type}
+    Click element  ${Type_Option}
+    Input Text  ${Subject}  Test Subject
+    Input Text  ${Summary}   Test Summary
+    Input Text  ${Full_Investment}   ${Full_Inv_Value}
+    Input Text  ${Contract_length}  ${contract_Len_Value}
+    Click element   ${Payment_Method}
+    Page should contain Element  ${Payment_Option}
+    Page should contain Element  ${Payment_Option_2}
+    Log to console  Both Payment Options available
+    Click element    ${Payment_Option}
+    Input TExt  ${Customer_Pays}  ${Cust_pay_val}
+    ${Value}  Get Value  //input[contains(@id,'TeliaPays')]
+    ${str_Telia_pay_val}    Run Keyword  Convert to string   ${Telia_pay_expected_val}
+    Should be equal    ${Value}   ${str_Telia_pay_val}
+    Log to console  Teli Pay value populated correctly
+    Input Text  ${Decision}   Invest
+    ${status}   Run Keyword and Return Status  Page should contain element  ${Mobile_Coverage}
+    Log to console   ${status}
+    Run Keyword If   ${status}   Input Text  ${Mobile_Coverage}   25
+    Choose File   ${Attachment}   ${File_Path}
+    Wait until element is visible  ${Button}  30s
+    Click element  ${Button}
+    Wait until element is visible  //button[@id='alert-ok-button']  30s
+    Click element  //button[@id='alert-ok-button']
+    Page should contain element   //small[text()='Maximum contract length is 120 months.']
+    Log to console   Contract length maximum validation is successful
+    Clear Element text  ${Contract_length}
+    Input Text  ${Contract_length}  100
+    Wait until element is visible  ${Button}  30s
+    Force Click element  ${Button}
+
+
+
+Submit created Investment
+    [Arguments]    ${oppo_name}   ${case_Number}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
+    Press Enter On    ${SEARCH_SALESFORCE}
+    Sleep    2s
+    ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
+    ${element_catenate} =    set variable    [@title='${case_Number}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+
+
+    ${More_actions}   set variable  //span[contains(text(),'more actions')]
+    Wait until element is visible   ${More_actions}  30s
+    set focus to element  ${More_actions}
+    Force Click element  ${More_actions}
+    Click element  //a[@title='Pricing Manager Approval']
+    Sleep  5s
+
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Execute JavaScript    window.scrollTo(0,1000)
+    Wait until element is visible   //textarea[@id='PricingComments']  30s
+    Input Text  //textarea[@id='PricingComments']  Testing
+    Input Text  //input[@id='Ebit']   20
+    Click element  //select[@id='ApprovalActionB2B']
+    Click element  //select[@id='ApprovalActionB2B']//option[@label='Prepare for Endorsement']
+
+    Wait until element is visible  //input[@id='EndorserB2B']  30s
+    Click element  //input[@id='EndorserB2B']
+    Wait until element is visible  //li[contains(text(),'Endorser Automation')]  30s
+    Click element  //li[contains(text(),'Endorser Automation')]
+
+    Wait until element is visible  //input[@id='ApproverB2B']  30s
+    Click element  //input[@id='ApproverB2B']
+    Wait until element is visible  //li[contains(text(),'Approver Automation')]  30s
+    Click element  //li[contains(text(),'Approver Automation')]
+
+    Wait until element is visible  //input[@id='NotifyB2B']  30s
+    Click element  //input[@id='NotifyB2B']
+    Wait until element is visible  //li[contains(text(),'Notifier Automation')]  30s
+    Force Click element  //li[contains(text(),'Notifier Automation')]
+    sleep  3s
+    Wait until element is visible   //p[text()='Save']  30s
+    Click element  //p[text()='Save']
+    Unselect frame
+    Submit for approval

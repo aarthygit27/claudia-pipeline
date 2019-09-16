@@ -1327,8 +1327,11 @@ Investment Process - B2B
     #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
     Go To Entity  ${oppo_name}
-    Create Investment Case
-
+    ${case_number}  run keyword    Create Investment Case
+    Submit created Investment    ${oppo_name}   ${case_number}
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Approval By Approver   ${Case_number}  ${oppo_name}
+    Check Case Status
 
 Manual Availability - B2O
 
@@ -1349,6 +1352,9 @@ Manual Availability - B2O
 
 
 Testing
-
-    Verify case Status by Endorser  00031128
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    execute manual step  page
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Fill Investment Info
 
