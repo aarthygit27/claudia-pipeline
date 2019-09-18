@@ -14,8 +14,8 @@ General Setup
     Set Test Variable    ${contact_name}  ${contact}
     ${opportunity}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Set Test Variable    ${oppo_name}   ${opportunity}
-    ${bill_acc_name}    run keyword    CreateABillingAccount
-    Set Test Variable     ${billing_acc_name}   ${bill_acc_name}
+    #${bill_acc_name}    run keyword    CreateABillingAccount
+    #Set Test Variable     ${billing_acc_name}   ${bill_acc_name}
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a
     Log to console      old pricelist is ${price_list_old}
