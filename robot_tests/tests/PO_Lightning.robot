@@ -254,7 +254,7 @@ Test scenario 10:Training
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
-    [Tags]    B2B_ReRun    sitpo22
+    [Tags]    B2B_ReRun    sitpo22   Prof_Test
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -266,7 +266,7 @@ Test scenario 11:Training
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
-    [Tags]    BQA-9198    PO1    B2B_Lightning_ReRun    sitpo22
+    [Tags]    BQA-9198    PO1    Prof_Test    sitpo22
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -278,7 +278,7 @@ Test scenario 12:Training
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    Trial Run    B2B_Lightning_ReRun    sitpo22
+    [Tags]    Trial Run    B2B_Lightning_ReRun    sitpo22  Prof_Test
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -290,7 +290,7 @@ Test scenario 13:Continuity Management Service
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    B2B_Lightning_ReRun    sitpo22
+    [Tags]    B2B_Lightning_ReRun    sitpo22  Prof_Test
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -302,7 +302,7 @@ Test scenario 14:Continuity Management Service
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
-    [Tags]    B2B_Lightning_ReRun    sitpo22
+    [Tags]    B2B_Lightning_ReRun    sitpo22  Prof_Test
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -314,7 +314,7 @@ Test scenario 15:Continuity Management Service
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
-    [Tags]    Trial Run    B2B_Lightning_ReRun    sitpo22
+    [Tags]    Trial Run    B2B_Lightning_ReRun    sitpo22  Prof_Test
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -326,7 +326,7 @@ Test scenario 16:Service Lead Service
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
-    [Tags]    B2B_Lightning_ReRun    sitpo22
+    [Tags]    B2B_Lightning_ReRun    sitpo22  Prof_Test
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -389,7 +389,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]      B2B_Lightning_ReRun   Last_product
+    [Tags]      B2B_Lightning_ReRun   Last_product  sitpo22
 
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
