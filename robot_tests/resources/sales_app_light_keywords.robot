@@ -1334,8 +1334,8 @@ UpdateAndAddSalesType
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     sleep    2s
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
-    ${status}   set variable    Run Keyword and return status    Frame should contain    ${next_button}    Next
-    Log to console      ${status}
+    ${status}    Run Keyword and return status    Frame should contain    ${next_button}    Next
+    Log to console      Next button on update Order ${status}
     Wait until element is visible   ${next_button}   30s
     Force click element    ${next_button}
     unselect frame
@@ -1492,7 +1492,7 @@ ClickonCreateOrderButton
     sleep    15s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
-    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
+    ${status}     Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
     Log to console      ${status}
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
@@ -1501,16 +1501,18 @@ ClickonCreateOrderButton
 
 NextButtonOnOrderPage
     log to console    NextButtonOnOrderPage
-    #Reload page
+    #Reload page  If reloaded it opens the open order page. So does not include here
     sleep  15s
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
     #sleep  10s
-    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
-    Log to console      ${status}
-    wait until element is visible    //span[text()='Next']/..    60s
+    ${count}    Run Keyword and return status    Get Element Count   //span[text()='Next']/..
+    Log to console  ${count}
+    #Run Keyword and return status  Frame should contain    //span[text()='Next']/..    Next
+    #Log to console      ${status}
+    #wait until element is visible    //span[text()='Next']/..    60s
     set focus to element    //span[text()='Next']/..
     click element  //span[text()='Next']/..
     unselect frame
@@ -1712,6 +1714,7 @@ CreateABillingAccount
     # go to particular account and create a billing accouint from there
     wait until page contains element    //li/a/div[@title='Billing Account']    45s
     force click element    //li/a/div[@title='Billing Account']
+    force click element    //li/a/div[@title='Billing Account']
     #sleep    20s
     #select frame    xpath=//div[contains(@class,'slds')]/iframe
     #wait until page contains element    //*[@id="RemoteAction1"]    30s
@@ -1742,10 +1745,11 @@ CreateABillingAccount
     sleep    5s
     wait until page contains element    //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']    30s
     force click element    //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
-    unselect frame
-    sleep    30s
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    sleep    20s
+    #unselect frame
+    #sleep    30s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #sleep    20s
+    Wait until element is visible    //*[@id="return_billing_account"]  60s
     force click element    //*[@id="return_billing_account"]
     sleep    10s
     unselect frame
@@ -2723,7 +2727,7 @@ OpenOrderPage
     Wait until element is visible  //iframe[@title='accessibility title'][@scrolling='yes']   30s
     select frame    //iframe[@title='accessibility title'][@scrolling='yes']
     Log to console      Open Order
-    ${status}   set variable    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
+    ${status}    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
     #Current frame should contain  Open
     Wait until element is visible   //button[contains(text(),'Open Order')]  60s
     set focus to element    //button[contains(text(),'Open Order')]
@@ -3222,7 +3226,7 @@ createACaseFromMore
     log to console   ${case_type}.this is case type..${oppo_name}
     Click element   //span[text()='More']
     sleep   30s
-    ${status}  set variable     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
+    ${status}     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
     log to console      ${status}
     force Click Element   //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
     sleep  3s
@@ -3381,11 +3385,18 @@ Case Approval By Endorser
     logoutAsUser
 
 Case Approval By Approver
-     [Arguments]   ${Case_number}  ${oppo_name}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
+     [Arguments]   ${Case_number}  ${oppo_name}  ${Account_Type}
+    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2O_Approver_User}   ${B2O_Approver_PW}
+    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
     Log to console  Logged in as Approver
     Check for Notification  ${Case_number}
-    Check for alert in Chatter Box   ${Case_number}
+
+    Select Options to Verify Chatter Box   ${Case_number}
+    Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
+    Page should contain   requested approval for this case from
+    Capture Page Screenshot
+    Log to console    There is an alert in the Chatter about new investment
+
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
@@ -3405,12 +3416,11 @@ Case Approval By Approver
     Go back
     Sleep  10s
     Page should contain element  //div[@class='approval-comments']/ul/li/article/div[2]/div/span
-    ${Endorser_Comments}  Get text   //div[@class='approval-comments']/ul/li/article/div[2]/div/span
-    Log to console  Endorser comment is visible and the comment given is ${Endorser_Comments}
+    Run Keyword if   '${Account_Type}'== 'B2B'   Endorser Verification
     Page should contain element  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
     ${Pricing Comments}  Get text  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
     Log to console  Pricing comments is visible and the comment is ${Pricing Comments}
-    Captue Page Screenshot
+    Capture Page Screenshot
     Wait until element is visible  //div[@title='Approve']  30s
     Capture Page Screenshot
     Click element  //div[@title='Approve']
@@ -3420,6 +3430,10 @@ Case Approval By Approver
     Capture Page Screenshot
     sleep  5s
     logoutAsUser
+
+Endorser Verification
+    ${Endorser_Comments}   Get text   //div[@class='approval-comments']/ul/li/article/div[2]/div/span
+    Log to console  Endorser comment is visible and the comment given is ${Endorser_Comments}
 
 Case Rejection By Approver
      [Arguments]   ${Case_number}  ${oppo_name}
@@ -3468,23 +3482,52 @@ Check for Notification
     Capture Page Screenshot
     Log to console   ${Notification}
     Log to console    ${Notification_2}
-    Captue Page Screenshot
+    Capture Page Screenshot
     sleep  2s
     Force Click element  //button[@title='Close']
 
-Check for alert in Chatter Box
+Select Options to Verify Chatter Box
 
     [Arguments]   ${Case_number}
     ${sort}  set variable   //input[@name='sort']
     ${sort_option}  set variable   //span[@title='Latest Posts']
+    ${Filter}   set variable  //span[text()='Filter Feed']
+    ${Filter_option}  set variable  //span[text()='Filter Feed']//following::div[1]/div/slot/lightning-menu-item[1]/a/span
+
     WAit until element is visible    ${sort}  30s
     Click element    ${sort}
     Click element    ${sort_option}
-    Page should contain  element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
-    Page should contain   requested approval for this case from
-    Captue Page Screenshot
-    Log to console    There is an alert in the Chatter about new investment
+    Page should contain element  ${Filter}
+    Force Click element   ${Filter}
+    Page should contain element  ${Filter_option}
+    Force Click element  ${Filter_option}
+    sleep  5s
 
+
+Check Case Status
+    [Arguments]   ${Case_number}  ${Account_Type}
+    Run Keyword If   '${Account_Type}'== 'B2O'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Run Keyword If   '${Account_Type}'== 'B2B'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Select Options to Verify Chatter Box
+    Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
+    Page should contain   created an attachment
+    Capture Page Screenshot
+    Log to console    There is an alert in the Chatter about new Investment pdf generation
+
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
+    Press Enter On    ${SEARCH_SALESFORCE}
+    Sleep    2s
+    ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
+    ${element_catenate} =    set variable    [@title='${case_Number}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    #Verify it the opportunity details are visible
+    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
+    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
+    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
 
 Verify case Status by PM
     [Arguments]   ${Case_number}
@@ -3731,7 +3774,7 @@ Fill Investment Info
 
 
 
-Submit created Investment
+PM details
     [Arguments]    ${oppo_name}   ${case_Number}  ${Account_Type}
     # Login and select the case
     Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2O_PM_User}   ${B2O_PM_PW}
@@ -3749,7 +3792,7 @@ Submit created Investment
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
@@ -3769,6 +3812,37 @@ Submit created Investment
     Execute JavaScript    window.scrollTo(0,1000)
     Wait until element is visible   //textarea[@id='PricingComments']  30s
     Input Text  //textarea[@id='PricingComments']    ${Pricing Comments}
+
+
+    Run Keyword If   '${Account_Type}'== 'B2O'     Submit Investment - B2O
+    Run Keyword Unless  '${Account_Type}' == 'B2O'    Submit Investment - B2B
+
+    sleep  3s
+    Wait until element is visible   //p[text()='Save']  30s
+    Click element  //p[text()='Save']
+    Unselect frame
+    Submit for approval  Investment Case
+
+Submit Investment - B2O
+
+    Input Text   //input[@id='FirstYear']  100
+    Click element  //select[@id='ApprovalActionB2O']
+    Wait until element is visible  //select[@id='ApprovalActionB2O']/option[@label='Send for Approval']  30s
+    Click element  //select[@id='ApprovalActionB2O']/option[@label='Send for Approval']
+
+    Wait until element is visible  //input[@id='ApproverB2O']  30s
+    Click element  //input[@id='ApproverB2O']
+    Wait until element is visible  //li[contains(text(),'B2OApprover Automation')]  30s
+    Click element  //li[contains(text(),'B2OApprover Automation')]
+
+    Wait until element is visible  //input[@id='NotifyB2O']  30s
+    Click element  //input[@id='NotifyB2O']
+    Wait until element is visible  //li[contains(text(),'B2ONotify Automation')]  30s
+    Force Click element  //li[contains(text(),'B2ONotify Automation')]
+    sleep  3s
+
+Submit Investment - B2B
+
     Input Text  //input[@id='Ebit']   ${Ebit Value}
     Click element  //select[@id='ApprovalActionB2B']
     Click element  //select[@id='ApprovalActionB2B']//option[@label='Prepare for Endorsement']
@@ -3787,8 +3861,23 @@ Submit created Investment
     Click element  //input[@id='NotifyB2B']
     Wait until element is visible  //li[contains(text(),'Notifier Automation')]  30s
     Force Click element  //li[contains(text(),'Notifier Automation')]
-    sleep  3s
-    Wait until element is visible   //p[text()='Save']  30s
-    Click element  //p[text()='Save']
-    Unselect frame
-    Submit for approval  Investment Case
+
+Create customership contract
+    [Documentation]  Create Customership contarct
+    ${Create Agreement}  set variable  //div[@title='Create Agreement']
+    ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
+    ${Agreement_Type}  set variable  //select[@id='AgreementType']
+    ${option}  set variable  //select[@id='AgreementType']/option[@label='Customership Agreement']
+    ${Next_Button}  set variable  //p[text()='Next']
+    ${Create_Agreement_Button}  set variable    //p[text()='Create Agreement']
+    Click element   ${Create Agreement}
+    sleep  5s
+    Wait until element is visible  ${Frame}  30s
+    Select frame  ${Frame}
+    Wait until element is visible   ${Agreement_Type}  30s
+    Click element  ${Agreement_Type}
+    Click element   ${option}
+    Click element    ${Next_Button}
+    Wait until element is visible  ${Create_Agreement_Button}   30s
+    Click element  ${Create_Agreement_Button}
+
