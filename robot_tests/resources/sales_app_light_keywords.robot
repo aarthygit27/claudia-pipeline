@@ -1334,8 +1334,8 @@ UpdateAndAddSalesType
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     sleep    2s
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
-    ${status}   set variable    Run Keyword and return status    Frame should contain    ${next_button}    Next
-    Log to console      ${status}
+    ${status}    Run Keyword and return status    Frame should contain    ${next_button}    Next
+    Log to console      Next button on update Order ${status}
     Wait until element is visible   ${next_button}   30s
     Force click element    ${next_button}
     unselect frame
@@ -1492,7 +1492,7 @@ ClickonCreateOrderButton
     sleep    15s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
-    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
+    ${status}     Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
     Log to console      ${status}
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
@@ -1501,7 +1501,7 @@ ClickonCreateOrderButton
 
 NextButtonOnOrderPage
     log to console    NextButtonOnOrderPage
-    #Reload page
+    #Reload page  If reloaded it opens the open order page. So does not include here
     sleep  15s
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     #click on the next button from the cart
@@ -3236,7 +3236,7 @@ createACaseFromMore
     log to console   ${case_type}.this is case type..${oppo_name}
     Click element   //span[text()='More']
     sleep   30s
-    ${status}  set variable     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
+    ${status}     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
     log to console      ${status}
     force Click Element   //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
     sleep  3s

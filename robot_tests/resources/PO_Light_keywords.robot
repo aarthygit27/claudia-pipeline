@@ -10,7 +10,12 @@ General Setup
     [Arguments]    ${price_list}
     Go To Salesforce and Login into Lightning    #sitpo admin
     Go To Entity    ${test_account}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    ${contact}  run keyword    CreateAContactFromAccount_HDC
+    Set Test Variable    ${contact_name}  ${contact}
+    ${opportunity}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Set Test Variable    ${oppo_name}   ${opportunity}
+    #${bill_acc_name}    run keyword    CreateABillingAccount
+    #Set Test Variable     ${billing_acc_name}   ${bill_acc_name}
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a
     Log to console      old pricelist is ${price_list_old}
@@ -134,11 +139,11 @@ AddToCart with product_id
 
     [Documentation]  Search and add products with product id and click settings
     [Arguments]   ${pname}  ${p_id}
+    ${Toggle}  set variable   //button[@class='slds-button cpq-item-has-children']/span[2][text()='${pname}']
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}      Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
     Log to console      ${status}
-
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
@@ -148,7 +153,10 @@ AddToCart with product_id
     Wait until element is visible   xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button   60s
     #sleep   5s
     click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
-    sleep  15s  # Better to have sleep time as it takes time to load
+    sleep  10s
+    ${status}   Run keyword and return status   Element should be visible   ${Toggle}
+    Log to console    Toggle status is ${status}
+    Run keyword if  ${status}  Click element  ${Toggle}
     Click Settings  ${pname}
     Unselect frame
 
@@ -157,6 +165,7 @@ AddToCart with product_id
 Searching and adding product
     [Documentation]  Search and add products and click settings
     [Arguments]   ${pname}=${product_name}
+    ${Toggle}  set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}   set variable    Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
@@ -172,6 +181,9 @@ Searching and adding product
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep  15s  # Better to have sleep time as it takes time to load
+    ${status}   Run keyword and return status   Element should be visible   ${Toggle}
+    Log to console    Toggle status is ${status}
+    Run keyword if  ${status}  Click element  ${Toggle}
     Click Settings  ${pname}
     Unselect frame
     #sleep  20s
@@ -179,6 +191,7 @@ Searching and adding product
 AddProductToCart with product_id
     [Documentation]  Search and add products with product id and click settings
     [Arguments]   ${p_id}  ${pname}
+    ${Toggle}  set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}   set variable    Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
@@ -191,14 +204,21 @@ AddProductToCart with product_id
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
 
     Wait until element is visible   xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button   60s
-    #sleep   5s
+
     click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
+    sleep  10s
+    ${status}   Run keyword and return status   Element should be visible   ${Toggle}
+    Log to console    Toggle status is ${status}
+    Run keyword if  ${status}  Click element  ${Toggle}
+
+
     Unselect frame
 
 Search and add product
 
    [Documentation]  Search and add products without clickings setting button
    [Arguments]   ${pname}=${product_name}
+   ${Toggle}  set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Wait until element is visible   xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
@@ -209,7 +229,10 @@ Search and add product
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     Wait until element is visible   //span[text()='${pname}']   30s
-    #sleep  15s
+    sleep  10s
+    ${status}   Run keyword and return status   Element should be visible   ${Toggle}
+    Log to console    Toggle status is ${status}
+    Run keyword if  ${status}  Click element  ${Toggle}
     #Click Settings
     Unselect frame
     #sleep  20s
@@ -218,11 +241,14 @@ Search and add product
 Add Avainasiakaspalvelukeskus
 
     [Documentation]    This is to add Avainasiakaspalvelukeskus to cart
+    ${Toggle}  set variable   //button[@class='slds-button cpq-item-has-children']/span[2][text()='Avainasiakaspalvelukeskus']
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product}=  set variable   //div[contains(text(),'Avainasiakaspalvelukeskus')]//following::button[1]
     Wait until element is visible   ${product}
     click button  ${product}
     #sleep   10s
+    Wait until element is visible   ${Toggle}  60s
+    Click element  ${Toggle}
     Unselect frame
 
 
@@ -232,8 +258,9 @@ Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
-    sleep   5s
-    Click Button    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[1]
+    sleep  10s
+    Wait until element is visible  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[@title='Settings']  30s
+    Click element    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
@@ -244,8 +271,8 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
-    sleep  5s
-    Click Button  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
+    sleep  10s
+    Click Button  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
@@ -253,17 +280,20 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
-    sleep    5s
-    click button    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[1]
+    Wait until element is visible  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[@title='Settings']  30s
+    click button    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[@title='Settings']
     Unselect frame
 
 Add Hallinta ja Tuki
+    ${Toggle}  set variable   //button[@class='slds-button cpq-item-has-children']/span[2][text()='Hallinta ja Tuki']
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     [Documentation]    This is to add Hallinta ja Tuki to cart
     ${product}=  set variable   //div[contains(text(),'Hallinta ja Tuki')]//following::button[1]
     Wait until element is visible   ${product}  30s
     click button  ${product}
     sleep   5s
+    Wait until element is visible   ${Toggle}  60s
+    Click element  ${Toggle}
     Capture Page Screenshot
     Unselect frame
 
@@ -275,7 +305,8 @@ Add Hallinta ja Tuki jatkuva palvelu
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     sleep    5s
-    Click Button   //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[1]
+    Wait until element is visible   //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[@title='Settings']  30s
+    Click Button   //div[contains(text(),'Hallinta ja Tuki jatkuva palvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add Hallinta ja Tuki kertapalvelu
@@ -286,7 +317,8 @@ Add Hallinta ja Tuki kertapalvelu
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     sleep    10s
-    Click button  //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[1]
+    Wait until element is visible  //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[@title='Settings']  30s
+    Click button  //div[contains(text(),'Hallinta ja Tuki kertapalvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add Hallinta ja Tuki varallaolo ja matkustus
@@ -298,7 +330,8 @@ Add Hallinta ja Tuki varallaolo ja matkustus
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     sleep    5s
-    Click Button   //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[1]
+    Wait until element is visible   //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[@title='Settings']  30s
+    Click Button   //div[contains(text(),'Hallinta ja Tuki varallaolo ja matkustus')]//following::button[@title='Settings']
     Unselect frame
 
 
@@ -315,7 +348,7 @@ Add Toimenpide XS
     click button    ${product_id}
     sleep   30s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[3]
+    Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[@title='Settings']
     Unselect frame
 
 Add Toimenpide S
@@ -327,7 +360,7 @@ Add Toimenpide S
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide S')]//following::button[3]
+    Click Button  //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']
     sleep  5s
 
     Unselect frame
@@ -340,7 +373,7 @@ Add Toimenpide M
     Wait until element is visible   ${product_id}   30s
     click button    ${product_id}
     sleep   20s
-    Click Button  //div[contains(text(),'Toimenpide M')]//following::button[3]
+    Click Button  //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']
     Unselect frame
 
 
@@ -353,7 +386,7 @@ Add Toimenpide L
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide L')]//following::button[3]
+    Click Button  //div[contains(text(),'Toimenpide L')]//following::button[@title='Settings']
     Unselect frame
 
 Add Toimenpide XL
@@ -365,7 +398,7 @@ Add Toimenpide XL
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[3]
+    Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[@title='Settings']
     Unselect frame
 
 Add Events jatkuva palvelu
@@ -378,7 +411,7 @@ Add Events jatkuva palvelu
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Events jatkuva palvelu')]//following::button[3]
+    Click Button  //div[contains(text(),'Events jatkuva palvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add Events kertapalvelu
@@ -391,7 +424,7 @@ Add Events kertapalvelu
     click button    ${product_id}
     sleep   20s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Events kertapalvelu')]//following::button[3]
+    Click Button  //div[contains(text(),'Events kertapalvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add_child_product
@@ -412,7 +445,7 @@ Click Settings
     #sleep  15s
     #Wait until element is visible   //div[contains(@class,'slds')]/iframe     60s
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
-    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[3]
+    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
     Wait until element is visible   ${SETTINGS}   60s
     Click Button    ${SETTINGS}
     sleep  3s
@@ -514,8 +547,6 @@ Update setting Muut asiantuntijapalvelut
 
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep    5s
-    #input text    ${Laskutettava_toimenpide}    This is the test order created by robot framework
-    # field is not available now. Configurations changed (9/5/2019)
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
@@ -684,7 +715,7 @@ select contact
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     log to console    entering Technical COntact page
     Wait Until Element Is Visible    ${contact_search}    120s
-    Input Text    ${contact_search}   B2O Contact  # For Telia Communication Oy Account
+    Input Text    ${contact_search}   ${contact_name}  # For Telia Communication Oy Account
     #sleep    15s
     Wait until element is visible   css=.typeahead .ng-binding   30s
     Click element   css=.typeahead .ng-binding
@@ -706,7 +737,7 @@ Enter technical contact
     ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
     Execute JavaScript    window.scrollTo(0,200)
     Wait Until element is visible   ${Technical_contact_search}     30s
-    Input text   ${Technical_contact_search}  B2O Contact  # Contact of TeliaCommunication Oy account
+    Input text   ${Technical_contact_search}  ${contact_name}  # Contact of TeliaCommunication Oy account
     #sleep  10s
     Wait until element is visible   css=.typeahead .ng-binding  30s
     Click element   css=.typeahead .ng-binding
@@ -721,7 +752,7 @@ Enter Main User
 
     ${Main_user_serach}=  set variable  //input[@id='MainContactTA']
     Wait Until element is visible   ${Main_user_serach}     30s
-    Input text   ${Main_user_serach}  B2O Contact
+    Input text   ${Main_user_serach}  ${contact_name}
     #sleep  10s
     Wait until element is visible   css=.typeahead .ng-binding  30s
     Click element   css=.typeahead .ng-binding

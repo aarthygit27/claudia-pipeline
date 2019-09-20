@@ -1282,7 +1282,7 @@ DummyTestCaseForHDC
 
 
 Pricing Escalation
-    [Tags]   BQA-11368
+    [Tags]   BQA-11368  Test
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -1300,7 +1300,7 @@ Pricing Escalation
     Case Not visible to Normal User  ${Case_number}
 
 Pricing Escalation - Rejection
-    [Tags]   BQA-11386
+    [Tags]   BQA-11386  Test
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -1331,23 +1331,23 @@ Investment Process - B2B
     Submit created Investment    ${oppo_name}   ${case_number}
     Case Approval By Endorser   ${Case_number}  ${oppo_name}
     Case Approval By Approver   ${Case_number}  ${oppo_name}
-    Check Case Status
+    Check Case Status  ${Case_number}  B2B
 
 
 Investment Process - B2O
     [Tags]   BQA-11395
-     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
     Go To Entity    ${B2O Account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
     Go To Entity    ${oppo_name}
     ${case_number}  run keyword    Create Investment Case   B2O
-    Submit created Investment    ${oppo_name}   ${case_number}  B2O
+    PM details    ${oppo_name}   ${case_number}  B2O
     Case Approval By Approver   ${Case_number}  ${oppo_name}
-    Check Case Status
+    Check Case Status  ${Case_number}  B2O
 
 Manual Availability - B2O
 
-    [Tags]   BQA-11380
+    [Tags]   BQA-11380  Test
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
     Go To Entity    ${B2O Account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
@@ -1356,14 +1356,20 @@ Manual Availability - B2O
     Fill Request Form
     Verify Opportunity
 
-
-
-
-
+Check of Customership Contract
+    [Tags]   BQA-11427
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Delete all existing contracts from Accounts Related tab
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
+    Go To Entity    ${oppo_name}
+    Verify that warning banner is displayed on opportunity page
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Create customership contract
 
 
 
 Testing
-    Submit created Investment    Test Robot Order_ 20190916-175850    00038314  B2O
-    Case Approval By Approver   00038314   Test Robot Order_ 20190916-175850
-    Check Case Status
+
+
+    Case Approval By Approver   00038316    Test Robot Order_ 20190917-114755  B2O
