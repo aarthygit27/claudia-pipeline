@@ -263,7 +263,7 @@ Create HDC Order
     ${billing_acc_name}    run keyword    CreateABillingAccount
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
-    Edit Opportunity values    Price List      B2B
+    #Edit Opportunity values    Price List      B2B
     #ChangeThePriceBookToHDC    HDC Pricebook B2B
     ClickingOnCPQ    ${oppo_name}
     Adding Telia Colocation    Telia Colocation
@@ -510,7 +510,7 @@ HDC - Complete Sales Process: UAT/Sanity Regression
     click element    ${win_prob_edit}
     Adding partner and competitor
     #ChangeThePriceBookToHDC    HDC Pricebook B2B
-    Edit Opportunity values         Price List      B2B
+    ChangeThePriceList      B2B
 
 Frame test
     [Tags]    frame
@@ -617,6 +617,7 @@ Add an account team member as account owner
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Change account owner to     B2B Lightning
+    logoutAsUser  Sales Admin
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -932,8 +933,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
-    Edit Opportunity values     Price List  B2B
-    #changethepricelist  B2B  B2B
+    #Edit Opportunity values     Price List  B2B
+    changethepricelist      B2B
     wait until page contains element  //li[text()='insufficient access rights on object id']   30s
     page should contain element  //li[text()='insufficient access rights on object id']
     #click element  //span[text()='Cancel']/..
@@ -954,8 +955,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  B2B DigiSales
     go to entity  ${oppo_name}
-    #changethepricelist  B2B  GTM
-    Edit Opportunity values     Price List  B2B
+    changethepricelist    GTM
+    #Edit Opportunity values     Price List  B2B
 
 
 AddProducrViaSVEandCPQFlow
@@ -1018,8 +1019,8 @@ CreateB2BHDCGTMOrder
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     go to entity  ${oppo_name}
-    Edit Opportunity values    Price List      GTM
-    #changethepricelist  B2B   GTM
+    #Edit Opportunity values    Price List      GTM
+    changethepricelist     GTM
     clickingOnSolutionValueEstimate   ${oppo_name}
     ${fyr}  run keyword   addProductsViaSVE      Telia Colocation
     log to console  ${fyr}.this is total
