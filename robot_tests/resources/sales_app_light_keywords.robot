@@ -2439,13 +2439,25 @@ Wait element to load and click
     Wait until keyword succeeds    30s    2s    Click Element    ${element}
 
 Verify that warning banner is displayed on opportunity page
+    [Arguments]    ${oppo_name}
     [Documentation]    After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
+    Go To Entity    ${oppo_name}
     Wait until element is visible    ${OPPORTUNITY_WARNING_BANNER}
 
 Verify that warning banner is not displayed on opportunity page
+    [Arguments]    ${oppo_name}
     [Documentation]    After creating oppotunity which has an active cutomer ship contract, the banner should not be available
+    Go To Entity    ${oppo_name}
     Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
     Page should not contain element    ${OPPORTUNITY_WARNING_BANNER}
+
+Verify Warning banner about existing of duplicate contract
+    [Arguments]    ${oppo_name}
+    [Documentation]  This warning should be visible when multiple customer ship contract are available for the oppo
+    Go To Entity    ${oppo_name}
+    Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
+    Page should not contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please select the preferred customership contract manually on the record.']
+
 
 Add product to cart (CPQ)
     [Documentation]     In the CPQ cart search for the wanted product and add it to the cart
@@ -2499,9 +2511,12 @@ Delete all existing contracts from Accounts Related tab
     #${status}=    run keyword and return status    Element Should Be Visible    //span[@title='Contracts']
     #run keyword if    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
     #Sleep    15s
-    ScrollUntillFound  //span[@title='Orders']
-    ${Count}   Run keyword   Get Text  //span[@title='Contracts']//following::span[1]
-    Return From Keyword if  '${Count}' == '(0)'
+    ScrollUntillFound  //span[text()='View All']/span[text()='Contracts']
+    Log to console   found element
+    sleep  5s
+    ${Status}   Run keyword and return status   Page should contain element  //span[text()='View All']/span[text()='Contracts']
+    Log to console  ${Status}
+    Return From Keyword if  '${Status}' == 'False'
     Capture Page Screenshot
     ScrollUntillFound   //span[text()='View All']/span[text()='Contracts']
     ${display}=    run keyword and return status    Element Should Be Visible    //span[text()='View All']/span[text()='Contracts']
@@ -3885,21 +3900,21 @@ Submit Investment - B2B
 Create contract Agreement
 
     [Documentation]  Create contract
-    [Arguments]   ${Contract_Type}
+    [Arguments]   ${Contract_Type}   ${Linked Customer Contract}=${EMPTY}
     ${Create Agreement}  set variable  //div[@title='Create Agreement']
     ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
     ${Agreement_Type}  set variable  //select[@id='AgreementType']
     ${option}  set variable  //select[@id='AgreementType']/option[@label='${Contract_Type} Agreement']
     ${Next_Button}  set variable  //p[text()='Next']
     ${Create_Agreement_Button}  set variable    //p[text()='Create Agreement']
+    Go To Entity    ${account}
     Wait until element is visible  ${Create Agreement}  30s
     Click element   ${Create Agreement}
-    sleep  5s
+    sleep  10s
     Wait until element is visible  ${Frame}  30s
     Select frame  ${Frame}
     ${Status}    Run Keyword and return status    Element should be visible   ${Agreement_Type}
     Log to console  ${Status}
-
     Force Click element  ${Agreement_Type}
     Click element   ${option}
     Click element    ${Next_Button}
@@ -3908,7 +3923,7 @@ Create contract Agreement
     Click element  ${Create_Agreement_Button}
     unselect frame
     sleep  5s
-    Fill Contract Details  ${Contract_Type}
+    Fill Contract Details  ${Contract_Type}  ${Linked Customer Contract}
     Activate Contract
 
 
@@ -3918,7 +3933,8 @@ Activate Contract
     Sleep  5s
     Execute JavaScript    window.scrollTo(0,200)
     sleep  5s
-    Page should contain element  //img[@alt='Ready']
+    Page should contain element  //span[text()='Agreement Data Complete']
+    Wait until element is visibel   //img[@alt='Ready']  30s
     Wait until element is visible  //div[@title='Activate']  30s
     Click element  //div[@title='Activate']
     Wait until element is visible  //button[@title='Yes']
@@ -3930,10 +3946,12 @@ Activate Contract
     set test variable  ${Customer_contract}     ${Contract Number}
     Log to console  The Customer Contract Number is  ${Customer_contract}
 
-Fill Contract Details
-    [Arguments]  ${Contract_Type}
 
-    ${contact_name}  set variable  Test RT
+
+Fill Contract Details
+
+    [Arguments]  ${Contract_Type}  ${Linked Customer Contract}
+    #${contact_name}  set variable  Test Rt
     ${Edit Contractual Contact Person}   set variable   //button[@title='Edit Contractual Contact Person']
     ${Search Contracts}    set variable  //span[text()='Contractual Contact Person']//following::div[1]/div/div/div/input[@title='Search Contacts']
     ${contact}  set variable  //div[@title='${contact_name}']
@@ -3952,7 +3970,7 @@ Fill Contract Details
     ${Document}  set variable   //select[@id='Document_Stage']
     ${Document_option}  set variable   //select[@id='Document_Stage']/option[@value='Approved']
     ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
-    Run keyword if   '${Contract_Type}' == 'Service'      Verify if Customer Contract is linked
+    Run keyword if   '${Contract_Type}' == 'Service'      Verify if Customer Contract is linked  ${Linked Customer Contract}
     Wait until element is visible    ${Edit Contractual Contact Person}  60s
     Click element    ${Edit Contractual Contact Person}
     Wait until element is visible    ${Search Contracts}  30s
@@ -3971,7 +3989,7 @@ Fill Contract Details
     Run Keyword Unless   ${status}   clear element text   ${Customer Signed By}
     Run keyword Unless   ${status}   Press Key   ${Customer Signed By}    ${contact_name}
     sleep  5s
-    Click element  ${contact}
+    Force Click element  ${contact}
     Click element   ${Customer Signed Date}
     Click element   //a[@title='Go to next month']
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
@@ -4008,6 +4026,7 @@ Fill Contract Details
     Click element  ${Document}
     Click element  ${Document_option}
     Click element  //p[text()='Load Attachment']
+    Wait until element is visible  //p[contains(text(),'Attachment has been loaded successfully.')]  60s
     Unselect Frame
 
 Go to account from oppo page
@@ -4029,9 +4048,35 @@ Select Offerings
 
 
 Verify if Customer Contract is linked
+    [Arguments]  ${Linked Customer Contract}
     ${Linked Contract}  set variable    //span[text()='Related Customership Contract']//following::a[1]
     Wait until element is visibel  ${Linked Contract}  30s
     ${check}  Get value   ${Linked Contract}
-    Should be equal    ${Linked Contract}   ${Customer_contract}
+    Should be equal    ${Linked Contract}   ${Linked Customer Contract}
     Log to console  Contract is linked
+
+Change Merged Status
+    [Arguments]  ${contract_Number}
+    Go To Entity    ${account}
+    ${save}  set variable  //span[text()='Save']
+    wait until element is visible    ${ACCOUNT_RELATED}    60s
+    Force click element    ${ACCOUNT_RELATED}
+    ScrollUntillFound   //span[text()='View All']/span[text()='Contracts']
+    Force Click element    //span[text()='View All']/span[text()='Contracts']
+    Wait until element is visible Sleep  //th[@scope='row']/span/a[contains(text(),'${contract_Number}')]  30s
+    Click element  //th[@scope='row']/span/a[contains(text(),'${contract_Number}')]
+    ScrollUntillFound    //span[text()='Merged']
+    Click element  //button[@title='Edit Merged']
+    Wait until element is visible  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]  30s
+    Click element  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]
+    ${status}  run keyword and return status   Element should be visible  ${save}
+    Run Keyword if  ${status}   Force Click element  ${save}
+    sleep  3s
+    ${status}  run keyword and return status   Element should be visible  ${save}
+    Run Keyword if  ${status}   Force Click element  ${save}
+    sleep  3s
+    Log to console   ${contract} is set to Merged
+
+
+
 

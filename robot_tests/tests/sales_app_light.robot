@@ -1350,6 +1350,7 @@ Manual Availability - B2O
     [Tags]   BQA-11380  Test
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
     Go To Entity    ${B2O Account}
+    Go To Entity    ${B2O Account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
     Go To Entity    ${oppo_name}
     Click Manual Availabilty
@@ -1358,14 +1359,56 @@ Manual Availability - B2O
 
 Check of Customership Contract
     [Tags]   BQA-11427
+    set Test variable    ${account}   Telia Communication Oy
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Delete all existing contracts from Accounts Related tab
+    Go To Entity    ${account}
+    #Delete all existing contracts from Accounts Related tab
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Set Test Variable   ${contact_name}   ${contact}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify that warning banner is displayed on opportunity page  ${oppo_name}
+    Create contract Agreement  Customership
+    ${Contract_A_Number}  set variable  ${Customer_contract}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify that warning banner is not displayed on opportunity page  ${oppo_name}
+    Create contract Agreement  Service  ${Contract_A_Number}
+    Create contract Agreement  Customership
+    ${Contract_B_Number}   set variable  ${Customer_contract}
+    Change Merged Status   ${Contract B_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify Warning banner about existing of duplicate contract  ${oppo_name}
+    Change Merged Status  ${Contract_A_Number}
+    Change Merged Status  ${Contract_B_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify Warning banner about existing of duplicate contract
+    Create contract Agreement  Service  ${Contract_B_Number}
+    Change Merged Status  ${Contract_A_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify that warning banner is displayed on opportunity page  ${oppo_name}
+
+
+
+
+Get activared contract number in activate contract keyword since it gets agreement number
+
+    Change Contract A as Merged
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
     Go To Entity    ${oppo_name}
-    Verify that warning banner is displayed on opportunity page
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Create customership contract
+    Verify Warning banner about existing of duplicate contract
+    Create contract Agreement  Service
+    Remove merged flag
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
+    Go To Entity    ${oppo_name}
+    Verify warning banner to select contract
+    Select contract to oppo
+
+
+
+
 
 
 
