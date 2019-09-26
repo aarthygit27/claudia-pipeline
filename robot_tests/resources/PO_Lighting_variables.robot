@@ -30,6 +30,28 @@ ${Sovelluskauppa 3rd Party Apps}    01u58000005pgeDAAQ
 ${VIP:n käytössä olevat Cid-numerot}    01u58000005pvIkAAI
 ${Ohjaus Telia Numeropalveluun}    01u58000005pgPzAAI
 ${Online Asiantuntijapalvelut}    01u58000005pgPjAAI
-${PASSWORD_SALESADMIN_SITPO}    PahaPassu5
+${PASSWORD_SALESADMIN_SITPO}    PahaPassu6
 ${SALES_ADMIN_SITPO}    saleadm@teliacompany.com.sitpo
 ${Telia Sign}     01u2600000Q4Is6AAF
+#${SETTINGS}   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[3]
+${X_BUTTON}       //span[contains(text(),'Close')]/..
+${CHILD_SETTINGS}    //div[@ng-if='!importedScope.isProvisioningStatusDeleted(childProd, attrs.provisioningStatus)']//button[@title='Settings']
+${SPINNER_SMALL}    //div[contains(@class,'small button-spinner')]
+${sales_type}    set variable    //select[@ng-model='p.SalesType']
+${CPQ_next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+${account_name}=    Set Variable    //p[contains(text(),'Search')]
+${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
+${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+${technical_contact}    John Doe
+${group_billing_id}    SALES FORCE TEST 2
+${test_account}        Aacon Oy
+${Hinnoitteluperuste}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Hinnoitteluperuste']]//following::select[1]
+${Henkilötyöaika}      //form[@name='productconfig']//following::label[text()[normalize-space() = 'Henkilötyöaika']]//following::input[1]
+${Palveluaika}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Palveluaika']]//following::select[1]
+${Laskuttaminen}   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Laskuttaminen']]//following::select[1]
+${Työtilaus vaadittu}    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
+${Laskutettava_toimenpide}    //textarea[@name='productconfig_field_0_0']
+${Kustannus}     //input[@name='productconfig_field_0_1']
+${Kilometrikorvaus}   //div[contains(text(),'Kilometrikorvaus')]/../../../div/button[contains(@class,'slds-button slds-button_neutral')]
+#${Kilometrit}=    set variable    //input[contains(@class,'ng-valid')][@value='0']
+${Kilometrit}   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Kilometrit']]//following::input[1]

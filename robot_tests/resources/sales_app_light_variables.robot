@@ -1,12 +1,25 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    release
+#${ENVIRONMENT}    release
+${ENVIRONMENT}    fESIT
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
-${LIGHTNING_TEST_ACCOUNT}       Abloy Oy
-${vLocUpg_TEST_ACCOUNT}    Administer Oy
-${CONTRACT_ACCOUNT}     Affecto Oy
+${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
+${SYSTEM_ADMIN_PWD}          PahaPassu1
+${PM_User}  pmauto@teliacompany.com.${ENVIRONMENT}
+${PM_PW}  PahaPassu1
+${B2O_PM_User}   b2opmauto@teliacompany.com.${ENVIRONMENT}
+${B2O_Approver_User}  b2oapproverauto@teliacompany.com.${ENVIRONMENT}
+${B2O_PM_PW}   PahaPassu1
+${B2O_Approver_PW}  PahaPassu1
+
+${Endorser_User}  endorserauto@teliacompany.com.${ENVIRONMENT}
+${Endorser_PW}  PahaPassu1
+${Approver_User}  approverauto@teliacompany.com.${ENVIRONMENT}
+${Approver_PW}  PahaPassu1
+${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
+${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
 ${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
@@ -48,7 +61,7 @@ ${LAST_NAME_FIELD}    //input[@placeholder='Last Name']
 ${ACCOUNT_NAME_FIELD}    //input[@title='Search Accounts']
 ${MASTER_PHONE_NUM_FIELD}    //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_PRIMARY_EMAIL_FIELD}    //span[contains(text(),'Primary eMail')]/../following-sibling::input[@type='email']
-${MASTER_EMAIL_FIELD}    //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
+${MASTER_EMAIL_FIELD}    //div[@id='email']
 #${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
 ${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
@@ -174,8 +187,8 @@ ${day}            12
 ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
-${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
-${SYSTEM_ADMIN_PWD}          PahaPassu1
+${PM_username}
+${PM_password}
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
 ${PASSWORD-SALESADMIN}    PahaPassu2
 ${REMOVE_ACCOUNT}    GESB Integration
@@ -223,7 +236,13 @@ ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/optio
 ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
 ${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
-${test_opportunity}     //table/tbody/tr/td/span/span[text()='Analyse Prospect']/../../../th/span/a[contains(text(), TestOpportunity)]
+${B2O Account}      Digita Oy
+${Pricing Comments}   Pricing Comments Testing
+${Ebit Value}  20
+${B2B_Contract_Length}  125
+${B2O_Contract_Length}   185
+${B2B_Max_contract_len}  120
+${B2O_Max_contract_len}  180
 
 
 ### Lead  Variables ###
