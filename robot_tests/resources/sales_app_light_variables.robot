@@ -1,8 +1,7 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-#${ENVIRONMENT}    release
-${ENVIRONMENT}    fESIT
+${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
@@ -13,7 +12,6 @@ ${B2O_PM_User}   b2opmauto@teliacompany.com.${ENVIRONMENT}
 ${B2O_Approver_User}  b2oapproverauto@teliacompany.com.${ENVIRONMENT}
 ${B2O_PM_PW}   PahaPassu1
 ${B2O_Approver_PW}  PahaPassu1
-
 ${Endorser_User}  endorserauto@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
 ${Approver_User}  approverauto@teliacompany.com.${ENVIRONMENT}
@@ -61,7 +59,7 @@ ${LAST_NAME_FIELD}    //input[@placeholder='Last Name']
 ${ACCOUNT_NAME_FIELD}    //input[@title='Search Accounts']
 ${MASTER_PHONE_NUM_FIELD}    //span[contains(text(),'Phone')]/../following-sibling::input[@type="tel"]
 ${MASTER_PRIMARY_EMAIL_FIELD}    //span[contains(text(),'Primary eMail')]/../following-sibling::input[@type='email']
-${MASTER_EMAIL_FIELD}    //div[@id='email']
+${MASTER_EMAIL_FIELD}    //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
 #${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
 ${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
@@ -187,8 +185,8 @@ ${day}            12
 ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
-${PM_username}
-${PM_password}
+${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
+${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
 ${PASSWORD-SALESADMIN}    PahaPassu2
 ${REMOVE_ACCOUNT}    GESB Integration
@@ -215,6 +213,12 @@ ${product_name}    Telia Robotics
 ${product_quantity}    1
 ${NRC}            35
 ${RC}             50000
+${B2bproductfyr1}    Telia Sopiva Pro N
+${B2bproductfyr2}   Pro nettikortti
+${B2bproductfyr3}   Multi-SIM
+${fixed_charge for_Telia Sopiva Pro N}  30
+${fixed_charge for_Pro Nettikortti}     0
+${fixed_charge for_Multi-SIM}           0
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
 ${360_VIEW}     //a[@title='360 View']
@@ -229,13 +233,12 @@ ${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbo
 ${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']
 ${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
 ${OPPORTUNITY_WARNING_BANNER}   //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account does not have an active customership contract, please conclude an agreement with the customer before accepting orders for the Account.']
-${SERVICE_CONTRACT_WARNING}     //div/div/small[text()='Selected Account does not have an active service contract for one or more of the selected offerings, a draft agreement and service contract has been automatically created']
+${SERVICE_CONTRACT_WARNING}     //div/div/small[text()='Selected Account does not have an active service contract for one or more of the selected offerings. A draft agreement and service contract has been automatically created for each of the offerings']
 ${STATUS_DRAFT_ELEMENT}     //span[text()='Status']/../../div[2]/span/span[text()='Draft']
 ${SALES_TYPE_DROPDOWN}      //table[@class='tg']/tbody//tr[2]/td[8]/select
 ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/option[@value='New Money-New Services']
 ${CPQ_CART_NEXT_BUTTON}      //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
 ${QUOTE_DETAILS_TAB}    //*[@id="brandBand_1"]/div/div[1]/div[4]/div[1]/div/div[3]/div[1]/div/div/div/ul/li[2]/a
-${table_row}      //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
 ${B2O Account}      Digita Oy
 ${Pricing Comments}   Pricing Comments Testing
 ${Ebit Value}  20
@@ -243,7 +246,14 @@ ${B2B_Contract_Length}  125
 ${B2O_Contract_Length}   185
 ${B2B_Max_contract_len}  120
 ${B2O_Max_contract_len}  180
-
+${table_row}        //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(@class,'rowActionsPlaceHolder ')]
+${test_opportunity}     //table/tbody/tr/td/span/span[text()='Analyse Prospect']/../../../th/span/a[contains(text(), TestOpportunity)]
+${externalphoneno}       +3589888
+${externaltitle}    MR
+${externaleMail}    externalemail@email.com
+${externalofficename}    ExternalOffice
+${ulmid}    ULMID
+${externalid}      EXternalID
 
 ### Lead  Variables ###
 
