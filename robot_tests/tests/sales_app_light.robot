@@ -1435,13 +1435,7 @@ DummyTestCaseForHDC
     #${billing_acc_name}
     ReviewPage
     ${order_no}    run keyword    ValidateTheOrchestrationPlan
-    log to console    ${order_no} .this is order
-
-Delete All the Oppotunities in Account
-    [Tags]       Lightning       Sanity
-    Go To Salesforce and Login into Admin User
-    Go to Entity   Aarslef Oy
-    Delete all entities from Accounts Related tab       Opportunities
+    log to conole    ${order_no} .this is order
 
 Delete all the contacts in Account
     Login to Salesforce as System Admin
@@ -1496,6 +1490,72 @@ Lightning_Customership Contract
      AddProductToCart   DataNet Basic Wireless
      UpdateAndAddSalesType for 2 products and check contract    Telia chat  DataNet Basic Wireless
      View Open Quote
+
+Pricing Escalation
+    [Tags]   BQA-11368  Test
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    logoutAsUser
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    Go To Entity  ${oppo_name}
+    Create Pricing Request
+    ${Case_number}   run keyword   Create Pricing Escalation
+    Submit for approval   Pricing Escalation
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Approval By Approver   ${Case_number}  ${oppo_name}
+    Verify case Status by PM   ${Case_number}
+    Verify case Status by Endorser   ${Case_number}
+    Case Not visible to Normal User    ${Case_number}
+
+Pricing Escalation - Rejection
+    [Tags]   BQA-11386  Test
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    logoutAsUser
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    Go To Entity  ${oppo_name}
+    Create Pricing Request
+    ${Case_number}   run keyword   Create Pricing Escalation
+    Submit for approval  Pricing Escalation
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Rejection By Approver   ${Case_number}  ${oppo_name}
+    #Verify case Status by PM  ${Case_number}  Rejected    --- Not notified. Raised Bug
+    Verify case Status by Endorser  ${Case_number}   Rejected
+    Case Not visible to Normal User  ${Case_number}
+
+
+Investment Process - B2B
+    [Tags]   BQA-11387
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    Go To Entity  ${oppo_name}
+    ${case_number}  run keyword    Create Investment Case  B2B
+    Submit created Investment    ${oppo_name}   ${case_number}
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Approval By Approver   ${Case_number}  ${oppo_name}
+    Check Case Status  ${Case_number}  B2B
+
+
+Investment Process - B2O
+    [Tags]   BQA-11395
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go To Entity    ${B2O Account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
+    Go To Entity    ${oppo_name}
+    ${case_number}  run keyword    Create Investment Case   B2O
+    PM details    ${oppo_name}   ${case_number}  B2O
+    Case Approval By Approver   ${Case_number}  ${oppo_name}
+    Check Case Status  ${Case_number}  B2O
+
+Manual Availability - B2O
 
     [Tags]   BQA-11380  Test
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
