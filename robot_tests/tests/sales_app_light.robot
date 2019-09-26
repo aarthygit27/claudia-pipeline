@@ -1295,9 +1295,9 @@ Pricing Escalation
     Submit for approval   Pricing Escalation
     Case Approval By Endorser   ${Case_number}  ${oppo_name}
     Case Approval By Approver   ${Case_number}  ${oppo_name}
-    Verify case Status by PM ${Case_number}
-    Verify case Status by Endorser ${Case_number}
-    Case Not visible to Normal User  ${Case_number}
+    Verify case Status by PM   ${Case_number}
+    Verify case Status by Endorser   ${Case_number}
+    Case Not visible to Normal User    ${Case_number}
 
 Pricing Escalation - Rejection
     [Tags]   BQA-11386  Test
@@ -1362,57 +1362,82 @@ Check of Customership Contract
     set Test variable    ${account}   Telia Communication Oy
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${account}
-    #Delete all existing contracts from Accounts Related tab
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    Set Test Variable   ${contact_name}   ${contact}
+    Delete all existing contracts from Accounts Related tab
+    #${contact}    run keyword    CreateAContactFromAccount_HDC
+    #Set Test Variable   ${contact_name}   ${contact}
+    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify that warning banner is displayed on opportunity page  ${oppo_name}
+    Go to account from oppo page
     Create contract Agreement  Customership
     ${Contract_A_Number}  set variable  ${Customer_contract}
     Go To Entity    ${account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify that warning banner is not displayed on opportunity page  ${oppo_name}
+    Verify Populated Cutomership Contract   ${Contract_A_Number}
+    Go to account from oppo page
     Create contract Agreement  Service  ${Contract_A_Number}
+    Go To Entity    ${account}
     Create contract Agreement  Customership
     ${Contract_B_Number}   set variable  ${Customer_contract}
     Change Merged Status   ${Contract B_Number}
     Go To Entity    ${account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify Warning banner about existing of duplicate contract  ${oppo_name}
+    Verify Populated Cutomership Contract   ${Contract_A_Number}
     Change Merged Status  ${Contract_A_Number}
     Change Merged Status  ${Contract_B_Number}
     Go To Entity    ${account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify Warning banner about existing of duplicate contract
+    Verify Populated Cutomership Contract   ${Contract_B_Number}
+    Go to account from oppo page
     Create contract Agreement  Service  ${Contract_B_Number}
     Change Merged Status  ${Contract_A_Number}
     Go To Entity    ${account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify that warning banner is displayed on opportunity page  ${oppo_name}
+    Verify Populated Cutomership Contract  ${EMPTY}
+    Select Customer ship contract manually   ${Contract_A_Number}
 
 
 
+One Order - B2B Colocation and Change Order
+    [Tags]  BQA-11521
 
-Get activared contract number in activate contract keyword since it gets agreement number
-
-    Change Contract A as Merged
-    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
-    Go To Entity    ${oppo_name}
-    Verify Warning banner about existing of duplicate contract
-    Create contract Agreement  Service
-    Remove merged flag
-    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
-    Go To Entity    ${oppo_name}
-    Verify warning banner to select contract
-    Select contract to oppo
-
-
-
-
+    HDC
+    DDM Request Handling
+    Validate DDM and billing system response
+    Change Order
 
 
 
 Testing
 
-
-    Case Approval By Approver   00038316    Test Robot Order_ 20190917-114755  B2O
+    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-122629
+    set Test variable    ${account}   Telia Communication Oy
+    ${Contract_A_Number}  set variable  519092512221
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Create contract Agreement  Customership
+    ${Contract_B_Number}   set variable  ${Customer_contract}
+    Create contract Agreement  Service  ${Contract_A_Number}
+    Go To Entity    ${account}
+    Change Merged Status   ${Contract B_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify Warning banner about existing of duplicate contract  ${oppo_name}
+    Verify Populated Cutomership Contract   ${Contract_A_Number}
+    Change Merged Status  ${Contract_A_Number}
+    Change Merged Status  ${Contract_B_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify Warning banner about existing of duplicate contract
+    Verify Populated Cutomership Contract   ${Contract_B_Number}
+    Go to account from oppo page
+    Create contract Agreement  Service  ${Contract_B_Number}
+    Change Merged Status  ${Contract_A_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify that warning banner is displayed on opportunity page  ${oppo_name}
+    Verify Populated Cutomership Contract  ${EMPTY}
+    Select Customer ship contract manually   ${Contract_A_Number}

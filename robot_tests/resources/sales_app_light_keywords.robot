@@ -2442,7 +2442,7 @@ Verify that warning banner is displayed on opportunity page
     [Arguments]    ${oppo_name}
     [Documentation]    After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
     Go To Entity    ${oppo_name}
-    Wait until element is visible    ${OPPORTUNITY_WARNING_BANNER}
+    Wait until element is visible    ${OPPORTUNITY_WARNING_BANNER}  30s
 
 Verify that warning banner is not displayed on opportunity page
     [Arguments]    ${oppo_name}
@@ -2511,7 +2511,7 @@ Delete all existing contracts from Accounts Related tab
     #${status}=    run keyword and return status    Element Should Be Visible    //span[@title='Contracts']
     #run keyword if    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
     #Sleep    15s
-    ScrollUntillFound  //span[text()='View All']/span[text()='Contracts']
+    ScrollUntillFound  //span[text()='View All']/span[text()='Opportunities']
     Log to console   found element
     sleep  5s
     ${Status}   Run keyword and return status   Page should contain element  //span[text()='View All']/span[text()='Contracts']
@@ -3364,7 +3364,7 @@ Submit for approval
     set focus to element  ${More_actions}
     Force Click element  ${More_actions}
     Click element  //a[@title='Submit for Approval']
-    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']   30s
+    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']   60s
     Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Submit
     Click element  //span[text()='Submit']
     Capture Page Screenshot
@@ -3382,7 +3382,13 @@ Case Approval By Endorser
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${Endorser_User}  ${Endorser_PW}
     Log to console  Logged in as Endorser
     Check for Notification  ${Case_number}  ${EMPTY}
-    Check for alert in Chatter Box   ${Case_number}
+
+    Select Options to Verify Chatter Box   ${Case_number}
+    Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
+    Page should contain   requested approval for this case from
+    Capture Page Screenshot
+    Log to console    There is an alert in the Chatter about new investment
+
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
@@ -3402,7 +3408,7 @@ Case Approval By Endorser
     Wait until element is visible  //div[@title='Approve']  30s
     Capture Page Screenshot
     Click element  //div[@title='Approve']
-    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  30s
+    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  60s
     Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Approved by Endorser
     Click element  //span[text()='Approve']
     Capture Page Screenshot
@@ -3410,7 +3416,7 @@ Case Approval By Endorser
     logoutAsUser
 
 Case Approval By Approver
-     [Arguments]   ${Case_number}  ${oppo_name}  ${Account_Type}
+     [Arguments]   ${Case_number}  ${oppo_name}  ${Account_Type}=${EMPTY}
     Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2O_Approver_User}   ${B2O_Approver_PW}
     Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
     Log to console  Logged in as Approver
@@ -3442,9 +3448,7 @@ Case Approval By Approver
     Sleep  10s
     Page should contain element  //div[@class='approval-comments']/ul/li/article/div[2]/div/span
     Run Keyword if   '${Account_Type}'== 'B2B'   Endorser Verification
-    Page should contain element  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
-    ${Pricing Comments}  Get text  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
-    Log to console  Pricing comments is visible and the comment is ${Pricing Comments}
+    Run Keyword Unless  '${Account_Type}' == '${EMPTY}'   Verify Pricing comments
     Capture Page Screenshot
     Wait until element is visible  //div[@title='Approve']  30s
     Capture Page Screenshot
@@ -3455,6 +3459,12 @@ Case Approval By Approver
     Capture Page Screenshot
     sleep  5s
     logoutAsUser
+
+Verify Pricing comments
+
+    Page should contain element  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
+    ${Pricing Comments}  Get text  //span[text()='Approval Details']//following::span[6][text()='Pricing Comments']//following::span[2]
+    Log to console  Pricing comments is visible and the comment is ${Pricing Comments}
 
 Endorser Verification
     ${Endorser_Comments}   Get text   //div[@class='approval-comments']/ul/li/article/div[2]/div/span
@@ -3572,7 +3582,7 @@ Verify case Status by PM
     logoutAsUser
 
 Verify case Status by Endorser
-    [Arguments]   ${Case_number}  ${status}
+    [Arguments]   ${Case_number}  ${status}=${EMPTY}
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Endorser_User}  ${Endorser_PW}
     Log to console  Logged in as Endorser to verify the Case Status
     Check for Notification  ${Case_number}   ${status}
@@ -3907,22 +3917,26 @@ Create contract Agreement
     ${option}  set variable  //select[@id='AgreementType']/option[@label='${Contract_Type} Agreement']
     ${Next_Button}  set variable  //p[text()='Next']
     ${Create_Agreement_Button}  set variable    //p[text()='Create Agreement']
-    Go To Entity    ${account}
+    #Go To Entity    ${account}
     Wait until element is visible  ${Create Agreement}  30s
     Click element   ${Create Agreement}
-    sleep  10s
+    sleep   5s   # Required for loading
+    Reload page
+    sleep  30s
     Wait until element is visible  ${Frame}  30s
     Select frame  ${Frame}
-    ${Status}    Run Keyword and return status    Element should be visible   ${Agreement_Type}
-    Log to console  ${Status}
-    Force Click element  ${Agreement_Type}
+    ${count}  Run Keyword and Return Status  Get Element Count   ${Agreement_Type}
+    Log to console    ${count}
+
+    Force click element   ${Agreement_Type}
+    Wait until element is visible  ${option}  30s
     Click element   ${option}
     Click element    ${Next_Button}
     Run keyword if   '${Contract_Type}' == 'Service'    Select Offerings
     Wait until element is visible  ${Create_Agreement_Button}   30s
     Click element  ${Create_Agreement_Button}
     unselect frame
-    sleep  5s
+    sleep  10s
     Fill Contract Details  ${Contract_Type}  ${Linked Customer Contract}
     Activate Contract
 
@@ -3931,26 +3945,53 @@ Activate Contract
 
     Go back
     Sleep  5s
+
     Execute JavaScript    window.scrollTo(0,200)
     sleep  5s
     Page should contain element  //span[text()='Agreement Data Complete']
-    Wait until element is visibel   //img[@alt='Ready']  30s
+    Reload page
+    Wait until element is visible  //img[@alt='Ready']  60s
+
     Wait until element is visible  //div[@title='Activate']  30s
     Click element  //div[@title='Activate']
     Wait until element is visible  //button[@title='Yes']
     Click element  //button[@title='Yes']
     sleep  3s
-    Page should contain element  //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[9]/span[text()='Activated']
+    Wait until element is visible   //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[9]/span[text()='Activated']   60s
     Log to console   Customer Contract ship is activated
-    ${Contract Number}  Run keyword   Get text  //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[2]/span
+    ${Contract Agreement}  Run keyword   Get text  //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[2]/span
+    ${Contract Agreement_No}   Convert to integer   ${Contract Agreement}
+    ${Contract}=   Evaluate   ${Contract Agreement_No}+ 1
+    ${Contract Number}    Convert to String    ${Contract}
     set test variable  ${Customer_contract}     ${Contract Number}
-    Log to console  The Customer Contract Number is  ${Customer_contract}
+    Log to console  The Contract Number is ${Customer_contract}
 
+Check Customer Signed By
+    Execute JavaScript    window.scrollTo(0,1100)
+    Press Key   ${Customer Signed By}   ${contact_name}
+    sleep  3s
+    ${Count}  run keyword and return status   Page should contain element ${contact}
+    Run Keyword Unless   ${Count}   clear element text   ${Customer Signed By}
+    Run keyword Unless   ${Count}   Press Key   ${Customer Signed By}    ${contact_name}
+    #sleep  5s
+    Page should contain element  ${contact}  30s
+    Force Click element  ${contact}
+    ${status}   Run keyword and return status  Page should contain element  //li[text()='An invalid option has been chosen.']
+    Run Keyword If  ${status}  Force Click element   //span[text()='Undo Customer Signed By']
+    Run Keyword If  ${status}   Force Click element  ${contact}
+    Capture Page Screenshot
+    sleep  5s
+     ${status}  run keyword and return status   Element should be visible  ${save}
+    Run Keyword if  ${status}   Force Click element  ${save}
+    sleep  3s
+    ${status}  run keyword and return status   Element should be visible  ${save}
+    Run Keyword if  ${status}   Force Click element  ${save}
+    sleep  3s
 
 
 Fill Contract Details
 
-    [Arguments]  ${Contract_Type}  ${Linked Customer Contract}
+    [Arguments]  ${Contract_Type}  ${Linked Customer Contract}=${EMPTY}
     #${contact_name}  set variable  Test Rt
     ${Edit Contractual Contact Person}   set variable   //button[@title='Edit Contractual Contact Person']
     ${Search Contracts}    set variable  //span[text()='Contractual Contact Person']//following::div[1]/div/div/div/input[@title='Search Contacts']
@@ -3960,9 +4001,9 @@ Fill Contract Details
     ${Customer Signature Place}  set variable   //label[@class='label inputLabel uiLabel-left form-element__label uiLabel']/span[text()='Customer Signature Place']//following::textarea[1]
     ${Telia Signed By}  set variable   //label[@class='label inputLabel uiLabel-left form-element__label uiLabel']/span[text()='Telia Signed By']//following::input[1]
     ${Telia Signed Date}   set variable  //label[@class='label inputLabel uiLabel-left form-element__label uiLabel']/span[text()='Telia Signed Date']//following::input[1]
-    ${Attachment_Button}  set variable   //div[@title='Add Attachment']
+    ${Attachment_Button}  set variable   //a[@title='Add Attachment']
     ${File_Path}   set variable    ${CURDIR}\\..\\resources\\Input.txt
-    ${save}  set variable  //span[text()='Save']
+    ${save}  set variable  //button[@title='Save']
     ${ATTACHMENT_NAME}  set variable  //input[@id='name']
     ${File}  set variable   //input[@type='file']
     ${Type}  set variable   //select[@id='type']
@@ -3970,9 +4011,43 @@ Fill Contract Details
     ${Document}  set variable   //select[@id='Document_Stage']
     ${Document_option}  set variable   //select[@id='Document_Stage']/option[@value='Approved']
     ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
+
     Run keyword if   '${Contract_Type}' == 'Service'      Verify if Customer Contract is linked  ${Linked Customer Contract}
-    Wait until element is visible    ${Edit Contractual Contact Person}  60s
-    Click element    ${Edit Contractual Contact Person}
+
+    ScrollUntillFound   //button[@title='Edit Customer Signed By']
+    Wait until element is visible  //button[@title='Edit Customer Signed By']  30s
+    Click element  //button[@title='Edit Customer Signed By']
+    Wait until element is visible   ${Customer Signed By}  30s
+    Press Key   ${Customer Signed By}   ${contact_name}
+    sleep  3s
+    ${Count}  run keyword and return status   Page should contain element ${contact}
+    Run Keyword Unless   ${Count}   clear element text   ${Customer Signed By}
+    Run keyword Unless   ${Count}   Press Key   ${Customer Signed By}    ${contact_name}
+    #sleep  5s
+    Page should contain element  ${contact}
+    Force Click element  ${contact}
+    ${status}   Run keyword and return status  Page should contain element  //li[text()='An invalid option has been chosen.']
+    Run Keyword If  ${status}  Force Click element   //span[text()='Undo Customer Signed By']
+    Run Keyword If  ${status}   Force Click element  ${contact}
+    Capture Page Screenshot
+    #sleep  5s
+
+    Wait until element is visible  ${Customer Signed Date}  30s
+    Click element   ${Customer Signed Date}
+    Wait until element is visible   //a[@title='Go to next month']   30s
+    Click element   //a[@title='Go to next month']
+    Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
+    Input Text   ${Customer Signature Place}  Helsinsiki
+    Execute JavaScript    window.scrollTo(0,1700)
+    Input Text   ${Telia Signed By}   Automation Admin
+    Wait until element is visible    //div[@title='Automation Admin']    30s
+    Click element  //div[@title='Automation Admin']
+    Force Click element   ${Telia Signed Date}
+    Click element   //a[@title='Go to next month']
+    Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
+
+    #Wait until element is visible    ${Edit Contractual Contact Person}  60s
+    #Click element    ${Edit Contractual Contact Person}
     Wait until element is visible    ${Search Contracts}  30s
     Click element  ${Search Contracts}
     Input Text  ${Search Contracts}  ${contact_name}
@@ -3981,41 +4056,37 @@ Fill Contract Details
     Run Keyword Unless   ${status}   clear element text   ${Search Contracts}
     Run keyword Unless   ${status}   Press Key   ${Search Contracts}   ${contact_name}
     Wait until element is visible    ${contact}  30s
-    Click element  ${contact}
-    Execute JavaScript    window.scrollTo(0,1000)
-    Press Key   ${Customer Signed By}   ${contact_name}
-    sleep  3s
-    ${status}  run keyword and return status   Element should be visible  ${contact}
-    Run Keyword Unless   ${status}   clear element text   ${Customer Signed By}
-    Run keyword Unless   ${status}   Press Key   ${Customer Signed By}    ${contact_name}
-    sleep  5s
     Force Click element  ${contact}
-    Click element   ${Customer Signed Date}
-    Click element   //a[@title='Go to next month']
-    Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
-    Input Text   ${Customer Signature Place}  Helsinsiki
-    Execute JavaScript    window.scrollTo(0,1500)
-    Input Text   ${Telia Signed By}   Automation Admin
-    Wait until element is visible    //div[@title='Automation Admin']    30s
-    Click element  //div[@title='Automation Admin']
-    Click element   ${Telia Signed Date}
-    Click element   //a[@title='Go to next month']
-    Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
-    ${status}  run keyword and return status   Element should be visible  ${save}
-    Run Keyword if  ${status}   Force Click element  ${save}
-    sleep  3s
-    ${status}  run keyword and return status   Element should be visible  ${save}
-    Run Keyword if  ${status}   Force Click element  ${save}
-    sleep  3s
+    Execute JavaScript    window.scrollTo(0,1700)
+    sleep  8s
+    ${status}   Run keyword and return status  Page should contain element  ${save}
+    Run keyword unless    ${status}   Reload page
+    Run keyword unless    ${status}   sleep  10s
+    Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
 
+    ${status}   Run keyword and return status  Element should be visible  ${save}
+    Run keyword unless    ${status}   Reload page
+    Run keyword unless    ${status}   sleep  10s
+    Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
+
+    click element  ${save}
+    sleep  10s
+
+    ${status}  Run keyword and return status  Element should not be visible  ${save}
+    Reload page
+    sleep  10s
+    Run keyword Unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
 
     #Attachment
-    Wait until element is visible  ${Attachment_Button}  30s
-    Force Click element  ${Attachment_Button}
-    #Click element   ${Attachment_Button}
+    Wait until element is visible  ${Attachment_Button}  60s
+    Click Link  ${Attachment_Button}
+    sleep  5s
+    Reload page
+        #Click element   ${Attachment_Button}
     Wait until element is visible  ${Frame}  30s
     Select frame  ${Frame}
-    sleep  10s
+    sleep  15s
+    #Wait until element is visible  ${File}  60s  - Not working
     ${status}  Run keyword and return status  Element should be visible  ${File}
     Choose File   ${File}   ${File_Path}
     Wait until element is visible  //textarea[@id='description']  30s
@@ -4031,6 +4102,7 @@ Fill Contract Details
 
 Go to account from oppo page
     [Documentation]  Go back to account page from opportubnity page
+    Reload page
     ${Account}  set variable  //span[@class='slds-form-element__label slds-truncate'][@title='Account Name']//following::div[3]/a
     Wait until element is visible   ${Account}   30s
     Click element  ${Account}
@@ -4050,33 +4122,98 @@ Select Offerings
 Verify if Customer Contract is linked
     [Arguments]  ${Linked Customer Contract}
     ${Linked Contract}  set variable    //span[text()='Related Customership Contract']//following::a[1]
-    Wait until element is visibel  ${Linked Contract}  30s
-    ${check}  Get value   ${Linked Contract}
-    Should be equal    ${Linked Contract}   ${Linked Customer Contract}
-    Log to console  Contract is linked
+    Wait until element is visible   ${Linked Contract}  30s
+    ${check}   Run keyword    Get Text   ${Linked Contract}
+    Should be equal    ${check}  ${Linked Customer Contract}
+    Log to console  Customer Contract is properly linked
 
 Change Merged Status
     [Arguments]  ${contract_Number}
     Go To Entity    ${account}
-    ${save}  set variable  //span[text()='Save']
+    ${save}  set variable  //button[@title='Save']
     wait until element is visible    ${ACCOUNT_RELATED}    60s
     Force click element    ${ACCOUNT_RELATED}
     ScrollUntillFound   //span[text()='View All']/span[text()='Contracts']
     Force Click element    //span[text()='View All']/span[text()='Contracts']
-    Wait until element is visible Sleep  //th[@scope='row']/span/a[contains(text(),'${contract_Number}')]  30s
+    Wait until element is visible   //th[@scope='row']/span/a[contains(text(),'${contract_Number}')]  30s
     Click element  //th[@scope='row']/span/a[contains(text(),'${contract_Number}')]
-    ScrollUntillFound    //span[text()='Merged']
+    ScrollUntillFound    //button[@title='Edit Merged']
     Click element  //button[@title='Edit Merged']
     Wait until element is visible  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]  30s
     Click element  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]
-    ${status}  run keyword and return status   Element should be visible  ${save}
-    Run Keyword if  ${status}   Force Click element  ${save}
-    sleep  3s
-    ${status}  run keyword and return status   Element should be visible  ${save}
-    Run Keyword if  ${status}   Force Click element  ${save}
-    sleep  3s
-    Log to console   ${contract} is set to Merged
+    sleep   5s
+    ${status}  Run keyword and return status  Element should be visible  ${save}   60s
+    Run keyword Unless   ${status}   Reload page
+    Run keyword Unless   ${status}   Toggle Merge Checkbox
+    click element  ${save}
+    sleep  5s
+
+Toggle Merge Checkbox
+
+    sleep  10s
+    ${save}  set variable  //button[@title='Save']
+    ScrollUntillFound    //button[@title='Edit Merged']
+    Click element  //button[@title='Edit Merged']
+    Wait until element is visible  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]  30s
+    Click element  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]
+    ${status}  Run keyword and return status  Element should be visible  ${save}   60s
+    Run keyword Unless   ${status}   Reload page
+    Run keyword Unless   ${status}   Toggle Merge Checkbox
 
 
+Verify Populated Cutomership Contract
+    [Documentation]  Verify if the opportunity page has customership contract details populated properly
+    [Arguments]  ${Contract_Number}
+
+    ${Customership_Contract_Filed}   set variable  //span[text()='Customership Contract']
+    ScrollUntillFound   ${Customership_Contract_Filed}
+    ${populated_Contract value}  Get Text  //span[text()='Customership Contract']//following::a[1]
+    Should be equal   ${populated_Contract value}  ${Contract_Number}
+    Log to console  Contract Number Population validation is succesful
+
+Select Customer ship contract manually
+    [Arguments]  ${Contract_Number}
+    ${Customership_Contract_Filed}   set variable  //span[text()='Customership Contract']
+    ${save}  set variable  //button[@title='Save']
+    ScrollUntillFound   ${Customership_Contract_Filed}
+    Click element  //span[text()='Edit Customership Contract']
+    Input Text   ${Contract_Number}   //input[@title='Search Contracts']
+    Wait until element is visible   //div[@title='${Contract_Number}']
+    Click element   //div[@title='${Contract_Number}']
+    sleep  5s
+    ${status}  Run keyword and return status   Element should be visible  ${save}   60s
+    Run keyword Unless   ${status}   Reload page
+    Run keyword Unless   ${status}   sleep  30s
+    Run keyword Unless   ${status}   Select Customer ship contract manually
+    click element  ${save}
+    sleep  5s
 
 
+Change Order
+
+    Initiate Change Order
+    Request Date
+
+
+Request date
+
+    Wait until element is visible  //input[@id='RequestDate']
+    Click element  //input[@id='RequestDate']
+    Wait until element is visible  //button[@title='Next Month']  30s
+    Click element  //button[@title='Next Month']
+    Click element  //tr[@id='week-0']/td[2]/span
+    Click element  //div[@id='Request Date_nextBtn']
+
+Initiate Change Order
+
+    Go to entity   ${account}
+    ${AssetHistory}  set variable  //span[text()='Asset History']
+    ScrollUntillFound    ${AssetHistory}
+    ${frame}  set variable  //force-aloha-page[@title='force-aloha-page']/div[@class='content iframe-parent']/iframe
+    Wait until element is visible   ${frame} 60s
+    select frame  ${frame}
+    Wait until element is visible  //li[@ng-repeat='prod in assetItems'][1]/div/div/div/div/span/a/span  30s
+    Click element  //li[@ng-repeat='prod in assetItems'][1]/div/div/input
+    Scroll until found   //button[text()='Change To Order']
+    Click element  //button[text()='Change To Order']
+    Unselect frame
