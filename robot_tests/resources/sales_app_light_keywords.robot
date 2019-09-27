@@ -18,7 +18,7 @@ Go to Sales App
 
 Switch to SalesApp
     [Documentation]    Go to App launcher and click on SalesApp
-    Click Element    Todays Page
+    Click Element    ${APP_LAUNCHER}
     Wait until Page Contains Element    ${SALES_APP_LINK}    60s
     Click Element    ${SALES_APP_LINK}
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
@@ -155,7 +155,7 @@ Create New Opportunity For Customer
     Fill Mandatory Classification
     Click Save Button
     Sleep    10s
-    Run Keyword If    '${Case}'=='PASSIVEACCOUNT'    Validate Opportunity cannot be created    PASSIVEACCOUNT
+    Run Keyword If    '${Case}'== 'PASSIVEACCOUNT'    Validate Opportunity cannot be created    PASSIVEACCOUNT
     ...    ELSE    Run Keyword Unless    ${expect_error}    Verify That Opportunity Creation Succeeded
 
 Click New Item For Account
@@ -186,7 +186,7 @@ Select Quick Action Value For Attribute
     [Arguments]    ${field}    ${value}
     Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']    60s
     Force Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
-    Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]
+    Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]  60s
     Force Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
 
 Fill Mandatory Classification
@@ -231,7 +231,7 @@ Verify That Opportunity Is Saved And Data Is Correct
     ${oppo_name}=    Set Variable    //*[text()='${OPPORTUNITY_NAME}']
     ${account_name}=    Set Variable    //*[@title='Account Name']//following-sibling::div//*[text()='${LIGHTNING_TEST_ACCOUNT}']
     ${oppo_date}=    Set Variable    //*[@title='Close Date']//following-sibling::div//*[text()='${OPPORTUNITY_CLOSE_DATE}']
-    #ScrollUntillFound    ${element}${oppo_name}
+    ScrollUntillFound    ${element}${oppo_name}
     Run Keyword And Continue On Failure    Scroll Page To Element    ${element}${oppo_name}
     Wait Until Page Contains Element    ${element}${oppo_name}    60s
     Run keyword and ignore error    Click element    ${element}${oppo_name}
@@ -326,7 +326,7 @@ Create New Master Contact
     Input Text    ${LAST_NAME_FIELD}    ${MASTER_LAST_NAME}
     Input Text    ${MASTER_PHONE_NUM_FIELD}    ${MASTER_PHONE_NUM}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${MASTER_PRIMARY_EMAIL}
-    #Input Text    ${MASTER_EMAIL_FIELD}    ${MASTER_EMAIL}
+    Input Text    ${MASTER_EMAIL_FIELD}    ${MASTER_EMAIL}
     Select from search List   ${ACCOUNT_NAME_FIELD}    ${MASTER_ACCOUNT_NAME}
     Click Element    ${SAVE_BUTTON}
     Sleep    10s
@@ -336,9 +336,11 @@ Select from search List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
     Sleep    10s
-    Press Enter On   ${field}
+    #Press Enter On   ${field}
+    click element  //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]
     Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${value}']
     Sleep    2s
+
 Select from Autopopulate List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
@@ -351,19 +353,27 @@ Validate Master Contact Details
     ${mobile_number}=    Set Variable    //span[text()='Mobile']//following::span//span[text()='${MASTER_MOBILE_NUM}']
     ${phone_number}=    Set Variable    //span[text()='Phone']//following::span//span[text()='${MASTER_PHONE_NUM}']
     ${primary_email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${MASTER_PRIMARY_EMAIL}']
-    #${email}=    Set Variable    //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
+    ${email}=    Set Variable           //span[text()='Email']//following::a[text()='${MASTER_EMAIL}']
     Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
     Click Visible element    ${DETAILS_TAB}
-    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${primary_email}
+    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${primary_email}    ${email}
     #Wait Until Page Contains Element    ${element}${phone_number}
     #Wait Until Page Contains Element    ${element}${email}
 
 Validate Contact Details
-    [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
+    [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}   ${primary_email}  ${email}
     Wait Until Page Contains Element    ${element}${contact_name}    240s
     Wait Until Page Contains Element    ${element}${account_name}    240s
     Wait Until Page Contains Element    ${element}${mobile_number}    240s
-    Wait Until Page Contains Element    ${element}${email}    240s
+    Wait Until Page Contains Element    ${element}${primary_email}    240s
+    Wait Until Page Contains Element    ${element}${email}            240s
+
+Validate NP Contact Details
+    [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}   ${email}
+    Wait Until Page Contains Element    ${element}${contact_name}    240s
+    Wait Until Page Contains Element    ${element}${account_name}    240s
+    Wait Until Page Contains Element    ${element}${mobile_number}    240s
+    Wait Until Page Contains Element    ${element}${email}            240s
 
 Create New NP Contact
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
@@ -390,14 +400,14 @@ Create New NP Contact
     Press Enter On    ${SAVE_BUTTON}
     Sleep    2s
 
-Validate NP Contact Details
+Validate NP Contact
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}']
     ${account_name}=    Set Variable    //span[text()='Account Name']//following::a[text()='${NP_ACCOUNT_NAME}']
     ${mobile_number}=    Set Variable    //span[text()='Mobile']//following::span//span[text()='${NP_MOBILE_NUM}']
     ${email}=    Set Variable    //span[text()='Email']//following::a[text()='${NP_EMAIL}']
     Go to Entity    Non-person ${NP_FIRST_NAME} ${NP_LAST_NAME}
     Click Visible Element    ${DETAILS_TAB}
-    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
+    Validate NP Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}     ${email}
 
 Create New Contact for Account
     ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
@@ -407,6 +417,7 @@ Create New Contact for Account
     Set Test Variable    ${AP_LAST_NAME}    Test ${first_name}
     Set Test Variable    ${AP_EMAIL}    ${email_id}
     Set Test Variable    ${AP_MOBILE_NUM}    ${mobile_num}
+    Set Test Variable    ${Ap_mail}        kasibhotla.sreeramachandramurthy@teliacompany.com
     click element    ${AP_NEW_CONTACT}
     #Sleep    2s
     Click Visible Element    ${AP_MOBILE_FIELD}
@@ -414,17 +425,20 @@ Create New Contact for Account
     Input Text    ${FIRST_NAME_FIELD}    ${AP_FIRST_NAME}
     Input Text    ${LAST_NAME_FIELD}    ${AP_LAST_NAME}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${AP_EMAIL}
+    Input Text    ${MASTER_EMAIL_FIELD}     ${Ap_mail}
     Click Element    ${AP_SAVE_BUTTON}
     Sleep    2s
+    [Return]    ${AP_FIRST_NAME} ${AP_LAST_NAME}
 
 Validate AP Contact Details
     Go To Entity    ${AP_FIRST_NAME} ${AP_LAST_NAME}    ${SEARCH_SALESFORCE}
     ${contact_name}=    Set Variable    //span[text()='Name']//following::span//span[text()='${AP_FIRST_NAME} ${AP_LAST_NAME}']
     ${account_name}=    Set Variable    //span[text()='Account Name']//following::a[text()='${AP_ACCOUNT_NAME}']
     ${mobile_number}=    Set Variable    //span[text()='Mobile']//following::span//span[@class="uiOutputPhone" and text()='${AP_MOBILE_NUM}']
-    ${email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${AP_EMAIL}']
+    ${Primary email}=    Set Variable    //span[text()='Primary eMail']//following::a[text()='${AP_EMAIL}']
+    ${mail}=             Set Variable    //span[text()='Primary eMail']//following::a[text()='${Ap_mail}']
     #Click Visible Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
-    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${email}
+    Validate Contact Details    ${CONTACT_DETAILS}    ${contact_name}    ${account_name}    ${mobile_number}    ${Primary email}   ${mail}
 
 Navigate to create new contact
     Wait element to load and click    //a[@title='New']
@@ -478,13 +492,20 @@ Validate Opportunity cannot be created
 Cancel Opportunity and Validate
     [Arguments]    ${opportunity}    ${stage}
     Go to Entity    ${opportunity}
+#    Input Text    xpath=${SEARCH_SALESFORCE}    ${opportunity}
+#    Sleep    2s
+#    Press Enter On    ${SEARCH_SALESFORCE}
+#    Sleep       60s
+#    Wait Until Page Contains element    //h1//span[text()='${opportunity}']    400s
+#    Entity Should Be Open    //h1//span[text()='${opportunity}']
     click visible element    ${EDIT_STAGE_BUTTON}
     sleep    5s
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
     #click visible element    //div[@class="uiInput uiInput--default"]//a[@class="select"]
     #Press Key    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${stage}
     #Click Element    //a[@title="${stage}"]
-    Save
+    Sleep  30s
+    Click element   //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     Validate error message
     Cancel and save
     Validate Closed Opportunity Details    ${opportunity}    ${stage}
@@ -509,8 +530,11 @@ Validate Closed Opportunity Details
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    Closed Won
     Save
     Wait Until Page Contains Element    //span[text()='Review the following errors']    60s
-    Press ESC On    //span[text()='Review the following errors']
-    click element    //*[@title='Cancel']
+    Click element   //button[@title="Close"]
+    Sleep  10s
+    #Press ESC On    //span[text()='Review the following errors']
+    #click element    //*[@title='Cancel']
+     Click element   //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
 
 Save
     click element    //button[@title='Save']
@@ -527,10 +551,12 @@ Cancel and save
     Scroll Page To Location    0    3000
     Click element    //a[contains(text(),"Close Comment")]
     Input Text    //label//span[contains(text(),"Close Comment")]/../following::textarea    Cancelling the opportunity
-    Click Element    //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
-    Click Element    //a[@title="09 Customer Postponed"]
-    Save
-    Sleep    2s
+    Force click element    //span[text()='Close Reason']//parent::span//parent::div//div[@class='uiPopupTrigger']//a
+    Sleep   10s
+    click element    //a[@title="09 Customer Postponed"]
+    Sleep  10s
+    Click element  //span[text()='Products With Manual Pricing']//following::span[text()='Save']
+    Sleep    10s
 
 Edit Opportunity
     [Arguments]    ${opportunity}
@@ -548,6 +574,22 @@ Select option from Dropdown
     Press Key    ${list}    ${item}
     Sleep    3s
     force click element    //a[@title='${item}']
+    sleep  20s
+
+Select option from Dropdown if not able to edit the element from the list
+    [Arguments]    ${list}    ${item}   ${element}
+    ScrollUntillFound  //button[text()="View all dependencies"]//following::span[text()="Opportunity Complete"]
+    Sleep   20s
+    Wait Until Page Contains Element    //div[@class="slds-form-element__control"]//span[text()="Create Continuation Sales Opportunity?"]//following::button[text()="View all dependencies"]    60s
+    force click element    //div[@class="slds-form-element__control"]//span[text()="Create Continuation Sales Opportunity?"]//following::button[text()="View all dependencies"]
+    sleep  20s
+    Click Element   //label[text()="Stage"]//following::input[@name="StageName"]
+    sleep  10s
+    Press Key    //label[text()="Stage"]//following::input[@name="StageName"]    ${element}
+    Sleep    10s
+    force click element    //a[@title='${element}']
+    Sleep  20s
+    Click Element   //span[text()="Apply"]
 
 Verify That Opportunity is Not Found under My All Open Opportunities
     [Arguments]    ${opportunity}
@@ -1005,13 +1047,19 @@ Remove change account owner
     Element Should Be Enabled     //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
     Wait Until Page Contains Element    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]    60s
     Input Text    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]   ${REMOVE_ACCOUNT}
-    Select from Autopopulate List    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]   ${REMOVE_ACCOUNT}
-    sleep  30s
-    Click Element   //*[text()="Change Account Owner"]//following::span[text()="Change Owner"]
+    sleep  5s
+    press enter on  //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
+    Sleep  15s
+    click element     //a[text()="Full Name"]//following::a[text()='${REMOVE_ACCOUNT}']
+    #Select from Autopopulate List    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]   ${REMOVE_ACCOUNT}
+    sleep  15s
+    Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
+    Sleep  15s
     : FOR    ${i}    IN RANGE    10
     \   ${new_owner}=    Get Text    ${ownername}
     \   ${status}=    Run Keyword And Return Status    Should Be Equal As Strings  ${REMOVE_ACCOUNT}   ${new_owner}
     \   Run Keyword If   ${status} == False      reload page
+    \   sleep  15s
     \   Wait Until Page Contains Element   ${ownername}   120s
     \   Exit For Loop If    ${status}
     Should Be Equal As Strings    ${REMOVE_ACCOUNT}    ${new_owner}
@@ -1023,28 +1071,44 @@ Check original account owner and change if necessary
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
     log to console    ${account_owner}
     ${user_is_already_owner}=    Run Keyword And Return Status    Should Be Equal As Strings    ${account_owner}    Maris Steinbergs
-    Run Keyword If    ${user_is_already_owner}    Set Test Variable    ${NEW_OWNER}    B2Blightning DigiSales
-    ...    ELSE    Set Test Variable    ${NEW_OWNER}    Maris Steinbergs
-    Change account owner to    ${NEW_OWNER}
+    Run Keyword If    ${user_is_already_owner}    Set Test Variable     ${NEW_OWNER}    B2B Lightning
+    ...     ELSE    Set Test Variable   ${NEW_OWNER}    Maris Steinbergs
+    Change account owner to     ${NEW_OWNER}
 
 Validate that account owner was changed successfully
-    [Arguments]    ${validated_owner}
-    [Documentation]    Validates that account owner change was successfull. Takes the name of the new owner as parameter.
-    ${new_owner}=    Get Text    //div[@class='ownerName']//a
-    log to console    ${new_owner}
+    [Documentation]     Validates that account owner change was successfull. Takes the name of the new owner as parameter.
+    [Arguments]     ${validated_owner}
+    Compare owner names  ${validated_owner}
+
+#Compare owner names
+#    [Arguments]     ${validated_owner}
+#    Wait until page contains element   //div[@class='ownerName']//a    30s
+#    ${new_owner}=       Get Text    //div[@class='ownerName']//a
+#    log to console      ${new_owner}
+#    Should Be Equal As Strings    ${validated_owner}    ${new_owner}
+
+
+Compare owner names
+    [Arguments]     ${validated_owner}
+    : FOR    ${i}    IN RANGE    10
+    \   ${new_owner}=    Get Text    //div[@class='ownerName']//a
+    \   ${status}=    Run Keyword And Return Status    Should Be Equal As Strings  ${validated_owner}   ${new_owner}
+    \   Run Keyword If   ${status} == False      reload page
+    \   Sleep  20s
+    \   Wait Until Page Contains Element   //div[@class='ownerName']//a   120s
+    \   Exit For Loop If    ${status}
+    #Wait until page contains element   //div[@class='ownerName']//a    30s
+    #${new_owner}=       Get Text    //div[@class='ownerName']//a
+    log to console      ${new_owner}
     Should Be Equal As Strings    ${validated_owner}    ${new_owner}
 
 Validate that account owner has changed in Account Hierarchy
-    [Documentation]    View account hierarchy and check that new owner is copied down in hierarchy
-    Wait element to load and click    //button[@title='View Account Hierarchy']
-    Wait element to load and click    //button[@title='Expand']
-    Wait until page contains element    //table/tbody/tr[1]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[2]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[3]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[4]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[5]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[6]/td[4]/span[text()='${NEW_OWNER}']    30s
-    Wait until page contains element    //table/tbody/tr[7]/td[4]/span[text()='${NEW_OWNER}']    30s
+    [Documentation]     View account hierarchy and check that new owner is copied down in hierarchy
+    Wait element to load and click  //button[@title='View Account Hierarchy']
+    Wait element to load and click  //button[@title='Expand']
+    Wait until page contains element    //table/tbody/tr[1]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[2]/td[4]/span[text()='${NEW_OWNER}']   30s
+    Wait until page contains element    //table/tbody/tr[3]/td[4]/span[text()='${NEW_OWNER}']   30s
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}
@@ -1259,28 +1323,30 @@ ClickingOnCPQ
 
 validateCreatedOppoForFYR
     [Arguments]    ${fyr_value_oppo}= ${fyr_value}
-    wait until page contains element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']    60s
-    page should contain element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']
-    page should contain element    //span[@title='FYR Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']
+    #wait until page contains element    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/Div/span[text()='${fyr_value_oppo},00 €']    60s
+    wait until page contains element    //span[text()="Revenue Total"]/../div/div/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]  60s
+    page should contain element    //span[text()="Revenue Total"]/../div/div/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
+    page should contain element    //span[text()="FYR Total"]/../div/div/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
     ScrollUntillFound    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
     sleep    5s
-    page should contain element    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${fyr_value_oppo},00 €']
-    page should contain element    //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${fyr_value_oppo},00 €']
+    page should contain element    //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
+    page should contain element    //span[text()='FYR Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${fyr_value_oppo},00 €"]
     ${monthly_charge_total}=    evaluate    (${RC}*${product_quantity})
     #${mrc_form}=    get text    //span[@title='Revenue Total']/../div[@class='slds-form-element__control']/div/span
     #should be equal as strings    ${monthly_charge_total}    ${mrc_form}
-    page should contain element    //span[text()='Monthly Charge Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${monthly_charge_total},00 €']
+    page should contain element    //span[text()='Recurring Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${monthly_charge_total},00 €"]
     ${one_time_total}=    evaluate    (${NRC}*${product_quantity})
     #${nrc_form}=    get text    //span[@title='FYR Total']/../div[@class='slds-form-element__control']/div/span
     #should be equal as strings    ${one_time_total}    ${nrc_form}
-    page should contain element    //span[text()='One Time Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span[normalize-space(.)='${one_time_total},00 €']
+    page should contain element    //span[text()='OneTime Total' and @class='test-id__field-label']/../../div[2]/span/span[text()=normalize-space(.)="${one_time_total},00 €"]
     click element    //span[text()='Related']
     sleep    5s
     log to console    related clicked
     ScrollUntillFound    //a[text()='${product_name}']
     page should contain element    //a[text()='${product_name}']
     page should contain element    //span[text()='New Money - New Services']
-    page should contain element    //span[text()='New Money - New Services']/..//following-sibling::td/span[text()='${product_quantity},00']
+    page should contain element    //span[text()='New Money - New Services']//following::span[@class="slds-truncate uiOutputNumber"][text()="${product_quantity},00"]
+
 
 AddProductToCart
     [Arguments]   ${pname}=${product_name}
@@ -1291,6 +1357,7 @@ AddProductToCart
     wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    sleep  20s
     wait until page contains element  //div[@class='cpq-item-product']/div[@class='cpq-item-base-product']//following::div[@class='cpq-item-no-children']/span[normalize-space(.)='${pname}']   60s
     scrolluntillfound  //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     validateThePricesInTheCart   ${pname}
@@ -1351,15 +1418,15 @@ UpdateAndAddSalesTypeB2O
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Wait Until Element Is Not Visible    ${spinner}    60s
     #wait until page contains element    xpath=//h1[normalize-space(.) = 'Update Products']    60s
-    #sleep    10s
-    wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
-    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
-    sleep    2s
-    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    sleep    10s
+    #wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
+    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
+    #sleep    2s
+    #click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
     click element    xpath=//button[normalize-space(.)='Next']
     unselect frame
-    #sleep    60s
+    sleep    60s
 
 
 View Open Quote
@@ -1387,26 +1454,27 @@ View Open Quote
 
 OpenQuoteButtonPage
     #${open_quote}=    Set Variable    //*[@id="View Quote"]
-    #${approval}=      Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
+    #${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
     #Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected final page frame
-    #${button_present}=  run keyword and return status  element should be visible   //*[@id="View Quote"]
-    #run keyword if  ${button_present}=='True'   force click element  ${button_present}
-    #log to console   ${button_present}
-    #${open_button_present}=  run keyword and return status  element should be visible  //*[@id="Open Quote"]
-    #log to console   ${open_button_present}
-    #run keyword if  ${button_present}=='True'  force click element  ${open_button_present}
-    #click element  //*[@id="Open Quote"]
+    #${button_present}=    run keyword and return status    element should be visible    //*[@id="View Quote"]
+    #run keyword if    ${button_present}=='True'    force click element    ${button_present}
+    #log to console    ${button_present}
+    #${open_button_present}=    run keyword and return status    element should be visible    //*[@id="Open Quote"]
+    #log to console    ${open_button_present}
+    #run keyword if    ${button_present}=='True'    force click element    ${open_button_present}
+    #click element    //*[@id="Open Quote"]
     #wait until page contains element    //*[@id="View Quote"]    60s
     #log to console    wait completed before open quote click
     #wait until element is visible    //*[@id="View Quote"]    30s
-    #wait until element is enabled    //*[@id="View Quote"]   20s
+    #wait until element is enabled    //*[@id="View Quote"]    20s
     #log to console    element visible next step
     #click element    //*[@id="View Quote"]
-    scrolluntillfound  //*[@id="Open Quote"]
-    sleep  2s
-    click element  //*[@id="Open Quote"]
+    Sleep    60s
+    scrolluntillfound    //*[@id="Open Quote"]
+    sleep    2s
+    click element    //*[@id="Open Quote"]
     unselect frame
     sleep    20s
 
@@ -1527,24 +1595,35 @@ OrderNextStepsPage
     sleep    45s
 
 getOrderStatusBeforeSubmitting
-    wait until page contains element   //span[@class='title' and text()='Details']  60s
-    reload page
-    wait until page contains element   //span[@class='title' and text()='Details']  60s
-    click element    //span[@class='title' and text()='Details']
+    wait until page contains element    //span[@class='title' and text()='Details']    60s
+    : FOR    ${i}    IN RANGE    10
+    \   ${status}=    Run Keyword And Return Status   wait until page contains element  //span[@class='title' and text()='Details']    60s
+    \   Run Keyword If   ${status} == False      reload page
+    \   Exit For Loop If    ${status}
+    #click element    //span[text()="Processed"]//following::li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    #click element   //span[text()="Mark Status as Complete"]/following::span[@class='title' and text()='Details']
     #//li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']   60s
-    wait until page contains element   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']   60s
+    Wait Until Element Is Enabled   //a[@title='Details']   60s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //a[@title='Details']   60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    sleep    60s
+    click element  //a[@title='Details']
+    sleep  15s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../following-sibling::div/span/span[text()='Draft']    60s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Fulfilment Status']/../following-sibling::div/span/span[text()='Draft']    60s
 
 clickOnSubmitOrder
     wait until page contains element  //a[@title='Submit Order']   60s
     click element  //a[@title='Submit Order']
     sleep   20s
+    click element   //button[text()='Submit']
+    Sleep       20s
     execute javascript   window.location.reload(true)
     sleep   20s
 
 getOrderStatusAfterSubmitting
-    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']   60s
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    wait until page contains element    //a[@title='Details']   60s
+    click element     //a[@title='Details']
     wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  60s
     ${fulfilment_status} =  get text  //span[text()='Fulfilment Status']/../following-sibling::div/span/span
     wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
@@ -1555,7 +1634,6 @@ getOrderStatusAfterSubmitting
     log to console  ${order_no}.this is getorderstatusafgtersubmirting function
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
-
 
 SearchAndSelectBillingAccount
     execute javascript    window.location.reload(true)
@@ -1584,6 +1662,7 @@ select order contacts- HDC
     ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
     ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
     ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+    ${primary_email}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     #Wait Until Element Is Visible    ${contact_search_title}    120s
     #Reload page
     #sleep   15s
@@ -1596,7 +1675,7 @@ select order contacts- HDC
     Click element   css=.typeahead .ng-binding
     sleep   10s
     Wait until element is visible  //input[@id='OCEmail']   30s
-    Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
+    Input Text   //input[@id='OCEmail']   ${primary_email}
     #Wait until element is visible    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
     #Click Element    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
     Sleep    5s
@@ -1608,7 +1687,7 @@ select order contacts- HDC
     Click element   css=.typeahead .ng-binding
     sleep  10s
     Wait until element is visible  //input[@id='TCEmail']   30s
-    Input Text   //input[@id='TCEmail']   primaryemail@noemail.com
+    Input Text   //input[@id='TCEmail']   ${primary_email}
     Execute JavaScript    window.scrollTo(0,200)
     #Wait until element is visible       xpath=//ng-form[@id='TechnicalContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
     #click element   xpath=//ng-form[@id='TechnicalContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
@@ -1646,11 +1725,13 @@ RequestActionDate
     log to console    entering Requested action date page
     wait until page contains element    //*[@id="RequestedActionDate"]    30s
     click element    //*[@id="RequestedActionDate"]
-    ${date_requested}=    Get Current Date    result_format=%m-%d-%Y
+    ${date_requested}=    Get Current Date    result_format=%d-%m-%Y
+    #${date_requested}=  Get Date From Future        1
     #log to console    ${d}
     input text    //*[@id="RequestedActionDate"]    ${date_requested}
     sleep  10s
-    click element    //*[@id="Additional data_nextBtn"]
+    #click element    //*[@id="Additional data_nextBtn"]
+    Click element       //*[@id="SelectRequestActionDate_nextBtn"]
     unselect frame
     log to console    Exiting    Requested Action Date page
     sleep    30s
@@ -1673,6 +1754,7 @@ SelectOwnerAccountInfo
     Wait until element is visible    //*[@id="BuyerIsPayer"]//following-sibling::span
     Log to console   Click BIP
     force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
+    ScrollUntillFound       //*[@id="SelectedBuyerAccount_nextBtn"]
     click element    //*[@id="SelectedBuyerAccount_nextBtn"]
     unselect frame
     log to console    Exiting owner Account page
@@ -1714,7 +1796,6 @@ CreateABillingAccount
     # go to particular account and create a billing accouint from there
     wait until page contains element    //li/a/div[@title='Billing Account']    45s
     force click element    //li/a/div[@title='Billing Account']
-    force click element    //li/a/div[@title='Billing Account']
     #sleep    20s
     #select frame    xpath=//div[contains(@class,'slds')]/iframe
     #wait until page contains element    //*[@id="RemoteAction1"]    30s
@@ -1745,11 +1826,10 @@ CreateABillingAccount
     sleep    5s
     wait until page contains element    //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']    30s
     force click element    //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
-    #unselect frame
-    #sleep    30s
-    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-    #sleep    20s
-    Wait until element is visible    //*[@id="return_billing_account"]  60s
+    unselect frame
+    sleep    30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    sleep    20s
     force click element    //*[@id="return_billing_account"]
     sleep    10s
     unselect frame
@@ -1759,14 +1839,13 @@ Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     [Arguments]        ${username}= ${B2B_DIGISALES_LIGHT_USER}   ${password}= ${Password_merge}  #${username}=mmw9007@teliacompany.com.release    #${password}=Sriram@234
     Login To Salesforce Lightning    ${username}    ${password}
 
-
-
 Login to Salesforce as DigiSales Admin User Release
     Login To Salesforce Lightning    ${SALES_ADMIN_USER_RELEASE}    ${PASSWORD-SALESADMIN}
 
 Updating Setting Telia Colocation
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element    xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Colocation']    60s
+    click element    xpath=//span[@class='cpq-product-name' and text()='Telia Colocation']/..
     wait until page contains element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button    60s
     click element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button
     #wait until page contains element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']    60s
@@ -1802,7 +1881,7 @@ Adding Telia Colocation
     wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
     input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
     wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
-    sleep   5s
+    sleep   20s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     unselect frame
     #wait until page contains element  //div[@class='cpq-item-product']/div[@class='cpq-item-base-product']//following::div[@class='cpq-item-no-children']/span[normalize-space(.)='${pname}']   60s
@@ -1856,17 +1935,22 @@ UpdateAndAddSalesTypewith quantity
     sleep    60s
 
 OpenQuoteButtonPage_release
-    ${open_quote}=    Set Variable    //*[@id="View Quote"]
+    ${Viwe_quote}=    Set Variable    //button[@title="View Quote"]
+    ${open_quote}=    Set Variable   //button[@title="Open Quote"]
     ${approval}=    Set variable    //div[@class='vlc-validation-warning ng-scope']/small[contains(text(),'Quote')]
     log to console    OpenQuoteButtonPage
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     log to console    selected final page frame
     log to console    wait completed before view quote click
-    wait until element is visible    ${open_quote}    30s
-    wait until element is enabled    ${open_quote}    20s
-    log to console    element visible next step
-    click element    ${open_quote}
+    sleep  60s
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Viwe_quote}    100s
+    Run Keyword If   ${status}   Click Visible Element    ${Viwe_quote}
+    Run Keyword unless   ${status}    Click Visible Element   ${open_quote}
+    #wait until element is visible    ${open_quote}    30s
+    #wait until element is enabled    ${open_quote}    20s
+    #log to console    element visible next step
+    #click element    ${open_quote}
     unselect frame
     sleep    60s
 
@@ -1880,15 +1964,18 @@ Closing the opportunity
     Log To Console    The current stage is ${stage}
     Capture Page Screenshot
     click element    ${EDIT_STAGE_BUTTON}
+    Sleep  30s
     Select option from Dropdown    //div[@class="uiInput uiInput--default"]//a[@class="select"]    Closed Won
     Execute Javascript    window.scrollTo(0,600)
-    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}
+    Select option from Dropdown if not able to edit the element from the list    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}   Closed Won
+    Select option from Dropdown   //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}
     Wait Until Page Contains Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    60s
     Execute Javascript    window.scrollTo(0,9000)
     #Get Text    //span[contains(text(),'Service Address Street')]/../../span
     Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    08 Other
     input text    //span[text()='Close Comment']/../../textarea    this is a test opportunity to closed won
-    click element    //span[contains(text(),'Save')]
+    sleep  30s
+    click element    //span[text()='Products With Manual Pricing']//following::span[text()='Save']
 
 Update closing dependencies
     ${stage_name}=    set variable    //input[@name='StageName']
@@ -1953,9 +2040,12 @@ Closing Opportunity as Won with FYR
     ClickingOnCPQ   ${oppo_name}
     searching and adding Telia Viestintäpalvelu VIP (24 kk)    Telia Viestintäpalvelu VIP (24 kk)
     updating settings Telia Viestintäpalvelu VIP (24 kk)
+    #search products    Telia Taloushallinto XXL-paketti
+    #Adding Telia Taloushallinto XXL-paketti
     UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    ${quantity}
     OpenQuoteButtonPage_release
     Go To Entity    ${oppo_name}
+    #Closing the opportunity    ${continuation}
     sleep    15s
     Capture Page Screenshot
     ${FYR_value}=    get text    ${FYR}
@@ -1967,43 +2057,52 @@ Editing Win prob
     ...
     ...    ${save}--> yes if there is nothing else to edit
     ...    no --> if there are other fields to edit
-    ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
-    ${win_prob}    set variable    //span[contains(text(),'Win Probability %')]/../../div/div/div/div
+    ${win_prob_edit}=    Set Variable    //button[@title='Edit Win Probability %']
+    ${win_prob}    set variable    //span[text()='Win Probability %']/../../div/div/div/div/a
     ${save_button}    set variable    //span[text()='Save']
+    sleep       20s
+    ScrollUntillFound       ${win_prob_edit}
     click element    ${win_prob_edit}
-    execute javascript
     Wait Until Element Is Visible    ${win_prob}    60s
-    Execute Javascript    window.scrollTo(0,200)
-    click element    ${win_prob}
+    ScrollUntillFound       ${win_prob}
+    #Execute Javascript    window.scrollTo(0,300)
+    Force click element    ${win_prob}
+    Wait Until Element Is Visible         //li/a[@title='10%']      60s
     click element    //li/a[@title='10%']
     #run keyword if    ${save} == yes    click element    ${save_button}
 
 Adding partner and competitor
     [Documentation]    Used to add partner and competitor for a existing opportunity
-    ${save_button}    set variable    //span[text()='Save']
+    ${save_button}    set variable      //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     ${competitor_list}    set variable    //ul[contains(@id,'source-list')]/li/div/span/span[text()='Accenture']
     ${partner_list}=    set variable    //ul[contains(@id,'source-list')]/li/div/span/span[text()='Accenture Oy']
     ${competitor_list_add}    set variable    //div[text()='Competitor']/../div/div/div/lightning-button-icon/button[@title='Move selection to Chosen']
     ${partner_list_add}    set variable    //div[text()='Partner']/../div/div/div/lightning-button-icon/button[@title='Move selection to Chosen']
     Execute Javascript    window.scrollTo(0,1700)
+    Sleep  10s
     click element    ${competitor_list}
     click element    ${competitor_list_add}
     Capture Page Screenshot
     Execute Javascript    window.scrollTo(0,1900)
+    Sleep  10s
     click element    ${partner_list}
     click element    ${partner_list_add}
     Capture Page Screenshot
     click element    ${save_button}
+    Sleep  30s
     Capture Page Screenshot
 
 Adding Yritysinternet Plus
-    ${product}=    Set Variable    //div[@data-product-id='${Yritysinternet_Plus}']/div/div/div/div/div/button
+    [Arguments]    ${Yritysinternet_Plus}
+    #${product}=    Set Variable    //div[@data-product-id='${Yritysinternet_Plus}']/div/div/div/div/div/button
+    ${product}=    Set Variable    //span[@title='${Yritysinternet_Plus}']/../../..//button
     ${SETTINGS}=    Set Variable    //button[@title='Settings']
     ${Liittymän_nopeus}    Set Variable    //select[@name='productconfig_field_0_0']
     ${Palvelutaso}    Set Variable    //select[@name='productconfig_field_0_1']
     ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
+    Sleep  30s
     Wait Until Element Is Visible    ${SETTINGS}    60s
     click element    ${SETTINGS}
     Wait Until Element Is Visible    ${Liittymän_nopeus}    60s
@@ -2012,16 +2111,23 @@ Adding Yritysinternet Plus
     Select From List By Value    ${Palvelutaso}    A24h
     sleep    3s
     click element    ${X_BUTTON}
+    Sleep  30s
     unselect frame
 
 Adding DataNet Multi
-    ${product}=    Set Variable    //div[@data-product-id='${DataNet_Multi}']/div/div/div/div/div/button
+    [Arguments]    ${DataNet_Multi}
+    #${product}=    Set Variable    //span[@title='${DataNet_Multi}']/../../..//button
+    ${product}=    Set Variable  //span[text()="HUOM! Pilotointiryhmän käyttöön DataNet Multi tilauslomake (nk. Kevytmallinnettu)"]//following::span[3][@title='${DataNet_Multi}']/../../..//button
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
-    sleep    5s
-    Click Element    ${next_button}
-
+    sleep    30s
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    Log to console      ${status}
+    wait until page contains element    //span[text()='Next']/..    60s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #Click Visible Element   ${next_button}
+    unselect frame
 UpdateAndAddSalesType for 2 products
     [Arguments]    ${product1}    ${product2}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
@@ -2049,6 +2155,7 @@ UpdateAndAddSalesType for 2 products
     sleep    5s
 
 preview and submit quote
+    [Arguments]    ${oppo_FOR}
     ${preview_quote}    Set Variable    //div[@title='Preview Quote']
     ${send_quote}    Set Variable    //div[@title='Send Quote Email']
     ${quote_n}    Set Variable    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div
@@ -2063,7 +2170,9 @@ preview and submit quote
     Capture Page Screenshot
     Execute Javascript    window.scrollTo(0,200)
     Capture Page Screenshot
+    Sleep  60s
     Go Back
+    Sleep  60s
     Click Element    ${send_quote}
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     Run Keyword If    ${status} == False    Reload Page
@@ -2071,24 +2180,50 @@ preview and submit quote
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Capture Page Screenshot
-    Click Element    ${send_mail}
+    Sleep  30s
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${send_mail}    100s
+    Run Keyword If   ${status}   Click Visible Element    ${send_mail}
+    Run Keyword unless   ${status}  approve the quote   ${oppo_FOR}
+    #Click Element    ${send_mail}
     Unselect Frame
     sleep    10s
     ${Quote_Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${submitted}    60s
     Log To Console    Quote is submitted: \ \ ${Quote_Status}
     [Return]    ${quote_number}
 
+approve the quote
+    [Arguments]    ${oppo_FOR}
+    logoutAsUser  B2B DigiSales
+    sleep  30s
+    login to salesforce as digisales admin user
+    sleep  20s
+    swithchtouser    B2B DigiSales
+    : FOR    ${i}    IN RANGE    10
+    \   ${status}=  Run Keyword And Return Status   Element Should Be Visible    //a[@href="/lightning/o/Quote/home"]/span/span[contains(text(),"Quotes")]    100s
+    \   Run Keyword If   ${status}   Click Visible Element    //a[@href="/lightning/o/Quote/home"]/span/span[contains(text(),"Quotes")]
+    \   Run Keyword unless   ${status}  Click Visible Element  //one-app-nav-bar-menu-button/a/span[contains(text(),"Show More")]
+    \   Sleep  30s
+    \   Exit For Loop If    ${status}
+	Sleep  20s
+    Input Text    //input[@name="Quote-search-input"]
+    Click Element   //a[contains(text(),"${oppo_FOR}")]
+    creditscoreapproving
+    logoutAsUser  B2B DigiSales
+    login to salesforce as digisales Lightning User
 Sending quote as email
     ${spinner}    Set Variable    //div[contains(@class,'slds-spinner--large')]
     ${send_mail}    Set Variable    //p[text()='Send Email']
     ${iframe}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Sleep  40s
     ${status}    Wait Until Element Is Enabled    ${iframe}    60s
     Run Keyword If    ${status} == False    Reload Page
     Wait Until Element Is Enabled    ${iframe}    60s
     select frame    ${iframe}
+    Sleep  30s
     Wait Until Element Is Visible    ${send_mail}    60s
     Capture Page Screenshot
     Click Element    ${send_mail}
+    Unselect Frame
 
 verifying quote and opportunity status
     [Arguments]    ${oppo_name}
@@ -2166,8 +2301,12 @@ Create Order from quote
     Wait Until Element Is Visible    ${create_order}    60s
     click element    ${create_order}
     Unselect Frame
-    sleep    15s
-
+    sleep  60s
+    select frame    ${frame}
+    Wait Until Element Is Visible    //button[contains(text(),"Open Order")]    60s
+    Click Element    //button[contains(text(),"Open Order")]
+    Sleep   20s
+    Unselect Frame
 Opportunity status
     ${oppo_status}    Set Variable    //a[@aria-selected='true'][@title='Negotiate and Close']
     sleep    10s
@@ -2177,20 +2316,29 @@ Opportunity status
 
 View order and send summary
     ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    ${view_button}    Set Variable    //button[@title='View']
+    ${view_button}    Set Variable    //div[@class="slds-button-group"]//button[@title="View"]
     ${preview_order}    Set Variable    //a/div[@title='Preview Order Summary']
     ${send_order_summary}    Set Variable    //a/div[@title='Send Order Summary Email']
     ${submit_order}    Set Variable    //a/div[@title='Submit Order']
-    ${order_progress}    Set Variable    //a[@title='In Progress'][@aria-selected='true']
+    ${order_progress}    Set Variable    //a[@title='In Progress']/span[2]
+    Sleep  30s
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}
     Run Keyword If    ${status} == False    Reload Page
-    sleep    20s
     Wait Until Element Is Enabled    ${frame}    60s
+    Sleep  30s
     select frame    ${frame}
-    Wait Until Element Is Visible    ${view_button}    60s
-    click element    ${view_button}
+    Log to console      Inside frame
+    ${status}   set variable    Run Keyword and return status    Frame should contain    ${view_button}    View
+    Log to console      ${status}
+    Sleep  100s
+    Wait Until Element Is Visible       ${view_button}     60s
+    click element   ${view_button}
     Unselect Frame
-    sleep    10s
+    #sleep  40s
+    #Wait Until Element Is Visible    //div[@id="Close"]   60s
+    #click element   //div[@id="Close"]
+    #Unselect Frame
+    sleep    20s
     wait until element is visible    ${preview_order}    120s
     click element    ${preview_order}
     sleep    7s
@@ -2199,18 +2347,339 @@ View order and send summary
     Wait Until Element Is Visible    ${send_order_summary}    60s
     click element    ${send_order_summary}
     Sending quote as email
+    Sleep  40s
     Wait Until Element Is Visible    ${submit_order}    60s
     click element    ${submit_order}
-    sleep    10s
+    Sleep  20s
+    Wait Until Element Is Visible     //div/p[text()="Are you sure you want to submit this order?"]/..//button[text()="Submit"]     60s
+    #Sleep  20s
+    click element   //div/p[text()="Are you sure you want to submit this order?"]/..//button[text()="Submit"]
+    sleep    40s
     Wait Until Element Is Visible    ${order_progress}    60s
     Capture Page Screenshot
 
 Adding Products
     [Arguments]    ${product-id}
-    ${product}=    Set Variable    //div[@data-product-id='${product-id}']/div/div/div/div/div/button
+    ${product}=    Set Variable    //span[normalize-space(.)= '${product-id}']/../../../div[@class='slds-tile__detail']/div/div/button
     Wait Until Element Is Visible    ${product}    60s
     Click Element    ${product}
     unselect frame
+
+Adding Products for Telia Sopiva Pro N
+    [Arguments]    ${product-id}
+    ${SETTINGS}=    Set Variable    //button[@title='Settings']
+    ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
+    ${Numeron siirto}=   Set Variable    //div[@class="slds-grid slds-grid--align-end"]/../..//div[13]/../fieldset//label[contains(text(),"Numeron siirto")]
+    ${product}=    Set Variable    //span[normalize-space(.)= '${product-id}']/../../../div[@class='slds-tile__detail']/div/div/button
+    Wait Until Element Is Visible    ${product}    60s
+    Click Element    ${product}
+    Wait Until Element Is Visible    ${SETTINGS}    100s
+    click element    ${SETTINGS}
+    scrolluntillfound  ${Numeron siirto}
+    Wait Until Element Is Visible    ${Numeron siirto}    60s
+    click element   //div[@class="slds-grid slds-grid--align-end"]/../..//div[13]/../fieldset//label//input[@value="Yes"]/../span
+    sleep    3s
+    click element    ${X_BUTTON}
+    Sleep  5s
+    Wait Until Element Is Visible    //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product-id}")]/../../../.././div[3]//span/span  30s
+    click element       //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product-id}")]/../../../.././div[3]//span/span
+    Sleep  5s
+    Wait Until Element Is Visible   //div[text()="Recurring Charge"]/..//input[@type="number"]   20s
+    Input Text       //div[text()="Recurring Charge"]/..//input[@type="number"]     50
+    Wait Until Element Is Visible       //button[contains(text(),"Apply")]      10s
+    click element   //button[contains(text(),"Apply")]
+    Sleep  25s
+    Wait Until Element Is Enabled       //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product-id}")]/../../../.././div[4]//div/span/span   60s
+    click element                       //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product-id}")]/../../../.././div[4]//div/span/span
+    Sleep  5s
+    Wait Until Element Is Visible       //div[text()="One Time Charge"]/..//input[@type="number"]   20s
+    Input Text       //div[text()="One Time Charge"]/..//input[@type="number"]     10
+    Wait Until Element Is Visible       //button[contains(text(),"Apply")]      10s
+    click element   //button[contains(text(),"Apply")]
+    Sleep  20s
+
+Adding Products for Telia Sopiva Pro N child products
+    [Arguments]    ${product1}  ${product2}
+    ${addproduct1}=     Set Variable    //div[contains(text(),"${product1}")]/../../../..//div[7]//button
+    ${addproduct2}=     Set Variable    //div[contains(text(),"${product2}")]/../../../div[@class="cpq-item-base-product-actions slds-text-align_right"]/button
+    Wait Until Element Is Enabled    ${addproduct1}    60s
+    Click Element    ${addproduct1}
+    Sleep  20s
+    Wait Until Element Is Enabled   ${addproduct2}     60s
+    click element    ${addproduct2}
+    Wait Until Element Is Enabled     //div[contains(text(),"${product2}")]/../../..//span[@class="cpq-underline"]/span       60s
+    click element     //div[contains(text(),"${product2}")]/../../..//span[@class="cpq-underline"]/following::span[1]/span
+    Sleep  5s
+    Wait Until Element Is Visible   //div[text()="One Time Charge"]/..//input[@type="number"]   20s
+    Input Text  //div[text()="One Time Charge"]/..//input[@type="number"]     10
+    Wait Until Element Is Visible       //button[contains(text(),"Apply")]      30s
+    click element   //button[contains(text(),"Apply")]
+    Sleep  15s
+    Wait Until Element Is Enabled   //div[contains(text(),"${product2}")]/../../..//span[@class="cpq-underline"]/span     60s
+    click element   //div[contains(text(),"${product2}")]/../../..//span[@class="cpq-underline"]/span
+    sleep  10s
+    Wait Until Element Is Visible   //div[text()="Recurring Charge"]/..//input[@type="number"]  10s
+    Input Text      //div[text()="Recurring Charge"]/..//input[@type="number"]       30
+    Wait Until Element Is Visible       //button[contains(text(),"Apply")]      10s
+    click element   //button[contains(text(),"Apply")]
+    Sleep  20s
+    log  display the cpq page for verfication
+    Capture Page Screenshot
+Validate the MRC and OTC and Opportunity total in CPQ
+     [Arguments]    ${product1}  ${product2}  ${product3}
+     Wait Until Element Is Enabled      //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product1}")]/../../../.././div[3]//span/span     60s
+     ${mrc1}        get text    //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product1}")]/../../../.././div[3]//span/span
+     ${mrc2}        get text   //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product2}")]/../../../.././div[3]//span/span
+     ${mrc3}        get text   //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product3}")]/../../../.././div[3]//span/span
+     ${otc1}        get text   //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product1}")]/../../../.././div[4]//div/span/span
+     ${otc2}        get text   //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product2}")]/../../../.././div[4]//div/span/span
+     ${otc3}        get text   //div[@class="cpq-product-cart-item"]//span[contains(text(),"${product3}")]/../../../.././div[4]//div/span/span
+     ${rctotal}     get text   //div[@class="cpq-total-bar slds-col slds-no-flex"]/div//div//div[contains(text(),"Recurring Total")]/../div[2]
+     ${otctotal}    get text   //div[@class="cpq-total-bar slds-col slds-no-flex"]/div//div//div[contains(text(),"OneTime Total")]/../div[2]
+     ${oppo_total}  get text   //div[@class="cpq-total-bar slds-col slds-no-flex"]/div//div//div[contains(text(),"Opportunity Total")]/../div[2]
+     #@{elements}    Set Variable    ${mrc1}    ${mrc2}    ${mrc3}    ${otc1}     ${otc2}     ${otc3}     ${rctotal}  ${otctotal}
+     #${mrctotlacalculated_pratical}     remove string and convert to number    @{elements}
+     ${mrc1} =  remove string  ${mrc1}  €
+     ${mrc2} =  remove string  ${mrc2}  €
+     ${mrc3} =  remove string  ${mrc3}  €
+     ${otc1} =  remove string  ${otc1}  €
+     ${otc2} =  remove string  ${otc2}  €
+     ${otc3} =  remove string  ${otc3}  €
+     ${rctotal} =  remove string  ${rctotal}  €
+     ${otctotal} =  remove string  ${otctotal}  €
+     ${oppo_total} =  remove string  ${oppo_total}  €
+     ${otc1} =  convert to number   ${otc1}
+     ${mrc1} =  convert to number   ${mrc1}
+     ${mrc2} =  convert to number   ${mrc2}
+     ${mrctotlacalculated_pratical} =  Evaluate   ${mrc1}+${mrc2}+${mrc3}
+     log to console     ${mrctotlacalculated_pratical}
+     Should be equal as numbers     ${rctotal}      ${mrctotlacalculated_pratical}
+     ${otctotalcalculated_pratical}=  evaluate  ${otc1} + ${otc2} + ${otc3}
+     log to console     ${otctotalcalculated_pratical}
+     Should be equal as numbers     ${otctotal}      ${otctotalcalculated_pratical}
+     ${oppototalcalculated_pratical} =  evaluate  ${mrctotlacalculated_pratical}+${otctotalcalculated_pratical}
+     log to console  ${oppototalcalculated_pratical}
+     Should be equal as numbers     ${oppo_total}   ${oppototalcalculated_pratical}
+     sleep  5s
+     ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+     Log to console      ${status}
+     wait until page contains element    //span[text()='Next']/..    60s
+     click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+     Sleep  40s
+     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe   60s
+     Run Keyword If    ${status} == False    Reload Page
+     sleep    60s
+     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+     page should contain element      //tr//td[contains(text(),"${product1}")]/../td[6]/span[contains(text(),"${otc1}")]
+     page should contain element      //tr//td[contains(text(),"${product1}")]/../td[7]/span[contains(text(),"${mrc1}")]
+     page should contain element     //tr//td[contains(text(),"${product2}")]/../td[7]/span[contains(text(),"${mrc2}")]
+     log to console  validation sucessful
+
+UpdateAndAddSalesType for B2b products
+    [Arguments]    ${product1}    ${product2}
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${product_1}=    Set Variable    //td[normalize-space(.)='${product1}']
+    ${product_2}=    Set Variable    //td[normalize-space(.)='${product2}']
+    ${Viwe_quote}=    Set Variable    //button[@title="View Quote"]
+    ${open_quote}=    Set Variable   //button[@title="Open Quote"]
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    log to console    UpdateAndAddSalesType for 2 products
+    sleep    10s
+    wait until page contains element    ${update_order}    60s
+    log to console    selected new frame
+    wait until page contains element    ${product_1}    70s
+    click element    ${product_1}//following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    ${product_1}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    sleep    5s
+    wait until page contains element    ${product_2}    70s
+    click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    ${product_2}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    Wait Until Element Is Visible    ${next_button}    60s
+    click element    ${next_button}
+    Unselect Frame
+    sleep    60s
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Viwe_quote}    60s
+    Run Keyword If   ${status}   click visible element    ${Viwe_quote}
+    Run Keyword unless   ${status}    click visible element   ${open_quote}
+    log to console  quote created
+    Unselect frame
+
+validate createdOPPO for products
+    [Arguments]    ${opportunity_product}
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible   //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']   60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    sleep    60s
+    click element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
+    sleep  20s
+    ScrollUntillFound    //div[@class="container rlvm forceRelatedListSingleContainer"]/../div[3]//div[@class="slds-card__footer"]/span
+    page should contain element    //div[@class="container rlvm forceRelatedListSingleContainer"]/../div[3]//div[@class="slds-card__footer"]/span
+    click element       //div[@class="container rlvm forceRelatedListSingleContainer"]/../div[3]//div[@class="slds-card__footer"]/span
+    sleep  5s
+    page should contain element     //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr1}"]
+    page should contain element      //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr2}"]
+    page should contain element     //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr3}"]
+    ${otc1} =    get text  //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr1}"]//following::td[4]/span/span
+    ${otc2}=     get text  //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr2}"]//following::td[4]/span/span
+    ${otc3}=     get text  //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr3}"]//following::td[4]/span/span
+    ${rc1}=      get text  //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr1}"]//following::td[5]/span/span
+    ${rc2}=      get text  //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr2}"]//following::td[5]/span/span
+    ${rc3}       get text  //a[@title="${opportunity_product}"]//following::a[@title="${B2bproductfyr3}"]//following::td[5]/span/span
+    ${otc1}=  remove string  ${otc1}  €
+    ${otc2}=  remove string  ${otc2}  €
+    ${otc3}=  remove string  ${otc3}  €
+    ${rc1} =  remove string  ${rc1}  €
+    ${rc2} =  remove string  ${rc2}  €
+    ${rc3} =  remove string  ${rc3}  €
+    ${otc1}=  replace string  ${otc1}  ,  .
+    ${otc2}=  replace string  ${otc2}  ,  .
+    ${otc3}=  replace string  ${otc3}  ,  .
+    ${rc1}=  replace string  ${rc1}  ,  .
+    ${rc2}=  replace string  ${rc2}  ,  .
+    ${rc3}=  replace string  ${rc3}  ,  .
+    ${otc1}=  convert to number   ${otc1}
+    #${otc2}=  convert to integer   ${otc2}
+    ${otc3}=  convert to number   ${otc3}
+    ${rc1} =  convert to number   ${rc1}
+    ${rc2} =  convert to number   ${rc2}
+    ${rc3} =  convert to number   ${rc3}
+    ${fyr1m}=  evaluate  ${fixed_charge for_Telia Sopiva Pro N}*${contract_lenght}
+    ${fyr1ma} =  evaluate  ${fyr1m}+${otc1}
+    ${fyr1}=  evaluate  ${fyr1ma}*${product_quantity}
+    ${fyr2m}=  evaluate  ${rc2}*${contract_lenght}
+    ${fyr2ma} =  evaluate  ${fyr2m}+${otc2}
+    ${fyr2}=  evaluate  ${fyr2ma}*${product_quantity}
+    ${lineitem1m} =   evaluate  ${rc1}* ${contract_lenght}+ ${otc1}
+    ${lineitem1}=  evaluate  ${lineitem1m}*${product_quantity}
+    ${lineitem2m} =   evaluate  ${rc2}* ${contract_lenght}+ ${otc2}
+    ${lineitem2}=  evaluate  ${lineitem2m}*${product_quantity}
+    ${lineitem3m} =   evaluate  ${rc3}* ${contract_lenght}+ ${otc3}
+    ${lineitem3}=  evaluate  ${lineitem3m}*${product_quantity}
+    ${lineitem_total}=  evaluate  ${lineitem1}+ ${lineitem2} +${lineitem3}
+    ${fyr_total} =   evaluate  ${fyr1}+ ${fyr2}
+    Capture Page Screenshot
+    sleep  10s
+    Go back
+    Sleep  40s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible   //li[@class="tabs__item active uiTabItem"]//a//span[text()="Details"]   40s
+    Run Keyword If    ${status_page} == False    Reload Page
+    sleep    60s
+    click element  //li[@class="tabs__item active uiTabItem"]//a//span[text()="Details"]
+    scrolluntillfound  //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    #${lineitem_totalt}   get text  //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    ${fyr_totalt}    get text     //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    #${lineitem_totalt}=  remove string  ${lineitem_totalt}  €
+    ${fyr_totalt}=  remove string  ${fyr_totalt}  €
+    #${lineitem_totalt}=  replace string  ${lineitem_totalt}  ' '  ''
+    #${lineitem_totalt}=  replace string  ${lineitem_totalt}  ,  .
+    ${fyr_totalt}=  replace string  ${fyr_totalt}  ,  .
+    ${fyr_totalt}=  convert to number  ${fyr_totalt}
+    #Should be equal as strings  ${lineitem_totalt}  ${lineitem_total}
+    page should contain element     //span[text()="Revenue Total"]/../div/div/span[text()=normalize-space(.)="${lineitem_total}€"]
+    Should be equal as strings  ${fyr_totalt}    ${fyr_total}
+    [Return]  ${lineitem_total}  ${fyr_total}
+
+validate createOPPO values against quote value
+    [Arguments]    ${opportunity_quote}
+    ${Revenue_Total} =  get text        //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    ${fyr_total} =  get text            //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    ${onetime_total} =  get text        //span[text()='OneTime Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    ${recurring_total} =  get text      //span[text()='Recurring Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    ${opportunity_total} =  get text    //span[text()='Opportunity Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    log to console  open quote
+    search salesforce    ${opportunity_quote}
+    wait until page contains element  //div[@class="listViewContainer safari-workaround"]//div[@class="slds-cell-fixed"]//span[@title="Quote Name"]/../../../../../..//a[@title="${opportunity_quote}"]
+    click element		//div[@class="listViewContainer safari-workaround"]//div[@class="slds-cell-fixed"]//span[@title="Quote Name"]/../../../../../..//a[@title="${opportunity_quote}"]
+    sleep  15s
+    wait until page contains element            //ul//span[@title="Quote Number"]
+    Wait Until Element Is Visible       //div[contains(@class,'active')]//span[text()='Related']/../../../li[2]/a//span[@class="title"]     60s
+    click element        //div[contains(@class,'active')]//span[text()='Related']/../../../li[2]/a//span[@class="title"]
+    Sleep  10s
+    scrolluntillfound   //span[text()="Quote Value and FYR"]//following::span[text()='Revenue Total' and @class='test-id__field-label']/../../div[2]/span/span
+    wait until page contains element    //span[text()="Quote Value and FYR"]//following::span[text()='Revenue Total' and @class='test-id__field-label']/../../div[2]/span/span
+    Element text should be  //span[text()="Quote Value and FYR"]//following::span[text()='Revenue Total' and @class='test-id__field-label']/../../div[2]/span/span      ${Revenue_Total}
+    Element text should be  //span[text()="Quote Value and FYR"]//following::span[text()='FYR Total' and @class='test-id__field-label']/../../div[2]/span/span          ${fyr_total}
+    Element text should be  //span[text()="Quote Value and FYR"]//following::span[text()='OneTime Total' and @class='test-id__field-label']/../../div[2]/span/span      ${onetime_total}
+    Element text should be  //span[text()="Quote Value and FYR"]//following::span[text()='Recurring Total' and @class='test-id__field-label']/../../div[2]/span/span    ${recurring_total}
+    Element text should be  //span[text()="Quote Value and FYR"]//following::span[text()='Quote Total' and @class='test-id__field-label']/../../div[2]/span/span        ${opportunity_total}
+    [Return]    ${Revenue_Total}    ${fyr_total}
+
+validate lineitem totals in quote
+    [Arguments]     ${oppo_name}    ${lineitem_total}  ${fyr_total}
+    click element  //div[contains(@class,'active')]//span[text()='Related']
+    wait until page contains element     //span[@title="Quote Line Items"]
+    click visible element  //span[@title="Quote Line Items"]//following::span[text()="View All"]
+    Sleep  10s
+    wait until page contains element    //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]/../../../../../../../../..//a[@title="${B2bproductfyr1}"]/../../..//td[9]/span/span
+    ${fyr1}     get text    //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]/../../../../../../../../..//a[@title="${B2bproductfyr1}"]/../../..//td[9]/span/span
+    ${fyr2}     get text    //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]/../../../../../../../../..//a[@title="${B2bproductfyr2}"]/../../..//td[9]/span/span
+    #${fyr3}     get text    //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]/../../../../../../../../..//a[@title="${B2bproductfyr3}"]/../../..//td[9]/span/span
+    ${lineitem1}    get text    //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]/../../../../../../../../..//a[@title="${B2bproductfyr1}"]/../../..//td[10]/span/span
+    ${lineitem3}  get text    //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]/../../../../../../../../..//a[@title="${B2bproductfyr3}"]/../../..//td[10]/span/span
+    ${lineitem2}    get text    //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]/../../../../../../../../..//a[@title="${B2bproductfyr2}"]/../../..//td[10]/span/span
+    ${fyr1} =  remove string  ${fyr1}  €
+    ${fyr2} =  remove string  ${fyr2}  €
+    #${fyr3} =  remove string  ${fyr3}  €
+    ${lineitem1}=  remove string  ${lineitem1}  €
+    ${lineitem2}=  remove string  ${lineitem2}  €
+    ${lineitem3}=  remove string  ${lineitem3}  €
+    ${lineitem1}=  replace string  ${lineitem1}  ,  .
+    ${lineitem2}=  replace string  ${lineitem2}  ,  .
+    ${lineitem3}=  replace string  ${lineitem3}  ,  .
+    ${fyr1} =  replace string  ${fyr1}  ,  .
+    ${fyr2} =  replace string  ${fyr2}  ,  .
+    #${lineitem_total}=  remove string  ${lineitem_total}  €
+    #${lineitem_total}=  replace string  ${lineitem_total}  ,  .
+    #${fyr_total}=  remove string  ${fyr_total}  €
+    #${fyr_total}=  replace string  ${fyr_total}  ,  .
+    ${fyr1} =  convert to number   ${fyr1}
+    ${fyr2} =  convert to number   ${fyr2}
+    ${lineitem1} =  convert to number   ${lineitem1}
+    ${lineitem2} =  convert to number   ${lineitem2}
+    ${lineitem3} =  convert to number   ${lineitem3}
+    ${lineitem_total1}=  evaluate  ${lineitem1}+ ${lineitem2} +${lineitem3}
+    #${lineitem_total1}  Set Variable    ${lineitem_total1}€
+    ${fyr_total1} =   evaluate  ${fyr1}+ ${fyr2}
+    #${fyr_total1} =  Set Variable  ${fyr_total1}€
+    Should be equal as strings  ${lineitem_total1}  ${lineitem_total}
+    Should be equal as strings  ${fyr_total1}   ${fyr_total}
+    log to console  line item total verfied sucessfully
+    click element  //span[text()="Quotes"]/../../..//a[@title="${oppo_name}"]
+    sleep  60s
+#    wait until page contains element        //div//div[@class="slds-grid primaryFieldRow"]//ul[@class="branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer"]/li[3]/a[@title="CPQ"]/div
+#    force click element   //div//div[@class="slds-grid primaryFieldRow"]//ul[@class="branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer"]/li[3]/a[@title="CPQ"]/div
+#    sleep    30s
+#    select frame    xpath=//div[contains(@class,'slds')]/iframe
+#    Log to console      Inside frame
+#    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
+#    Log to console      ${status}
+#    wait until page contains element    //span[text()='Create Order']/..    60s
+#    click element    //span[text()='Create Order']/..
+#    Sleep  30s
+#    unselect frame
+
+validatation on order page
+    [Arguments]  ${fyr_total}    ${Revenue_Total}
+    scrolluntillfound  //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[11]//span[text()="View All"]
+    page should contain element     //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[text()="${B2bproductfyr1}"]
+    page should contain element     //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[text()="${B2bproductfyr2}"]
+    page should contain element     //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[text()="${B2bproductfyr3}"]
+    sleep  20s
+    Wait Until Element Is Enabled   //a[@title='Details']   60s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //a[@title='Details']   60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    sleep    60s
+    click element   //a[@title='Details']
+    sleep  5s
+    #${fyr_total1} =  Set Variable  ${fyr_total}€
+    scrolluntillfound  //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    Element text should be  //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span  ${fyr_total}
+    Element text should be  //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span    ${Revenue_Total}
+    log to console  validatation sucessfull on order page
 
 Updating sales type multiple products
     [Arguments]    @{products}
@@ -2262,7 +2731,7 @@ Searching and adding multiple products
     : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > ${count}-1
     \    ${product_name}    Set Variable    @{products}[${i}]
-    \    ${product_id}    Set Variable    ${${product_name}}
+    \    ${product_id}    Set Variable    ${product_name}
     \    Log To Console    product name ${product_name}
     \    search products    ${product_name}
     \    Log To Console    Product id ${product_id}
@@ -2274,6 +2743,7 @@ Searching and adding multiple products
     #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True    click element    ${next_button}
     Unselect Frame
+    Sleep  60s
 
 Preview order summary and verify order
     [Arguments]    @{products}
@@ -2422,6 +2892,7 @@ Select product available for the address and create an opportunity
     Run Keyword If    ${isVisible}    Click element    //div[@id='HTTPCreateOpportunityLineItems']/div/p/button[text()='Continue']
     unselect frame
     Wait until page contains element    xpath=//a[@title='CPQ']    60s
+    CLICK ELEMENT     xpath=//a[@title='CPQ']
 
 Check the CPQ-cart contains the wanted products
     [Arguments]    ${product_name}
@@ -2443,6 +2914,7 @@ Verify that warning banner is displayed on opportunity page
     [Documentation]    After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
     Go To Entity    ${oppo_name}
     Wait until element is visible    ${OPPORTUNITY_WARNING_BANNER}  30s
+    Page should contain element   ${OPPORTUNITY_WARNING_BANNER}
 
 Verify that warning banner is not displayed on opportunity page
     [Arguments]    ${oppo_name}
@@ -2456,8 +2928,15 @@ Verify Warning banner about existing of duplicate contract
     [Documentation]  This warning should be visible when multiple customer ship contract are available for the oppo
     Go To Entity    ${oppo_name}
     Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
-    Page should not contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please select the preferred customership contract manually on the record.']
+    Page should contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please confirm that the pre-populated customership contract is valid for this opportunity.']
 
+Verify Warning banner about Manual selection of contract
+
+    [Arguments]    ${oppo_name}
+    [Documentation]  This warning should be visible when multiple customer ship contract are available for the oppo
+    Go To Entity    ${oppo_name}
+    Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
+    Page should contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please select the preferred customership contract manually on the record.']
 
 Add product to cart (CPQ)
     [Documentation]     In the CPQ cart search for the wanted product and add it to the cart
@@ -2482,9 +2961,40 @@ Update products
     Click element   ${NEW_MONEY_NEW_SERVICES}
     Wait element to load and click  //form[@id="a1q0E000000i2dBQAQ-12"]/div/div/button
     sleep   20s
-    Wait element to load and click  //button[@id="View Quote"]
+    Wait element to load and click  //button[@id="Open Quote"]
     unselect frame
     Wait until page contains element    //h1/div[@title='${OPPORTUNITY_NAME}']  30s
+
+Update products OTC and RC
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${Viwe_quote}=    Set Variable    //button[@title="View Quote"]
+    ${open_quote}=    Set Variable   //button[@title="Open Quote"]
+    Wait Until Element Is Enabled   ${iframe}   60s
+    select frame    ${iframe}
+    Input Text  //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[4]/input      200
+    Input Text  //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[5]/input      200
+    Wait element to load and click      //div[@id="OpportunityLineItems"]/ng-include/div/table/tbody/tr[3]/td[8]/select
+    Click element   //table[@class='tg']/tbody//tr[3]/td[8]/select/option[@value='New Money-New Services']
+    Wait element to load and click  //form[@id="a1q4E000002zpz1QAA-12"]/div/div/button
+    sleep   60s
+    ${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Viwe_quote}    100s
+    Run Keyword If   ${status}   Wait element to load and click    ${Viwe_quote}
+    Run Keyword unless   ${status}    Wait element to load and click   ${open_quote}
+    #Wait element to load and click  //button[@id="View Quote"]
+    unselect frame
+    sleep   10s
+
+Check prices are correct in quote line items
+    sleep   10s
+    Wait until page contains element   //a/span[text()='Quote Line Items']      30s
+    Force click element   //a/span[text()='Quote Line Items']
+    Wait until element is visible   //table/tbody/tr/td[5]/span/span[text()='200,00 €']     30s
+    Wait until element is visible   //table/tbody/tr/td[6]/span/span[text()='200,00 €']     30s
+
+Check opportunity value is correct
+    ScrollUntillFound    //h3/button/span[text()='Opportunity Value and FYR']
+    Wait until page contains element    //span[text()='OneTime Total']/../../../div/div[2]/span/span[text()='200,00 €']     30s
+    Wait until page contains element    //span[text()='Recurring Total']/../../../div/div[2]/span/span[text()='200,00 €']   30s
 
 Check service contract is on Draft Status
     [Documentation]    On account page check service contracts and verify that created one is on draft status
@@ -2498,7 +3008,7 @@ Select rows to delete the contract
     [Documentation]    Used to delete all the existing contracts for the business account
 
     ${count}=    get element count    ${table_row}
-    log to console    ${count}
+    log to console   No. of contracts to delete: ${count}
     : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > ${count}-1
     \    Delete all Contracts    ${table_row}
@@ -2512,7 +3022,6 @@ Delete all existing contracts from Accounts Related tab
     #run keyword if    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
     #Sleep    15s
     ScrollUntillFound  //span[text()='View All']/span[text()='Opportunities']
-    Log to console   found element
     sleep  5s
     ${Status}   Run keyword and return status   Page should contain element  //span[text()='View All']/span[text()='Contracts']
     Log to console  ${Status}
@@ -2564,10 +3073,12 @@ Validate contact relationship
     Wait until page contains element    //table/tbody/tr[2]/td[2]/span/span/img[@class='slds-truncate checked']    20s
 
 Navigate to related tab
-    Wait element to load and click    ${ACCOUNT_RELATED}
+    Wait Until Element Is Visible    ${ACCOUNT_RELATED}    60s
+    Force click element    ${ACCOUNT_RELATED}
 
 Add account owner to account team
     ${account_owner}=    Get Text    //div[@class='ownerName']//a
+    Navigate to view    Account Team Members
     Add new team member  ${account_owner}
 
 Validate that account owner can not be added to account team
@@ -2577,13 +3088,15 @@ Validate that account owner can not be added to account team
 Add new team member
     [Documentation]     Add new team member to account
     [Arguments]     ${new_team_member}      ${role}=--None--
+    sleep   10s
     Wait until page contains element    //ul/li/a[@title='New']     30s
     Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']
     Input text  //input[@title='Search People']     ${new_team_member}
     Wait element to load and click  //a[@role='option']/div/div[@title='${new_team_member}']
     Wait element to load and click  //a[text()='--None--']
-    Wait element to load and click  //ul/li/a[text()='${role}']
+    force click element  //div[@class="select-options"]//ul/li/a[@title="${role}"]
+    Sleep  10s
     Click element   //button[@title='Save']
     sleep   10s
 
@@ -2592,9 +3105,10 @@ Validate that team member is created succesfully
     Wait until page contains element   //table/tbody/tr/th/span/span[text()='${name}']     30s
     Wait until page contains element    //table/tbody/tr/th/span/span[text()='${name}']/../../../td[2]/span/span[text()='${role}']
 
-Navigate to Account team members page
-    ScrollUntillFound  //span[text()='Account Team Members']
-    Click element   //span[text()='Account Team Members']
+Navigate to view
+    [Arguments]     ${title}
+    ScrollUntillFound  //span[text()='${title}']
+    Click element   //span[text()='${title}']
 
 Try to add same team member twice
     [Documentation]     Tries to add same user twice as a team member for business account.
@@ -2633,12 +3147,41 @@ Change account owner to
 
 Open change owner view and fill the form
     [Arguments]    ${username}
-    Wait element to load and click    //button[@title='Change Owner']
-    Wait until page contains element    //input[@title='Search People']
-    Input text    //input[@title='Search People']    ${username}
-    Wait element to load and click    //a[@role='option']/div/div[@title='${username}']
-    Click element    //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
-    sleep    40s
+    #Wait element to load and click    //button[@title='Change Owner']
+    #Wait until page contains element    //input[@title='Search People']
+    Wait element to load and click      //div[@class="slds-form-element__control slds-grid itemBody"]//button[@title='Change Owner']
+    Wait until page contains element    //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
+    input text     //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]    ${username}
+    Sleep  10s
+    Press Enter On   //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
+    Sleep    10s
+    Click element   //a[text()="Full Name"]//following::a[text()='${username}']
+    #Click element    //a[text()='${username}']
+    sleep  10s
+    #Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
+    Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
+    sleep   40s
+
+Validate that account owner cannot be different from the group account owner
+    Wait until page contains element    //span[text()='Owner ID: Account Owner cannot be different from the Group Account owner']   30s
+    Click element   //button[@title='Cancel']
+
+Navigate to Account History
+    ScrollUntillFound  //a/span[text()='Account History']
+    Click element   //a/span[text()='Account History']
+
+Validate that Account history contains record
+    [Arguments]     ${user}
+    Wait until page contains element    //table/tbody/tr[1]/td[5]//span[text()='${user}']
+
+Validate that Tellu login page opens
+    [Documentation]     Validate that Tellu login page opens in new window.
+    sleep   10s
+    Select Window   NEW
+    Maximize browser window
+    Execute Javascript    window.location.reload(false);
+    # Title should be     Teamworks Process Server Console
+    Wait until page contains element    //form[@name='login']       30s
 
 Enter Random Data to Lead Web Form
     [Arguments]    ${fname}    ${lname}    ${email}    ${mobile}    ${title}    ${desc}
@@ -2732,6 +3275,7 @@ UpdateAndAddSalesTypeandClickDirectOrder
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     sleep    2s
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    sleep  5s
     click element    //label[normalize-space(.)='Direct Order' and @class='vlc-check-label ng-binding']/..//input
     sleep    2s
     click element    //button[normalize-space(.)='Next']
@@ -2739,10 +3283,12 @@ UpdateAndAddSalesTypeandClickDirectOrder
     sleep    60s
 
 openOrderFromDirecrOrder
-    select frame    //div[contains(@class,'iframe')]/iframe
-    wait until page contains element    //span[text()='Click View Order button to close this process & navigate to the Order Screen.']    45s
-    page should contain element    //button[@id='View Order']
-    click element    //button[@id='View Order']
+    #select frame  //div[contains(@class,'iframe')]/iframe
+    select frame   //div[@class="windowViewMode-normal oneContent active lafPageHost"]/div[@class="oneAlohaPage"]/force-aloha-page/div[contains(@class,'iframe')]/iframe
+    #wait until page contains element   //span[text()='Click View Quote button to close this process & navigate to the Quote Screen.']    60s
+    page should contain element  //button[@title='View Order']
+    Click Visible Element  //button[@title='View Order']
+    Sleep   20s
     unselect frame
 
 OpenOrderPage
@@ -2764,8 +3310,8 @@ OpenOrderPage
 getMultibellaCaseGUIID
     [Arguments]  ${order_no}
     go to entity  ${order_no}
-    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']   60s
-    click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
+    wait until page contains element    //span[text()='Details']   60s
+    click element     //span[text()='Details']
     wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  60s
     ${case_GUI_id}  get text  //span[text()='MultibellaCaseGuiId']/../..//span[@class='uiOutputText']
     ${case_id}  get text  //span[text()='MultibellaCaseId']/../..//span[@class='uiOutputText']
@@ -2820,10 +3366,11 @@ logoutAsUser
     sleep  10s
 
 
-
 ChangeThePriceList
-    [Arguments]    ${price_list_old}  ${price_list_new}
-    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'Standard Pricebook')]/following::span[@class='deleteIcon']
+    [Arguments]      ${price_list_new}
+    ${price_list_old}=     get text        //span[text()='Price List']//following::a
+    #${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'Standard Pricebook')]/following::span[@class='deleteIcon']
+    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
     log to console    this is to change the PriceList
     #sleep    30s
     #Execute JavaScript    window.scrollTo(0,600)
@@ -2831,14 +3378,15 @@ ChangeThePriceList
     ScrollUntillFound    //button[@title="Edit Price List"]
     page should contain element  //span[text()='Price Book']//following::a[text()='Standard Price Book']
     click element    //button[@title="Edit Price List"]
-    #sleep    10s
     wait until page contains element  //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]   20s
-    click element    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
+    scroll page to element  ${B2B_Price_list_delete_icon}
+    force click element    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
     sleep    3s
     input text    //input[@title='Search Price Lists']    ${price_list_new}
     sleep    3s
     click element    //*[@title='${price_list_new}']/../../..
-    click element    //button[@title='Save']
+    #click element    //button[@title='Save']
+    click element       //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     sleep    3s
     execute javascript    window.scrollTo(0,0)
     page should contain element  //span[@class='test-id__field-label' and text()='Price List']/../..//a[text()='${price_list_new}']
@@ -2945,7 +3493,7 @@ ApproveB2BGTMRequest
     Log to console      approved
     logoutAsUser  ${Approver_name}
     sleep  10s
-    login to salesforce as digisales lightning user vlocupgsandbox
+    Login to Salesforce as System Admin
 
 
 openQuoteFromOppoRelated
@@ -2960,9 +3508,8 @@ openQuoteFromOppoRelated
     #page should contain element  //span[text()='${quote_no}']/..//span[@class="uiOutputText"]
 
 SalesProjectOppurtunity
-
     [Arguments]  ${case_number}
-
+    reload page
     sleep  15s
     click element  //span[text()='${case_number}']//following::button[@title='Edit Subject']
     #wait until element is visible  //a[@class='select' and text()='New']   30
@@ -2970,13 +3517,17 @@ SalesProjectOppurtunity
     #sleep  3s
     #click element  //a[@title="In Case Assessment"]
     ${date}  get date from future  7
-    input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
+    Wait Until Element Is Visible    //span[text()='Offer Date']/../following-sibling::div/input    60s
+    Input Text    xpath=//span[text()='Offer Date']/../following-sibling::div/input    ${date}
+    #Input Quick Action Value For Attribute    Offer Date    ${date}
+    #input text   //span[text()='Offer Date']/../following-sibling::div/input   ${date}
     force click element  //span[text()='Sales Project']/..//following-sibling::input[@type="checkbox"]
     Scroll Page To Location    0    1400
     wait until element is visible   //a[@class='select' and text()='--None--']
     force click element  //a[@class='select' and text()='--None--']
-    click element  //a[@title='Sales Project']
-    click element  //button[@title='Save']/span
+    click element   //a[@title='Sales Project']
+    Sleep   10s
+    force click element     //div[@class='actionsContainer']//button[@title='Save']
     Log to console      Case Saved
     Scroll Page To Location    0    0
     wait until page contains element  //span[text()='Assign Support Resource' and @class="title"]   30s
@@ -2993,7 +3544,6 @@ SalesProjectOppurtunity
     Select option from Dropdown with Force Click Element    //a[@class='select']   //div[@class='select-options']//ul//li[6]/a[@title='Sales Project']
     log to console      dropdown selected
     sleep  5s
-
     click element  //span[text()='Sales Support Case Lead']/../following::input[@type="checkbox"]
     scroll page to location  0  200
     wait until page contains element  //div[@class='bottomBarRight slds-col--bump-left']//span[text()="Save"][1]/..  20s
@@ -3018,7 +3568,6 @@ ContractStateMessaging
     log to console    NextButtonOnOrderPage
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
-
     wait until page contains element   //button[@class="form-control btn btn-primary ng-binding" and normalize-space(.)='Open Order']
     Log to console      Element found
     click element  //button[@class="form-control btn btn-primary ng-binding" and normalize-space(.)='Open Order']
@@ -3162,14 +3711,17 @@ ValidateTheOrchestrationPlan
     click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     sleep    10s
     select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
-    sleep    20s
+    sleep    30s
     Element should be visible    //a[text()='Start']
-    Element should be visible    //a[text()='Assetize Order']
+    Element should be visible    //a[text()='Create Assets']
     Element should be visible    //a[text()='Deliver Service']
     Element should be visible    //a[text()='Order Events Update']
-    Element should be visible   //a[text()='Activate Billing']
+    Element should be visible   //a[text()='Call Billing System']
     #go back
     sleep   3s
+    Click element       //a[@class='item-label item-header' and text()='Deliver Service']
+    sleep       10s
+    wait until page contains element    //span[text()='State']/following::lightning-formatted-text[text()='Completed']      30s
     #click element  //th/div[@data-aura-class="forceOutputLookupWithPreview"]/a[@data-special-link="true" and text()='Telia Colocation']
     [Return]  ${order_number}
     unselect frame
@@ -3251,7 +3803,7 @@ createACaseFromMore
     log to console   ${case_type}.this is case type..${oppo_name}
     Click element   //span[text()='More']
     sleep   30s
-    ${status}     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
+    ${status}  set variable     run keyword and return status   page should contain  //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
     log to console      ${status}
     force Click Element   //a[@href="/lightning/o/Case/home"][@role='menuitemcheckbox']
     sleep  3s
@@ -3909,7 +4461,7 @@ Submit Investment - B2B
 
 Create contract Agreement
 
-    [Documentation]  Create contract
+    [Documentation]  Create contract(service/Customership) based on the contract type
     [Arguments]   ${Contract_Type}   ${Linked Customer Contract}=${EMPTY}
     ${Create Agreement}  set variable  //div[@title='Create Agreement']
     ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
@@ -3938,35 +4490,35 @@ Create contract Agreement
     unselect frame
     sleep  10s
     Fill Contract Details  ${Contract_Type}  ${Linked Customer Contract}
-    Activate Contract
+    Activate Contract  ${Contract_Type}
 
 
 Activate Contract
-
+    [Documentation]  Activate the created contract and check the status of the contract
+    [Arguments]   ${Contract_Type}
     Go back
     Sleep  5s
-
     Execute JavaScript    window.scrollTo(0,200)
     sleep  5s
     Page should contain element  //span[text()='Agreement Data Complete']
     Reload page
     Wait until element is visible  //img[@alt='Ready']  60s
-
     Wait until element is visible  //div[@title='Activate']  30s
     Click element  //div[@title='Activate']
     Wait until element is visible  //button[@title='Yes']
     Click element  //button[@title='Yes']
     sleep  3s
     Wait until element is visible   //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[9]/span[text()='Activated']   60s
-    Log to console   Customer Contract ship is activated
+    Log to console   ${Contract_Type} Contract is activated
     ${Contract Agreement}  Run keyword   Get text  //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[2]/span
     ${Contract Agreement_No}   Convert to integer   ${Contract Agreement}
     ${Contract}=   Evaluate   ${Contract Agreement_No}+ 1
     ${Contract Number}    Convert to String    ${Contract}
     set test variable  ${Customer_contract}     ${Contract Number}
-    Log to console  The Contract Number is ${Customer_contract}
+    Log to console  The ${Contract_Type} Contract Number is ${Customer_contract}
 
 Check Customer Signed By
+    [Documentation]   This keyword to be used when Customer signed by field is not getting populated properly
     Execute JavaScript    window.scrollTo(0,1100)
     Press Key   ${Customer Signed By}   ${contact_name}
     sleep  3s
@@ -3990,7 +4542,7 @@ Check Customer Signed By
 
 
 Fill Contract Details
-
+    [Documentation]  To fill form while creating SErvice and customership contract
     [Arguments]  ${Contract_Type}  ${Linked Customer Contract}=${EMPTY}
     #${contact_name}  set variable  Test Rt
     ${Edit Contractual Contact Person}   set variable   //button[@title='Edit Contractual Contact Person']
@@ -4109,7 +4661,7 @@ Go to account from oppo page
     sleep  3s
 
 Select Offerings
-
+    [Documentation]  Select offerings while creating service contract
     #Wait until element is visible  ${Frame}  30s
     #Select frame  ${Frame}
     ${offering}  set variable  //div[@id='agreement-off-scroll-h']/div/table/tbody/tr[1]/td[1]/label/input[@type='checkbox']
@@ -4120,14 +4672,17 @@ Select Offerings
 
 
 Verify if Customer Contract is linked
+    [Documentation]  To verify if the primary customer ship contract(the one that is not set to merge) is getting linked to the service contract that is being created.
     [Arguments]  ${Linked Customer Contract}
     ${Linked Contract}  set variable    //span[text()='Related Customership Contract']//following::a[1]
     Wait until element is visible   ${Linked Contract}  30s
     ${check}   Run keyword    Get Text   ${Linked Contract}
     Should be equal    ${check}  ${Linked Customer Contract}
-    Log to console  Customer Contract is properly linked
+    Log to console  Customer Contract is properly linked with the service contract that is being created
 
 Change Merged Status
+
+    [Documentation]   Toggle the merge status for the given cutomer contract by going into the related tab of account
     [Arguments]  ${contract_Number}
     Go To Entity    ${account}
     ${save}  set variable  //button[@title='Save']
@@ -4142,21 +4697,21 @@ Change Merged Status
     Wait until element is visible  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]  30s
     Click element  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]
     sleep   5s
-    ${status}  Run keyword and return status  Element should be visible  ${save}   60s
+    ${status}  Run keyword and return status  Element should be visible  ${save}
     Run keyword Unless   ${status}   Reload page
     Run keyword Unless   ${status}   Toggle Merge Checkbox
     click element  ${save}
     sleep  5s
 
 Toggle Merge Checkbox
-
+    [Documentation]  Reload the page and set the merge status. To use this keyword when the save button does not work properly in the contract page while setting the merge status.
     sleep  10s
     ${save}  set variable  //button[@title='Save']
     ScrollUntillFound    //button[@title='Edit Merged']
     Click element  //button[@title='Edit Merged']
     Wait until element is visible  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]  30s
     Click element  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]
-    ${status}  Run keyword and return status  Element should be visible  ${save}   60s
+    ${status}  Run keyword and return status  Element should be visible  ${save}
     Run keyword Unless   ${status}   Reload page
     Run keyword Unless   ${status}   Toggle Merge Checkbox
 
@@ -4167,24 +4722,31 @@ Verify Populated Cutomership Contract
 
     ${Customership_Contract_Filed}   set variable  //span[text()='Customership Contract']
     ScrollUntillFound   ${Customership_Contract_Filed}
-    ${populated_Contract value}  Get Text  //span[text()='Customership Contract']//following::a[1]
+
+    Run keyword if  '${Contract_Number}' =='${EMPTY}'  Page should not contain   //span[text()='Customership Contract'][@class='test-id__field-label']//following::span[1]/div/a
+    Run keyword if  '${Contract_Number}' =='${EMPTY}'  Log to console  Customer contract ship field is empty
+    Return From Keyword if   '${Contract_Number}' =='${EMPTY}'
+    ${populated_Contract value}  Get Text   //span[text()='Customership Contract'][@class='test-id__field-label']//following::span[1]/div/a
     Should be equal   ${populated_Contract value}  ${Contract_Number}
-    Log to console  Contract Number Population validation is succesful
+    Log to console  Contract Number Population validation is succesful in opportunity page
 
 Select Customer ship contract manually
+    [Documentation]   When multiple contracts are present for an account and their status are not merged, select the customer ship contract manually
     [Arguments]  ${Contract_Number}
     ${Customership_Contract_Filed}   set variable  //span[text()='Customership Contract']
-    ${save}  set variable  //button[@title='Save']
-    ScrollUntillFound   ${Customership_Contract_Filed}
-    Click element  //span[text()='Edit Customership Contract']
-    Input Text   ${Contract_Number}   //input[@title='Search Contracts']
+    ${save}  set variable  //span[text()='Customership Contract']/following::span[text()='Save']
+    #${save}  set variable  //div[@class='footer ']/div/div/button[@title='Save']
+    ScrollUntillFound   //span[text()='Edit Customership Contract']
+    Wait until element is visible  //span[text()='Edit Customership Contract']   30s
+    Force Click element  //span[text()='Edit Customership Contract']
+    Input Text   //input[@title='Search Contracts']  ${Contract_Number}
     Wait until element is visible   //div[@title='${Contract_Number}']
     Click element   //div[@title='${Contract_Number}']
     sleep  5s
-    ${status}  Run keyword and return status   Element should be visible  ${save}   60s
-    Run keyword Unless   ${status}   Reload page
-    Run keyword Unless   ${status}   sleep  30s
-    Run keyword Unless   ${status}   Select Customer ship contract manually
+    Wait until page contains element   ${save}  20s
+    ${status}   Run keyword and return status   Get element count  ${save}
+    Log to console  ${status}
+    Set focus to element  ${save}
     click element  ${save}
     sleep  5s
 

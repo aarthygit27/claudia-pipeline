@@ -1,7 +1,7 @@
 *** Settings ***
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
-Resource          ../resource/multibella_keywords.robot
+Resource          ../resources/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
 
 *** Keywords ***

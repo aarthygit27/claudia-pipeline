@@ -7,6 +7,7 @@ Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
 Resource          ../resources/PO_Light_keywords.robot
+Library           AutoItLibrary
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
@@ -166,6 +167,7 @@ Test scenario 1:Telia Architect
     ${prod_2}    set variable    Muut asiantuntijapalvelut
     General Setup    B2B
     AddToCart with product_id    Telia Arkkitehti jatkuva palvelu   01u6E000007Roo5
+    Update setting Telia Arkkitehti jatkuva palvelu    d    yes
     Update setting Telia Arkkitehti jatkuva palvelu    d    yes
     AddToCart with product_id    Muut asiantuntijapalvelut   01u6E000007RosF
     Update setting Muut asiantuntijapalvelut
