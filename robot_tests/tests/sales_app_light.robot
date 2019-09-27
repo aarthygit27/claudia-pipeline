@@ -1402,8 +1402,7 @@ DummyTestCaseForHDC
     #${billing_acc_name}
     ReviewPage
     ${order_no}    run keyword    ValidateTheOrchestrationPlan
-    log to conole    ${order_no} .this is order
-
+    log to console    ${order_no} .this is order
 
 Pricing Escalation
     [Tags]   BQA-11368  Test
@@ -1420,7 +1419,7 @@ Pricing Escalation
     Case Approval By Endorser   ${Case_number}  ${oppo_name}
     Case Approval By Approver   ${Case_number}  ${oppo_name}
     Verify case Status by PM   ${Case_number}
-    Verify case Status by Endorser   ${Case_number}
+    Verify case Status by Endorser   ${Case_number}  Approved
     Case Not visible to Normal User    ${Case_number}
 
 Pricing Escalation - Rejection

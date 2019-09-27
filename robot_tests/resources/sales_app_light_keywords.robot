@@ -3904,7 +3904,7 @@ Create Pricing Escalation
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     [Return]  ${Case_number}
 
 
@@ -3939,7 +3939,7 @@ Case Approval By Endorser
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
     Page should contain   requested approval for this case from
     Capture Page Screenshot
-    Log to console    There is an alert in the Chatter about new investment
+    Log to console    There is an alert in the Chatter about new case
 
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
@@ -3950,7 +3950,7 @@ Case Approval By Endorser
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
@@ -3978,7 +3978,7 @@ Case Approval By Approver
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
     Page should contain   requested approval for this case from
     Capture Page Screenshot
-    Log to console    There is an alert in the Chatter about new investment
+    Log to console    There is an alert in the Chatter about new case
 
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
@@ -3989,7 +3989,7 @@ Case Approval By Approver
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
@@ -4036,7 +4036,7 @@ Case Rejection By Approver
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
@@ -4066,6 +4066,7 @@ Check for Notification
     ${Notification_2}  Run keyword   Get text  //div[@class='notification-content']/span[contains(text(),${Case_number})]
     Run Keyword If  '${status}' == 'Rejected'  Should end with     ${Notification}    is rejected
     Run Keyword If  '${status}' == '${EMPTY}'   Should end with     ${Notification}    is requesting approval for case
+    Run Keyword If  '${status}' == 'Approved'   Should end with     ${Notification}    is approved
     Capture Page Screenshot
     Log to console   ${Notification}
     Log to console    ${Notification_2}
@@ -4099,7 +4100,7 @@ Check Case Status
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
     Page should contain   created an attachment
     Capture Page Screenshot
-    Log to console    There is an alert in the Chatter about new Investment pdf generation
+    Log to console    There is an alert in the Chatter about new case pdf generation
 
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
@@ -4130,7 +4131,7 @@ Verify case Status by PM
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     logoutAsUser
 
 Verify case Status by Endorser
@@ -4148,7 +4149,7 @@ Verify case Status by Endorser
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     logoutAsUser
 
 Case Not visible to Normal User
