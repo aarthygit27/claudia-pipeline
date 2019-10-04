@@ -4665,9 +4665,11 @@ Select Offerings
     [Documentation]  Select offerings while creating service contract
     #Wait until element is visible  ${Frame}  30s
     #Select frame  ${Frame}
+    sleep  10s
     ${offering}  set variable  //div[@id='agreement-off-scroll-h']/div/table/tbody/tr[1]/td[1]/label/input[@type='checkbox']
     ${next}  set variable   //div[@id='AddOfferingsStep_nextBtn']
-    Wait until element is visible  ${offering}  30s
+    ${status}   Run keyword and return status   Get element count  ${offering}
+    Log to console  ${status}
     Force Click element  ${offering}
     Click element  ${next}
 
@@ -4756,7 +4758,63 @@ Change Order
 
     Initiate Change Order
     Request Date
+    CPQ Page
 
+CPQ Page
+
+    Verify the Action of product  ${pname}  ${Value}
+    Verify onetime total charge
+    Delete Product   ${pname}
+    Verify the Action of product  ${pname}  ${Value}
+    Add Product   ${pname}
+    Verify the Action of product  ${pname}  ${Value}
+    clicking on next button
+    Select Account
+    select contact
+    Select Date
+    Select account Owner
+    Verify Order Type
+    Submit Order Button
+    ${Order_Number}  Set variable   ValidateTheOrchestrationPlan
+
+Verify Order Type
+
+    ${ACCOUNT_DETAILS}  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    Wait until element is visible   ${ACCOUNT_DETAILS}  60s
+    Force Click element  ${ACCOUNT_DETAILS}
+    ${Order_Type}  get text   //div[@class='test-id__field-label-container slds-form-element__label']/span[text()='Order Type']//following::span[2]
+    Should be equal   ${Order_Type}  Change
+
+Verify the Action of product
+    [Arguments]  ${pname}  ${Value}
+    ${Action}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']//following::div[13]/div
+    ${Action Value}  Get Text  ${Action}
+    Should be equal     ${Action Value}  ${Value}
+    Log to console  The ACtion value for the product ${pname} is verified
+
+Verify onetime total charge
+
+    ${One Time Value}  get text  //div[contains(text(),'OneTime Total')]//following::div[1]
+    Should be equal   ${One Time Value}  '0'
+
+Delete Product
+    [Arguments]  ${pname}
+
+    ${Delete_Button}   set variable   //div[contains(text(),'${pname}')]//following::button[4][@title='Delete Item']
+    Wait until element is visible   ${Delete_Button}  30s
+    Click element  ${Delete_Button}
+    Wait until element is visible  //button[text()='Delete']  30s
+    Click element  //button[text()='Delete']
+
+Add Product
+
+    [Arguments]  ${pname}
+
+    ${Add_Product}  set variable   //div[contains(text(),'${pname}')]//following::button[1]
+    Wait until element is visible  ${Add_Product}  60s
+    Click element  ${Add_Product}
+    #Wait until element is added
+    Wait until element is visible   //div[contains(text(),'${pname}')]//following::button[4][@title='Delete Item']
 
 Request date
 
@@ -4780,3 +4838,23 @@ Initiate Change Order
     Scroll until found   //button[text()='Change To Order']
     Click element  //button[text()='Change To Order']
     Unselect frame
+
+DDM Request Handling
+
+    Login Workbench
+
+
+Login Workbench
+
+    ${Env}  set variable   //label[text()='Environment:']//following::select[1]
+    ${Environment_Option}  set variable  //label[text()='Environment:']//following::select[1]/option[text()='Sandbox']
+    ${T&C}  set variable  //input[@type='checkbox'][@id='termsAccepted']
+    ${login}  set variable  //input[@type='submit']
+    Execute Javascript    window.open('https://workbench.developerforce.com');
+    sleep    10s
+    Switch between windows    1
+    Wait Until Element Is Visible    ${ENV}    30s
+    Click element   ${Env}
+    Click element  ${Environment_Option}
+    Click element    ${T&C}
+    Click element   ${login}

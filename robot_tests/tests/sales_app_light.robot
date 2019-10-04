@@ -1486,9 +1486,9 @@ Check of Customership Contract
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${account}
     Delete all existing contracts from Accounts Related tab
-    #${contact}    run keyword    CreateAContactFromAccount_HDC
-    #Set Test Variable   ${contact_name}   ${contact}
-    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Set Test Variable   ${contact_name}   ${contact}
+    #Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify that warning banner is displayed on opportunity page  ${oppo_name}
     Go to account from oppo page
@@ -1534,31 +1534,8 @@ One Order - B2B Colocation and Change Order
     DDM Request Handling
     Validate DDM and billing system response
     Change Order
+    DDM Request Handling
+    Validate DDM and billing system response
 
 
 
-Testing
-
-    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-122629
-    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-122629
-    set Test variable    ${account}   Telia Communication Oy
-    ${Contract_A_Number}  set variable   519092712413
-    ${Contract_B_Number}  set variable  519092712417
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
-    Go To    https://telia-fi--fesit.lightning.force.com/lightning/r/Opportunity/0064E00000E87cxQAB/view
-    Verify Warning banner about existing of duplicate contract   Test Robot Order_ 20190927-114101
-    Verify Populated Cutomership Contract   ${Contract_A_Number}
-    Change Merged Status  ${Contract_A_Number}
-    Change Merged Status  ${Contract_B_Number}
-    Go To Entity    ${account}
-    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
-    Verify Warning banner about existing of duplicate contract  ${oppo_name}
-    Verify Populated Cutomership Contract   ${Contract_B_Number}
-    Go to account from oppo page
-    Create contract Agreement  Service  ${Contract_B_Number}
-    Change Merged Status  ${Contract_A_Number}
-    Go To Entity    ${account}
-    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
-    Verify Warning banner about Manual selection of contract  ${oppo_name}
-    Verify Populated Cutomership Contract  ${EMPTY}
-    Select Customer ship contract manually   ${Contract_A_Number}
