@@ -88,7 +88,7 @@ Test : Telia IP VPN NNI
     General Setup     B2O
     Search and add product    Telia IP VPN NNI
     clicking on next button
-    UpdateAndAddSalesType    Telia IP VPN NNI
+    Update And Add SalesType    Telia IP VPN NNI
     Create_Order
 
 Test : Telia IP VPN ACCESS
@@ -96,7 +96,7 @@ Test : Telia IP VPN ACCESS
     General Setup     B2O
     Search and add product    Telia IP VPN ACCESS
     clicking on next button
-    UpdateAndAddSalesType    Telia IP VPN ACCESS
+    Update And Add SalesType    Telia IP VPN ACCESS
     Create_Order
 
 Telia Ethernet capacity
@@ -114,7 +114,7 @@ Telia Domain Name Service - P&O create new order
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service
     clicking on next button
-    UpdateAndAddSalesType    Telia Domain Name Service
+    Update And Add SalesType    Telia Domain Name Service
     Create_Order
 
 Product8: Telia Robotics
@@ -123,7 +123,7 @@ Product8: Telia Robotics
     Searching and adding product    Telia Robotics
     update_setting_TeliaRobotics
     clicking on next button
-    UpdateAndAddSalesType    Telia Robotics
+    Update And Add SalesType    Telia Robotics
     Create_Order
 
 Product8: Telia Crowd Insights
@@ -132,7 +132,7 @@ Product8: Telia Crowd Insights
     Searching and adding product    Telia Crowd Insights
     update_setting_TeliaRobotics
     clicking on next button
-    UpdateAndAddSalesType    Telia Crowd Insights
+    Update And Add SalesType    Telia Crowd Insights
     Create_Order
 
 Product8: Telia Sign
@@ -141,7 +141,7 @@ Product8: Telia Sign
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
     clicking on next button
-    UpdateAndAddSalesType    Telia Sign
+    Update And Add SalesType    Telia Sign
     Create_Order
 
 Product9: Telia ACE
@@ -149,7 +149,7 @@ Product9: Telia ACE
     General Setup    B2B
     Searching and adding product    Telia ACE
     clicking on next button
-    UpdateAndAddSalesType    Telia ACE
+    Update And Add SalesType    Telia ACE
     Create_Order
 
 Product10: Genesys PureCloud
@@ -157,7 +157,7 @@ Product10: Genesys PureCloud
     General Setup    B2B
     Searching and adding product    Genesys PureCloud
     clicking on next button
-    UpdateAndAddSalesType    Genesys PureCloud
+    Update And Add SalesType    Genesys PureCloud
     Create_Order
 
 Test scenario 1:Telia Architect
@@ -168,11 +168,10 @@ Test scenario 1:Telia Architect
     General Setup    B2B
     AddToCart with product_id    Telia Arkkitehti jatkuva palvelu   01u6E000007Roo5
     Update setting Telia Arkkitehti jatkuva palvelu    d    yes
-    Update setting Telia Arkkitehti jatkuva palvelu    d    yes
     AddToCart with product_id    Muut asiantuntijapalvelut   01u6E000007RosF
     Update setting Muut asiantuntijapalvelut
     clicking on next button
-    UpdateAndAddSalesType for 2 products    ${prod_1}    ${prod_2}
+    Update And Add SalesType for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
 
 Test scenario 2: Telia Project management
@@ -181,12 +180,12 @@ Test scenario 2: Telia Project management
     ${prod_1}    set variable    Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}    set variable    Telia Projektijohtaminen varallaolo ja matkustus
     General Setup  B2B
-    AddToCart with product_id    Telia Projektijohtaminen jatkuva palvelu  01u6E000007Roon
+    Searching and adding product   Telia Projektijohtaminen jatkuva palvelu  # 01u6E000007Roon
     update setting common    d    yes
-    AddToCart with product_id    Telia Projektijohtaminen varallaolo ja matkustus    01u6E000007RopK
+    Searching and adding product   Telia Projektijohtaminen varallaolo ja matkustus   # 01u6E000007RopK
     update setting common    h    yes
     clicking on next button
-    UpdateAndAddSalesType for 2 products    ${prod_1}    ${prod_2}
+    Update And Add SalesType for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
 
 Test scenario 3:Telia Consulting
@@ -195,12 +194,12 @@ Test scenario 3:Telia Consulting
     ${prod_1}    set variable    Telia Konsultointi jatkuva palvelu
     ${prod_2}    set variable    Telia Konsultointi varallaolo ja matkustus
     General Setup    B2B
-    AddToCart with product_id    Telia Konsultointi jatkuva palvelu   01u6E000007Ror1
+    Searching and adding product    Telia Konsultointi jatkuva palvelu  # 01u6E000007Ror1
     update setting common    d    yes
     Searching and adding product    Telia Konsultointi varallaolo ja matkustus
     update setting common    h    yes
     clicking on next button
-    UpdateAndAddSalesType for 2 products    ${prod_1}    ${prod_2}
+    Update And Add SalesType for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
 
 Test scenario 7: Key Customer Service Desk Additional Work
@@ -213,7 +212,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
     Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 8: Key Customer Service Desk Additional Work
@@ -226,7 +225,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
     Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 9: Key Customer Service Desk
@@ -239,7 +238,7 @@ Test scenario 9: Key Customer Service Desk
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 10:Training
@@ -251,7 +250,7 @@ Test scenario 10:Training
     Searching and adding product    Koulutus jatkuva palvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 11:Training
@@ -263,7 +262,7 @@ Test scenario 11:Training
     Searching and adding product    Koulutus kertapalvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 12:Training
@@ -275,7 +274,7 @@ Test scenario 12:Training
     Searching and adding product    Koulutus varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 13:Continuity Management Service
@@ -287,7 +286,7 @@ Test scenario 13:Continuity Management Service
     Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 14:Continuity Management Service
@@ -299,7 +298,7 @@ Test scenario 14:Continuity Management Service
     Add_child_product    Jatkuvuudenhallinta kertapalvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 15:Continuity Management Service
@@ -311,7 +310,7 @@ Test scenario 15:Continuity Management Service
     Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 16:Service Lead Service
@@ -323,7 +322,7 @@ Test scenario 16:Service Lead Service
     Searching and adding product    Palvelujohtaminen jatkuva palvelu
     update setting common    d    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 17:Service Lead Service
@@ -335,7 +334,7 @@ Test scenario 17:Service Lead Service
     Searching and adding product    Palvelujohtaminen kertapalvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 18: Service Lead Service
@@ -347,7 +346,7 @@ Test scenario 18: Service Lead Service
     Searching and adding product    Palvelujohtaminen varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 19:Operation and Support Service
@@ -360,7 +359,7 @@ Test scenario 19:Operation and Support Service
     Add Hallinta ja Tuki jatkuva palvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType for 2 products    Telia Palvelunhallintakeskus    Hallinta ja Tuki jatkuva palvelu
+    Update And Add SalesType for 2 products    Telia Palvelunhallintakeskus    Hallinta ja Tuki jatkuva palvelu
     Create_Order
 
 Test scenario 20:Operation and Support Service
@@ -373,7 +372,7 @@ Test scenario 20:Operation and Support Service
     Add Hallinta ja Tuki kertapalvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 21:Operation and Support Service
@@ -386,7 +385,7 @@ Test scenario 21:Operation and Support Service
     Add Hallinta ja Tuki varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 Test scenario 22 Other:Operation and Support Services
@@ -416,7 +415,7 @@ Test scenario 22 Other:Operation and Support Services
     Add Events kertapalvelu
     update setting common    h    no
     clicking on next button
-    UpdateAndAddSalesType    Telia Palvelunhallintakeskus
+    Update And Add SalesType    Telia Palvelunhallintakeskus
     Create_Order
 
 testing
