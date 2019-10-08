@@ -1316,21 +1316,21 @@ CreateAOppoFromAccount_HDC
 Edit Opportunity values
     [Arguments]    ${field}      ${value}
     ${fieldProperty}=    Set Variable        //button[@title='Edit ${field}']
-    ${price_list_old}=     get text        //span[text()='Price List']//following::a
-    Log to console          ${price_list_old}
+    ScrollUntillFound  //span[text()='Price List']//following::a[1]
+    ${price_list_old}=     Get text       //span[text()='Price List']//following::a[1]
     ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
     ScrollUntillFound       ${fieldProperty}
-    click element       ${fieldProperty}
+    Force click element       ${fieldProperty}
     Sleep       2s
-    ${status}    Run Keyword And Return Status    element should be visible      ${B2B_Price_list_delete_icon}
-    Run Keyword If    ${status} == True         click element           ${B2B_Price_list_delete_icon}
+    Wait until element is visible  ${B2B_Price_list_delete_icon}  30s
+    Force click element           ${B2B_Price_list_delete_icon}
     sleep    10s
     wait until page contains element     //input[contains(@title,'Search ${field}')]  60s
     input text    //input[contains(@title,'Search ${field}')]    ${value}
     sleep    3s
     click element    //*[@title='${value}']/../../..
     Sleep  10s
-    click element    //span[text()='Products With Manual Pricing']//following::span[text()='Save']
+    click element    //span[text()='Price List']//following::span[text()='Save']
     Sleep  10s
 
 ChangeThePriceBookToHDC
@@ -4836,7 +4836,7 @@ Fill Contract Details
     ${Telia Signed Date}   set variable  //label[@class='label inputLabel uiLabel-left form-element__label uiLabel']/span[text()='Telia Signed Date']//following::input[1]
     ${Attachment_Button}  set variable   //a[@title='Add Attachment']
     ${File_Path}   set variable    ${CURDIR}\\..\\resources\\Input.txt
-    ${save}  set variable  //button[@title='Save']
+    ${save}  set variable  //span[text()='Contractual Contact Person']//following::span[text()='Save']
     ${ATTACHMENT_NAME}  set variable  //input[@id='name']
     ${File}  set variable   //input[@type='file']
     ${Type}  set variable   //select[@id='type']
