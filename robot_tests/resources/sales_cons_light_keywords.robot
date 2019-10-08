@@ -340,8 +340,10 @@ Create New Master Contact and Validate
 Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
+    Sleep  10s
     Press Enter On   ${field}
-    Click Visible Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
+    Sleep  10s
+    Click Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
     Sleep    2s
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
     #Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      60s
@@ -354,7 +356,7 @@ Validate Contact Details
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${CONTACT_ACCOUNTNAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${CONTACT_MOBILE}']
                     ${email}=    Set Variable               //span[text()='Primary eMail']//following::a[text()='${CONTACT_PRIMARY_EMAIL}']
-    Click Visible Element       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    force click element     //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     #Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep                               5s

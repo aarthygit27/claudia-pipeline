@@ -10,13 +10,6 @@ Resource          ../resources/PO_Light_keywords.robot
 Library           AutoItLibrary
 
 *** Test Cases ***
-
-Test
-    Go To Salesforce and Login into Lightning
-    Go to   https://telia-fi--release.lightning.force.com/lightning/r/Opportunity/0066E000007xu4qQAA/view
-    Edit Opportunity values     Price List  B2B
-
-
 Product1:Telia Multiservice NNI
     [Tags]    B2O_Lightning  PO_Scripts
     General Setup    B2O
