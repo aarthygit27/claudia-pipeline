@@ -1050,7 +1050,7 @@ Log Error Message
     Set Test Variable    ${ERROR_MESSAGE}    ${error_msg}
 
 Login As Digisales Manager And Approve Quote
-    Go To Salesforce And Login    sitpoadmin
+    Go To Salesforce And Login    B2B DigisalesManager
     Open Chatter
     Wait Until Keyword Succeeds    1min    1s    Approve Quote
     [Teardown]    Close Tabs And Logout
@@ -1085,8 +1085,7 @@ Login To Salesforce And Handle Mobile Phone Registration
     Wait Until Page Contains Element    xpath=${LOGOUT_BUTTON}    15 seconds
 
 Login to Salesforce as Digisales User
-    Login To Salesforce    saleadm@teliacompany.com.sitpo   PahaPassu5
-    #${B2B_DIGISALES_USER}    ${PASSWORD}
+    Login To Salesforce    ${B2B_DIGISALES_USER}    ${PASSWORD}
 
 Login To Salesforce as Customer Care User
     Login to Salesforce    ${CUSTOMER_CARE_USER}    ${PASSWORD}
