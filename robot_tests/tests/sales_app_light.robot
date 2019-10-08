@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-#Test Teardown     Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -205,41 +205,56 @@ Lightning: Sales admin Change Account owner for group account
     #click element    //th[@title='Orchestration Plan Name']//following::div[@data-aura-class='forceOutputLookupWithPreview']/a
     #sleep    20s
 
-Create HDC Order -old
-    [Tags]    BQA-HDCOrder    Lightning
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount
-    log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    ${oppo_name}
-    ChangeThePriceBookToHDC    HDC Pricebook B2B
-    ClickingOnCPQ    ${oppo_name}
-    Adding Telia Colocation    Telia Colocation
-    Updating Setting Telia Colocation
-    UpdateAndAddSalesType    Telia Colocation
-    OpenQuoteButtonPage
-    #CreditScoreApproving
-    #go to entity    Oppo_ 20190217-115637    Quotes
-    sleep    40s
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
-    SelectingTechnicalContact    ${contact_name}
-    #${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
-    #${billing_acc_name}
-    ReviewPage
-    ValidateTheOrchestrationPlan
+#Create HDC Order -old
+#    [Tags]    BQA-HDCOrder
+#    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+#    #go to entity    319021811502
+#    #sleep    10s
+#    #${order_number}    run keyword    getOrderStatusAfterSubmitting
+#    #ValidateTheOrchestrationPlan
+#    #go to entity    ${order_number}
+#    #openAssetviaOppoProductRelated
+#    #sleep    300s
+#    #click element    //span[@class='title' and text()='Assets']
+#    #sleep    3s
+#    #click element    //div[@data-aura-class="forceOutputLookupWithPreview"]/a[text()='Telia Colocation']
+#    ##${business_acc_name}    run keyword    CreateBusinessAccount
+#    ##log to console    ${business_acc_name}.this is business account
+#    #Execute javascript    document.body.style.transform = 'scale(0.8)';
+#    #document.body.style.zoom="50%"
+#    #Go To Entity    ${business_acc_name}
+#    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+#    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+#    log to console    ${contact_name}.this is name
+#    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+#    log to console    ${oppo_name}.this is opportunity
+#    ${billing_acc_name}    run keyword    CreateABillingAccount
+#    log to console    ${billing_acc_name}.this is billing account name
+#    Go To Entity    ${oppo_name}
+#    ChangeThePriceBookToHDC    HDC Pricebook B2B
+#    ClickingOnCPQ    ${oppo_name}
+#    Adding Telia Colocation    Telia Colocation
+#    Updating Setting Telia Colocation
+#    UpdateAndAddSalesType    Telia Colocation
+#    OpenQuoteButtonPage
+#    #CreditScoreApproving
+#    #go to entity    Oppo_ 20190217-115637    Quotes
+#    sleep    40s
+#    ClickonCreateOrderButton
+#    NextButtonOnOrderPage
+#    SearchAndSelectBillingAccount
+#    SelectingTechnicalContact    ${contact_name}
+#    #${contact_name}
+#    RequestActionDate
+#    SelectOwnerAccountInfo    ${billing_acc_name}
+#    #${billing_acc_name}
+#    ReviewPage
+#    ValidateTheOrchestrationPlan
 
 Create HDC Order
-
-    [Tags]    BQA-HDCOrder    Lightning     commit_check
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    [Tags]    BQA-HDCOrder    Lightning     commit_check        Sanity
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
@@ -248,7 +263,7 @@ Create HDC Order
     ${billing_acc_name}    run keyword    CreateABillingAccount
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
-    Edit Opportunity values    Price List      B2B
+    #Edit Opportunity values    Price List      B2B
     #ChangeThePriceBookToHDC    HDC Pricebook B2B
     ClickingOnCPQ    ${oppo_name}
     Adding Telia Colocation    Telia Colocation
@@ -257,29 +272,38 @@ Create HDC Order
     View Open Quote
     #sleep    40s
     ClickonCreateOrderButton
-    OpenOrderPage
+    #OpenOrderPage
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount
     select order contacts- HDC  ${contact_name}
      #SelectingTechnicalContact    ${contact_name}
-
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}
     #${billing_acc_name}
-    ReviewPage
+    #ReviewPage
+    clickOnSubmitOrder
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-B2BOrder  commit_check
-     #Login to Salesforce as DigiSales Lightning User
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    [Tags]    BQA-B2BOrder       commit_check       Sanity
+    Login to Salesforce as DigiSales Lightning User
+    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    #GO TO ENTITY    Oppo_ 20190217-191125
+    #SLEEP    60S
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #${sc_name}    run keyword    createAAgreement    Service Contract
+    #${billing_acc_name}    run keyword    CreateABillingAccount
+    #capture page screenshot
+    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    #capture page screenshot
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
     Edit Opportunity values    Price List      B2B
+    #ChangeThePriceBookToHDC    B2B Pricebook
+    ##B2O pricebook
     ClickingOnCPQ   ${oppo_name}
     AddProductToCart    Alerta projektointi
     ##B2O Other Services
@@ -292,7 +316,7 @@ Create B2B Order
     #CreditScoreApproving
     ClickonCreateOrderButton
     #ContractStateMessaging
-    OpenOrderPage
+    #OpenOrderPage
     NextButtonOnOrderPage
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
@@ -324,6 +348,7 @@ Create B2O Order
     View Open Quote
     #CreditScoreApproving
     ClickonCreateOrderButton
+    #clickonopenorderbutton
     NextButtonOnOrderPage
     OrderNextStepsPage
     getOrderStatusBeforeSubmitting
@@ -449,7 +474,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     Go To Entity   ${oppo_name}
     sleep    5s
     ClickingOnCPQ    ${oppo_name}
-    sleep    10s
+    sleep    30s
     Searching and adding multiple products    @{products}
     Updating sales type multiple products    @{products}
     OpenQuoteButtonPage_release
@@ -482,10 +507,11 @@ HDC - Complete Sales Process: UAT/Sanity Regression
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     Go To Entity    ${oppo_name}
-    sleep    5s
+    sleep    10s
     wait until element is visible    ${win_prob_edit}    20s
     click element    ${win_prob_edit}
     Adding partner and competitor
+    Sleep  10s
     #ChangeThePriceBookToHDC    HDC Pricebook B2B
     ChangeThePriceList      B2B
 
@@ -559,7 +585,8 @@ Check banner for customership and service contract
     Go To Entity    ${CONTRACT_ACCOUNT}
     Delete all entities from Accounts Related tab      Contracts
     Go To Salesforce and Login into Lightning
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    #Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity    ${CONTRACT_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     #Create New Opportunity For Customer    ACTIVEACCOUNT
     Verify that warning banner is displayed on opportunity page
@@ -567,7 +594,8 @@ Check banner for customership and service contract
     ClickingOnCPQ       ${OPPORTUNITY_NAME}
     Add product to cart (CPQ)    Telia Verkkotunnuspalvelu
     Update products
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    #Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity    ${CONTRACT_ACCOUNT}
     Check service contract is on Draft Status
 
 Create contact relationship for account
@@ -584,7 +612,7 @@ Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
     [Tags]    Lightning    BQA-10736    Summer-Test     AccountManagement
     Go To Salesforce and Login into Admin User
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Go To Entity    Aacon Oy
     Change account owner to     B2B Lightning
     Validate that account owner was changed successfully    B2B Lightning
 
@@ -719,8 +747,10 @@ Negative: Check external data is not editable when creating new contact
 Negative: Check external data is not editable with existing contact
     [Tags]      Summer-Test     BQA-10946    Lightning
     [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
+    Login to Salesforce as System Admin
+    Create new contact with external data
     Go To Salesforce and Login into Lightning
-    Go to Entity    Matti Vauhkonen
+    Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
     Open edit contact form
     Validate external contact data can not be modified
     Close contact form
@@ -728,8 +758,10 @@ Negative: Check external data is not editable with existing contact
 Negative: Check external data is not editable from account contact relationship view
     [Tags]      Summer-Test     BQA-10947    Lightning
     [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
+    Login to Salesforce as System Admin
+    Create new contact with external data
     Go To Salesforce and Login into Lightning
-    Go to Entity    Matti Vauhkonen
+    Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
     Navigate to related tab
     Click view contact relationship
     Validate external contact data can not be modified
@@ -1022,7 +1054,8 @@ CreateB2BHDCGTMOrder
     Log to console      Submitted for approval
     sleep  5s
     reload page
-    scrolluntillfound  //span[text()='Pending Approval']
+    Sleep  60s
+    #scrolluntillfound  //span[text()='Pending Approval']
     page should contain element  //span[text()='Pending Approval']
     Log to console  Pending approval
     logoutAsUser  B2B DigiSales
@@ -1402,7 +1435,61 @@ DummyTestCaseForHDC
     #${billing_acc_name}
     ReviewPage
     ${order_no}    run keyword    ValidateTheOrchestrationPlan
-    log to console    ${order_no} .this is order
+    log to conole    ${order_no} .this is order
+
+Delete all the contacts in Account
+    Login to Salesforce as System Admin
+    Search Salesforce    Aarslef Oy
+    Delete all entries from Search list     Contacts
+
+Lightning - FYR Calculation for B2B
+     [Tags]     BQA-11305
+     Go To Salesforce and Login into Lightning
+     Go to Entity    Aacon Oy
+     ${contact_name}   run keyword    Create New Contact for Account
+     ${oppo_name}      run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+     log to console      ${oppo_name}.this is opportunity
+     #${oppo_name}    set variable   Test Robot Order_ 20190917-151448
+     Go to Entity   ${oppo_name}
+     clickingoncpq   ${oppo_name}
+     search products    ${B2bproductfyr1}
+     Adding Products for Telia Sopiva Pro N    ${B2bproductfyr1}
+     Adding Products for Telia Sopiva Pro N child products  ${B2bproductfyr2}   ${B2bproductfyr3}
+     Validate the MRC and OTC and Opportunity total in CPQ  ${B2bproductfyr1}   ${B2bproductfyr2}   ${B2bproductfyr3}
+     UpdateAndAddSalesType for B2b products     ${B2bproductfyr1}   ${B2bproductfyr2}
+     Go to Entity   ${oppo_name}
+     ${lineitem_total}  ${fyr_total}    validate createdOPPO for products     ${oppo_name}
+     ${Revenue_Total}   ${fyrt_total}   validate createOPPO values against quote value    ${oppo_name}
+     validate lineitem totals in quote  ${oppo_name}    ${lineitem_total}  ${fyr_total}
+     clickoncreateorderbutton
+     clickonopenorderbutton
+     NextButtonOnOrderPage
+     OrderNextStepsPage
+     validatation on order page     ${fyrt_total}    ${Revenue_Total}
+
+Lightning_Customership Contract
+     Go To Salesforce and Login into Admin User
+     Go To Entity    ${CONTRACT_ACCOUNT}
+     Delete all entities existing service contract from Accounts Related tab     Contracts
+     Go To Salesforce and Login into Lightning
+     Go to Entity    ${CONTRACT_ACCOUNT}
+     ${contact_name}   run keyword    Create New Contact for Account
+     ${oppo_name}      run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+     Verify that warning banner is displayed on opportunity page if tha account already have a customership contract  ${oppo_name}
+     #Go to Entity   ${oppo_name}
+     clickingoncpq   ${oppo_name}
+     search products  Telia chat
+     Adding Products  Telia chat
+     AddProductToCart   DataNet Basic Wireless
+     UpdateAndAddSalesType for 2 products and check contract    Telia chat  DataNet Basic Wireless
+     View Open Quote
+     Go to Entity   ${oppo_name}
+     clickingoncpq   ${oppo_name}
+     search products  Telia chat
+     Adding Products  Telia chat
+     AddProductToCart   DataNet Basic Wireless
+     UpdateAndAddSalesType for 2 products and check contract    Telia chat  DataNet Basic Wireless
+     View Open Quote
 
 Pricing Escalation
     [Tags]   BQA-11368  Test
@@ -1445,13 +1532,13 @@ Pricing Escalation - Rejection
 Investment Process - B2B
     [Tags]   BQA-11387
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Go To Entity    Aacon Oyj
     #${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
     Go To Entity  ${oppo_name}
     ${case_number}  run keyword    Create Investment Case  B2B
-    Submit created Investment    ${oppo_name}   ${case_number}
+    #Submit created Investment    ${oppo_name}   ${case_number}
     Case Approval By Endorser   ${Case_number}  ${oppo_name}
     Case Approval By Approver   ${Case_number}  ${oppo_name}
     Check Case Status  ${Case_number}  B2B
@@ -1486,9 +1573,9 @@ Check of Customership Contract
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${account}
     Delete all existing contracts from Accounts Related tab
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    Set Test Variable   ${contact_name}   ${contact}
-    #Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
+    #${contact}    run keyword    CreateAContactFromAccount_HDC
+    #Set Test Variable   ${contact_name}   ${contact}
+    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify that warning banner is displayed on opportunity page  ${oppo_name}
     Go to account from oppo page
@@ -1539,3 +1626,28 @@ One Order - B2B Colocation and Change Order
 
 
 
+Testing
+
+    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-122629
+    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-122629
+    set Test variable    ${account}   Telia Communication Oy
+    ${Contract_A_Number}  set variable   519092712413
+    ${Contract_B_Number}  set variable  519092712417
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To    https://telia-fi--fesit.lightning.force.com/lightning/r/Opportunity/0064E00000E87cxQAB/view
+    Verify Warning banner about existing of duplicate contract   Test Robot Order_ 20190927-114101
+    Verify Populated Cutomership Contract   ${Contract_A_Number}
+    Change Merged Status  ${Contract_A_Number}
+    Change Merged Status  ${Contract_B_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify Warning banner about existing of duplicate contract  ${oppo_name}
+    Verify Populated Cutomership Contract   ${Contract_B_Number}
+    Go to account from oppo page
+    Create contract Agreement  Service  ${Contract_B_Number}
+    Change Merged Status  ${Contract_A_Number}
+    Go To Entity    ${account}
+    ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
+    Verify Warning banner about Manual selection of contract  ${oppo_name}
+    Verify Populated Cutomership Contract  ${EMPTY}
+    Select Customer ship contract manually   ${Contract_A_Number}
