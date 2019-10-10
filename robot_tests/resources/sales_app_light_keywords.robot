@@ -3057,14 +3057,12 @@ Wait element to load and click
     Run Keyword If    ${status} == False    Wait until page contains element    ${element}    30s
     Wait until keyword succeeds    30s    2s    Click Element    ${element}
 
-Verify that warning banner is displayed on opportunity page if tha account already have a customership contract
-    [Documentation]    After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
-    Wait until element is visible    ${SERVICE_CONTRACT_WARNING}
-
 Verify that warning banner is displayed on opportunity page
+    [Arguments]    ${oppo_name}
     [Documentation]    After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
     Go To Entity    ${oppo_name}
     Wait until element is visible    ${OPPORTUNITY_WARNING_BANNER}  30s
+    Page should contain element   ${OPPORTUNITY_WARNING_BANNER}
 
 Verify that warning banner is not displayed on opportunity page
     [Arguments]    ${oppo_name}
@@ -3078,8 +3076,15 @@ Verify Warning banner about existing of duplicate contract
     [Documentation]  This warning should be visible when multiple customer ship contract are available for the oppo
     Go To Entity    ${oppo_name}
     Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
-    Page should contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please select the preferred customership contract manually on the record.']
+    Page should contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please confirm that the pre-populated customership contract is valid for this opportunity.']
 
+Verify Warning banner about Manual selection of contract
+
+    [Arguments]    ${oppo_name}
+    [Documentation]  This warning should be visible when multiple customer ship contract are available for the oppo
+    Go To Entity    ${oppo_name}
+    Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
+    Page should contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please select the preferred customership contract manually on the record.']
 
 Add product to cart (CPQ)
     [Documentation]     In the CPQ cart search for the wanted product and add it to the cart
@@ -3181,7 +3186,7 @@ Select rows to delete the contract
     [Documentation]    Used to delete all the existing contracts for the business account
 
     ${count}=    get element count    ${table_row}
-    log to console    ${count}
+    log to console   No. of contracts to delete: ${count}
     : FOR    ${i}    IN RANGE    9999
     \    Exit For Loop If    ${i} > ${count}-1
     \    Delete all Contracts    ${table_row}
@@ -3237,7 +3242,6 @@ Delete all existing contracts from Accounts Related tab
     #run keyword if    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
     #Sleep    15s
     ScrollUntillFound  //span[text()='View All']/span[text()='Opportunities']
-    Log to console   found element
     sleep  5s
     ${Status}   Run keyword and return status   Page should contain element  //span[text()='View All']/span[text()='Contracts']
     Log to console  ${Status}
@@ -4180,7 +4184,7 @@ Create Pricing Escalation
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     [Return]  ${Case_number}
 
 
@@ -4215,7 +4219,7 @@ Case Approval By Endorser
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
     Page should contain   requested approval for this case from
     Capture Page Screenshot
-    Log to console    There is an alert in the Chatter about new investment
+    Log to console    There is an alert in the Chatter about new case
 
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
@@ -4226,7 +4230,7 @@ Case Approval By Endorser
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
@@ -4254,7 +4258,7 @@ Case Approval By Approver
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
     Page should contain   requested approval for this case from
     Capture Page Screenshot
-    Log to console    There is an alert in the Chatter about new investment
+    Log to console    There is an alert in the Chatter about new case
 
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
@@ -4265,7 +4269,7 @@ Case Approval By Approver
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
@@ -4312,7 +4316,7 @@ Case Rejection By Approver
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
@@ -4342,6 +4346,7 @@ Check for Notification
     ${Notification_2}  Run keyword   Get text  //div[@class='notification-content']/span[contains(text(),${Case_number})]
     Run Keyword If  '${status}' == 'Rejected'  Should end with     ${Notification}    is rejected
     Run Keyword If  '${status}' == '${EMPTY}'   Should end with     ${Notification}    is requesting approval for case
+    Run Keyword If  '${status}' == 'Approved'   Should end with     ${Notification}    is approved
     Capture Page Screenshot
     Log to console   ${Notification}
     Log to console    ${Notification_2}
@@ -4375,7 +4380,7 @@ Check Case Status
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
     Page should contain   created an attachment
     Capture Page Screenshot
-    Log to console    There is an alert in the Chatter about new Investment pdf generation
+    Log to console    There is an alert in the Chatter about new case pdf generation
 
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
@@ -4406,7 +4411,7 @@ Verify case Status by PM
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     logoutAsUser
 
 Verify case Status by Endorser
@@ -4424,7 +4429,7 @@ Verify case Status by Endorser
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number for Pricing Escalation and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     logoutAsUser
 
 Case Not visible to Normal User
@@ -4649,7 +4654,7 @@ Fill Investment Info
 
 PM details
     [Documentation]  Login as PM. Search and select Case. Fill Pricing Manager Approval form and submit the case for approval.
-    [Arguments]    ${oppo_name}   ${case_Number}
+    [Arguments]    ${oppo_name}   ${case_Number}  ${Account_Type}
 
     # Login and select the case
     Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2O_PM_User}   ${B2O_PM_PW}
@@ -4737,7 +4742,7 @@ Submit Investment - B2B
 
 Create contract Agreement
 
-    [Documentation]  Create contract
+    [Documentation]  Create contract(service/Customership) based on the contract type
     [Arguments]   ${Contract_Type}   ${Linked Customer Contract}=${EMPTY}
     ${Create Agreement}  set variable  //div[@title='Create Agreement']
     ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
@@ -4766,35 +4771,35 @@ Create contract Agreement
     unselect frame
     sleep  10s
     Fill Contract Details  ${Contract_Type}  ${Linked Customer Contract}
-    Activate Contract
+    Activate Contract  ${Contract_Type}
 
 
 Activate Contract
-
+    [Documentation]  Activate the created contract and check the status of the contract
+    [Arguments]   ${Contract_Type}
     Go back
     Sleep  5s
-
     Execute JavaScript    window.scrollTo(0,200)
     sleep  5s
     Page should contain element  //span[text()='Agreement Data Complete']
     Reload page
     Wait until element is visible  //img[@alt='Ready']  60s
-
     Wait until element is visible  //div[@title='Activate']  30s
     Click element  //div[@title='Activate']
     Wait until element is visible  //button[@title='Yes']
     Click element  //button[@title='Yes']
     sleep  3s
     Wait until element is visible   //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[9]/span[text()='Activated']   60s
-    Log to console   Customer Contract ship is activated
+    Log to console   ${Contract_Type} Contract is activated
     ${Contract Agreement}  Run keyword   Get text  //span[@class='slds-form-element__label slds-truncate'][@title='Contract Number']//following::div[2]/span
     ${Contract Agreement_No}   Convert to integer   ${Contract Agreement}
     ${Contract}=   Evaluate   ${Contract Agreement_No}+ 1
     ${Contract Number}    Convert to String    ${Contract}
     set test variable  ${Customer_contract}     ${Contract Number}
-    Log to console  The Contract Number is ${Customer_contract}
+    Log to console  The ${Contract_Type} Contract Number is ${Customer_contract}
 
 Check Customer Signed By
+    [Documentation]   This keyword to be used when Customer signed by field is not getting populated properly
     Execute JavaScript    window.scrollTo(0,1100)
     Press Key   ${Customer Signed By}   ${contact_name}
     sleep  3s
@@ -4818,7 +4823,7 @@ Check Customer Signed By
 
 
 Fill Contract Details
-
+    [Documentation]  To fill form while creating SErvice and customership contract
     [Arguments]  ${Contract_Type}  ${Linked Customer Contract}=${EMPTY}
     #${contact_name}  set variable  Test Rt
     ${Edit Contractual Contact Person}   set variable   //button[@title='Edit Contractual Contact Person']
@@ -4844,7 +4849,7 @@ Fill Contract Details
 
     ScrollUntillFound   //button[@title='Edit Customer Signed By']
     Wait until element is visible  //button[@title='Edit Customer Signed By']  30s
-    Click element  //button[@title='Edit Customer Signed By']
+    Force Click element  //button[@title='Edit Customer Signed By']
     Wait until element is visible   ${Customer Signed By}  30s
     Press Key   ${Customer Signed By}   ${contact_name}
     sleep  3s
@@ -4861,7 +4866,7 @@ Fill Contract Details
     #sleep  5s
 
     Wait until element is visible  ${Customer Signed Date}  30s
-    Click element   ${Customer Signed Date}
+    Force Click element   ${Customer Signed Date}
     Wait until element is visible   //a[@title='Go to next month']   30s
     Click element   //a[@title='Go to next month']
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
@@ -4937,25 +4942,30 @@ Go to account from oppo page
     sleep  3s
 
 Select Offerings
-
+    [Documentation]  Select offerings while creating service contract
     #Wait until element is visible  ${Frame}  30s
     #Select frame  ${Frame}
+    sleep  10s
     ${offering}  set variable  //div[@id='agreement-off-scroll-h']/div/table/tbody/tr[1]/td[1]/label/input[@type='checkbox']
     ${next}  set variable   //div[@id='AddOfferingsStep_nextBtn']
-    Wait until element is visible  ${offering}  30s
+    ${status}   Run keyword and return status   Get element count  ${offering}
+    Log to console  ${status}
     Force Click element  ${offering}
     Click element  ${next}
 
 
 Verify if Customer Contract is linked
+    [Documentation]  To verify if the primary customer ship contract(the one that is not set to merge) is getting linked to the service contract that is being created.
     [Arguments]  ${Linked Customer Contract}
     ${Linked Contract}  set variable    //span[text()='Related Customership Contract']//following::a[1]
     Wait until element is visible   ${Linked Contract}  30s
     ${check}   Run keyword    Get Text   ${Linked Contract}
     Should be equal    ${check}  ${Linked Customer Contract}
-    Log to console  Customer Contract is properly linked
+    Log to console  Customer Contract is properly linked with the service contract that is being created
 
 Change Merged Status
+
+    [Documentation]   Toggle the merge status for the given cutomer contract by going into the related tab of account
     [Arguments]  ${contract_Number}
     Go To Entity    ${account}
     ${save}  set variable  //button[@title='Save']
@@ -4977,7 +4987,7 @@ Change Merged Status
     sleep  5s
 
 Toggle Merge Checkbox
-
+    [Documentation]  Reload the page and set the merge status. To use this keyword when the save button does not work properly in the contract page while setting the merge status.
     sleep  10s
     ${save}  set variable  //button[@title='Save']
     ScrollUntillFound    //button[@title='Edit Merged']
@@ -5001,12 +5011,14 @@ Verify Populated Cutomership Contract
     Return From Keyword if   '${Contract_Number}' =='${EMPTY}'
     ${populated_Contract value}  Get Text   //span[text()='Customership Contract'][@class='test-id__field-label']//following::span[1]/div/a
     Should be equal   ${populated_Contract value}  ${Contract_Number}
-    Log to console  Contract Number Population validation is succesful
+    Log to console  Contract Number Population validation is succesful in opportunity page
 
 Select Customer ship contract manually
+    [Documentation]   When multiple contracts are present for an account and their status are not merged, select the customer ship contract manually
     [Arguments]  ${Contract_Number}
     ${Customership_Contract_Filed}   set variable  //span[text()='Customership Contract']
-    ${save}  set variable  //div[@class='footer ']/div/div/button/span[text()='Save']
+    ${save}  set variable  //span[text()='Customership Contract']/following::span[text()='Save']
+    #${save}  set variable  //div[@class='footer ']/div/div/button[@title='Save']
     ScrollUntillFound   //span[text()='Edit Customership Contract']
     Wait until element is visible  //span[text()='Edit Customership Contract']   30s
     Force Click element  //span[text()='Edit Customership Contract']
@@ -5014,11 +5026,10 @@ Select Customer ship contract manually
     Wait until element is visible   //div[@title='${Contract_Number}']
     Click element   //div[@title='${Contract_Number}']
     sleep  5s
-    ScrollUntillFound  ${save}
-    ${status}  Run keyword and return status   Element should be visible  ${save}
-    Run keyword Unless   ${status}   Reload page
-    Run keyword Unless   ${status}   sleep  30s
-    Run keyword Unless   ${status}   Select Customer ship contract manually   ${Contract_Number}
+    Wait until page contains element   ${save}  20s
+    ${status}   Run keyword and return status   Get element count  ${save}
+    Log to console  ${status}
+    Set focus to element  ${save}
     click element  ${save}
     sleep  5s
 
@@ -5027,7 +5038,63 @@ Change Order
 
     Initiate Change Order
     Request Date
+    CPQ Page
 
+CPQ Page
+
+    Verify the Action of product  ${pname}  ${Value}
+    Verify onetime total charge
+    Delete Product   ${pname}
+    Verify the Action of product  ${pname}  ${Value}
+    Add Product   ${pname}
+    Verify the Action of product  ${pname}  ${Value}
+    clicking on next button
+    Select Account
+    select contact
+    Select Date
+    Select account Owner
+    Verify Order Type
+    Submit Order Button
+    ${Order_Number}  Set variable   ValidateTheOrchestrationPlan
+
+Verify Order Type
+
+    ${ACCOUNT_DETAILS}  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    Wait until element is visible   ${ACCOUNT_DETAILS}  60s
+    Force Click element  ${ACCOUNT_DETAILS}
+    ${Order_Type}  get text   //div[@class='test-id__field-label-container slds-form-element__label']/span[text()='Order Type']//following::span[2]
+    Should be equal   ${Order_Type}  Change
+
+Verify the Action of product
+    [Arguments]  ${pname}  ${Value}
+    ${Action}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']//following::div[13]/div
+    ${Action Value}  Get Text  ${Action}
+    Should be equal     ${Action Value}  ${Value}
+    Log to console  The ACtion value for the product ${pname} is verified
+
+Verify onetime total charge
+
+    ${One Time Value}  get text  //div[contains(text(),'OneTime Total')]//following::div[1]
+    Should be equal   ${One Time Value}  '0'
+
+Delete Product
+    [Arguments]  ${pname}
+
+    ${Delete_Button}   set variable   //div[contains(text(),'${pname}')]//following::button[4][@title='Delete Item']
+    Wait until element is visible   ${Delete_Button}  30s
+    Click element  ${Delete_Button}
+    Wait until element is visible  //button[text()='Delete']  30s
+    Click element  //button[text()='Delete']
+
+Add Product
+
+    [Arguments]  ${pname}
+
+    ${Add_Product}  set variable   //div[contains(text(),'${pname}')]//following::button[1]
+    Wait until element is visible  ${Add_Product}  60s
+    Click element  ${Add_Product}
+    #Wait until element is added
+    Wait until element is visible   //div[contains(text(),'${pname}')]//following::button[4][@title='Delete Item']
 
 Request date
 
@@ -5051,3 +5118,23 @@ Initiate Change Order
     Scroll until found   //button[text()='Change To Order']
     Click element  //button[text()='Change To Order']
     Unselect frame
+
+DDM Request Handling
+
+    Login Workbench
+
+
+Login Workbench
+
+    ${Env}  set variable   //label[text()='Environment:']//following::select[1]
+    ${Environment_Option}  set variable  //label[text()='Environment:']//following::select[1]/option[text()='Sandbox']
+    ${T&C}  set variable  //input[@type='checkbox'][@id='termsAccepted']
+    ${login}  set variable  //input[@type='submit']
+    Execute Javascript    window.open('https://workbench.developerforce.com');
+    sleep    10s
+    Switch between windows    1
+    Wait Until Element Is Visible    ${ENV}    30s
+    Click element   ${Env}
+    Click element  ${Environment_Option}
+    Click element    ${T&C}
+    Click element   ${login}
