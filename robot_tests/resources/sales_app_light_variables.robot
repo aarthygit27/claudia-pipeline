@@ -16,7 +16,7 @@ ${Endorser_User}  endorserauto@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
 ${Approver_User}  approverauto@teliacompany.com.${ENVIRONMENT}
 ${Approver_PW}  PahaPassu1
-${LIGHTNING_TEST_ACCOUNT}    Aarsleff Oy
+${LIGHTNING_TEST_ACCOUNT}    ABB Technology Oy
 ${vLocUpg_TEST_ACCOUNT}    Aacon Oy
 #Digia Oyj
 ${CLASSIC_MENU}    //*[@id="userNav"]
@@ -139,7 +139,7 @@ ${save_task_button}    //div/div[3]/div/div/div[2]/div[2]/button
 ${suucess_msg_task_anchor}    //div[contains(text(),'You have an upcoming Task with')]
 #//*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${TEST_ACCOUNT_CONTACT}    Aacon Oy
-${TEST_CONTACT}     Aarsleff Oy
+${TEST_CONTACT}     ABB Technology Oy
 #${contact_name_form}    //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
 ${related_to}     //span[@class='data-social-photo-guid-0c81cbe7-ad99-4592-a537-f11c4b51aaee photoContainer forceSocialPhoto_v2 forceOutputLookup']/../a[text()]
 ${contact_name_form}    //span[@class="title"]//following::div[@class="runtime_sales_activitiesManyWhoName"]
