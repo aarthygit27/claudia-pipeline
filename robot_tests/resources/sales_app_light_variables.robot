@@ -1,7 +1,7 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    release
+${ENVIRONMENT}    devbase
 #${ENVIRONMENT}    fESIT
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
