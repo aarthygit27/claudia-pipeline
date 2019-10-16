@@ -1,8 +1,7 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    devbase
-#${ENVIRONMENT}    fESIT
+${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu2
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
@@ -17,8 +16,9 @@ ${Endorser_User}  endorserauto@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
 ${Approver_User}  approverauto@teliacompany.com.${ENVIRONMENT}
 ${Approver_PW}  PahaPassu1
-${LIGHTNING_TEST_ACCOUNT}    ABB Technology Oy
-${vLocUpg_TEST_ACCOUNT}    Aacon Oy
+${LIGHTNING_TEST_ACCOUNT}       Affecto Oy
+${vLocUpg_TEST_ACCOUNT}    Aarsleff Oy
+${CONTRACT_ACCOUNT}     Affecto Oy
 #Digia Oyj
 ${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
@@ -140,7 +140,7 @@ ${save_task_button}    //div/div[3]/div/div/div[2]/div[2]/button
 ${suucess_msg_task_anchor}    //div[contains(text(),'You have an upcoming Task with')]
 #//*[contains(text(),'You have an upcoming Task with')]/../../../div/div/div/div[@class='primaryField slds-media__body']/div/div/a
 ${TEST_ACCOUNT_CONTACT}    Aacon Oy
-${TEST_CONTACT}     ABB Technology Oy
+${TEST_CONTACT}     Aarsleff Oy
 #${contact_name_form}    //*[@class='slds-form-element__control']/div/div[@class='runtime_sales_activitiesManyWhoName']/div/div/a
 ${related_to}     //span[@class='data-social-photo-guid-0c81cbe7-ad99-4592-a537-f11c4b51aaee photoContainer forceSocialPhoto_v2 forceOutputLookup']/../a[text()]
 ${contact_name_form}    //span[@class="title"]//following::div[@class="runtime_sales_activitiesManyWhoName"]
@@ -226,10 +226,10 @@ ${360_VIEW}     //a[@title='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[text()= 'Availability check']
 ${DEFAULT_ADDRESS}      Korpijärventie 3
 ${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='${DEFAULT_ADDRESS}']
-${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[6]/td[1]/label/input
-${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']
+${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[5]/td[1]/label/input/../span
+${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
-${B2O_DIGISALES_LIGHT_PASSWORD}     PahaPassu2
+${B2O_DIGISALES_LIGHT_PASSWORD}    PahaPassu2
 ${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input
 ${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']
 ${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
@@ -255,6 +255,7 @@ ${externaleMail}    externalemail@email.com
 ${externalofficename}    ExternalOffice
 ${ulmid}    ULMID
 ${externalid}      EXternalID
+${RemoveAccountOwner}       Oy Wasaware Ab
 
 ### Lead  Variables ###
 

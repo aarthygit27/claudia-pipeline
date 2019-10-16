@@ -34,7 +34,7 @@ Login to Salesforce as DigiSales Lightning User
     Login To Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}    ${PASSWORDCONSOLE}
 
 Login to Salesforce Lightning
-    [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${PASSWORD}
+    [Arguments]    ${username}    ${password}
     Wait Until Page Contains Element    id=username     240s
     Input Text    id=username    ${username}
     Sleep       5s
@@ -341,9 +341,11 @@ Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
     Sleep  10s
-    Press Enter On   ${field}
+    #Press Enter On   ${field}
+    click element  //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]
     Sleep  10s
-    Click Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
+    #Click Visible Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
+    click visible element  //div[@class="searchScrollerWrapper"]//a[text()="${value}"]
     Sleep    2s
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
     #Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      60s
