@@ -344,7 +344,6 @@ Select from search List
     : FOR    ${i}    IN RANGE    10
     \   ${IsErrorVisible}=    Run Keyword And Return Status        element should not be visible      //*[text()='Sorry to interrupt']
     \   Sleep   2s
-    \   log to console          ${IsErrorVisible}
     \   Click Element       //button[@title='OK']
     \   Exit For Loop If    ${i} > ${count}-1
     #Press Enter On   ${field}
