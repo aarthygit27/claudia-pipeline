@@ -1,5 +1,5 @@
 *** Settings ***
-Resource          ../resources/sales_app_light_keywords.robot
+#Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
@@ -8,11 +8,11 @@ Resource          ../resources/PO_Lighting_variables.robot
 General Setup
 
     [Arguments]    ${price_list}
-    Go To Salesforce and Login into Lightning    #sitpo admin
+    Open Salesforce and Login into Lightning   #sitpo admin
     Go To Entity    ${test_account}
-    ${contact}  run keyword    CreateAContactFromAccount_HDC
+    ${contact}  run keyword    Create Contact From Account
     Set Test Variable    ${contact_name}  ${contact}
-    ${opportunity}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${opportunity}    run keyword    Create Opportunity    ${contact_name}
     Set Test Variable    ${oppo_name}   ${opportunity}
     #${bill_acc_name}    run keyword    CreateABillingAccount
     #Set Test Variable     ${billing_acc_name}   ${bill_acc_name}
@@ -21,12 +21,251 @@ General Setup
     Log to console      old pricelist is ${price_list_old}
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${price_list_old}    ${price_list}
     Run Keyword If    ${compare}== False   Log to console    Change Pricielist
-    Run Keyword If    ${compare}== False   Edit Opportunity values     Price List  ${price_list}
+    Run Keyword If    ${compare}== False   Edit Opportunity Page     Price List  ${price_list}
     ClickingOnCPQ   ${oppo_name}
-    sleep  15s
+   #sleep  15s
 
 Login to Salesforce as sitpo admin
     Login To Salesforce Lightning    ${SALES_ADMIN_SITPO}    ${PASSWORD_SALESADMIN_SITPO}
+
+Open Salesforce and Login into Lightning
+    [Arguments]    ${user}=DigiSales Lightning User
+    [Documentation]    Go to Salesforce and then Login as DigiSales Lightning User, then switch to Sales App
+    ...    and then select the Home Tab in Menu
+    Open Salesforce
+    #Sleep    20s
+    #Run Keyword    Login to Salesforce as ${user}
+    Open Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}    ${Password_merge}
+    Open Sales App
+    Go to Home
+    Clear All Notifications
+    #Sleep    30s
+    ${error}=    Run Keyword And Return Status    Element Should Be Visible    //div[@class()='modal-container slds-modal__container']
+    Run Keyword If    ${error}    click button    //button[@title='OK']
+
+Open Salesforce
+    [Documentation]    Go to SalesForce and verify the login page is displayed.
+    Go To    ${LOGIN_PAGE}
+    Login Page Should Be Open
+
+Login Page Should Be Open
+    [Documentation]    To Validate the elements in Login page
+    Wait Until Keyword Succeeds    60s    1 second    Location Should Be    ${LOGIN_PAGE}
+    Wait Until Element Is Visible    id=username    60s
+    Wait Until Element Is Visible    id=password    60s
+
+Open Sales App
+    [Documentation]    Go to SalesForce and switch to salesapp menu.
+    ${IsElementVisible}=    Run Keyword And Return Status    element should not be visible    ${SALES_APP_NAME}
+    Run Keyword If    ${IsElementVisible}    Switch to SalesApp
+
+Go to Home
+    [Arguments]    ${timeout}=60s
+    Wait Until Element is Visible    ${SALES_APP_HOME}    60s
+    Click Element    ${SALES_APP_HOME}
+    Sleep    10s
+
+
+Clear All Notifications
+    ${notifi_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[text()='Clear All']/..
+    Run Keyword If    ${notifi_present}    Clear Notifications
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
+    Run Keyword If    ${present}    Close All Notifications
+
+Clear Notifications
+    click element    xpath=//*[text()='Clear All']/..
+
+Close All Notifications
+    @{locators}=    Get Webelements    xpath=${CLOSE_NOTIFICATION}
+    ${original}=    Create List
+    : FOR    ${locator}    IN    @{locators}
+    \    Run Keyword and Ignore Error    Close Notification
+
+Close Notification
+    ${visible}=    run keyword and return status    element should be visible    ${CLOSE_NOTIFICATION}
+    run keyword if    ${visible}    Click Element    xpath=${CLOSE_NOTIFICATION}
+
+Open Salesforce Lightning
+
+    [Arguments]    ${username}    ${password}
+    #log to console    ${password}
+    Wait Until Page Contains Element    id=username    240s
+    Input Text    id=username    ${username}
+    Sleep    5s
+    Input text    id=password    ${password}
+    Click Element    id=Login
+    Sleep    20s
+    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[text()='Remind Me Later']
+    Run Keyword If    ${infoAvailable}    force click element    //a[text()='Remind Me Later']
+    run keyword and ignore error    Check For Lightning Force
+    ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${LIGHTNING_ICON}
+    Run Keyword If    ${buttonNotAvailable}    reload page
+    Wait Until Page Contains Element    xpath=${LIGHTNING_ICON}    60 seconds
+
+Go to Entity
+    [Arguments]    ${target}    ${type}=${EMPTY}
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
+    Run Keyword If    ${present}    Close All Notifications
+    Log    Going to '${target}'
+    Wait Until Keyword Succeeds    8 mins    40s    Search And Select the Entity    ${target}    ${type}
+    Sleep    10s    The page might load too quickly and it can appear as the search tab would be closed even though it isn't
+
+Search And Select the Entity
+    [Arguments]    ${target}    ${type}=${EMPTY}
+    Reload page
+    Search Salesforce    ${target}
+    Select Entity    ${target}    ${type}
+
+Search Salesforce
+    [Arguments]    ${item}
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${item}
+    #Sleep    2s
+    Press Enter On    ${SEARCH_SALESFORCE}
+    #Press Key    xpath=${SEARCH_SALESFORCE}    \\13
+    Sleep    2s
+    ${IsVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    run keyword unless    ${IsVisible}    Press Enter On    ${SEARCH_SALESFORCE}
+    ${IsNotVisible}=    Run Keyword And Return Status    Element Should Be Visible    ${SEARCH_RESULTS}    60s
+    run keyword unless    ${IsNotVisible}    Search Salesforce    ${item}
+    ${NoResultFound}=    Run Keyword And Return Status    Element Should Be Visible    //div[contains(@class, 'noResultsMessage')]    60s
+    run keyword if    ${NoResultFound}    Search And Select the Entity    ${item}
+
+Select Entity
+    [Arguments]    ${target_name}    ${type}
+    ${element_catenate} =    set variable    [@title='${target_name}']
+    #Sleep    15s
+    #${status}=  Run Keyword And Return Status  Element Should Be Visible   ${Select task}    100s
+    #Run Keyword If   ${status}   Click Visible Element    ${TABLE_HEADERForEvent}${element_catenate}
+    #Run Keyword unless   ${status}    Click Visible Element    ${TABLE_HEADER}${element_catenate}
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    #Sleep    15s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    #Sleep    15s
+    Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
+    ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
+    run keyword Unless    ${ISOpen}    Search And Select the Entity    ${target_name}    ${type}
+
+Entity Should Be Open
+    [Arguments]    ${target_name}
+    Sleep    5s
+    Wait Until Page Contains element    ${target_name}    30s
+    #${Case} ---- ActiveStatus or PassiveStatus of Account
+
+Create Contact From Account
+
+
+    log to console    This is to create new contact
+    ${a}    create unique name    Contact_
+    force click element    //li/a/div[text()='New Contact']
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    60s
+    #click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='form-element__group ']/div[@class='uiInput uiInputSelect forceInputPicklist uiInput--default uiInput--select']/div/div/div/div/a
+    #sleep    3s
+    #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
+    clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    Testing
+    #sleep    5s
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']    30s
+    clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
+    #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
+    force click element    //Span[text()='Name']//following::input[@placeholder="Last Name"]
+    input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${a}
+    sleep    2s
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    30s
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
+    Sleep  10s
+    clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       kasibhotla.sreeramachandramurthy@teliacompany.com
+    sleep    5s
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
+    force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
+    ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
+    Sleep  30s
+    log to console    ${IsErrorVisible}
+    Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${a}
+    [Return]    Testing ${a}
+
+reEnterContactData
+    [Arguments]    ${random_name}
+    #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
+    clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
+    force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    Testing
+    sleep    5s
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']    30s
+    clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
+    #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='lastName compoundBLRadius compoundBRRadius form-element__row input']
+    force click element    //Span[text()='Name']//following::input[@placeholder="Last Name"]
+    input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${random_name}
+    sleep    2s
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
+    sleep    2s
+    clear element text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       kasibhotla.sreeramachandramurthy@teliacompany.com
+    Sleep  2s
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
+    force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
+    sleep    5s
+    ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
+    Sleep  30s
+    log to console    ${IsErrorVisible}
+    Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${random_name}
+    #sleep    10s
+
+Create Opportunity
+
+    [Arguments]    ${b}=${contact_name}
+    log to console    this is to create a Oppo from contact ${b}
+    ${oppo_name}    create unique name    Test Robot Order_
+    wait until page contains element    //li/a[@title="New Opportunity"]   60s
+    click element    //li/a[@title="New Opportunity"]
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    40s
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    ${oppo_name}
+    sleep    3s
+    ${close_date}    get date from future    10
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[2]    ${close_date}
+    #sleep    10s
+    Wait until element is visible    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]  30s
+    Capture Page Screenshot
+    Input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    Wait until element is visible   //*[@title='${b}']/../../..    30s
+    click element    //*[@title='${b}']/../../..
+    sleep    2s
+    input text    //textarea    Description Testing
+    click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
+    sleep    10s
+    [Return]    ${oppo_name}
+
+Select from search List
+    [Arguments]    ${field}    ${value}
+    Input Text    ${field}    ${value}
+    Wait until element is visible    //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]  30s
+    click element  //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]
+    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${value}']
+    Sleep    2s
+
+Edit Opportunity Page
+
+    [Arguments]    ${field}      ${value}
+    ${fieldProperty}=    Set Variable        //button[@title='Edit ${field}']
+    ScrollUntillFound  //span[text()='Price List']//following::a[1]
+    ${price_list_old}=     Get text       //span[text()='Price List']//following::a[1]
+    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
+    ScrollUntillFound       ${fieldProperty}
+    Force click element       ${fieldProperty}
+    Sleep       2s
+    Wait until element is visible  ${B2B_Price_list_delete_icon}  30s
+    Force click element           ${B2B_Price_list_delete_icon}
+    sleep    10s
+    wait until page contains element     //input[contains(@title,'Search ${field}')]  60s
+    input text    //input[contains(@title,'Search ${field}')]    ${value}
+    sleep    3s
+    click element    //*[@title='${value}']/../../..
+    Sleep  10s
+    click element    //span[text()='Price List']//following::span[text()='Save']
+    Sleep  10s
 
 Change Price list
     [Arguments]    ${price_lists}
@@ -74,6 +313,29 @@ Change Price list
     click element    //button[@title='Save']
     #execute javascript    window.scrollTo(0,0)
     sleep    5s
+
+ClickingOnCPQ
+    [Arguments]    ${b}=${oppo_name}
+    ##clcking on CPQ
+    log to console    ClickingOnCPQ
+    Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
+    #wait until page contains element    xpath=//h1[text()='${b}']    30s
+    sleep    30s
+
+Force click element
+    [Arguments]    ${elementToClick}
+    ${element_xpath}=    Replace String    ${elementToClick}    \"    \\\"
+    Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep    2s
+
+ScrollUntillFound
+    [Arguments]    ${element}
+    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
+    : FOR    ${i}    IN RANGE    9999
+    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+    \    Sleep    5s
+    \    Execute JavaScript    window.scrollTo(0,${i}*200)
+    \    Exit For Loop If    ${status}
 
 updating close date
     ${close_date}=    Get Date From Future    30
@@ -587,10 +849,6 @@ clicking on next button
     Reload page
     Wait Until Element Is Enabled    ${iframe}    90s
     select frame    ${iframe}
-    sleep  30s
-
-    #Scroll Page To Location    0    100
-
     Wait Until Element Is Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True
     click element    ${next_button}
@@ -621,7 +879,7 @@ UpdatePageNextButton
     unselect frame
     #sleep    60s
 
-Update And Add SalesType
+Update Product Page
 
     [Arguments]    ${products}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
@@ -644,7 +902,7 @@ Update And Add SalesType
     Force click element    ${next_button}
     unselect frame
 
-Update And Add SalesType for 2 products
+Update Product Page for 2 products
     [Arguments]    ${product1}    ${product2}
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
     ${product_1}=    Set Variable    //td[normalize-space(.)='${product1}']
@@ -672,11 +930,11 @@ Update And Add SalesType for 2 products
 
 Create_Order
 
-    ViewOpenQuote
+    View Or Open Quote
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrder
-    Open Order Page
+    #Open Order Page
     NextButtonInOrderPage
     sleep  10s
     Wait until element is visible   //div[contains(@class,'slds')]/iframe   30s
@@ -686,7 +944,7 @@ Create_Order
     Unselect frame
     Run Keyword Unless    ${Status}    Enter Details
 
-ViewOpenQuote
+View Or Open Quote
 
     ${open_quote}=    Set Variable    //button[@id='Open Quote']    #//button[@id='Open Quote']
     ${view_quote}    Set Variable    //button[@id='View Quote']
@@ -709,19 +967,17 @@ ViewOpenQuote
 ClickonCreateOrder
 
     log to console    ClickonCreateOrderButton
-    #clicking on CPQ after credit score approval and click create order button this cpq not able to click so work on hold
-    #click element  //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    #sleep   10s
-    wait until page contains element    //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    30s
+    wait until page contains element    //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    60s
     force click element    //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
     sleep    15s
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe  60s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
     ${status}     Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
     Log to console      ${status}
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
-    unselect
+    unselect frame
 
 Open Order Page
 
@@ -741,7 +997,7 @@ NextButtonInOrderPage
 
     log to console    NextButtonOnOrderPage
     #Reload page  If reloaded it opens the open order page. So does not include here
-    sleep  30s
+    sleep  20s
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
@@ -782,7 +1038,7 @@ Enter Details
 
 Create_Order for multiple products
     [Arguments]    ${prod_1}  ${prod_2}
-    ViewOpenQuote
+    View Or Open Quote
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrder
@@ -1053,10 +1309,10 @@ Enter Group id and submit
 
 view orchestration plan details
     Reload page
-    sleep  20s
+    sleep  10s
     ${plan}     set variable    //a[contains(@class,'textUnderline outputLookupLink')][contains(text(),'Plan')]
 
-    Scroll Page to element   ${plan}
+    ScrollUntillFound   ${plan}
     #Execute JavaScript    window.scrollTo(0,1200)
     Click element   ${plan}
     sleep  10s
