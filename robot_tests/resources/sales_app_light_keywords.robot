@@ -67,7 +67,6 @@ Login to Salesforce as DigiSales B2O User
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce Lightning
-
     [Arguments]    ${username}    ${password}
     #log to console    ${password}
     Wait Until Page Contains Element    id=username    240s
@@ -1317,21 +1316,21 @@ CreateAOppoFromAccount_HDC
 Edit Opportunity values
     [Arguments]    ${field}      ${value}
     ${fieldProperty}=    Set Variable        //button[@title='Edit ${field}']
-    ScrollUntillFound  //span[text()='Price List']//following::a[1]
-    ${price_list_old}=     Get text       //span[text()='Price List']//following::a[1]
+    ${price_list_old}=     get text        //span[text()='Price List']//following::a
+    Log to console          ${price_list_old}
     ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
     ScrollUntillFound       ${fieldProperty}
-    Force click element       ${fieldProperty}
+    click element       ${fieldProperty}
     Sleep       2s
-    Wait until element is visible  ${B2B_Price_list_delete_icon}  30s
-    Force click element           ${B2B_Price_list_delete_icon}
+    ${status}    Run Keyword And Return Status    element should be visible      ${B2B_Price_list_delete_icon}
+    Run Keyword If    ${status} == True         click element           ${B2B_Price_list_delete_icon}
     sleep    10s
     wait until page contains element     //input[contains(@title,'Search ${field}')]  60s
     input text    //input[contains(@title,'Search ${field}')]    ${value}
     sleep    3s
     click element    //*[@title='${value}']/../../..
     Sleep  10s
-    click element    //span[text()='Price List']//following::span[text()='Save']
+    click element    //span[text()='Products With Manual Pricing']//following::span[text()='Save']
     Sleep  10s
 
 ChangeThePriceBookToHDC
@@ -5385,7 +5384,7 @@ Initiate Change Order
     select frame  ${frame}
     Wait until element is visible  //li[@ng-repeat='prod in assetItems'][1]/div/div/div/div/span/a/span  30s
     Click element  //li[@ng-repeat='prod in assetItems'][1]/div/div/input
-    ScrollUntillFound   //button[text()='Change To Order']
+    Scroll until found   //button[text()='Change To Order']
     Click element  //button[text()='Change To Order']
     Unselect frame
 
