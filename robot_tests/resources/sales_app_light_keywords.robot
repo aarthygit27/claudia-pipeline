@@ -67,6 +67,7 @@ Login to Salesforce as DigiSales B2O User
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce Lightning
+
     [Arguments]    ${username}    ${password}
     #log to console    ${password}
     Wait Until Page Contains Element    id=username    240s
@@ -5039,6 +5040,7 @@ Change Order
     Initiate Change Order
     Request Date
     CPQ Page
+    Order Post script
 
 CPQ Page
 
@@ -5049,6 +5051,274 @@ CPQ Page
     Add Product   ${pname}
     Verify the Action of product  ${pname}  ${Value}
     clicking on next button
+
+clicking on next button
+    ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
+    ${next_button}    set variable    //span[contains(text(),'Next')]
+    Reload page
+    Wait Until Element Is Enabled    ${iframe}    90s
+    select frame    ${iframe}
+    sleep  30s
+
+    #Scroll Page To Location    0    100
+
+    Wait Until Element Is Visible    ${next_button}    60s
+    #Run Keyword If    ${status} == True
+    click element    ${next_button}
+    Unselect Frame
+    #sleep  10s
+
+Select Account
+
+    [Documentation]    This is to search and select the account
+    ${account_name}=    Set Variable    //p[contains(text(),'Search')]
+    ${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
+    ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    sleep    5s
+    wait until element is visible   //div[@class='iframe-parent slds-template_iframe slds-card']/iframe    60s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+
+    Wait Until Element Is Visible    ${account_name}    120s
+    click element    ${account_name}
+    #sleep    3s
+    Wait Until Element Is Visible    ${account_checkbox}    120s
+    click element    ${account_checkbox}
+    #sleep    3s
+    Capture Page Screenshot
+    Wait Until Element Is Visible    ${search_account_next_button}    120s
+    Click Element    ${search_account_next_button}
+    Unselect frame
+    sleep  5s
+
+select contact
+
+
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
+    ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
+    ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe   30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Technical COntact page
+    Wait Until Element Is Visible    ${contact_search}    120s
+    Input Text    ${contact_search}   ${contact_name}  # For Telia Communication Oy Account
+    #sleep    15s
+    Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    #sleep   10s
+    Wait until element is visible  //input[@id='OCEmail']   30s
+    Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
+
+    ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
+    Run Keyword if  ${status}  Enter technical contact
+    Execute JavaScript    window.scrollTo(0,200)
+    Sleep    5s
+    #sleep  10s
+    Wait until element is visible   ${contact_next_button}  30s
+    Click Element    ${contact_next_button}
+    unselect frame
+    #sleep   10s
+
+Enter technical contact
+    ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
+    Execute JavaScript    window.scrollTo(0,200)
+    Wait Until element is visible   ${Technical_contact_search}     30s
+    Input text   ${Technical_contact_search}  ${contact_name}  # Contact of TeliaCommunication Oy account
+    #sleep  10s
+    Wait until element is visible   css=.typeahead .ng-binding  30s
+    Click element   css=.typeahead .ng-binding
+    #sleep  10s
+    Wait until element is visible  //input[@id='TCEmail']   30s
+    Input Text   //input[@id='TCEmail']   primaryemail@noemail.com
+    Execute JavaScript    window.scrollTo(0,200)
+    ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Main User:']
+    Run Keyword if  ${status}  Enter Main user
+
+Enter Main User
+
+    ${Main_user_serach}=  set variable  //input[@id='MainContactTA']
+    Wait Until element is visible   ${Main_user_serach}     30s
+    Input text   ${Main_user_serach}  ${contact_name}
+    #sleep  10s
+    Wait until element is visible   css=.typeahead .ng-binding  30s
+    Click element   css=.typeahead .ng-binding
+    #sleep  10s
+    Wait until element is visible  //input[@id='MCEmail']   30s
+    Input Text   //input[@id='MCEmail']   primaryemail@noemail.com
+    Execute JavaScript    window.scrollTo(0,200)
+
+
+
+
+
+Select Date
+
+    [Documentation]    Used for selecting \ requested action date
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #sleep    60s
+    Wait until element is visible   ${additional_info_next_button}  60s
+    ${status}    Run Keyword and Return Status    Page should contain element    //input[@id='RequestedActionDate']
+    #Log to console    ${status}
+    Run Keyword if    ${status}   Pick Date without product
+    Run Keyword Unless    ${status}    Click Element    ${additional_info_next_button}
+    Unselect frame
+
+Pick Date without product
+
+    Log to console    picking date
+    ${date_id}=    Set Variable    //input[@id='RequestedActionDate']
+    ${next_month}=    Set Variable    //button[@title='Next Month']
+    ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    #${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${date_id}    120s
+    Click Element    ${date_id}
+    Wait Until Element Is Visible    ${next_month}    120s
+    Click Button    ${next_month}
+    click element    ${firstday}
+    #sleep    5s
+    Capture Page Screenshot
+    Click Element    ${additional_info_next_button}
+
+
+select Date for multiple products
+
+    [Arguments]   ${prod_1}   ${prod_2}
+    [Documentation]    Used for selecting \ requested action date for each parent product
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is visible   ${additional_info_next_button}  60s
+    ${status}    Run Keyword and Return Status    Element should be visible    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_1}')]//following::input[2]
+    Log to console    ${prod_1}
+    Run Keyword if    ${status}    Pick Date with product    ${prod_1}
+    ${status}    Run Keyword and Return Status    Element should be visible   //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_2}')]//following::input[2]
+    Log to console    ${prod_2}
+    Run Keyword if    ${status}    Pick Date with product     ${prod_2}
+    #sleep  5s
+    Click Element    ${additional_info_next_button}
+    Unselect frame
+
+Pick date with product
+
+    [Arguments]    ${product}
+    Log to console    picking date
+    ${date_id}=    Set Variable    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${product}')]//following::input[2]
+    ${next_month}=    Set Variable    //button[@title='Next Month']
+    ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    #${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${date_id}    120s
+    Click Element    ${date_id}
+    Wait Until Element Is Visible    ${next_month}    120s
+    Click Button    ${next_month}
+    click element    ${firstday}
+    #sleep   5s
+    Capture Page Screenshot
+
+
+
+Select account Owner
+
+    log to console    Select Owner Account FLow Chart Page
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Owner Account page
+    ${owner_account}=    Set Variable    //ng-form[@id='BuyerAccount']//span[@class='slds-checkbox--faux']
+    ${buyer_payer}=    Set Variable    //input[@id='BuyerIsPayer']/../span
+    ${buyer_account_next_button}=    Set Variable    //div[@id='SelectedBuyerAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${buyer_payer}    120s
+    Click Element    ${owner_account}
+    sleep    3s
+    click element    ${buyer_payer}
+    sleep    3s
+    #Capture Page Screenshot
+    Wait Until Element Is Visible    ${buyer_account_next_button}    120s
+    click element    ${buyer_account_next_button}
+    sleep  3s
+    ${status} =  Run Keyword and Return status   Page should contain element   //p[text()='Update Order']
+    Run Keyword if  ${status}   Continue and submit
+    unselect frame
+    log to console    Exiting owner Account page
+    sleep    10s
+
+Continue and submit
+    [Documentation]   Give continue for Update Order Dialogue box after selecting account
+    Wait until element is visible  //button[contains(text(),' Continue')]
+    Click element  //button[contains(text(),' Continue')]
+    sleep  3s
+
+
+Submit for Approval
+
+    sleep    40s
+    ${status}   set variable  Run keyword and return status   Page contains element   //div[text()='Submit for Approval']
+    Run Keyword if   {status}   Click element   //div[text()='Submit for Approval']
+    Wait until page contains element  //h2[text()='Submit for Approval']
+    Input Text   //textarea[@role='textbox']  submit
+    click element  //span[text()='Submit']
+
+Submit Order Button
+    Reload page
+    Wait until element is visible   //div[@title='Submit Order']    60s
+    Log to console    submitted
+    Click element  //div[@title='Submit Order']
+    #sleep  10s
+    Capture Page Screenshot
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    sleep  5s
+    Capture Page Screenshot
+    ${status} =    Run Keyword and Return status  Page should contain element   //div[text()='Please add Group Billing ID.']
+    Run Keyword if   ${status}  Enter Group id and submit
+    Run Keyword unless   ${status}   click element   //button[text()='Submit']
+    sleep  15s
+
+Enter Group id and submit
+
+    ${cancel}=  set variable    //span[text()='Cancel']
+    ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    ${Group id}=  set variable   //span[text()='Edit Group Billing ID']
+    ${Installation date}=  set variable   //div/span[text()='Desired Installation Date']
+
+    Wait until element is visible   ${cancel}   30s
+    Click element   ${cancel}
+    sleep  3s
+    Wait until element is visible   ${Detail}  60s
+    Force click element   ${Detail}
+    #sleep  10s
+    Execute JavaScript    window.scrollTo(0,1500)
+    Wait until element is visible   ${Installation date}   60s
+    Log to console  Installation date
+    set focus to element   ${Installation date}
+    Click element  //div/span[text()='Desired Installation Date']//following::button[1]
+    sleep  3s
+    Wait until element is visible   //label/span[text()='Desired Installation Date']//following::input[1]  30s
+    Force Click element  //label/span[text()='Desired Installation Date']//following::input[1]
+    Click element   //a[@title='Go to next month']
+    Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
+    Click element  //tr[@class='calRow'][2]/td[1]/span
+    Execute JavaScript    window.scrollTo(0,1700)
+    #Wait until element is visible      ${Group id}  60s
+    #set focus to element  ${Group id}
+    #Force Click element  ${Group id}
+    Wait until element is visible   //input[@title='Search Group Billing IDs']  60s
+    Input Text  //input[@title='Search Group Billing IDs']     ${group_billing_id}
+    Wait until element is visible   //div[@title='${group_billing_id}']   50s
+    Click element   //div[@title='${group_billing_id}']
+    Wait until element is visible   //button[@title='Save']  30s
+
+    Click element  //button[@title='Save']
+    sleep  5s
+    Wait until element is visible   //div[@title='Submit Order']    60s
+    Click element  //div[@title='Submit Order']
+    sleep  5s
+    Capture Page Screenshot
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    click element   //button[text()='Submit']
+    sleep  15s
+
+Order Post script
+
     Select Account
     select contact
     Select Date
@@ -5115,7 +5385,7 @@ Initiate Change Order
     select frame  ${frame}
     Wait until element is visible  //li[@ng-repeat='prod in assetItems'][1]/div/div/div/div/span/a/span  30s
     Click element  //li[@ng-repeat='prod in assetItems'][1]/div/div/input
-    Scroll until found   //button[text()='Change To Order']
+    ScrollUntillFound   //button[text()='Change To Order']
     Click element  //button[text()='Change To Order']
     Unselect frame
 
@@ -5138,3 +5408,4 @@ Login Workbench
     Click element  ${Environment_Option}
     Click element    ${T&C}
     Click element   ${login}
+    Login to Salesforce as DigiSales Lightning User
