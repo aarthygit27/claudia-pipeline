@@ -334,12 +334,21 @@ Create New Master Contact
     Sleep    10s
     #Validate Master Contact Details    ${CONTACT_DETAILS}
 
+
 Select from search List
     [Arguments]    ${field}    ${value}
     Input Text    ${field}    ${value}
     Sleep    10s
-    #Press Enter On   ${field}
     click element  //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]
+    ${count}=    Get Element Count      //*[text()='Sorry to interrupt']
+    : FOR    ${i}    IN RANGE    10
+    \   ${IsErrorVisible}=    Run Keyword And Return Status        element should not be visible      //*[text()='Sorry to interrupt']
+    \   Sleep   2s
+    \   log to console          ${IsErrorVisible}
+    \   Click Element       //button[@title='OK']
+    \   Exit For Loop If    ${i} > ${count}-1
+    #Press Enter On   ${field}
+    Sleep   5s
     Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${value}']
     Sleep    2s
 
