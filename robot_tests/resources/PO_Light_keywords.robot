@@ -65,6 +65,12 @@ Go to Home
     Click Element    ${SALES_APP_HOME}
     Sleep    10s
 
+Switch to SalesApp
+    [Documentation]    Go to App launcher and click on SalesApp
+    Click Element    ${APP_LAUNCHER}
+    Wait until Page Contains Element    ${SALES_APP_LINK}    60s
+    Click Element    ${SALES_APP_LINK}
+    Wait Until Element is Visible    ${SALES_APP_NAME}    60s
 
 Clear All Notifications
     ${notifi_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[text()='Clear All']/..
@@ -1002,7 +1008,8 @@ NextButtonInOrderPage
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
-    #sleep  10s
+    sleep  10s
+    wait until element is visible       //span[text()='Next']/..        30s
     ${count}    Run Keyword and return status    Get Element Count   //span[text()='Next']/..
     Log to console  ${count}
     #Run Keyword and return status  Frame should contain    //span[text()='Next']/..    Next
@@ -1552,7 +1559,81 @@ update_setting_TeliaSign
     click element    ${closing}
     Unselect Frame
 
+Update Setting for Telia Domain Name Service
+    [Arguments]    ${asiakkaan_verkkotunnus}
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    ${Asiakkaan_verkkotunnus_field}  set variable   //input[@name='productconfig_field_1_0']
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${Asiakkaan_verkkotunnus_Field}    240s
+    click element    ${Asiakkaan_verkkotunnus_Field}
+    Press key    ${Asiakkaan_verkkotunnus_Field}        ${asiakkaan_verkkotunnus}
+    click element    ${closing}
+    Unselect Frame
 
+Add Other Domain Name and update settings
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${Other_Domain_Service_Add_To_Cart}   set variable   //div[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
+    ${Other_Domain_Service_Settings_Icon}   set variable     //div[contains(text(),'Other Domain name')]/../../..//*[@alt='settings']/..
+    ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
+    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.RU']
+    ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='1']
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    wait until element is visible       //span[text()='Internet Domain']/../button      240s
+    click element       //span[text()='Internet Domain']/../button
+    Wait Until Element Is Visible    ${Other_Domain_Service_Add_To_Cart}    240s
+    click element    ${Other_Domain_Service_Add_To_Cart}
+    Wait Until Element Is Visible    ${Other_Domain_Service_Settings_Icon}    240s
+    force click element    ${Other_Domain_Service_Settings_Icon}
+    Wait Until Element Is Visible   ${Verkotunnus_Field}   10s
+    press enter on    ${Verkotunnus_Field}
+    Wait Until Element Is Visible   ${Verkotunnus_option}   2s
+    click element    ${Verkotunnus_option}
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        1
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        existing
+    Wait Until Element Is Visible    ${Voimassaoloaika_Field}  10s
+    press enter on    ${Voimassaoloaika_Field}
+    Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
+    click element    ${Voimassaoloaika_option}
+    #Wait Until Element Is Visible    10s
+    click element    ${closing}
+    wait until element is visible       //span[text()='Internet Domain']/../button      240s
+    click element       //span[text()='Internet Domain']/../button
+    Unselect Frame
+
+Validate the validity and the price for Other Domain
+    [Arguments]    ${field}         ${value}
+    ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${value}']
+    ${recurringcharge}    get text      //div[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
+    ${onetimecharge}    get text     //div[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][2]
+    Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
+    press enter on    ${Voimassaoloaika_Field}
+    Wait Until Element Is Visible    ${Voimassaoloaika_option}   2s
+    click element    ${Voimassaoloaika_option}
+    sleep   20s
+    Should be true       '35.00' in '${recurringcharge}'
+    Should be true       '35.00' in '${onetimecharge}'
+
+
+Add DNS Primary
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${DNS_Primary_Add_To_Cart}   set variable   //div[contains(text(),'DNS Primary')]/../../..//button[contains(text(),'Add to Cart')]
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    wait until element is visible       //span[text()='DNS Maintenance']/../button      240s
+    click element       //span[text()='DNS Maintenance']/../button
+    Wait Until Element Is Visible    ${DNS_Primary_Add_To_Cart}    240s
+    click element    ${DNS_Primary_Add_To_Cart}
+    sleep   20s
+    #Wait Until Element Is Visible    10s
+    click element    ${closing}
+    Unselect Frame
 
 update_setting_Telia Domain Name Service
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe

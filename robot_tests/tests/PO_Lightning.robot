@@ -1,12 +1,11 @@
 *** Settings ***
 Documentation     Suite description
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     #Logout From All Systems and Close Browser
-#Resource          ../resources/sales_app_light_keywords.robot
+Test Teardown     Logout From All Systems and Close Browser
+Resource          ../resources/PO_Light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
-Resource          ../resources/PO_Light_keywords.robot
 Library           AutoItLibrary
 
 *** Test Cases ***
@@ -104,6 +103,20 @@ Telia Ethernet capacity
     Searching and adding product    Telia Ethernet Capacity
     updating setting telia ethernet capacity
     Product_updation    Telia Ethernet Capacity
+    Create_Order
+
+
+Telia Domain Name Service - Other Domain
+    [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name and DNS Primary
+    [Tags]    BQA-11509     PO_Scripts  submit issue- contact
+    General Setup    B2B
+    Searching and adding product    Telia Domain Name Service
+    Update Setting for Telia Domain Name Service     russianpupu.ru
+    Add Other Domain Name and update settings
+    Add DNS Primary
+    #update_setting_Telia Domain Name Service
+    clicking on next button
+    Update Product Page    Telia Domain Name Service
     Create_Order
 
 Telia Domain Name Service - P&O create new order
