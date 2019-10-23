@@ -5,6 +5,7 @@ Library           Dialogs
 Library           Screenshot
 Library           DateTime
 Library           Collections
+Library           OperatingSystem
 Resource          ..${/}resources${/}common_variables.robot    #Library    libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
 
 *** Keywords ***
