@@ -694,7 +694,7 @@ Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
     [Tags]    Summer-Test    BQA-10737    Lightning     Sanity
     Go To Salesforce and Login into Admin User
-    Go to Entity  Digita
+    Go to Entity  ABB
     Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully
@@ -712,7 +712,7 @@ Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
     [Tags]      Summer-Test     Lightning   BQA-10951       Sanity
     Go To Salesforce and Login into Admin User
-    Go to Entity  Digita
+    Go to Entity  ABB
     Add account owner to account team
     Validate that account owner can not be added to account team
 
@@ -720,7 +720,7 @@ Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
     [Tags]    Summer-Test    BQA-10738    Lightning     Sanity
     Go To Salesforce and Login into Admin User
-    Go to Entity  Digita
+    Go to Entity  ABB
     Navigate to view    Account Team Members
     Validate that team member is created succesfully
     Change team member role from account
@@ -729,7 +729,7 @@ Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
     [Tags]    Summer-Test    BQA-10739    Lightning     Sanity
     Go To Salesforce and Login into Admin User
-    Go to Entity  Digita
+    Go to Entity  ABB
     Navigate to view    Account Team Members
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Delete team member from account
@@ -800,6 +800,7 @@ Group: Account team member is added as group owner
     [Tags]      Summer-Test     Lightning   BQA-10933       Sanity
     Go To Salesforce and Login into Admin User
     Go to Entity  Digita
+    Change account owner to     B2B Lightning
     Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully  Sales,Admin
@@ -959,8 +960,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     #page should contain element  //li[text()='insufficient access rights on object id']
     #click element  //span[text()='Cancel']/..
     #click element     //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
-    sleep  3s
-    reload page
+    #sleep  3s
+    #reload page
     Sleep  10s
     logoutasuser  B2B DigiSales
     sleep  10s
