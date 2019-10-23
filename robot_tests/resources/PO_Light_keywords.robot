@@ -1609,8 +1609,8 @@ Validate the validity and the price for Other Domain
     [Arguments]    ${field}         ${value}
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${value}']
-    ${recurringcharge}    get text      //div[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
-    ${onetimecharge}    get text     //div[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][2]
+    ${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
+    ${onetimecharge}    get text     //*[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][2]
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
     press enter on    ${Voimassaoloaika_Field}
     Wait Until Element Is Visible    ${Voimassaoloaika_option}   2s
