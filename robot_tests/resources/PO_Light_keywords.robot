@@ -1622,7 +1622,7 @@ Validate the validity and the price for Other Domain
 
 Add DNS Primary
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
-    ${DNS_Primary_Add_To_Cart}   set variable   //div[contains(text(),'DNS Primary')]/../../..//button[contains(text(),'Add to Cart')]
+    ${DNS_Primary_Add_To_Cart}   set variable   //*[contains(text(),'DNS Primary')]/../../..//button[contains(text(),'Add to Cart')]
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
