@@ -1563,6 +1563,7 @@ Investment Process - B2B
     Go To Entity  ${oppo_name}
     ${case_number}  run keyword    Create Investment Case  B2B
     #Submit created Investment    ${oppo_name}   ${case_number}
+    PM details    ${oppo_name}   ${case_number}  B2B
     Case Approval By Endorser   ${Case_number}  ${oppo_name}
     Case Approval By Approver   ${Case_number}  ${oppo_name}
     Check Case Status  ${Case_number}  B2B
@@ -1641,7 +1642,7 @@ Check of Customership Contract
 One Order - B2B Colocation and Change Order
     [Tags]  BQA-11521
 
-    HDC
+    Create HDC Order
     DDM Request Handling
     Validate DDM and billing system response
     Change Order

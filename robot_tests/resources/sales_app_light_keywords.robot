@@ -4073,6 +4073,8 @@ ValidateTheOrchestrationPlan
     wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
     ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
     log to console  ${order_number}.this is order numner
+    set test variable  ${order_no}     ${order_number}
+    #Including test variable in order to use it further in change order scripts for One order TC
     scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     #execute javascript    window.scrollTo(0,2000)
     #sleep    10s
@@ -5485,6 +5487,11 @@ Initiate Change Order
 DDM Request Handling
 
     Login Workbench
+    File Handling - Change Order id
+    Execute DDM Request
+    File Handling - Get Debug Line
+    Execute Debug code
+    Verify Response code
 
 
 Login Workbench
@@ -5502,3 +5509,61 @@ Login Workbench
     Click element    ${T&C}
     Click element   ${login}
     Login to Salesforce as DigiSales Lightning User
+
+
+File Handling
+
+    ${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
+    ${DDM_request}   get file    ${File_Path}
+    ${No.of lines}    get line count    ${DDM_request}
+    #Log to console   ${No.of lines}
+    ${Line}   Get Line   ${DDM_request}  0
+    #Log to console  ${Line}
+    ${Existing_Order_Number}   Get Substring    ${Line}  11
+    Log to console  ${Existing_Order_Number}
+    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
+    #Log to console   ${Replaced_line}
+    ${New_request}   Replace String Using Regexp    ${DDM_request}  ${Line}   ${Replaced_line}
+    Log to console   ${New_request}
+
+
+Execute DDM Request
+
+    ${Utilities}  set variable    //span[text()='utilities']
+    ${Apex Execute}  set variable   //span[text()='utilities']//following::li[2]/a
+
+
+Fetch Result
+
+    ${Result_Text}  set variable  //div/pre
+    ${Result}   Get Text   ${Result_Text}
+
+
+Validate DDM and billing system response
+
+    Switch between windows    0
+    Go to Entity    ${order_no}
+    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    #execute javascript    window.scrollTo(0,2000)
+    #sleep    10s
+    log to console    Validate DDM Response
+    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
+    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    sleep    10s
+    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    sleep    30s
+    Element should be visible    //a[text()='Start']
+    Element should be visible    //a[text()='Create Assets']
+    Element should be visible    //a[text()='Deliver Service']
+    Element should be visible    //a[text()='Order Events Update']
+    Element should be visible   //a[text()='Call Billing System']
+    #go back
+    sleep   3s
+    force click element       //a[@class='item-label item-header' and text()='Deliver Service']
+    unselect frame
+    #sleep       80s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
+    Run Keyword If    ${status_page} == False    Reload Page
+    Run Keyword If    ${status_page} == False    Sleep  60s
+    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
+    log to console    Validate Billing system Response
