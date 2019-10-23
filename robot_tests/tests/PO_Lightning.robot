@@ -121,7 +121,7 @@ Telia Domain Name Service - Other Domain
 
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    BQA-11509     PO_Scripts  submit issue- contact
+    [Tags]    PO_Scripts  submit issue- contact
     General Setup    B2B
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service
