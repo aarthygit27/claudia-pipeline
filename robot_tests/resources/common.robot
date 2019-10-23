@@ -125,6 +125,11 @@ Strip Area Code From Phone Number
     ${stripped}=    Remove String    ${number}    +358
     [Return]    ${stripped}
 
+Strip string of the element
+     [Arguments]    ${element_name}
+     ${element_name} =  remove string  ${element_name}  €
+     [Return]   ${element_name}
+
 Scroll Page To Element
     [Arguments]    ${element}
     #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
