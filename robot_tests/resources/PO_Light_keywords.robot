@@ -1574,8 +1574,8 @@ Update Setting for Telia Domain Name Service
 
 Add Other Domain Name and update settings
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
-    ${Other_Domain_Service_Add_To_Cart}   set variable   //div[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
-    ${Other_Domain_Service_Settings_Icon}   set variable     //div[contains(text(),'Other Domain name')]/../../..//*[@alt='settings']/..
+    ${Other_Domain_Service_Add_To_Cart}   set variable   //*[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
+    ${Other_Domain_Service_Settings_Icon}   set variable     //*[contains(text(),'Other Domain name')]/../../..//*[@alt='settings']/..
     ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
     ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.RU']
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
