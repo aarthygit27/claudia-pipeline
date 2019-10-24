@@ -1573,13 +1573,14 @@ Update Setting for Telia Domain Name Service
     Unselect Frame
 
 Add Other Domain Name and update settings
+    [Arguments]    ${Verkotunnus}         ${Voimassaoloaika}        ${otc}
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${Other_Domain_Service_Add_To_Cart}   set variable   //*[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
     ${Other_Domain_Service_Settings_Icon}   set variable     //*[contains(text(),'Other Domain name')]/../../..//*[@alt='settings']/..
     ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
-    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.RU']
+    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='${Verkotunnus}']
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
-    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='1']
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${Voimassaoloaika}']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
@@ -1593,8 +1594,8 @@ Add Other Domain Name and update settings
     press enter on    ${Verkotunnus_Field}
     Wait Until Element Is Visible   ${Verkotunnus_option}   2s
     click element    ${Verkotunnus_option}
-    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        1
-    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        existing
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        1          ${otc}
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        existing       ${otc}
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  10s
     press enter on    ${Voimassaoloaika_Field}
     Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
@@ -1606,7 +1607,7 @@ Add Other Domain Name and update settings
     Unselect Frame
 
 Validate the validity and the price for Other Domain
-    [Arguments]    ${field}         ${value}
+    [Arguments]    ${field}         ${value}        ${otc}
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${value}']
     ${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
@@ -1617,7 +1618,7 @@ Validate the validity and the price for Other Domain
     click element    ${Voimassaoloaika_option}
     sleep   20s
     Should be true       '35.00' in '${recurringcharge}'
-    Should be true       '35.00' in '${onetimecharge}'
+    Should be true       '${otc}' in '${onetimecharge}'
 
 
 Add DNS Primary
