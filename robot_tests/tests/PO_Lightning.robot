@@ -108,7 +108,7 @@ Telia Ethernet capacity
 
 Domain name service with Other Domain - RU
     [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name and DNS Primary
-    [Tags]    BQA-11509     PO_Scripts  submit issue- contact
+    [Tags]    BQA-11509     PO_Scripts  submit issue- contact       RunTest
     General Setup    B2B
     Searching and adding product    Telia Domain Name Service
     Update Setting for Telia Domain Name Service     russianpupu.ru
@@ -121,12 +121,13 @@ Domain name service with Other Domain - RU
 
 Domain name service with Other Domain - EU
     [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name, DNS Primary and Office 365 Configuration
-    [Tags]    BQA-11730     PO_Scripts  submit issue- contact
+    [Tags]    BQA-11730     PO_Scripts  submit issue- contact       RunTest
     General Setup    B2B
     Searching and adding product    Telia Domain Name Service
     Update Setting for Telia Domain Name Service     pupubryssel.eu
     Add Other Domain Name and update settings       .EU     existing       5.00
     Add DNS Primary
+    Add Office 365 Configuration
     #update_setting_Telia Domain Name Service
     clicking on next button
     Update Product Page    Telia Domain Name Service

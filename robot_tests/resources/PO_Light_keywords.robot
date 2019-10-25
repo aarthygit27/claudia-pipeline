@@ -439,13 +439,11 @@ Searching and adding product
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}     Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
     Log to console      ${status}
-
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
     Click element  //div[contains(@class, 'cpq-searchbox')]//input
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
-
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
@@ -1631,6 +1629,19 @@ Add DNS Primary
     click element       //span[text()='DNS Maintenance']/../button
     Wait Until Element Is Visible    ${DNS_Primary_Add_To_Cart}    240s
     click element    ${DNS_Primary_Add_To_Cart}
+    sleep   20s
+    #Wait Until Element Is Visible    10s
+    click element    ${closing}
+    Unselect Frame
+
+Add Office 365 Configuration
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${DNS_Office365_Add_To_Cart}   set variable   //*[contains(text(),'Office 365 Configuration')]/../../..//button[contains(text(),'Add to Cart')]
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${DNS_Office365_Add_To_Cart}    240s
+    click element    ${DNS_Office365_Add_To_Cart}
     sleep   20s
     #Wait Until Element Is Visible    10s
     click element    ${closing}
