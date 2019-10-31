@@ -439,13 +439,11 @@ Searching and adding product
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}     Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
     Log to console      ${status}
-
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
     Click element  //div[contains(@class, 'cpq-searchbox')]//input
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
-
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     #sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
@@ -1573,13 +1571,14 @@ Update Setting for Telia Domain Name Service
     Unselect Frame
 
 Add Other Domain Name and update settings
+    [Arguments]    ${Verkotunnus}         ${Voimassaoloaika}        ${otc}
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${Other_Domain_Service_Add_To_Cart}   set variable   //*[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
     ${Other_Domain_Service_Settings_Icon}   set variable     //*[contains(text(),'Other Domain name')]/../../..//*[@alt='settings']/..
     ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
-    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.RU']
+    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='${Verkotunnus}']
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
-    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='1']
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${Voimassaoloaika}']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
@@ -1593,8 +1592,8 @@ Add Other Domain Name and update settings
     press enter on    ${Verkotunnus_Field}
     Wait Until Element Is Visible   ${Verkotunnus_option}   2s
     click element    ${Verkotunnus_option}
-    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        1
-    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        existing
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        1          ${otc}
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        existing       ${otc}
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  10s
     press enter on    ${Voimassaoloaika_Field}
     Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
@@ -1606,7 +1605,7 @@ Add Other Domain Name and update settings
     Unselect Frame
 
 Validate the validity and the price for Other Domain
-    [Arguments]    ${field}         ${value}
+    [Arguments]    ${field}         ${value}        ${otc}
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${value}']
     ${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
@@ -1617,12 +1616,12 @@ Validate the validity and the price for Other Domain
     click element    ${Voimassaoloaika_option}
     sleep   20s
     Should be true       '35.00' in '${recurringcharge}'
-    Should be true       '35.00' in '${onetimecharge}'
+    Should be true       '${otc}' in '${onetimecharge}'
 
 
 Add DNS Primary
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
-    ${DNS_Primary_Add_To_Cart}   set variable   //div[contains(text(),'DNS Primary')]/../../..//button[contains(text(),'Add to Cart')]
+    ${DNS_Primary_Add_To_Cart}   set variable   //*[contains(text(),'DNS Primary')]/../../..//button[contains(text(),'Add to Cart')]
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
@@ -1630,6 +1629,19 @@ Add DNS Primary
     click element       //span[text()='DNS Maintenance']/../button
     Wait Until Element Is Visible    ${DNS_Primary_Add_To_Cart}    240s
     click element    ${DNS_Primary_Add_To_Cart}
+    sleep   20s
+    #Wait Until Element Is Visible    10s
+    click element    ${closing}
+    Unselect Frame
+
+Add Office 365 Configuration
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${DNS_Office365_Add_To_Cart}   set variable   //*[contains(text(),'Office 365 Configuration')]/../../..//button[contains(text(),'Add to Cart')]
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${DNS_Office365_Add_To_Cart}    240s
+    click element    ${DNS_Office365_Add_To_Cart}
     sleep   20s
     #Wait Until Element Is Visible    10s
     click element    ${closing}
