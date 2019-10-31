@@ -723,7 +723,7 @@ Enter and Select Contact Meeting
     sleep    5s
 
 Create a Meeting
-    Check original account owner and change if necessary for event
+    #Check original account owner and change if necessary for event
     ${unique_subject_task}=    run keyword    Create Unique Task Subject
     Click Clear All Notifications
     click Meeting Link on Page
@@ -739,7 +739,7 @@ Create Unique Task Subject
     [Return]    Task-${random_string}
 
 click Meeting Link on Page
-    click Element    ${NEW_EVENT_LABEL}
+    force click element  ${NEW_EVENT_LABEL}
     #Sleep    10s
     Wait Until Page Contains element    xpath=${SUBJECT_INPUT}    100s
 
@@ -3045,7 +3045,9 @@ Validate point to point address details
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${iframe}    60s
     Run Keyword If    ${status} == False    execute javascript    window.location.reload(false);
     select frame    ${iframe}
-    Wait until page contains element    xpath=//input[@id="pointToPointInput"]/../span      60s
+    Sleep  60s
+    Wait Until Element Is Enabled  xpath=//input[@id="pointToPointInput"]/../span      60s
+    Wait until page contains element    xpath=//input[@id="pointToPointInput"]      60s
     click element     xpath=//input[@id="pointToPointInput"]/../span
     Wait until element is visible    //input[@id="postalCodeCityForAddressA"]    60s
     Input Text    ${postal_code_field_A}    ${DEFAULT_POSTAL_CODE}
@@ -3070,8 +3072,11 @@ Select B2O product available and connect existing opportunity
     Wait until page contains element    ${EXISTING_OPPORTUNITY_TEXT_FIELD}
     Wait until keyword succeeds    30s    2s    Input text    ${EXISTING_OPPORTUNITY_TEXT_FIELD}    ${OPPORTUNITY_NAME}
     sleep    5s
-    Wait element to load and click    //*[@id="OpportunityResultList"]/div/ng-include/div/table/tbody/tr/td[1]/label/input
+    Wait element to load and click    //*[@id="OpportunityResultList"]/div/ng-include/div/table/tbody/tr/td[1]/label/input/../span
     Click element    //div[@id='UpdateOpportunity_nextBtn']
+    sleep    30s
+    ${isVisible}    Run Keyword and return status    Wait until page contains element    //button[contains(text(),"Continue")]  30s
+    Run Keyword If    ${isVisible}    Click element    //button[contains(text(),"Continue")]
     unselect frame
     Wait until page contains element    xpath=//a[@title='CPQ']    60s
 
@@ -3385,7 +3390,7 @@ Delete row items
     [Arguments]    ${table_row}
     [Documentation]    Used to delete the individual row
     Force Click element    ${table_row}
-    wait until element is visible    //a[@title='Delete']
+    wait until element is visible    //a[@title='Delete']   60s
     Force Click element    //a[@title='Delete']
     wait until element is visible    //button[@title='Delete']    60s
     Click element    //button[@title='Delete']
@@ -3729,12 +3734,14 @@ ChangeThePriceList
     #Execute JavaScript    window.scrollTo(0,600)
     #scroll page to element    //button[@title="Edit Price Book"]
     ScrollUntillFound    //button[@title="Edit Price List"]
+    Execute JavaScript    window.scrollTo(0,200)
     page should contain element  //span[text()='Price Book']//following::a[text()='Standard Price Book']
+    wait until page contains element    //button[@title="Edit Price List"]  60s
     click element    //button[@title="Edit Price List"]
     wait until page contains element  //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]   20s
     scroll page to element  ${B2B_Price_list_delete_icon}
     force click element    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
-    sleep    3s
+    wait until page contains element    //input[@title='Search Price Lists']    60s
     input text    //input[@title='Search Price Lists']    ${price_list_new}
     sleep    3s
     click element    //*[@title='${price_list_new}']/../../..

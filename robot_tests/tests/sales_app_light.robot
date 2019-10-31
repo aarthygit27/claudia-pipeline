@@ -92,7 +92,10 @@ Check Attributes/Contact Person are named right
 
 Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
-    [Tags]    BQA-7948    Lightning     QucikActionsforAccount      Sanity
+    [Tags]    BQA-7948    Lightning     QucikActionsforAccount      Sanity      rerun
+    Go To Salesforce and Login into Admin User
+    Go To Entity    ${TEST_CONTACT}
+    Check original account owner and change if necessary for event
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -125,7 +128,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523  Lightning     Summer-Test     BQA-10932     AccountManagement       Sanity      rerun
+    [Tags]    BQA-8523  Lightning     Summer-Test     BQA-10932     AccountManagement       Sanity
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -517,7 +520,7 @@ HDC - Complete Sales Process: UAT/Sanity Regression
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     Go To Entity    ${oppo_name}
-    #sleep    10s
+    sleep    10s
     wait until page contains element    ${win_prob_edit}    30s
     click element    ${win_prob_edit}
     Adding partner and competitor
@@ -784,6 +787,7 @@ Add several team members to business account team
     Go to Entity  Digita Oy
     Navigate to related tab
     Navigate to view    Account Team Members
+    Delete team member from account
     Add new team member  Sales Admin    Account Manager
     Validate that team member is created succesfully    Sales,Admin     Account Manager
     Add new team member  B2O NetworkSales   Account Manager
@@ -822,7 +826,7 @@ Negative: Try to change account owner different from the group account owner
     [Tags]  Summer-Test     Lightning   BQA-10968       AccountManagement       Sanity
     Go To Salesforce and Login into Admin User
     ${group_account_owner}=    Set variable     Maris Steinbergs
-    Go to Entity  YIT Oyj
+    Go to Entity  AT&T
     Compare owner names  ${group_account_owner}
     Change account owner to  Sales Admin
     Validate that account owner cannot be different from the group account owner
@@ -1029,7 +1033,7 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]      BQA-10818       SreeramE2E       Lightning    TestCheck       Sanity    rerun
+    [Tags]      BQA-10818       SreeramE2E       Lightning    TestCheck
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #swithchtouser   B2B DigiSales
     Go To Salesforce and Login into Lightning
