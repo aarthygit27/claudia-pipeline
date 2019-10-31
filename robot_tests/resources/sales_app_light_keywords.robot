@@ -5513,11 +5513,41 @@ DDM Request Handling
 
     Login Workbench
     File Handling - Change Order id
-    Execute DDM Request
     File Handling - Get Debug Line
     Execute Debug code
     Verify Response code
 
+Verify Response code
+
+    ${Response}    Get Text  //p[@id='codeViewPort']
+    ${Line}   Get Line   ${Response}  0
+    Should contain  ${Line}    200
+
+Execute Debug code
+    ${Utilities}  set variable    //span[text()='utilities']
+    ${Rest Explorer}  set variable   //span[text()='utilities']//following::li[1]/a
+    ${Submit}  set variable  //input[@id='execBtn']
+    Wait until element is visible   ${Utilities}  30s
+    Force Click element   ${Utilities}
+    Force Click element  ${Rest Explorer}
+    Click Element  //input[@value='POST']
+    clear element text   //input[@id='urlInput']
+    Input Text  //input[@id='urlInput']   /services/apexrest/DDM/Events
+    Input Text   //textarea[@name='requestBody']   ${DEBUG CODE}
+    Click element  ${Submit}
+
+File Handling - Get Debug Line
+    ${result}   Fetch Result
+    Get Debug line   ${result}
+
+
+Get Debug line
+    [Arguments]   ${result}
+    ${Debug_line}   Get Lines Containing String  ${result}  |DEBUG|
+    #Log to console   ${Debug_line}
+    ${Debug_Code}   Fetch From Right   ${Debug_line}  |DEBUG|
+    Set Test Variable    ${DEBUG CODE}    ${Debug_Code}
+    #Log to console    ${Debug_Code}
 
 Login Workbench
 
@@ -5527,16 +5557,34 @@ Login Workbench
     ${login}  set variable  //input[@type='submit']
     Execute Javascript    window.open('https://workbench.developerforce.com');
     sleep    10s
-    Switch between windows    1
+    Switch between windows  1
+    Page should contain element  //label[text()='Environment:']
     Wait Until Element Is Visible    ${ENV}    30s
     Click element   ${Env}
     Click element  ${Environment_Option}
-    Click element    ${T&C}
+    Force Click element    ${T&C}
     Click element   ${login}
-    Login to Salesforce as DigiSales Lightning User
+    ${title}    Get Title
+    Run keyword if   '${title}'=='Login | Salesforce'   Login Salesforce to access Workbench   buc3285@teliacompany.com.release   Telia@003
+
+Login Salesforce to access Workbench
+   [Arguments]    ${username}   ${password}
+    Wait Until Page Contains Element    id=username    240s
+    Input Text    id=username    ${username}
+    Sleep    5s
+    Input text    id=password    ${password}
+    Click Element    id=Login
 
 
-File Handling
+Switch between windows
+    [Arguments]    ${index}
+    @{titles}    Get Window Titles
+    BuiltIn.Log To Console    @{titles}
+    Select Window    title=@{titles}[${index}]
+    ${title}    Get Title
+    BuiltIn.Log To Console  ${title}
+
+File Handling - Change Order id
 
     ${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
     ${DDM_request}   get file    ${File_Path}
@@ -5545,23 +5593,35 @@ File Handling
     ${Line}   Get Line   ${DDM_request}  0
     #Log to console  ${Line}
     ${Existing_Order_Number}   Get Substring    ${Line}  11
-    Log to console  ${Existing_Order_Number}
-    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
+    #Log to console  ${Existing_Order_Number}
+    #${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
+    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '319103017660';
     #Log to console   ${Replaced_line}
     ${New_request}   Replace String Using Regexp    ${DDM_request}  ${Line}   ${Replaced_line}
-    Log to console   ${New_request}
+    #Log to console   ${New_request}
+    Execute DDM Request   ${New_request}
 
 
 Execute DDM Request
-
+    [Arguments]   ${New_request}
     ${Utilities}  set variable    //span[text()='utilities']
     ${Apex Execute}  set variable   //span[text()='utilities']//following::li[2]/a
+    ${Submit}  set variable  //input[@type='submit']
+    Wait until element is visible   ${Utilities}  30s
+    Force Click element   ${Utilities}
+    Force Click element  ${Apex Execute}
+    Input Text   //textarea[@id='scriptInput']   ${New_request}
+    Click element  ${Submit}
+
 
 
 Fetch Result
 
-    ${Result_Text}  set variable  //div/pre
+    ${Result_Text}  set variable  //*[contains(text(),'Execute Anonymous')]
+    Wait until element is visible   ${Result_Text}   30s
     ${Result}   Get Text   ${Result_Text}
+    #Log to console  ${Result}
+    [Return]   ${Result}
 
 
 Validate DDM and billing system response
