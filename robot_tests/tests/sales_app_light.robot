@@ -504,7 +504,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     #verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
-    [Tags]    BQA-8560    Lightning     Sanity      fix
+    [Tags]    BQA-8503    Lightning     Sanity      fix
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}

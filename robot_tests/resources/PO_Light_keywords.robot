@@ -159,8 +159,8 @@ Entity Should Be Open
     #${Case} ---- ActiveStatus or PassiveStatus of Account
 
 Create Contact From Account
-
-
+    ${primary_email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
+    ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     log to console    This is to create new contact
     ${a}    create unique name    Contact_
     force click element    //li/a/div[text()='New Contact']
@@ -178,11 +178,12 @@ Create Contact From Account
     input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${a}
     sleep    2s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    30s
-    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    ${primary_email_id}
     Sleep  10s
+    log to console      enter email
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
-    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       kasibhotla.sreeramachandramurthy@teliacompany.com
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       ${email_id}
     sleep    5s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
@@ -194,6 +195,8 @@ Create Contact From Account
 
 reEnterContactData
     [Arguments]    ${random_name}
+    ${primary_email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
+    ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     #set focus to element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']
@@ -205,11 +208,11 @@ reEnterContactData
     force click element    //Span[text()='Name']//following::input[@placeholder="Last Name"]
     input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${random_name}
     sleep    2s
-    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    ${primary_email_id}
     sleep    2s
     clear element text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
-    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       kasibhotla.sreeramachandramurthy@teliacompany.com
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       ${email_id}
     Sleep  2s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
@@ -1099,7 +1102,7 @@ select contact
     Click element   css=.typeahead .ng-binding
     #sleep   10s
     Wait until element is visible  //input[@id='OCEmail']   30s
-    Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
+    #Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
 
     ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
     Run Keyword if  ${status}  Enter technical contact
@@ -1121,7 +1124,7 @@ Enter technical contact
     Click element   css=.typeahead .ng-binding
     #sleep  10s
     Wait until element is visible  //input[@id='TCEmail']   30s
-    Input Text   //input[@id='TCEmail']   primaryemail@noemail.com
+    #Input Text   //input[@id='TCEmail']   primaryemail@noemail.com
     Execute JavaScript    window.scrollTo(0,200)
     ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Main User:']
     Run Keyword if  ${status}  Enter Main user
@@ -1136,7 +1139,7 @@ Enter Main User
     Click element   css=.typeahead .ng-binding
     #sleep  10s
     Wait until element is visible  //input[@id='MCEmail']   30s
-    Input Text   //input[@id='MCEmail']   primaryemail@noemail.com
+    #Input Text   //input[@id='MCEmail']   primaryemail@noemail.com
     Execute JavaScript    window.scrollTo(0,200)
 
 
