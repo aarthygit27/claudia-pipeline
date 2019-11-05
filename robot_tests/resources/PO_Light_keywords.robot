@@ -718,7 +718,7 @@ Click Settings
     ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
     Wait until element is visible   ${SETTINGS}   60s
     Click Button    ${SETTINGS}
-    sleep  3s
+    sleep  10s
 
 update setting common
     [Arguments]    ${option}    ${cbox}
@@ -1651,21 +1651,33 @@ Add Office 365 Configuration
     Unselect Frame
 
 update_setting_Telia Domain Name Service
+
+    [documentation]   Add Telia Domain Name Service, Finnish Domain name, DNS Primary, DNS Security, Redirect and Express Delivery to cart in CPQ page. Validate that Finnish Domain name registrant agreement is added automatically after adding Finnish domain name. Update required settings for the added products
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     ${Asiakkaan_verkkotunnus_field}  set variable   //input[@name='productconfig_field_1_0']
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    Wait Until Element Is Visible    ${Asiakkaan_verkkotunnus_Field}    240s
+    click element    ${Asiakkaan_verkkotunnus_Field}
+    Input Text    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
+    click element    ${closing}
+
+
+
+Add Finnish_Domain_Service
+
+    ${Internet Domain_Toggle}  set variable  //span[text()='Internet Domain']/../button
+    ${Finnish Domain Name Registrant}  set variable  //div[contains(text(),'Finnish Domain Name Registrant')]/../../..//*[@alt='settings']/..
     ${Finnish_Domain_Service_Add_To_Cart}   set variable   //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
     ${Finnish_Domain_Service_Settings_Icon}   set variable     //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//*[@alt='settings']/..
     ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
     ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.FI']
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_1')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_1')]//option[text()='5']
-    Wait Until Element Is Visible    ${iframe}    60s
-    Select Frame    ${iframe}
-    Wait Until Element Is Visible    ${Asiakkaan_verkkotunnus_Field}    240s
-    click element    ${Asiakkaan_verkkotunnus_Field}
-    Press key    ${Asiakkaan_verkkotunnus_Field}    Testrobot.fi
-    click element    ${closing}
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait until element is visible  ${Internet Domain_Toggle}   60s
+    Click element  ${Internet Domain_Toggle}
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
     click element    ${Finnish_Domain_Service_Add_To_Cart}
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Settings_Icon}    240s
@@ -1674,12 +1686,71 @@ update_setting_Telia Domain Name Service
     press enter on    ${Verkotunnus_Field}
     Wait Until Element Is Visible   ${Verkotunnus_option}   2s
     click element    ${Verkotunnus_option}
+    #Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
+    #press enter on    ${Voimassaoloaika_Field}
+    #Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
+    #click element    ${Voimassaoloaika_option}
+    #Wait Until Element Is Visible    10s
+    Validate the validity and the price for Finnish Domain     ${Voimassaoloaika_Field}        1      19
+    Validate the validity and the price for Finnish Domain     ${Voimassaoloaika_Field}        2      25
+    click element    ${closing}
+    Wait until element is visible  ${Finnish Domain Name Registrant}   60s
+    Log to console   Finnish Domain Name Registrant added automatically
+
+Validate the validity and the price for Finnish Domain
+    [Arguments]    ${field}         ${value}        ${otc}
+    ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_1')]
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_1')]//option[text()='${value}']
+
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
     press enter on    ${Voimassaoloaika_Field}
-    Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
+    Wait Until Element Is Visible    ${Voimassaoloaika_option}   2s
     click element    ${Voimassaoloaika_option}
-    #Wait Until Element Is Visible    10s
-    click element    ${closing}
+    sleep   20s
+    #Should be true       '35.00' in '${recurringcharge}'
+    ${recurringcharge}    get text      //*[contains(text(),'Finnish Domain Name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
+    ${onetimecharge}    get text     //*[contains(text(),'Finnish Domain Name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][2]
+    Should be true       '${otc}' in '${onetimecharge}'
+
+
+Adding DNS Primary
+    ${DNS Maintenance_Toggle}  set variable  //span[text()='DNS Maintenance']/../button
+    ${DNS Primary}  set variable   //div[contains(text(),'DNS Primary')]/../../..//button[contains(text(),'Add to Cart')]
+    Wait until element is visible   ${DNS Maintenance_Toggle}  240s
+    Click element   ${DNS Maintenance_Toggle}
+    Wait until element is visible  ${DNS Primary}  240s
+    Click element       ${DNS Primary}
+
+Add DNS Security
+    ${DNS Primary Toggle}  set variable  //span[text()='DNS Primary']/../../button
+    ${DNS Security}   set variable   //div[contains(text(),'DNS Security')]/../../..//button[contains(text(),'Add to Cart')]
+    Wait until element is visible  ${DNS Primary Toggle}   60s
+    Click element       ${DNS Primary Toggle}
+    Wait until element is visible   ${DNS Security}  60s
+    Click element  ${DNS Security}
+
+Add Redirect
+    ${Redirect}  set variable  //div[contains(text(),'Redirect')]/../../..//button[contains(text(),'Add to Cart')]
+    ${Redirect_settings}  set variable  //div[contains(text(),'Redirect')]/../../..//*[@alt='settings']/..
+    ${Lähdeosoite}  set variable   //input[@name='productconfig_field_0_0']
+    ${Kohdeosoite}  set variable  //input[@name='productconfig_field_0_1']
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait until element is visible  ${Redirect}  60s
+    Click element       ${Redirect}
+    Wait until element is visible  ${Redirect_settings}  60s
+    Click element  ${Redirect_settings}
+    Input Text    ${Lähdeosoite}   teollisuskatu 14 00510
+    Press Key    ${Kohdeosoite}   telekatu 12 00510
+    sleep  5s
+
+    Click element  ${closing}
+
+Add Express Delivery
+    ${Express Delivery}  set variable  //div[contains(text(),'Express Delivery')]/../../..//button[contains(text(),'Add to Cart')]
+    ${Express Delivery settings}  set variable  //div[contains(text(),'Express Delivery')]/../../..//*[@alt='settings']/..
+    Wait until element is visible  ${Express Delivery}   60s
+    Click element       ${Express Delivery}
+    Wait until element is visible   ${Express Delivery settings}  60s
     Unselect Frame
 
 Update Setting Ethernet Operator Subscription

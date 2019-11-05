@@ -105,12 +105,47 @@ Telia Ethernet capacity
     Product_updation    Telia Ethernet Capacity
     Create_Order
 
+
+Domain name service with Other Domain - RU
+    [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name and DNS Primary
+    [Tags]    BQA-11509     PO_Scripts  submit issue- contact       RunTest
+    General Setup    B2B
+    Searching and adding product    Telia Domain Name Service
+    Update Setting for Telia Domain Name Service     russianpupu.ru
+    Add Other Domain Name and update settings       .RU     1       35.00
+    Add DNS Primary
+    #update_setting_Telia Domain Name Service
+    clicking on next button
+    Update Product Page    Telia Domain Name Service
+    Create_Order
+
+Domain name service with Other Domain - EU
+    [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name, DNS Primary and Office 365 Configuration
+    [Tags]    BQA-11730     PO_Scripts  submit issue- contact       RunTest
+    General Setup    B2B
+    Searching and adding product    Telia Domain Name Service
+    Update Setting for Telia Domain Name Service     pupubryssel.eu
+    Add Other Domain Name and update settings       .EU     existing       5.00
+    Add DNS Primary
+    Add Office 365 Configuration
+    #update_setting_Telia Domain Name Service
+    clicking on next button
+    Update Product Page    Telia Domain Name Service
+    Create_Order
+
+
+
 Telia Domain Name Service - P&O create new order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    PO_Scripts  submit issue- contact
+    [Tags]    BQA-11731   PO_Scripts  submit issue- contact
     General Setup    B2B
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service
+    Add Finnish_Domain_Service
+    Adding DNS Primary
+    Add DNS Security
+    Add Redirect
+    Add Express Delivery
     clicking on next button
     Update Product Page    Telia Domain Name Service
     Create_Order
@@ -217,7 +252,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]      BQA-11492     PO_Scripts    sitpo22
+    [Tags]      BQA-11492     PO_Scripts    sitpo22  Check
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -417,13 +452,7 @@ Test scenario 22 Other:Operation and Support Services
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
 
-testing
-    Wait Until element is visible   id=username     30s
-    Input Text  id=username   saleadm@teliacompany.com.sitpo
-    Input Text   id =password  PahaPassu6
-    Click Element  id=Login
-    Execute Manual step  pages
-    view orchestration plan details
+
 
 
 Product Monitor - B2B

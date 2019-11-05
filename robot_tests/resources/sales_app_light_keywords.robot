@@ -723,7 +723,7 @@ Enter and Select Contact Meeting
     sleep    5s
 
 Create a Meeting
-    Check original account owner and change if necessary for event
+    #Check original account owner and change if necessary for event
     ${unique_subject_task}=    run keyword    Create Unique Task Subject
     Click Clear All Notifications
     click Meeting Link on Page
@@ -739,7 +739,7 @@ Create Unique Task Subject
     [Return]    Task-${random_string}
 
 click Meeting Link on Page
-    click Element    ${NEW_EVENT_LABEL}
+    force click element  ${NEW_EVENT_LABEL}
     #Sleep    10s
     Wait Until Page Contains element    xpath=${SUBJECT_INPUT}    100s
 
@@ -3045,7 +3045,9 @@ Validate point to point address details
     ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${iframe}    60s
     Run Keyword If    ${status} == False    execute javascript    window.location.reload(false);
     select frame    ${iframe}
-    Wait until page contains element    xpath=//input[@id="pointToPointInput"]/../span      60s
+    Sleep  60s
+    Wait Until Element Is Enabled  xpath=//input[@id="pointToPointInput"]/../span      60s
+    Wait until page contains element    xpath=//input[@id="pointToPointInput"]      60s
     click element     xpath=//input[@id="pointToPointInput"]/../span
     Wait until element is visible    //input[@id="postalCodeCityForAddressA"]    60s
     Input Text    ${postal_code_field_A}    ${DEFAULT_POSTAL_CODE}
@@ -3070,8 +3072,11 @@ Select B2O product available and connect existing opportunity
     Wait until page contains element    ${EXISTING_OPPORTUNITY_TEXT_FIELD}
     Wait until keyword succeeds    30s    2s    Input text    ${EXISTING_OPPORTUNITY_TEXT_FIELD}    ${OPPORTUNITY_NAME}
     sleep    5s
-    Wait element to load and click    //*[@id="OpportunityResultList"]/div/ng-include/div/table/tbody/tr/td[1]/label/input
+    Wait element to load and click    //*[@id="OpportunityResultList"]/div/ng-include/div/table/tbody/tr/td[1]/label/input/../span
     Click element    //div[@id='UpdateOpportunity_nextBtn']
+    sleep    30s
+    ${isVisible}    Run Keyword and return status    Wait until page contains element    //button[contains(text(),"Continue")]  30s
+    Run Keyword If    ${isVisible}    Click element    //button[contains(text(),"Continue")]
     unselect frame
     Wait until page contains element    xpath=//a[@title='CPQ']    60s
 
@@ -3385,7 +3390,7 @@ Delete row items
     [Arguments]    ${table_row}
     [Documentation]    Used to delete the individual row
     Force Click element    ${table_row}
-    wait until element is visible    //a[@title='Delete']
+    wait until element is visible    //a[@title='Delete']   60s
     Force Click element    //a[@title='Delete']
     wait until element is visible    //button[@title='Delete']    60s
     Click element    //button[@title='Delete']
@@ -3729,12 +3734,14 @@ ChangeThePriceList
     #Execute JavaScript    window.scrollTo(0,600)
     #scroll page to element    //button[@title="Edit Price Book"]
     ScrollUntillFound    //button[@title="Edit Price List"]
+    Execute JavaScript    window.scrollTo(0,200)
     page should contain element  //span[text()='Price Book']//following::a[text()='Standard Price Book']
+    wait until page contains element    //button[@title="Edit Price List"]  60s
     click element    //button[@title="Edit Price List"]
     wait until page contains element  //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]   20s
     scroll page to element  ${B2B_Price_list_delete_icon}
     force click element    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
-    sleep    3s
+    wait until page contains element    //input[@title='Search Price Lists']    60s
     input text    //input[@title='Search Price Lists']    ${price_list_new}
     sleep    3s
     click element    //*[@title='${price_list_new}']/../../..
@@ -5506,11 +5513,41 @@ DDM Request Handling
 
     Login Workbench
     File Handling - Change Order id
-    Execute DDM Request
     File Handling - Get Debug Line
     Execute Debug code
     Verify Response code
 
+Verify Response code
+
+    ${Response}    Get Text  //p[@id='codeViewPort']
+    ${Line}   Get Line   ${Response}  0
+    Should contain  ${Line}    200
+
+Execute Debug code
+    ${Utilities}  set variable    //span[text()='utilities']
+    ${Rest Explorer}  set variable   //span[text()='utilities']//following::li[1]/a
+    ${Submit}  set variable  //input[@id='execBtn']
+    Wait until element is visible   ${Utilities}  30s
+    Force Click element   ${Utilities}
+    Force Click element  ${Rest Explorer}
+    Click Element  //input[@value='POST']
+    clear element text   //input[@id='urlInput']
+    Input Text  //input[@id='urlInput']   /services/apexrest/DDM/Events
+    Input Text   //textarea[@name='requestBody']   ${DEBUG CODE}
+    Click element  ${Submit}
+
+File Handling - Get Debug Line
+    ${result}   Fetch Result
+    Get Debug line   ${result}
+
+
+Get Debug line
+    [Arguments]   ${result}
+    ${Debug_line}   Get Lines Containing String  ${result}  |DEBUG|
+    #Log to console   ${Debug_line}
+    ${Debug_Code}   Fetch From Right   ${Debug_line}  |DEBUG|
+    Set Test Variable    ${DEBUG CODE}    ${Debug_Code}
+    #Log to console    ${Debug_Code}
 
 Login Workbench
 
@@ -5520,16 +5557,34 @@ Login Workbench
     ${login}  set variable  //input[@type='submit']
     Execute Javascript    window.open('https://workbench.developerforce.com');
     sleep    10s
-    Switch between windows    1
+    Switch between windows  1
+    Page should contain element  //label[text()='Environment:']
     Wait Until Element Is Visible    ${ENV}    30s
     Click element   ${Env}
     Click element  ${Environment_Option}
-    Click element    ${T&C}
+    Force Click element    ${T&C}
     Click element   ${login}
-    Login to Salesforce as DigiSales Lightning User
+    ${title}    Get Title
+    Run keyword if   '${title}'=='Login | Salesforce'   Login Salesforce to access Workbench   buc3285@teliacompany.com.release   Telia@003
+
+Login Salesforce to access Workbench
+   [Arguments]    ${username}   ${password}
+    Wait Until Page Contains Element    id=username    240s
+    Input Text    id=username    ${username}
+    Sleep    5s
+    Input text    id=password    ${password}
+    Click Element    id=Login
 
 
-File Handling
+Switch between windows
+    [Arguments]    ${index}
+    @{titles}    Get Window Titles
+    BuiltIn.Log To Console    @{titles}
+    Select Window    title=@{titles}[${index}]
+    ${title}    Get Title
+    BuiltIn.Log To Console  ${title}
+
+File Handling - Change Order id
 
     ${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
     ${DDM_request}   get file    ${File_Path}
@@ -5538,23 +5593,35 @@ File Handling
     ${Line}   Get Line   ${DDM_request}  0
     #Log to console  ${Line}
     ${Existing_Order_Number}   Get Substring    ${Line}  11
-    Log to console  ${Existing_Order_Number}
-    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
+    #Log to console  ${Existing_Order_Number}
+    #${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
+    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '319103017660';
     #Log to console   ${Replaced_line}
     ${New_request}   Replace String Using Regexp    ${DDM_request}  ${Line}   ${Replaced_line}
-    Log to console   ${New_request}
+    #Log to console   ${New_request}
+    Execute DDM Request   ${New_request}
 
 
 Execute DDM Request
-
+    [Arguments]   ${New_request}
     ${Utilities}  set variable    //span[text()='utilities']
     ${Apex Execute}  set variable   //span[text()='utilities']//following::li[2]/a
+    ${Submit}  set variable  //input[@type='submit']
+    Wait until element is visible   ${Utilities}  30s
+    Force Click element   ${Utilities}
+    Force Click element  ${Apex Execute}
+    Input Text   //textarea[@id='scriptInput']   ${New_request}
+    Click element  ${Submit}
+
 
 
 Fetch Result
 
-    ${Result_Text}  set variable  //div/pre
+    ${Result_Text}  set variable  //*[contains(text(),'Execute Anonymous')]
+    Wait until element is visible   ${Result_Text}   30s
     ${Result}   Get Text   ${Result_Text}
+    #Log to console  ${Result}
+    [Return]   ${Result}
 
 
 Validate DDM and billing system response

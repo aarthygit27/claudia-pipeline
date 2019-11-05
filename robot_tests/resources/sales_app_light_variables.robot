@@ -82,7 +82,7 @@ ${AP_SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//span[conta
 #OPPORTUNITY
 ${EDIT_STAGE_BUTTON}    //*[@title="Edit Stage"]
 #Meeting, Call, Event, Task
-${NEW_EVENT_LABEL}    //*[(text()='New Event')]
+${NEW_EVENT_LABEL}    //*[(text()='New Event')]/..
 ${NEW_TASK_LABEL}    //*[(text()='New Task')]
 ${SUBJECT_INPUT}    //*[text()='Subject']/../div/div/lightning-base-combobox/div/div/input
 #//label[text()='Subject']//following::input[@class='slds-input slds-combobox__input']
@@ -255,7 +255,7 @@ ${externaleMail}    externalemail@email.com
 ${externalofficename}    ExternalOffice
 ${ulmid}    ULMID
 ${externalid}      EXternalID
-${RemoveAccountOwner}       Oy Wasaware Ab
+${RemoveAccountOwner}       Ypap Oy
 
 ### Lead  Variables ###
 
