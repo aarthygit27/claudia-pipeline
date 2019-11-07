@@ -5369,7 +5369,7 @@ Continue and submit
     sleep  3s
 
 
-Submit for Approval
+#Submit for Approval
 
     sleep    40s
     ${status}   set variable  Run keyword and return status   Page contains element   //div[text()='Submit for Approval']

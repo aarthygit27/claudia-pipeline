@@ -17,14 +17,14 @@ Add new contact - Master
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395  Lightning   ContactsManagement      Sanity
+    [Tags]    BQA-8395  Lightning      Sanity
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
-    [Tags]    BQA-8394  Lightning   ContactsManagement      Sanity
+    [Tags]    BQA-8394  Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
@@ -83,7 +83,7 @@ Check Attributes/Business Account are named right in Sales Force UI
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    Lightning     ContactsManagement      Sanity
+    [Tags]    BQA-8483    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
@@ -613,7 +613,7 @@ Check banner for customership and service contract
 
 Create contact relationship for account
     [Documentation]    Add new relationship for contact and check that account are displayed correctly on contact page.
-    [Tags]    Lightning    BQA-10523    Summer-Test     ContactsManagement      Sanity
+    [Tags]    Lightning    BQA-10523    Summer-Test      Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Contact for Account
