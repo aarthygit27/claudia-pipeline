@@ -17,14 +17,14 @@ Add new contact - Master
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395  Lightning   ContactsManagement      Sanity
+    [Tags]    BQA-8395  Lightning      Sanity
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
-    [Tags]    BQA-8394  Lightning   ContactsManagement      Sanity
+    [Tags]    BQA-8394  Lightning     Sanity
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
@@ -83,7 +83,7 @@ Check Attributes/Business Account are named right in Sales Force UI
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    Lightning     ContactsManagement      Sanity
+    [Tags]    BQA-8483    Lightning         Sanity
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
@@ -256,8 +256,9 @@ Lightning: Sales admin Change Account owner for group account
 Create HDC Order
     [Tags]    BQA-HDCOrder    Lightning     commit_check        Sanity
     Login to Salesforce as DigiSales Lightning User
+    set test variable   ${Account}    ${vLocUpg_TEST_ACCOUNT}
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Go To Entity    ${Account}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -613,7 +614,7 @@ Check banner for customership and service contract
 
 Create contact relationship for account
     [Documentation]    Add new relationship for contact and check that account are displayed correctly on contact page.
-    [Tags]    Lightning    BQA-10523    Summer-Test     ContactsManagement      Sanity
+    [Tags]    Lightning    BQA-10523    Summer-Test      Sanity
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Contact for Account
@@ -1600,14 +1601,15 @@ Manual Availability - B2O
 Check of Customership Contract
     [Tags]   BQA-11427
     set Test variable    ${account}   Telia Communication Oy
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Login To Salesforce As DigiSales Lightning User   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${account}
     Delete all existing contracts from Accounts Related tab
     #${contact}    run keyword    CreateAContactFromAccount_HDC
     #Set Test Variable   ${contact_name}   ${contact}
     Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
-    Verify that warning banner is displayed on opportunity page  ${oppo_name}
+    #Set Test Variable   ${oppo_name}    Test Robot Order_ 20191107-170816
+    Verify warning banner on oppo page   ${oppo_name}
     Go to account from oppo page
     Create contract Agreement  Customership
     ${Contract_A_Number}  set variable  ${Customer_contract}
@@ -1646,13 +1648,18 @@ Check of Customership Contract
 
 One Order - B2B Colocation and Change Order
     [Tags]  BQA-11521
-
-    Create HDC Order
+    set test variable   ${Account}    Telia Communication Oy
+    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go to Entity    ${Account}
+    Delete all assets
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
+    HDC Order
     DDM Request Handling
-    Validate DDM and billing system response
+    Validate Billing system
     Change Order
     DDM Request Handling
-    Validate DDM and billing system response
+    Validate Billing system
+    Capture Page Screenshot
 
 
 Testing
@@ -1660,3 +1667,15 @@ Testing
 
     #Go To Salesforce and Login into Lightning
     DDM Request Handling
+    Validate DDM and billing system response
+
+Testing2
+
+
+    Go To   https://telia-fi--release.lightning.force.com/lightning/r/Account/0014E000012h81yQAA/view
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   ${B2B_DIGISALES_LIGHT_USER}
+    Input Text   id =password  ${Password_merge}
+    Click Element  id=Login
+    Change Order
+
