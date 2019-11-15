@@ -14,8 +14,8 @@ General Setup
     Set Test Variable    ${contact_name}  ${contact}
     ${opportunity}    run keyword    Create Opportunity    ${contact_name}
     Set Test Variable    ${oppo_name}   ${opportunity}
-    #${bill_acc_name}    run keyword    CreateABillingAccount
-    #Set Test Variable     ${billing_acc_name}   ${bill_acc_name}
+    ${billing_acc_name}    run keyword    CreateABillingAccount
+    Set Test Variable    ${billingaccount}   ${billing_acc_name}
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a[1]
     Log to console      old pricelist is ${price_list_old}
@@ -189,8 +189,8 @@ Create Contact From Account
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
     ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
     Sleep  30s
-    log to console    ${IsErrorVisible}
-    Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${a}
+    #log to console    ${IsErrorVisible}
+    #Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${a}
     [Return]    Testing ${a}
 
 reEnterContactData
@@ -210,10 +210,12 @@ reEnterContactData
     sleep    2s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    ${primary_email_id}
     sleep    2s
+    log to console      Enter primary email
     clear element text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       ${email_id}
     Sleep  2s
+    log to console      Enter email
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
     sleep    5s
@@ -1009,7 +1011,7 @@ NextButtonInOrderPage
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Log to console      Inside frame
-    sleep  10s
+    sleep  20s
     wait until element is visible       //span[text()='Next']/..        30s
     ${count}    Run Keyword and return status    Get Element Count   //span[text()='Next']/..
     Log to console  ${count}
@@ -1040,9 +1042,35 @@ Enter Details
     Select Account
     select contact
     Select Date
-    Select account Owner
+    SelectOwnerAccountInfo    ${billingaccount}
+    #Select account Owner
     Submit Order Button
     view orchestration plan details
+
+
+SelectOwnerAccountInfo
+    [Arguments]    ${e}= ${billing_account}
+    log to console    Select Owner Account FLow Chart Page
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Owner Account page
+    Scroll Page To Element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    Log to console      Selecting Billing account
+    sleep   10s
+    force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep  10s
+    unselect frame
+    Scroll Page To Element       //*[@id="BuyerIsPayer"]//following-sibling::span
+    sleep  10s
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is visible    //*[@id="BuyerIsPayer"]//following-sibling::span
+    Log to console   Click BIP
+    force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
+    ScrollUntillFound       //*[@id="SelectedBuyerAccount_nextBtn"]
+    click element    //*[@id="SelectedBuyerAccount_nextBtn"]
+    unselect frame
+    log to console    Exiting owner Account page
+    sleep    30s
 
 Create_Order for multiple products
     [Arguments]    ${prod_1}  ${prod_2}
@@ -1213,10 +1241,13 @@ Pick date with product
     #sleep   5s
     Capture Page Screenshot
 
+Create account owner
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
 
+
+    unselect frame
 
 Select account Owner
-
     log to console    Select Owner Account FLow Chart Page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     log to console    entering Owner Account page
@@ -1317,9 +1348,11 @@ Enter Group id and submit
 
 view orchestration plan details
     Reload page
+    wait until page contains element        //div[text()='Order']//following::div//span         60s
+    ${Order}        Get Text    //div[text()='Order']//following::div//span
+    Set Test Variable     ${Order_Id}    ${Order}
     sleep  10s
     ${plan}     set variable    //a[contains(@class,'textUnderline outputLookupLink')][contains(text(),'Plan')]
-
     ScrollUntillFound   ${plan}
     #Execute JavaScript    window.scrollTo(0,1200)
     Click element   ${plan}
@@ -1695,7 +1728,11 @@ Add Finnish_Domain_Service
     Validate the validity and the price for Finnish Domain     ${Voimassaoloaika_Field}        2      25
     click element    ${closing}
     Wait until element is visible  ${Finnish Domain Name Registrant}   60s
+    sleep       120s
     Log to console   Finnish Domain Name Registrant added automatically
+    wait until element is visible       //span[text()='Internet Domain']/../button      240s
+    click element       //span[text()='Internet Domain']/../button
+    Unselect Frame
 
 Validate the validity and the price for Finnish Domain
     [Arguments]    ${field}         ${value}        ${otc}
@@ -1717,6 +1754,7 @@ Adding DNS Primary
     ${DNS Maintenance_Toggle}  set variable  //span[text()='DNS Maintenance']/../button
     ${DNS Primary}  set variable   //div[contains(text(),'DNS Primary')]/../../..//button[contains(text(),'Add to Cart')]
     Wait until element is visible   ${DNS Maintenance_Toggle}  240s
+    Sleep       30s
     Click element   ${DNS Maintenance_Toggle}
     Wait until element is visible  ${DNS Primary}  240s
     Click element       ${DNS Primary}
@@ -1901,3 +1939,42 @@ updating setting telia ethernet capacity
     input text    ${city_town-a}    helsinki
     sleep    10s
     click element    ${closing}
+
+Send Account to billing system
+    click element       //div[@title='Send Account to billing system']
+    wait until page contains element        //*[text()='Billing Id was fetch successfully for the business account.']
+    Force click element     //*[@id="Customer_nextBtn"]/p[text()='Next']
+
+CreateABillingAccount
+    wait until page contains element    //li/a/div[@title='Billing Account']    45s
+    force click element    //li/a/div[@title='Billing Account']
+    sleep    20s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     //div[@title='Send Account to billing system']    5s
+    run keyword if    ${status} == True    Send Account to billing system
+    wait until page contains element    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]    30s
+    ${account_name_get}=    get value    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
+    ${numbers}=    Generate Random String    4    [NUMBERS]
+    clear element text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
+    input text    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]    Billing_${test_account}_${numbers}
+    Execute JavaScript    window.scrollTo(0,700)
+    click element    //*[@id="billing_country"]
+    click element    //*[@id="billing_country"]/option[@value='FI']
+    click element    //*[@id="Invoice_Delivery_Method"]
+    click element    //*[@id="Invoice_Delivery_Method"]/option[@value='Paper Invoice']
+    input text    //*[@id="payment_term"]    10
+    click element    //*[@id="create_billing_account"]/p[text()='Create Billing Account']
+    sleep    10s
+    execute javascript    window.scrollTo(0,2100)
+    #scroll page to element    //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
+    sleep    5s
+    wait until page contains element    //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']    30s
+    force click element    //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
+    unselect frame
+    sleep    30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    sleep    20s
+    force click element    //*[@id="return_billing_account"]
+    sleep    10s
+    unselect frame
+    [Return]    Billing_${test_account}_${numbers}
