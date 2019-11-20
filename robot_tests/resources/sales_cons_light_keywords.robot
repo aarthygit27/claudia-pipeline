@@ -34,7 +34,7 @@ Login to Salesforce as DigiSales Lightning User
     Login To Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}    ${PASSWORDCONSOLE}
 
 Login to Salesforce Lightning
-    [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${PASSWORD}
+    [Arguments]    ${username}    ${password}
     Wait Until Page Contains Element    id=username     240s
     Input Text    id=username    ${username}
     Sleep       5s
@@ -210,7 +210,7 @@ Close All Tabs
     #Should Be Equal As Integers     ${current}    0
     @{locators}=     Get Webelements    xpath=${TABS_OPENED}//div[contains(@class,'close')]
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}   IN    @{locators}
     \       Run Keyword and Ignore Error    Close Tab
 
 Close Tab
@@ -301,7 +301,7 @@ Click specific element
     [Arguments]     ${element}
     @{locators}=     Get Webelements    xpath=${element}
     ${original}=       Create List
-    :FOR   ${locator}   in    @{locators}
+    :FOR   ${locator}  IN    @{locators}
     Click Element     xpath=${element}
 
 Go to Contacts
@@ -340,8 +340,12 @@ Create New Master Contact and Validate
 Select from Autopopulate List
     [Arguments]                     ${field}            ${value}
     Input Text                      xpath=${field}          ${value}
-    Press Enter On   ${field}
-    Click Visible Element   //div[contains(@class,'primaryLabel') and @title='${value}']
+    Sleep  10s
+    #Press Enter On   ${field}
+    click element  //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]
+    Sleep  10s
+    #Click Visible Element   //div[contains(@class,'primaryLabel')]//following::*[@title='${value}']
+    click visible element  //div[@class="searchScrollerWrapper"]//a[text()="${value}"]
     Sleep    2s
     #${split} =	Fetch from Left	    ${value}        ${SPACE}
     #Wait until page contains element  //div[contains(@class,'primaryLabel') and @title='${value}']      60s
@@ -354,7 +358,7 @@ Validate Contact Details
                     ${account_name}=    Set Variable       //span[text()='Account Name']//following::a[text()='${CONTACT_ACCOUNTNAME}']
                     ${mobile_number}=   Set Variable       //span[text()='Mobile']//following::span//span[text()='${CONTACT_MOBILE}']
                     ${email}=    Set Variable               //span[text()='Primary eMail']//following::a[text()='${CONTACT_PRIMARY_EMAIL}']
-    Click Visible Element       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+    force click element     //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     #Wait Until Page Contains Element    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']         20s
     #Click element                       //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
     Sleep                               5s

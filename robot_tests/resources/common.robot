@@ -5,12 +5,13 @@ Library           Dialogs
 Library           Screenshot
 Library           DateTime
 Library           Collections
+Library           OperatingSystem
 Resource          ..${/}resources${/}common_variables.robot    #Library    libs.selenium_extensions.SeleniumExtensions.SeleniumExtensions
 
 *** Keywords ***
 Click Visible Element
     [Arguments]    ${locator}
-    Wait Until Element Is Visible    ${locator}    15 s
+    Wait Until Element Is Visible    ${locator}    120s
     Click Element    ${locator}
 
 Create Unique Email
@@ -123,6 +124,11 @@ Strip Area Code From Phone Number
     [Arguments]    ${number}
     ${stripped}=    Remove String    ${number}    +358
     [Return]    ${stripped}
+
+Strip string of the element
+     [Arguments]    ${element_name}
+     ${element_name} =  remove string  ${element_name}  €
+     [Return]   ${element_name}
 
 Scroll Page To Element
     [Arguments]    ${element}

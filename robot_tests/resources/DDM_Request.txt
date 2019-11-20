@@ -1,0 +1,19 @@
+String oid='319092515055';
+Map<String,String> vals = new Map<String,String>();
+Set<Id> oItemsId =  new Set<Id>();
+for(OrderItem oItem:[select id from OrderItem where Order.orderNumber = :oId]){
+oItemsId.add(oItem.id);
+}
+for(Asset a:[select id,vlocity_cmt__orderproductid__c from asset where vlocity_cmt__orderproductid__c in :oItemsId]){
+vals.put(a.id,a.vlocity_cmt__orderproductid__c);
+}
+//PROVISIONING DDM NOTIFICATION
+String str='{"serviceOrderStateChangeNotification":{"header":{"messageId":"DDM1518013040773","timestamp":"2018-02-07T04:17:20.773","sender":{"systemId":"DDM"},"receiver":[{"systemId":"Claudia"}],"state":"SUCCESS","operation":"UPDATE"},"notification":[{"event":{"serviceOrder":[{"externalId":"'+oid+'","state":"COMPLETED","serviceOrderItem":[';
+integer i=0;
+for(String key:vals.keySet()){
+if(i!=0) str+=',';
+str+='{"action":"ADD","service":{"serviceState":"ACTIVE"},"product":{"id":"'+vals.get(key)+'","name":"TS_prod_H_DataCenter","assetId":"'+key+'","commercialId":"RACK010480","dateOfAction":"'+Date.today()+'T10:00:00"}}';
+i++;
+}
+str+=']}]}}]}}';
+system.debug(str);
