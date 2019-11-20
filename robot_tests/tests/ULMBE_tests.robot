@@ -3,17 +3,14 @@ Library           OperatingSystem
 Library           String
 Library           Collections
 Library           BuiltIn
-Resource          ../resources/ULMBE_keywords.robot
-Resource          ../resources/salesforce_keywords.robot
-Resource          ..
-Test Timeout      9 minutes
-
+Library          ../resources/ULMBE_keywords.robot
+Library          ../resources/salesforce_keywords.robot
 
 Documentation    Suite description
 
 *** Test Cases ***
 ULMBE_login
-    [Documentation]     Test create ULM login endpoint.
+    [Documentation]     Test create CSR login endpoint.
     [Tags]  APITests
     CSR Login
     CSR Logout

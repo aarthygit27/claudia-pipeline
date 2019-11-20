@@ -3,7 +3,7 @@ Library           OperatingSystem
 Library           String
 Library           Collections
 Library           BuiltIn
-Resource          ../resources/Integartion_API_keywords.robot
+Resource          ../resources/Integration_API_keywords.robot
 Resource          ../resources/salesforce_keywords.robot
 Test Timeout      9 minutes
 

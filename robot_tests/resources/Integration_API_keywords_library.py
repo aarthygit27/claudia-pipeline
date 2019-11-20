@@ -60,12 +60,11 @@ def api_authenticate_ulm(i):
 
     if access_token_respons.status_code == 200:
        token_json_ulm = access_token_respons.json()
-     #   parsed_json = json.loads(access_token_response.text)
-        print (token_json_ulm)
-        access_token = token_json_ulm["access_token"]
-        print token_json_ulm["access_token"]
+     # parsed_json = json.loads(access_token_response.text)
+       print (token_json_ulm)
+       access_token = token_json_ulm["access_token"]
+       print token_json_ulm["access_token"]
     return access_token_respons.status_code
-
 
 
 def API_authenticate_ngsf_ddm():

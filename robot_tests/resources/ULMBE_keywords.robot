@@ -4,6 +4,7 @@ Library           Collections
 Library           SeleniumLibrary
 Library           ../resources/ULMBE_functionalities.py
 Library           ../tests/ULMBE_tests.robot
+
 *** Test Cases ***
 CSR Login
     ${return_value} =   CSR Session start
