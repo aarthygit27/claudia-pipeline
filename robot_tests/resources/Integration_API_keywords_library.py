@@ -53,19 +53,20 @@ def api_authenticate_ulm(i):
     client_secret = 'tQf2Gh4wo7zJczOB'
 
     access_token_response = s.post(token_url,auth=(client_id, client_secret),verify=False)
-    access_token_response = requests.post(token_url, data=payload, verify=False, allow_redirects=False, auth=(client_id, client_secret))
+    access_token_respons = requests.post(token_url, data=payload, verify=False, allow_redirects=False, auth=(client_id, client_secret))
 
-    print("[auth:setToken()] STATUS CODE: " + str(access_token_response.status_code))
-    print("[auth:setToken()] RESPONSE: " + access_token_response.text)
+    print("[auth:setToken()] STATUS CODE: " + str(access_token_respons.status_code))
+    print("[auth:setToken()] RESPONSE: " + access_token_respons.text)
 
-    if access_token_response.status_code == 200:
-       token_json_ulm = access_token_response.json()
+    if access_token_respons.status_code == 200:
+       token_json_ulm = access_token_respons.json()
      #   parsed_json = json.loads(access_token_response.text)
         print (token_json_ulm)
         access_token = token_json_ulm["access_token"]
         print token_json_ulm["access_token"]
+    return access_token_respons.status_code
 
-    return access_token_response.status_code
+
 
 def API_authenticate_ngsf_ddm():
     base64Key = 'SEQ4Q0VUeXQyS25nalV3bmYyV2pCa3puZ3dlV0xHb0s6VE1mMElKaW5aQWd3NU9FdA=='
@@ -2100,10 +2101,10 @@ def Get_resource_availability_in_address():
     jsonni ={
   "GetAvailabilityOfAllRequest":{
         "requestId":"123456",
-        "townName":"Helsinki",${city}
-        "postalCode":"00510",${postal_code}
-        "streetName":"Aleksis Kiven katu",${address},
-        "streetNumber":"25",${street_number}
+        "townName":"Helsinki",
+        "postalCode":"00510",
+        "streetName":"Aleksis Kiven katu",
+        "streetNumber":"25",
     }
 }
 
@@ -2139,7 +2140,7 @@ def check_credit_score():
       "productCategory":"BroadbandLowRisk",
       "usage":"1",
      "version":"3",
-      "businessId":${bid},
+      "businessId":"123456-08"
     }
 }
 

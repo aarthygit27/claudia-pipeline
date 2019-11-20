@@ -1,2 +1,0 @@
-*** Variables ***
-${ULM}       MHRHa3AwQXFBWTFiaUJ5THZlUWdud3J1S1NLYVRPV0E6dFFmMkdoNHdvN3pKY3pPQg==

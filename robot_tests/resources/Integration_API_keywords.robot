@@ -1,8 +1,9 @@
 *** Settings ***
-Library            ../resources/API_keywords_library.py
+Library            ../resources/Integration_API_keywords_library.py
 Library           Collections
 Library           SeleniumLibrary
-Library           ../resources/API_variables.robot
+Library           ../resources/Integration_API_variables.robot
+Library           ../resources/ULMBE_functionalities.py
 
 *** Variables ***
 # Set initial value for suite variable
@@ -113,3 +114,13 @@ Create ECM document
 #Notify ECM document
 #    ${return_value} =   Notify Document ECM
 #    Should be Equal As Integers     ${return_value}   200
+
+Create ECM document
+    ${return_value} =   Create Document ECM
+    Should be Equal As Integers     ${return_value}   200
+
+
+
+
+
+
