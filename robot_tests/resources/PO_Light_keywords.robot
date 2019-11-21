@@ -615,7 +615,6 @@ Add Toimenpide XS
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     Scroll Page To Element   ${product_id}
-
     click button    ${product_id}
     sleep   30s
     Capture Page Screenshot
@@ -626,14 +625,15 @@ Add Toimenpide S
     [Documentation]    This is to Add Toimenpide S
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Execute JavaScript   window.scrollTo(0,500)
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide S')]//following::button[1]
     Wait until element is visible   ${product_id}   30s
+    Scroll Page To Element   ${product_id}
     click button    ${product_id}
     sleep   20s
+    wait until page contains element        //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']        30s
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']
-    sleep  5s
-
     Unselect frame
 
 Add Toimenpide M
@@ -642,9 +642,12 @@ Add Toimenpide M
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide M')]//following::button[1]
     Wait until element is visible   ${product_id}   30s
+    Scroll Page To Element   ${product_id}
     click button    ${product_id}
     sleep   20s
+    wait until page contains element        //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']        30s
     Click Button  //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']
+    sleep  10s
     Unselect frame
 
 
@@ -654,10 +657,13 @@ Add Toimenpide L
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide L')]//following::button[1]
     Wait until element is visible  ${product_id}   30s
+    Scroll Page To Element   ${product_id}
     click button    ${product_id}
     sleep   20s
+    wait until page contains element        //div[contains(text(),'Toimenpide L')]//following::button[@title='Settings']        30s
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide L')]//following::button[@title='Settings']
+    sleep  10s
     Unselect frame
 
 Add Toimenpide XL
@@ -666,10 +672,13 @@ Add Toimenpide XL
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XL')]//following::button[1]
     Wait until element is visible  ${product_id}   30s
+    Scroll Page To Element   ${product_id}
     click button    ${product_id}
     sleep   20s
+    wait until page contains element        //div[contains(text(),'Toimenpide XL')]//following::button[@title='Settings']       30s
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[@title='Settings']
+    sleep  10s
     Unselect frame
 
 Add Events jatkuva palvelu
@@ -681,6 +690,7 @@ Add Events jatkuva palvelu
     Wait until element is visible  ${product_id}   30s
     click button    ${product_id}
     sleep   20s
+    wait until page contains element        //div[contains(text(),'Events jatkuva palvelu')]//following::button[@title='Settings']
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Events jatkuva palvelu')]//following::button[@title='Settings']
     Unselect frame
@@ -694,6 +704,7 @@ Add Events kertapalvelu
     Wait until element is visible  ${product_id}   30s
     click button    ${product_id}
     sleep   20s
+    wait until page contains element        //div[contains(text(),'Events kertapalvelu')]//following::button[@title='Settings']         30s
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Events kertapalvelu')]//following::button[@title='Settings']
     Unselect frame
@@ -703,7 +714,7 @@ Add_child_product
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${child_cart}=    set variable    //div[@class='cpq-item-no-children'][contains(text(),'${child_product}')]/../../../div/button
     Wait until element is visible  ${child_cart}  30s
-    Click Element    ${child_cart}
+    Force Click Element    ${child_cart}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     Wait until element is visible  ${CHILD_SETTINGS}  30s
     click button    ${CHILD_SETTINGS}
@@ -1095,7 +1106,7 @@ Create_Order for multiple products
     #sleep  5s
     Select account Owner
     #Close and Submit
-    Submit Order
+    submit order
     wait until page contains element        //div[text()='Order']//following::div//span         60s
     ${Order}        Get Text    //div[text()='Order']//following::div//span
     Set Test Variable     ${Order_Id}    ${Order}
@@ -1891,8 +1902,13 @@ submit order
     ${submit_order}=    Set Variable    //span[text()='Yes']
     #${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
     #select frame    ${iframe}
-    wait until element is visible    ${submit_order}    120s
-    click element    ${submit_order}
+    Wait until element is visible   //div[@title='Submit Order']    60s
+    Log to console    submitted
+    click element    //div[@title='Submit Order']
+    wait until element is visible       //button[text()='Submit']      60s
+    click element       //button[text()='Submit']
+    #wait until element is visible    ${submit_order}    120s
+    #click element    ${submit_order}
     sleep    10s
     #Unselect Frame
 
@@ -1986,3 +2002,6 @@ CreateABillingAccount
     sleep    10s
     unselect frame
     [Return]    Billing_${test_account}_${numbers}
+
+
+Add all child products
