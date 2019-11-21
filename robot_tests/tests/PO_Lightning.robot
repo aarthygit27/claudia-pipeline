@@ -10,36 +10,36 @@ Library           AutoItLibrary
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
-    [Tags]    BQA-9953      B2O_Lightning  PO_Scripts
+    [Tags]    BQA-9953      B2O_Lightning  Product not available
     General Setup    B2O
     Search and add product    Telia Multiservice NNI
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log       Billing account is ${billingaccount}
+    log       Order Number is ${Order_Id}
 
 Product2:Telia Ethernet Operator Subscription
-    [Tags]    BQA-9954      B2O_Lightning   PO_Scripts
+    [Tags]    BQA-9954      B2O_Lightning   Product not available
     General Setup    B2O
     Searching and adding product    Telia Ethernet Operator Subscription
     Update Setting Ethernet Operator Subscription
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log       Billing account is ${billingaccount}
+    log       Order Number is ${Order_Id}
 
 Product3:Ethernet Nordic Network Bridge
-    [Tags]    BQA-9955      B2O_Lightning   PO_Scripts
+    [Tags]    BQA-9955      B2O_Lightning   Product not available
     General Setup    B2O
     Searching and adding product    Ethernet Nordic Network Bridge
     update_setting1
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product4:Ethernet Nordic E-Line EPL
     [Tags]    BQA-9956      Product not available
@@ -49,51 +49,51 @@ Product4:Ethernet Nordic E-Line EPL
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product5: Ethernet Nordic E-LAN EVP-LAN
-    [Tags]    BQA-9957      B2O_Lightning  PO_Scripts
+    [Tags]    BQA-9957      B2O_Lightning   Product not available
     General Setup    B2O
     Searching and adding product    Ethernet Nordic E-LAN EVP-LAN
     Update_setting_Ethernet Nordic E-LAN EVP-LAN
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product6: Ethernet Nordic HUB/E-NNI
-    [Tags]    BQA-9959      B2O_Lightning   PO_Scripts
+    [Tags]    BQA-9959      B2O_Lightning   Product not available
     General Setup    B2O
     Searching and adding product    Ethernet Nordic HUB/E-NNI
     update_setting_Ethernet Nordic HUB/E-NNI
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product7: Telia Ethernet subscription
-    [Tags]    BQA-9960      B2O_Lightning   PO_Scripts
+    [Tags]    BQA-9960      B2O_Lightning   Product not available
     General Setup    B2O
     Searching and adding product    Telia Ethernet Subscription
     update_setting_Telia Ethernet subscription
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test : IP VPN
     [Tags]    BQA-11508     B2O_Lightning   PO_Scripts
     General Setup    B2O
-    Search and add product    Telia Unmanaged IP VPN
+    Searching and adding product    Telia Unmanaged IP VPN
     clicking on next button
     UpdatePageNextButton
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 
 Test : Telia IP VPN NNI
@@ -128,8 +128,8 @@ Product8: Telia Robotics
     clicking on next button
     Update Product Page    Telia Robotics
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product8: Telia Crowd Insights
     [Tags]    BQA-9952       Crowd Insights    B2B_other   PO_Scripts
@@ -139,8 +139,8 @@ Product8: Telia Crowd Insights
     clicking on next button
     Update Product Page    Telia Crowd Insights
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product8: Telia Sign
     [Tags]    BQA-9951      Telia Sign    B2B_other  PO_Scripts
@@ -150,8 +150,8 @@ Product8: Telia Sign
     clicking on next button
     Update Product Page    Telia Sign
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product9: Telia ACE
     [Tags]    BQA-11480     Telia ACE    B2B_other   PO_Scripts
@@ -160,8 +160,8 @@ Product9: Telia ACE
     clicking on next button
     Update Product Page    Telia ACE
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Product10: Genesys PureCloud
     [Tags]    BQA-11482     Genesys PureCloud   B2B_other   PO_Scripts
@@ -170,8 +170,8 @@ Product10: Genesys PureCloud
     clicking on next button
     Update Product Page    Genesys PureCloud
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
@@ -186,8 +186,8 @@ Test scenario 1:Telia Architect
     clicking on next button
     Update Product Page for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log        Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
@@ -202,8 +202,8 @@ Test scenario 2: Telia Project management
     clicking on next button
     Update Product Page for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
@@ -218,8 +218,8 @@ Test scenario 3:Telia Consulting
     clicking on next button
     Update Product Page for 2 products    ${prod_1}    ${prod_2}
     Create_Order for multiple products    ${prod_1}    ${prod_2}
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request. Product Removed
@@ -234,8 +234,8 @@ Test scenario 7: Key Customer Service Desk Additional Work
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
@@ -249,8 +249,8 @@ Test scenario 8: Key Customer Service Desk Additional Work
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
@@ -264,8 +264,8 @@ Test scenario 9: Key Customer Service Desk
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
@@ -278,8 +278,8 @@ Test scenario 10:Training
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
@@ -292,8 +292,8 @@ Test scenario 11:Training
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
@@ -306,8 +306,8 @@ Test scenario 12:Training
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -320,8 +320,8 @@ Test scenario 13:Continuity Management Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -334,8 +334,8 @@ Test scenario 14:Continuity Management Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
@@ -348,8 +348,8 @@ Test scenario 15:Continuity Management Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
@@ -362,8 +362,8 @@ Test scenario 16:Service Lead Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
@@ -376,8 +376,8 @@ Test scenario 17:Service Lead Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
@@ -390,8 +390,8 @@ Test scenario 18: Service Lead Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
@@ -405,8 +405,8 @@ Test scenario 19:Operation and Support Service
     clicking on next button
     Update Product Page for 2 products    Telia Palvelunhallintakeskus    Hallinta ja Tuki jatkuva palvelu
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
@@ -420,8 +420,8 @@ Test scenario 20:Operation and Support Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
@@ -435,8 +435,8 @@ Test scenario 21:Operation and Support Service
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
@@ -466,8 +466,8 @@ Test scenario 22 Other:Operation and Support Services
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 
 
@@ -517,8 +517,8 @@ Domain name service with Other Domain Complete Order RU
     clicking on next button
     Update Product Page    Telia Domain Name Service
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Domain name service with Other Domain Complete Order EU
     [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name, DNS Primary and Office 365 Configuration
@@ -533,8 +533,8 @@ Domain name service with Other Domain Complete Order EU
     clicking on next button
     Update Product Page    Telia Domain Name Service
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Domain name service with Finnish Domain - Complete Order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
@@ -550,8 +550,8 @@ Domain name service with Finnish Domain - Complete Order
     clicking on next button
     Update Product Page    Telia Domain Name Service
     Create_Order
-    log to console      Billing account is ${billingaccount}
-    log to console      Order Number is ${Order_Id}
+    log      Billing account is ${billingaccount}
+    log      Order Number is ${Order_Id}
 
 Telia ACE Complete Order
     [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest
