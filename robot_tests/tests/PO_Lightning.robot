@@ -403,7 +403,8 @@ Test scenario 19:Operation and Support Service
     Add Hallinta ja Tuki jatkuva palvelu
     update setting common    h    no
     clicking on next button
-    Update Product Page for 2 products    Telia Palvelunhallintakeskus    Hallinta ja Tuki jatkuva palvelu
+    Update Product Page     Telia Palvelunhallintakeskus
+    #Update Product Page for 2 products    Telia Palvelunhallintakeskus    Hallinta ja Tuki jatkuva palvelu
     Create_Order
     log      Billing account is ${billingaccount}
     log      Order Number is ${Order_Id}
@@ -557,6 +558,8 @@ Telia ACE Complete Order
     [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest
     General Setup    B2B
     Searching and adding product    Telia ACE
-    clicking on next button
-    Update Product Page    Telia ACE
-    Create_Order
+    log     ${oppo_name}
+    #Add all child products
+    #clicking on next button
+    #Update Product Page    Telia ACE
+    #Create_Order
