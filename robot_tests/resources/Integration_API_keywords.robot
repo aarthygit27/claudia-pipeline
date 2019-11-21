@@ -1,7 +1,9 @@
 *** Settings ***
-Library            ../resources/API_keywords_library.py
+Library            ../resources/Integration_API_keywords_library.py
 Library           Collections
 Library           SeleniumLibrary
+Library           ../resources/Integration_API_variables.robot
+Library           ../resources/ULMBE_functionalities.py
 
 *** Variables ***
 # Set initial value for suite variable
@@ -42,6 +44,22 @@ Authenticate To check credit score
 Authenticate To ECM Notify
     ${return_value} =   Authenticate Ecm Notify
     Should be Equal As Integers    ${return_value}    200
+
+Authenticate To Sproject Manual availability
+    ${return_value} =   Authenticate Sproject
+    Should be Equal As Integers    ${return_value}    200
+
+Post Sproject Manual availability
+    ${return_value} =    Sproject manual availability
+    Should Be Equal As Integers    ${return_value}    200
+
+Authenticate To create billing account
+    ${return_value} =   Authenticate Create billing account
+    Should be Equal As Integers    ${return_value}    200
+
+Create Billing account for the business account
+    ${return_value} =    Create Billing Account
+    Should Be Equal As Integers    ${return_value}    200
 
 Get Credit Scoring
     ${return_value} =    API Get Credit Scoring
@@ -96,3 +114,13 @@ Create ECM document
 #Notify ECM document
 #    ${return_value} =   Notify Document ECM
 #    Should be Equal As Integers     ${return_value}   200
+
+Create ECM document
+    ${return_value} =   Create Document ECM
+    Should be Equal As Integers     ${return_value}   200
+
+
+
+
+
+

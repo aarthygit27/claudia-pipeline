@@ -20,7 +20,7 @@ def get_session():
 def API_authenticate():
     base64Key = 'R1lMckd2TUZsMjBIdW96QWZFdjBBMlJBNzdwTGNBeXI6WlQ2aHR0YzlNYzZVZUZPWg=='
     print 'base64Key'
-    global token_json
+#    global token_json
     token_url = "https://api-garden-test.teliacompany.com:443/oauth/client_credential/accesstoken?grant_type=client_credentials"
     payload = {'grant_type': 'client_credentials', 'Authorization':"Basic "+ base64Key}
     headers = {}
@@ -42,8 +42,8 @@ def API_authenticate():
 
     return access_token_response.status_code
 
-def API_authenticate_ulm():
-    base64Key = 'MHRHa3AwQXFBWTFiaUJ5THZlUWdud3J1S1NLYVRPV0E6dFFmMkdoNHdvN3pKY3pPQg=='
+def api_authenticate_ulm(i):
+    base64Key = i
     print 'base64Key'
     global token_json_ulm
     token_url = "https://api-garden-test.teliacompany.com:443/oauth/client_credential/accesstoken?grant_type=client_credentials"
@@ -53,19 +53,19 @@ def API_authenticate_ulm():
     client_secret = 'tQf2Gh4wo7zJczOB'
 
     access_token_response = s.post(token_url,auth=(client_id, client_secret),verify=False)
-#    access_token_response = requests.post(token_url, data=payload, verify=False, allow_redirects=False, auth=(client_id, client_secret))
+    access_token_respons = requests.post(token_url, data=payload, verify=False, allow_redirects=False, auth=(client_id, client_secret))
 
-    print("[auth:setToken()] STATUS CODE: " + str(access_token_response.status_code))
-    print("[auth:setToken()] RESPONSE: " + access_token_response.text)
+    print("[auth:setToken()] STATUS CODE: " + str(access_token_respons.status_code))
+    print("[auth:setToken()] RESPONSE: " + access_token_respons.text)
 
-    if access_token_response.status_code == 200:
-        token_json_ulm = access_token_response.json()
-        #parsed_json = json.loads(access_token_response.text)
-        print (token_json_ulm)
-        access_token = token_json_ulm["access_token"]
-        print token_json_ulm["access_token"]
+    if access_token_respons.status_code == 200:
+       token_json_ulm = access_token_respons.json()
+     # parsed_json = json.loads(access_token_response.text)
+       print (token_json_ulm)
+       access_token = token_json_ulm["access_token"]
+       print token_json_ulm["access_token"]
+    return access_token_respons.status_code
 
-    return access_token_response.status_code
 
 def API_authenticate_ngsf_ddm():
     base64Key = 'SEQ4Q0VUeXQyS25nalV3bmYyV2pCa3puZ3dlV0xHb0s6VE1mMElKaW5aQWd3NU9FdA=='
@@ -239,6 +239,56 @@ def Authenticate_Ecm_Notify():
 
     return access_token_response.status_code
 
+def Authenticate_Sproject():
+    base64Key = 'Ynp0Mm1IRmFEZjFDY1hLM05ac0tNcGZ2R2tOR016Smw6UFFEdlBjRTEya3E4WHpWUA=='
+    print 'base64Key'
+    global token_json_ecm_notify
+    token_url = "https://api-garden-test.teliacompany.com/oauth/client_credential/accesstoken?grant_type=client_credentials"
+    payload = {'grant_type': 'client_credentials', 'Authorization':"Basic "+ base64Key}
+    headers = {}
+    client_id = ' bzt2mHFaDf1CcXK3NZsKMpfvGkNGMzJl'
+    client_secret = 'PQDvPcE12kq8XzVP'
+
+    access_token_response = s.post(token_url,auth=(client_id, client_secret),verify=False)
+#    access_token_response = requests.post(token_url, data=payload, verify=False, allow_redirects=False, auth=(client_id, client_secret))
+
+    print("[auth:setToken()] STATUS CODE: " + str(access_token_response.status_code))
+    print("[auth:setToken()] RESPONSE: " + access_token_response.text)
+
+    if access_token_response.status_code == 200:
+        token_json_ecm_notify = access_token_response.json()
+        #parsed_json = json.loads(access_token_response.text)
+        print (token_json_ecm_notify)
+        access_token = token_json_ecm_notify["access_token"]
+        print token_json_ecm_notify["access_token"]
+
+    return access_token_response.status_code
+
+def Authenticate_Create_billing_account():
+    base64Key = 'Ynp0Mm1IRmFEZjFDY1hLM05ac0tNcGZ2R2tOR016Smw6UFFEdlBjRTEya3E4WHpWUA=='
+    print 'base64Key'
+    global token_json_ecm_notify
+    token_url = "https://api-garden-test.teliacompany.com/oauth/client_credential/accesstoken?grant_type=client_credentials"
+    payload = {'grant_type': 'client_credentials', 'Authorization':"Basic "+ base64Key}
+    headers = {}
+    client_id = ' bzt2mHFaDf1CcXK3NZsKMpfvGkNGMzJl'
+    client_secret = 'PQDvPcE12kq8XzVP'
+
+    access_token_response = s.post(token_url,auth=(client_id, client_secret),verify=False)
+#    access_token_response = requests.post(token_url, data=payload, verify=False, allow_redirects=False, auth=(client_id, client_secret))
+
+    print("[auth:setToken()] STATUS CODE: " + str(access_token_response.status_code))
+    print("[auth:setToken()] RESPONSE: " + access_token_response.text)
+
+    if access_token_response.status_code == 200:
+        token_json_ecm_notify = access_token_response.json()
+        #parsed_json = json.loads(access_token_response.text)
+        print (token_json_ecm_notify)
+        access_token = token_json_ecm_notify["access_token"]
+        print token_json_ecm_notify["access_token"]
+
+    return access_token_response.status_code
+
 def API_get_credit_scoring():
     url = "https://api-garden-test.teliacompany.com:443/v1/finland/creditscore"
 	
@@ -246,6 +296,275 @@ def API_get_credit_scoring():
     headers = {'Content-Type':'application/json', 'Authorization': 'Bearer ' + token_json['access_token'], 'traceId': uuid.uuid4().hex}
     #headers = {}
     r = s.post(url, json=jsonni, headers=headers,verify=False)
+    print("[auth:setToken()] STATUS CODE: " + str(r.status_code))
+    print("[auth:setToken()] RESPONSE: " + r.text)
+
+    if r.status_code == 200:
+        parsed_json = json.loads(r.text)
+        return r.status_code
+
+def Sproject_manual_availability():
+    url = "https://api-garden-test.teliacompany.com/v1/finland/manualavailabilitycheck/availabilitycheck"
+    global token_json
+    jsonni = {
+   "header":{
+      "transactionId":"SF-1507104429748177",
+      "timestamp":"2019-04-17T11:07:09Z",
+      "sender":{
+         "user":"Marko Salmenautio",
+         "referenceId":"00558000001ulOTAAY",
+         "name":"Claudia",
+         "id":"177",
+         "description":"none"
+      },
+      "receivers":{
+         "user":"Marko Salmenautio",
+         "referenceId":"none",
+         "name":"sProject",
+         "id":"241",
+         "description":"none"
+      },
+      "messageId":"SF-1507104429748177",
+      "correlationId":"SF-1507104429748177"
+   },
+   "availabilityCheckRequest":{
+      "salesPerson":{
+         "telephone":"+358405004065",
+         "name":{
+            "givenName":"Tomass",
+            "familyName":"Ramanausks"
+         },
+         "email":"tomass.ramanausks@accenture.com"
+      },
+      "referenceId":"69E6750005",
+      "id":1455,
+      "orderLines":[{
+         "techInfo":"Fibre",
+         "speed":"20",
+         "sites":{
+            "referenceId":"Site-A",
+            "name":"none",
+            "equipmentRoom":"none",
+            "contact":{
+               "telephone":"none",
+               "name":{
+                  "givenName":"none",
+                  "familyName":"none"
+               },
+               "email":"none"
+            },
+            "connectionType":"Fibre",
+            "address":{
+               "referenceId":"none",
+               "postalCode":"00820",
+               "country":"Finland",
+               "city":"Helsinki",
+               "addressLine":"lumikintie 5b"
+            }
+         },
+         "promisedDeliveryDate":"2019-04-17T11:07:09Z",
+         "orderQuantity":1,
+         "note":"Testing",
+         "lineNumber":1,
+         "itemId":"189_7",
+         "itemDescription":"Saatavuuskysely",
+         "durationInMonth":0,
+         "customerProduct":"189_7",
+         "customer":{
+            "salesChannel":"single",
+            "referenceId":"808808",
+            "name":"Account TestContact",
+            "contact":{
+               "telephone":"+358405004065",
+               "name":{
+                  "givenName":"Account",
+                  "familyName":"TestContact"
+               },
+               "email":"test081090@mailinator.com"
+            }
+         },
+         "connectionType":"Fibre"
+      }],
+
+      "description":"Manual availability request from Claudia",
+      "createAt":"2019-04-17T11:07:09Z"
+   }
+}
+    headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token_json['access_token'],
+               'traceId': uuid.uuid4().hex}
+    # headers = {}
+    r = s.post(url, json=jsonni, headers=headers, verify=False)
+    print("[auth:setToken()] STATUS CODE: " + str(r.status_code))
+    print("[auth:setToken()] RESPONSE: " + r.text)
+
+    if r.status_code == 200:
+        parsed_json = json.loads(r.text)
+        return r.status_code
+
+def Create_Billing_Account():
+    url = "https://api-garden-test.teliacompany.com/v1/finland/billingaccountmanagement/billingaccount"
+
+    jsonni ={
+    "BillingAccount": {
+        "name": "Telia billing account",
+        "state": "Active",
+        "type": "Hierarchy account",
+        "characteristic":[
+        {
+        "name": "billingProvider",
+        "value": "10010"
+            },
+        {
+        "name": "customerId",
+        "value": "123456777"
+            },
+
+        {
+        "name": "receiverID",
+        "value": "EDI3039"
+        },
+        {
+        "name": "additionalName",
+        "value": "SUPPER ACCOUNT"
+        },
+        {
+        "name": "brand",
+        "value": "Sonera"
+        },
+        {
+        "name": "taxNumber",
+        "value": "VATCODE2682"
+        },
+        {
+        "name": "YR",
+        "value": "BM02020202"
+        },
+        {
+        "name": "collectiveInvoiceId",
+        "value": "82821"
+        },
+        {
+        "name": "consolidatedInvoice",
+        "value": "8282"
+        },
+        {
+        "name": "customerReferenceNumber",
+        "value": "Ref:AAAA"
+        },
+        {
+        "name": "customerReferenceText",
+        "value": "Ref: Sudhir"
+        },
+        {
+        "name": "costPoolInformation",
+        "value": "Info 01"
+        },
+        {
+        "name": "paperInvoiceCharge",
+        "value": "Yes"
+        },
+
+        {
+        "name": "accountNumber",
+        "value": "123457041"
+        }],
+        "billStructure": {
+            "presentationMedia": {
+                "name": "E-invoice",
+                "language": "Finnish"
+            },
+            "cycleSpecification": {
+        "name": "FIN - Monthly billing cycle 1"
+      }
+        },
+        "contact": [{
+            "contactType": "Main Email Invoice Email",
+            "contactMedium": {
+                "type": "Email",
+                "characteristic": {
+                    "emailAddress": "sudhir.rayini@gmail.com"
+                }
+            }
+        },
+        {
+            "contactType": "Secondary Email Invoice Email",
+            "contactMedium": {
+                "type": "Email",
+                "characteristic": {
+                    "emailAddress": "sudhir.rayini@cgi.com"
+                }
+            }
+        },
+        {
+            "contactType": "Main SMS Invoice",
+            "contactMedium": {
+                "type": "Mobile",
+                "characteristic": {
+                    "phoneNumber": "35840000001"
+                }
+            }
+        },
+        {
+            "contactType": "Secondary SMS Invoice",
+            "contactMedium": {
+                "type": "Mobile",
+                "characteristic": {
+                    "phoneNumber": "35840000002"
+                }
+            }
+        },
+        {
+            "contactType": "phone",
+            "contactMedium": {
+                "type": "phone",
+                "characteristic": {
+                    "phoneNumber": "35840000003"
+                }
+            }
+        },
+        {
+            "contactName": "Susu",
+            "contactType": "BillingAddress",
+            "contactMedium": {
+                "type": "Address",
+                "characteristic": {
+                    "city": "Helsinki",
+                    "country": "Finland",
+                    "postCode": "00510",
+                    "street1": "Teollisuuskatu 15"
+                }
+            }
+        }],
+
+        "paymentPlan": {
+            "paymentMethod": {
+                "name": "Bank Transfer",
+                "description": "Direct payment to bank account in the details",
+                "type": "bankAccountTrasfer",
+                "details": {
+                    "bank": "Nordea",
+                    "accountNumber": "123456704",
+                    "accountNumberType": "IBAN",
+                    "BIC": "FINBHXXX",
+                    "owner": "Telia Finland Oyj"
+                }
+            }
+        },
+        "currency": {
+            "currencyCode": "EUR"
+        },
+        "accountRelationship": {
+            "account": {
+
+            }
+        }
+    }
+}
+
+    headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token_json['access_token'],
+               'traceId': uuid.uuid4().hex}
+    # headers = {}
+    r = s.post(url, json=jsonni, headers=headers, verify=False)
     print("[auth:setToken()] STATUS CODE: " + str(r.status_code))
     print("[auth:setToken()] RESPONSE: " + r.text)
 
@@ -1784,7 +2103,7 @@ def Get_resource_availability_in_address():
         "townName":"Helsinki",
         "postalCode":"00510",
         "streetName":"Aleksis Kiven katu",
-        "streetNumber":"25"
+        "streetNumber":"25",
     }
 }
 
@@ -1820,7 +2139,7 @@ def check_credit_score():
       "productCategory":"BroadbandLowRisk",
       "usage":"1",
      "version":"3",
-      "businessId":"1704967-9"
+      "businessId":"123456-08"
     }
 }
 
@@ -1830,7 +2149,6 @@ def check_credit_score():
     r = s.post(url, json=jsonni, headers=headers, verify=False)
     print(r)
     print(r.status_code)
-    print("[auth:setToken()] STATUS CODE: " + str(r.status_code))
     print("[auth:setToken()] RESPONSE: " + r.text)
 
     if r.status_code == 200:
