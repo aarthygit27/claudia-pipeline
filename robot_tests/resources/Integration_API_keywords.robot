@@ -3,7 +3,6 @@ Library            ../resources/Integration_API_keywords_library.py
 Library           Collections
 Library           SeleniumLibrary
 Library           ../resources/Integration_API_variables.robot
-Library           ../resources/ULMBE_functionalities.py
 
 *** Variables ***
 # Set initial value for suite variable

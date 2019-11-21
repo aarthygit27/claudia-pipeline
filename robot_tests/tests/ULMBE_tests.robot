@@ -3,8 +3,7 @@ Library           OperatingSystem
 Library           String
 Library           Collections
 Library           BuiltIn
-Library          ../resources/ULMBE_keywords.robot
-Library          ../resources/salesforce_keywords.robot
+Resource          ../resources/ULMBE_keywords.robot
 
 Documentation    Suite description
 

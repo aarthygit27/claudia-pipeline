@@ -96,28 +96,3 @@ Create_Billing_Account
     [Tags]  APITests
     Authenticate To create billing account
     Create Billing account for the business account
-
-ULMBE_login
-    [Documentation]     Test create ULM login endpoint.
-    [Tags]  APITests
-    CSR Login
-    CSR Logout
-
-ULMBE user views own details
-    [Documentation]     Test create ULM login endpoint.
-    [Tags]  APITests
-    User login
-    User details
-    User group
-    User group user details
-    User group memberships
-    CSR logout
-
-ULMBE user changes own details
-
-    UserUpdateProfilebySelfCare session start
-    UserUpdateProfilebySelfCare session step
-
-
-
-
