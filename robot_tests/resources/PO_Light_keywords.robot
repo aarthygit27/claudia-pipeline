@@ -423,10 +423,10 @@ AddToCart with product_id
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
     Click element  //div[contains(@class, 'cpq-searchbox')]//input
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
-
     Wait until element is enabled   xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button   60s
     #sleep   5s
-    Force click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
+    #Force click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
+    Click element    xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
     sleep  10s
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     Log to console    Toggle status is ${status}
@@ -450,9 +450,9 @@ Searching and adding product
     Click element  //div[contains(@class, 'cpq-searchbox')]//input
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
-    #sleep   5s
+    sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
-    sleep  15s  # Better to have sleep time as it takes time to load
+    sleep  30s  # Better to have sleep time as it takes time to load
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
@@ -487,7 +487,6 @@ AddProductToCart with product_id
     Unselect frame
 
 Search and add product
-
    [Documentation]  Search and add products without clickings setting button
    [Arguments]   ${pname}=${product_name}
    ${Toggle}  set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']
@@ -822,7 +821,10 @@ Update setting Muut asiantuntijapalvelut
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
-    sleep    10s
+    sleep    20s
+    wait until page contains element        //span[text()='Muut asiantuntijapalvelut']//parent::button       30s
+    click element       //span[text()='Muut asiantuntijapalvelut']//parent::button
+    sleep       10s
     click element    ${Kilometrikorvaus}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
     sleep    10s
@@ -834,6 +836,7 @@ Update setting Muut asiantuntijapalvelut
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
+    click element       //span[text()='Muut asiantuntijapalvelut']/parent::button
     Unselect frame
 
 Update setting Telia Palvelunhallintakeskus
@@ -952,6 +955,9 @@ Create_Order
     Run Keyword if    ${Status}    Close and Submit
     Unselect frame
     Run Keyword Unless    ${Status}    Enter Details
+    wait until page contains element        //div[text()='Order']//following::div//span         60s
+    ${Order}        Get Text    //div[text()='Order']//following::div//span
+    Set Test Variable     ${Order_Id}    ${Order}
 
 View Or Open Quote
 
@@ -1078,6 +1084,7 @@ Create_Order for multiple products
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrder
+    Sleep       10s
     #Open Order Page  # Removed not available in release
     NextButtonInOrderPage
     Select Account
@@ -1087,7 +1094,11 @@ Create_Order for multiple products
     Select Date for multiple products    ${prod_1}  ${prod_2}
     #sleep  5s
     Select account Owner
-    Submit Order Button
+    #Close and Submit
+    Submit Order
+    wait until page contains element        //div[text()='Order']//following::div//span         60s
+    ${Order}        Get Text    //div[text()='Order']//following::div//span
+    Set Test Variable     ${Order_Id}    ${Order}
     view orchestration plan details
 
 
@@ -1348,9 +1359,6 @@ Enter Group id and submit
 
 view orchestration plan details
     Reload page
-    wait until page contains element        //div[text()='Order']//following::div//span         60s
-    ${Order}        Get Text    //div[text()='Order']//following::div//span
-    Set Test Variable     ${Order_Id}    ${Order}
     sleep  10s
     ${plan}     set variable    //a[contains(@class,'textUnderline outputLookupLink')][contains(text(),'Plan')]
     ScrollUntillFound   ${plan}
@@ -1881,12 +1889,12 @@ Select owner
 
 submit order
     ${submit_order}=    Set Variable    //span[text()='Yes']
-    ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
-    select frame    ${iframe}
+    #${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
+    #select frame    ${iframe}
     wait until element is visible    ${submit_order}    120s
     click element    ${submit_order}
     sleep    10s
-    Unselect Frame
+    #Unselect Frame
 
 Product_updation
     [Arguments]    ${product_name}
