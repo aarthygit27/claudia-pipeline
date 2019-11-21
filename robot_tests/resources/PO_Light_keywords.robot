@@ -1687,7 +1687,6 @@ Add DNS Primary
     sleep   20s
     #Wait Until Element Is Visible    10s
     click element    ${closing}
-    Unselect Frame
 
 Add Office 365 Configuration
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
