@@ -555,9 +555,9 @@ Domain name service with Finnish Domain - Complete Order
     log      Order Number is ${Order_Id}
 
 Telia ACE Complete Order
-    [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest
+    [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest          TestingMail
     General Setup    B2B
-    Searching and adding product    Telia ACE
+    #Searching and adding product    Telia ACE
     log     ${oppo_name}
     #Add all child products
     #clicking on next button
