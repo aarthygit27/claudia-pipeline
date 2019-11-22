@@ -614,8 +614,8 @@ Add Toimenpide XS
     Log to console  select product
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
-    Scroll Page To Element   ${product_id}
-    click button    ${product_id}
+    Scroll Page To Element      ${product_id}
+    click button     ${product_id}
     sleep   30s
     Capture Page Screenshot
     Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[@title='Settings']
@@ -632,9 +632,14 @@ Add Toimenpide S
     click button    ${product_id}
     sleep   20s
     wait until page contains element        //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']        30s
-    Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']
+    Force click element         //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']
+    Click Settings Button       Toimenpide S
     Unselect frame
+
+Click Settings Button
+    [Arguments]    ${product}
+    ${status}=    Run Keyword And Return Status    Element Should Be Visible    //span[text()='Close']/..
+    Run Keyword Unless    ${status}    Run Keyword With Delay    0.10s    Force click element     //div[contains(text(),'${product}')]//following::button[@title='Settings']
 
 Add Toimenpide M
     [Documentation]    This is to Add Toimenpide M
@@ -646,7 +651,8 @@ Add Toimenpide M
     click button    ${product_id}
     sleep   20s
     wait until page contains element        //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']        30s
-    Click Button  //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']
+    Force click element         //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']
+    Click Settings Button       Toimenpide M
     sleep  10s
     Unselect frame
 
@@ -655,14 +661,15 @@ Add Toimenpide L
     [Documentation]    This is to Add Toimenpide L
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Sleep       20s
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide L')]//following::button[1]
     Wait until element is visible  ${product_id}   30s
-    Scroll Page To Element   ${product_id}
-    click button    ${product_id}
-    sleep   20s
+    ScrollUntillFound   ${product_id}
+    Force click element      ${product_id}
+    sleep   30s
     wait until page contains element        //div[contains(text(),'Toimenpide L')]//following::button[@title='Settings']        30s
-    Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide L')]//following::button[@title='Settings']
+    Force click element         //div[contains(text(),'Toimenpide L')]//following::button[@title='Settings']
+    Click Settings Button       Toimenpide L
     sleep  10s
     Unselect frame
 
@@ -670,43 +677,47 @@ Add Toimenpide XL
     [Documentation]    This is to Add Toimenpide XL
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Sleep       20s
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XL')]//following::button[1]
     Wait until element is visible  ${product_id}   30s
-    Scroll Page To Element   ${product_id}
-    click button    ${product_id}
+    ScrollUntillFound   ${product_id}
+    Force click element    ${product_id}
     sleep   20s
     wait until page contains element        //div[contains(text(),'Toimenpide XL')]//following::button[@title='Settings']       30s
-    Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide XL')]//following::button[@title='Settings']
+    ScrollUntillFound           //div[contains(text(),'Toimenpide XL')]//following::button[@title='Settings']
+    Force click element         //div[contains(text(),'Toimenpide XL')]//following::button[@title='Settings']
+    Click Settings Button       Toimenpide XL
     sleep  10s
     Unselect frame
 
 Add Events jatkuva palvelu
-
     [Documentation]   This is to  Add Events jatkuva palvelu  using Add to cart button
-
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Sleep       20s
     ${product_id}=    Set Variable    //div[contains(text(),'Events jatkuva palvelu')]//following::button[1]
     Wait until element is visible  ${product_id}   30s
-    click button    ${product_id}
+    ScrollUntillFound   ${product_id}
+    Force click element     ${product_id}
     sleep   20s
     wait until page contains element        //div[contains(text(),'Events jatkuva palvelu')]//following::button[@title='Settings']
-    Capture Page Screenshot
-    Click Button  //div[contains(text(),'Events jatkuva palvelu')]//following::button[@title='Settings']
+    ScrollUntillFound       //div[contains(text(),'Events jatkuva palvelu')]//following::button[@title='Settings']
+    Force click element    //div[contains(text(),'Events jatkuva palvelu')]//following::button[@title='Settings']
+    Click Settings Button       Events jatkuva palvelu
     Unselect frame
 
 Add Events kertapalvelu
-
     [Documentation]   This is to  Add Events kertapalvelu  using Add to cart button
-
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    Sleep       20s
     ${product_id}=    Set Variable    //div[contains(text(),'Events kertapalvelu')]//following::button[1]
     Wait until element is visible  ${product_id}   30s
-    click button    ${product_id}
+    ScrollUntillFound    ${product_id}
+    Force click element     ${product_id}
     sleep   20s
     wait until page contains element        //div[contains(text(),'Events kertapalvelu')]//following::button[@title='Settings']         30s
-    Capture Page Screenshot
-    Click Button  //div[contains(text(),'Events kertapalvelu')]//following::button[@title='Settings']
+    ScrollUntillFound     //div[contains(text(),'Events kertapalvelu')]//following::button[@title='Settings']
+    Force click element    //div[contains(text(),'Events kertapalvelu')]//following::button[@title='Settings']
+    Click Settings Button       Events kertapalvelu
     Unselect frame
 
 Add_child_product
@@ -763,10 +774,7 @@ update setting common
     sleep    5s
 
 update setting Toimenpide
-
     [Arguments]    ${option}    ${cbox}
-
-
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Capture Page Screenshot
@@ -781,14 +789,13 @@ update setting Toimenpide
     click element    ${Palveluaika}
     Wait until element is visible   ${Palveluaika}//option[contains(text(),'arkisin 8-16')]   30s
     click element     ${Palveluaika}//option[contains(text(),'arkisin 8-16')]
-
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${cbox}    yes
     Run Keyword If    ${compare}== True    click element    ${Työtilaus vaadittu}
     #Fill Laskutuksen lisätieto
     click element    ${X_BUTTON}
     Wait until element is not visible  ${X_BUTTON}  30s
     unselect frame
-    sleep    5s
+    sleep    20s
 
 
 Update setting Telia Arkkitehti jatkuva palvelu
@@ -833,8 +840,10 @@ Update setting Muut asiantuntijapalvelut
     sleep    5s
     click element    ${X_BUTTON}
     sleep    20s
-    wait until page contains element        //span[text()='Muut asiantuntijapalvelut']//parent::button       30s
-    click element       //span[text()='Muut asiantuntijapalvelut']//parent::button
+    Click parent Product     Muut asiantuntijapalvelut
+    sleep   30s
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${Kilometrikorvaus}
+    run keyword unless   ${present}    Click parent Product     Muut asiantuntijapalvelut
     sleep       10s
     click element    ${Kilometrikorvaus}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
@@ -849,6 +858,11 @@ Update setting Muut asiantuntijapalvelut
     click element    ${X_BUTTON}
     click element       //span[text()='Muut asiantuntijapalvelut']/parent::button
     Unselect frame
+
+Click parent Product
+    [Arguments]    ${parent}
+    wait until page contains element        //span[text()='${parent}']//parent::button       30s
+    click element       //span[text()='${parent}']//parent::button
 
 Update setting Telia Palvelunhallintakeskus
 
@@ -872,6 +886,7 @@ clicking on next button
     Reload page
     Wait Until Element Is Enabled    ${iframe}    90s
     select frame    ${iframe}
+    #Wait Until Element Is Enabled    ${iframe}    90s
     Wait Until Element Is Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True
     click element    ${next_button}
@@ -1687,6 +1702,7 @@ Add DNS Primary
     sleep   20s
     #Wait Until Element Is Visible    10s
     click element    ${closing}
+    unselect frame
 
 Add Office 365 Configuration
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe

@@ -456,14 +456,14 @@ Test scenario 22 Other:Operation and Support Services
     update setting Toimenpide   h    no
     Add Toimenpide XL
     update setting Toimenpide    h    no
-    Search and add product    Asiantuntijakäynti
-    Search and add product    Pikatoimituslisä
-    #Searching and adding product    Events jatkuva palvelu
     Add Events jatkuva palvelu
     update setting common    d    no
     #Searching and adding product    Events jatkuva palvelu
     Add Events kertapalvelu
     update setting common    h    no
+    Search and add product    Asiantuntijakäynti
+    Search and add product    Pikatoimituslisä
+    #Searching and adding product    Events jatkuva palvelu
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
