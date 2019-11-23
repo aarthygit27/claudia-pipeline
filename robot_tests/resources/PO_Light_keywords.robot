@@ -618,7 +618,9 @@ Add Toimenpide XS
     click button     ${product_id}
     sleep   30s
     Capture Page Screenshot
-    Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[@title='Settings']
+    #Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[@title='Settings']
+    Force click element         //div[contains(text(),'Toimenpide XS')]//following::button[@title='Settings']
+    Click Settings Button       Toimenpide XS
     Unselect frame
 
 Add Toimenpide S
@@ -1794,12 +1796,15 @@ Adding DNS Primary
     Click element       ${DNS Primary}
 
 Add DNS Security
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${DNS Primary Toggle}  set variable  //span[text()='DNS Primary']/../../button
     ${DNS Security}   set variable   //div[contains(text(),'DNS Security')]/../../..//button[contains(text(),'Add to Cart')]
+    select frame     ${iframe}
     Wait until element is visible  ${DNS Primary Toggle}   60s
     Click element       ${DNS Primary Toggle}
     Wait until element is visible   ${DNS Security}  60s
     Click element  ${DNS Security}
+    unselect frame
 
 Add Redirect
     ${Redirect}  set variable  //div[contains(text(),'Redirect')]/../../..//button[contains(text(),'Add to Cart')]
@@ -1807,6 +1812,8 @@ Add Redirect
     ${Lähdeosoite}  set variable   //input[@name='productconfig_field_0_0']
     ${Kohdeosoite}  set variable  //input[@name='productconfig_field_0_1']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    select frame        ${iframe}
     Wait until element is visible  ${Redirect}  60s
     Click element       ${Redirect}
     Wait until element is visible  ${Redirect_settings}  60s
@@ -1814,12 +1821,14 @@ Add Redirect
     Input Text    ${Lähdeosoite}   teollisuskatu 14 00510
     Press Key    ${Kohdeosoite}   telekatu 12 00510
     sleep  5s
-
     Click element  ${closing}
+    unselect frame
 
 Add Express Delivery
     ${Express Delivery}  set variable  //div[contains(text(),'Express Delivery')]/../../..//button[contains(text(),'Add to Cart')]
     ${Express Delivery settings}  set variable  //div[contains(text(),'Express Delivery')]/../../..//*[@alt='settings']/..
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    select frame         ${iframe}
     Wait until element is visible  ${Express Delivery}   60s
     Click element       ${Express Delivery}
     Wait until element is visible   ${Express Delivery settings}  60s
