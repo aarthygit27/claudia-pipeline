@@ -182,9 +182,7 @@ MUBE Create New Business Customer With Language
     MUBE Verify That Customer Order Status Is Set To Finished
 
 MUBE Create New Contact Person For Business Customer
-    [Arguments]    ${customer_businessid}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${language}=${DEFAULT_LANGUAGE}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=8881234
-    ...    ${street_name}=${DEFAULT_STREET_NAME}    ${street_number}=${DEFAULT_STREET_NUMBER}    ${staircase}=${DEFAULT_STAIRCASE}    ${apartment_door}=${DEFAULT_APPARTMENT}    ${postal_code}=${DEFAULT_POSTAL_CODE}    ${city}=${DEFAULT_CITY}
-    ...    # MUBE disallows +358 starting phone numbers
+    [Arguments]    ${customer_businessid}    ${first_name}=${EMPTY}    ${last_name}=${EMPTY}    ${language}=${DEFAULT_LANGUAGE}    ${email}=${DEFAULT_EMAIL}    ${phone_number}=8881234         ${street_name}=${DEFAULT_STREET_NAME}    ${street_number}=${DEFAULT_STREET_NUMBER}    ${staircase}=${DEFAULT_STAIRCASE}    ${apartment_door}=${DEFAULT_APPARTMENT}    ${postal_code}=${DEFAULT_POSTAL_CODE}    ${city}=${DEFAULT_CITY}          # MUBE disallows +358 starting phone numbers
     [Documentation]    Create contact person for customer pointed by the given business id.
     ...    Only mandatory argument is '{customer_businessid}'. Rest of the arguments are optional and they will be
     ...    generated/defaults used if left out. Following suite variables are created after this keyword:

@@ -1212,10 +1212,7 @@ Change Account Owner
     \   Run Keyword If   ${status} == False      reload page
     \   Wait Until Page Contains Element   ${OWNER_NAME}   120s
     \   Exit For Loop If    ${status}
-    Should Be Equal As Strings    ${NEW_OWNER_REFLECTED}    ${NewOwner}    #${OWNER_OPTIONS}=    Set Variable    (//a[@role='option' and not(contains(., '${CurrentOwnerName}'))])    #${Count}=
-    ...    # get element count    ${OWNER_OPTIONS}    #Log To Console    No of options available as new owner:${Count}    #${SELECT_NEW_OWNER}=    catenate
-    ...    # ${OWNER_OPTIONS}    [1]    #Run Keyword If    ${Count}!=0    Click Element    ${SELECT_NEW_OWNER}
-    ...    #...    # ELSE    Log to console    No Option available
+    Should Be Equal As Strings    ${NEW_OWNER_REFLECTED}    ${NewOwner}
     #    Wait Until Page Contains Element    ${NEW_OWNER_SELECTED}    10s
     #    ${NEW_OWNER_NAME}=    Get Text    ${NEW_OWNER_SELECTED}
     #    Log To Console    New Owner selected:${NEW_OWNER_NAME}
@@ -1231,9 +1228,7 @@ Click on a given account
     sleep    5s
     ${present}=    Run Keyword And Return Status    Element Should Be Visible    //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
     Run Keyword If    ${present}    Click specific element    //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
-    ...    ELSE    Log To Console    No account name available    #${count}=    Get Element Count    ${ACCOUNT_NAME}
-    ...    #${elementUsed}=    Set Variable    //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']    #Run Keyword if    ${count}!=0    click element
-    ...    # ${elementUsed}    #...    # ELSE    Log To Console    No account name available
+    ...    ELSE    Log To Console    No account name available
     sleep    10s
 
 Click specific element

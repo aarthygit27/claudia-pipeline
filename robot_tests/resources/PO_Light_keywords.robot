@@ -18,7 +18,7 @@ General Setup
     Set Test Variable    ${billingaccount}   ${billing_acc_name}
     Go To Entity    ${oppo_name}
     ${price_list_old}=     get text        //span[text()='Price List']//following::a[1]
-    Log to console      old pricelist is ${price_list_old}
+    #Log to console      old pricelist is ${price_list_old}
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${price_list_old}    ${price_list}
     Run Keyword If    ${compare}== False   Log to console    Change Pricielist
     Run Keyword If    ${compare}== False   Edit Opportunity Page     Price List  ${price_list}
@@ -161,7 +161,7 @@ Entity Should Be Open
 Create Contact From Account
     ${primary_email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
     ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
-    log to console    This is to create new contact
+    #log to console    This is to create new contact
     ${a}    create unique name    Contact_
     force click element    //li/a/div[text()='New Contact']
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::input[@class='firstName compoundBorderBottom form-element__row input']    60s
@@ -180,7 +180,7 @@ Create Contact From Account
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    30s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    ${primary_email_id}
     Sleep  10s
-    log to console      enter email
+    #log to console      enter email
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       ${email_id}
@@ -210,25 +210,25 @@ reEnterContactData
     sleep    2s
     input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    ${primary_email_id}
     sleep    2s
-    log to console      Enter primary email
+    #log to console      Enter primary email
     clear element text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       ${email_id}
     Sleep  2s
-    log to console      Enter email
+    #log to console      Enter email
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
     sleep    5s
     ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
     Sleep  30s
-    log to console    ${IsErrorVisible}
+    #log to console    ${IsErrorVisible}
     Run Keyword If    ${IsErrorVisible}    reEnterContactData    ${random_name}
     #sleep    10s
 
 Create Opportunity
 
     [Arguments]    ${b}=${contact_name}
-    log to console    this is to create a Oppo from contact ${b}
+    #log to console    this is to create a Oppo from contact ${b}
     ${oppo_name}    create unique name    Test Robot Order_
     wait until page contains element    //li/a[@title="New Opportunity"]   60s
     click element    //li/a[@title="New Opportunity"]
@@ -284,23 +284,23 @@ Change Price list
     ${Price List}    set variable    //span[contains(text(),'Edit Close Date')]/../../button
     ${B2B_Price_list_delete_icon}=    Set Variable    //label/span[text()='Price List']/../../div//a[@class='deleteAction']
     ${edit pricelist}    Set Variable    //button[@title='Edit Price List']
-    Log To Console    Change Price list
+    #Log To Console    Change Price list
     sleep    10s
     Scroll Page To Element    ${edit pricelist}
     ${element_position}    Get Vertical Position    ${edit pricelist}
     ${scroll_position}=    Evaluate    ${element_position}+1
-    Log To Console    ${scroll_position}as
+    #Log To Console    ${scroll_position}as
     Scroll Page To Location    0    ${scroll_position}
     ScrollUntillFound    ${edit pricelist}
     Click Element    ${edit pricelist}
     #sleep    10s
     #ScrollUntillFound    ${B2B_Price_list_delete_icon}
     #Scroll Element Into View    ${B2B_Price_list_delete_icon}
-    log to console    ${price_lists}
+    #log to console    ${price_lists}
     ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${B2B_Price_list_delete_icon}    15s
-    log to console    ${status}
+    #log to console    ${status}
     Run Keyword If    ${status} == False    Click Element    ${edit pricelist}
-    log to console    waiting for delete icon
+    #log to console    waiting for delete icon
     Wait Until Element Is Visible    ${B2B_Price_list_delete_icon}    15s
     Capture Page Screenshot
     sleep    3s
@@ -308,19 +308,19 @@ Change Price list
     click element    ${B2B_Price_list_delete_icon}
     sleep    3s
     Capture Page Screenshot
-    Log To Console    searching for price list
+    #Log To Console    searching for price list
     ${search}    Get Vertical Position    //input[@title='Search Price Lists']
     ${vert_post}    Evaluate    ${search}+3
     Scroll Page To Location    0    ${vert_post}
     #Scroll Page To Element    //input[@title='Search Price Lists']
-    log to console    scrolling
+    #log to console    scrolling
     Wait Until Element Is Visible    //input[@title='Search Price Lists']    15s
     Capture Page Screenshot
-    Log To Console    ${price_lists}
+    #Log To Console    ${price_lists}
     input text    //input[@title='Search Price Lists']    ${price_lists}
     sleep    3s
     click element    //*[@title='${price_lists}']/../../..
-    Log To Console    saving
+    #Log To Console    saving
     click element    //button[@title='Save']
     #execute javascript    window.scrollTo(0,0)
     sleep    5s
@@ -328,7 +328,7 @@ Change Price list
 ClickingOnCPQ
     [Arguments]    ${b}=${oppo_name}
     ##clcking on CPQ
-    log to console    ClickingOnCPQ
+    #log to console    ClickingOnCPQ
     Wait until keyword succeeds     30s     5s      click element    xpath=//a[@title='CPQ']
     #wait until page contains element    xpath=//h1[text()='${b}']    30s
     sleep    30s
@@ -352,7 +352,7 @@ updating close date
     ${close_date}=    Get Date From Future    30
     ${Edit_close_date}    set variable    //span[contains(text(),'Edit Close Date')]/../../button
     ${closing_date}    Set Variable    //div[contains(@data-aura-class,'uiInput--datetime')]/div/input
-    Log To Console    updating close date
+    #Log To Console    updating close date
     Scroll Page To Element    ${Edit_close_date}
     click element    ${Edit_close_date}
     Scroll Page To Element    ${closing_date}
@@ -417,7 +417,7 @@ AddToCart with product_id
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}      Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
-    Log to console      ${status}
+    #Log to console      ${status}
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
@@ -429,7 +429,7 @@ AddToCart with product_id
     Click element    xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
     sleep  10s
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
-    Log to console    Toggle status is ${status}
+    #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
     Click Settings  ${pname}
     Unselect frame
@@ -443,7 +443,7 @@ Searching and adding product
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}     Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
-    Log to console      ${status}
+    #Log to console      ${status}
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
@@ -454,7 +454,7 @@ Searching and adding product
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep  30s  # Better to have sleep time as it takes time to load
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
-    Log to console    Toggle status is ${status}
+    #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
     Click Settings  ${pname}
     Unselect frame
@@ -467,7 +467,7 @@ AddProductToCart with product_id
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}   set variable    Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
-    Log to console      ${status}
+    #Log to console      ${status}
 
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
@@ -480,7 +480,7 @@ AddProductToCart with product_id
     click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
     sleep  10s
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
-    Log to console    Toggle status is ${status}
+    #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
 
 
@@ -502,7 +502,7 @@ Search and add product
     Wait until element is visible   //span[text()='${pname}']   30s
     sleep  10s
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
-    Log to console    Toggle status is ${status}
+    #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
     #Click Settings
     Unselect frame
@@ -611,7 +611,7 @@ Add Toimenpide XS
     ...    to cart and fill the required details
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Execute JavaScript   window.scrollTo(0,500)
-    Log to console  select product
+    #Log to console  select product
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     Scroll Page To Element      ${product_id}
@@ -899,7 +899,7 @@ Update Product
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     ${Count}=  GetElement Count     ${sales_type}
-    Log to console      No of products is ${count}
+    #Log to console      No of products is ${count}
     Run Keyword IF  ${Count} != 1   Select From List By Value    (//select[@ng-model='p.SalesType'])[1]    New Money-New Services
     Run Keyword IF  ${Count} != 1     Select From List By Value    (//select[@ng-model='p.SalesType'])[2]    New Money-New Services
     Run Keyword IF  ${count} == 1     Select From List By Value    ${sales_type}    New Money-New Services
@@ -909,7 +909,7 @@ Update Product
 UpdatePageNextButton
 
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
-    log to console    UpdateAndAddSalesType
+    #log to console    UpdateAndAddSalesType
     sleep    20s
     #Requires sleep to overcome dead object issue
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
@@ -925,19 +925,19 @@ Update Product Page
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
     ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
-    log to console    UpdateAndAddSalesType
+    #log to console    UpdateAndAddSalesType
     sleep    8s
     Wait Until Element Is Visible    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     Wait until element is Visible    ${update_order}    60s
-    log to console    selected new frame
+    #log to console    selected new frame
     Wait until element is Visible    ${product_list}    70s
     Wait until element is visible  ${product_list} //following-sibling::td/select[contains(@class,'required')]  30s
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     sleep    2s
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     ${status}    Run Keyword and return status    Frame should contain    ${next_button}    Next
-    Log to console      Next button on update Order ${status}
+    #Log to console      Next button on update Order ${status}
     Wait until element is visible   ${next_button}   30s
     Force click element    ${next_button}
     unselect frame
@@ -948,12 +948,12 @@ Update Product Page for 2 products
     ${product_1}=    Set Variable    //td[normalize-space(.)='${product1}']
     ${product_2}=    Set Variable    //td[normalize-space(.)='${product2}']
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
-    log to console    UpdateAndAddSalesType for 2 products
+    #log to console    UpdateAndAddSalesType for 2 products
     sleep  10s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until element is visible    ${update_order}    60s
-    log to console    selected new frame
+    #log to console    selected new frame
     wait until element is visible   ${product_1}    70s
     click element    ${product_1} //following-sibling::td/select[contains(@class,'required')]
     sleep    2s
@@ -998,7 +998,7 @@ View Or Open Quote
     #Reload page
     Wait until element is visible  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe   30s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    log to console    selected Create Quotation frame
+    #log to console    selected Create Quotation frame
     Wait Until Element Is Visible    ${quote}    120s
     ${quote_text}    get text    ${quote}
     ${open}    Run Keyword And Return Status    Should Be Equal As Strings    ${quote_text}    Open Quote
@@ -1009,15 +1009,15 @@ View Or Open Quote
 
 ClickonCreateOrder
 
-    log to console    ClickonCreateOrderButton
+    #log to console    ClickonCreateOrderButton
     wait until page contains element    //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']    60s
     force click element    //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
     sleep    15s
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  60s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    Log to console      Inside frame
+    #Log to console      Inside frame
     ${status}     Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
-    Log to console      ${status}
+    #Log to console      ${status}
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
     unselect frame
@@ -1027,7 +1027,7 @@ Open Order Page
     sleep   15s
     Wait until element is visible  //iframe[@title='accessibility title'][@scrolling='yes']   30s
     select frame    //iframe[@title='accessibility title'][@scrolling='yes']
-    Log to console      Open Order
+    #Log to console      Open Order
     ${status}    Run Keyword and return status    Frame should contain    //button[contains(text(),'Open Order')]    Open Order
     #Current frame should contain  Open
     Wait until element is visible   //button[contains(text(),'Open Order')]  60s
@@ -1038,17 +1038,17 @@ Open Order Page
 
 NextButtonInOrderPage
 
-    log to console    NextButtonOnOrderPage
+    #log to console    NextButtonOnOrderPage
     #Reload page  If reloaded it opens the open order page. So does not include here
     sleep  20s
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    Log to console      Inside frame
+    #Log to console      Inside frame
     sleep  20s
     wait until element is visible       //span[text()='Next']/..        30s
     ${count}    Run Keyword and return status    Get Element Count   //span[text()='Next']/..
-    Log to console  ${count}
+    #Log to console  ${count}
     #Run Keyword and return status  Frame should contain    //span[text()='Next']/..    Next
     #Log to console      ${status}
     #wait until element is visible    //span[text()='Next']/..    60s
@@ -1084,12 +1084,12 @@ Enter Details
 
 SelectOwnerAccountInfo
     [Arguments]    ${e}= ${billing_account}
-    log to console    Select Owner Account FLow Chart Page
+    #log to console    Select Owner Account FLow Chart Page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    log to console    entering Owner Account page
+    #log to console    entering Owner Account page
     Scroll Page To Element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
-    Log to console      Selecting Billing account
+    #Log to console      Selecting Billing account
     sleep   10s
     force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     sleep  10s
@@ -1098,12 +1098,12 @@ SelectOwnerAccountInfo
     sleep  10s
     select frame   xpath=//div[contains(@class,'slds')]/iframe
     Wait until element is visible    //*[@id="BuyerIsPayer"]//following-sibling::span
-    Log to console   Click BIP
+    #Log to console   Click BIP
     force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
     ScrollUntillFound       //*[@id="SelectedBuyerAccount_nextBtn"]
     click element    //*[@id="SelectedBuyerAccount_nextBtn"]
     unselect frame
-    log to console    Exiting owner Account page
+    #log to console    Exiting owner Account page
     sleep    30s
 
 Create_Order for multiple products
@@ -1161,7 +1161,7 @@ select contact
     ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
     Wait until element is visible   //div[contains(@class,'slds')]/iframe   30s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    log to console    entering Technical COntact page
+    #log to console    entering Technical COntact page
     Wait Until Element Is Visible    ${contact_search}    120s
     Input Text    ${contact_search}   ${contact_name}  # For Telia Communication Oy Account
     #sleep    15s
@@ -1229,7 +1229,7 @@ Select Date
 
 Pick Date without product
 
-    Log to console    picking date
+    #Log to console    picking date
     ${date_id}=    Set Variable    //input[@id='RequestedActionDate']
     ${next_month}=    Set Variable    //button[@title='Next Month']
     ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
@@ -1254,10 +1254,10 @@ select Date for multiple products
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     Wait until element is visible   ${additional_info_next_button}  60s
     ${status}    Run Keyword and Return Status    Element should be visible    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_1}')]//following::input[2]
-    Log to console    ${prod_1}
+    #Log to console    ${prod_1}
     Run Keyword if    ${status}    Pick Date with product    ${prod_1}
     ${status}    Run Keyword and Return Status    Element should be visible   //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${prod_2}')]//following::input[2]
-    Log to console    ${prod_2}
+    #Log to console    ${prod_2}
     Run Keyword if    ${status}    Pick Date with product     ${prod_2}
     #sleep  5s
     Click Element    ${additional_info_next_button}
@@ -1266,7 +1266,7 @@ select Date for multiple products
 Pick date with product
 
     [Arguments]    ${product}
-    Log to console    picking date
+    #Log to console    picking date
     ${date_id}=    Set Variable    //div[@class='ProductName2 ng-binding ng-scope'][contains(text(),'${product}')]//following::input[2]
     ${next_month}=    Set Variable    //button[@title='Next Month']
     ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
@@ -1287,9 +1287,9 @@ Create account owner
     unselect frame
 
 Select account Owner
-    log to console    Select Owner Account FLow Chart Page
+    #log to console    Select Owner Account FLow Chart Page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    log to console    entering Owner Account page
+    #log to console    entering Owner Account page
     ${owner_account}=    Set Variable    //ng-form[@id='BuyerAccount']//span[@class='slds-checkbox--faux']
     ${buyer_payer}=    Set Variable    //input[@id='BuyerIsPayer']/../span
     ${buyer_account_next_button}=    Set Variable    //div[@id='SelectedBuyerAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
@@ -1305,7 +1305,7 @@ Select account Owner
     ${status} =  Run Keyword and Return status   Page should contain element   //p[text()='Update Order']
     Run Keyword if  ${status}   Continue and submit
     unselect frame
-    log to console    Exiting owner Account page
+    #log to console    Exiting owner Account page
     sleep    10s
 
 
@@ -1328,7 +1328,7 @@ Submit for Approval
 Submit Order Button
     Reload page
     Wait until element is visible   //div[@title='Submit Order']    60s
-    Log to console    submitted
+    #Log to console    submitted
     Click element  //div[@title='Submit Order']
     #sleep  10s
     Capture Page Screenshot
@@ -1355,7 +1355,7 @@ Enter Group id and submit
     #sleep  10s
     Execute JavaScript    window.scrollTo(0,1500)
     Wait until element is visible   ${Installation date}   60s
-    Log to console  Installation date
+    #Log to console  Installation date
     set focus to element   ${Installation date}
     Click element  //div/span[text()='Desired Installation Date']//following::button[1]
     sleep  3s
@@ -1522,7 +1522,7 @@ helinsiki_address
 
     Wait until element is visible    ${country}  30s
     Click element   ${country}
-    Log to console   verify if address is populated properly
+    #Log to console   verify if address is populated properly
     ${code}  get text  ${postal_code}
     ${compare}=    Run Keyword And Return Status    Should Not Be Empty   ${code}
     Run Keyword If    ${compare}== False   Press Key    ${postal_code}    00100
@@ -1765,7 +1765,7 @@ Add Finnish_Domain_Service
     click element    ${closing}
     Wait until element is visible  ${Finnish Domain Name Registrant}   60s
     sleep       120s
-    Log to console   Finnish Domain Name Registrant added automatically
+    #Log to console   Finnish Domain Name Registrant added automatically
     wait until element is visible       //span[text()='Internet Domain']/../button      240s
     click element       //span[text()='Internet Domain']/../button
     Unselect Frame
@@ -1855,7 +1855,7 @@ update telia robotics price sitpo
     ${adjustments}    Set Variable    //h2[text()='Adjustment']
     ${price}    Set Variable    //input[@id='adjustment-input-01']
     ${apply button}    Set Variable    //button[contains(text(),'Apply')]
-    Log To Console    update telia robotics price sitpo
+    #Log To Console    update telia robotics price sitpo
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     Wait Until Element Is Visible    ${recurring charge}    60s
@@ -1928,7 +1928,7 @@ submit order
     #${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
     #select frame    ${iframe}
     Wait until element is visible   //div[@title='Submit Order']    60s
-    Log to console    submitted
+    #Log to console    submitted
     click element    //div[@title='Submit Order']
     wait until element is visible       //button[text()='Submit']      60s
     click element       //button[text()='Submit']
