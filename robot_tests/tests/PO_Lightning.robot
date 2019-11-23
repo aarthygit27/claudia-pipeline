@@ -6,7 +6,7 @@ Resource          ../resources/PO_Light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
-Library           AutoItLibrary
+#Library           AutoItLibrary
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
