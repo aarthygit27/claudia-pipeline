@@ -175,7 +175,7 @@ Product10: Genesys PureCloud
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]    BQA-11483     Run    sitpo22  Rerun  PO_Scripts
+    [Tags]    BQA-11483     Run    sitpo22   PO_Scripts
     ${prod_1}    set variable    Telia Arkkitehti jatkuva palvelu
     ${prod_2}    set variable    Muut asiantuntijapalvelut
     General Setup    B2B
@@ -239,7 +239,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]      BQA-11492     PO_Scripts    sitpo22  Check
+    [Tags]      BQA-11492     PO_Scripts    sitpo22  Check      Rerun
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -441,7 +441,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]      BQA-11507   PO_Scripts   Last_product  sitpo22
+    [Tags]      BQA-11507   PO_Scripts   Last_product  sitpo22      Rerun
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -539,7 +539,7 @@ Domain name service with Other Domain Complete Order EU
 
 Domain name service with Finnish Domain - Complete Order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    BQA-11731   PO_Scripts
+    [Tags]    BQA-11731   PO_Scripts        Rerun
     General Setup    B2B
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service

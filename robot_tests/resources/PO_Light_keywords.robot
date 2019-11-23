@@ -1830,6 +1830,7 @@ Add Express Delivery
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     select frame         ${iframe}
     Wait until element is visible  ${Express Delivery}   60s
+    sleep    5s
     Click element       ${Express Delivery}
     Wait until element is visible   ${Express Delivery settings}  60s
     Unselect Frame
