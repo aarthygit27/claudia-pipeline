@@ -614,7 +614,7 @@ Add Toimenpide XS
     #Log to console  select product
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
-    Scroll Page To Element      ${product_id}
+    ScrollUntillFound      ${product_id}
     click button     ${product_id}
     sleep   30s
     Capture Page Screenshot
@@ -626,12 +626,13 @@ Add Toimenpide XS
 Add Toimenpide S
     [Documentation]    This is to Add Toimenpide S
     ...    to cart and fill the required details
+    Sleep   20s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Execute JavaScript   window.scrollTo(0,500)
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide S')]//following::button[1]
     Wait until element is visible   ${product_id}   30s
-    Scroll Page To Element   ${product_id}
-    click button    ${product_id}
+    ScrollUntillFound   ${product_id}
+    Force click element      ${product_id}
     sleep   20s
     wait until page contains element        //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']        30s
     Force click element         //div[contains(text(),'Toimenpide S')]//following::button[@title='Settings']
@@ -649,8 +650,8 @@ Add Toimenpide M
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide M')]//following::button[1]
     Wait until element is visible   ${product_id}   30s
-    Scroll Page To Element   ${product_id}
-    click button    ${product_id}
+    ScrollUntillFound   ${product_id}
+    Force click element      ${product_id}
     sleep   20s
     wait until page contains element        //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']        30s
     Force click element         //div[contains(text(),'Toimenpide M')]//following::button[@title='Settings']
