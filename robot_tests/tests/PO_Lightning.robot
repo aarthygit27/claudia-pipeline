@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     Suite description
+Documentation     PO Sanity Test cases are executed in ${ENVIRONMENT} sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/PO_Light_keywords.robot
