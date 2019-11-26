@@ -561,7 +561,7 @@ Add Hallinta ja Tuki
     [Documentation]    This is to add Hallinta ja Tuki to cart
     ${product}=  set variable   //div[contains(text(),'Hallinta ja Tuki')]//following::button[1]
     Wait until element is visible   ${product}  30s
-    click button  ${product}
+    Force click element      ${product}
     sleep   5s
     Wait until element is visible   ${Toggle}  60s
     Click element  ${Toggle}
@@ -615,7 +615,7 @@ Add Toimenpide XS
     ${product_id}=    Set Variable    //div[contains(text(),'Toimenpide XS')]//following::button[1]
     Wait until element is visible   //div[contains(text(),'Toimenpide XS')]//following::button[1]  30s
     ScrollUntillFound      ${product_id}
-    click button     ${product_id}
+    Force click element     ${product_id}
     sleep   30s
     Capture Page Screenshot
     #Click Button  //div[contains(text(),'Toimenpide XS')]//following::button[@title='Settings']
@@ -779,6 +779,7 @@ update setting common
 update setting Toimenpide
     [Arguments]    ${option}    ${cbox}
     Wait until element is visible  //div[contains(@class,'slds')]/iframe  30s
+    sleep   10s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     Capture Page Screenshot
     Wait until element is visible   ${Hinnoitteluperuste}  60s
@@ -984,9 +985,11 @@ Create_Order
     Run Keyword if    ${Status}    Close and Submit
     Unselect frame
     Run Keyword Unless    ${Status}    Enter Details
-    wait until page contains element        //div[text()='Order']//following::div//span         60s
-    ${Order}        Get Text    //div[text()='Order']//following::div//span
+    #wait until page contains element        //div[text()='Order']//following::div//span         60s
+    ${Order}        Get Text     //div[@class='slds-grid primaryFieldRow']//span[@class='uiOutputText']
+    log to console           ${Order}
     Set Test Variable     ${Order_Id}    ${Order}
+    #view orchestration plan details
 
 View Or Open Quote
 
@@ -1073,14 +1076,13 @@ Close and Submit
 
 
 Enter Details
-
     Select Account
     select contact
     Select Date
     SelectOwnerAccountInfo    ${billingaccount}
     #Select account Owner
     Submit Order Button
-    view orchestration plan details
+    #view orchestration plan details
 
 
 SelectOwnerAccountInfo
@@ -1388,6 +1390,7 @@ Enter Group id and submit
 
 view orchestration plan details
     Reload page
+    log to console      view orchestration plan details
     sleep  10s
     ${plan}     set variable    //a[contains(@class,'textUnderline outputLookupLink')][contains(text(),'Plan')]
     ScrollUntillFound   ${plan}
