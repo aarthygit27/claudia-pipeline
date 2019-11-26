@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     Suite description
+Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 #Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
@@ -8,23 +8,25 @@ Resource          ../resources/multibella_keywords.robot
 #Library             test123.py
 
 *** Test Cases ***
+
+##################################################  SANITY TESTS ###################################################
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details.
-    [Tags]    BQA-8396  Lightning  Sanity  ContactsManagement
+    [Tags]    BQA-8396  AUTOLIGHTNING   ContactsManagement
     Go To Salesforce and Login into Lightning
     Create New Master Contact
     Validate Master Contact Details
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395  Lightning      Sanity
+    [Tags]    BQA-8395  AUTOLIGHTNING   ContactsManagement
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
-    [Tags]    BQA-8394  Lightning     Sanity
+    [Tags]    BQA-8394  AUTOLIGHTNING   ContactsManagement
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
@@ -33,7 +35,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
     ...    and then in My all open Opportunities section.
-    [Tags]    BQA-8393    Lightning     Sanity      fix
+    [Tags]    BQA-8393    AUTOLIGHTNING        OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -43,7 +45,7 @@ Create opportunity from Account
 Negative - Validate Opportunity cannot be created for Passive account
     [Documentation]    Select the Passive account and validate that the Opportunity creation
     ...    throws an error
-    [Tags]    BQA-8457    Lightning     Sanity
+    [Tags]    BQA-8457    AUTOLIGHTNING       OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer    PASSIVEACCOUNT
@@ -51,7 +53,7 @@ Negative - Validate Opportunity cannot be created for Passive account
 Negative - Validate Opportunity cannot be created for Group account
     [Documentation]    Select the Group account and validate that the new opportunity button
     ...    is not displayed
-    [Tags]    BQA-8464    Lightning     Sanity
+    [Tags]    BQA-8464    AUTOLIGHTNING         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created    GROUPACCOUNT
@@ -59,7 +61,7 @@ Negative - Validate Opportunity cannot be created for Group account
 Closing active opportunity as cancelled
     [Documentation]    Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8465    Lightning     Sanity
+    [Tags]    BQA-8465    AUTOLIGHTNING         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -68,7 +70,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8466    Lightning     Sanity
+    [Tags]    BQA-8466    AUTOLIGHTNING         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -76,14 +78,14 @@ Closing active opportunity as lost
 
 Check Attributes/Business Account are named right in Sales Force UI
     [Documentation]    To Verify the Business Account Attributes Are Named Right
-    [Tags]    BQA-8484    Lightning     Sanity
+    [Tags]    BQA-8484    AUTOLIGHTNING        AcccountManagement
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    Lightning         Sanity
+    [Tags]    BQA-8483    AUTOLIGHTNING     ContactsManagement
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
@@ -92,7 +94,7 @@ Check Attributes/Contact Person are named right
 
 Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
-    [Tags]    BQA-7948    Lightning     QucikActionsforAccount      Sanity      rerun
+    [Tags]    BQA-7948    AUTOLIGHTNING     QuickActionsForAccount
     Go To Salesforce and Login into Admin User
     Go To Entity    ${TEST_CONTACT}
     Check original account owner and change if necessary for event
@@ -104,7 +106,7 @@ Lightning: Create Meeting from Account
 
 Lightning: Create Call from Account
     [Documentation]    To create call for a account
-    [Tags]    BQA-8085    Lightning     QucikActionsforAccount      Sanity
+    [Tags]    BQA-8085    AUTOLIGHTNING     QuickActionsForAccount
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -113,7 +115,7 @@ Lightning: Create Call from Account
 
 Lightning: Create Task from Account
     [Documentation]    To create task for a account
-    [Tags]    BQA-8463    Lightning     QucikActionsforAccount      Sanity
+    [Tags]    BQA-8463    AUTOLIGHTNING     QuickActionsForAccount
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -128,7 +130,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
-    [Tags]    BQA-8523  Lightning     Summer-Test     BQA-10932     AccountManagement       Sanity
+    [Tags]    BQA-8523     AUTOLIGHTNING      AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -137,7 +139,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    Lightning    Summer-Test      Sanity      AccountManagement
+    [Tags]    BQA-8524    AUTOLIGHTNING      AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${RemoveAccountOwner}
     Remove change account owner
@@ -146,7 +148,7 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8525    Lightning     AccountManagement       Sanity
+    [Tags]    BQA-8525    AUTOLIGHTNING     AccountManagement
     Login to Salesforce as DigiSales Admin user
     Go to Entity    ${TEST_CONTACT}
     Change Account Owner
@@ -154,7 +156,7 @@ Lightning: Sales admin Change Account owner
 
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8526    Lightning     AccountManagement       Sanity
+    [Tags]    BQA-8526    AUTOLIGHTNING     AccountManagement
     Login to Salesforce as DigiSales Admin user
     Go to Entity    ${GROUP_TEST_ACCOUNT}
     Change Account Owner
@@ -254,17 +256,16 @@ Lightning: Sales admin Change Account owner for group account
 #    ValidateTheOrchestrationPlan
 
 Create HDC Order
-    [Tags]    BQA-HDCOrder    Lightning     commit_check        Sanity
+    [Tags]    BQA-11774    AUTOLIGHTNING       HDCOrderManagement
     Login to Salesforce as DigiSales Lightning User
-    set test variable   ${Account}    ${vLocUpg_TEST_ACCOUNT}
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity    ${Account}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
+    #log to console    ${oppo_name}.this is opportunity
     ${billing_acc_name}    run keyword    CreateABillingAccount
-    log to console    ${billing_acc_name}.this is billing account name
+    #log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     #Edit Opportunity values    Price List      B2B
     ChangeThePriceList      B2B
@@ -286,10 +287,14 @@ Create HDC Order
     #${billing_acc_name}
     #ReviewPage
     clickOnSubmitOrder
+#    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+#    Input Text    xpath=${SEARCH_SALESFORCE}    319100915935
+#    wait until page contains element  //span[@title="319100915935"]/../..   30s
+#    force click element     //span[@title="319100915935"]/../..
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-8919  BQA-B2BOrder       commit_check       Sanity
+    [Tags]    BQA-8919     AUTOLIGHTNING        B2BOrderManagement
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #GO TO ENTITY    Oppo_ 20190217-191125
@@ -301,7 +306,7 @@ Create B2B Order
     #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #capture page screenshot
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
@@ -330,12 +335,12 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-8920    BQA-B2OOrder    Lightning         Sanity           test
+    [Tags]    BQA-8920    AUTOLIGHTNING         B2OOrderManagement
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    ${contact_name}    run keyword    Create New Contact for Account
+    #log to console    ${contact_name}.this is name
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
@@ -344,6 +349,7 @@ Create B2O Order
     #ChangeThePriceBookToHDC    B2O pricebook
     ##B2B Pricebook
     ClickingOnCPQ    ${oppo_name}
+    #${oppo_name}    set variable   Test Robot Order_ 20191114-182830
     AddProductToCart    B2O Other Services
     ##Alerta projektointi
     #Run Keyword If    '${p}'== 'b2b'    run keyword    UpdateAndAddSalesType    Alerta projektointi
@@ -352,6 +358,10 @@ Create B2O Order
     ##B2O Other Services
     #OpenQuoteButtonPage
     View Open Quote
+    ${quote_number}    Run Keyword    preview and submit quote  ${oppo_name}
+    verifying quote and opportunity status      ${oppo_name}
+    Search Salesforce    ${quote_number}
+    Select Entity    ${oppo_name}    ${EMPTY}
     #CreditScoreApproving
     ClickonCreateOrderButton
     #clickonopenorderbutton
@@ -361,69 +371,33 @@ Create B2O Order
     #sleep    60s
     clickOnSubmitOrder
     getOrderStatusAfterSubmitting
+    Go to Entity    ${oppo_name}
+    Closing the opportunity with reason    Closed Won
+    Verify That Opportunity is Found From My All Opportunities  ${oppo_name}
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    Lightning         Sanity
+    [Tags]    BQA-8798    AUTOLIGHTNING
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
+    #log to console    ${oppo_name}.this is opportunity
     go to entity    ${oppo_name}
     clickingOnSolutionValueEstimate    ${oppo_name}
     ${fyr}    run keyword    addProductsViaSVE    ${product_name}
     Go To Entity    ${oppo_name}
     validateCreatedOppoForFYR    ${fyr}
-
-Closing Opportunity as Won with FYR below 3 KEUR
-    [Tags]    BQA-8794     TestCheck
-    Closing Opportunity as Won with FYR    8    No
-    #${FYR}=    set variable    //span[@title='FYR Total']/../div
-    #Go To Salesforce and Login into Lightning
-    #Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
-    #Go To Entity    ${oppo_name}
-    #ClickingOnCPQ    ${oppo_name}
-    #searching and adding Telia Viestintäpalvelu VIP (24 kk)
-    #updating settings Telia Viestintäpalvelu VIP (24 kk)
-    #search products    Telia Taloushallinto XXL-paketti
-    #Adding Telia Taloushallinto XXL-paketti
-    #UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    8
-    #OpenQuoteButtonPage_release
-    #Go To Entity    ${oppo_name}
-    #Closing the opportunity    no
-    #sleep    15s
-    #Capture Page Screenshot
-    #${FYR_value}=    get text    ${FYR}
-    #Log to console    The FYR value is ${FYR_value}
-
-Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
-    [Tags]    BQA-8795       TestCheck
-    ${Edit_continuation}=    Set Variable    //div[@class='slds-form-element slds-form-element_readonly slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element']/div/button[@title='Edit Create Continuation Sales Opportunity?']
-    Closing Opportunity as Won with FYR    200    Yes
-    sleep    10s
-    Execute Javascript    window.scrollTo(0,600)
-    Click element   ${Edit_continuation}
-    Select option from Dropdown with Force Click Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    //div[@class='select-options']/ul/li//a[@title='--None--']
-    sleep  5s
-    #Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
-    click element    //div[@class='footer active']//div[@class='actionsContainer']/button[@title='Save']/span
-    sleep    5s
-    Capture Page Screenshot
-
-Closing Opportunity as Won with FYR greater than 100KEUR
-    [Tags]    BQA-8796       TestCheck
-    Closing Opportunity as Won with FYR    300    Yes
+    Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    Lightning       test  Sanity
+    [Tags]    BQA-9121    AUTOLIGHTNING         B2BOrderManagement
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     #${oppo_name}    set variable    Test Robot Order_ 20191010-124935
     #sleep    5s
@@ -467,7 +441,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9122    Lightning     Sanity   rerun
+    [Tags]    BQA-9122    AUTOLIGHTNING         B2BOrderManagement
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
@@ -508,18 +482,17 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     #verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
-    [Tags]    BQA-8503    Lightning     Sanity      fix
+    [Tags]    BQA-8560    AUTOLIGHTNING         HDCOrderManagement
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
     Go To Salesforce and Login into Lightning
-    Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    #${billing_acc_name}    run keyword    CreateABillingAccount
-    #log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #Go To Entity    ${TEST_ACCOUNT_CONTACT}
     #sleep    10s
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount
+    #log to console    ${oppo_name}.this is opportunity
     Go To Entity    ${oppo_name}
     sleep    10s
     wait until page contains element    ${win_prob_edit}    30s
@@ -528,43 +501,21 @@ HDC - Complete Sales Process: UAT/Sanity Regression
     Sleep  10s
     #ChangeThePriceBookToHDC    HDC Pricebook B2B
     ChangeThePriceList      B2B
-
-Frame test
-    [Tags]    frame
-    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    Go To Salesforce and Login into Lightning
-    Go To    https://telia-fi--release.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDYwRTAwMDAwQ25rZDYifSwic3RhdGUiOnt9fQ%3D%3D
-    Wait Until Element Is Visible    ${frame}    45s
-    select frame    ${frame}
-    sleep    10s
-    Capture Page Screenshot
-    Get Window Size
-    #Set Window Size    1920    1080
-    #Capture Page Screenshot
-
-reload page test
-    [Tags]    reloaded
-    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    Go To Salesforce and Login into Lightning
-    Go To    https://telia-fi--release.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDYwRTAwMDAwQ25rZDYifSwic3RhdGUiOnt9fQ%3D%3D
-    Wait Until Element Is Visible    ${frame}    45s
-    select frame    ${frame}
-    sleep    10s
-    Capture Page Screenshot
-    # Window Size
-    Execute Javascript    window.location.reload(false);
-    Capture Page Screenshot
-
-Contract activation
-    Go To Salesforce and Login into Lightning
-    Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
-    Create New Contact for Account
-    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    Create New Opportunity For Customer    ACTIVEACCOUNT
-    Update Contact and Pricelist in Opportunity    B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    #SearchAndSelectBillingAccount
+    #select order contacts- HDC  ${contact_name}
+    #RequestActionDate
+    #SelectOwnerAccountInfo    ${billing_acc_name}
+    #clickOnSubmitOrder
 
 Automatic availability check B2B-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
+    [Tags]    BQA-10225    AUTOLIGHTNING        AvailabilityCheck
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -574,15 +525,15 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products    Telia Yritysinternet
 
 Automatic availability check B2O-Account
-    [Tags]    BQA-10225    Lightning    Summer-Test     Sanity
+    [Tags]    BQA-10225    AUTOLIGHTNING        AvailabilityCheck
     Go To Salesforce and Login into Lightning    DigiSales B2O User
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
-    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Create New Opportunity For Customer      ACTIVEACCOUNT
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
     Validate point to point address details
     Select B2O product available and connect existing opportunity
-    ClickingOnCPQ
+    #ClickingOnCPQ
     Check the CPQ-cart contains the wanted products     MetroEthernet Kapasiteetti
 
 # Delete all contracts from account
@@ -594,7 +545,7 @@ Automatic availability check B2O-Account
 
 Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
-    [Tags]    Lightning    BQA-10334    Lightning    Summer-Test        Sanity  rerun
+    [Tags]      BQA-10334    AUTOLIGHTNING      ContractManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${CONTRACT_ACCOUNT}
     Delete all entities from Accounts Related tab      Contracts
@@ -603,7 +554,7 @@ Check banner for customership and service contract
     Go To Entity    ${CONTRACT_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     #Create New Opportunity For Customer    ACTIVEACCOUNT
-    Verify that warning banner is displayed on opportunity page
+    Verify that warning banner is displayed on opportunity page   ${OPPORTUNITY_NAME}
     #ClickingOnCPQ
     ClickingOnCPQ       ${OPPORTUNITY_NAME}
     Add product to cart (CPQ)    Telia Verkkotunnuspalvelu
@@ -614,7 +565,7 @@ Check banner for customership and service contract
 
 Create contact relationship for account
     [Documentation]    Add new relationship for contact and check that account are displayed correctly on contact page.
-    [Tags]    Lightning    BQA-10523    Summer-Test      Sanity
+    [Tags]     BQA-10523    AUTOLIGHTNING     ContactsManagement
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Contact for Account
@@ -624,14 +575,14 @@ Create contact relationship for account
 
 Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
-    [Tags]    Lightning    BQA-10736    Summer-Test     AccountManagement       Sanity
+    [Tags]    BQA-10736    AUTOLIGHTNING     AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    Aacon Oy
     Change account owner to     B2B Lightning
     Validate that account owner was changed successfully    B2B Lightning
 
 Add an account team member as account owner
-    [Tags]  Lightning     BQA-10524     Summer-Test     Sanity
+    [Tags]    BQA-10524     AUTOLIGHTNING       AccountManagement
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -645,7 +596,7 @@ Add an account team member as account owner
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
-    [Tags]  Summer-Test     BQA-10948    Lightning      Sanity
+    [Tags]     BQA-10948    AUTOLIGHTNING       AccountManagement
     [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -655,7 +606,7 @@ Edit team member's role as account owner
     Change team member role from account
 
 Delete team member as account owner
-    [Tags]  Summer-Test     Lightning   BQA-10949       Sanity
+    [Tags]     BQA-10949       AUTOLIGHTNING        AccountManagement
     [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -666,7 +617,7 @@ Delete team member as account owner
 
 Add an account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then add some user as a team member for business account
-    [Tags]    Summer-Test    BQA-10727    Lightning     Sanity
+    [Tags]    BQA-10727     AUTOLIGHTNING       AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -676,7 +627,7 @@ Add an account team member as Sales Admin
 
 Edit team member's role as Sales Admin
     [Documentation]    Log in as Sales Admin and then edit existing team member's role for business account
-    [Tags]    Summer-Test    BQA-10728    Lightning     Sanity
+    [Tags]     BQA-10728     AUTOLIGHTNING          AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -686,7 +637,7 @@ Edit team member's role as Sales Admin
 
 Delete account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then delete team member from business account
-    [Tags]    Summer-Test    BQA-10740    Lightning     Sanity
+    [Tags]     BQA-10740    AUTOLIGHTNING       AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -696,7 +647,7 @@ Delete account team member as Sales Admin
 
 Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
-    [Tags]    Summer-Test    BQA-10737    Lightning     Sanity
+    [Tags]     BQA-10737    AUTOLIGHTNING       AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  ABB
     Navigate to view    Account Team Members
@@ -705,7 +656,7 @@ Add an account team member to Group
 
 Negative: Try to add account owner to Account team
     [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
-    [Tags]      Summer-Test     Lightning   BQA-10952       AccountManagement       Sanity
+    [Tags]      BQA-10952     AUTOLIGHTNING     AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  Aacon Oy
     Navigate to related tab
@@ -714,7 +665,7 @@ Negative: Try to add account owner to Account team
 
 Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
-    [Tags]      Summer-Test     Lightning   BQA-10951       Sanity
+    [Tags]      BQA-10951       AUTOLIGHTNING       AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  ABB
     Add account owner to account team
@@ -722,7 +673,7 @@ Negative: Try to add group owner to group's account team
 
 Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
-    [Tags]    Summer-Test    BQA-10738    Lightning     Sanity
+    [Tags]    BQA-10738    AUTOLIGHTNING        AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  ABB
     Navigate to view    Account Team Members
@@ -731,7 +682,7 @@ Group: Edit team member's role
 
 Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
-    [Tags]    Summer-Test    BQA-10739    Lightning     Sanity
+    [Tags]     BQA-10739    AUTOLIGHTNING       AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  ABB
     Navigate to view    Account Team Members
@@ -740,7 +691,7 @@ Group: Delete team member
 
 Negative: Try to add same team member twice to account team
     [Documentation]     Expected result: It's not possible to add same team member twice to business account's account team.
-    [Tags]  Summer-Test     Lightning   BQA-11052       Sanity
+    [Tags]     BQA-11052       AUTOLIGHTNING        AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab
@@ -750,7 +701,7 @@ Negative: Try to add same team member twice to account team
     Delete team member from account
 
 Negative: Check external data is not editable when creating new contact
-    [Tags]      Summer-Test     BQA-10945    Lightning      Sanity
+    [Tags]      BQA-10945    AUTOLIGHTNING      ContactsManagement
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -759,7 +710,7 @@ Negative: Check external data is not editable when creating new contact
     Close contact form
 
 Negative: Check external data is not editable with existing contact
-    [Tags]      Summer-Test     BQA-10946    Lightning      Sanity
+    [Tags]       BQA-10946     AUTOLIGHTNING        ContactsManagement
     [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
     Login to Salesforce as System Admin
     Create new contact with external data
@@ -770,7 +721,7 @@ Negative: Check external data is not editable with existing contact
     Close contact form
 
 Negative: Check external data is not editable from account contact relationship view
-    [Tags]      Summer-Test     BQA-10947    Lightning      Sanity
+    [Tags]      BQA-10947     AUTOLIGHTNING     ContactsManagement
     [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
     Login to Salesforce as System Admin
     Create new contact with external data
@@ -781,7 +732,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]  Summer-Test     BQA-10937    Lightning      Sanity
+    [Tags]    BQA-10937    AUTOLIGHTNING          AccountManagement
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
@@ -802,29 +753,29 @@ Add several team members to business account team
 Group: Account team member is added as group owner
     [Documentation]     Account team member is added as group owner. History is checked and it should contain record about changing the owner.
     ...     Check that new owner is removed from the account team.
-    [Tags]      Summer-Test     Lightning   BQA-10933       Sanity
+    [Tags]      BQA-10933       AUTOLIGHTNING       AccountManagement
     Go To Salesforce and Login into Admin User
-    Go to Entity  Digita
+    Go to Entity  Aho Group
     Change account owner to     B2B Lightning
     Navigate to view    Account Team Members
     Add new team member     Sales Admin
     Validate that team member is created succesfully  Sales,Admin
-    Go to Entity  Digita
+    Go to Entity  Aho Group
     Change account owner to     Sales Admin
     Validate that account owner was changed successfully  Sales Admin
     Navigate to view    Account Team Members
     Wait until page contains element    //div[@class='emptyContent']//p[text()='No items to display.']      30s
-    Go to Entity  Digita
+    Go to Entity  Aho Group
     Navigate to Account History
     Validate that Account history contains record   Sales Admin
-    Go to Entity  Digita
+    Go to Entity  Aho Group
     Change account owner to  B2B Lightning
     Validate that account owner was changed successfully  B2B Lightning
 
 Negative: Try to change account owner different from the group account owner
     [Documentation]     Log in as sales admin and find Business account from group hierarchy. Try to change the Business Account owner different from
     ...     the group account owner. This should not be possible.
-    [Tags]  Summer-Test     Lightning   BQA-10968       AccountManagement       Sanity
+    [Tags]     BQA-10968     AUTOLIGHTNING     AccountManagement
     Go To Salesforce and Login into Admin User
     ${group_account_owner}=    Set variable     Maris Steinbergs
     Go to Entity  AT&T
@@ -834,7 +785,7 @@ Negative: Try to change account owner different from the group account owner
 
 Mobile coverage request redirects to Tellu
     [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
-    [Tags]  Summer-Test      BQA-10955      wip
+    [Tags]     BQA-10955      AUTOLIGHTNING         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -847,7 +798,7 @@ Mobile coverage request redirects to Tellu
 
 Manual availability check redirects to Tellu
     [Documentation]     Check that manual availability check button from the opportunity page redirects to Tellu-system login.
-    [Tags]  Summer-Test       BQA-10954     wip
+    [Tags]     BQA-10954     AUTOLIGHTNING          OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -857,7 +808,7 @@ Manual availability check redirects to Tellu
 
 Investment redirects to Tellu
     [Documentation]     In opportunity view clicking investment button redirects to Tellu-system login
-    [Tags]      Summer-Test   BQA-10953     wip
+    [Tags]      BQA-10953      AUTOLIGHTNING        OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -866,7 +817,7 @@ Investment redirects to Tellu
     Validate that Tellu login page opens
 
 Price input for unmodeled products in omniscript
-    [Tags]  Summer-Test     BQA-9160    Lightning       Sanity
+    [Tags]    BQA-9160      AUTOLIGHTNING          OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
@@ -877,53 +828,13 @@ Price input for unmodeled products in omniscript
     Go to Entity  ${OPPORTUNITY_NAME}
     Check opportunity value is correct
 
-Lead_Creation
-    [Documentation]    This TC creates lead from the Web-to-lead form and validate the same in Claudia leads tab,
-    ...    convert it to opportunity
-    [Tags]    SreeramE2E    Lightning
-    ${lead_file}    run keyword    open file from resources    lead_Release.html
-    go to    file:///${lead_file}
-    ${fname}    generate random string    3    [NUMBERS]F
-    ${lname}    generate random string    3    [NUMBERS]L
-    ${mobile}    create unique mobile number
-    ${title}    generate random string    5    [NUMBERS]abcdefghi
-    ${desc}    generate random string    10    [NUMBERS]abcdef
-    sleep    5s
-    enter random data to lead web form    ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
-    go to    ${LOGIN_PAGE_APP}
-    Login to Salesforce as DigiSales Lightning User
-    #login to salesforce as digisales lightning user vlocupgsandbox
-    go to entity    ${lead_account_name}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    open_todays_leads
-    force click element    //a[@title='${fname} ${lname}']
-    wait until page contains element    //span[text()='${fname} ${lname}']    30s
-    validate_Created_Lead    ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
-    Edit_and_Select_Contact    ${contact_name}
-    scroll page to location    0    0
-    click element    ${convert_lead_btn}
-    wait until page contains element    ${converting_lead_header}    30s
-    input text    ${lead_name_input}    Lead_${fname}_${lname}
-    input text    ${lead_desc_textarea}    ${desc}
-    ${close_date}    get date from future    10
-    sleep    3s
-    input text    ${lead_close_date}    ${close_date}
-    click element    ${converting_lead_dialogue}
-    click element    ${converting_lead_overlay}
-    wait until page contains element    ${lead_converted_h4}    60s
-    wait until page contains element    //span[text()='Opportunity']//ancestor::div[@class="slds-box"]//a[text()='Lead_${fname}_${lname}']    30s
-    click element    //span[text()='Opportunity']//ancestor::div[@class="slds-box"]//a[text()='Lead_${fname}_${lname}']
-    wait until page contains element    //span[text()='Opportunity ID']    30s
-    scrolluntillfound    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
-    page should contain element    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
-
 create a b2b direct order
-    [Tags]    BQA-10813   SreeramE2E  Lightning     Sanity  rerun
+    [Tags]    BQA-10813    AUTOLIGHTNING       B2BOrderManagement
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    Ylöjärven Yrityspalvelu Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
@@ -939,18 +850,17 @@ create a b2b direct order
     getMultibellaCaseGUIID    ${order_no}
 
 Add Oppo Team Member and Edit the Oppo with New Team Member
-    [Tags]  BQA-10816       SreeramE2E       Lightning      commit_check        Sanity
-    [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B
-                    ...     and try modifying the oppo with newly added team member
+    [Tags]  BQA-10816       AUTOLIGHTNING       OpportunityValidation
+    [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B and try modifying the oppo with newly added team member
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  Sales Admin
     Go To Salesforce and Login into Admin User
     Go To Entity    Aarsleff Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep   10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
+    #log to console    ${oppo_name}.this is opportunity
     go to entity  ${oppo_name}
     #clickingoncpq  ${oppo_name}
     logoutasuser  Sales Admin
@@ -970,6 +880,8 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     Sleep  10s
     logoutasuser  B2B DigiSales
     sleep  10s
+    #Go To Salesforce and Login into Admin User
+    #${oppo_name}     set variable   Test Robot Order_ 20191021-143603
     Login to Salesforce as DigiSales Admin User
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  Sales Admin
@@ -986,15 +898,15 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]  BQA-10817    SreeramE2E  commit_check    Lightning       Sanity
+    [Tags]      BQA-10817      AUTOLIGHTNING        OpportunityValidation
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep   10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
+    #log to console    ${oppo_name}.this is opportunity
     go to entity  ${oppo_name}
     clickingOnSolutionValueEstimate   ${oppo_name}
     ${fyr}  run keyword  addProductsViaSVE         ${product_name}
@@ -1003,11 +915,11 @@ AddProducrViaSVEandCPQFlow
     ${fyr_total}=  get text  //span[@title='FYR Total']/../div[@class='slds-form-element__control']/Div/span
     ${revenue_total}=  remove string  ${revenue_total}  ,00 €
     ${revenue_total}=       Evaluate    '${revenue_total}'.replace(' ','')
-    log to console  ${revenue_total}.this is final revenue total
+    #log to console  ${revenue_total}.this is final revenue total
     ${fyr_total}=  remove string  ${fyr_total}  ,00 €
     ${fyr_total}=       Evaluate    '${fyr_total}'.replace(' ','')
-    log to console  ${revenue_total}.this is final revenue total
-    log to console  ${fyr}.this is output of addproductviasve keyword
+    #log to console  ${revenue_total}.this is final revenue total
+    #log to console  ${fyr}.this is output of addproductviasve keyword
     should be equal as strings  ${fyr_total}  ${fyr}
     should be equal as strings  ${revenue_total}  ${fyr}
     #validateCreatedOppoForFYR  ${fyr}
@@ -1034,25 +946,25 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]      BQA-10818       SreeramE2E       Lightning    TestCheck
+    [Tags]      BQA-10818       AUTOLIGHTNING       HDCGTMOrderManagement
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #swithchtouser   B2B DigiSales
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep   10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
+    #log to console    ${oppo_name}.this is opportunity
     go to entity  ${oppo_name}
     #Edit Opportunity values    Price List      GTM
     changethepricelist     GTM
     clickingOnSolutionValueEstimate   ${oppo_name}
     ${fyr}  run keyword   addProductsViaSVE      Telia Colocation
-    log to console  ${fyr}.this is total
+    #log to console  ${fyr}.this is total
     ${GTM_limit}=  set variable  600000
     ${result}=  evaluate  ${fyr} > ${GTM_limit}
-    log to console  ${result}.this is comparison
+    #log to console  ${result}.this is comparison
     Run keyword If    ${result}=='True'   click on more actions
     scrolluntillfound  //button[@title="Edit GTM Approval Request Justification"]
     click element  //button[@title="Edit GTM Approval Request Justification"]
@@ -1060,7 +972,7 @@ CreateB2BHDCGTMOrder
     force click element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
     input text    //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea    Please APprove
     click element  //div[@class="footer active"]//button[@title="Save"]
-    Log to console  To be submitted for approval
+    #Log to console  To be submitted for approval
     scroll page to location  0  0
     sleep  3s
     wait until page contains element  //a[contains(@title, 'more actions')][1]   30s
@@ -1068,13 +980,13 @@ CreateB2BHDCGTMOrder
     wait until page contains element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..   20s
     page should contain element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..
     force click element   //div[text()='Submit for HDC GTM Approval']
-    Log to console      Submitted for approval
+    #Log to console      Submitted for approval
     sleep  5s
     reload page
     Sleep  60s
     #scrolluntillfound  //span[text()='Pending Approval']
     page should contain element  //span[text()='Pending Approval']
-    Log to console  Pending approval
+    #Log to console  Pending approval
     logoutAsUser  B2B DigiSales
     sleep   10s
     Login to Salesforce as System Admin
@@ -1085,7 +997,7 @@ CreateB2BHDCGTMOrder
     go to entity  ${oppo_name}
     scrolluntillfound  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
     page should contain element  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
-    Log to console      Status Approved
+    #Log to console      Status Approved
     ClickingOnCPQ    ${oppo_name}
     #Adding Telia Colocation    Telia Colocation
     #Updating Setting Telia Colocation
@@ -1138,7 +1050,7 @@ CreateB2BHDCGTMOrder
     #${fyr}  run keyword  addProductsViaSVE         ${product_name}
 
 createSalesProjectOppo
-    [Tags]         Lightning    commit_check        Sanity  rerun
+    [Tags]        BQA-11776    AUTOLIGHTNING        OpportunityValidation
     Login to Salesforce as DigiSales Lightning User
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  B2B DigiSales
@@ -1152,13 +1064,13 @@ createSalesProjectOppo
     #${oppo_name} =   Set variable                                  Test Robot Order_ 20190927-123308
     Go To Entity     ${oppo_name}
     sleep  2s
-    Log to console      addproductsviasve
+    #Log to console      addproductsviasve
     clickingOnSolutionValueEstimate     ${oppo_name}
     addProductsViaSVE   Subscriptions and networks
     Sleep  10s
-    Log to console  Create case
+    #Log to console  Create case
     ${case_number}=  run keyword      Create case from more actions
-    log to console   ${case_number}.this is created case
+    #log to console   ${case_number}.this is created case
     logoutAsUser  B2B DigiSales
     Login to Salesforce as System Admin
     #login to salesforce as digisales lightning user vlocupgsandbox
@@ -1262,13 +1174,13 @@ createSalesProjectOppo
 
 
 Create B2B Order - Multibella
-    [Tags]  SreeramE2E       Lightning      Sanity  rerun
+    [Tags]    BQA-11778       AUTOLIGHTNING         B2BOrderManagement
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #SwithchToUser  B2B DigiSales
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep   10s
     ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
     go to entity   ${oppo_name}
@@ -1292,11 +1204,92 @@ Create B2B Order - Multibella
     #go to entity   ${order_no}
     getMultibellaCaseGUIID   ${order_no}
 
+
+
+
+###########################################   Scripts that needs fixing ########################################
+
+
+Closing Opportunity as Won with FYR below 3 KEUR
+    [Tags]    BQA-8794
+    Closing Opportunity as Won with FYR    8    No
+    #${FYR}=    set variable    //span[@title='FYR Total']/../div
+    #Go To Salesforce and Login into Lightning
+    #Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Chetan
+    #Go To Entity    ${oppo_name}
+    #ClickingOnCPQ    ${oppo_name}
+    #searching and adding Telia Viestintäpalvelu VIP (24 kk)
+    #updating settings Telia Viestintäpalvelu VIP (24 kk)
+    #search products    Telia Taloushallinto XXL-paketti
+    #Adding Telia Taloushallinto XXL-paketti
+    #UpdateAndAddSalesTypewith quantity    Telia Viestintäpalvelu VIP (24 kk)    8
+    #OpenQuoteButtonPage_release
+    #Go To Entity    ${oppo_name}
+    #Closing the opportunity    no
+    #sleep    15s
+    #Capture Page Screenshot
+    #${FYR_value}=    get text    ${FYR}
+    #Log to console    The FYR value is ${FYR_value}
+
+Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
+    [Tags]    BQA-8795
+    ${Edit_continuation}=    Set Variable    //div[@class='slds-form-element slds-form-element_readonly slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element']/div/button[@title='Edit Create Continuation Sales Opportunity?']
+    Closing Opportunity as Won with FYR    200    Yes
+    sleep    10s
+    Execute Javascript    window.scrollTo(0,600)
+    Click element   ${Edit_continuation}
+    Select option from Dropdown with Force Click Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    //div[@class='select-options']/ul/li//a[@title='--None--']
+    sleep  5s
+    #Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    No
+    click element    //div[@class='footer active']//div[@class='actionsContainer']/button[@title='Save']/span
+    sleep    5s
+    Capture Page Screenshot
+
+Closing Opportunity as Won with FYR greater than 100KEUR
+    [Tags]    BQA-8796
+    Closing Opportunity as Won with FYR    300    Yes
+
+Frame test
+    [Tags]    frame
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Go To Salesforce and Login into Lightning
+    Go To    https://telia-fi--release.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDYwRTAwMDAwQ25rZDYifSwic3RhdGUiOnt9fQ%3D%3D
+    Wait Until Element Is Visible    ${frame}    45s
+    select frame    ${frame}
+    sleep    10s
+    Capture Page Screenshot
+    Get Window Size
+    #Set Window Size    1920    1080
+    #Capture Page Screenshot
+
+reload page test
+    [Tags]    reloaded
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Go To Salesforce and Login into Lightning
+    Go To    https://telia-fi--release.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDYwRTAwMDAwQ25rZDYifSwic3RhdGUiOnt9fQ%3D%3D
+    Wait Until Element Is Visible    ${frame}    45s
+    select frame    ${frame}
+    sleep    10s
+    Capture Page Screenshot
+    # Window Size
+    Execute Javascript    window.location.reload(false);
+    Capture Page Screenshot
+
+Contract activation
+    Go To Salesforce and Login into Lightning
+    Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Contact for Account
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Update Contact and Pricelist in Opportunity    B2B
+
+
 #######please donot panic with Portal test cases #######
 
 createRFQviaOnline
     [Documentation]    this is to create RFQ via b2o Online portal
-    [Tags]    SreeramE2E    B2OPortal
+    [Tags]        B2OPortal
     openOnlinePortal
     ## RFQ Creation Starts ##
     wait until page contains element    //span[text()='Offering']    60s
@@ -1332,7 +1325,7 @@ createRFQviaOnline
     click element    //div[text()='Send RFQ']
     wait until page contains element    //h1[text()='Thank you for your RFQ!' ]    60s
     ${rfq_number}=    get text    //Span[text()='RFQ number']/..//h2
-    log to console    ${rfq_number}.this is rfq
+    #log to console    ${rfq_number}.this is rfq
     ## RFQ Creation Ends ##
     ## Logout from portal starts ##
     click element    //span[@class='telia-react-element telia-react-color__purple telia-react-icon telia-icon--arrow-down telia-react-icon__sizeSm']
@@ -1345,7 +1338,7 @@ createRFQviaOnline
     ## Login to Claudia Sitpo starts ##
 
 RFQValidationInClaudia
-    [Tags]    SreeramE2E    B2OPortal
+    [Tags]       B2OPortal
     login to salesforce as digisales lightning user sitposandbox
     ## Search the Oppo based on the RFQ id received via portal starts ##
     Search Salesforce    2019040000036072
@@ -1391,7 +1384,7 @@ RFQValidationInClaudia
     ## Open the Quote and make visisble to portal ##
 
 createOrderFromQuoteinOnlinePortal
-    [Tags]    SreeramE2E    B2OPortal
+    [Tags]       B2OPortal
     openOnlinePortal
     ## Search for the RFQ,Quote    ##
     wait until page contains element    //span[text()='Offering']    60s
@@ -1418,7 +1411,7 @@ createOrderFromQuoteinOnlinePortal
     ## Search for the RFQ,Quote    ##
 
 validateTheOrderCreatedViaPortalInClaudia
-    [Tags]    SreeramE2E    B2OPortal
+    [Tags]       B2OPortal
     login to salesforce as digisales lightning user sitposandbox
     go to entity    319043010544
     wait until page contains element    //span[@class='title' and text()='Details']    30s
@@ -1427,21 +1420,21 @@ validateTheOrderCreatedViaPortalInClaudia
     page should contain element    //span[text()='B2O Order']
     scrolluntillfound    //span[text()='SAP Order Number']/..//span
     ${sap_number}=    get text    //span[text()='SAP Order Number']/..//span
-    log to console    ${sap_number}
+    #log to console    ${sap_number}
 
 DummyTestCaseForHDC
-    [Tags]    SreeramE2E    Lightning
+    [Tags]        Lightning
     Login to Salesforce as System Admin
     swithchtouser    B2B DigiSales
     go to entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact_name}.this is name
+    #log to console    ${contact_name}.this is name
     sleep    5s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
+    #log to console    ${oppo_name}.this is opportunity
     sleep    5s
     ${billing_acc_name}    run keyword    CreateABillingAccount    ${vLocUpg_TEST_ACCOUNT}
-    log to console    ${billing_acc_name}
+    #log to console    ${billing_acc_name}
     sleep    5s
     go to entity    ${oppo_name}
     clickingoncpq    ${oppo_name}
@@ -1449,7 +1442,7 @@ DummyTestCaseForHDC
     UpdateAndAddSalesType    Telia Colocation
     HDCOpenQuoteButtonPage
     ${quote_no}    run keyword    getQuoteNumber
-    log to console    ${quote_no}.this is quote
+    #log to console    ${quote_no}.this is quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount    Aacon Oy
@@ -1459,17 +1452,17 @@ DummyTestCaseForHDC
     #${billing_acc_name}
     ReviewPage
     ${order_no}    run keyword    ValidateTheOrchestrationPlan
-    log to console    ${order_no} .this is order
+    #log to console    ${order_no} .this is order
 
 Delete All the Oppotunities in Account
-    [Tags]       Lightning       Sanity
+    [Tags]       Lightning
     Go To Salesforce and Login into Admin User
     Go to Entity   Affecto Oy
     Delete all entities from Accounts Related tab       Opportunities
 
 Delete all the contacts in Account
     Login to Salesforce as System Admin
-    Search Salesforce    Aarslef Oy
+    Search Salesforce    Aacon Oy
     Delete all entries from Search list     Contacts
 
 Lightning - FYR Calculation for B2B
@@ -1478,7 +1471,7 @@ Lightning - FYR Calculation for B2B
      Go to Entity    Aacon Oy
      ${contact_name}   run keyword    Create New Contact for Account
      ${oppo_name}      run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-     log to console      ${oppo_name}.this is opportunity
+     #log to console      ${oppo_name}.this is opportunity
      #${oppo_name}    set variable   Test Robot Order_ 20190917-151448
      Go to Entity   ${oppo_name}
      clickingoncpq   ${oppo_name}
@@ -1499,30 +1492,52 @@ Lightning - FYR Calculation for B2B
 
 Lightning_Customership Contract
      Go To Salesforce and Login into Admin User
+     #Login To Salesforce Lightning  ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
      Go To Entity    ${CONTRACT_ACCOUNT}
-     Delete all entities existing service contract from Accounts Related tab     Contracts
+     #${contact_name}   run keyword    Create New Contact for Account
+     Delete all entities from Accounts Related tab   Contracts
+     Create contract Agreement  Customership
      Go To Salesforce and Login into Lightning
      Go to Entity    ${CONTRACT_ACCOUNT}
+     #${oppo_name}    set variable  Test Robot Order_ 20191112-160038
      ${contact_name}   run keyword    Create New Contact for Account
      ${oppo_name}      run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-     Verify that warning banner is displayed on opportunity page if tha account already have a customership contract  ${oppo_name}
-     #Go to Entity   ${oppo_name}
-     clickingoncpq   ${oppo_name}
-     search products  Telia chat
-     Adding Products  Telia chat
-     AddProductToCart   DataNet Basic Wireless
-     UpdateAndAddSalesType for 2 products and check contract    Telia chat  DataNet Basic Wireless
-     View Open Quote
      Go to Entity   ${oppo_name}
      clickingoncpq   ${oppo_name}
-     search products  Telia chat
-     Adding Products  Telia chat
-     AddProductToCart   DataNet Basic Wireless
-     UpdateAndAddSalesType for 2 products and check contract    Telia chat  DataNet Basic Wireless
+     search products  Telia Colocation
+     Adding Products  Telia Colocation
+     search products  Telia Cid
+     Adding Products  Telia Cid
+     updating setting Telia Cid
+     Verify that warning banner is displayed on opportunity page sevice contract     ${oppo_name}
+     creation of the quote without service contract  ${oppo_name}
+     #go to  https://telia-fi--release.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX09tbmlTY3JpcHRVbml2ZXJzYWxQYWdlP2lkPTAwNjZFMDAwMDA4OWNjWFFBUSZ0cmFja0tleT0xNTczNTYyMzg3MjkwIy9PbW5pU2NyaXB0VHlwZS9PcHBvcnR1bml0eSUyMFByb2R1Y3QvT21uaVNjcmlwdFN1YlR5cGUvT0xJJTIwRmllbGRzL09tbmlTY3JpcHRMYW5nL0VuZ2xpc2gvQ29udGV4dElkLzAwNjZFMDAwMDA4OWNjWFFBUS9QcmVmaWxsRGF0YVJhcHRvckJ1bmRsZS8vdHJ1ZSJ9LCJzdGF0ZSI6e319
+     #sleep  50s
+     UpdateAndAddSalesType for 2 products and check contract     Telia Colocation  Telia Cid
      View Open Quote
+     creation of the another one quote to verify the service contract  ${oppo_name}
+     verify that warning banner not displayed in that quote creation page
+     #sleep  50s
+     UpdateAndAddSalesType for 2 products and check contract     Telia Colocation  Telia Cid
+     View Open Quote
+     #log to console  activate the created service contract
+     Go To Salesforce and Login into Admin User
+     Activate the generated service contract     AP 20191112-160020 Test 20191112-160020  519111213248
+     Go To Salesforce and Login into Lightning
+     Go to Entity    ${CONTRACT_ACCOUNT}
+     ${oppo_name1}      run keyword    CreateAOppoFromAccount_HDC    AP 20191112-160020 Test 20191112-160020
+     Go to Entity   ${oppo_name1}
+     clickingoncpq   ${oppo_name1}
+     search products  Muutos Telia Cid
+     Adding Products  Muutos Telia Cid
+     search products  Telia DataCenter -tilaratkaisu
+     Adding Products  Telia DataCenter -tilaratkaisu
+     UpdateAndAddSalesType for 2 products and check contract    Muutos Telia Cid    Telia DataCenter -tilaratkaisu
+     View Open Quote
+     Verify that warning banner is not displayed on opportunity page   ${oppo_name1}
 
 Pricing Escalation
-    [Tags]   BQA-11368  Test
+    [Tags]   BQA-11368
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -1540,7 +1555,7 @@ Pricing Escalation
     Case Not visible to Normal User    ${Case_number}
 
 Pricing Escalation - Rejection
-    [Tags]   BQA-11386  Test
+    [Tags]   BQA-11386
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -1679,3 +1694,43 @@ Testing2
     Click Element  id=Login
     Change Order
 
+
+Lead_Creation
+    [Documentation]    This TC creates lead from the Web-to-lead form and validate the same in Claudia leads tab,
+    ...    convert it to opportunity
+    [Tags]    SreeramE2E    Lightning
+    ${lead_file}    run keyword    open file from resources    lead_Release.html
+    go to    file:///${lead_file}
+    ${fname}    generate random string    3    [NUMBERS]F
+    ${lname}    generate random string    3    [NUMBERS]L
+    ${mobile}    create unique mobile number
+    ${title}    generate random string    5    [NUMBERS]abcdefghi
+    ${desc}    generate random string    10    [NUMBERS]abcdef
+    sleep    5s
+    enter random data to lead web form    ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
+    go to    ${LOGIN_PAGE_APP}
+    Login to Salesforce as DigiSales Lightning User
+    #login to salesforce as digisales lightning user vlocupgsandbox
+    go to entity    ${lead_account_name}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    open_todays_leads
+    force click element    //a[@title='${fname} ${lname}']
+    wait until page contains element    //span[text()='${fname} ${lname}']    30s
+    validate_Created_Lead    ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
+    Edit_and_Select_Contact    ${contact_name}
+    scroll page to location    0    0
+    click element    ${convert_lead_btn}
+    wait until page contains element    ${converting_lead_header}    30s
+    input text    ${lead_name_input}    Lead_${fname}_${lname}
+    input text    ${lead_desc_textarea}    ${desc}
+    ${close_date}    get date from future    10
+    sleep    3s
+    input text    ${lead_close_date}    ${close_date}
+    click element    ${converting_lead_dialogue}
+    click element    ${converting_lead_overlay}
+    wait until page contains element    ${lead_converted_h4}    60s
+    wait until page contains element    //span[text()='Opportunity']//ancestor::div[@class="slds-box"]//a[text()='Lead_${fname}_${lname}']    30s
+    click element    //span[text()='Opportunity']//ancestor::div[@class="slds-box"]//a[text()='Lead_${fname}_${lname}']
+    wait until page contains element    //span[text()='Opportunity ID']    30s
+    scrolluntillfound    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
+    page should contain element    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
