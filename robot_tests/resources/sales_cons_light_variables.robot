@@ -3,7 +3,7 @@ ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${ENVIRONMENT_CONSOLE}                      release
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
-${PASSWORDCONSOLE}                          PahaPassu2
+${PASSWORDCONSOLE}                          PahaPassu3
 ${LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']

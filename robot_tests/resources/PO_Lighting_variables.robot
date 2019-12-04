@@ -57,7 +57,7 @@ ${Kilometrikorvaus}   //div[contains(text(),'Kilometrikorvaus')]/../../../div/bu
 ${Kilometrit}   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Kilometrit']]//following::input[1]
 ${BROWSER}        Firefox
 
-${Password_merge}    PahaPassu2
+${Password_merge}    PahaPassu3
 ${LOGIN_PAGE}        https://test.salesforce.com/
 ${SALES_APP_NAME}    //*[contains(@class,'appName')]//span[text()='Sales']
 ${CLOSE_NOTIFICATION}    //button[@title='Dismiss notification']

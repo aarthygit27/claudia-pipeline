@@ -452,7 +452,7 @@ Searching and adding product
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     sleep   5s
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
-    sleep  30s  # Better to have sleep time as it takes time to load
+    sleep  60s  # Better to have sleep time as it takes time to load
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
@@ -2034,3 +2034,15 @@ CreateABillingAccount
 
 
 Add all child products
+     ${AddChildProducts}=    Set Variable       //div[@class='cpq-product-cart-item-child']//button[contains(text(), 'Add to Cart')]
+     Sleep      10s
+     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
+     select frame  xpath=//div[contains(@class,'slds')]/iframe
+     ${count}    get element count      ${AddChildProducts}
+     #${locators}=    Get Webelements    xpath=${AddChildProducts}
+     : FOR    ${locator}    IN RANGE  ${count}-1
+     \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+     \    ScrollUntillFound      ${AddChildProducts}
+     \    Force click element         ${AddChildProducts}
+     \    Exit For Loop If    ${status}
+     unselect frame
