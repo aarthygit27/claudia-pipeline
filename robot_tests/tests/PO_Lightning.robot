@@ -556,10 +556,14 @@ Domain name service with Finnish Domain - Complete Order
 
 Telia ACE Complete Order
     [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest          TestingMail
-    General Setup    B2B
-    #Searching and adding product    Telia ACE
-    log     ${oppo_name}
-    #Add all child products
+    #General Setup    B2B
+    Open Salesforce and Login into Lightning
+    Go to Entity      Test Robot Order_ 20191127-074112
+    ClickingOnCPQ    Test Robot Order_ 20191127-074112
+    Searching and adding product    Telia ACE
+    #log     ${oppo_name}
+    Add all child products
+
     #clicking on next button
     #Update Product Page    Telia ACE
     #Create_Order
