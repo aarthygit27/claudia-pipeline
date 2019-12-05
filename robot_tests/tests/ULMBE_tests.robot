@@ -38,7 +38,7 @@ User Management: user changes own information
     [Documentation]     Test create ULM login endpoint.
     [Tags]  APITests
 
-User Management: user changes own information
+User Management: use changes own information
     [Documentation]     Test create ULM login endpoint.
     [Tags]  APITests
 
