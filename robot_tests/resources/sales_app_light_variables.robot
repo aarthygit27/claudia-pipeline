@@ -272,3 +272,5 @@ ${lead_close_date}                  //input[@class="field input"]
 ${converting_lead_dialogue}          //div[@class="convertSection"][text()='Converting Lead']
 ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
+${group_billing_id}         Test_Group_Aarsleff
+#Changes for each account
