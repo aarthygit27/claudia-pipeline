@@ -3,7 +3,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu1
+${Password_merge}    PahaPassu2
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pmauto@teliacompany.com.${ENVIRONMENT}
@@ -45,10 +45,11 @@ ${OPPORTUNITY_PAGE}    //*[contains(@class,'slds-page-header')]
 ${RESULTS_TABLE}    //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SEARCH_INPUT}    //input[contains(@name,'search-input')]
 ${PASSIVE_TEST_ACCOUNT}    Airmec Oy
-${GROUP_TEST_ACCOUNT}    Digita
+${GROUP_TEST_ACCOUNT}    Aho Group
 #CONTACTS
 ${CONTACTS_TAB}    //div[@class='bBottom']//a[@title='Contacts']
-${CONTACTS_ICON}    //div[@class="slds-grid"]//nav[@role="navigation"]//span[contains(text(),'Contacts')]
+#${CONTACTS_ICON}    //div[@class="slds-grid"]//nav[@role="navigation"]//span[contains(text(),'Contacts')]
+${CONTACTS_ICON}    //span[@class="uiImage"]//img[@title="Contacts"]
 ${NEW_BUTTON}     //div[@class="slds-truncate" and @title="New"]
 ${MASTER}         //span[contains(text(),'Master')]
 ${NON-PERSON}     //span[contains(text(),'Non-person')]
@@ -73,7 +74,7 @@ ${MASTER_ACCOUNT_NAME}    Aktia Fondbolag Ab
 ${MASTER_PHONE_NUM}    +358968372101
 ${MASTER_EMAIL}    saemail@telia.com
 ${NP_EMAIL_FIELD}    //input[@type='email']
-${NP_ACCOUNT_NAME}    Gasum Oy
+${NP_ACCOUNT_NAME}    Aktia Fondbolag Ab
 ${NP_PHONE_NUM}    +358968372111
 ${AP_ACCOUNT_NAME}    Ambea Oy
 ${AP_NEW_CONTACT}    //div[@title="New Contact"]
@@ -215,7 +216,7 @@ ${product_quantity}    1
 ${NRC}            35
 ${RC}             50000
 ${B2bproductfyr1}    Telia Sopiva Pro N
-${B2bproductfyr2}   Pro nettikortti
+${B2bproductfyr2}   Pro Nettikortti
 ${B2bproductfyr3}   Multi-SIM
 ${fixed_charge for_Telia Sopiva Pro N}  30
 ${fixed_charge for_Pro Nettikortti}     0
@@ -230,11 +231,12 @@ ${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/t
 ${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
 ${B2O_DIGISALES_LIGHT_PASSWORD}    PahaPassu1
-${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input
-${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']
+${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input/../span
+${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
 ${OPPORTUNITY_WARNING_BANNER}   //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account does not have an active customership contract, please conclude an agreement with the customer before accepting orders for the Account.']
 ${SERVICE_CONTRACT_WARNING}     //div/div/small[text()='Selected Account does not have an active service contract for one or more of the selected offerings. A draft agreement and service contract has been automatically created for each of the offerings']
+${SERVICE_CONTRACT_WARNING_oppo}     //div//*[text()='Note! Selected Account does not have an active service contract for one or more of the selected offerings, please conclude a service agreement with the customer before accepting orders from the Account.']
 ${STATUS_DRAFT_ELEMENT}     //span[text()='Status']/../../div[2]/span/span[text()='Draft']
 ${SALES_TYPE_DROPDOWN}      //table[@class='tg']/tbody//tr[2]/td[8]/select
 ${NEW_MONEY_NEW_SERVICES}   //table[@class='tg']/tbody//tr[2]/td[8]/select/option[@value='New Money-New Services']

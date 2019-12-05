@@ -1,12 +1,12 @@
 *** Settings ***
-Documentation     Suite description
+Documentation     PO Sanity Test cases are executed in ${ENVIRONMENT} sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/PO_Light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 Resource          ../resources/PO_Lighting_variables.robot
-Library           AutoItLibrary
+#Library           AutoItLibrary
 
 *** Test Cases ***
 Product1:Telia Multiservice NNI
@@ -175,7 +175,7 @@ Product10: Genesys PureCloud
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]    BQA-11483     Run    sitpo22  Rerun  PO_Scripts
+    [Tags]    BQA-11483     Run    sitpo22   PO_Scripts
     ${prod_1}    set variable    Telia Arkkitehti jatkuva palvelu
     ${prod_2}    set variable    Muut asiantuntijapalvelut
     General Setup    B2B
@@ -239,7 +239,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
-    [Tags]      BQA-11492     PO_Scripts    sitpo22  Check
+    [Tags]      BQA-11492     PO_Scripts    sitpo22  Check      Rerun
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -403,7 +403,8 @@ Test scenario 19:Operation and Support Service
     Add Hallinta ja Tuki jatkuva palvelu
     update setting common    h    no
     clicking on next button
-    Update Product Page for 2 products    Telia Palvelunhallintakeskus    Hallinta ja Tuki jatkuva palvelu
+    Update Product Page     Telia Palvelunhallintakeskus
+    #Update Product Page for 2 products    Telia Palvelunhallintakeskus    Hallinta ja Tuki jatkuva palvelu
     Create_Order
     log      Billing account is ${billingaccount}
     log      Order Number is ${Order_Id}
@@ -440,7 +441,7 @@ Test scenario 21:Operation and Support Service
 
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
-    [Tags]      BQA-11507   PO_Scripts   Last_product  sitpo22
+    [Tags]      BQA-11507   PO_Scripts   Last_product  sitpo22      Rerun
     General Setup    B2B
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -455,14 +456,14 @@ Test scenario 22 Other:Operation and Support Services
     update setting Toimenpide   h    no
     Add Toimenpide XL
     update setting Toimenpide    h    no
-    Search and add product    Asiantuntijakäynti
-    Search and add product    Pikatoimituslisä
-    #Searching and adding product    Events jatkuva palvelu
     Add Events jatkuva palvelu
     update setting common    d    no
     #Searching and adding product    Events jatkuva palvelu
     Add Events kertapalvelu
     update setting common    h    no
+    Search and add product    Asiantuntijakäynti
+    Search and add product    Pikatoimituslisä
+    #Searching and adding product    Events jatkuva palvelu
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
@@ -538,7 +539,7 @@ Domain name service with Other Domain Complete Order EU
 
 Domain name service with Finnish Domain - Complete Order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
-    [Tags]    BQA-11731   PO_Scripts
+    [Tags]    BQA-11731   PO_Scripts        Rerun
     General Setup    B2B
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service
@@ -554,9 +555,15 @@ Domain name service with Finnish Domain - Complete Order
     log      Order Number is ${Order_Id}
 
 Telia ACE Complete Order
-    [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest
-    General Setup    B2B
+    [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest          TestingMail
+    #General Setup    B2B
+    Open Salesforce and Login into Lightning
+    Go to Entity      Test Robot Order_ 20191127-074112
+    ClickingOnCPQ    Test Robot Order_ 20191127-074112
     Searching and adding product    Telia ACE
-    clicking on next button
-    Update Product Page    Telia ACE
-    Create_Order
+    #log     ${oppo_name}
+    Add all child products
+
+    #clicking on next button
+    #Update Product Page    Telia ACE
+    #Create_Order

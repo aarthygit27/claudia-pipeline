@@ -3,7 +3,7 @@ ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
 ${ENVIRONMENT_CONSOLE}                      release
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
-${PASSWORDCONSOLE}                          PahaPassu1
+${PASSWORDCONSOLE}                          PahaPassu3
 ${LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
 ${CLASSIC_MENU}                             //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
@@ -56,7 +56,7 @@ ${NP_CONTACT_ACCOUNTNAME}                   Aktia Fondbolag Ab
 ${NP_CONTACT_MOBILE}                        +358333333333
 
 #NEW CONTACT FROM ACCOUNTS PAGE
-${AP_CONTACT_ACCOUNTNAME}                   Gasum Oy
+${AP_CONTACT_ACCOUNTNAME}                   Aktia Fondbolag Ab
 ${AP_NEW_CONTACT}                           //div[@title="New Contact"]
 #${AP_CONTACT_FIRSTNAME}                     APTEST10
 #${AP_CONTACT_LASTNAME}                      APCONTACT10
