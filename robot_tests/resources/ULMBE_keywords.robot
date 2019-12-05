@@ -5,13 +5,17 @@ Library           SeleniumLibrary
 Library           ../resources/ULMBE_functionalities.py
 Library           ../tests/ULMBE_tests.robot
 
-*** Test Cases ***
+*** Keywords ***
 CSR Login
     ${return_value} =   CSR Session start
     Should be Equal As Integers     ${return_value}   200
 
-User Login
+B2oadm Login
     ${return_value} =   User Session start
+    Should be Equal As Integers     ${return_value}   200
+
+User sowmi Login
+    ${return_value} =   User Session start sowmi
     Should be Equal As Integers     ${return_value}   200
 
 User details
@@ -28,6 +32,18 @@ User group user details
 
 User group memberships
     ${return_value} =   User group membership details
+    Should be Equal As Integers     ${return_value}   200
+
+CSR Logout
+    ${return_value} =   Session end
+    Should be Equal As Integers     ${return_value}   200
+
+UserUpdateProfilebySelf session start
+    ${return_value} =   update profile by self start
+    Should be Equal As Integers     ${return_value}   200
+
+UserUpdateProfilebySelf session execute
+    ${return_value} =   update profile by self execute
     Should be Equal As Integers     ${return_value}   200
 
 CSR Logout

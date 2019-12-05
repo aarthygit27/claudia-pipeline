@@ -5,26 +5,65 @@ Library           Collections
 Library           BuiltIn
 Resource          ../resources/ULMBE_keywords.robot
 
-Documentation    Suite description
-
 *** Test Cases ***
-ULMBE_login
+Admin functionality: CSR login and logout
     [Documentation]     Test create CSR login endpoint.
     [Tags]  APITests
     CSR Login
     CSR Logout
 
-ULMBE user views own details
+User's own details
     [Documentation]     Test create ULM login endpoint.
     [Tags]  APITests
-    User login
+    b2oadm login
     User details
     User group
     User group user details
     User group memberships
     CSR logout
 
-ULMBE user changes own details
+User Management: user changes own information
+    [Documentation]     Test create ULM login endpoint.
+    [Tags]  APITests
+    User sowmi login
+    UserUpdateProfilebySelf session start
+    UserUpdateProfilebySelf session execute
+    CSR Logout
 
-    UserUpdateProfilebySelfCare session start
-    UserUpdateProfilebySelfCare session step
+User Management: user resets/updates password
+    [Documentation]     Test create ULM login endpoint.
+    [Tags]  APITests
+
+User Management: user changes own information
+    [Documentation]     Test create ULM login endpoint.
+    [Tags]  APITests
+
+User Management: user changes own information
+    [Documentation]     Test create ULM login endpoint.
+    [Tags]  APITests
+
+Admin functionality: CSR reads company data
+    [Documentation]     Test create CSR login endpoint.
+    [Tags]  APITests
+
+Admin functionality: CSR reads user data
+    [Documentation]     Test create CSR login endpoint.
+    [Tags]  APITests
+
+Admin functionality: CSR changes user data
+    [Documentation]     Test create CSR login endpoint.
+    [Tags]  APITests
+
+Admin functionality: CSR resets password
+    [Documentation]     Test create CSR login endpoint.
+    [Tags]  APITests
+
+Admin functionality: CSR adds a user to a group on behalf of primary/admin
+    [Documentation]     Test create CSR login endpoint.
+    [Tags]  APITests
+
+Admin functionality: CSR changes role of a user on behalf of primary/admin
+    [Documentation]     Test create CSR login endpoint.
+    [Tags]  APITests
+
+
