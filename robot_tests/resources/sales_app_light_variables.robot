@@ -3,7 +3,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    release
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu2
+${Password_merge}    PahaPassu3
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pmauto@teliacompany.com.${ENVIRONMENT}
