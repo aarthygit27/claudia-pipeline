@@ -291,7 +291,6 @@ def Authenticate_Create_billing_account():
 
 def API_get_credit_scoring():
     url = "https://api-garden-test.teliacompany.com:443/v1/finland/creditscore"
-	
     jsonni = {"creditScoreRequest":{"inquirer":"B2B DigiSales", "originalInquiringSystem":"Claudia", "usage":"1", "businessId":"2299480-0", "language":"en", "appliedAmount":0, "version":"3", "productCategory":"BroadbandLowRisk"}, "header":{"sender":{"name":"PH10097", "id":123}, "timestamp": dt.datetime.now().isoformat()}}
     headers = {'Content-Type':'application/json', 'Authorization': 'Bearer ' + token_json['access_token'], 'traceId': uuid.uuid4().hex}
     #headers = {}
