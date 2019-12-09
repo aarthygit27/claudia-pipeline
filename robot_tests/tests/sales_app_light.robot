@@ -25,6 +25,7 @@ Add new contact - Non person
     Validate NP Contact
 
 Add new contact from Accounts Page
+
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
     [Tags]    BQA-8394  AUTOLIGHTNING   ContactsManagement
     Go To Salesforce and Login into Lightning
