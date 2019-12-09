@@ -63,7 +63,7 @@ ${SALES_APP_NAME}    //*[contains(@class,'appName')]//span[text()='Sales']
 ${CLOSE_NOTIFICATION}    //button[@title='Dismiss notification']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${ENVIRONMENT}    release
+${ENVIRONMENT}    rel
 ${SALES_APP_HOME}    //a[@title='Home']
 ${APP_LAUNCHER}    //button[contains(@class,'salesforceIdentityAppLauncherHeader')]
 ${SALES_APP_NAME}    //*[contains(@class,'appName')]//span[text()='Sales']
