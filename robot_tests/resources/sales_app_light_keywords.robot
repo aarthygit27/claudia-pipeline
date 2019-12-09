@@ -73,7 +73,11 @@ Login to Salesforce Lightning
     Sleep    5s
     Input text    id=password    ${password}
     Click Element    id=Login
-    Wait Until Page Contains Element    //a//span[text()="Home"]    60s
+    #${homepage}=    Run Keyword And Return Status    Wait Until Page Contains Element    //a//span[text()="Home"]    60s
+    #Run Keyword unless    ${homepage}    reload page
+    #Run Keyword unless    ${homepage}    sleep  30s
+    #Wait Until Page Contains Element    //a//span[text()="Home"]    60s
+    Sleep  50s
     ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[text()='Remind Me Later']
     Run Keyword If    ${infoAvailable}    force click element    //a[text()='Remind Me Later']
     run keyword and ignore error    Check For Lightning Force
@@ -1792,6 +1796,7 @@ getOrderStatusAfterSubmitting
     [Return]   ${order_no}
 
 SearchAndSelectBillingAccount
+    [Arguments]   ${vLocUpg_TEST_ACCOUNT}
     execute javascript    window.location.reload(true)
     sleep    30s
     #log to console    SearchAndSelectBillingAccount
@@ -1949,6 +1954,7 @@ ReviewPage
 #    unselect frame
 
 CreateABillingAccount
+    [Arguments]    ${LIGHTNING_TEST_ACCOUNT}
     # go to particular account and create a billing accouint from there
     wait until page contains element    //li/a/div[@title='Billing Account']    45s
     force click element    //li/a/div[@title='Billing Account']
@@ -1975,7 +1981,9 @@ CreateABillingAccount
     click element    //*[@id="billing_country"]/option[@value='FI']
     click element    //*[@id="Invoice_Delivery_Method"]
     click element    //*[@id="Invoice_Delivery_Method"]/option[@value='Paper Invoice']
+    sleep  2s
     input text    //*[@id="payment_term"]    10
+    sleep  2s
     click element    //*[@id="create_billing_account"]/p[text()='Create Billing Account']
     sleep    10s
     execute javascript    window.scrollTo(0,2100)
@@ -5987,7 +5995,7 @@ HDC Order
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${Account}
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ChangeThePriceList      B2B
@@ -5998,7 +6006,7 @@ HDC Order
     View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
+    SearchAndSelectBillingAccount   ${Account}
     select order contacts- HDC  ${contact_name}
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}

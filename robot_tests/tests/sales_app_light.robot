@@ -264,7 +264,7 @@ Create HDC Order
     #log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     #log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount
+    ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
     #log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     #Edit Opportunity values    Price List      B2B
@@ -279,7 +279,7 @@ Create HDC Order
     ClickonCreateOrderButton
     #OpenOrderPage
     NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
     select order contacts- HDC  ${contact_name}
     #SelectingTechnicalContact    ${contact_name}
     RequestActionDate
@@ -1706,7 +1706,7 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount
+    ${billing_acc_name}    run keyword    CreateABillingAccount   ${Account}
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ChangeThePriceList      B2B
@@ -1720,7 +1720,7 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
+    SearchAndSelectBillingAccount   ${Account}
     select order contacts- HDC  ${contact_name}
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}
