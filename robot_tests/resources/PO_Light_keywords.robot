@@ -451,7 +451,7 @@ Searching and adding product
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     sleep   5s
-    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    Force click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep  60s  # Better to have sleep time as it takes time to load
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
