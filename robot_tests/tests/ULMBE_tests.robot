@@ -8,13 +8,13 @@ Resource          ../resources/ULMBE_keywords.robot
 *** Test Cases ***
 Admin functionality: CSR login and logout
     [Documentation]     Test create CSR login endpoint.
-    [Tags]  APITests
+    [Tags]  APITests_run
     CSR Login
     CSR Logout
 
 User's own details
     [Documentation]     Test create ULM login endpoint.
-    [Tags]  APITests
+    [Tags]  APITests_run
     b2oadm login
     User details
     User group
@@ -24,7 +24,7 @@ User's own details
 
 User Management: user changes own information
     [Documentation]     Test create ULM login endpoint.
-    [Tags]  APITests
+    [Tags]  APITests_run
     User sowmi login
     UserUpdateProfilebySelf session start
     UserUpdateProfilebySelf session execute
