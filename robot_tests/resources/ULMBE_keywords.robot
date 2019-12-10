@@ -45,7 +45,3 @@ UserUpdateProfilebySelf session start
 UserUpdateProfilebySelf session execute
     ${return_value} =   update profile by self execute
     Should be Equal As Integers     ${return_value}   200
-
-CSR Logout
-    ${return_value} =   Session end
-    Should be Equal As Integers     ${return_value}   200
