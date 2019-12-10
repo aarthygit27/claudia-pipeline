@@ -25,6 +25,7 @@ Add new contact - Non person
     Validate NP Contact
 
 Add new contact from Accounts Page
+
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
     [Tags]    BQA-8394  AUTOLIGHTNING   ContactsManagement
     Go To Salesforce and Login into Lightning
@@ -264,7 +265,7 @@ Create HDC Order
     #log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     #log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount
+    ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
     #log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     #Edit Opportunity values    Price List      B2B
@@ -279,7 +280,7 @@ Create HDC Order
     ClickonCreateOrderButton
     #OpenOrderPage
     NextButtonOnOrderPage
-    SearchAndSelectBillingAccount
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
     select order contacts- HDC  ${contact_name}
     #SelectingTechnicalContact    ${contact_name}
     RequestActionDate
@@ -1618,10 +1619,10 @@ Check of Customership Contract
     set Test variable    ${account}   Telia Communication Oy
     Login To Salesforce As DigiSales Lightning User   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${account}
-    Delete all existing contracts from Accounts Related tab
-    #${contact}    run keyword    CreateAContactFromAccount_HDC
-    #Set Test Variable   ${contact_name}   ${contact}
-    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
+    #Delete all existing contracts from Accounts Related tab
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    #Set Test Variable   ${contact_name}   Testing Contact_ 20191107-170711
+    Set Test Variable   ${contact_name}   ${contact}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     #Set Test Variable   ${oppo_name}    Test Robot Order_ 20191107-170816
     Verify warning banner on oppo page   ${oppo_name}
@@ -1668,6 +1669,7 @@ One Order - B2B Colocation and Change Order
     Go to Entity    ${Account}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
     DDM Request Handling
     Validate Billing system
@@ -1676,23 +1678,112 @@ One Order - B2B Colocation and Change Order
     Validate Billing system
     Capture Page Screenshot
 
+One Order- B2O Colocation and change order
+    [Tags]  BQA-11523
+    set test variable   ${Account}    Telia Communication Oy
+    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go to Entity    ${Account}
+    Delete all assets
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    HDC Order
+    DDM Request Handling
+    Validate Billing system
+    Change Order
+    DDM Request Handling
+    Validate Billing system
+    Capture Page Screenshot
+    Go to Entity    ${Account}
+    Terminate asset     Telia Colocation
+
+
+One Order- B2B Colocation, Case management product, Modeled Case management product
+    [Tags]  BQA-11522
+    set test variable   ${Account}    Telia Communication Oy
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Entity    ${Account}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount   ${Account}
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    Adding Arkkitehti   Arkkitehti
+    Adding Telia Cid    Telia Cid
+    Updating Setting Telia Cid
+    UpdateAndAddSalesType for 3 products and check contract    Telia Colocation   Arkkitehti  Telia Cid
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${Account}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan
+    Go back
+    Validate Call case Management status
+    DDM Request Handling
+    Validate Billing system
+    Validate Order status
+
+
+
+SAP Order
+    set test variable   ${Account}    Telia Communication Oy
+    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go To Entity    ${Account}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2O
+    ClickingOnCPQ    ${oppo_name}
+    Adding Vula    VULA
+    Update Setting Vula   VULA
+    UpdatePageNextButton
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    Close and submit
+    Enter Group id and submit
+    Reload page
+    ValidateSapCallout
 
 Testing
 
+    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go to  https://telia-fi--release.lightning.force.com/lightning/r/Order/8016E000000niRiQAI/view
+    #sleep  30s
+    Enter Group id and submit
+    Reload page
+    ValidateSapCallout
 
-    #Go To Salesforce and Login into Lightning
-    DDM Request Handling
-    Validate DDM and billing system response
 
 Testing2
 
-
-    Go To   https://telia-fi--release.lightning.force.com/lightning/r/Account/0014E000012h81yQAA/view
-    Wait Until element is visible   id=username     30s
-    Input Text  id=username   ${B2B_DIGISALES_LIGHT_USER}
-    Input Text   id =password  ${Password_merge}
-    Click Element  id=Login
-    Change Order
+    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go To   eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDY2RTAwMDAwOENEQkEifSwic3RhdGUiOnt9fQ
+    Adding Vula    VULA
+    Update Setting Vula
+    UpdatePageNextButton
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    Close and submit
+    Enter Group id and submit
+    Reload page
+    ValidateSapCallout
 
 
 Lead_Creation

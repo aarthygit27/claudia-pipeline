@@ -1,9 +1,9 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    release
+${ENVIRONMENT}    REL
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu2
+${Password_merge}    PahaPassu3
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pmauto@teliacompany.com.${ENVIRONMENT}
@@ -272,3 +272,5 @@ ${lead_close_date}                  //input[@class="field input"]
 ${converting_lead_dialogue}          //div[@class="convertSection"][text()='Converting Lead']
 ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
+${group_billing_id}         Test_Group_Aarsleff
+#Changes for each account

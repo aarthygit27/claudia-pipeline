@@ -563,7 +563,9 @@ Telia ACE Complete Order
     Searching and adding product    Telia ACE
     #log     ${oppo_name}
     Add all child products
-
+    Update Setting      Agent Interact Workplace            productconfig_field_0_0     100
+    Update Setting      Mobile Agent Workplace              productconfig_field_0_0     200
+    #Overrride Prices in CPQ
     #clicking on next button
     #Update Product Page    Telia ACE
     #Create_Order

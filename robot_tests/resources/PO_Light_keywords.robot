@@ -2046,3 +2046,17 @@ Add all child products
      \    Force click element         ${AddChildProducts}
      \    Exit For Loop If    ${status}
      unselect frame
+
+Update Setting
+    [Arguments]    ${product}       ${field}      ${value}
+    ${settings}  set variable  //div[contains(text(),'${product}')]/../../..//*[@alt='settings']/..
+    ${fieldname}  set variable   //input[@name='${field}']
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    select frame        ${iframe}
+    ScrollUntillFound     ${settings}
+    Force Click element     ${settings}
+    Input Text    ${fieldname}   ${value}
+    sleep  5s
+    Click element  ${closing}
+    unselect frame
