@@ -2,8 +2,8 @@
 Documentation    Suite description
 Library           Collections
 Library           SeleniumLibrary
-Library           ../resources/ULMBE_functionalities.py
-Library           ../tests/ULMBE_tests.robot
+Library           ..${/}resources${/}ULMBE_functionalities.py
+Library           ..${/}tests${/}ULMBE_tests.robot
 
 *** Keywords ***
 CSR Login
