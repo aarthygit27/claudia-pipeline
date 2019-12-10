@@ -2,8 +2,8 @@
 Documentation    Suite description
 Library           Collections
 Library           SeleniumLibrary
-Library           ../resources/ULMBE_functionalities.py
-Library           ../tests/ULMBE_tests.robot
+Resource           ..${/}resources${/}ULMBE_functionalities.py
+Resource           ..${/}tests${/}ULMBE_tests.robot
 
 *** Keywords ***
 CSR Login
@@ -44,8 +44,4 @@ UserUpdateProfilebySelf session start
 
 UserUpdateProfilebySelf session execute
     ${return_value} =   update profile by self execute
-    Should be Equal As Integers     ${return_value}   200
-
-CSR Logout
-    ${return_value} =   Session end
     Should be Equal As Integers     ${return_value}   200
