@@ -1726,14 +1726,14 @@ Order Products must have a unit price
     unselect frame
 
 NextButtonOnOrderPage
-    #log to console    NextButtonOnOrderPage
+    log to console    NextButtonOnOrderPage
     sleep  5s
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     #Log to console      Inside frame
     #sleep  30s
-    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
-    #Log to console      ${status}
+    ${status}    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    Log to console      ${status}
     wait until page contains element    //span[text()='Next']/..    120s
     click element    //span[text()='Next']/..
     unselect frame
@@ -5689,44 +5689,34 @@ Enter Group id and submit
 
     ${cancel}=  set variable    //span[text()='Cancel']
     ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
-    ${Group id}=  set variable   //span[text()='Edit Group Billing ID']
+    #${Group id}=  set variable   //span[text()='Edit Group Billing ID']
     ${Group Billing ID}=  set variable   //div/span[text()='Group Billing ID']
 
-    ${status}   Run keyword and return status   Wait until element is visible   ${cancel}   30s
-    Run keyword if   ${status}  Click element   ${cancel}
+    #${status}   Run keyword and return status   Wait until element is visible   ${cancel}   30s
+    #Run keyword if   ${status}  Click element   ${cancel}
     sleep  3s
     Wait until element is visible   ${Detail}  60s
     Force click element   ${Detail}
     #sleep  10s
-
-    Scroll Page To Element   ${Group Billing ID}
-
-    #set focus to element   ${Installation date}
-    Click element  //div/span[text()='Group Billing ID']//following::button[1]//following::span[text()='Edit Group Billing ID']
+    Wait until element is visible  //span[text()='Edit Status']
+    Force Click element  //span[text()='Edit Status']
     sleep  3s
-    Wait until element is visible   //label/span[text()='Group Billing ID']//following::input[1]  30s
-    Force Click element  //label/span[text()='Group Billing ID']//following::input[1]
-    Input Text  //input[@title='Search Group Billing IDs']     ${group_billing_id}
-    Click element   //div[@title='${group_billing_id}']
+    Page should contain element  //label/span[text()='Group Billing ID']
+    ScrollUntillFound    //label/span[text()='Group Billing ID']
+    Press Key  //input[@title='Search Group Billing IDs']     ${group_id}
+    Wait until element is visible  //div[@title='${group_id}']  30s
+    Click element   //div[@title='${group_id}']
 
-
+    Wait until element is visible  //label/span[text()='Desired Installation Date']/..//following::input[1]   30s
+    Force Click element  //label/span[text()='Desired Installation Date']/..//following::input[1]
     Click element   //a[@title='Go to next month']
     Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
     Click element  //tr[@class='calRow'][2]/td[1]/span
-
-    #Wait until element is visible      ${Group id}  60s
-    #set focus to element  ${Group id}
-    #Force Click element  ${Group id}
-    page should contain element   //input[@title='Search Group Billing IDs']  60s
-    Input Text  //input[@title='Search Group Billing IDs']     ${group_billing_id}
-    Wait until element is visible   //div[@title='${group_billing_id}']   50s
-    Click element   //div[@title='${group_billing_id}']
     Wait until element is visible   //button[@title='Save']  30s
-
     Click element  //button[@title='Save']
     sleep  5s
     Wait until element is visible   //div[@title='Submit Order']    60s
-    Click element  //div[@title='Submit Order']
+    Click element  //div[@title='Submit Order']/..
     sleep  5s
     Capture Page Screenshot
     Wait until element is visible     //h2[text()='Submit Order']   30s
@@ -6236,21 +6226,15 @@ ValidateSapCallout
     Set test variable   ${order_no}      ${order_number}
     # Donot remove as reusing it for change plan - Aarthy
     scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
-    #execute javascript    window.scrollTo(0,2000)
-    #sleep    10s
     log to console    plan validation
     wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
     click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     sleep    10s
     Wait until element is visible  xpath=//*[@title='Orchestration Plan View']/div/iframe[1]   60s
     select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
-    Wait until element is visible  //a[text()='Start']  60s
-    Element should be visible    //a[text()='Start']
+    Wait until element is visible  //a[text()='Start Order']  60s
+    Element should be visible    //a[text()='Start Order']
     Element should be visible    //a[text()='Create Assets']
-    Element should be visible    //a[text()='Deliver Service']
-    Element should be visible    //a[text()='Order Events Update']
-    Element should be visible   //a[text()='Call Billing System']
-    #go back
     sleep   3s
     force click element       //a[@class='item-label item-header' and text()='Callout to SAP Provisioning I']
     unselect frame
@@ -6258,4 +6242,4 @@ ValidateSapCallout
     ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
+    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s300s
