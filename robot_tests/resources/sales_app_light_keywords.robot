@@ -1290,11 +1290,11 @@ CreateAContactFromAccount_HDC
     input text    //Span[text()='Name']//following::input[@placeholder="Last Name"]    ${a}
     sleep    2s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    30s
-    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    kasibhotla.sreeramachandramurthy@teliacompany.com
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Primary eMail']//following::input[1]    ${a}@teliacompany.com
     Sleep  10s
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
-    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       kasibhotla.sreeramachandramurthy@teliacompany.com
+    input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       ${a}@teliacompany.com
     sleep    5s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
@@ -1956,18 +1956,8 @@ ReviewPage
 CreateABillingAccount
     [Arguments]    ${LIGHTNING_TEST_ACCOUNT}
     # go to particular account and create a billing accouint from there
-    wait until page contains element    //li/a/div[@title='Billing Account']    45s
-    force click element    //li/a/div[@title='Billing Account']
-    #sleep    20s
-    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-    #wait until page contains element    //*[@id="RemoteAction1"]    30s
-    #click element    //*[@id="RemoteAction1"]
-    #unselect frame
-    #sleep    10s
-    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-    #wait until page contains element    //*[@id="Customer_nextBtn"]    30s
-    #click element    //*[@id="Customer_nextBtn"]
-    #unselect frame
+    wait until page contains element    //li/a[@title='Billing Account']   45s
+    force click element    //li/a[@title='Billing Account']
     sleep    20s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]    30s
@@ -5711,15 +5701,23 @@ Enter Group id and submit
     sleep  3s
     Page should contain element  //label/span[text()='Group Billing ID']
     ScrollUntillFound    //label/span[text()='Group Billing ID']
-    Press Key  //input[@title='Search Group Billing IDs']     ${group_id}
-    Wait until element is visible  //div[@title='${group_id}']  30s
-    Click element   //div[@title='${group_id}']
+    #Input Text   //input[@title='Search Group Billing IDs']     ${group_id}
+    Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
+    #${status}    Run keyword and return status   Page should contain element   //div[@title='${group_id}']
+    #Wait until element is visible  //div[@title='${group_id}']  30s
+    #Click element   //div[@title='${group_id}']
 
     Wait until element is visible  //label/span[text()='Desired Installation Date']/..//following::input[1]   30s
     Force Click element  //label/span[text()='Desired Installation Date']/..//following::input[1]
     Click element   //a[@title='Go to next month']
     Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
     Click element  //tr[@class='calRow'][2]/td[1]/span
+
+    # Contract id issue
+    Wait until element is visible  //label/span[text()='SAP Contract ID']/..//following::input[1]  30s
+    Clear element Text  //label/span[text()='SAP Contract ID']/..//following::input[1]
+    Input Text  //label/span[text()='SAP Contract ID']/..//following::input[1]  1010004095
+
     Wait until element is visible   //button[@title='Save']  30s
     Click element  //button[@title='Save']
     sleep  5s
@@ -5887,6 +5885,9 @@ Login Workbench
     ${title}    Get Title
     Run keyword if   '${title}'=='Login | Salesforce'   Login Salesforce to access Workbench   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     sleep  10s
+    ${status}    Run keyword and return status   Page should contain element   //input[@title='Allow']
+    Run Keyword If   ${status}   Click element   //input[@title='Allow']
+    sleep  5s
     ${status}    Run keyword and return status   Page should contain element    //span[text()='utilities']
     Run Keyword If    ${status} == False    Login Workbench
 
@@ -5951,8 +5952,8 @@ Validate Billing system response
 
     Switch between windows    0
     Reload page
-    #Go back
-    Wait until element is visible    //div[@class='content iframe-parent']/iframe
+    Go back
+    Wait until element is visible    //div[@class='content iframe-parent']/iframe   60s
     select frame    //div[@class='content iframe-parent']/iframe
     sleep    30s
     Element should be visible    //a[text()='Start']
@@ -5962,9 +5963,9 @@ Validate Billing system response
     Element should be visible   //a[text()='Call Billing System']
     #go back
     log to console    Validate Billing system Response
-    go back
-    Wait until element is visible    //div[@class='content iframe-parent']/iframe
-    select frame    //div[@class='content iframe-parent']/iframe
+    #go back
+    #Wait until element is visible    //div[@class='content iframe-parent']/iframe
+    #select frame    //div[@class='content iframe-parent']/iframe
     force click element       //a[@class='item-label item-header' and text()='Call Billing System']
     unselect frame
     #sleep       80s
@@ -5978,15 +5979,14 @@ Validate Billing system response
 HDC Order
 
 
-    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount  ${Account}
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ChangeThePriceList      B2B
@@ -5997,7 +5997,7 @@ HDC Order
     View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
-    SearchAndSelectBillingAccount   ${Account}
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
     select order contacts- HDC  ${contact_name}
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}
@@ -6234,10 +6234,12 @@ ValidateSapCallout
     log to console  ${order_number}.this is order numner
     Set test variable   ${order_no}      ${order_number}
     # Donot remove as reusing it for change plan - Aarthy
-    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
-    log to console    plan validation
-    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
-    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    sleep  3s
+    Wait until element is visible   ${Detail}  60s
+    Force click element   ${Detail}
+    Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
+    Click element  //span[text()='Orchestration Plan']//following::a[1]
     sleep    10s
     Wait until element is visible  xpath=//*[@title='Orchestration Plan View']/div/iframe[1]   60s
     select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
@@ -6251,4 +6253,4 @@ ValidateSapCallout
     ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s300s
+    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s

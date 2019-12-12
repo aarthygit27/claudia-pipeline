@@ -1672,7 +1672,7 @@ One Order - B2B Colocation and Change Order
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
     DDM Request Handling
-    Validate Billing system
+    Validate Billing system response
     Change Order
     DDM Request Handling
     Validate Billing system
@@ -1688,10 +1688,10 @@ One Order- B2O Colocation and change order
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
     DDM Request Handling
-    Validate Billing system
+    Validate Billing system response
     Change Order
     DDM Request Handling
-    Validate Billing system
+    Validate Billing system response
     Capture Page Screenshot
     Go to Entity    ${Account}
     Terminate asset     Telia Colocation
@@ -1730,13 +1730,14 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Go back
     Validate Call case Management status
     DDM Request Handling
-    Validate Billing system
+    Validate Billing system response
     Validate Order status
 
 
 
 SAP Order
-    [Documentation]     This script is designed for Telia Communication Oy account. If account is changed, the corresponding group id has to be changed for the script to work.
+    [Tags]  BQA-12512
+    [Documentation]     This script is designed for Digita Oy. If account is changed, the corresponding group id has to be changed for the script to work. SAP contract id hardcoded as it is getting failed nowadys.
     set test variable   ${Account}    Digita Oy
     Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
     Go To Entity    ${Account}
@@ -1745,7 +1746,7 @@ SAP Order
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${Account}
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ChangeThePriceList      B2O
