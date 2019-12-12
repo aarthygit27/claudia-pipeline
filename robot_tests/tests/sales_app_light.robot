@@ -1663,9 +1663,9 @@ Check of Customership Contract
 
 One Order - B2B Colocation and Change Order
     [Tags]  BQA-11521
-    set test variable   ${Account}    Telia Communication Oy
+    #set test variable   ${Account}    Telia Communication Oy
     Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
-    Go to Entity    ${Account}
+    Go to Entity    ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
@@ -1762,12 +1762,29 @@ SAP Order
 
 Testing
 
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    #Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   ${B2O_DIGISALES_LIGHT_USER}
+    Input Text   id =password  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Click Element  id=Login
+    sleep  20s
     Go to  https://telia-fi--release.lightning.force.com/lightning/r/Order/8016E000000niRiQAI/view
     #sleep  30s
-    Enter Group id and submit
+    #Enter Group id and submit
     Reload page
-    ValidateSapCallout
+    Wait until element is visible  xpath=//*[@title='Orchestration Plan View']/div/iframe[1]   60s
+    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    Wait until element is visible  //a[text()='Start Order']  60s
+    Element should be visible    //a[text()='Start Order']
+    Element should be visible    //a[text()='Create Assets']
+    sleep   3s
+    force click element       //a[@class='item-label item-header' and text()='Callout to SAP Provisioning I']
+    unselect frame
+    #sleep       80s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
+    Run Keyword If    ${status_page} == False    Reload Page
+    Run Keyword If    ${status_page} == False    Sleep  60s
+    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
 
 
 Testing2

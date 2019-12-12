@@ -5793,8 +5793,8 @@ Request date
 
 Initiate Change Order
 
-    #Go to entity   ${vLocUpg_TEST_ACCOUNT}
-    Go to entity   ${Account}
+    Go to entity   ${vLocUpg_TEST_ACCOUNT}
+    #Go to entity   ${Account}
     Page should contain element   //span[text()='Account ID']
     Force Click element  //span[text()='Account ID']
     ${AssetHistory}   set variable   //div[@class='full forcePageBlock forceRecordLayout']/div/h3[contains(@class,'test-id')]/button/span[text()='Asset History']
@@ -5971,7 +5971,7 @@ HDC Order
 
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Go To Entity    ${Account}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}
