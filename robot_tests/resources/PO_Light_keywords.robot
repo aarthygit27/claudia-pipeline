@@ -451,7 +451,7 @@ Searching and adding product
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     sleep   5s
-    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    Force click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep  60s  # Better to have sleep time as it takes time to load
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
@@ -2046,3 +2046,17 @@ Add all child products
      \    Force click element         ${AddChildProducts}
      \    Exit For Loop If    ${status}
      unselect frame
+
+Update Setting
+    [Arguments]    ${product}       ${field}      ${value}
+    ${settings}  set variable  //div[contains(text(),'${product}')]/../../..//*[@alt='settings']/..
+    ${fieldname}  set variable   //input[@name='${field}']
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    select frame        ${iframe}
+    ScrollUntillFound     ${settings}
+    Force Click element     ${settings}
+    Input Text    ${fieldname}   ${value}
+    sleep  5s
+    Click element  ${closing}
+    unselect frame
