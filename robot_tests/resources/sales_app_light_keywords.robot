@@ -5878,6 +5878,7 @@ Login Workbench
     sleep  5s
     ${title}    Get Title
     Run keyword if   '${title}'=='Login | Salesforce'   Login Salesforce to access Workbench   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    sleep  10s
     ${status}    Run keyword and return status   Page should contain element    //span[text()='utilities']
     Run Keyword If    ${status} == False    Login Workbench
 
