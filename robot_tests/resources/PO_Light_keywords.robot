@@ -2040,7 +2040,7 @@ Add all child products
      select frame  xpath=//div[contains(@class,'slds')]/iframe
      ${count}    get element count      ${AddChildProducts}
      #${locators}=    Get Webelements    xpath=${AddChildProducts}
-     : FOR    ${locator}    IN RANGE  ${count}-1
+     : FOR    ${locator}    IN RANGE  ${count}
      \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
      \    ScrollUntillFound      ${AddChildProducts}
      \    Force click element         ${AddChildProducts}
@@ -2059,4 +2059,12 @@ Update Setting
     Input Text    ${fieldname}   ${value}
     sleep  5s
     Click element  ${closing}
+    unselect frame
+
+Overrride Prices in CPQ
+    [Arguments]    ${product}       ${rc}      ${otc}
+    ${priceoverride}  set variable  //div[contains(text(),'Production Environment')]/../../..//*[@class='cpq-underline']
+    select frame        ${iframe}
+    ScrollUntillFound     ${priceoverride}
+
     unselect frame

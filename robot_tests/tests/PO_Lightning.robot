@@ -565,7 +565,7 @@ Telia ACE Complete Order
     Add all child products
     Update Setting      Agent Interact Workplace            productconfig_field_0_0     100
     Update Setting      Mobile Agent Workplace              productconfig_field_0_0     200
-    #Overrride Prices in CPQ
+    Overrride Prices in CPQ         Production Environment      100     150
     #clicking on next button
     #Update Product Page    Telia ACE
     #Create_Order
