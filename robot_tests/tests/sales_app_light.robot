@@ -1664,18 +1664,59 @@ Check of Customership Contract
 
 One Order - B2B Colocation and Change Order
     [Tags]  BQA-11521
-    set test variable   ${Account}    Telia Communication Oy
     Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
-    Go to Entity    ${Account}
+    Go to Entity    ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
+    Go back
+    ${url}=    Get Location
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    #Open Browser    ${LOGIN_PAGE}   ${BROWSER}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Validate Billing system
+    Switch between windows    0
+    logoutAsUser   ${SYSTEM_ADMIN_USER}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go to   ${url}
+    Validate Billing system response
     Change Order
+    Go back
+    ${url}=    Get Location
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Validate Billing system
+    Switch between windows    0
+    logoutAsUser  ${SYSTEM_ADMIN_USER}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go to   ${url}
+    Validate Billing system response
+    Capture Page Screenshot
+
+
+Testing
+    set test variable  ${order_no}  319121614555
+    set test variable   ${contact_name}  Testing Contact_20191216-124544
+    ${url}   set variable   https://telia-fi--rel.lightning.force.com/lightning/r/vlocity_cmt__OrchestrationPlan__c/a1w1w000000EJuWAAW/view
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   ${SYSTEM_ADMIN_USER}
+    Input Text   id =password  ${SYSTEM_ADMIN_PWD}
+    Click Element  id=Login
+
+    #DDM Request Handling
+    #Open Browser    ${LOGIN_PAGE}   ${BROWSER}
+    #Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    #Go to   ${url}
+    #Validate Billing system response
+    #Change Order
+    #Go back
+    #${url}=    Get Location
+    DDM Request Handling
+    Open Browser    ${LOGIN_PAGE}   ${BROWSER}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go to   ${url}
+    Validate Billing system response
     Capture Page Screenshot
 
 One Order- B2O Colocation and change order
@@ -1688,10 +1729,10 @@ One Order- B2O Colocation and change order
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
     DDM Request Handling
-    Validate Billing system
+    Validate Billing system response
     Change Order
     DDM Request Handling
-    Validate Billing system
+    Validate Billing system response
     Capture Page Screenshot
     Go to Entity    ${Account}
     Terminate asset     Telia Colocation
@@ -1730,21 +1771,26 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Go back
     Validate Call case Management status
     DDM Request Handling
-    Validate Billing system
+    Validate Billing system response
     Validate Order status
 
 
 
 SAP Order
-    set test variable   ${Account}    Telia Communication Oy
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
+
+
+    [Tags]  BQA-12512
+    [Documentation]     This script is designed for Digita Oy. If account is changed, the corresponding group id has to be changed for the script to work. SAP contract id hardcoded as it is getting failed nowadys.
+    set test variable   ${Account}    Digita Oy
+    #Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go To Entity    ${Account}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${Account}
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ChangeThePriceList      B2O
@@ -1760,30 +1806,7 @@ SAP Order
     Reload page
     ValidateSapCallout
 
-Testing
 
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
-    Go to  https://telia-fi--release.lightning.force.com/lightning/r/Order/8016E000000niRiQAI/view
-    #sleep  30s
-    Enter Group id and submit
-    Reload page
-    ValidateSapCallout
-
-
-Testing2
-
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
-    Go To   eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsZWFzZS5saWdodG5pbmcuZm9yY2UuY29tL2FwZXgvdmxvY2l0eV9jbXRfX2h5YnJpZGNwcT9pZD0wMDY2RTAwMDAwOENEQkEifSwic3RhdGUiOnt9fQ
-    Adding Vula    VULA
-    Update Setting Vula
-    UpdatePageNextButton
-    View Open Quote
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    Close and submit
-    Enter Group id and submit
-    Reload page
-    ValidateSapCallout
 
 
 Lead_Creation

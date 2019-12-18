@@ -27,8 +27,10 @@ Create Unique Phone Number
 Create Unique Name
     [Arguments]    ${prefix}
     ${timestamp}=    Get Current Date    result_format=%Y%m%d-%H%M%S
-    ${name}=    Set Variable If    '${prefix}'=='${EMPTY}'    ${timestamp}    ${prefix} ${timestamp}
+    ${name}=    Set Variable If    '${prefix}'=='${EMPTY}'    ${timestamp}    ${prefix}${timestamp}
     ${length}=    Get Length    ${name}
+    # Removed the space between prefix and timestamp as having space will throw errro in giving email in contact page. Donot change this
+    ## By aarthy
     # The search does not work if the name is too long. Cut characters to fit the timestamp. The timestamp takes 16 characters.
     # For example 'Telia Palvelulaite Lenovo ThinkPad L460 i5-6200U / 14" FHD / 8GB / 256SSD / W10P Opportunity <timestamp>' is too long
     ${name}=    Set Variable If    ${length} > 100    ${name[:70]} ${timestamp}    ${name}
