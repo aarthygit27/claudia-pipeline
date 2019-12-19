@@ -451,7 +451,7 @@ Searching and adding product
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     sleep   5s
-    Force click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep  60s  # Better to have sleep time as it takes time to load
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
@@ -2040,7 +2040,7 @@ Add all child products
      select frame  xpath=//div[contains(@class,'slds')]/iframe
      ${count}    get element count      ${AddChildProducts}
      #${locators}=    Get Webelements    xpath=${AddChildProducts}
-     : FOR    ${locator}    IN RANGE  ${count}-1
+     : FOR    ${locator}    IN RANGE  ${count}
      \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
      \    ScrollUntillFound      ${AddChildProducts}
      \    Force click element         ${AddChildProducts}
@@ -2059,4 +2059,17 @@ Update Setting
     Input Text    ${fieldname}   ${value}
     sleep  5s
     Click element  ${closing}
+    unselect frame
+
+Overrride Prices in CPQ
+    [Arguments]    ${product}       ${rc}      ${otc}
+    ${recurringcharge}    set variable       //div[contains(text(),' ${product}')]/../../../descendant::div[contains(@class,'cpq-item-currency-value')][1]
+    ${onetimecharge}    set variable       //div[contains(text(),' ${product}')]/../../../descendant::div[contains(@class,'cpq-item-currency-value')][2]
+    select frame        ${iframe}
+    ScrollUntillFound     ${priceoverride}
+    click element       ${recurringcharge}
+    wait until page contains element        //input[@id='adjustment-input-01']          30s
+    input text          //input[@id='adjustment-input-01']      ${rc}
+    click element       //button[contains(text(),'Apply')]
+    wait until page contains element        ${onetimecharge}        30s
     unselect frame
