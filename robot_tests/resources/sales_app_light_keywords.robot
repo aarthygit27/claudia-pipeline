@@ -5732,7 +5732,8 @@ Verify the Action of child product
 
 Verify the Action of product
     [Arguments]  ${pname}  ${Value}
-    ${Action}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']//following::div[13]/div
+    #${Action}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']//following::div[13]/div
+    ${Action}   set variable   //span[text()='${pname}']//following::div[13]/div
     Wait until element is visible  ${Action}    60s
     ${Action Value}  Get Text  ${Action}
     Should be equal     ${Action Value}  ${Value}
@@ -5803,6 +5804,18 @@ DDM Request Handling
     File Handling - Get Debug Line
     Execute Debug code
     Verify Response code
+    Close opened windows
+
+
+Close opened windows
+
+    ${title_var}        Get Window Titles
+    ${Length}   Run keyword   Get length   ${title_var}
+    : FOR    ${i}    IN RANGE    1   ${Length}
+    \    Select Window       title=@{title_var}[${i}]
+    \    close window
+
+
 
 Verify Response code
 
@@ -6149,11 +6162,11 @@ Close and submit
     #Log to console    submitted
     #Click element  //div[@title='Submit Order']
     #sleep  10s
-    #Capture Page Screenshot
-    #Wait until element is visible     //h2[text()='Submit Order']   30s
-    #sleep  5s
-    #Capture Page Screenshot
-    #Enter Group id and submit
+    Capture Page Screenshot
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    sleep  5s
+    Capture Page Screenshot
+    Enter Group id and submit
 
 Submit Order Button
     Reload page
