@@ -1540,7 +1540,7 @@ UpdateAndAddSalesType
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     click element    ${next_button}
     unselect frame
-    sleep    20s
+    sleep    60s
 
 UpdateAndAddSalesTypeB2O
     [Arguments]    ${pname}=${product_name}
