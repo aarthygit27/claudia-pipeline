@@ -1540,7 +1540,7 @@ UpdateAndAddSalesType
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
     click element    ${next_button}
     unselect frame
-    sleep    60s
+    sleep    20s
 
 UpdateAndAddSalesTypeB2O
     [Arguments]    ${pname}=${product_name}
@@ -3614,7 +3614,7 @@ Try to add same team member twice
     [Arguments]     ${user}
     Add new team member  ${user}
     Add new team member  ${user}
-    
+
 Validate that same user can not be added twice to account team
     Wait until page contains element    //ul[@class='errorsList']/li[text()='Cannot create a duplicate entry']     30s
     Wait until element is visible   //ul[@class='errorsList']/li[text()='Cannot create a duplicate entry']     30s
