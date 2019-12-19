@@ -2063,8 +2063,13 @@ Update Setting
 
 Overrride Prices in CPQ
     [Arguments]    ${product}       ${rc}      ${otc}
-    ${priceoverride}  set variable  //div[contains(text(),'Production Environment')]/../../..//*[@class='cpq-underline']
+    ${recurringcharge}    set variable       //div[contains(text(),' ${product}')]/../../../descendant::div[contains(@class,'cpq-item-currency-value')][1]
+    ${onetimecharge}    set variable       //div[contains(text(),' ${product}')]/../../../descendant::div[contains(@class,'cpq-item-currency-value')][2]
     select frame        ${iframe}
     ScrollUntillFound     ${priceoverride}
-
+    click element       ${recurringcharge}
+    wait until page contains element        //input[@id='adjustment-input-01']          30s
+    input text          //input[@id='adjustment-input-01']      ${rc}
+    click element       //button[contains(text(),'Apply')]
+    wait until page contains element        ${onetimecharge}        30s
     unselect frame
