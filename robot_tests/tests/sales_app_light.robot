@@ -1670,8 +1670,6 @@ One Order - B2B Colocation and Change Order
     logoutAsUser   ${SALES_ADMIN_APP_USER}
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
-    Go back
-    ${url}=    Get Location
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     #Open Browser    ${LOGIN_PAGE}   ${BROWSER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
@@ -1682,8 +1680,6 @@ One Order - B2B Colocation and Change Order
     Go to   ${url}
     Validate Billing system response
     Change Order
-    Go back
-    ${url}=    Get Location
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling

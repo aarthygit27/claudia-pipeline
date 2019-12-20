@@ -4261,6 +4261,9 @@ ValidateTheOrchestrationPlan
     wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
     click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     sleep    10s
+    ${location}=    Get Location
+    set test variable   ${url}   ${location}
+
     select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
     sleep    30s
     Element should be visible    //a[text()='Start']
