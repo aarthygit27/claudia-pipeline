@@ -1674,7 +1674,7 @@ One Order - B2B Colocation and Change Order
     #Open Browser    ${LOGIN_PAGE}   ${BROWSER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Switch between windows    0
+    #Switch between windows    0
     logoutAsUser   ${SYSTEM_ADMIN_USER}
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go to   ${url}
@@ -1683,7 +1683,7 @@ One Order - B2B Colocation and Change Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Switch between windows    0
+    #Switch between windows    0
     logoutAsUser  ${SYSTEM_ADMIN_USER}
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go to   ${url}
