@@ -5902,7 +5902,7 @@ Switch between windows
 File Handling - Change Order id
 
     #${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
-    ${File_Path}   set variable    ${CURDIR}\\DDM_Request.txt
+    ${File_Path}   set variable    ${CURDIR}${/}DDM_Request.txt
     ${DDM_request}   get file    ${File_Path}
     ${No.of lines}    get line count    ${DDM_request}
     #Log to console   ${No.of lines}
