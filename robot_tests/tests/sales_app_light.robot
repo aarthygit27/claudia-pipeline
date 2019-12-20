@@ -1835,6 +1835,6 @@ Lead_Creation
 
 Test File Handling In jenkins
 
-    [Tags]  Test Files Input
+    [Tags]  Test_Files_Input
     Set test variable    ${order_no}    319103017660
     File Handling - Change Order id
