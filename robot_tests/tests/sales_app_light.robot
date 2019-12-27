@@ -1679,6 +1679,7 @@ One Order - B2B Colocation and Change Order
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go to   ${url}
     Validate Billing system response
+    Log to console   Entering change Order
     Change Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
@@ -1732,18 +1733,18 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount   ${Account}
+    ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
     log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ChangeThePriceList      B2B
     ClickingOnCPQ    ${oppo_name}
     Adding Telia Colocation    Telia Colocation
-    Updating Setting Telia Colocation
+    Updating Setting Telia Colocation without Next
     Adding Arkkitehti   Arkkitehti
     Adding Telia Cid    Telia Cid
     Updating Setting Telia Cid
     UpdateAndAddSalesType for 3 products and check contract    Telia Colocation   Arkkitehti  Telia Cid
-    View Open Quote
+    #View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}

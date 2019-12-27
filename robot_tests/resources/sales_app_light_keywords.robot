@@ -2005,17 +2005,33 @@ Updating Setting Telia Colocation
     Unselect Frame
     sleep    60s
 
+Updating Setting Telia Colocation without Next
+
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Colocation']    60s
+    click element    xpath=//span[@class='cpq-product-name' and text()='Telia Colocation']/..
+    wait until page contains element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button    60s
+    click element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button
+    unselect frame
+
 updating setting Telia Cid
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     ${SETTINGS}=    Set Variable    //button[@title='Settings']
     ${X_BUTTON}=    Set Variable    //button[@class='slds-button slds-button--icon']
-    wait until page contains element    xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Cid']
+    wait until page contains element    xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Cid']  60s
     Wait Until Element Is Visible    ${SETTINGS}    60s
     click element    ${SETTINGS}
     wait until page contains element    //form[@name="productconfig"]//div[2]//input    60s
     input text  //form[@name="productconfig"]//div[2]//input      1
     click element    ${X_BUTTON}
-    #Wait Until Element Is Visible    ${Next_Button}    60s
+    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    sleep    10s
+    wait until page contains element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']    60s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #log to console    before teardiwn
+    Unselect Frame
+    sleep    60s
+
 
 search products
     [Arguments]    ${product}
@@ -2362,13 +2378,7 @@ UpdateAndAddSalesType for 3 products and check contract
     #sleep    60s
     Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    ${status}    Run Keyword And Return Status      Wait until page contains element    ${SERVICE_CONTRACT_WARNING}     30s
-    Run Keyword If    log to console  ${SERVICE_CONTRACT_WARNING}
-    Run Keyword unless  log to console  service contract already created
-    Run Keyword If    Reload page
 
-    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
-    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     wait until element is visible    ${update_order}    60s
     log to console    selected new frame
     wait until element is visible   ${product_1}    70s
@@ -5784,6 +5794,7 @@ Initiate Change Order
     ${AssetHistory}   set variable   //div[@class='full forcePageBlock forceRecordLayout']/div/h3[contains(@class,'test-id')]/button/span[text()='Asset History']
     Execute JavaScript    window.scrollTo(5000,4900)
     Page should contain element   ${AssetHistory}
+    Log to console   Asset history found
     ${frame}  set variable  //force-aloha-page[@title='AssetHistoryAndMACD']/div[@class='content iframe-parent']/iframe
     Page should contain element    ${frame}
     select frame  ${frame}
@@ -5796,6 +5807,7 @@ Initiate Change Order
     Checkbox Should Be Selected   //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
     Capture Page Screenshot
     sleep  5s
+    Log to console   Change Order Initiated
     ${status}   Run keyword and return status   Element Should Be Enabled   //button[text()='Change To Order']
     Force Click element  //button[text()='Change To Order']
     Unselect frame
@@ -6057,21 +6069,7 @@ Adding Vula
 
 
 
-Updating Setting Telia Cid
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
-    Wait until element is visible   ${SETTINGS}   60s
-    Click Button    ${SETTINGS}
-    sleep  10s
-    Input Text   //input[@name='productconfig_field_0_0']   2
-    Click element  //*[@alt='close'][contains(@size,'large')]
-    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    sleep    10s
-    wait until page contains element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']    60s
-    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    log to console    before teardiwn
-    Unselect Frame
-    sleep
+
 
 
 Update Setting Vula
