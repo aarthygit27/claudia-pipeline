@@ -6139,7 +6139,7 @@ Validate Order status
     ${Order status}  set variable   //span[@title='Status']/../div/div/span
     Wait until element is visible  ${Order status}   60s
     ${Status}  Get text   ${Order status}
-    Should be equal   ${Order status}   Completed
+    Should be equal   ${Status}   Completed
     Log to console  The Order is completed
 
 UpdatePageNextButton
