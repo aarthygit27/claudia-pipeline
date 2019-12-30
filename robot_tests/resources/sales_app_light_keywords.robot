@@ -1793,6 +1793,7 @@ SearchAndSelectBillingAccount
     #log to console    SearchAndSelectBillingAccount
     #Selecting the billingAC FLow chart page
     #log to console    entering billingAC page
+    Wait until element is visible    //div[contains(@class,'slds')]/iframe   60s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until element is visible    //*[@id="ExtractAccount"]    30s
     click element    //*[@id="ExtractAccount"]
