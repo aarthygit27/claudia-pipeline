@@ -2370,6 +2370,7 @@ UpdateAndAddSalesType for 3 products and check contract
     ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
     ${product_1}=    Set Variable    //td[normalize-space(.)='${product1}']
     ${product_2}=    Set Variable    //td[normalize-space(.)='${product2}']
+    ${product_3}=    Set Variable    //td[normalize-space(.)='${product3}']
     ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
     log to console    UpdateAndAddSalesType for 3 products
     sleep    30s
@@ -5826,7 +5827,7 @@ Close opened windows
 
     ${title_var}        Get Window Titles
     ${Length}   Run keyword   Get length   ${title_var}
-    : FOR    ${i}    IN RANGE    1   ${Length}
+    : FOR    ${i}    IN RANGE    0   ${Length}
     \    Select Window       title=@{title_var}[${i}]
     \    close window
 
@@ -5974,7 +5975,7 @@ Validate Billing system response
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
     wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
-    Go back
+    #Go back
 
 
 HDC Order
@@ -6121,6 +6122,7 @@ Update Setting Vula
 Validate Call case Management status
     Wait until element is visible    //div[@class='content iframe-parent']/iframe
     select frame    //div[@class='content iframe-parent']/iframe
+    Wait until element is visible   //a[@class='item-label item-header' and text()='Call Case Management']   60s
     force click element       //a[@class='item-label item-header' and text()='Call Case Management']
     unselect frame
     #sleep       80s
@@ -6128,11 +6130,14 @@ Validate Call case Management status
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
     wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
-    Go back
+    #Go back
 
 Validate Order status
 
+    Wait until page contains element   //a[text()='${order_no}']  60s
+    Click element   //a[text()='${order_no}']
     ${Order status}  set variable   //span[@title='Status']/../div/div/span
+    Wait until element is visible  ${Order status}   60s
     ${Status}  Get text   ${Order status}
     Should be equal   ${Order status}   Completed
     Log to console  The Order is completed

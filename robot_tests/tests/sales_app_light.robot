@@ -1671,11 +1671,11 @@ One Order - B2B Colocation and Change Order
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    #Open Browser    ${LOGIN_PAGE}   ${BROWSER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
     #Switch between windows    0
-    logoutAsUser   ${SYSTEM_ADMIN_USER}
+    #logoutAsUser   ${SYSTEM_ADMIN_USER}
+    Open Browser And Go To Login Page
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go to   ${url}
     Validate Billing system response
@@ -1684,8 +1684,7 @@ One Order - B2B Colocation and Change Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    #Switch between windows    0
-    logoutAsUser  ${SYSTEM_ADMIN_USER}
+    Open Browser And Go To Login Page
     Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go to   ${url}
     Validate Billing system response
@@ -1744,7 +1743,6 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Adding Telia Cid    Telia Cid
     Updating Setting Telia Cid
     UpdateAndAddSalesType for 3 products and check contract    Telia Colocation   Arkkitehti  Telia Cid
-    #View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
@@ -1753,14 +1751,30 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
     ValidateTheOrchestrationPlan
-    Go back
+    Go to   ${url}
     Validate Call case Management status
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
+    Open Browser And Go To Login Page
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go to   ${url}
     Validate Billing system response
     Validate Order status
 
+Testing
 
-
+    #Wait Until element is visible   id=username     30s
+    #Input Text  id=username   ${B2B_DIGISALES_LIGHT_USER}
+    #Input Text   id =password  ${Password_merge}
+    #Click Element  id=Login
+    set test variable   ${order_no}  319123015378
+    set test variable   ${url}   https://telia-fi--rel.lightning.force.com/lightning/r/vlocity_cmt__OrchestrationPlan__c/a1w1w000000EKLDAA4/view
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go to   ${url}
+    Validate Billing system response
+    Validate Order status
+    
 SAP Order
 
 
