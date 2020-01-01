@@ -451,7 +451,7 @@ Searching and adding product
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
     Wait until element is visible   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
     sleep   5s
-    Force click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    CLICK ELEMENT   xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     sleep  60s  # Better to have sleep time as it takes time to load
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
@@ -972,7 +972,7 @@ Update Product Page for 2 products
 
 Create_Order
 
-    View Or Open Quote
+    #View Or Open Quote
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrder
@@ -998,7 +998,7 @@ View Or Open Quote
     ${quote}    Set Variable    //button[contains(@id,'Quote')]
     ${central_spinner}    Set Variable    //div[@class='center-block spinner']
     wait until element is not visible    ${central_spinner}    120s
-    sleep  3s
+    sleep  10s
     #Reload page
     Wait until element is visible  //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe   30s
     select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe

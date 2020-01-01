@@ -44,7 +44,7 @@ ${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@c
 ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
 ${technical_contact}    John Doe
 ${group_billing_id}    SALES FORCE TEST 2
-${test_account}        3C Europe Oy
+${test_account}        Aacon Oy
 ${Hinnoitteluperuste}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Hinnoitteluperuste']]//following::select[1]
 ${Henkilötyöaika}      //form[@name='productconfig']//following::label[text()[normalize-space() = 'Henkilötyöaika']]//following::input[1]
 ${Palveluaika}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Palveluaika']]//following::select[1]
