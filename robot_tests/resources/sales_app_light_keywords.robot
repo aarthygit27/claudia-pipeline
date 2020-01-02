@@ -3867,6 +3867,7 @@ SwithchToUser
     Execute Javascript    window.location.reload(true)
     #reload page
     wait until page contains element  //a[text()='Log out as ${user}']   60s
+    Capture Page Screenshot
     page should contain element  //a[text()='Log out as ${user}']
 
 logoutAsUser
@@ -4408,10 +4409,10 @@ createACaseFromMore
 
 
 Create Pricing Request
-    ${More}   set variable   //a[contains(@title,'more actions')]
+    ${More}   set variable   //a[@title='CPQ']//following::a[contains(@title,'more actions')]
     ${Create Pricing List}   set variable  //div[@class='branding-actions actionMenu']//following::a[@title='Create Pricing Request']
     Wait until element is visible  ${More}  30S
-    cLICK ELEMENT   ${More}
+    Force Click element  ${More}
     Wait until element is visible    ${Create Pricing List}   30s
     Click element  ${Create Pricing List}
     sleep  5s    # for the page to load
@@ -4456,14 +4457,14 @@ Create Pricing Escalation
     Click element  //input[@id='ReasonCategories'][@type='checkbox']//following::span[text()='Revenue']
     Input text  //textarea[@id='Comments']  Test Comments
     Click element  //input[@id='EndorserLookup']
-    Wait until element is visible  //li[contains(text(),'Endorser Automation')]  30s
-    Click element  //li[contains(text(),'Endorser Automation')]
+    Wait until element is visible  //li[contains(text(),'Endorser')]  30s
+    Click element  //li[contains(text(),'Endorser')]
     Click element  //input[@id='ApproverLookup']
-    Wait until element is visible  //li[contains(text(),'Approver Automation')]  30s
-    Click element  //li[contains(text(),'Approver Automation')]
+    Wait until element is visible  //li[contains(text(),'Approver')]  30s
+    Click element  //li[contains(text(),'Approver')]
     Click element     //input[@id='NotifyLookup']
-    Wait until element is visible  //li[contains(text(),'Notifier Automation')]  30s
-    Click element  //li[contains(text(),'Notifier Automation')]
+    Wait until element is visible  //li[contains(text(),'notifier')]  30s
+    Click element  //li[contains(text(),'notifier')]
     execute javascript    window.scrollTo(0,300)
     Wait until element is visible  //p[text()='Create Pricing Escalation']  30s
     Click element  //p[text()='Create Pricing Escalation']
@@ -4497,17 +4498,17 @@ Submit for approval
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
     #Log to console   ${Case_number} is the Case number for ${case_type}  and the status is ${Case_status}
-    logoutAsUser
+    logoutAsUser    ${PM_User}
 
 
 Case Approval By Endorser
     [Arguments]   ${Case_number}   ${oppo_name}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${Endorser_User}  ${Endorser_PW}
+    Login to Salesforce Lightning   ${Endorser_User}  ${Endorser_PW}
     #Log to console  Logged in as Endorser
     Check for Notification  ${Case_number}  ${EMPTY}
 
     Select Options to Verify Chatter Box   ${Case_number}
-    Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
+    Wait until page contains element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']    60s
     Page should contain   requested approval for this case from
     Capture Page Screenshot
     #Log to console    There is an alert in the Chatter about new case
@@ -4515,8 +4516,10 @@ Case Approval By Endorser
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
+
     Click element  //a[text()='${Case_number}']
     sleep  10s
+    ${url}   Get Location
     Click element  //a[text()='${Case_number}']
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
@@ -4526,7 +4529,7 @@ Case Approval By Endorser
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
     #Log to console  Linked Opportunity is ${oppo}
-    Go back
+    Go to  ${url}
     Sleep  10s
     Wait until element is visible  //div[@title='Approve']  30s
     Capture Page Screenshot
@@ -4536,17 +4539,17 @@ Case Approval By Endorser
     Click element  //span[text()='Approve']
     Capture Page Screenshot
     sleep  5s
-    logoutAsUser
+    logoutAsUser    ${Endorser_User}
 
 Case Approval By Approver
      [Arguments]   ${Case_number}  ${oppo_name}  ${Account_Type}=${EMPTY}
-    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2O_Approver_User}   ${B2O_Approver_PW}
-    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
+    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce Lightning    ${B2O_Approver_User}   ${B2O_Approver_PW}
+    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce Lightning  ${Approver_User}  ${Approver_PW}
     #Log to console  Logged in as Approver
     Check for Notification  ${Case_number}
 
     Select Options to Verify Chatter Box   ${Case_number}
-    Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
+    Wait until page contains element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']  60s
     Page should contain   requested approval for this case from
     Capture Page Screenshot
     #Log to console    There is an alert in the Chatter about new case
@@ -4554,8 +4557,10 @@ Case Approval By Approver
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
+
     Click element  //a[text()='${Case_number}']
     sleep  10s
+    ${url}  Get Location
     Click element  //a[text()='${Case_number}']
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
@@ -4567,7 +4572,7 @@ Case Approval By Approver
     #Log to console  Opportunity Validation is Sucessful
     sleep  5s
     #Log to console  Linked Opportunity is ${oppo}
-    Go back
+    Go to   ${url}
     Sleep  10s
     Page should contain element  //div[@class='approval-comments']/ul/li/article/div[2]/div/span
     Run Keyword if   '${Account_Type}'== 'B2B'   Endorser Verification
@@ -4581,7 +4586,7 @@ Case Approval By Approver
     Click element  //span[text()='Approve']
     Capture Page Screenshot
     sleep  5s
-    logoutAsUser
+    logoutAsUser    ${Approver_User}
 
 Verify Pricing comments
 
@@ -4595,14 +4600,16 @@ Endorser Verification
 
 Case Rejection By Approver
      [Arguments]   ${Case_number}  ${oppo_name}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Approver_User}  ${Approver_PW}
+    Login to Salesforce Lightning    ${Approver_User}  ${Approver_PW}
     #Log to console  Logged in as Approver
     Check for Notification  ${Case_number}
     Wait until element is visible  //span[text()='Items to Approve']  30s
     #Click element  //a[text()='00031101']
     Wait until element is visible  //a[text()='${Case_number}']  30s
+
     Click element  //a[text()='${Case_number}']
     sleep  10s
+    ${url}  Get location
     Click element  //a[text()='${Case_number}']
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
@@ -4614,7 +4621,7 @@ Case Rejection By Approver
     #Log to console  Opportunity Validation is Sucessful
     sleep  5s
     #Log to console  Linked Opportunity is ${oppo}
-    Go back
+    Go to  ${url}
     Wait until element is visible  //div[@title='Reject']  30s
     Capture Page Screenshot
     Click element  //div[@title='Reject']
@@ -4623,7 +4630,7 @@ Case Rejection By Approver
     Click element  //span[text()='Reject']
     Capture Page Screenshot
     sleep  5s
-    logoutAsUser
+    logoutAsUser    ${Approver_User}
 
 
 
@@ -4665,8 +4672,8 @@ Select Options to Verify Chatter Box
 
 Check Case Status
     [Arguments]   ${Case_number}  ${Account_Type}
-    Run Keyword If   '${Account_Type}'== 'B2O'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
-    Run Keyword If   '${Account_Type}'== 'B2B'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Run Keyword If   '${Account_Type}'== 'B2O'   Login to Salesforce Lightning   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Run Keyword If   '${Account_Type}'== 'B2B'   Login to Salesforce Lightning      ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Select Options to Verify Chatter Box
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
     Page should contain   created an attachment
@@ -4690,7 +4697,7 @@ Check Case Status
 
 Verify case Status by PM
     [Arguments]   ${Case_number}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    Login to Salesforce Lightning    ${PM_User}  ${PM_PW}
     #Log to console  Logged in as Pm to verify the Case Status
     #Reload page
     Search Salesforce    ${Case_number}
@@ -4703,11 +4710,11 @@ Verify case Status by PM
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
-    logoutAsUser
+    logoutAsUser    ${PM_User}
 
 Verify case Status by Endorser
     [Arguments]   ${Case_number}  ${status}=${EMPTY}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${Endorser_User}  ${Endorser_PW}
+    Login to Salesforce Lightning    ${Endorser_User}  ${Endorser_PW}
     #Log to console  Logged in as Endorser to verify the Case Status
     Check for Notification  ${Case_number}   ${status}
     #Reload page
@@ -4721,12 +4728,12 @@ Verify case Status by Endorser
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
-    logoutAsUser
+    logoutAsUser    ${Endorser_User}
 
 Case Not visible to Normal User
 
      [Arguments]   ${Case_number}
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2B_DIGISALES_LIGHT_USER}   ${Password_merge}
+    Login to Salesforce Lightning     ${B2B_DIGISALES_LIGHT_USER}   ${Password_merge}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${Case_number}
     Press Enter On    ${SEARCH_SALESFORCE}
@@ -4948,8 +4955,8 @@ PM details
     [Arguments]    ${oppo_name}   ${case_Number}  ${Account_Type}
 
     # Login and select the case
-    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox    ${B2O_PM_User}   ${B2O_PM_PW}
-    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}   ${PM_PW}
+    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce Lightning     ${B2O_PM_User}   ${B2O_PM_PW}
+    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce Lightning    ${PM_User}   ${PM_PW}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
     Press Enter On    ${SEARCH_SALESFORCE}
@@ -5018,18 +5025,18 @@ Submit Investment - B2B
 
     Wait until element is visible  //input[@id='EndorserB2B']  30s
     Click element  //input[@id='EndorserB2B']
-    Wait until element is visible  //li[contains(text(),'Endorser Automation')]  30s
-    Click element  //li[contains(text(),'Endorser Automation')]
+    Wait until element is visible  //li[contains(text(),'Endorser')]  30s
+    Click element  //li[contains(text(),'Endorser')]
 
     Wait until element is visible  //input[@id='ApproverB2B']  30s
     Click element  //input[@id='ApproverB2B']
-    Wait until element is visible  //li[contains(text(),'Approver Automation')]  30s
-    Click element  //li[contains(text(),'Approver Automation')]
+    Wait until element is visible  //li[contains(text(),'Approver')]  30s
+    Click element  //li[contains(text(),'Approver')]
 
     Wait until element is visible  //input[@id='NotifyB2B']  30s
     Click element  //input[@id='NotifyB2B']
-    Wait until element is visible  //li[contains(text(),'Notifier Automation')]  30s
-    Force Click element  //li[contains(text(),'Notifier Automation')]
+    Wait until element is visible  //li[contains(text(),'notifier')]  30s
+    Force Click element  //li[contains(text(),'notifier')]
 
 Activate the generated service contract
     [Arguments]   ${contact_name}  ${contract_number}
@@ -5784,7 +5791,7 @@ Request date
     Click element  //input[@id='RequestDate']
     Wait until element is visible  //button[@title='Next Month']  30s
     Click element  //button[@title='Next Month']
-    Click element  //tr[@id='week-0']/td[2]/span
+    Click element  //tr[@id='week-1']/td[2]/span
     Click element  //div[@id='Request Date_nextBtn']
 
 Initiate Change Order
@@ -6007,6 +6014,32 @@ HDC Order
     clickOnSubmitOrder
     ValidateTheOrchestrationPlan
 
+HDC Order_B2O
+
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan
+
 Terminate asset
     [Arguments]   ${asset}
     ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
@@ -6110,10 +6143,11 @@ Update Setting Vula
     sleep  3s
     Click element  //*[@alt='close'][contains(@size,'large')]
     sleep  10s
-    Reload page
-    sleep  10s
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #Reload page
+    #sleep  10s
+    #Wait until element is visible  //div[contains(@class,'slds')]/iframe    60s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     #sleep    10s
     wait until page contains element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']    60s
     click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']

@@ -1539,12 +1539,12 @@ Lightning_Customership Contract
 
 Pricing Escalation
     [Tags]   BQA-11368
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Login to Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    logoutAsUser
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    logoutAsUser    ${B2B_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning    ${PM_User}  ${PM_PW}
     Go To Entity  ${oppo_name}
     Create Pricing Request
     ${Case_number}   run keyword   Create Pricing Escalation
@@ -1559,11 +1559,11 @@ Pricing Escalation - Rejection
     [Tags]   BQA-11386
     Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
-    logoutAsUser
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    logoutAsUser    ${B2B_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning   ${PM_User}  ${PM_PW}
     Go To Entity  ${oppo_name}
     Create Pricing Request
     ${Case_number}   run keyword   Create Pricing Escalation
@@ -1577,11 +1577,11 @@ Pricing Escalation - Rejection
 
 Investment Process - B2B
     [Tags]   BQA-11387
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    Go To Entity    Aacon Oyj
-    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    Login to Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
     Go To Entity  ${oppo_name}
     ${case_number}  run keyword    Create Investment Case  B2B
     #Submit created Investment    ${oppo_name}   ${case_number}
@@ -1695,27 +1695,26 @@ One Order - B2B Colocation and Change Order
 One Order- B2O Colocation and change order
     [Tags]  BQA-11523
 
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     Go to Entity   ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
-    logoutAsUser   ${SALES_ADMIN_APP_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
-    HDC Order
-    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    SwithchToUser  B2O NetworkSales
+    HDC Order_B2O
+    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Switch between windows    0
-    logoutAsUser   ${SYSTEM_ADMIN_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Open Browser And Go To Login Page
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    SwithchToUser  B2O NetworkSales
     Go to   ${url}
     Validate Billing system response
     Change Order
-    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Switch between windows    0
-    logoutAsUser  ${SYSTEM_ADMIN_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Open Browser And Go To Login Page
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    SwithchToUser  B2O NetworkSales
     Go to   ${url}
     Validate Billing system response
     Capture Page Screenshot
@@ -1764,25 +1763,24 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
 
 Testing
 
-    #Wait Until element is visible   id=username     30s
-    #Input Text  id=username   ${B2B_DIGISALES_LIGHT_USER}
-    #Input Text   id =password  ${Password_merge}
-    #Click Element  id=Login
-    set test variable   ${order_no}  319123015378
-    set test variable   ${url}   https://telia-fi--rel.lightning.force.com/lightning/r/vlocity_cmt__OrchestrationPlan__c/a1w1w000000EKLDAA4/view
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-    Go to   ${url}
-    Validate Billing system response
-    Validate Order status
-    
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   ${SYSTEM_ADMIN_USER}
+    Input Text   id =password  ${SYSTEM_ADMIN_PWD}
+    Click Element  id=Login
+    #set test variable   ${order_no}  319123015378
+    #set test variable   ${url}   https://telia-fi--rel.lightning.force.com/lightning/r/vlocity_cmt__OrchestrationPlan__c/a1w1w000000EKLDAA4/view
+    #Login to Salesforce as DigiSales Lightning User   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    SwithchToUser  B2O NetworkSales
+
+
 SAP Order
 
 
     [Tags]  BQA-12512
     [Documentation]     This script is designed for Digita Oy. If account is changed, the corresponding group id has to be changed for the script to work. SAP contract id hardcoded as it is getting failed nowadys.
     set test variable   ${Account}    Digita Oy
-    #Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    SwithchToUser  B2O NetworkSales
     Go To Entity    ${Account}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
@@ -1848,8 +1846,3 @@ Lead_Creation
     scrolluntillfound    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
     page should contain element    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
 
-Test File Handling In jenkins
-
-    [Tags]  Test_Files_Input
-    Set test variable    ${order_no}    319103017660
-    File Handling - Change Order id
