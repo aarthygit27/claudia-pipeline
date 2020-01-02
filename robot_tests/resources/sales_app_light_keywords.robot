@@ -4880,7 +4880,7 @@ Create Investment Case
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
     #Log to console   ${Case_number} is the Case number for Investment Request and the status is ${Case_status}
-    logoutAsUser
+    logoutAsUser    ${B2B_DIGISALES_LIGHT_USER}
     [Return]    ${case_number}
 
 

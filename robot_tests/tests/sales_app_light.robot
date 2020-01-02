@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
-Test Teardown     Logout From All Systems and Close Browser
+#Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -1555,9 +1555,17 @@ Pricing Escalation
     Verify case Status by Endorser   ${Case_number}  Approved
     Case Not visible to Normal User    ${Case_number}
 
+TEST PE
+    [Tags]   TEST_PE
+    Case Approval By Approver   00033281     Test Robot Order_20191231-114249
+    Verify case Status by PM   ${Case_number}
+    Verify case Status by Endorser   ${Case_number}  Approved
+    Case Not visible to Normal User    ${Case_number}
+
+
 Pricing Escalation - Rejection
-    [Tags]   BQA-11386
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    [Tags]   BQA-11386 (Functionaly failing)
+    Login to Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -1585,6 +1593,16 @@ Investment Process - B2B
     Go To Entity  ${oppo_name}
     ${case_number}  run keyword    Create Investment Case  B2B
     #Submit created Investment    ${oppo_name}   ${case_number}
+    PM details    ${oppo_name}   ${case_number}  B2B
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Approval By Approver   ${Case_number}  ${oppo_name}
+    Check Case Status  ${Case_number}  B2B
+
+
+Test Investment
+
+    ${oppo_name}    Set variable       Test Robot Order_20200102-1619
+    ${case_number}   Set variable    00033285
     PM details    ${oppo_name}   ${case_number}  B2B
     Case Approval By Endorser   ${Case_number}  ${oppo_name}
     Case Approval By Approver   ${Case_number}  ${oppo_name}
@@ -1774,8 +1792,7 @@ Testing
 
 
 SAP Order
-
-
+    #Switch failing. Refer 580
     [Tags]  BQA-12512
     [Documentation]     This script is designed for Digita Oy. If account is changed, the corresponding group id has to be changed for the script to work. SAP contract id hardcoded as it is getting failed nowadys.
     set test variable   ${Account}    Digita Oy
