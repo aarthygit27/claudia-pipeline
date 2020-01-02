@@ -6,16 +6,16 @@ ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu3
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
-${PM_User}  pmauto@teliacompany.com.${ENVIRONMENT}
+${PM_User}  pm@teliacompany.com.${ENVIRONMENT}
 ${PM_PW}  PahaPassu1
 ${B2O_PM_User}   b2opmauto@teliacompany.com.${ENVIRONMENT}
 ${B2O_Approver_User}  b2oapproverauto@teliacompany.com.${ENVIRONMENT}
 ${B2O_PM_PW}   PahaPassu1
 ${B2O_Approver_PW}  PahaPassu1
-${Endorser_User}  endorserauto@teliacompany.com.${ENVIRONMENT}
+${Endorser_User}  endorser@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
-${Approver_User}  approverauto@teliacompany.com.${ENVIRONMENT}
-${Approver_PW}  PahaPassu1
+${Approver_User}  approver@teliacompany.com.${ENVIRONMENT}
+${Approver_PW}  PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}       Affecto Oy
 ${vLocUpg_TEST_ACCOUNT}    Aarsleff Oy
 ${CONTRACT_ACCOUNT}     Affecto Oy
