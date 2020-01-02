@@ -4674,13 +4674,11 @@ Check Case Status
     [Arguments]   ${Case_number}  ${Account_Type}
     Run Keyword If   '${Account_Type}'== 'B2O'   Login to Salesforce Lightning   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
     Run Keyword If   '${Account_Type}'== 'B2B'   Login to Salesforce Lightning      ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-    Select Options to Verify Chatter Box
+    Select Options to Verify Chatter Box    ${Case_number}
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
-    Page should contain   created an attachment
+    #Page should contain   created an attachment
     Capture Page Screenshot
-    #Log to console    There is an alert in the Chatter about new case pdf generation
-
-    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
     Press Enter On    ${SEARCH_SALESFORCE}
     Sleep    2s
@@ -4970,11 +4968,12 @@ PM details
     Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
     ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
     ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    #Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
+    Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
+    Reload page
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
-    #Log to console  Linked Opportunity is ${oppo}
+    Log to console  Linked Opportunity is ${oppo}
 
     ${More_actions}   set variable  //span[contains(text(),'more actions')]
     Wait until element is visible   ${More_actions}  30s

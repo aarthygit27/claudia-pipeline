@@ -1589,10 +1589,8 @@ Investment Process - B2B
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
     Go To Entity  ${oppo_name}
     ${case_number}  run keyword    Create Investment Case  B2B
-    #Submit created Investment    ${oppo_name}   ${case_number}
     PM details    ${oppo_name}   ${case_number}  B2B
     Case Approval By Endorser   ${Case_number}  ${oppo_name}
     Case Approval By Approver   ${Case_number}  ${oppo_name}
@@ -1601,11 +1599,8 @@ Investment Process - B2B
 
 Test Investment
 
-    ${oppo_name}    Set variable       Test Robot Order_20200102-1619
+    ${oppo_name}    Set variable       Test Robot Order_20200102-161926
     ${case_number}   Set variable    00033285
-    PM details    ${oppo_name}   ${case_number}  B2B
-    Case Approval By Endorser   ${Case_number}  ${oppo_name}
-    Case Approval By Approver   ${Case_number}  ${oppo_name}
     Check Case Status  ${Case_number}  B2B
 
 
