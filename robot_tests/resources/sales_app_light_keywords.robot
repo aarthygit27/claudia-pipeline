@@ -6204,7 +6204,7 @@ Close and submit
     #Click element  //div[@title='Submit Order']
     #sleep  10s
     Capture Page Screenshot
-    Wait until element is visible     //h2[text()='Submit Order']   30s
+    Wait until element is visible     //div[@title='Submit Order']   30s
     sleep  5s
     Capture Page Screenshot
     Enter Group id and submit
