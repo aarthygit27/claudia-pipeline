@@ -4675,7 +4675,7 @@ Check Case Status
     Run Keyword If   '${Account_Type}'== 'B2O'   Login to Salesforce Lightning   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
     Run Keyword If   '${Account_Type}'== 'B2B'   Login to Salesforce Lightning      ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Select Options to Verify Chatter Box    ${Case_number}
-    Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/span[text()='${Case_number}']
+    Page should contain element   //div[@class='feedBodyInner Desktop oneApp'][1]/span[contains(text(),"approved")][contains(text(),"${Case_number}")]
     #Page should contain   created an attachment
     Capture Page Screenshot
      Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
