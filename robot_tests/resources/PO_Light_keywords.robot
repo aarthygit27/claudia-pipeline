@@ -971,8 +971,8 @@ Update Product Page for 2 products
     sleep    5s
 
 Create_Order
-
-    #View Or Open Quote
+    ${Status}=      Run Keyword and Return Status         element should be visible       //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
+    run keyword unless     ${Status}     View Or Open Quote
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     ClickonCreateOrder
