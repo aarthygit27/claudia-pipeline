@@ -4900,7 +4900,7 @@ Fill Investment Info
     ${Mobile_Coverage}  set variable  //input[@id='MobileCoverageNo']
     ${Attachment}  set variable   //input[@type='file']
     #${File_Path}   set variable    C:\\Users\\Ram\\work\\aarthy\\claudia-pipeline_rt\\robot_tests\\resources\\Input.txt
-    ${File_Path}   set variable    ${CURDIR}\\..\\resources\\Input.txt
+    ${File_Path}   set variable    ${CURDIR}${/}Input.txt
     ${Button}  set variable   //div[@id='InvestmentInfo_nextBtn']
     ${Telia_Pays}  set variable  //input[@id='TeliaPaysOne']
     ${Full_Inv_Value}  set variable  2000
@@ -5697,10 +5697,13 @@ Enter Group id and submit
     Page should contain element  //label/span[text()='Group Billing ID']
     ScrollUntillFound    //label/span[text()='Group Billing ID']
     #Input Text   //input[@title='Search Group Billing IDs']     ${group_id}
-    Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
-    #${status}    Run keyword and return status   Page should contain element   //div[@title='${group_id}']
-    #Wait until element is visible  //div[@title='${group_id}']  30s
-    #Click element   //div[@title='${group_id}']
+    #Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
+    Input Text    //input[@title='Search Group Billing IDs']    ${group_id}
+    Sleep    10s
+    Press Enter On   //input[@title='Search Group Billing IDs']
+    Sleep   5s
+    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${group_id}']
+    Sleep    2s
 
     Wait until element is visible  //label/span[text()='Desired Installation Date']/..//following::input[1]   30s
     Force Click element  //label/span[text()='Desired Installation Date']/..//following::input[1]
@@ -6240,8 +6243,8 @@ ValidateSapCallout
     Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
     Click element  //span[text()='Orchestration Plan']//following::a[1]
     sleep    10s
-    Wait until element is visible  xpath=//*[@title='Orchestration Plan View']/div/iframe[1]   60s
-    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
+    select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
     Wait until element is visible  //a[text()='Start Order']  60s
     Element should be visible    //a[text()='Start Order']
     Element should be visible    //a[text()='Create Assets']
@@ -6249,7 +6252,7 @@ ValidateSapCallout
     force click element       //a[@class='item-label item-header' and text()='Callout to SAP Provisioning I']
     unselect frame
     #sleep       80s
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[text()="Completed"]    60s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
+    wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
