@@ -3861,14 +3861,14 @@ SwithchToUser
     select frame  //div[contains(@class,'iframe')]/iframe
     wait until page contains element  //td[@class="pbButton"]/input[@title='Login']   60s
     force click element  //td[@class="pbButton"]/input[@title='Login']
-    sleep  2s
+    sleep  10s
     unselect frame
     Reload page
     Execute Javascript    window.location.reload(true)
-    #reload page
-    wait until page contains element  //a[text()='Log out as ${user}']   60s
+    sleep  30s
+    wait until page contains element  //a[text()='Log out as ${user}']   120s
     Capture Page Screenshot
-    page should contain element  //a[text()='Log out as ${user}']
+    #page should contain element  //a[text()='Log out as ${user}']
 
 logoutAsUser
     [Arguments]  ${user}
@@ -4261,6 +4261,39 @@ ChangeOrderReviewPage
     click element    //*[@id="DecomposeOrder"]
     #log to console    Exiting Review page
 
+ValidateTheOrchestrationPlan- B20
+
+    [Documentation]   Orchestration plan will not be available in the realated tab in case of B2o user. So move to Details tab and then  click on plan
+    wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
+    ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
+    log to console  ${order_number}.this is order numner
+    set test variable  ${order_no}   ${order_number}
+    ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    sleep  3s
+    Wait until element is visible   ${Detail}  60s
+    Force click element   ${Detail}
+    Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
+    Click element  //span[text()='Orchestration Plan']//following::a[1]
+    sleep    10s
+    Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
+    select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
+    Wait until element is visible  //a[text()='Start Order']  60s
+    Element should be visible    //a[text()='Start Order']
+    Element should be visible    //a[text()='Create Assets']
+    Element should be visible    //a[text()='Deliver Service']
+    Element should be visible    //a[text()='Order Events Update']
+    Element should be visible   //a[text()='Call Billing System']
+    #go back
+    sleep   3s
+    force click element       //a[@class='item-label item-header' and text()='Deliver Service']
+    unselect frame
+    #sleep       80s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[text()="Completed"]    60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    Run Keyword If    ${status_page} == False    Sleep  60s
+    wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
+    [Return]  ${order_number}
+
 ValidateTheOrchestrationPlan
     wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
     ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
@@ -4276,8 +4309,8 @@ ValidateTheOrchestrationPlan
     sleep    10s
     ${location}=    Get Location
     set test variable   ${url}   ${location}
-
-    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
+    select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
     sleep    30s
     Element should be visible    //a[text()='Start']
     Element should be visible    //a[text()='Create Assets']
@@ -4289,11 +4322,10 @@ ValidateTheOrchestrationPlan
     force click element       //a[@class='item-label item-header' and text()='Deliver Service']
     unselect frame
     #sleep       80s
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[text()="Completed"]    60s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
-    #click element  //th/div[@data-aura-class="forceOutputLookupWithPreview"]/a[@data-special-link="true" and text()='Telia Colocation']
+    wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
     [Return]  ${order_number}
 
 
@@ -4484,7 +4516,9 @@ Create Pricing Escalation
 Submit for approval
     [Arguments]       ${case_type}
     ${More_actions}   set variable  //span[contains(text(),'more actions')]
-    Wait until element is visible   ${More_actions}  30s
+    sleep  30s
+    #Do not remove as wait is not working sometimes in jenkins
+    Wait until element is visible   ${More_actions}  60s
     set focus to element  ${More_actions}
     Force Click element  ${More_actions}
     Click element  //a[@title='Submit for Approval']
@@ -5981,10 +6015,10 @@ Validate Billing system response
     force click element       //a[@class='item-label item-header' and text()='Call Billing System']
     unselect frame
     #sleep       80s
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[text()="Completed"]    60s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
+    wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
     #Go back
 
 
@@ -6040,7 +6074,7 @@ HDC Order_B2O
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
-    ValidateTheOrchestrationPlan
+    ValidateTheOrchestrationPlan- B20
 
 Terminate asset
     [Arguments]   ${asset}
