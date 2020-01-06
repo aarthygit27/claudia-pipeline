@@ -4277,8 +4277,8 @@ ValidateTheOrchestrationPlan- B20
     sleep    10s
     Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
     select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
-    Wait until element is visible  //a[text()='Start Order']  60s
-    Element should be visible    //a[text()='Start Order']
+    Wait until element is visible  //a[text()='Start']  60s
+    Element should be visible    //a[text()='Start']
     Element should be visible    //a[text()='Create Assets']
     Element should be visible    //a[text()='Deliver Service']
     Element should be visible    //a[text()='Order Events Update']
@@ -4515,7 +4515,7 @@ Create Pricing Escalation
 
 Submit for approval
     [Arguments]       ${case_type}
-    ${More_actions}   set variable  //span[contains(text(),'more actions')]
+    ${More_actions}   set variable  //a[@title='Clone']//following::span[contains(text(),'more actions')]
     sleep  30s
     #Do not remove as wait is not working sometimes in jenkins
     Wait until element is visible   ${More_actions}  60s
@@ -5009,9 +5009,8 @@ PM details
     Should be equal   ${oppo_name}   ${oppo}
     Log to console  Linked Opportunity is ${oppo}
 
-    ${More_actions}   set variable  //span[contains(text(),'more actions')]
+    ${More_actions}   set variable  //a[@title='Clone']//following::span[contains(text(),'more actions')]
     Wait until element is visible   ${More_actions}  30s
-    set focus to element  ${More_actions}
     Force Click element  ${More_actions}
     Click element  //a[@title='Pricing Manager Approval']
     Sleep  5s
@@ -6276,11 +6275,11 @@ ValidateSapCallout
     Force click element   ${Detail}
     Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
     Click element  //span[text()='Orchestration Plan']//following::a[1]
-    sleep    10s
+    sleep    20s
     Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
     select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
-    Wait until element is visible  //a[text()='Start Order']  60s
-    Element should be visible    //a[text()='Start Order']
+    Wait until element is visible  //a[text()='Start']  60s
+    Element should be visible    //a[text()='Start']
     Element should be visible    //a[text()='Create Assets']
     sleep   3s
     force click element       //a[@class='item-label item-header' and text()='Callout to SAP Provisioning I']

@@ -1589,6 +1589,15 @@ Investment Process - B2B
     Case Approval By Approver   ${Case_number}  ${oppo_name}
     Check Case Status  ${Case_number}  B2B
 
+Test Investment
+    [Tags]  check_invest
+    ${Case_number}   set variable   00033288
+    ${oppo_name}     set variable   Test Robot Order_20200103-143425
+    PM details    ${oppo_name}   ${case_number}  B2B
+    Case Approval By Endorser   ${Case_number}  ${oppo_name}
+    Case Approval By Approver   ${Case_number}  ${oppo_name}
+    Check Case Status  ${Case_number}  B2B
+
 
 Investment Process - B2O
     [Tags]   BQA-11395
@@ -1699,6 +1708,34 @@ One Order- B2O Colocation and change order
     Delete all assets
     SwithchToUser  B2O NetworkSales
     HDC Order_B2O
+    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    DDM Request Handling
+    Open Browser And Go To Login Page
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    SwithchToUser  B2O NetworkSales
+    Go to   ${url}
+    Validate Billing system response
+    Change Order
+    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    DDM Request Handling
+    Open Browser And Go To Login Page
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    SwithchToUser  B2O NetworkSales
+    Go to   ${url}
+    Validate Billing system response
+    Capture Page Screenshot
+    Go to Entity    ${vLocUpg_TEST_ACCOUNT}
+    Terminate asset     Telia Colocation
+
+Test B2o One Order
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   ${B2O_DIGISALES_LIGHT_USER}
+    Input Text   id =password  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Click Element  id=Login
+    Go to   https://telia-fi--rel.lightning.force.com/lightning/r/Order/8011w000002U3UpAAK/view
+    ValidateTheOrchestrationPlan- B20
     logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
