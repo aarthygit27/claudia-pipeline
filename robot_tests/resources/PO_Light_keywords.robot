@@ -9,16 +9,17 @@ General Setup
 
     [Arguments]    ${price_list}
     Open Salesforce and Login into Lightning   #sitpo admin
-    Go To Entity    ${test_account}
-    ${contact}  run keyword    Create Contact From Account
-    Set Test Variable    ${contact_name}  ${contact}
-    ${opportunity}    run keyword    Create Opportunity    ${contact_name}
-    Set Test Variable    ${oppo_name}   ${opportunity}
-    ${billing_acc_name}    run keyword    CreateABillingAccount
-    Set Test Variable    ${billingaccount}   ${billing_acc_name}
-    Go To Entity    ${oppo_name}
-    ${price_list_old}=     get text        //span[text()='Price List']//following::a[1]
-    #Log to console      old pricelist is ${price_list_old}
+#     Go To Entity    ${test_account}
+#    ${contact}  run keyword    Create Contact From Account
+#    Set Test Variable    ${contact_name}  ${contact}
+#    ${opportunity}    run keyword    Create Opportunity    ${contact_name}
+#    Set Test Variable    ${oppo_name}   ${opportunity}
+#    ${billing_acc_name}    run keyword    CreateABillingAccount
+#    Set Test Variable    ${billingaccount}   ${billing_acc_name}
+    Go To Entity    Test Robot Order_20200111-125005
+    Scroll Page To Element       //span[text()='Price List']
+    ${price_list_old}=     get text     //span[text()='Price List']//following::a
+    Log to console      old pricelist is ${price_list_old}
     ${compare}=    Run Keyword And Return Status    Should Be Equal As Strings    ${price_list_old}    ${price_list}
     Run Keyword If    ${compare}== False   Log to console    Change Pricielist
     Run Keyword If    ${compare}== False   Edit Opportunity Page     Price List  ${price_list}
@@ -148,8 +149,8 @@ Select Entity
     #Sleep    15s
     Click Element    ${TABLE_HEADER}${element_catenate}
     #Sleep    15s
-    Wait Until Page Contains element    //h1//span[text()='${target_name}']    400s
-    ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//span[text()='${target_name}']
+    Wait Until Page Contains element    //h1//*[text()='${target_name}']    400s
+    ${ISOpen}=    Run Keyword And Return Status    Entity Should Be Open    //h1//*[text()='${target_name}']
     run keyword Unless    ${ISOpen}    Search And Select the Entity    ${target_name}    ${type}
 
 Entity Should Be Open
@@ -261,21 +262,22 @@ Edit Opportunity Page
 
     [Arguments]    ${field}      ${value}
     ${fieldProperty}=    Set Variable        //button[@title='Edit ${field}']
-    ScrollUntillFound  //span[text()='Price List']//following::a[1]
-    ${price_list_old}=     Get text       //span[text()='Price List']//following::a[1]
-    ${B2B_Price_list_delete_icon}=    Set Variable    //span[@class='pillText'][contains(text(),'${price_list_old}')]/following::span[@class='deleteIcon'][1]
+    scroll page to element      //*[text()='Price List']//following::input
+    ${price_list_old}=     get element attribute       //*[text()='Price List']//following::input       placeholder
+    log to console          ${price_list_old}
+    ${B2B_Price_list_delete_icon}=    Set Variable    //input[contains(@placeholder,'B2B')]//following::button[@title='Clear Selection']
     ScrollUntillFound       ${fieldProperty}
     Force click element       ${fieldProperty}
     Sleep       2s
     Wait until element is visible  ${B2B_Price_list_delete_icon}  30s
     Force click element           ${B2B_Price_list_delete_icon}
     sleep    10s
-    wait until page contains element     //input[contains(@title,'Search ${field}')]  60s
-    input text    //input[contains(@title,'Search ${field}')]    ${value}
+    wait until page contains element       //input[contains(@placeholder,'Search ${field}')]        60s
+    input text    //input[contains(@placeholder,'Search ${field}')]    ${value}
     sleep    3s
     click element    //*[@title='${value}']/../../..
     Sleep  10s
-    click element    //span[text()='Price List']//following::span[text()='Save']
+    click element    //*[text()='Price List']//following::span[text()='Save']
     Sleep  10s
 
 Change Price list
