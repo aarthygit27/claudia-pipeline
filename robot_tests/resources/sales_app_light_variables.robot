@@ -1,7 +1,7 @@
 *** Variables ***
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
-${ENVIRONMENT}    REL
+${ENVIRONMENT}    rel
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${Password_merge}    PahaPassu3
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
@@ -18,12 +18,12 @@ ${Approver_User}  approver@teliacompany.com.${ENVIRONMENT}
 ${Approver_PW}  PahaPassu2
 ${LIGHTNING_TEST_ACCOUNT}       Affecto Oy
 ${vLocUpg_TEST_ACCOUNT}    Aarsleff Oy
-${CONTRACT_ACCOUNT}     Affecto Oy
+${CONTRACT_ACCOUNT}     Telia Communication Oy
 #Digia Oyj
 ${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
-${APP_LAUNCHER}    //button[contains(@class,'salesforceIdentityAppLauncherHeader')]
+${APP_LAUNCHER}    //nav[contains(@class,'appLauncher ')]//button
 ${SALES_APP_NAME}    //*[contains(@class,'appName')]//span[text()='Sales']
 ${SALES_APP_LINK}    //a[@class='appTileTitle' and text()='Sales']
 ${SALES_APP_HOME}    //a[@title='Home']
@@ -31,28 +31,28 @@ ${SALES_APP_HOME}    //a[@title='Home']
 ${SEARCH_SALESFORCE}    //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
 ${SEARCH_RESULTS}    //div[contains(@class,'forceSearchScopesList')]//*[text()='Search Results']
 ${TABLE_HEADERForEvent}    //div[@class="resultsMultiWrapper"]//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
-#//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${TABLE_HEADERForEvent}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
 ${ENTITY_HEADER}    //header[@class='forceHighlightsPanel']
 ${Select task}       //*[@title="Start Date & Time"]
 ${TABLE_HEADER}    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a
 ${ACCOUNT_HEADER}    //header[@class='forceHighlightsPanel']
 ${NEW_ITEM_POPUP}    //div[@class='modal-container slds-modal__container']
 ${SAVE_OPPORTUNITY}    //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
-${ACCOUNT_RELATED}      //div[contains(@class,'active')]//span[text()='Related']//parent::a
+${ACCOUNT_RELATED}      //li[@title="Related"]//a[text()="Related"]
 #${RELATED_OPPORTUNITY}    //*[@class='primaryField']
 ${RELATED_OPPORTUNITY}    //tbody
 ${OPPORTUNITY_PAGE}    //*[contains(@class,'slds-page-header')]
 ${RESULTS_TABLE}    //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SEARCH_INPUT}    //input[contains(@name,'search-input')]
 ${PASSIVE_TEST_ACCOUNT}    Airmec Oy
-${GROUP_TEST_ACCOUNT}    Aho Group
+${GROUP_TEST_ACCOUNT}    Abloy
 #CONTACTS
 ${CONTACTS_TAB}    //div[@class='bBottom']//a[@title='Contacts']
 #${CONTACTS_ICON}    //div[@class="slds-grid"]//nav[@role="navigation"]//span[contains(text(),'Contacts')]
-${CONTACTS_ICON}    //span[@class="uiImage"]//img[@title="Contacts"]
+${CONTACTS_ICON}    //img[@title="Contacts"]
 ${NEW_BUTTON}     //div[@class="slds-truncate" and @title="New"]
-${MASTER}         //span[contains(text(),'Master')]
-${NON-PERSON}     //span[contains(text(),'Non-person')]
+${MASTER}        //span[contains(text(),'Master')]/../../div/input/../span
+${NON-PERSON}     //span[contains(text(),'Non-person')]/../../div/input/../span
 ${NEXT}           //span[contains(text(),'Next')]
 ${CONTACT_INFO}    //span[text()='Contact Information']
 ${MOBILE_NUM_FIELD}    //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
@@ -65,7 +65,7 @@ ${MASTER_EMAIL_FIELD}    //span[contains(text(),'Email')]/../following-sibling::
 #${SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//button[@title='Save']
 ${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
-${DETAILS_TAB}    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+${DETAILS_TAB}    //li[@title="Details"]//a[text()="Details"]
 ${DEFAULT_EMAIL}    d@email.com
 #${MASTER_MOBILE_NUM}    +358999888001
 #${MASTER_FIRST_NAME}    SATEST
@@ -130,7 +130,9 @@ ${meeting_status_edit_button}    //*[@title='Edit Meeting Status']
 ${meeting_status_select}    //*[text()='Meeting Status']/../../div[@class='uiMenu']/div/div/div/a
 ${meeting_status_value}    //*[@title='Done']
 ${meeting_outcome_dropdown_value}    //a[@title='Positive']
-${description_textarea}    //div/div/div[@class='slds-grid slds-col slds-is-editing slds-has-flexi-truncate full forcePageBlockItem forcePageBlockItemEdit']/div/div/div/textarea
+#${description_heading}  //h3/span[text()='Description Information']
+#${description_textarea}    //div/div/div[@class='slds-grid slds-col slds-is-editing slds-has-flexi-truncate full forcePageBlockItem forcePageBlockItemEdit']/div/div/div/textarea
+#${description_textarea}    //button[@title='Insert quick text']/../../textarea[@class="textarea textarea uiInput uiInputTextArea uiInput--default uiInput--textarea"]
 ${save_button_editform}    //*[@class='slds-button slds-button--neutral uiButton--default uiButton--brand uiButton forceActionButton' and @title='Save']
 ${description_span}    //*[text()='Description']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
 ${meeting_outocme_span}    //*[text()='Meeting Outcome']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
@@ -191,16 +193,18 @@ ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
 ${PASSWORD-SALESADMIN}    PahaPassu1
+${Credit_control_user}     creditcontrol@teliacompany.com.${ENVIRONMENT}
+${Credit_control_password}  PahaPassu1
 ${REMOVE_ACCOUNT}    GESB Integration
-${ownername}      //div[@class='ownerName']
+${ownername}      //div//p[text()="Account Owner"]/..//a
 ${ACCOUNT_OWNER}    Sales Admin
 ${ACCOUNT_LIST}    //a[@data-refid='recordId']/../../parent::tr
 ${ACCOUNT_NAME}    (//tr//a[@data-refid='recordId'])
 ${ACCOUNTS_LINK}    //div[@class='bBottom']//span[text()='Accounts']
-${CHANGE_OWNER}   //div[@class="slds-form-element__control slds-grid itemBody"]//button[@title='Change Owner']
+${CHANGE_OWNER}   //button[@title='Change Owner']
 ${SEARCH_PEOPLE}  //*[contains(text(),"Change Account Owner")]//following::input[@title="Search People"]
 #${OWNER_NAME}    //div[contains(@class,'primaryLabel')]
-${CHANGE_OWNER_BUTTON}    //div[contains(@class,'forceModalActionContainer')]//button[@title='Change Owner']
+${CHANGE_OWNER_BUTTON}    //button[text()='Change Owner']
 #//button[@title='Cancel']/following-sibling::button
 #${CHANGE_OWNER_BUTTON}    //button[@title='Change Owner']
 ${SEARCH_OWNER}    //input[@title='Search People']
@@ -223,8 +227,8 @@ ${fixed_charge for_Pro Nettikortti}     0
 ${fixed_charge for_Multi-SIM}           0
 ${sales_type_value}    New Money-New Services
 ${contract_lenght}    12
-${360_VIEW}     //a[@title='360 View']
-${AVAILABILITY_CHECK_BUTTON}        //button[text()= 'Availability check']
+${360_VIEW}     //li//a[text()='360 View']
+${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]
 ${DEFAULT_ADDRESS}      Korpijärventie 3
 ${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='${DEFAULT_ADDRESS}']
 ${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[5]/td[1]/label/input/../span
@@ -257,7 +261,7 @@ ${externaleMail}    externalemail@email.com
 ${externalofficename}    ExternalOffice
 ${ulmid}    ULMID
 ${externalid}      EXternalID
-${RemoveAccountOwner}       Ypap Oy
+${RemoveAccountOwner}       Aacon Oy
 
 ### Lead  Variables ###
 

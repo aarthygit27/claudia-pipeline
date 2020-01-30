@@ -1,7 +1,7 @@
 *** Variables ***
 ${BROWSER}                                  Firefox
 ${LOGIN_PAGE}                               https://test.salesforce.com/
-${ENVIRONMENT_CONSOLE}                      release
+${ENVIRONMENT_CONSOLE}                      rel
 ${B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
 ${PASSWORDCONSOLE}                          PahaPassu3
 ${LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
