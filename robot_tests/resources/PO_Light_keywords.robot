@@ -9,14 +9,14 @@ General Setup
 
     [Arguments]    ${price_list}
     Open Salesforce and Login into Lightning   #sitpo admin
-#     Go To Entity    ${test_account}
-#    ${contact}  run keyword    Create Contact From Account
-#    Set Test Variable    ${contact_name}  ${contact}
-#    ${opportunity}    run keyword    Create Opportunity    ${contact_name}
-#    Set Test Variable    ${oppo_name}   ${opportunity}
-#    ${billing_acc_name}    run keyword    CreateABillingAccount
-#    Set Test Variable    ${billingaccount}   ${billing_acc_name}
-    Go To Entity    Test Robot Order_20200111-125005
+    Go To Entity    ${test_account}
+    ${contact}  run keyword    Create Contact From Account
+    Set Test Variable    ${contact_name}  ${contact}
+    ${opportunity}    run keyword    Create Opportunity    ${contact_name}
+    Set Test Variable    ${oppo_name}   ${opportunity}
+    ${billing_acc_name}    run keyword    CreateABillingAccount
+    Set Test Variable    ${billingaccount}   ${billing_acc_name}
+    Go To Entity    ${opportunity}
     Scroll Page To Element       //span[text()='Price List']
     ${price_list_old}=     get text     //span[text()='Price List']//following::a
     Log to console      old pricelist is ${price_list_old}
@@ -277,7 +277,7 @@ Edit Opportunity Page
     sleep    3s
     click element    //*[@title='${value}']/../../..
     Sleep  10s
-    click element    //*[text()='Price List']//following::span[text()='Save']
+    click element    //button[@title='Save']
     Sleep  10s
 
 Change Price list
@@ -458,7 +458,8 @@ Searching and adding product
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
-    Click Settings  ${pname}
+    ${status}   Run keyword and return status  wait until page contains element   //span[contains(text(),"Required attribute missing for Telia Robotics.")]  60s
+    Run keyword if  ${status}   Click Settings  ${pname}
     Unselect frame
     #sleep  20s
 
@@ -921,7 +922,7 @@ UpdatePageNextButton
     Wait until element is visible  ${next_button}  30s
     click element    ${next_button}
     unselect frame
-    #sleep    60s
+    sleep    40s
 
 Update Product Page
 
@@ -945,6 +946,7 @@ Update Product Page
     Wait until element is visible   ${next_button}   30s
     Force click element    ${next_button}
     unselect frame
+    sleep  60s
 
 Update Product Page for 2 products
     [Arguments]    ${product1}    ${product2}
@@ -1027,6 +1029,7 @@ ClickonCreateOrder
     wait until page contains element    //span[text()='Create Order']/..    60s
     click element    //span[text()='Create Order']/..
     unselect frame
+    sleep  30s
 
 Open Order Page
 

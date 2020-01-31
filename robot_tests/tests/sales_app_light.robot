@@ -587,10 +587,10 @@ Add an account team member as account owner
     [Tags]    BQA-10524     AUTOLIGHTNING       AccountManagement
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Admin User
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    Change account owner to     B2B Lightning
-    logoutAsUser  Sales Admin
-    Go To Salesforce and Login into Lightning
+#    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+#    Check original account owner and change if necessary for event
+#    logoutAsUser  Sales Admin
+#    Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Navigate to view    Account Team Members

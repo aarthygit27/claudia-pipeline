@@ -3738,7 +3738,8 @@ Add new team member
     Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']     60s
     Input text  //input[@title='Search People']     ${new_team_member}
-    Wait element to load and click  //a[@role='option']/div/div[@title='${new_team_member}']
+    wait until page contains element  //a[@role='option']/div//div[@title='${new_team_member}']  60s
+    force click element  //a[@role='option']/div//div[@title='${new_team_member}']
     Wait element to load and click  //a[text()='--None--']
     force click element  //div[@class="select-options"]//ul/li/a[@title="${role}"]
     Sleep  10s
