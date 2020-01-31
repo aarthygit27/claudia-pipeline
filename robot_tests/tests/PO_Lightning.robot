@@ -87,7 +87,7 @@ Product7: Telia Ethernet subscription
 
 Test : IP VPN
     [Tags]    BQA-11508     B2O_Lightning   PO_Scripts
-    General Setup    B2O
+    General Setup    B2O    ${test_account}
     Searching and adding product    Telia Unmanaged IP VPN
     clicking on next button
     UpdatePageNextButton
