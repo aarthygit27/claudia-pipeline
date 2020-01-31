@@ -45,6 +45,9 @@ ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextB
 ${technical_contact}    John Doe
 ${group_billing_id}    SALES FORCE TEST 2
 ${test_account}        Aacon Oy
+${vLocUpg_TEST_ACCOUNT}    Aarsleff Oy
+${Account_test}      Digita Oy
+${CONTRACT_ACCOUNT}     Telia Communication Oy
 ${Hinnoitteluperuste}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Hinnoitteluperuste']]//following::select[1]
 ${Henkilötyöaika}      //form[@name='productconfig']//following::label[text()[normalize-space() = 'Henkilötyöaika']]//following::input[1]
 ${Palveluaika}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Palveluaika']]//following::select[1]

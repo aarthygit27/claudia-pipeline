@@ -122,18 +122,19 @@ Telia Ethernet capacity
 
 Product8: Telia Robotics
     [Tags]    BQA-9950      TeliaRobotics    B2B_other  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Robotics
     update_setting_TeliaRobotics
     clicking on next button
     Update Product Page    Telia Robotics
+    #${contact_name}  set variable  Testing Contact_20200131-132503
     Create_Order
     log      Billing account is ${billingaccount}
     log      Order Number is ${Order_Id}
 
 Product8: Telia Crowd Insights
     [Tags]    BQA-9952       Crowd Insights    B2B_other   PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${vLocUpg_TEST_ACCOUNT}
     Searching and adding product    Telia Crowd Insights
     update_setting_TeliaRobotics
     clicking on next button
@@ -144,7 +145,7 @@ Product8: Telia Crowd Insights
 
 Product8: Telia Sign
     [Tags]    BQA-9951      Telia Sign    B2B_other  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
     clicking on next button
@@ -155,7 +156,7 @@ Product8: Telia Sign
 
 Product9: Telia ACE
     [Tags]    BQA-11480     Telia ACE    B2B_other   PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia ACE
     clicking on next button
     Update Product Page    Telia ACE
@@ -165,7 +166,7 @@ Product9: Telia ACE
 
 Product10: Genesys PureCloud
     [Tags]    BQA-11482     Genesys PureCloud   B2B_other   PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${vLocUpg_TEST_ACCOUNT}
     Searching and adding product    Genesys PureCloud
     clicking on next button
     Update Product Page    Genesys PureCloud
@@ -178,7 +179,7 @@ Test scenario 1:Telia Architect
     [Tags]    BQA-11483     Run    sitpo22   PO_Scripts
     ${prod_1}    set variable    Telia Arkkitehti jatkuva palvelu
     ${prod_2}    set variable    Muut asiantuntijapalvelut
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     AddToCart with product_id    Telia Arkkitehti jatkuva palvelu   01u6E000007Roo5
     Update setting Telia Arkkitehti jatkuva palvelu    d    yes
     AddToCart with product_id    Muut asiantuntijapalvelut   01u6E000007RosF
@@ -194,7 +195,7 @@ Test scenario 2: Telia Project management
     [Tags]    BQA-11485     Trial Run    sitpo22  PO_Scripts
     ${prod_1}    set variable    Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}    set variable    Telia Projektijohtaminen varallaolo ja matkustus
-    General Setup  B2B
+    General Setup  B2B  ${test_account}
     Searching and adding product   Telia Projektijohtaminen jatkuva palvelu  # 01u6E000007Roon
     update setting common    d    yes
     Searching and adding product   Telia Projektijohtaminen varallaolo ja matkustus   # 01u6E000007RopK
@@ -210,7 +211,7 @@ Test scenario 3:Telia Consulting
     [Tags]    BQA-11486     Run    sitpo22  PO_Scripts
     ${prod_1}    set variable    Telia Konsultointi jatkuva palvelu
     ${prod_2}    set variable    Telia Konsultointi varallaolo ja matkustus
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Konsultointi jatkuva palvelu  # 01u6E000007Ror1
     update setting common    d    yes
     Searching and adding product    Telia Konsultointi varallaolo ja matkustus
@@ -224,7 +225,7 @@ Test scenario 3:Telia Consulting
 Test scenario 7: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Continuous Service with Case management request. Product Removed
     [Tags]    BQA-11491     Trial Run    B2B_Lightning_Rerun    sitpo22   PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     #AddToCart with product_id    Telia Palvelunhallintakeskus   01u6E000007RotD
     Searching and adding product  Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
@@ -240,7 +241,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
 Test scenario 8: Key Customer Service Desk Additional Work
     [Documentation]    Ordering Key Customer Service Desk Additional work \ One Time Service
     [Tags]      BQA-11492     PO_Scripts    sitpo22  Check      Rerun
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
@@ -255,7 +256,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
 Test scenario 9: Key Customer Service Desk
     [Documentation]    Ordering Key Customer Service Desk Additional Work Standby and Travel Service with Case management request
     [Tags]    BQA-11493     Run    B2B_ReRun    sitpo22  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
@@ -270,7 +271,7 @@ Test scenario 9: Key Customer Service Desk
 Test scenario 10:Training
     [Documentation]    Ordering Training Continuous Service
     [Tags]      BQA-11494   Trial Run    PO_Scripts    sitpo22
-    General Setup    B2B
+    General Setup    B2B   ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product    Koulutus jatkuva palvelu
@@ -284,7 +285,7 @@ Test scenario 10:Training
 Test scenario 11:Training
     [Documentation]    Ordering Training \ One Time Service
     [Tags]    BQA-11495     B2B_ReRun    sitpo22   PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product    Koulutus kertapalvelu
@@ -298,7 +299,7 @@ Test scenario 11:Training
 Test scenario 12:Training
     [Documentation]    Ordering Training Standby and Travel Service with Case management request
     [Tags]    BQA-11496    PO_Scripts    Prof_Test    sitpo22
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product    Koulutus varallaolo ja matkustus
@@ -312,7 +313,7 @@ Test scenario 12:Training
 Test scenario 13:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    BQA-11497     Trial Run    B2B_Lightning_ReRun    sitpo22  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
@@ -326,7 +327,7 @@ Test scenario 13:Continuity Management Service
 Test scenario 14:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    BQA-11498     B2B_Lightning_ReRun    sitpo22  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta kertapalvelu
@@ -340,7 +341,7 @@ Test scenario 14:Continuity Management Service
 Test scenario 15:Continuity Management Service
     [Documentation]    Ordering Continuity Management Service Continuous Service
     [Tags]    BQA-11499     B2B_Lightning_ReRun    sitpo22  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
@@ -354,7 +355,7 @@ Test scenario 15:Continuity Management Service
 Test scenario 16:Service Lead Service
     [Documentation]    Ordering Service Lead Service Continuous Service
     [Tags]    BQA-11500     Trial Run    PO_Scripts    sitpo22
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product    Palvelujohtaminen jatkuva palvelu
@@ -368,7 +369,7 @@ Test scenario 16:Service Lead Service
 Test scenario 17:Service Lead Service
     [Documentation]    Ordering Service Lead Service Onetime Service
     [Tags]    BQA-11501     B2B_Lightning_ReRun    sitpo22    PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product    Palvelujohtaminen kertapalvelu
@@ -382,7 +383,7 @@ Test scenario 17:Service Lead Service
 Test scenario 18: Service Lead Service
     [Documentation]    Ordering Service Lead Service Standby and Travel Service
     [Tags]    BQA-11502     B2B_Lightning_ReRun    sitpo22  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Searching and adding product    Palvelujohtaminen varallaolo ja matkustus
@@ -396,7 +397,7 @@ Test scenario 18: Service Lead Service
 Test scenario 19:Operation and Support Service
     [Documentation]    Ordering Operation and Support Continuous Service
     [Tags]    BQA-11503     Trial Run    PO_Scripts    sitpo22  Rerun
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
@@ -412,7 +413,7 @@ Test scenario 19:Operation and Support Service
 Test scenario 20:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Onetime Service
     [Tags]    BQA-11504     B2B_Lightning_ReRun    sitpo22  PO_Scripts
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
@@ -427,7 +428,7 @@ Test scenario 20:Operation and Support Service
 Test scenario 21:Operation and Support Service
     [Documentation]    Ordering Operation and Support Service Standby and Travel Service
     [Tags]    BQA-11505     PO_Scripts    sitpo22
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
@@ -442,7 +443,7 @@ Test scenario 21:Operation and Support Service
 Test scenario 22 Other:Operation and Support Services
     [Documentation]    Ordering Other Operation and Support Services
     [Tags]      BQA-11507   PO_Scripts   Last_product  sitpo22      Rerun
-    General Setup    B2B
+    General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     Update setting Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
@@ -509,7 +510,7 @@ Product Monitor - Single Product
 Domain name service with Other Domain Complete Order RU
     [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name and DNS Primary
     [Tags]    BQA-11509     PO_Scripts     RunTest
-    General Setup    B2B
+    General Setup    B2B    ${Account_test}
     Searching and adding product    Telia Domain Name Service
     Update Setting for Telia Domain Name Service     russianpupu.ru
     Add Other Domain Name and update settings       .RU     1       35.00
@@ -524,7 +525,7 @@ Domain name service with Other Domain Complete Order RU
 Domain name service with Other Domain Complete Order EU
     [Documentation]    To create new P&O order adding Telia Domain Name Service, Other Domain name, DNS Primary and Office 365 Configuration
     [Tags]    BQA-11730     PO_Scripts       RunTest
-    General Setup    B2B
+    General Setup    B2B    ${Account_test}
     Searching and adding product    Telia Domain Name Service
     Update Setting for Telia Domain Name Service     pupubryssel.eu
     Add Other Domain Name and update settings       .EU     existing       5.00
@@ -540,7 +541,7 @@ Domain name service with Other Domain Complete Order EU
 Domain name service with Finnish Domain - Complete Order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
     [Tags]    BQA-11731   PO_Scripts        Rerun
-    General Setup    B2B
+    General Setup    B2B    ${Account_test}
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service
     Add Finnish_Domain_Service

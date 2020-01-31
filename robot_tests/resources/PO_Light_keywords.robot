@@ -7,7 +7,7 @@ Resource          ../resources/PO_Lighting_variables.robot
 *** Keywords ***
 General Setup
 
-    [Arguments]    ${price_list}
+    [Arguments]    ${price_list}    ${test_account}
     Open Salesforce and Login into Lightning   #sitpo admin
     Go To Entity    ${test_account}
     ${contact}  run keyword    Create Contact From Account
@@ -458,7 +458,7 @@ Searching and adding product
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
-    ${status}   Run keyword and return status  wait until page contains element   //span[contains(text(),"Required attribute missing for Telia Robotics.")]  60s
+    ${status}   Run keyword and return status  wait until page contains element   //span[contains(text(),"Required attribute missing")]  60s
     Run keyword if  ${status}   Click Settings  ${pname}
     Unselect frame
     #sleep  20s
@@ -1151,7 +1151,7 @@ Select Account
     Wait Until Element Is Visible    ${account_name}    120s
     click element    ${account_name}
     #sleep    3s
-    Wait Until Element Is Visible    ${account_checkbox}    120s
+    Wait Until page contains element    ${account_checkbox}    120s
     click element    ${account_checkbox}
     #sleep    3s
     Capture Page Screenshot
@@ -1171,8 +1171,8 @@ select contact
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     #log to console    entering Technical COntact page
     Wait Until Element Is Visible    ${contact_search}    120s
-    Input Text    ${contact_search}   ${contact_name}  # For Telia Communication Oy Account
-    #sleep    15s
+    Input Text    ${contact_search}   ${contact_name}
+    sleep    15s
     Wait until element is visible   css=.typeahead .ng-binding   30s
     Click element   css=.typeahead .ng-binding
     #sleep   10s
@@ -1229,7 +1229,7 @@ Select Date
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     #sleep    60s
     Wait until element is visible   ${additional_info_next_button}  60s
-    ${status}    Run Keyword and Return Status    Page should contain element    //input[@id='RequestedActionDate']
+    ${status}    Run Keyword and Return Status    Page should contain element    //*[@id="RequestedActionDateSelection"]
     #Log to console    ${status}
     Run Keyword if    ${status}   Pick Date without product
     Run Keyword Unless    ${status}    Click Element    ${additional_info_next_button}
@@ -1243,8 +1243,9 @@ Pick Date without product
     ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
     ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
     #${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
-    Wait Until Element Is Visible    ${date_id}    120s
-    Click Element    ${date_id}
+    #click element  //*[@id="RequestedActionDateSelection"]
+    Wait Until Element Is Visible    //*[@id="RequestedActionDateSelection"]    120s
+    Click Element    //*[@id="RequestedActionDateSelection"]
     Wait Until Element Is Visible    ${next_month}    120s
     Click Button    ${next_month}
     click element    ${firstday}
