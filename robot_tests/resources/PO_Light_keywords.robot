@@ -2005,6 +2005,10 @@ Send Account to billing system
     Force click element     //*[@id="Customer_nextBtn"]/p[text()='Next']
 
 CreateABillingAccount
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a/div[@title='Billing Account']   60s
+    #Run Keyword If    ${status_page} == True    force click element    //li/a/div[@title='Billing Account']
+    Run Keyword If    ${status_page} == False   force click element     //a[@title="Show 2 more actions"]
+    sleep  20s
     wait until page contains element    //li/a/div[@title='Billing Account']    45s
     force click element    //li/a/div[@title='Billing Account']
     sleep    20s
