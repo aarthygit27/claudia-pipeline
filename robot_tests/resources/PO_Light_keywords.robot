@@ -425,10 +425,12 @@ AddToCart with product_id
     Wait until element is visible    //div[contains(@class,'cpq-products-list')]     60s
     Click element  //div[contains(@class, 'cpq-searchbox')]//input
     input text   //div[contains(@class, 'cpq-searchbox')]//input   ${pname}
-    Wait until element is enabled   xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button   60s
+    #Wait until element is enabled   xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button   60s
+    Wait until element is enabled   //div/span[contains(text(),'${pname}')]/../../../div[@class="slds-tile__detail"]//button    60s
     #sleep   5s
     #Force click element  xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
-    Click element    xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
+    #Click element    xpath=//div[contains(@data-product-id,'${p_id}')]/div/div/div[2]/div/div[2]/button
+    click element  //div/span[contains(text(),'${pname}')]/../../../div[@class="slds-tile__detail"]//button
     sleep  10s
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
@@ -872,9 +874,11 @@ Click parent Product
     click element       //span[text()='${parent}']//parent::button
 
 Update setting Telia Palvelunhallintakeskus
-
+    [Arguments]    ${product}
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    ${Palvelunhallintakeskus}=    Set Variable    //select[@name='productconfig_field_0_1']
+    Click Settings   ${product}
+    #select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${Palvelunhallintakeskus}=    Set Variable    //input[@name='productconfig_field_1_0']
     ${Työtilaus vaadittu}=    Set Variable    //form[@name='productconfig']//span[@class='slds-form-element__label'][contains(text(),'Työtilaus vaadittu')]
     #sleep  15s
     Wait Until Element Is Visible    ${Palvelunhallintakeskus}    30s
@@ -1690,8 +1694,8 @@ Validate the validity and the price for Other Domain
     [Arguments]    ${field}         ${value}        ${otc}
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${value}']
-    ${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
-    ${onetimecharge}    get text     //*[contains(text(),'Other Domain name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][2]
+    ${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
+    ${onetimecharge}    get text     //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][3]
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
     press enter on    ${Voimassaoloaika_Field}
     Wait Until Element Is Visible    ${Voimassaoloaika_option}   2s

@@ -15,8 +15,8 @@ ${B2O_Approver_PW}  PahaPassu1
 ${Endorser_User}  endorser@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
 ${Approver_User}  approver@teliacompany.com.${ENVIRONMENT}
-${Approver_PW}  PahaPassu2
-${LIGHTNING_TEST_ACCOUNT}       Affecto Oy
+${Approver_PW}  PahaPassu3
+${LIGHTNING_TEST_ACCOUNT}     Telia Communication Oy
 ${vLocUpg_TEST_ACCOUNT}    Aarsleff Oy
 ${CONTRACT_ACCOUNT}     Telia Communication Oy
 #Digia Oyj

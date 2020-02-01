@@ -195,7 +195,7 @@ Test scenario 2: Telia Project management
     [Tags]    BQA-11485     Trial Run    sitpo22  PO_Scripts
     ${prod_1}    set variable    Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}    set variable    Telia Projektijohtaminen varallaolo ja matkustus
-    General Setup  B2B  ${test_account}
+    General Setup  B2B   Ahma insinöörit Oy
     Searching and adding product   Telia Projektijohtaminen jatkuva palvelu  # 01u6E000007Roon
     update setting common    d    yes
     Searching and adding product   Telia Projektijohtaminen varallaolo ja matkustus   # 01u6E000007RopK
@@ -211,7 +211,7 @@ Test scenario 3:Telia Consulting
     [Tags]    BQA-11486     Run    sitpo22  PO_Scripts
     ${prod_1}    set variable    Telia Konsultointi jatkuva palvelu
     ${prod_2}    set variable    Telia Konsultointi varallaolo ja matkustus
-    General Setup    B2B    ${test_account}
+    General Setup    B2B    Ahma insinöörit Oy
     Searching and adding product    Telia Konsultointi jatkuva palvelu  # 01u6E000007Ror1
     update setting common    d    yes
     Searching and adding product    Telia Konsultointi varallaolo ja matkustus
@@ -228,7 +228,7 @@ Test scenario 7: Key Customer Service Desk Additional Work
     General Setup    B2B    ${test_account}
     #AddToCart with product_id    Telia Palvelunhallintakeskus   01u6E000007RotD
     Searching and adding product  Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     update setting common    h    no
@@ -243,7 +243,7 @@ Test scenario 8: Key Customer Service Desk Additional Work
     [Tags]      BQA-11492     PO_Scripts    sitpo22  Check      Rerun
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     update setting common    h    no
@@ -258,7 +258,7 @@ Test scenario 9: Key Customer Service Desk
     [Tags]    BQA-11493     Run    B2B_ReRun    sitpo22  PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add Avainasiakaspalvelukeskus
     Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     update setting common    h    no
@@ -273,7 +273,7 @@ Test scenario 10:Training
     [Tags]      BQA-11494   Trial Run    PO_Scripts    sitpo22
     General Setup    B2B   ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus  Telia Palvelunhallintakeskus
     Searching and adding product    Koulutus jatkuva palvelu
     update setting common    h    no
     clicking on next button
@@ -287,7 +287,7 @@ Test scenario 11:Training
     [Tags]    BQA-11495     B2B_ReRun    sitpo22   PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Searching and adding product    Koulutus kertapalvelu
     update setting common    h    no
     clicking on next button
@@ -301,7 +301,7 @@ Test scenario 12:Training
     [Tags]    BQA-11496    PO_Scripts    Prof_Test    sitpo22
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Searching and adding product    Koulutus varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
@@ -315,7 +315,7 @@ Test scenario 13:Continuity Management Service
     [Tags]    BQA-11497     Trial Run    B2B_Lightning_ReRun    sitpo22  PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
     update setting common    h    no
     clicking on next button
@@ -329,7 +329,7 @@ Test scenario 14:Continuity Management Service
     [Tags]    BQA-11498     B2B_Lightning_ReRun    sitpo22  PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta kertapalvelu
     update setting common    h    no
     clicking on next button
@@ -343,7 +343,7 @@ Test scenario 15:Continuity Management Service
     [Tags]    BQA-11499     B2B_Lightning_ReRun    sitpo22  PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
@@ -357,7 +357,7 @@ Test scenario 16:Service Lead Service
     [Tags]    BQA-11500     Trial Run    PO_Scripts    sitpo22
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Searching and adding product    Palvelujohtaminen jatkuva palvelu
     update setting common    d    no
     clicking on next button
@@ -371,7 +371,7 @@ Test scenario 17:Service Lead Service
     [Tags]    BQA-11501     B2B_Lightning_ReRun    sitpo22    PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Searching and adding product    Palvelujohtaminen kertapalvelu
     update setting common    h    no
     clicking on next button
@@ -385,7 +385,7 @@ Test scenario 18: Service Lead Service
     [Tags]    BQA-11502     B2B_Lightning_ReRun    sitpo22  PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Searching and adding product    Palvelujohtaminen varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
@@ -399,7 +399,7 @@ Test scenario 19:Operation and Support Service
     [Tags]    BQA-11503     Trial Run    PO_Scripts    sitpo22  Rerun
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
     Add Hallinta ja Tuki jatkuva palvelu
     update setting common    h    no
@@ -415,7 +415,7 @@ Test scenario 20:Operation and Support Service
     [Tags]    BQA-11504     B2B_Lightning_ReRun    sitpo22  PO_Scripts
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
     Add Hallinta ja Tuki kertapalvelu
     update setting common    h    no
@@ -430,7 +430,7 @@ Test scenario 21:Operation and Support Service
     [Tags]    BQA-11505     PO_Scripts    sitpo22
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
     Add Hallinta ja Tuki varallaolo ja matkustus
     update setting common    h    no
@@ -445,7 +445,7 @@ Test scenario 22 Other:Operation and Support Services
     [Tags]      BQA-11507   PO_Scripts   Last_product  sitpo22      Rerun
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
-    Update setting Telia Palvelunhallintakeskus
+    #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
     Add Hallinta ja Tuki
     Add Toimenpide XS
     update setting Toimenpide    h    no

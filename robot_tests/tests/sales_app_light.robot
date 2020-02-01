@@ -1608,10 +1608,10 @@ Manual Credit Check Enquiry
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go to Entity   ${oppo_name}
     clickingoncpq   ${oppo_name}
-    Add product to cart (CPQ)  Genesys PureCloud
-    UpdateAndAddSalesType  Genesys PureCloud
+    Add product to cart (CPQ)  Telia Chat
+    UpdateAndAddSalesType  Telia Chat
     ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
-    logoutAsUser
+    logoutAsUser  B2B DigiSales
     sleep  20s
     Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     swithchtouser  Credit Control
