@@ -541,10 +541,7 @@ Domain name service with Other Domain Complete Order EU
 Domain name service with Finnish Domain - Complete Order
     [Documentation]    To create new P&O order adding Telia Domain Name Service
     [Tags]    BQA-11731   PO_Scripts        Rerun
-    #General Setup    B2B    ${Account_test}
-    Open Salesforce and Login into Lightning
-    Go to Entity   Test Robot Order_20200203-161251
-    ClickingOnCPQ   Test Robot Order_20200203-161251
+    General Setup    B2B    ${Account_test}
     Searching and adding product    Telia Domain Name Service
     update_setting_Telia Domain Name Service
     Add Finnish_Domain_Service
