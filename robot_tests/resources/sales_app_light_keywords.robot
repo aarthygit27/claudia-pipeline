@@ -442,7 +442,7 @@ Create New Contact for Account
     Set Test Variable    ${AP_LAST_NAME}    Test ${first_name}
     Set Test Variable    ${AP_EMAIL}    ${email_id}
     Set Test Variable    ${AP_MOBILE_NUM}    ${mobile_num}
-    Set Test Variable    ${Ap_mail}        kasibhotla.sreeramachandramurthy@teliacompany.com
+    Set Test Variable    ${Ap_mail}     ${email_id}
     Wait Until Page Contains element    xpath=${AP_NEW_CONTACT}    60s
     click element    ${AP_NEW_CONTACT}
     #Sleep    2s
@@ -1325,7 +1325,7 @@ CreateAContactFromAccount_HDC
     clear element text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]  30s
     input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::span[text()='Email']//following::input[1]       ${a}@teliacompany.com
-    sleep    5s
+    sleep    10s
     wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']    30s
     force click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::div[@class='modal-footer slds-modal__footer']/button/span[text()='Save']
     ${IsErrorVisible}=    Run Keyword And Return Status    element should be visible    //span[text()='Review the errors on this page.']
@@ -1757,7 +1757,8 @@ Order Products must have a unit price
 
 NextButtonOnOrderPage
     #log to console    NextButtonOnOrderPage
-    sleep  5s
+    sleep  30s
+    #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     ${status}    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
     Log to console      ${status}
@@ -3738,8 +3739,7 @@ Add new team member
     Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']     60s
     Input text  //input[@title='Search People']     ${new_team_member}
-    wait until page contains element  //a[@role='option']/div//div[@title='${new_team_member}']  60s
-    force click element  //a[@role='option']/div//div[@title='${new_team_member}']
+    Wait element to load and click  //a[@role='option']/div//div[@title='${new_team_member}']
     Wait element to load and click  //a[text()='--None--']
     force click element  //div[@class="select-options"]//ul/li/a[@title="${role}"]
     Sleep  10s
@@ -4007,10 +4007,9 @@ SwithchToUser
     unselect frame
     Reload page
     Execute Javascript    window.location.reload(true)
-    sleep  30s
-    wait until page contains element  //a[text()='Log out as ${user}']   120s
-    Capture Page Screenshot
-    #page should contain element  //a[text()='Log out as ${user}']
+    #reload page
+    wait until page contains element  //a[text()='Log out as ${user}']   60s
+    page should contain element  //a[text()='Log out as ${user}']
 
 logoutAsUser
     [Arguments]  ${user}
@@ -6579,26 +6578,27 @@ Activate The Manual Credit enquiry
     #wait until page contains element  //a[@title="${value}"]  60s
     #click element  //a[@title="${value}"]
     wait until page contains element  //a[text()="Case Details"]   30s
-    click element  //a[@title="Details"]
-    wait until page contains element  //button[@title="Change Owner"]  20s
-#    click element   //button[@title="Change Owner"]
-#    wait until page contains element  //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]  30s
-#    input text   //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]  Credit Control
-#    sleep  3s
-#    Press Enter On  //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]
-#    wait until page contains element  //a[text()="Full Name"]//following::a[text()='Credit Control']  60s
-#    click element     //a[text()="Full Name"]//following::a[text()='Credit Control']
-#    sleep  10s
-#    click element   //button[@title="Cancel"]//following::button[@title="Change Owner"]
-#    sleep  30s
+    sleep  30s
+    click element  ${DETAILS_TAB}
+    wait until page contains element  ${CHANGE_OWNER}  20s
+    click element   ${CHANGE_OWNER}
+    wait until page contains element  //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]  30s
+    input text   //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]  Credit Control
+    sleep  3s
+    Press Enter On  //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]
+    wait until page contains element  //a[text()="Full Name"]//following::a[text()='Credit Control']  60s
+    click element     //a[text()="Full Name"]//following::a[text()='Credit Control']
+    sleep  10s
+    click element   ${CHANGE_OWNER_BUTTON}
+    sleep  30s
     page should contain element  //div[@role="list"]//div//span[text()="Status"]/../../div[2]//span[text()="In Progress"]
     force click element  //button[@title="Edit Decision"]
     #click element  //div//span/span[text()="Decision"]/../../div//a[@class="select"]
-    select option from dropdown  //div//span/span[text()="Decision"]/../../div//a[@class="select"]  Positive
-    click button  //button[@title="Save"]
+    select option from dropdown  //lightning-combobox//label[text()="Decision"]/..//div/*[@class="slds-combobox_container"]/div  Positive
+    click element   //button[@title="Save"]
     wait until page contains element    //div[@role="list"]//div//span[text()="Status"]/../../div[2]//span[text()="Closed"]   60s
     page should contain element  //div[@role="list"]//div//span[text()="Status"]/../../div[2]//span[text()="Closed"]
-    logoutAsUser
+    logoutAsUser    Credit Control
     sleep  20s
 
 credit score status after approval
@@ -6635,6 +6635,8 @@ credit score status after approval
     page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive"]
     page should contain element  //button[contains(text(),"Create Order")]
     click element  //button[contains(text(),"Create Order")]
+    unselect frame
+    Sleep  10s
     NextButtonOnOrderPage
 
 create two different billing account for payer and buyer validation

@@ -1600,12 +1600,13 @@ Lightning_Service Contract
     Create contract Agreement  Service  ${Contract_Number}
 
 
-Manual Credit Check Enquiry
+Manual Credit Check Enquiry with postive
     [Tags]  BQA-12600
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
     Go to Entity   ${oppo_name}
     clickingoncpq   ${oppo_name}
     Add product to cart (CPQ)  Telia Chat
@@ -1617,9 +1618,98 @@ Manual Credit Check Enquiry
     swithchtouser  Credit Control
     Activate The Manual Credit enquiry   ${value}
     Login to Salesforce as DigiSales Lightning User
+    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
     page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
-    go to entity  ${TEST_CONTACT}
+    Search Salesforce    ${quote_number}
+    Select Entity    ${oppo_name}    ${EMPTY}
+    credit score status after approval
+    SearchAndSelectBillingAccount   ${TEST_CONTACT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan
+
+Manual Credit Check Enquiry with postive and condition
+    [Tags]  BQA-12674
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_CONTACT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
+    Go to Entity   ${oppo_name}
+    clickingoncpq   ${oppo_name}
+    Add product to cart (CPQ)  Telia Chat
+    UpdateAndAddSalesType  Telia Chat
+    ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
+    logoutAsUser  B2B DigiSales
+    sleep  20s
+    Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    swithchtouser  Credit Control
+    Activate The Manual Credit enquiry   ${value}
+    Login to Salesforce as DigiSales Lightning User
+    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    Search Salesforce    ${quote_number}
+    Select Entity    ${oppo_name}    ${EMPTY}
+    credit score status after approval
+    SearchAndSelectBillingAccount   ${TEST_CONTACT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan
+
+Manual Credit Check Enquiry with Negative
+    [Tags]  BQA-12673
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_CONTACT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
+    Go to Entity   ${oppo_name}
+    clickingoncpq   ${oppo_name}
+    Add product to cart (CPQ)  Telia Chat
+    UpdateAndAddSalesType  Telia Chat
+    ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
+    logoutAsUser  B2B DigiSales
+    sleep  20s
+    Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    swithchtouser  Credit Control
+    Activate The Manual Credit enquiry   ${value}
+    Login to Salesforce as DigiSales Lightning User
+    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    Search Salesforce    ${quote_number}
+    Select Entity    ${oppo_name}    ${EMPTY}
+    credit score status after approval
+    SearchAndSelectBillingAccount   ${TEST_CONTACT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan
+
+Manual Credit Check Enquiry with No Result
+    [Tags]  BQA-12675
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${TEST_CONTACT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
+    Go to Entity   ${oppo_name}
+    clickingoncpq   ${oppo_name}
+    Add product to cart (CPQ)  Telia Chat
+    UpdateAndAddSalesType  Telia Chat
+    ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
+    logoutAsUser  B2B DigiSales
+    sleep  20s
+    Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    swithchtouser  Credit Control
+    Activate The Manual Credit enquiry   ${value}
+    Login to Salesforce as DigiSales Lightning User
+    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
     Search Salesforce    ${quote_number}
     Select Entity    ${oppo_name}    ${EMPTY}
     credit score status after approval

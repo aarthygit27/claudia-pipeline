@@ -59,7 +59,8 @@ ${Kilometrikorvaus}   //div[contains(text(),'Kilometrikorvaus')]/../../../div/bu
 #${Kilometrit}=    set variable    //input[contains(@class,'ng-valid')][@value='0']
 ${Kilometrit}   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Kilometrit']]//following::input[1]
 ${BROWSER}        Firefox
-
+${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
+${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${Password_merge}    PahaPassu3
 ${LOGIN_PAGE}        https://test.salesforce.com/
 ${SALES_APP_NAME}    //*[contains(@class,'appName')]//span[text()='Sales']
@@ -88,3 +89,12 @@ ${RELATED_OPPORTUNITY}    //tbody
 ${OPPORTUNITY_PAGE}    //*[contains(@class,'slds-page-header')]
 ${RESULTS_TABLE}    //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
 ${SEARCH_INPUT}    //input[contains(@name,'search-input')]
+${AP_MOBILE_FIELD}    //span[contains(text(),'Mobile')]/../following-sibling::input[@type="tel"]
+${FIRST_NAME_FIELD}    //input[@placeholder='First Name']
+${LAST_NAME_FIELD}    //input[@placeholder='Last Name']
+${MASTER_PRIMARY_EMAIL_FIELD}    //span[contains(text(),'Primary eMail')]/../following-sibling::input[@type='email']
+${MASTER_EMAIL_FIELD}    //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
+${AP_SAVE_BUTTON}    //div[@class="modal-footer slds-modal__footer"]//span[contains(text(),"Save")]
+${DETAILS_TAB}    //li[@title="Details"]//a[text()="Details"]
+${CHANGE_OWNER}   //button[@title='Change Owner']
+${CHANGE_OWNER_BUTTON}    //button[text()='Change Owner']

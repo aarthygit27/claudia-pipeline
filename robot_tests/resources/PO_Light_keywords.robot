@@ -10,7 +10,7 @@ General Setup
     [Arguments]    ${price_list}    ${test_account}
     Open Salesforce and Login into Lightning   #sitpo admin
     Go To Entity    ${test_account}
-    ${contact}  run keyword    Create Contact From Account
+    ${contact}  run keyword    Create New Contact for Account
     Set Test Variable    ${contact_name}  ${contact}
     ${opportunity}    run keyword    Create Opportunity    ${contact_name}
     Set Test Variable    ${oppo_name}   ${opportunity}
@@ -158,6 +158,31 @@ Entity Should Be Open
     Sleep    5s
     Wait Until Page Contains element    ${target_name}    30s
     #${Case} ---- ActiveStatus or PassiveStatus of Account
+
+
+Create New Contact for Account
+    ${first_name}=    Run Keyword    Create Unique Name    ${EMPTY}
+    ${email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
+    ${mobile_num}=    Run Keyword    Create Unique Phone Number
+    Set Test Variable    ${AP_FIRST_NAME}    AP ${first_name}
+    Set Test Variable    ${AP_LAST_NAME}    Test ${first_name}
+    Set Test Variable    ${AP_EMAIL}    ${email_id}
+    Set Test Variable    ${AP_MOBILE_NUM}    ${mobile_num}
+    Set Test Variable    ${Ap_mail}     ${email_id}
+    Wait Until Page Contains element    //div[@title="New Contact"]    60s
+    click element    //div[@title="New Contact"]
+    #Sleep    2s
+    Wait Until Page Contains element    xpath=${AP_MOBILE_FIELD}    60s
+    Click Visible Element    ${AP_MOBILE_FIELD}
+    Input Text    ${AP_MOBILE_FIELD}    ${AP_MOBILE_NUM}
+    Input Text    ${FIRST_NAME_FIELD}    ${AP_FIRST_NAME}
+    Input Text    ${LAST_NAME_FIELD}    ${AP_LAST_NAME}
+    Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${AP_EMAIL}
+    Input Text    ${MASTER_EMAIL_FIELD}     ${Ap_mail}
+    Click Element    ${AP_SAVE_BUTTON}
+    Sleep    5s
+    [Return]    ${AP_FIRST_NAME} ${AP_LAST_NAME}
+
 
 Create Contact From Account
     ${primary_email_id}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
@@ -531,7 +556,7 @@ Add Avainasiakaspalvelukeskus
 Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
 
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[1]
+    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö jatkuva palvelu')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     sleep  10s
@@ -544,7 +569,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     [Documentation]    This is to add Avainasiakaspalvelukeskus lisätyöt kertapalvelu to cart and click grand child settings button
 
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[1]
+    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö kertapalvelu')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     sleep  10s
@@ -553,7 +578,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
 
 Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     select frame  xpath=//div[contains(@class,'slds')]/iframe
-    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[1]
+    ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö varallaolo ja matkustus')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     Wait until element is visible  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[@title='Settings']  30s
@@ -980,10 +1005,10 @@ Update Product Page for 2 products
 
 Create_Order
     ${Status}=      Run Keyword and Return Status         element should be visible       //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
-    run keyword unless     ${Status}     View Or Open Quote
+    run keyword unless     ${Status}     Credit Score Validation Checking
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
-    ClickonCreateOrder
+    run keyword if     ${Status}    ClickonCreateOrder
     #Open Order Page
     NextButtonInOrderPage
     sleep  10s
@@ -998,6 +1023,134 @@ Create_Order
     log to console           ${Order}
     Set Test Variable     ${Order_Id}    ${Order}
     #view orchestration plan details
+
+Credit Score Validation Checking
+
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Wait until page contains element  //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]   60
+    ${Status}=      Run Keyword and Return Status   element should be visible    //div//*[text()="Credit Score Not Accepted - Result: MAN"]
+    Run Keyword if    ${Status}     Manual Credit enquiry Button
+    Run Keyword unless   ${Status}  log to console   Not able to create the order without sucessful validation of credit score
+
+Manual Credit enquiry Button
+    ${send_quote}    Set Variable    //div[@title='Send Quote Email']
+    page should contain element	 //div//button[contains(text(),"Create Manual Credit Inquiry")]
+    click button    //div//button[contains(text(),"Create Manual Credit Inquiry")]
+    wait until page contains element  //div//h1[contains(text(),"Input Manual Credit Inquiry information")]  60s
+    Wait Until Element Is Visible  //ng-form//textarea[@id="Description"]   50s
+    sleep  5s
+    input text   //ng-form//textarea[@id="Description"]   approve
+    click element  //div//button[contains(text(),"Done")]
+    unselect frame
+    wait until page contains element    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span   60s
+    ${quote_number}    get text    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
+    wait until page contains element    ${send_quote}   60s
+    click element  ${send_quote}
+    sleep  10s
+    Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //div//h1[contains(text(),"Credit Score result: Manual Credit Inquiry Case is not complete")]  60s
+    ${value}    get text  //div[@class="slds-form-element__control"]//p//h3
+    ${value} =  remove string   ${value}  Related Manual Credit Inquiry Case:
+    ${value} =  remove string   ${value}   is waiting for decision.
+    ${String_count} =  Get Line Count  ${value}
+    #${Ending_position} =  Evaluate  ${String_count}-1
+    ${value}=  Get Substring  ${value}  1  9
+    log to console  ${value}
+    #${value}  convert to number  ${value}
+    unselect frame
+    logoutAsUser  B2B DigiSales
+    sleep  20s
+    Open Salesforce Lightning  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    swithchtouser  Credit Control
+    Activate The Manual Credit enquiry   ${value}
+    Open Salesforce and Login into Lightning
+    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    Search Salesforce    ${quote_number}
+    Select Entity    ${oppo_name}    ${EMPTY}
+    credit score status after approval
+
+Activate The Manual Credit enquiry
+    [Arguments]  ${value}
+    reload page
+    sleep  30s
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}   ${value}
+    Sleep    2s
+    Press Enter On    ${SEARCH_SALESFORCE}
+    Wait Until Page Contains element    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a[@title='${value}']    120s
+    Sleep    15s
+    Click Element    //div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//following::a[@title='${value}']
+    wait until page contains element  //span[text()="Case Number"]  60s
+    wait until page contains element  //a[text()="Case Details"]   30s
+    sleep  30s
+    click element  ${DETAILS_TAB}
+    wait until page contains element  ${CHANGE_OWNER}  20s
+    click element   ${CHANGE_OWNER}
+    wait until page contains element  //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]  30s
+    input text   //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]  Credit Control
+    sleep  3s
+    Press Enter On  //*[contains(text(),"Change Case Owner")]//following::input[@title="Search People"]
+    wait until page contains element  //a[text()="Full Name"]//following::a[text()='Credit Control']  60s
+    click element     //a[text()="Full Name"]//following::a[text()='Credit Control']
+    sleep  10s
+    click element   ${CHANGE_OWNER_BUTTON}
+    sleep  30s
+    page should contain element  //div[@role="list"]//div//span[text()="Status"]/../../div[2]//span[text()="In Progress"]
+    force click element  //button[@title="Edit Decision"]
+    #click element  //div//span/span[text()="Decision"]/../../div//a[@class="select"]
+    select option from dropdown  //lightning-combobox//label[text()="Decision"]/..//div/*[@class="slds-combobox_container"]/div  Positive
+    click element   //button[@title="Save"]
+    wait until page contains element    //div[@role="list"]//div//span[text()="Status"]/../../div[2]//span[text()="Closed"]   60s
+    page should contain element  //div[@role="list"]//div//span[text()="Status"]/../../div[2]//span[text()="Closed"]
+    logoutAsUser    Credit Control
+    sleep  20s
+
+credit score status after approval
+    ${send_quote}    Set Variable    //div[@title='Send Quote Email']
+    ${quote_n}    Set Variable    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
+    ${send_mail}    Set Variable    //p[text()='Send Email']
+    wait until page contains element    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span   60s
+    wait until page contains element    ${send_quote}   60s
+    click element  ${send_quote}
+    sleep  50s
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Click Visible Element    ${send_mail}
+    unselect frame
+    #ClickonCreateOrderButton
+    wait until page contains element        //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']       60s
+    sleep  10s
+    ##${expiry} =    get text    //*[text()='Expiration Date']
+    ##log to console    ${expiry}
+    force click element    //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
+    #force click element       //a[@title='CPQ']
+    sleep    30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #Log to console      Inside frame
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
+    #Log to console      ${status}
+    wait until page contains element    //span[text()='Create Order']/..    60s
+    click element    //span[text()='Create Order']/..
+    #Sleep  30s
+    unselect frame
+    Sleep  60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //button[contains(text(),"Create Order")]  60s
+    page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive"]
+    page should contain element  //button[contains(text(),"Create Order")]
+    click element  //button[contains(text(),"Create Order")]
+    unselect frame
+    Sleep  10s
+
+Select option from Dropdown
+    [Arguments]    ${list}    ${item}
+    ScrollUntillFound  ${list}
+    force click element   ${list}
+    sleep  10s
+    wait until page contains element   ${list}/div[2]/lightning-base-combobox-item[@data-value="${item}"]  60s
+    click visible element  ${list}/div[2]/lightning-base-combobox-item[@data-value="${item}"]
 
 View Or Open Quote
 
@@ -1788,7 +1941,6 @@ Validate the validity and the price for Finnish Domain
     [Arguments]    ${field}         ${value}        ${otc}
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_1')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_1')]//option[text()='${value}']
-
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
     press enter on    ${Voimassaoloaika_Field}
     Wait Until Element Is Visible    ${Voimassaoloaika_option}   2s
@@ -1796,7 +1948,8 @@ Validate the validity and the price for Finnish Domain
     sleep   20s
     #Should be true       '35.00' in '${recurringcharge}'
     ${recurringcharge}    get text      //*[contains(text(),'Finnish Domain Name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
-    ${onetimecharge}    get text     //*[contains(text(),'Finnish Domain Name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][2]
+    ${onetimecharge}    get text     //*[contains(text(),'Finnish Domain Name')]/../../../div[@class='cpq-item-base-product-currency cpq-item-currency-value'][3]
+    ${onetimecharge} =  remove string   ${onetimecharge}  .00€
     Should be true       '${otc}' in '${onetimecharge}'
 
 
@@ -2074,3 +2227,39 @@ Update Setting
     sleep  5s
     Click element  ${closing}
     unselect frame
+
+logoutAsUser
+    [Arguments]  ${user}
+    [Documentation]     Logout through seetings button as direct logout is not available in some pages.
+    ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
+    sleep  20s
+    click element   ${setting_lighting}
+    sleep  2s
+    wait until page contains element   //a[text()='Log Out']  60s
+    click element  //a[text()='Log Out']
+    sleep  10s
+
+SwithchToUser
+    [Arguments]  ${user}
+    #log to console   ${user}.this is user
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${user}
+    sleep  3s
+    press key   xpath=${SEARCH_SALESFORCE}    \\13
+    wait until page contains element    //a[text()='${user}']     45s
+    click element  //a[text()='${user}']
+    wait until page contains element  //div[@class='primaryFieldAndActions truncate primaryField highlightsH1 slds-m-right--small']//span[text()='${user}']  60s
+    wait until page contains element  //div[text()='User Detail']   60s
+    click element  //div[text()='User Detail']
+    wait until page contains element  //div[@id="setupComponent"]   60s
+    Wait until element is visible  //div[contains(@class,'iframe')]/iframe  60s
+    select frame  //div[contains(@class,'iframe')]/iframe
+    wait until page contains element  //td[@class="pbButton"]/input[@title='Login']   60s
+    force click element  //td[@class="pbButton"]/input[@title='Login']
+    sleep  10s
+    unselect frame
+    Reload page
+    Execute Javascript    window.location.reload(true)
+    #reload page
+    wait until page contains element  //a[text()='Log out as ${user}']   60s
+    page should contain element  //a[text()='Log out as ${user}']
