@@ -560,8 +560,8 @@ Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     sleep  10s
-    Wait until element is visible  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[@title='Settings']  30s
-    Click element    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu')]//following::button[@title='Settings']
+    Wait until element is visible  //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö jatkuva palvelu')]//following::button[@title='Settings']  30s
+    Click element    //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö jatkuva palvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
@@ -573,7 +573,7 @@ Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
     sleep  10s
-    Click Button  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt kertapalvelu')]//following::button[@title='Settings']
+    Click Button  //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö kertapalvelu')]//following::button[@title='Settings']
     Unselect frame
 
 Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
@@ -581,9 +581,29 @@ Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
     ${product_id}=    Set Variable    //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö varallaolo ja matkustus')]//following::button[1]
     Wait until element is visible   ${product_id}  30s
     click button    ${product_id}
-    Wait until element is visible  //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[@title='Settings']  30s
-    click button    //div[contains(text(),'Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus')]//following::button[@title='Settings']
+    Wait until element is visible  //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö varallaolo ja matkustus')]//following::button[@title='Settings']  30s
+    click button    //div[contains(text(),'Avainasiakaspalvelukeskus Lisätyö varallaolo ja matkustus')]//following::button[@title='Settings']
     Unselect frame
+
+Add Koulutus jatkuva palvelu
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product_id}=    Set Variable    //div[contains(text(),'Koulutus jatkuva palvelu')]//following::button[1]
+    Wait until element is visible   ${product_id}  30s
+    click button    ${product_id}
+    Wait until element is visible  //div[contains(text(),'Koulutus jatkuva palvelu')]//following::button[@title='Settings']  30s
+    click button    //div[contains(text(),'Koulutus jatkuva palvelu')]//following::button[@title='Settings']
+    Unselect frame
+
+Add Child product of Telia Palvelunhallintakeskus
+    [Arguments]   ${pname}
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${product_id}=    Set Variable    //div[contains(text(),'${pname}')]//following::button[1]
+    Wait until element is visible   ${product_id}  30s
+    click button    ${product_id}
+    Wait until element is visible  //div[contains(text(),'${pname}')]//following::button[@title='Settings']  30s
+    click button    //div[contains(text(),'${pname}')]//following::button[@title='Settings']
+    Unselect frame
+
 
 Add Hallinta ja Tuki
     ${Toggle}  set variable   //button[@class='slds-button cpq-item-has-children']/span[2][text()='Hallinta ja Tuki']
@@ -1855,6 +1875,7 @@ Validate the validity and the price for Other Domain
     [Arguments]    ${field}         ${value}        ${otc}
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${value}']
+    wait until page contains element  //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]  60s
     ${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
     ${onetimecharge}    get text     //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][3]
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s

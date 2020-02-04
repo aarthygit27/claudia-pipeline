@@ -274,7 +274,8 @@ Test scenario 10:Training
     General Setup    B2B   ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     #Update setting Telia Palvelunhallintakeskus  Telia Palvelunhallintakeskus
-    Searching and adding product    Koulutus jatkuva palvelu
+    #Searching and adding product
+    Add Koulutus jatkuva palvelu
     update setting common    h    no
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
@@ -288,7 +289,8 @@ Test scenario 11:Training
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
-    Searching and adding product    Koulutus kertapalvelu
+    #Searching and adding product    Koulutus kertapalvelu
+    Add Child product of Telia Palvelunhallintakeskus   Koulutus kertapalvelu
     update setting common    h    no
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
@@ -302,7 +304,8 @@ Test scenario 12:Training
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
-    Searching and adding product    Koulutus varallaolo ja matkustus
+    #Searching and adding product    Koulutus varallaolo ja matkustus
+    Add Child product of Telia Palvelunhallintakeskus   Koulutus varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
@@ -358,7 +361,8 @@ Test scenario 16:Service Lead Service
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
-    Searching and adding product    Palvelujohtaminen jatkuva palvelu
+    #Searching and adding product    Palvelujohtaminen jatkuva palvelu
+    Add Child product of Telia Palvelunhallintakeskus   Palvelujohtaminen jatkuva palvelu
     update setting common    d    no
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
@@ -372,7 +376,8 @@ Test scenario 17:Service Lead Service
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
-    Searching and adding product    Palvelujohtaminen kertapalvelu
+    #Searching and adding product    Palvelujohtaminen kertapalvelu
+    Add Child product of Telia Palvelunhallintakeskus   Palvelujohtaminen kertapalvelu
     update setting common    h    no
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
@@ -386,7 +391,8 @@ Test scenario 18: Service Lead Service
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Palvelunhallintakeskus
     #Update setting Telia Palvelunhallintakeskus     Telia Palvelunhallintakeskus
-    Searching and adding product    Palvelujohtaminen varallaolo ja matkustus
+    #Searching and adding product    Palvelujohtaminen varallaolo ja matkustus
+    Add Child product of Telia Palvelunhallintakeskus  Palvelujohtaminen varallaolo ja matkustus
     update setting common    h    no
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
@@ -462,9 +468,11 @@ Test scenario 22 Other:Operation and Support Services
     #Searching and adding product    Events jatkuva palvelu
     Add Events kertapalvelu
     update setting common    h    no
-    Search and add product    Asiantuntijakäynti
-    Search and add product    Pikatoimituslisä
+    #Search and add product    Asiantuntijakäynti
+    Add Child product of Telia Palvelunhallintakeskus    Asiantuntijakäynti
+    #Search and add product    Pikatoimituslisä
     #Searching and adding product    Events jatkuva palvelu
+    Add Child product of Telia Palvelunhallintakeskus   Events jatkuva palvelu
     clicking on next button
     Update Product Page    Telia Palvelunhallintakeskus
     Create_Order
