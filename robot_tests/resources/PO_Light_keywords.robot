@@ -1001,25 +1001,25 @@ Update Product Page for 2 products
     Wait Until Element Is Visible    ${next_button}    60s
     click element    ${next_button}
     Unselect Frame
-    sleep    5s
+    sleep    30s
 
 Create_Order
-    ${Status}=      Run Keyword and Return Status         element should be visible       //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
+    ${Status}=      Run Keyword and Return Status      wait until page contains element   //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']  60s
     run keyword unless     ${Status}     Credit Score Validation Checking
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
     run keyword if     ${Status}    ClickonCreateOrder
     #Open Order Page
     NextButtonInOrderPage
-    sleep  10s
+    sleep  30s
     Wait until element is visible   //div[contains(@class,'slds')]/iframe   30s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    ${Status}=    Run Keyword and Return Status    Element should be visible     //section[@id='OrderTypeCheck']/section/div/div/div/h1
+    ${Status}=    Run Keyword and Return Status    wait until page contains eleemnt   //section[@id='OrderTypeCheck']/section/div/div/div/h1  40s
     Run Keyword if    ${Status}    Close and Submit
     Unselect frame
     Run Keyword Unless    ${Status}    Enter Details
     #wait until page contains element        //div[text()='Order']//following::div//span         60s
-    ${Order}        Get Text     //div[@class='slds-grid primaryFieldRow']//span[@class='uiOutputText']
+    ${Order}        Get Text    //h1//div[text()="Order"]/../div[2]//span[@class='uiOutputText']
     log to console           ${Order}
     Set Test Variable     ${Order_Id}    ${Order}
     #view orchestration plan details
@@ -1251,6 +1251,7 @@ SelectOwnerAccountInfo
     [Arguments]    ${e}= ${billing_account}
     #log to console    Select Owner Account FLow Chart Page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //div//label[@for="BuyerAccount"]   60s
     #log to console    entering Owner Account page
     Scroll Page To Element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
@@ -1273,11 +1274,15 @@ SelectOwnerAccountInfo
 
 Create_Order for multiple products
     [Arguments]    ${prod_1}  ${prod_2}
-    View Or Open Quote
+    #View Or Open Quote
     #Wait Until Element Is Visible    //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a    120s
     #Click element   //ul[@class='branding-actions slds-button-group slds-m-left--xx-small oneActionsRibbon forceActionsContainer']/li[4]/a
-    ClickonCreateOrder
-    Sleep       10s
+    ${Status}=      Run Keyword and Return Status      wait until page contains element   //h1/div[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']  60s
+    run keyword unless     ${Status}     Credit Score Validation Checking
+    run keyword if     ${Status}    ClickonCreateOrder
+    #Open Order Page
+    #ClickonCreateOrder
+    Sleep       30s
     #Open Order Page  # Removed not available in release
     NextButtonInOrderPage
     Select Account
@@ -1776,6 +1781,9 @@ update_setting_TeliaSign
     ${setting}    Set Variable    //button[@title='Settings']
     ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
     ${update}    Set Variable    //h2[contains(text(),'Updated Telia Sign')]
+    Select Frame    ${iframe}
+    Click Settings  ${pname}
+    unselect frame
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
     Wait Until Element Is Visible    ${setting}    60s

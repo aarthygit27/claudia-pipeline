@@ -86,7 +86,7 @@ Product7: Telia Ethernet subscription
     log      Order Number is ${Order_Id}
 
 Test : IP VPN
-    [Tags]    BQA-11508     B2O_Lightning   PO_Scripts
+    [Tags]    BQA-11508     B2O_Lightning   PO_Scripts1
     General Setup    B2O    ${test_account}
     Searching and adding product    Telia Unmanaged IP VPN
     clicking on next button
@@ -121,7 +121,7 @@ Telia Ethernet capacity
     Create_Order
 
 Product8: Telia Robotics
-    [Tags]    BQA-9950      TeliaRobotics    B2B_other  PO_Scripts
+    [Tags]    BQA-9950      TeliaRobotics    B2B_other  PO_Scripts1
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Robotics
     update_setting_TeliaRobotics
@@ -133,7 +133,7 @@ Product8: Telia Robotics
     log      Order Number is ${Order_Id}
 
 Product8: Telia Crowd Insights
-    [Tags]    BQA-9952       Crowd Insights    B2B_other   PO_Scripts
+    [Tags]    BQA-9952       Crowd Insights    B2B_other   PO_Scripts1
     General Setup    B2B    ${vLocUpg_TEST_ACCOUNT}
     Searching and adding product    Telia Crowd Insights
     update_setting_TeliaRobotics
@@ -144,7 +144,7 @@ Product8: Telia Crowd Insights
     log      Order Number is ${Order_Id}
 
 Product8: Telia Sign
-    [Tags]    BQA-9951      Telia Sign    B2B_other  PO_Scripts
+    [Tags]    BQA-9951      Telia Sign    B2B_other  PO_Scripts1
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia Sign
     update_setting_TeliaSign
@@ -155,7 +155,7 @@ Product8: Telia Sign
     log      Order Number is ${Order_Id}
 
 Product9: Telia ACE
-    [Tags]    BQA-11480     Telia ACE    B2B_other   PO_Scripts
+    [Tags]    BQA-11480     Telia ACE    B2B_other   PO_Scripts1
     General Setup    B2B    ${test_account}
     Searching and adding product    Telia ACE
     clicking on next button
@@ -165,7 +165,7 @@ Product9: Telia ACE
     log      Order Number is ${Order_Id}
 
 Product10: Genesys PureCloud
-    [Tags]    BQA-11482     Genesys PureCloud   B2B_other   PO_Scripts
+    [Tags]    BQA-11482     Genesys PureCloud   B2B_other   PO_Scripts1
     General Setup    B2B    ${vLocUpg_TEST_ACCOUNT}
     Searching and adding product    Genesys PureCloud
     clicking on next button
@@ -176,13 +176,13 @@ Product10: Genesys PureCloud
 
 Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
-    [Tags]    BQA-11483     Run    sitpo22   PO_Scripts
+    [Tags]    BQA-11483     Run    sitpo22   PO_Scripts1
     ${prod_1}    set variable    Telia Arkkitehti jatkuva palvelu
     ${prod_2}    set variable    Muut asiantuntijapalvelut
     General Setup    B2B    ${test_account}
     AddToCart with product_id    Telia Arkkitehti jatkuva palvelu   01u6E000007Roo5
     Update setting Telia Arkkitehti jatkuva palvelu    d    yes
-    AddToCart with product_id    Muut asiantuntijapalvelut   01u6E000007RosF
+    AddToCart with product_id    Muut Asiantuntijapalvelut   01u6E000007RosF
     Update setting Muut asiantuntijapalvelut
     clicking on next button
     Update Product Page for 2 products    ${prod_1}    ${prod_2}
@@ -192,7 +192,7 @@ Test scenario 1:Telia Architect
 
 Test scenario 2: Telia Project management
     [Documentation]    Ordering Telia Project Management continuous service and one time Service with Case management request
-    [Tags]    BQA-11485     Trial Run    sitpo22  PO_Scripts
+    [Tags]    BQA-11485     Trial Run    sitpo22  PO_Scripts1
     ${prod_1}    set variable    Telia Projektijohtaminen jatkuva palvelu
     ${prod_2}    set variable    Telia Projektijohtaminen varallaolo ja matkustus
     General Setup  B2B   Ahma insinöörit Oy
@@ -208,7 +208,7 @@ Test scenario 2: Telia Project management
 
 Test scenario 3:Telia Consulting
     [Documentation]    Ordering TeliaConsulting continuous service and onetime Service with Case management request
-    [Tags]    BQA-11486     Run    sitpo22  PO_Scripts
+    [Tags]    BQA-11486     Run    sitpo22  PO_Scripts1
     ${prod_1}    set variable    Telia Konsultointi jatkuva palvelu
     ${prod_2}    set variable    Telia Konsultointi varallaolo ja matkustus
     General Setup    B2B    Ahma insinöörit Oy
