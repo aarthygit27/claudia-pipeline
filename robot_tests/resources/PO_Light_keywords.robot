@@ -1782,7 +1782,7 @@ update_setting_TeliaSign
     ${Paketti}    set variable    //select[@name='productconfig_field_0_0']
     ${update}    Set Variable    //h2[contains(text(),'Updated Telia Sign')]
     Select Frame    ${iframe}
-    Click Settings  ${pname}
+    Click Settings  Telia Sign
     unselect frame
     Wait Until Element Is Visible    ${iframe}    60s
     Select Frame    ${iframe}
