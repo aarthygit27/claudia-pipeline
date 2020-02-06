@@ -69,11 +69,10 @@ Go to Home
 Switch to SalesApp
     [Documentation]    Go to App launcher and click on SalesApp
     Click Element    ${APP_LAUNCHER}
-    sleep  20s
-    wait until page contains element  //div[@class="container"]//input[@type="search"]  60s
-    input text  //div[@class="container"]//input[@type="search"]   Sales
-    press enter on  //div[@class="container"]//input[@type="search"]
-    sleep  30s
+    Wait until Page Contains Element    ${SEARCH_APP}    60s
+    input text      ${SEARCH_APP}   sales
+    click element     //div[@class='al-menu-dropdown-list']//a[@data-label='Sales']
+    sleep   30s
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
 
 Clear All Notifications
@@ -182,8 +181,9 @@ Create New Contact for Account
     Input Text    ${LAST_NAME_FIELD}    ${AP_LAST_NAME}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${AP_EMAIL}
     Input Text    ${MASTER_EMAIL_FIELD}     ${Ap_mail}
+    wait until page contains element    ${AP_SAVE_BUTTON}
     Click Element    ${AP_SAVE_BUTTON}
-    Sleep    5s
+    Sleep    10s
     [Return]    ${AP_FIRST_NAME} ${AP_LAST_NAME}
 
 
@@ -270,9 +270,9 @@ Create Opportunity
     Wait until element is visible    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]  30s
     Capture Page Screenshot
     Select from search List   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
-    Input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
-    Wait until element is visible   //*[@title='${b}']/../../..    30s
-    click element    //*[@title='${b}']/../../..
+    #Input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    #Wait until element is visible   //*[@title='${b}']/../../..    30s
+    #click element    //*[@title='${b}']/../../..
     sleep    2s
     input text    //textarea    Description Testing
     click element    //button[@data-aura-class="uiButton"]/span[text()='Save']

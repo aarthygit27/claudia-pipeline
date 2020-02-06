@@ -69,8 +69,9 @@ ${LIGHTNING_ICON}    //img[@class='icon noicon']
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
 ${ENVIRONMENT}    rel
 ${SALES_APP_HOME}    //a[@title='Home']
-${APP_LAUNCHER}    //button[contains(@class,'salesforceIdentityAppLauncherHeader')]
+${APP_LAUNCHER}    //*[@class='appLauncher slds-context-bar__icon-action']//button
 ${SALES_APP_NAME}    //*[contains(@class,'appName')]//span[text()='Sales']
+${SEARCH_APP}    //*[@placeholder='Search apps and items...']
 ${SALES_APP_LINK}    //a[@class='appTileTitle' and text()='Sales']
 ${SALES_APP_HOME}    //a[@title='Home']
 ${SEARCH_SALESFORCE}    //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
