@@ -69,8 +69,10 @@ Go to Home
 Switch to SalesApp
     [Documentation]    Go to App launcher and click on SalesApp
     Click Element    ${APP_LAUNCHER}
-    Wait until Page Contains Element    ${SALES_APP_LINK}    60s
-    Click Element    ${SALES_APP_LINK}
+    Wait until Page Contains Element    ${SEARCH_APP}    60s
+    input text      ${SEARCH_APP}   sales
+    click element     //div[@class='al-menu-dropdown-list']//a[@data-label='Sales']
+    sleep   30s
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
 
 Clear All Notifications
@@ -179,8 +181,9 @@ Create New Contact for Account
     Input Text    ${LAST_NAME_FIELD}    ${AP_LAST_NAME}
     Input Text    ${MASTER_PRIMARY_EMAIL_FIELD}    ${AP_EMAIL}
     Input Text    ${MASTER_EMAIL_FIELD}     ${Ap_mail}
+    wait until page contains element    ${AP_SAVE_BUTTON}
     Click Element    ${AP_SAVE_BUTTON}
-    Sleep    5s
+    Sleep    10s
     [Return]    ${AP_FIRST_NAME} ${AP_LAST_NAME}
 
 
