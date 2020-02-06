@@ -69,8 +69,11 @@ Go to Home
 Switch to SalesApp
     [Documentation]    Go to App launcher and click on SalesApp
     Click Element    ${APP_LAUNCHER}
-    Wait until Page Contains Element    ${SALES_APP_LINK}    60s
-    Click Element    ${SALES_APP_LINK}
+    sleep  20s
+    wait until page contains element  //div[@class="container"]//input[@type="search"]  60s
+    input text  //div[@class="container"]//input[@type="search"]   Sales
+    press enter on  //div[@class="container"]//input[@type="search"]
+    sleep  30s
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
 
 Clear All Notifications
@@ -266,6 +269,7 @@ Create Opportunity
     #sleep    10s
     Wait until element is visible    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]  30s
     Capture Page Screenshot
+    Select from search List   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
     Input text   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
     Wait until element is visible   //*[@title='${b}']/../../..    30s
     click element    //*[@title='${b}']/../../..
@@ -894,10 +898,10 @@ Update setting Muut asiantuntijapalvelut
     sleep    5s
     click element    ${X_BUTTON}
     sleep    20s
-    Click parent Product     Muut asiantuntijapalvelut
+    Click parent Product     Muut Asiantuntijapalvelut
     sleep   30s
     ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${Kilometrikorvaus}
-    run keyword unless   ${present}    Click parent Product     Muut asiantuntijapalvelut
+    run keyword unless   ${present}    Click parent Product     Muut Asiantuntijapalvelut
     sleep       10s
     click element    ${Kilometrikorvaus}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
@@ -910,7 +914,7 @@ Update setting Muut asiantuntijapalvelut
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
-    click element       //span[text()='Muut asiantuntijapalvelut']/parent::button
+    click element       //span[text()='Muut Asiantuntijapalvelut']/parent::button
     Unselect frame
 
 Click parent Product
@@ -1034,7 +1038,7 @@ Create_Order
     sleep  30s
     Wait until element is visible   //div[contains(@class,'slds')]/iframe   30s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    ${Status}=    Run Keyword and Return Status    wait until page contains eleemnt   //section[@id='OrderTypeCheck']/section/div/div/div/h1  40s
+    ${Status}=    Run Keyword and Return Status    wait until page contains element   //section[@id='OrderTypeCheck']/section/div/div/div/h1  40s
     Run Keyword if    ${Status}    Close and Submit
     Unselect frame
     Run Keyword Unless    ${Status}    Enter Details
@@ -1302,9 +1306,10 @@ Create_Order for multiple products
     run keyword if     ${Status}    ClickonCreateOrder
     #Open Order Page
     #ClickonCreateOrder
-    Sleep       30s
+    Sleep  30s
     #Open Order Page  # Removed not available in release
     NextButtonInOrderPage
+    Sleep  20s
     Select Account
     #sleep  5s
     select contact
