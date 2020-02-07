@@ -70,7 +70,8 @@ Switch to SalesApp
     [Documentation]    Go to App launcher and click on SalesApp
     Click Element    ${APP_LAUNCHER}
     Wait until Page Contains Element    ${SEARCH_APP}    60s
-    input text      ${SEARCH_APP}   sales
+    input text      ${SEARCH_APP}   Sales
+    wait until page contains element   //div[@class='al-menu-dropdown-list']//a[@data-label='Sales']  60s
     click element     //div[@class='al-menu-dropdown-list']//a[@data-label='Sales']
     sleep   30s
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
@@ -1522,8 +1523,11 @@ Submit for Approval
     click element  //span[text()='Submit']
 
 Submit Order Button
-    Reload page
-    Wait until element is visible   //div[@title='Submit Order']    60s
+    #Reload page
+    ${status}  Run keyword and return status   Wait until element is visible   //div[@title='Submit Order']    60s
+    Run Keyword unless   ${status}   Reload page
+    Run Keyword unless   ${status}   sleep  20s
+    Run Keyword unless   ${status}    Wait until element is visible   //div[@title='Submit Order']    60s
     #Log to console    submitted
     Click element  //div[@title='Submit Order']
     #sleep  10s
@@ -2196,15 +2200,15 @@ Send Account to billing system
     Force click element     //*[@id="Customer_nextBtn"]/p[text()='Next']
 
 CreateABillingAccount
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a/div[@title='Billing Account']   60s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a[@title='Billing Account']   60s
     #Run Keyword If    ${status_page} == True    force click element    //li/a/div[@title='Billing Account']
     Run Keyword If    ${status_page} == False   force click element     //a[@title="Show 2 more actions"]
     sleep  20s
-    wait until page contains element    //li/a/div[@title='Billing Account']    45s
-    force click element    //li/a/div[@title='Billing Account']
+    wait until page contains element    //li/a[@title='Billing Account']    45s
+    click element    //li/a[@title='Billing Account']
     sleep    20s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     //div[@title='Send Account to billing system']    5s
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     //div[@title='Send Account to billing system']    40s
     run keyword if    ${status} == True    Send Account to billing system
     wait until page contains element    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]    30s
     ${account_name_get}=    get value    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
@@ -2290,7 +2294,7 @@ SwithchToUser
     select frame  //div[contains(@class,'iframe')]/iframe
     wait until page contains element  //td[@class="pbButton"]/input[@title='Login']   60s
     force click element  //td[@class="pbButton"]/input[@title='Login']
-    sleep  10s
+    sleep  30s
     unselect frame
     Reload page
     Execute Javascript    window.location.reload(true)
