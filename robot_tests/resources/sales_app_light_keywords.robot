@@ -81,8 +81,7 @@ Login to Salesforce Lightning
     #${homepage}=    Run Keyword And Return Status    Wait Until Page Contains Element    //a//span[text()="Home"]    60s
     #Run Keyword unless    ${homepage}    reload page
     #Run Keyword unless    ${homepage}    sleep  30s
-    #Wait Until Page Contains Element    //a//span[text()="Home"]    60s
-    Sleep  50s
+    sleep  45s
     ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[text()='Remind Me Later']
     Run Keyword If    ${infoAvailable}    force click element    //a[text()='Remind Me Later']
     run keyword and ignore error    Check For Lightning Force
@@ -1542,8 +1541,8 @@ validateThePricesInTheCart
     #${RC} =   get text   //span[normalize-space(.)='${product}']//ancestor::div[contains(@class,"product-title")]//following::div[contains(@class,"currency-value")][1]/div/div/span/span
     wait until page contains element    //span[normalize-space(.)='${product}']//ancestor::div[contains(@class,'base-product')]//div[3]//span[@class='cpq-underline']       45s
     ${rc}=  get text  //span[normalize-space(.)='${product}']//ancestor::div[contains(@class,'base-product')]//div[3]//span[@class='cpq-underline']
-    ${nrc}=  get text  //span[normalize-space(.)='${product}']//ancestor::div[contains(@class,'base-product')]//div[4]//span[@class='cpq-underline']
-    page should contain element  //div[normalize-space(.)='Recurring Total']/..//div[@class='slds-text-heading--medium'][normalize-space(.)='${rc}']
+    ${nrc}=  get text  //span[normalize-space(.)='${product}']//ancestor::div[contains(@class,'base-product')]//div[5]//span[@class='cpq-underline']
+    page should contain element  //div[normalize-space(.)='Monthly Recurring Total']/..//div[@class='slds-text-heading--medium'][normalize-space(.)='${rc}']
     page should contain element  //div[normalize-space(.)='OneTime Total']/..//div[@class='slds-text-heading--medium'][normalize-space(.)='${nrc}']
     #log to console  ${OTC}.this is OTC--${RC}.this is RC
 
@@ -2436,9 +2435,20 @@ Adding Yritysinternet Plus
     Sleep  30s
     Wait Until Element Is Visible    ${SETTINGS}    60s
     click element    ${SETTINGS}
+    wait until element is visible  //select[@name='productconfig_field_0_0']  60s
+    Select From List By Value     //select[@name='productconfig_field_0_0']     EXTRA ETHERNET
     Wait Until Element Is Visible    ${Liittymän_nopeus}    60s
-    Select From List By Value    ${Liittymän_nopeus}    2 Mbit/s/1 Mbit/s
+    Select From List By Value    ${Liittymän_nopeus}    2 Mbit/s / 1 Mbit/s
+    wait until element is visible  //select[@name='productconfig_field_0_3']  60s
+    Select From List By Value     //select[@name='productconfig_field_0_3']    4
+    wait until element is visible  //select[@name='productconfig_field_0_4']  60s
+    Select From List By Value     //select[@name='productconfig_field_0_4']     Saatavuustieto tarkistettu järjestelmästä
+    wait until element is visible  //select[@name='productconfig_field_0_5']  60s
+    Select From List By Value     //select[@name='productconfig_field_0_5']     EXTRA ETHERNET
     sleep    3s
+    wait until element is visible  //input[@name="productconfig_field_0_6"]   60s
+    input text  //input[@name="productconfig_field_0_6"]   L1.robotframework
+    input text  //input[@name="productconfig_field_0_7"]  L2.robotframework
     Select From List By Value    ${Palvelutaso}    A24h
     sleep    3s
     click element    ${X_BUTTON}
@@ -4162,14 +4172,17 @@ addProductsViaSVE
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.RecurringTotalt']
      input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.RecurringTotalt']  ${RC}
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']
+     sleep  2s
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value}']
+     sleep  5s
      #click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.ContractLength']/option[@value='${contract_lenght}']
      #click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.ContractLength']/option[@value='${contract_lenght}']
      ${fyr_value}=      evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
      ${revenue_value}=  evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
-     click element  //button[normalize-space(.)='Save Changes']
+     wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
+     force click element  //button[normalize-space(.)='Save Changes']
      unselect frame
      sleep   30s
      [Return]   ${fyr_value}
@@ -4587,10 +4600,10 @@ createACaseFromMore
 
 
 Create Pricing Request
-    ${More}   set variable   //a[@title='CPQ']//following::a[contains(@title,'more actions')]
+    ${More}   set variable   //a[contains(@title,'more actions')]
     ${Create Pricing List}   set variable  //div[@class='branding-actions actionMenu']//following::a[@title='Create Pricing Request']
     Wait until element is visible  ${More}  30S
-    Force Click element  ${More}
+    cLICK ELEMENT   ${More}
     Wait until element is visible    ${Create Pricing List}   30s
     Click element  ${Create Pricing List}
     sleep  5s    # for the page to load
@@ -4609,9 +4622,9 @@ Create Pricing Request
     Wait until element is visible   //p[text()='Create Pricing Request']  30s
     Click element  //p[text()='Create Pricing Request']
     Unselect Frame
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]   30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible   //p[@title='Case Number']//following::lightning-formatted-text[1]   30s
+    ${Case_number}     get text   //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text    //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number for Pricing Request and the status is ${Case_status}
     Capture Page Screenshot
 
@@ -4651,9 +4664,9 @@ Create Pricing Escalation
     execute javascript    window.scrollTo(0,200)
     Capture Page Screenshot
     Reload Page
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     [Return]  ${Case_number}
 
@@ -4674,9 +4687,9 @@ Submit for approval
     Capture Page Screenshot
     sleep  5s
     Reload page
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number for ${case_type}  and the status is ${Case_status}
     logoutAsUser    ${PM_User}
 
@@ -4701,9 +4714,9 @@ Case Approval By Endorser
     sleep  10s
     ${url}   Get Location
     Click element  //a[text()='${Case_number}']
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
@@ -4742,9 +4755,9 @@ Case Approval By Approver
     sleep  10s
     ${url}  Get Location
     Click element  //a[text()='${Case_number}']
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
@@ -4791,9 +4804,9 @@ Case Rejection By Approver
     sleep  10s
     ${url}  Get location
     Click element  //a[text()='${Case_number}']
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
     ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
@@ -4868,9 +4881,9 @@ Check Case Status
     Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
     Click Element    ${TABLE_HEADER}${element_catenate}
     #Verify it the opportunity details are visible
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
 
 Verify case Status by PM
@@ -4884,9 +4897,9 @@ Verify case Status by PM
     #Sleep    15s
     Click Element    ${TABLE_HEADER}${element_catenate}
     sleep  10s
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     logoutAsUser    ${PM_User}
 
@@ -4902,9 +4915,9 @@ Verify case Status by Endorser
     #Sleep    15s
     Click Element    ${TABLE_HEADER}${element_catenate}
     sleep  10s
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
     logoutAsUser    ${Endorser_User}
 
@@ -5054,9 +5067,9 @@ Create Investment Case
     sleep  10s
     Fill Investment Info   ${Account_Type}
     Unselect frame
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]   30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
+    Wait until element is visible   //p[@title='Case Number']//following::lightning-formatted-text[1]   30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text    //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number for Investment Request and the status is ${Case_status}
     logoutAsUser    ${B2B_DIGISALES_LIGHT_USER}
     [Return]    ${case_number}
@@ -5145,13 +5158,12 @@ PM details
     Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
     Click Element    ${TABLE_HEADER}${element_catenate}
     #Verify it the opportunity details are visible
-    Wait until element is visible  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]  30s
-    ${Case_number}     get text  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[1]
-    ${Case_status}      get text   //span[@class='slds-form-element__label slds-truncate'][@title='Status']//following::div[1]/div/span[1]
-    Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
-    Reload page
-    Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
-    ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
+    #Log to console   ${Case_number} is the Case number  and the status is ${Case_status}
+    Wait until element is visible   //span/a[contains(text(),'Test Robot Order')]  30s
+    ${oppo}  Run Keyword  Get Text  //span/a[contains(text(),'Test Robot Order')]
     Should be equal   ${oppo_name}   ${oppo}
     Log to console  Linked Opportunity is ${oppo}
 
@@ -5254,9 +5266,11 @@ Create contract Agreement
     ${contact_name}   run keyword    Create New Contact for Account
     sleep  40s
     #Wait Until Page Contains element  //ul/li//a[@title="Show 2 more actions"]  60s
-    Force click element   //ul/li//a[@title="Show 2 more actions"]
-    Sleep  10s
-    force click element  //ul/li//a[@title="Create Agreement"]
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible      //li/a//div[@title="Create Agreement"]   60s
+    #Run Keyword If    ${status_page} == True    force click element    //li/a/div[@title='Billing Account']
+    Run Keyword If    ${status_page} == False   force click element     //a[@title="Show 2 more actions"]
+    sleep  20s
+    force click element     //li/a//div[@title="Create Agreement"]
     sleep   10s   # Required for loading
     Reload page
     sleep  30s
@@ -5917,13 +5931,10 @@ Enter Group id and submit
     Page should contain element  //label/span[text()='Group Billing ID']
     ScrollUntillFound    //label/span[text()='Group Billing ID']
     #Input Text   //input[@title='Search Group Billing IDs']     ${group_id}
-    #Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
-    Input Text    //input[@title='Search Group Billing IDs']    ${group_id}
-    Sleep    10s
-    Press Enter On   //input[@title='Search Group Billing IDs']
-    Sleep   5s
-    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${group_id}']
-    Sleep    2s
+    Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
+    #${status}    Run keyword and return status   Page should contain element   //div[@title='${group_id}']
+    #Wait until element is visible  //div[@title='${group_id}']  30s
+    #Click element   //div[@title='${group_id}']
 
     Wait until element is visible  //label/span[text()='Desired Installation Date']/..//following::input[1]   30s
     Force Click element  //label/span[text()='Desired Installation Date']/..//following::input[1]
@@ -6420,12 +6431,7 @@ Close and submit
     #sleep  15s
     Unselect frame
 
-#Submit Order Button
-    #Reload page
-    #Wait until element is visible   //div[@title='Submit Order']    60s
-    #Log to console    submitted
-    #Click element  //div[@title='Submit Order']
-    #sleep  10s
+
     Capture Page Screenshot
     Wait until element is visible     //div[@title='Submit Order']   30s
     sleep  5s
