@@ -890,17 +890,16 @@ Update setting Telia Arkkitehti jatkuva palvelu
     Unselect frame
 
 Update setting Muut asiantuntijapalvelut
-
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     sleep    5s
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
     sleep    20s
-    Click parent Product     Muut asiantuntijapalvelut
+    Click parent Product     Muut Asiantuntijapalvelut
     sleep   30s
     ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${Kilometrikorvaus}
-    run keyword unless   ${present}    Click parent Product     Muut asiantuntijapalvelut
+    run keyword unless   ${present}    Click parent Product     Muut Asiantuntijapalvelut
     sleep       10s
     click element    ${Kilometrikorvaus}
     Wait Until Element Is Not Visible    ${SPINNER_SMALL}    120s
@@ -913,7 +912,7 @@ Update setting Muut asiantuntijapalvelut
     Fill Laskutuksen lisätieto
     sleep    5s
     click element    ${X_BUTTON}
-    click element       //span[text()='Muut asiantuntijapalvelut']/parent::button
+    click element       //span[text()='Muut Asiantuntijapalvelut']/parent::button
     Unselect frame
 
 Click parent Product
@@ -1324,7 +1323,6 @@ Create_Order for multiple products
 
 
 Select Account
-
     [Documentation]    This is to search and select the account
     ${account_name}=    Set Variable    //p[contains(text(),'Search')]
     ${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
@@ -1332,9 +1330,9 @@ Select Account
     sleep    5s
     wait until element is visible   //div[@class='iframe-parent slds-template_iframe slds-card']/iframe    60s
     select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
-
+    Sleep   3s
     Wait Until Element Is Visible    ${account_name}    120s
-    click element    ${account_name}
+    Force click element      ${account_name}
     #sleep    3s
     Wait Until page contains element    ${account_checkbox}    120s
     click element    ${account_checkbox}
@@ -1345,10 +1343,7 @@ Select Account
     Unselect frame
     sleep  5s
 
-
 select contact
-
-
     ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
     ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
     ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
@@ -1363,7 +1358,6 @@ select contact
     #sleep   10s
     Wait until element is visible  //input[@id='OCEmail']   30s
     #Input Text   //input[@id='OCEmail']   primaryemail@noemail.com
-
     ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
     Run Keyword if  ${status}  Enter technical contact
     Execute JavaScript    window.scrollTo(0,200)
@@ -2258,6 +2252,29 @@ Update Setting
     Input Text    ${fieldname}   ${value}
     sleep  5s
     Click element  ${closing}
+    unselect frame
+
+Override Prices in CPQ
+    [Arguments]    ${product}       ${rc}       ${otc}
+    ${recurringcharge}  set variable  //div[contains(text(),'${product}')]/../../../div/div/div/div[contains(@ng-if,'vlocity_cmt__RecurringCharge__c')]/div/span
+    ${onetimecharge}  set variable   //div[contains(text(),'${product}')]/../../../div/div/div/div[contains(@ng-if,'vlocity_cmt__OneTimeCharge__c')]/span
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    select frame        ${iframe}
+    wait until page contains element        ${recurringcharge}
+    ScrollUntillFound     ${recurringcharge}
+    Force Click element     ${recurringcharge}
+    wait until page contains element     //input[@id='adjustment-input-01']         60s
+    input text       //input[@id='adjustment-input-01']     ${rc}
+    Sleep   3s
+    click element   //button[contains(text(),'Apply')]
+    wait until page contains element        ${onetimecharge}
+    ScrollUntillFound     ${onetimecharge}
+    Force Click element     ${onetimecharge}
+    Sleep   3s
+    wait until page contains element     //input[@id='adjustment-input-01']     60s
+    input text       //input[@id='adjustment-input-01']     ${otc}
+    click element   //button[contains(text(),'Apply')]
+    sleep   5s
     unselect frame
 
 logoutAsUser

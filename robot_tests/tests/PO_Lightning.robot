@@ -178,7 +178,7 @@ Test scenario 1:Telia Architect
     [Documentation]    Ordering Telia Architect Continuous Service with Other Services Extra Service and Kilometer allowance
     [Tags]    BQA-11483     Run    sitpo22   PO_Scripts
     ${prod_1}    set variable    Telia Arkkitehti jatkuva palvelu
-    ${prod_2}    set variable    Muut asiantuntijapalvelut
+    ${prod_2}    set variable    Muut Asiantuntijapalvelut
     General Setup    B2B    ${test_account}
     AddToCart with product_id    Telia Arkkitehti jatkuva palvelu   01u6E000007Roo5
     Update setting Telia Arkkitehti jatkuva palvelu    d    yes
@@ -574,7 +574,7 @@ Telia ACE Complete Order
     Add all child products
     Update Setting      Agent Interact Workplace            productconfig_field_0_0     100
     Update Setting      Mobile Agent Workplace              productconfig_field_0_0     200
-    #Overrride Prices in CPQ
+    Override Prices in CPQ      Production Environment      100       150
     #clicking on next button
     #Update Product Page    Telia ACE
     #Create_Order
