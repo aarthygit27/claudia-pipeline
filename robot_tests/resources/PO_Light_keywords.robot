@@ -468,8 +468,6 @@ AddToCart with product_id
     Click Settings  ${pname}
     Unselect frame
 
-
-
 Searching and adding product
     [Documentation]  Search and add products and click settings
     [Arguments]   ${pname}=${product_name}
@@ -477,6 +475,7 @@ Searching and adding product
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
     ${status}     Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
+    Sleep       10s
     #Log to console      ${status}
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     Wait until element is visible  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
@@ -2239,7 +2238,7 @@ Add all child products
      select frame  xpath=//div[contains(@class,'slds')]/iframe
      ${count}    get element count      ${AddChildProducts}
      #${locators}=    Get Webelements    xpath=${AddChildProducts}
-     : FOR    ${locator}    IN RANGE  ${count}-1
+     : FOR    ${locator}    IN RANGE  ${count}
      \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
      \    ScrollUntillFound      ${AddChildProducts}
      \    Force click element         ${AddChildProducts}
@@ -2266,14 +2265,16 @@ Override Prices in CPQ
     ${onetimecharge}  set variable   //div[contains(text(),'${product}')]/../../../div/div/div/div[contains(@ng-if,'vlocity_cmt__OneTimeCharge__c')]/span
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     select frame        ${iframe}
-    wait until page contains element        ${recurringcharge}
+    wait until page contains element        ${recurringcharge}      20s
     ScrollUntillFound     ${recurringcharge}
     Force Click element     ${recurringcharge}
     wait until page contains element     //input[@id='adjustment-input-01']         60s
     input text       //input[@id='adjustment-input-01']     ${rc}
     Sleep   3s
     click element   //button[contains(text(),'Apply')]
-    wait until page contains element        ${onetimecharge}
+    unselect frame
+    select frame        ${iframe}
+    wait until page contains element        ${onetimecharge}        20s
     ScrollUntillFound     ${onetimecharge}
     Force Click element     ${onetimecharge}
     Sleep   3s

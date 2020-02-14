@@ -567,14 +567,23 @@ Telia ACE Complete Order
     [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest          TestingMail
     #General Setup    B2B
     Open Salesforce and Login into Lightning
-    Go to Entity      Test Robot Order_ 20191209-152542
-    ClickingOnCPQ    Test Robot Order_ 20191209-152542
+    Go to Entity      Test Robot Order_20200208-103505
+    ClickingOnCPQ     Test Robot Order_20200208-103505
     Searching and adding product    Telia ACE
     #log     ${oppo_name}
     Add all child products
     Update Setting      Agent Interact Workplace            productconfig_field_0_0     100
     Update Setting      Mobile Agent Workplace              productconfig_field_0_0     200
     Override Prices in CPQ      Production Environment      100       150
-    #clicking on next button
-    #Update Product Page    Telia ACE
-    #Create_Order
+    Override Prices in CPQ      Service Activation      200       250
+    Override Prices in CPQ      Service Fee      300       350
+    Override Prices in CPQ      Agent Interact Workplace      400       450
+    Override Prices in CPQ      Mobile Agent Workplace      500       550
+    Override Prices in CPQ      Other user license      600       650
+    Override Prices in CPQ      Customer specific service      700       750
+    Override Prices in CPQ      Interface license      800       850
+    Override Prices in CPQ      Recording      900       950
+    Override Prices in CPQ      Teleopti      1000       1050
+    clicking on next button
+    Update Product Page    Telia ACE
+    Create_Order
