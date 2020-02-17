@@ -1877,15 +1877,16 @@ Validate the validity and the price for Other Domain
     [Arguments]    ${field}         ${value}        ${otc}
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${value}']
+    sleep  20s
     wait until page contains element  //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]  60s
-    ${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
+    #${recurringcharge}    get text      //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][1]
     ${onetimecharge}    get text     //*[contains(text(),'Other Domain name')]/../../..//div[@class='cpq-item-base-product-currency cpq-item-currency-value'][3]
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
     press enter on    ${Voimassaoloaika_Field}
     Wait Until Element Is Visible    ${Voimassaoloaika_option}   2s
     click element    ${Voimassaoloaika_option}
     sleep   20s
-    Should be true       '35.00' in '${recurringcharge}'
+    #Should be true       '35.00' in '${recurringcharge}'
     Should be true       '${otc}' in '${onetimecharge}'
 
 

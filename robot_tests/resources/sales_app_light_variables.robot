@@ -231,7 +231,7 @@ ${360_VIEW}     //li//a[text()='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]
 ${DEFAULT_ADDRESS}      Korpijärventie 3
 ${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scope am-fade bottom-left']/li/a[text()='${DEFAULT_ADDRESS}']
-${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[5]/td[1]/label/input/../span
+${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[7]/td[1]/label/input/../span
 ${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
 ${B2O_DIGISALES_LIGHT_PASSWORD}    PahaPassu2

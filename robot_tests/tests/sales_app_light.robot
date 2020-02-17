@@ -11,7 +11,7 @@ Resource          ../resources/multibella_keywords.robot
 
 ##################################################  SANITY TESTS ###################################################
 Add new contact - Master
-    [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details.
+    [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details
     [Tags]    BQA-8396  AUTOLIGHTNING   ContactsManagement
     Go To Salesforce and Login into Lightning
     Create New Master Contact
@@ -25,7 +25,6 @@ Add new contact - Non person
     Validate NP Contact
 
 Add new contact from Accounts Page
-
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
     [Tags]    BQA-8394  AUTOLIGHTNING   ContactsManagement
     Go To Salesforce and Login into Lightning
@@ -132,6 +131,7 @@ Lightning: Create Task from Account
     #Verify That Opportunity is Found From My All Open Opportunities
 
 Change Account owner for Group Account
+    [Documentation]    To change the account  owner for group  account
     [Tags]    BQA-8523     AUTOLIGHTNING      AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
@@ -260,26 +260,18 @@ Lightning: Sales admin Change Account owner for group account
 Create HDC Order
     [Tags]    BQA-11774    AUTOLIGHTNING       HDCOrderManagement
     Login to Salesforce as DigiSales Lightning User
-    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    #log to console    ${contact_name}.this is name
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    #log to console    ${oppo_name}.this is opportunity
     ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
-    #log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     #Edit Opportunity values    Price List      B2B
     ChangeThePriceList      B2B
-    #ChangeThePriceBookToHDC    HDC Pricebook B2B
     ClickingOnCPQ    ${oppo_name}
     Adding Telia Colocation    Telia Colocation
     Updating Setting Telia Colocation
     UpdateAndAddSalesType    Telia Colocation
-    #View Open Quote
-    #sleep    40s
     ClickonCreateOrderButton
-    #OpenOrderPage
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
     select order contacts- HDC  ${contact_name}
@@ -289,24 +281,12 @@ Create HDC Order
     #${billing_acc_name}
     #ReviewPage
     clickOnSubmitOrder
-#    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
-#    Input Text    xpath=${SEARCH_SALESFORCE}    319100915935
-#    wait until page contains element  //span[@title="319100915935"]/../..   30s
-#    force click element     //span[@title="319100915935"]/../..
     ValidateTheOrchestrationPlan
 
 Create B2B Order
     [Tags]    BQA-8919     AUTOLIGHTNING        B2BOrderManagement
     Login to Salesforce as DigiSales Lightning User
-    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
-    #GO TO ENTITY    Oppo_ 20190217-191125
-    #SLEEP    60S
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    #${sc_name}    run keyword    createAAgreement    Service Contract
-    #${billing_acc_name}    run keyword    CreateABillingAccount
-    #capture page screenshot
-    #Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    #capture page screenshot
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #log to console    ${contact_name}.this is name
     sleep    10s
@@ -380,7 +360,6 @@ Create B2O Order
 createAOppoViaSVE
     [Tags]    BQA-8798    AUTOLIGHTNING
     Login to Salesforce as DigiSales Lightning User
-    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #log to console    ${contact_name}.this is name
@@ -389,13 +368,13 @@ createAOppoViaSVE
     #log to console    ${oppo_name}.this is opportunity
     go to entity    ${oppo_name}
     clickingOnSolutionValueEstimate    ${oppo_name}
-    ${fyr}    run keyword    addProductsViaSVE    ${product_name}
+    ${fyr}    run keyword    addProductsViaSVE    Telia Colocation
     Go To Entity    ${oppo_name}
-    validateCreatedOppoForFYR    ${fyr}
+    validateCreatedOppoForFYR   Telia Colocation  ${fyr}
     Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    AUTOLIGHTNING         B2BOrderManagement
+    [Tags]    BQA-9121    AUTOLIGHTNING         B2BOrderManagement  rerun
     Go To Salesforce and Login into Lightning
     Go To Entity    Ylöjärven Yrityspalvelu Oy
     ${contact_name}    run keyword    Create New Contact for Account
@@ -411,22 +390,9 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     sleep    10s
     #clickingOnSolutionValueEstimate    ${oppo_name}
     ClickingOnCPQ    ${oppo_name}
-    #sleep   30s
-    #Log to console      Inside frame
-    #sleep  60s
-    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-    #${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
-    #Log to console      ${status}
-    #wait until page contains element    //span[text()='Next']/..    60s
     #click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     search products  Telia Yritysinternet Plus
     Adding Yritysinternet Plus  Telia Yritysinternet Plus
-    #Sleep  60s
-    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-    #${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
-    #Log to console      ${status}
-    #wait until page contains element    //span[text()='Next']/..    60s
-    #click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     search products    DataNet Multi
     Adding DataNet Multi  DataNet Multi
     #sleep   20s
@@ -460,12 +426,6 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     ClickingOnCPQ    ${oppo_name}
     #sleep    30s
     Searching and adding multiple products    @{products}
-    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-    #${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
-    #Log to console      ${status}
-    #wait until page contains element    //span[text()='Next']/..    60s
-    #click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
-    #unselect frame
     Updating sales type multiple products    @{products}
     #OpenQuoteButtonPage_release
     preview and submit quote  ${oppo_name}
@@ -587,10 +547,10 @@ Add an account team member as account owner
     [Tags]    BQA-10524     AUTOLIGHTNING       AccountManagement
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Admin User
-#    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-#    Check original account owner and change if necessary for event
-#    logoutAsUser  Sales Admin
-#    Go To Salesforce and Login into Lightning
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Check original account owner and change if necessary for event
+    logoutAsUser  Sales Admin
+    Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
     Navigate to view    Account Team Members
@@ -1604,7 +1564,7 @@ Manual Credit Check Enquiry with postive
     [Tags]  BQA-12600
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
     Go to Entity   ${oppo_name}
@@ -1616,17 +1576,18 @@ Manual Credit Check Enquiry with postive
     sleep  20s
     Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     swithchtouser  Credit Control
-    Activate The Manual Credit enquiry   ${value}
+    Activate The Manual Credit enquiry with positive   ${value}   Positive
     Login to Salesforce as DigiSales Lightning User
     ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
     page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
     Search Salesforce    ${quote_number}
     Select Entity    ${oppo_name}    ${EMPTY}
     credit score status after approval
-    SearchAndSelectBillingAccount   ${TEST_CONTACT}
-    select order contacts- HDC  ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
+    Check the credit score result of the case with postive
+#    SearchAndSelectBillingAccount   ${TEST_CONTACT}
+#    select order contacts- HDC  ${contact_name}
+#    RequestActionDate
+#    SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
     ValidateTheOrchestrationPlan
 
@@ -1634,7 +1595,7 @@ Manual Credit Check Enquiry with postive and condition
     [Tags]  BQA-12674
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
     Go to Entity   ${oppo_name}
@@ -1646,13 +1607,14 @@ Manual Credit Check Enquiry with postive and condition
     sleep  20s
     Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     swithchtouser  Credit Control
-    Activate The Manual Credit enquiry   ${value}
+    Activate The Manual Credit enquiry with positive with condition   ${value}  Positive with Conditions
     Login to Salesforce as DigiSales Lightning User
     ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
-    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive with Conditions.")]
     Search Salesforce    ${quote_number}
     Select Entity    ${oppo_name}    ${EMPTY}
     credit score status after approval
+    Check the credit score result of the case with Positive with Conditions
     SearchAndSelectBillingAccount   ${TEST_CONTACT}
     select order contacts- HDC  ${contact_name}
     RequestActionDate
@@ -1664,7 +1626,7 @@ Manual Credit Check Enquiry with Negative
     [Tags]  BQA-12673
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
     Go to Entity   ${oppo_name}
@@ -1676,10 +1638,10 @@ Manual Credit Check Enquiry with Negative
     sleep  20s
     Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     swithchtouser  Credit Control
-    Activate The Manual Credit enquiry   ${value}
+    Activate The Manual Credit enquiry with Negative    ${value}   Negative
     Login to Salesforce as DigiSales Lightning User
-    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
-    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Negative.")]
+    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Negative.")]
     Search Salesforce    ${quote_number}
     Select Entity    ${oppo_name}    ${EMPTY}
     credit score status after approval
@@ -1694,40 +1656,23 @@ Manual Credit Check Enquiry with No Result
     [Tags]  BQA-12675
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
     Go to Entity   ${oppo_name}
     clickingoncpq   ${oppo_name}
     Add product to cart (CPQ)  Telia Chat
     UpdateAndAddSalesType  Telia Chat
-    ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
-    logoutAsUser  B2B DigiSales
     sleep  20s
-    Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
-    swithchtouser  Credit Control
-    Activate The Manual Credit enquiry   ${value}
-    Login to Salesforce as DigiSales Lightning User
-    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
-    page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
-    Search Salesforce    ${quote_number}
-    Select Entity    ${oppo_name}    ${EMPTY}
-    credit score status after approval
-    SearchAndSelectBillingAccount   ${TEST_CONTACT}
-    select order contacts- HDC  ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
-    clickOnSubmitOrder
-    ValidateTheOrchestrationPlan
 
 Pricing Escalation
     [Tags]   BQA-11368
-    Login to Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Login to Salesforce as DigiSales Lightning User  ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    logoutAsUser    ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning    ${PM_User}  ${PM_PW}
+    logoutAsUser  ${B2B_DIGISALES_LIGHT_USER}
+    Login to Salesforce as DigiSales Lightning User  ${PM_User}  ${PM_PW}
     Go To Entity  ${oppo_name}
     Create Pricing Request
     ${Case_number}   run keyword   Create Pricing Escalation
@@ -1738,16 +1683,15 @@ Pricing Escalation
     Verify case Status by Endorser   ${Case_number}  Approved
     Case Not visible to Normal User    ${Case_number}
 
-
 Pricing Escalation - Rejection
     [Tags]   BQA-11386
-    Login to Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Login to Salesforce as DigiSales Lightning User ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
-    logoutAsUser    ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${PM_User}  ${PM_PW}
+    #${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
+    logoutAsUser    ${SYSTEM_ADMIN_USER}
+    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox   ${PM_User}  ${PM_PW}
     Go To Entity  ${oppo_name}
     Create Pricing Request
     ${Case_number}   run keyword   Create Pricing Escalation
@@ -1758,33 +1702,35 @@ Pricing Escalation - Rejection
     Verify case Status by Endorser  ${Case_number}   Rejected
     Case Not visible to Normal User  ${Case_number}
 
+Test file handling
+    [Tags]  Test_file
+    Wait Until element is visible   id=username     30s
+    Input Text  id=username   ${SALES_ADMIN_APP_USER}
+    Input Text   id =password  ${PASSWORD-SALESADMIN}
+    Click Element  id=Login
+    DDM Request Handling
 
 Investment Process - B2B
     [Tags]   BQA-11387
-    Login to Salesforce Lightning    ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Login to Salesforce as DigiSales Lightning User     ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Entity    Aacon Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity  ${oppo_name}
     ${case_number}  run keyword    Create Investment Case  B2B
-    PM details    ${oppo_name}   ${case_number}  B2B
-    Case Approval By Endorser   ${Case_number}  ${oppo_name}
-    Case Approval By Approver   ${Case_number}  ${oppo_name}
-    Check Case Status  ${Case_number}  B2B
+    #Submit created Investment    ${oppo_name}   ${case_number}
+    PM details  ${oppo_name}    ${case_number}    B2B
+    #PM details    ${oppo_name}   ${case_number}  B2B
+    Case Approval By Endorser   ${case_number}   ${oppo_name}
+    Case Approval By Approver   ${case_number}   ${oppo_name}
+    Check Case Status  ${case_number}  B2B
 
-Test Investment
-    [Tags]  check_invest
-    ${Case_number}   set variable   00033288
-    ${oppo_name}     set variable   Test Robot Order_20200103-143425
-    PM details    ${oppo_name}   ${case_number}  B2B
-    Case Approval By Endorser   ${Case_number}  ${oppo_name}
-    Case Approval By Approver   ${Case_number}  ${oppo_name}
-    Check Case Status  ${Case_number}  B2B
 
 
 Investment Process - B2O
     [Tags]   BQA-11395
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Login to Salesforce as DigiSales Lightning User  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
     Go To Entity    ${B2O Account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
     Go To Entity    ${oppo_name}
@@ -1796,7 +1742,7 @@ Investment Process - B2O
 Manual Availability - B2O
 
     [Tags]   BQA-11380  Test
-    Login to Salesforce as DigiSales Lightning User vLocUpgSandbox  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
     Go To Entity    ${B2O Account}
     Go To Entity    ${B2O Account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
@@ -1810,17 +1756,17 @@ Check of Customership Contract
     set Test variable    ${account}   Telia Communication Oy
     Login To Salesforce As DigiSales Lightning User   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
     Go To Entity    ${account}
-    #Delete all existing contracts from Accounts Related tab
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    #Set Test Variable   ${contact_name}   Testing Contact_ 20191107-170711
-    Set Test Variable   ${contact_name}   ${contact}
+    Delete all existing contracts from Accounts Related tab
+    #${contact}    run keyword    CreateAContactFromAccount_HDC
+    #Set Test Variable   ${contact_name}   ${contact}
+    Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     #Set Test Variable   ${oppo_name}    Test Robot Order_ 20191107-170816
     Verify warning banner on oppo page   ${oppo_name}
     Go to account from oppo page
     Create contract Agreement  Customership
     ${Contract_A_Number}  set variable  ${Customer_contract}
-    Log to console   Contract A is ${Contract_A_Number}
+    #Log to console   Contract A is ${Contract_A_Number}
     Go To Entity    ${account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
     Verify that warning banner is not displayed on opportunity page  ${oppo_name}
@@ -1830,7 +1776,7 @@ Check of Customership Contract
     Go To Entity    ${account}
     Create contract Agreement  Customership
     ${Contract_B_Number}   set variable  ${Customer_contract}
-    Log to console   Contract B is ${Contract_B_Number}
+    #Log to console   Contract B is ${Contract_B_Number}
     Change Merged Status   ${Contract B_Number}
     Go To Entity    ${account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
@@ -1886,54 +1832,27 @@ One Order - B2B Colocation and Change Order
 One Order- B2O Colocation and change order
     [Tags]  BQA-11523
 
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
     Go to Entity   ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
-    SwithchToUser  B2O NetworkSales
-    HDC Order_B2O
-    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
+    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
+    HDC Order
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Open Browser And Go To Login Page
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    SwithchToUser  B2O NetworkSales
+    Switch between windows    0
+    logoutAsUser   ${SYSTEM_ADMIN_USER}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go to   ${url}
     Validate Billing system response
     Change Order
-    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
-    Open Browser And Go To Login Page
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    SwithchToUser  B2O NetworkSales
-    Go to   ${url}
-    Validate Billing system response
-    Capture Page Screenshot
-    Go to Entity    ${vLocUpg_TEST_ACCOUNT}
-    Terminate asset     Telia Colocation
-
-Test B2o One Order
-    Wait Until element is visible   id=username     30s
-    Input Text  id=username   ${B2O_DIGISALES_LIGHT_USER}
-    Input Text   id =password  ${B2O_DIGISALES_LIGHT_PASSWORD}
-    Click Element  id=Login
-    Go to   https://telia-fi--rel.lightning.force.com/lightning/r/Order/8011w000002U3UpAAK/view
-    ValidateTheOrchestrationPlan- B20
-    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    DDM Request Handling
-    Open Browser And Go To Login Page
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    SwithchToUser  B2O NetworkSales
-    Go to   ${url}
-    Validate Billing system response
-    Change Order
-    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    DDM Request Handling
-    Open Browser And Go To Login Page
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    SwithchToUser  B2O NetworkSales
+    Switch between windows    0
+    logoutAsUser  ${SYSTEM_ADMIN_USER}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go to   ${url}
     Validate Billing system response
     Capture Page Screenshot
@@ -1979,14 +1898,29 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Go to   ${url}
     Validate Billing system response
     Validate Order status
+    Validate Billing account
+
+Testing
+
+    #Wait Until element is visible   id=username     30s
+    #Input Text  id=username   ${B2B_DIGISALES_LIGHT_USER}
+    #Input Text   id =password  ${Password_merge}
+    #Click Element  id=Login
+    set test variable   ${order_no}  319123015378
+    set test variable   ${url}   https://telia-fi--rel.lightning.force.com/lightning/r/vlocity_cmt__OrchestrationPlan__c/a1w1w000000EKLDAA4/view
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go to   ${url}
+    Validate Billing system response
+    Validate Order status
 
 SAP Order
-    #Switch failing. Refer 580
+
+
     [Tags]  BQA-12512
     [Documentation]     This script is designed for Digita Oy. If account is changed, the corresponding group id has to be changed for the script to work. SAP contract id hardcoded as it is getting failed nowadys.
     set test variable   ${Account}    Digita Oy
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    SwithchToUser  B2O NetworkSales
+    #Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go To Entity    ${Account}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
