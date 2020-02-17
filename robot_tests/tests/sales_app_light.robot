@@ -522,7 +522,7 @@ Automatic availability check B2B-Account
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
     Validate Address details
-    Select product available for the address and create an opportunity
+    select product available for the address and create an opportunity
     #ClickingOnCPQ
     Check the CPQ-cart contains the wanted products    Telia Yritysinternet
 

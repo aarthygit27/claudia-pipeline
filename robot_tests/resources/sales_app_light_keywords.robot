@@ -3263,7 +3263,7 @@ Navigate to Availability check
     Wait Until Element Is Enabled    ${iframe}    60s
     select frame    ${iframe}
     ${status}   set variable    Run Keyword and return status    Frame should contain    ${AVAILABILITY_CHECK_BUTTON}    Availability check
-    Current Frame Should Contain    //button[text()="Availability check"]
+    #Current Frame Should Contain    //button[text()="Availability check"]
     Wait until page contains element  //button[text()="Availability check"]    60s
     Click Button   //button[text()="Availability check"]
     ${status}=    Run Keyword and return status    Wait until element is not visible    ${AVAILABILITY_CHECK_BUTTON}
