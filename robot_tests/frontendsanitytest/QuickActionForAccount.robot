@@ -13,11 +13,11 @@ Resource          ../resources/multibella_keywords.robot
 Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
     [Tags]    BQA-7948    AUTOLIGHTNING     QuickActionsForAccount
-    Go To Salesforce and Login into Admin User
+    Go To Salesforce and Login into Lightning       DigiSales Admin
     Go To Entity    ${TEST_CONTACT}
     sleep    20s
     Check original account owner and change if necessary for event
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
     Go to Entity   ${TEST_CONTACT}
@@ -26,7 +26,7 @@ Lightning: Create Meeting from Account
 Lightning: Create Call from Account
     [Documentation]    To create call for a account
     [Tags]    BQA-8085    AUTOLIGHTNING     QuickActionsForAccount
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
     Go to Entity    ${TEST_CONTACT}
@@ -36,7 +36,7 @@ Lightning: Create Call from Account
 Lightning: Create Task from Account
     [Documentation]    To create task for a account
     [Tags]    BQA-8463    AUTOLIGHTNING     QuickActionsForAccount
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
     Go To Entity    ${TEST_CONTACT}

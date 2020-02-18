@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 Investment Process - B2B
     [Tags]   BQA-11387
     [Documentation]    Create B2B Investment case. Complete the approval flow.
-    Login to Salesforce as DigiSales Lightning User     ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    Aacon Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -27,7 +27,7 @@ Investment Process - B2B
 Investment Process - B2O
     [Tags]   BQA-11395
     [Documentation]    Create B2O Investment case. Complete the approval flow.
-    Login to Salesforce as DigiSales Lightning User  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go To Salesforce and Login into Lightning       B2O User
     Go To Entity    ${B2O Account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
     Go To Entity    ${oppo_name}

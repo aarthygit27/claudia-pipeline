@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 Create B2O Order
     [Tags]    BQA-8920    AUTOLIGHTNING         B2OOrderManagement
     [Documentation]     Create Order by adding B2O Other services into cart
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    Create New Contact for Account
     sleep    10s

@@ -13,21 +13,21 @@ Resource          ../resources/multibella_keywords.robot
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details
     [Tags]    BQA-8396  AUTOLIGHTNING   ContactsManagement
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Create New Master Contact
     Validate Master Contact Details
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
     [Tags]    BQA-8395  AUTOLIGHTNING   ContactsManagement
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Create New NP Contact
     Validate NP Contact
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
     [Tags]    BQA-8394  AUTOLIGHTNING   ContactsManagement
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
     Validate AP Contact Details
@@ -35,7 +35,7 @@ Add new contact from Accounts Page
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
     [Tags]    BQA-8483    AUTOLIGHTNING     ContactsManagement
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Contacts
     Create New Master Contact With All Details
     Validate Master Contact Details In Contact Page    ${CONTACT_DETAILS}
@@ -44,7 +44,7 @@ Check Attributes/Contact Person are named right
 Negative: Check external data is not editable when creating new contact
     [Tags]      BQA-10945    AUTOLIGHTNING      ContactsManagement
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Contacts
     Navigate to create new contact
     Validate external contact data can not be modified
@@ -53,9 +53,9 @@ Negative: Check external data is not editable when creating new contact
 Negative: Check external data is not editable with existing contact
     [Tags]       BQA-10946     AUTOLIGHTNING        ContactsManagement
     [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
-    Login to Salesforce as System Admin
+    Go To Salesforce and Login into Lightning        System Admin
     Create new contact with external data
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
     Open edit contact form
     Validate external contact data can not be modified
@@ -64,9 +64,9 @@ Negative: Check external data is not editable with existing contact
 Negative: Check external data is not editable from account contact relationship view
     [Tags]      BQA-10947     AUTOLIGHTNING     ContactsManagement
     [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
-    Login to Salesforce as System Admin
+    Go To Salesforce and Login into Lightning        System Admin
     Create new contact with external data
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Entity    ${MASTER_FIRST_NAME} ${MASTER_LAST_NAME}
     Navigate to related tab
     Click view contact relationship

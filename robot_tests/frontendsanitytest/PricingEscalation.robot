@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 Pricing Escalation
     [Tags]   BQA-11368
     [Documentation]    Create Pricing escatalation case and then complete the approval flow by endorser and approver
-    Login to Salesforce as DigiSales Lightning User  ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -32,12 +32,13 @@ Pricing Escalation
 Pricing Escalation - Rejection
     [Tags]   BQA-11386
     [Documentation]    Create Pricing
-    Login to Salesforce as DigiSales Lightning User     ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     #${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    Test RT
     logoutAsUser    ${SYSTEM_ADMIN_USER}
+    Go To Salesforce and Login into Lightning       Pricing Manager
     Login to Salesforce Lightning   ${PM_User}  ${PM_PW}
     Go To Entity  ${oppo_name}
     Create Pricing Request

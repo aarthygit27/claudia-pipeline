@@ -14,7 +14,7 @@ Create opportunity from Account
     [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
     ...    and then in My all open Opportunities section.
     [Tags]    BQA-8393    AUTOLIGHTNING        OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Verify That Opportunity Is Found With Search And Go To Opportunity
@@ -24,7 +24,7 @@ Negative - Validate Opportunity cannot be created for Passive account
     [Documentation]    Select the Passive account and validate that the Opportunity creation
     ...    throws an error
     [Tags]    BQA-8457    AUTOLIGHTNING       OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer    PASSIVEACCOUNT
 
@@ -32,7 +32,7 @@ Negative - Validate Opportunity cannot be created for Group account
     [Documentation]    Select the Group account and validate that the new opportunity button
     ...    is not displayed
     [Tags]    BQA-8464    AUTOLIGHTNING         OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created    GROUPACCOUNT
 
@@ -40,7 +40,7 @@ Closing active opportunity as cancelled
     [Documentation]    Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
     [Tags]    BQA-8465    AUTOLIGHTNING         OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Cancel Opportunity and Validate     ${OPPORTUNITY_NAME}     Cancelled
@@ -50,7 +50,7 @@ Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
     [Tags]    BQA-8466    AUTOLIGHTNING         OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Cancel Opportunity and Validate    ${OPPORTUNITY_NAME}    Closed Lost
@@ -58,7 +58,7 @@ Closing active opportunity as lost
 Mobile coverage request redirects to Tellu
     [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
     [Tags]     BQA-10955      AUTOLIGHTNING         OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
@@ -71,7 +71,7 @@ Mobile coverage request redirects to Tellu
 Manual availability check redirects to Tellu
     [Documentation]     Check that manual availability check button from the opportunity page redirects to Tellu-system login.
     [Tags]     BQA-10954     AUTOLIGHTNING          OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
@@ -81,7 +81,7 @@ Manual availability check redirects to Tellu
 Investment redirects to Tellu
     [Documentation]     In opportunity view clicking investment button redirects to Tellu-system login
     [Tags]      BQA-10953      AUTOLIGHTNING        OpportunityValidation
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
@@ -92,7 +92,7 @@ Investment redirects to Tellu
 Add Oppo Team Member and Edit the Oppo with New Team Member
     [Tags]  BQA-10816       AUTOLIGHTNING       OpportunityValidation
     [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B and try modifying the oppo with newly added team member
-    Go To Salesforce and Login into Admin User
+    Go To Salesforce and Login into Lightning       DigiSales Admin
     Go To Entity    Aarsleff Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     sleep   10s
@@ -100,23 +100,23 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
     go to entity  ${oppo_name}
     logoutasuser  Sales Admin
     sleep   10s
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     go to entity  ${oppo_name}
     changethepricelist      B2B
     Sleep  10s
     logoutasuser  B2B DigiSales
     sleep  10s
-    Login to Salesforce as DigiSales Admin User
+    Go To Salesforce and Login into Lightning       DigiSales Admin
     AddOppoTeamMember  ${oppo_name}   B2B DigiSales
     logoutAsUser  Sales Admin
     sleep  10s
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     go to entity  ${oppo_name}
     changethepricelist    GTM
 
 createSalesProjectOppo
     [Tags]        BQA-11776    AUTOLIGHTNING        OpportunityValidation
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity   ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     sleep   10s
@@ -128,7 +128,7 @@ createSalesProjectOppo
     Sleep  10s
     ${case_number}=  run keyword      Create case from more actions
     logoutAsUser  B2B DigiSales
-    Login to Salesforce as System Admin
+    Go To Salesforce and Login into Lightning       DigiSales Admin
     swithchtouser      B2B DigiSales
     openquotefromopporelated  ${oppo_name}  ${case_number}
     SalesProjectOppurtunity     ${case_number}
@@ -144,7 +144,7 @@ Closing Opportunity as Won with FYR below 3 KEUR
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     [Tags]    BQA-8795    AUTOLIGHTNING
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     ${FYR}=    set variable    //p[@title='FYR Total']/..//lightning-formatted-text
     ${Edit_continuation}=    Set Variable    //div/button[@title='Edit Create Continuation Sales Opportunity?']
     Closing Opportunity as Won with FYR    200    Yes

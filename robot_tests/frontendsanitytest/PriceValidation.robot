@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 Price input for unmodeled products in omniscript
     [Tags]    BQA-9160      AUTOLIGHTNING          OpportunityValidation
     [Documentation]    Validate OTC and MRC in quote and opportunity
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
     ClickingOnCPQ       ${OPPORTUNITY_NAME}
@@ -26,7 +26,7 @@ Price input for unmodeled products in omniscript
 Lightning - FYR Calculation for B2B
      [Tags]     BQA-11305   AUTOLIGHTNING   rerun
      [Documentation]    Add products to cart, calculate otc, mrc. Validate FYR and revenue.
-     Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
      Go to Entity    Kotipizza Group Oyj
      ${contact_name}   run keyword    Create New Contact for Account
      ${oppo_name}      run keyword    CreateAOppoFromAccount_HDC    ${contact_name}

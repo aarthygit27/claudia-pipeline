@@ -13,10 +13,10 @@ Resource          ../resources/multibella_keywords.robot
 Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
     [Tags]      BQA-10334    AUTOLIGHTNING      ContractManagement
-    Go To Salesforce and Login into Admin User
+    Go To Salesforce and Login into Lightning        System Admin
     Go To Entity    ${CONTRACT_ACCOUNT}
     Delete all entities from Accounts Related tab      Contracts
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${CONTRACT_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
     Verify that warning banner is displayed on opportunity page   ${OPPORTUNITY_NAME}
@@ -29,7 +29,7 @@ Check banner for customership and service contract
 Create contact relationship for account
     [Documentation]    Add new relationship for contact and check that account are displayed correctly on contact page.
     [Tags]     BQA-10523    AUTOLIGHTNING     ContactsManagement
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Contact for Account
     Add relationship for the contact person
@@ -39,14 +39,14 @@ Create contact relationship for account
 Lightning_Customership Contract
      [Tags]  BQA-12655
      [Documentation]    Create Customership Contract
-     Go To Salesforce and Login into Admin User
+     Go To Salesforce and Login into Lightning       DigiSales Admin
      Go To Entity    ${CONTRACT_ACCOUNT}
      Create contract Agreement  Customership
 
 Lightning_Service Contract
     [Tags]  BQA-12666
     [Documentation]    Create Service Contract
-    Go To Salesforce and Login into Admin User
+    Go To Salesforce and Login into Lightning       DigiSales Admin
     Go To Entity    ${CONTRACT_ACCOUNT}
     Delete all entities from Accounts Related tab   Contracts
     Create contract Agreement  Customership
@@ -57,7 +57,7 @@ Check of Customership Contract
     [Tags]   BQA-11427
     [Documentation]    Validate banner for customership contract
     set Test variable    ${account}   Telia Communication Oy
-    Login To Salesforce As DigiSales Lightning User   ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     Go To Entity    ${account}
     Delete all existing contracts from Accounts Related tab
     Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806

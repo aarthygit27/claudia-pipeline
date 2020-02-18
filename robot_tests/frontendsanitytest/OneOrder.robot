@@ -13,26 +13,26 @@ Resource          ../resources/multibella_keywords.robot
 One Order - B2B Colocation and Change Order
     [Tags]  BQA-11521
     [Documentation]    Create new order with product B2B Telia colocation and then perform change order
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Lightning       DigiSales Admin
     Go to Entity    ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     HDC Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     DDM Request Handling
     Open Browser And Go To Login Page
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to   ${url}
     Validate Billing system response
     Log to console   Entering change Order
     Change Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     DDM Request Handling
     Open Browser And Go To Login Page
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to   ${url}
     Validate Billing system response
     Capture Page Screenshot
@@ -42,27 +42,27 @@ One Order - B2B Colocation and Change Order
 One Order- B2O Colocation and change order
     [Tags]  BQA-11523
     [Documentation]    Create new order with product B2O Telia colocation and then perform change order
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Lightning       DigiSales Admin
     Go to Entity   ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go To Salesforce and Login into Lightning       B2O User
     HDC Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     DDM Request Handling
     Switch between windows    0
     logoutAsUser   ${SYSTEM_ADMIN_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to   ${url}
     Validate Billing system response
     Change Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     DDM Request Handling
     Switch between windows    0
     logoutAsUser  ${SYSTEM_ADMIN_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to   ${url}
     Validate Billing system response
     Capture Page Screenshot
@@ -73,7 +73,7 @@ One Order- B2O Colocation and change order
 One Order- B2B Colocation, Case management product, Modeled Case management product
     [Tags]  BQA-11522
     [Documentation]    Create new order with product B2B Telia colocation , Arkkitehti, CID and then perform change order
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
@@ -102,10 +102,10 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Go to   ${url}
     Validate Call case Management status
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     DDM Request Handling
     Open Browser And Go To Login Page
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go to   ${url}
     Validate Billing system response
     Validate Order status

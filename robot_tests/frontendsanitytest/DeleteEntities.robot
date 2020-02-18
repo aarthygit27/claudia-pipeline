@@ -13,13 +13,13 @@ Resource          ../resources/multibella_keywords.robot
 Delete All the Oppotunities in Account
     [Tags]       Lightning
     [Documentation]    Delete Opportunities in the Account
-    Go To Salesforce and Login into Admin User
+    Go To Salesforce and Login into Lightning       System Admin
     Go to Entity   Affecto Oy
     Delete all entities from Accounts Related tab       Opportunities
 
 Delete all the contacts in Account
     [Tags]       Lightning
     [Documentation]    Delete Contacts in the Account
-    Login to Salesforce as System Admin
+    Go To Salesforce and Login into Lightning       System Admin
     Search Salesforce    Aacon Oy
     Delete all entries from Search list     Contacts

@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 Create HDC Order
     [Tags]    BQA-11774    AUTOLIGHTNING       HDCOrderManagement
     [Documentation]    Add Telia colocation to opportunity cart, submit order and validate orchestration plan
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -37,7 +37,7 @@ Create HDC Order
 HDC - Complete Sales Process: UAT/Sanity Regression
     [Tags]    BQA-8560    AUTOLIGHTNING         HDCOrderManagement
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}

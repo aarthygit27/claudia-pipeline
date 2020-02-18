@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 CreateB2BHDCGTMOrder
     [Tags]      BQA-10818       AUTOLIGHTNING       HDCGTMOrderManagement
     [Documentation]    Create GTM approval request, complete the process.
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     sleep   10s
@@ -44,7 +44,7 @@ CreateB2BHDCGTMOrder
     page should contain element  //span[text()='Pending Approval']
     logoutAsUser  B2B DigiSales
     sleep   10s
-    Login to Salesforce as System Admin
+    Go To Salesforce and Login into Lightning       System Admin
     ApproveB2BGTMRequest  Leila Podduikin  ${oppo_name}
     ApproveB2BGTMRequest  Tommi Mattila    ${oppo_name}
     go to entity  ${oppo_name}

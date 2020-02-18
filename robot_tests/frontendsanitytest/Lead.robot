@@ -24,7 +24,7 @@ Lead_Creation
     sleep    5s
     enter random data to lead web form    ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
     go to    ${LOGIN_PAGE_APP}
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     #login to salesforce as digisales lightning user vlocupgsandbox
     go to entity    ${lead_account_name}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC

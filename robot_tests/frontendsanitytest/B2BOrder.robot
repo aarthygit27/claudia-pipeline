@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 Create B2B Order
     [Tags]    BQA-8919     AUTOLIGHTNING        B2BOrderManagement
     [Documentation]     Create B2B order with product Alerta Projecktointi
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -34,7 +34,7 @@ Create B2B Order
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
     [Tags]    BQA-9121    AUTOLIGHTNING         B2BOrderManagement  rerun
     [Documentation]     Create B2B order with modelled product Telia Yritysinternet plus and unmodelled product Data ner multi
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    Ylöjärven Yrityspalvelu Oy
     ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -67,7 +67,7 @@ Opportunity: Products used for reporting only must not be visible on Quote & Ord
     ...    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
     ...    Sopiva Pro-migraatio    Sovelluskauppa 3rd Party Apps    VIP:n käytössä olevat Cid-numerot    Ohjaus Telia Numeropalveluun    Online Asiantuntijapalvelut
     ${Submit Order}    set variable    //div[@title='Submit Order']
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}      run keyword    CreateAOppoFromAccount_HDC     ${contact_name}
@@ -90,7 +90,7 @@ Opportunity: Products used for reporting only must not be visible on Quote & Ord
 Create B2B Direct Order
     [Tags]    BQA-10813    AUTOLIGHTNING       B2BOrderManagement
     [Documentation]     Create B2B Direct order
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    Ylöjärven Yrityspalvelu Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     sleep    10s
@@ -107,7 +107,7 @@ Create B2B Direct Order
 Create B2B Order - Multibella
     [Tags]    BQA-11778       AUTOLIGHTNING         B2BOrderManagement
     [Documentation]     Create Order for Multibella product
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    Digita Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     sleep   10s

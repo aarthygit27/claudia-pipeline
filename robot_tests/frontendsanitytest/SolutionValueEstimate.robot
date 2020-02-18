@@ -12,7 +12,7 @@ Resource          ../resources/multibella_keywords.robot
 
 createAOppoViaSVE
     [Tags]    BQA-8798    AUTOLIGHTNING
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #log to console    ${contact_name}.this is name
@@ -28,8 +28,7 @@ createAOppoViaSVE
 
 AddProducrViaSVEandCPQFlow
     [Tags]      BQA-10817      AUTOLIGHTNING        OpportunityValidation
-    Login to Salesforce as DigiSales Lightning User
-    #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    Digita Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     sleep   10s

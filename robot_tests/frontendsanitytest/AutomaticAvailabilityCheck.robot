@@ -12,7 +12,7 @@ Resource          ../resources/multibella_keywords.robot
 
 Automatic availability check B2B-Account
     [Tags]    BQA-10225    AUTOLIGHTNING        AvailabilityCheck
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
     Validate Address details
@@ -21,7 +21,7 @@ Automatic availability check B2B-Account
 
 Automatic availability check B2O-Account
     [Tags]    BQA-10225    AUTOLIGHTNING        AvailabilityCheck
-    Go To Salesforce and Login into Lightning    DigiSales B2O User
+    Go To Salesforce and Login into Lightning    B2O User
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer      ACTIVEACCOUNT
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}

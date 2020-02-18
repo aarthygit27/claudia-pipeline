@@ -12,7 +12,7 @@ Resource          ../resources/multibella_keywords.robot
 
 Manual Credit Check Enquiry with postive
     [Tags]  BQA-12600
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -24,10 +24,10 @@ Manual Credit Check Enquiry with postive
     ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
     logoutAsUser  B2B DigiSales
     sleep  20s
-    Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     swithchtouser  Credit Control
     Activate The Manual Credit enquiry with positive   ${value}   Positive
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
     page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
     Search Salesforce    ${quote_number}
@@ -39,7 +39,7 @@ Manual Credit Check Enquiry with postive
 
 Manual Credit Check Enquiry with postive and condition
     [Tags]  BQA-12674
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -51,10 +51,10 @@ Manual Credit Check Enquiry with postive and condition
     ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
     logoutAsUser  B2B DigiSales
     sleep  20s
-    Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     swithchtouser  Credit Control
     Activate The Manual Credit enquiry with positive with condition   ${value}  Positive with Conditions
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
     page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive with Conditions.")]
     Search Salesforce    ${quote_number}
@@ -70,7 +70,7 @@ Manual Credit Check Enquiry with postive and condition
 
 Manual Credit Check Enquiry with Negative
     [Tags]  BQA-12673
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
@@ -82,10 +82,10 @@ Manual Credit Check Enquiry with Negative
     ${value}   ${quote_number}  run keyword    Manual Credit enquiry Button
     logoutAsUser  B2B DigiSales
     sleep  20s
-    Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
+    Go To Salesforce and Login into Lightning       System Admin
     swithchtouser  Credit Control
     Activate The Manual Credit enquiry with Negative    ${value}   Negative
-    Login to Salesforce as DigiSales Lightning User
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Negative.")]
     page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Negative.")]
     Search Salesforce    ${quote_number}
@@ -100,7 +100,7 @@ Manual Credit Check Enquiry with Negative
 
 Manual Credit Check Enquiry with No Result
     [Tags]  BQA-12675
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}

@@ -13,7 +13,7 @@ Resource          ../resources/multibella_keywords.robot
 Manual Availability - B2O
     [Tags]   BQA-11380  Test
     [Documentation]    Create Opportunity and perform manual availability check
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
+    Go To Salesforce and Login into Lightning       B2O User
     Go To Entity    ${B2O Account}
     Go To Entity    ${B2O Account}
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  Test RT
