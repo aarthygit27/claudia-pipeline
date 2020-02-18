@@ -1,0 +1,171 @@
+*** Settings ***
+Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
+Test Setup        Open Browser And Go To Login Page
+Test Teardown     Logout From All Systems and Close Browser
+Resource          ../resources/sales_app_light_keywords.robot
+Resource          ../resources/common.robot
+Resource          ../resources/multibella_keywords.robot
+#Library             test123.py
+
+
+*** Test Cases ***
+
+Create opportunity from Account
+    [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
+    ...    and then in My all open Opportunities section.
+    [Tags]    BQA-8393    AUTOLIGHTNING        OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Verify That Opportunity Is Found With Search And Go To Opportunity
+    Verify That Opportunity is Found From My All Open Opportunities
+
+Negative - Validate Opportunity cannot be created for Passive account
+    [Documentation]    Select the Passive account and validate that the Opportunity creation
+    ...    throws an error
+    [Tags]    BQA-8457    AUTOLIGHTNING       OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${PASSIVE_TEST_ACCOUNT}
+    Create New Opportunity For Customer    PASSIVEACCOUNT
+
+Negative - Validate Opportunity cannot be created for Group account
+    [Documentation]    Select the Group account and validate that the new opportunity button
+    ...    is not displayed
+    [Tags]    BQA-8464    AUTOLIGHTNING         OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${GROUP_TEST_ACCOUNT}
+    Validate Opportunity cannot be created    GROUPACCOUNT
+
+Closing active opportunity as cancelled
+    [Documentation]    Create new opportunity and cancel the opportunity and validate that
+    ...    it cannot be updated further
+    [Tags]    BQA-8465    AUTOLIGHTNING         OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Cancel Opportunity and Validate     ${OPPORTUNITY_NAME}     Cancelled
+
+
+Closing active opportunity as lost
+    [Documentation]    Create new opportunity and close the opportunity as lost and validate that
+    ...    it cannot be updated further
+    [Tags]    BQA-8466    AUTOLIGHTNING         OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Create New Opportunity For Customer    ACTIVEACCOUNT
+    Cancel Opportunity and Validate    ${OPPORTUNITY_NAME}    Closed Lost
+
+Mobile coverage request redirects to Tellu
+    [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
+    [Tags]     BQA-10955      AUTOLIGHTNING         OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    ${status}=  Run keyword and return status    Wait element to load and click  //a[@title='Mobile Coverage Request']
+    Run keyword if      ${status} == False    Force click element  //a[@title='Show 9 more actions']
+    Run keyword if      ${status} == False    Click element   //a[@title='Mobile Coverage Request']
+    Sleep   10s
+    Validate that Tellu login page opens
+
+Manual availability check redirects to Tellu
+    [Documentation]     Check that manual availability check button from the opportunity page redirects to Tellu-system login.
+    [Tags]     BQA-10954     AUTOLIGHTNING          OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    Wait element to load and click  //a[@title='Manual Availability Check']
+    Validate that Tellu login page opens
+
+Investment redirects to Tellu
+    [Documentation]     In opportunity view clicking investment button redirects to Tellu-system login
+    [Tags]      BQA-10953      AUTOLIGHTNING        OpportunityValidation
+    Go To Salesforce and Login into Lightning
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Navigate to view  Opportunities
+    Wait element to load and click  ${test_opportunity}
+    Wait element to load and click  //a[@title='Investment']
+    Validate that Tellu login page opens
+
+
+Add Oppo Team Member and Edit the Oppo with New Team Member
+    [Tags]  BQA-10816       AUTOLIGHTNING       OpportunityValidation
+    [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B and try modifying the oppo with newly added team member
+    Go To Salesforce and Login into Admin User
+    Go To Entity    Aarsleff Oy
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    sleep   10s
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    go to entity  ${oppo_name}
+    logoutasuser  Sales Admin
+    sleep   10s
+    Login to Salesforce as DigiSales Lightning User
+    go to entity  ${oppo_name}
+    changethepricelist      B2B
+    Sleep  10s
+    logoutasuser  B2B DigiSales
+    sleep  10s
+    Login to Salesforce as DigiSales Admin User
+    AddOppoTeamMember  ${oppo_name}   B2B DigiSales
+    logoutAsUser  Sales Admin
+    sleep  10s
+    Login to Salesforce as DigiSales Lightning User
+    go to entity  ${oppo_name}
+    changethepricelist    GTM
+
+createSalesProjectOppo
+    [Tags]        BQA-11776    AUTOLIGHTNING        OpportunityValidation
+    Login to Salesforce as DigiSales Lightning User
+    Go To Entity   ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    sleep   10s
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    Go To Entity     ${oppo_name}
+    sleep  2s
+    clickingOnSolutionValueEstimate     ${oppo_name}
+    addProductsViaSVE   Subscriptions and networks
+    Sleep  10s
+    ${case_number}=  run keyword      Create case from more actions
+    logoutAsUser  B2B DigiSales
+    Login to Salesforce as System Admin
+    swithchtouser      B2B DigiSales
+    openquotefromopporelated  ${oppo_name}  ${case_number}
+    SalesProjectOppurtunity     ${case_number}
+    go to entity    ${oppo_name}
+    page should contain element  //span[text()='Opportunity Record Type']/../..//div//span[text()='Sales Project Opportunity']
+
+
+###################  Needs Fixing ###################
+Closing Opportunity as Won with FYR below 3 KEUR
+    [Tags]    BQA-8794     AUTOLIGHTNING
+    Closing Opportunity as Won with FYR    8    No
+
+
+Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
+    [Tags]    BQA-8795    AUTOLIGHTNING
+    Go To Salesforce and Login into Lightning
+    ${FYR}=    set variable    //p[@title='FYR Total']/..//lightning-formatted-text
+    ${Edit_continuation}=    Set Variable    //div/button[@title='Edit Create Continuation Sales Opportunity?']
+    Closing Opportunity as Won with FYR    200    Yes
+    ${FYR_value}=    get text    ${FYR}
+    sleep    10s
+    Closing the opportunity and check Continuation  Closed Won
+    ${oppo_name}  get text  //div//h1//div[text()="Opportunity"]/..//lightning-formatted-text
+    Go to Entity   Continuation Sales: ${oppo_name}
+    reload page
+    sleep  60s
+    ${FYR_value1}=    get text    //p[@title='FYR Total']/..//lightning-formatted-text
+    Should be equal as strings  ${FYR_value}  ${FYR_value1}
+    ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
+    ${stage}  get text  ${current_stage}
+    Should be equal as strings   ${stage}   Analyse Prospect
+    Execute Javascript    window.scrollTo(0,1000)
+    wait until page contains element  //*[text()="Create Continuation Sales Opportunity?"]   30s
+    sleep    5s
+    Capture Page Screenshot
+
+Closing Opportunity as Won with FYR greater than 100KEUR
+    [Tags]    BQA-8796   AUTOLIGHTNING
+    Closing Opportunity as Won with FYR    300    Yes
+    Closing the opportunity and check Continuation  Closed Won
