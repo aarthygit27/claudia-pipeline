@@ -20,12 +20,10 @@ Switch to SalesApp
     [Documentation]    Go to App launcher and click on SalesApp
     Click Element    ${APP_LAUNCHER}
     sleep  20s
-    wait until page contains element  //div[@class="container"]//input[@type="search"]  60s
-    input text  //div[@class="container"]//input[@type="search"]   Sales
-    press enter on  //div[@class="container"]//input[@type="search"]
+    wait until page contains element   ${APP_SEARCH}   60s
+    input text      ${APP_SEARCH}       Sales
+    press enter on    ${APP_SEARCH}
     sleep  30s
-#    Wait until Page Contains Element    ${SALES_APP_LINK}    60s
-#    Click Element    ${SALES_APP_LINK}
     Wait Until Element is Visible    ${SALES_APP_NAME}    60s
 
 Login Page Should Be Open
@@ -35,7 +33,7 @@ Login Page Should Be Open
     Wait Until Element Is Visible    id=password    60s
 
 Go To Salesforce and Login into Lightning
-    [Arguments]    ${user}=DigiSales Lightning User
+    [Arguments]    ${user}
     [Documentation]    Go to Salesforce and then Login as DigiSales Lightning User, then switch to Sales App
     ...    and then select the Home Tab in Menu
     Go to Salesforce
@@ -45,28 +43,24 @@ Go To Salesforce and Login into Lightning
     Reset to Home
     Click Clear All Notifications
     Sleep    30s
-    ${error}=    Run Keyword And Return Status    Element Should Be Visible    //div[@class()='modal-container slds-modal__container']
-    Run Keyword If    ${error}    click button    //button[@title='OK']
+    ${error}=    Run Keyword And Return Status    Element Should Be Visible    ${errorpopup}
+    Run Keyword If    ${error}    click button      ${errorok}
 
-Go To Salesforce and Login into Admin User
-    [Arguments]    ${user}=DigiSales Admin User
-    [Documentation]    Go to Salesforce and then Login as DigiSales Admin User, then switch to Sales App
-    ...    and then select the Home Tab in Menu
-    Go to Salesforce
-    Run Keyword    Login to Salesforce as ${user}
-    Go to Sales App
-    Reset to Home
-
-Login to Salesforce as DigiSales Admin User
-    Login To Salesforce Lightning    ${SALES_ADMIN_APP_USER}   ${PASSWORD-SALESADMIN}
-
-Login to Salesforce as DigiSales Lightning User
+Login to Salesforce as B2B DigiSales
     [Arguments]    ${username}=${B2B_DIGISALES_LIGHT_USER}    ${password}=${Password_merge}
     Login To Salesforce Lightning    ${username}    ${password}
-    Go to Sales App
-    Reset to Home
 
-Login to Salesforce as DigiSales B2O User
+Login to Salesforce as System Admin
+    [Arguments]        ${username}= ${SYSTEM_ADMIN_USER}   ${password}= ${SYSTEM_ADMIN_PWD}  #${username}=mmw9007@teliacompany.com.release    #${password}=Sriram@234
+    Login To Salesforce Lightning    ${username}    ${password}
+
+Login to Salesforce as DigiSales Admin
+    Login To Salesforce Lightning    ${SALES_ADMIN_APP_USER}   ${PASSWORD-SALESADMIN}
+
+Login to Salesforce as Pricing Manager
+    Login To Salesforce Lightning    ${PM_User}  ${PM_PW}
+
+Login to Salesforce as B2O User
     [Arguments]    ${username}=${B2O_DIGISALES_LIGHT_USER}    ${password}=${B2O_DIGISALES_LIGHT_PASSWORD}
     Login To Salesforce Lightning    ${username}    ${password}
 
@@ -2056,10 +2050,6 @@ CreateABillingAccount
     unselect frame
     [Return]    Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
 
-Login to Salesforce as System Admin
-    [Arguments]        ${username}= ${SYSTEM_ADMIN_USER}   ${password}= ${SYSTEM_ADMIN_PWD}  #${username}=mmw9007@teliacompany.com.release    #${password}=Sriram@234
-    Login To Salesforce Lightning    ${username}    ${password}
-
 Login to Salesforce as DigiSales Admin User Release
     Login To Salesforce Lightning    ${SALES_ADMIN_USER_RELEASE}    ${PASSWORD-SALESADMIN}
 
@@ -2360,7 +2350,7 @@ Reporting Products
 Closing Opportunity as Won with FYR
     [Arguments]    ${quantity}    ${continuation}
     ${FYR}=    set variable    //p[@title='FYR Total']/..//lightning-formatted-text
-    Go To Salesforce and Login into Lightning
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #log to console    ${contact_name}.this is name
@@ -2648,7 +2638,7 @@ approve the quote
     sleep  10s
     creditscoreapproving
     logoutAsUser  ${SYSTEM_ADMIN_USER}
-    login to salesforce as digisales Lightning User
+    Login to Salesforce as B2B DigiSales
     sleep  30s
     go to   ${page}
     Sending quote as email
@@ -4728,7 +4718,7 @@ Submit for approval
 
 Case Approval By Endorser
     [Arguments]   ${Case_number}   ${oppo_name}
-    Login to Salesforce as DigiSales Lightning User   ${Endorser_User}  ${Endorser_PW}
+    Login to Salesforce Lightning  ${Endorser_User}  ${Endorser_PW}
     #Log to console  Logged in as Endorser
     Check for Notification  ${Case_number}  ${EMPTY}
 
@@ -4766,8 +4756,8 @@ Case Approval By Endorser
 
 Case Approval By Approver
      [Arguments]   ${Case_number}  ${oppo_name}  ${Account_Type}=${EMPTY}
-    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User    ${B2O_Approver_User}   ${B2O_Approver_PW}
-    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce as DigiSales Lightning User   ${Approver_User}  ${Approver_PW}
+    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce Lightning   ${B2O_Approver_User}   ${B2O_Approver_PW}
+    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce Lightning   ${Approver_User}  ${Approver_PW}
     #Log to console  Logged in as Approver
     Check for Notification  ${Case_number}
 
@@ -4821,7 +4811,7 @@ Endorser Verification
 
 Case Rejection By Approver
      [Arguments]   ${Case_number}  ${oppo_name}
-    Login to Salesforce as DigiSales Lightning User   ${Approver_User}  ${Approver_PW}
+    Login to Salesforce Lightning   ${Approver_User}  ${Approver_PW}
     #Log to console  Logged in as Approver
     Check for Notification  ${Case_number}
     Wait until element is visible  //span[text()='Items to Approve']  30s
@@ -4891,8 +4881,8 @@ Select Options to Verify Chatter Box
 
 Check Case Status
     [Arguments]   ${Case_number}  ${Account_Type}
-    Run Keyword If   '${Account_Type}'== 'B2O'   Login to Salesforce as DigiSales Lightning User  ${B2O_DIGISALES_LIGHT_USER}  ${B2O_DIGISALES_LIGHT_PASSWORD}
-    Run Keyword If   '${Account_Type}'== 'B2B'   Login to Salesforce as DigiSales Lightning User
+    Run Keyword If   '${Account_Type}'== 'B2O'   Login to Salesforce as B2O User
+    Run Keyword If   '${Account_Type}'== 'B2B'   Login to Salesforce as B2B DigiSales
     Select Options to Verify Chatter Box    ${Case_number}
     Page should contain element   //div[@class='slds-media__body forceChatterFeedItemHeader'][1]/div/p/span/a/following::span[contains(text(),'${Case_number}')]
     #Page should contain   created an attachment
@@ -4916,7 +4906,7 @@ Check Case Status
 
 Verify case Status by PM
     [Arguments]   ${Case_number}
-    Login to Salesforce as DigiSales Lightning User   ${PM_User}  ${PM_PW}
+    Login to Salesforce Lightning   ${PM_User}  ${PM_PW}
     #Log to console  Logged in as Pm to verify the Case Status
     #Reload page
     Search Salesforce    ${Case_number}
@@ -4933,7 +4923,7 @@ Verify case Status by PM
 
 Verify case Status by Endorser
     [Arguments]   ${Case_number}  ${status}=${EMPTY}
-    Login to Salesforce as DigiSales Lightning User   ${Endorser_User}  ${Endorser_PW}
+    Login to Salesforce Lightning   ${Endorser_User}  ${Endorser_PW}
     #Log to console  Logged in as Endorser to verify the Case Status
     Check for Notification  ${Case_number}   ${status}
     #Reload page
@@ -4952,7 +4942,7 @@ Verify case Status by Endorser
 Case Not visible to Normal User
 
      [Arguments]   ${Case_number}
-    Login to Salesforce as DigiSales Lightning User    ${B2B_DIGISALES_LIGHT_USER}   ${Password_merge}
+    Login to Salesforce Lightning       ${B2B_DIGISALES_LIGHT_USER}   ${Password_merge}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${Case_number}
     Press Enter On    ${SEARCH_SALESFORCE}
@@ -5174,8 +5164,8 @@ PM details
     [Arguments]    ${oppo_name}   ${case_Number}  ${Account_Type}
 
     # Login and select the case
-    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce as DigiSales Lightning User   ${B2O_PM_User}   ${B2O_PM_PW}
-    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce as DigiSales Lightning User  ${PM_User}   ${PM_PW}
+    Run Keyword If   '${Account_Type}'== 'B2O'    Login to Salesforce Lightning      ${B2O_PM_User}   ${B2O_PM_PW}
+    Run Keyword Unless  '${Account_Type}' == 'B2O'   Login to Salesforce Lightning      ${PM_User}   ${PM_PW}
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${case_Number}
     Press Enter On    ${SEARCH_SALESFORCE}

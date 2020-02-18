@@ -23,6 +23,7 @@ ${CONTRACT_ACCOUNT}     Telia Communication Oy
 ${CLASSIC_MENU}    //*[@id="userNav"]
 ${SWITCH_TO_LIGHTNING}    //a[@title='Switch to Lightning Experience']
 ${LIGHTNING_ICON}    //img[@class='icon noicon']
+${APP_SEARCH}       //div[@class="container"]//input[@type="search"]
 ${APP_LAUNCHER}    //nav[contains(@class,'appLauncher ')]//button
 ${SALES_APP_NAME}    //*[contains(@class,'appName')]//span[text()='Sales']
 ${SALES_APP_LINK}    //a[@class='appTileTitle' and text()='Sales']
@@ -262,6 +263,11 @@ ${externalofficename}    ExternalOffice
 ${ulmid}    ULMID
 ${externalid}      EXternalID
 ${RemoveAccountOwner}       Aacon Oy
+${noitems}       //div[@class='emptyContent']//p[text()='No items to display.']
+${businessAccount}      Aacon Oy
+${groupAccount}      Aacon Oy
+${errorpopup}     //div[@class()='modal-container slds-modal__container']
+${errorok}      //button[@title='OK']
 
 ### Lead  Variables ###
 
