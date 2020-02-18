@@ -76,8 +76,8 @@ Login to Salesforce Lightning
     #Run Keyword unless    ${homepage}    reload page
     #Run Keyword unless    ${homepage}    sleep  30s
     sleep  45s
-    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[text()='Remind Me Later']
-    Run Keyword If    ${infoAvailable}    force click element    //a[text()='Remind Me Later']
+    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    ${remindmelater}
+    Run Keyword If    ${infoAvailable}    force click element    ${remindmelater}
     run keyword and ignore error    Check For Lightning Force
     ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${LIGHTNING_ICON}
     Run Keyword If    ${buttonNotAvailable}    reload page

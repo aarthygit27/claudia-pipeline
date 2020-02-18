@@ -268,7 +268,18 @@ ${businessAccount}      Aacon Oy
 ${groupAccount}      Aacon Oy
 ${errorpopup}     //div[@class()='modal-container slds-modal__container']
 ${errorok}      //button[@title='OK']
-
+${editgtmapprovalrequest}      //button[@title="Edit GTM Approval Request Justification"]
+${gtmapprovaljustification}       //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
+${gtmsave}        //div[@class="footer active"]//button[@title="Save"]
+${moreactionslink}      //a[contains(@title, 'more actions')][1]
+${submitgtmapproval}      //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..
+${pendingapproval}     //span[text()='Pending Approval']
+${approvedstatus}      //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
+${mobilecoveragerequest}      //a[@title='Mobile Coverage Request']
+${showmoreactions}    //a[@title='Show 9 more actions']
+${manualavailabilitycheck}      //a[@title='Manual Availability Check']
+${investment}       //a[@title='Investment']
+${remindmelater}       //a[text()='Remind Me Later']
 ### Lead  Variables ###
 
 ${lead_account_name}                Academic Work HR Services Oy
