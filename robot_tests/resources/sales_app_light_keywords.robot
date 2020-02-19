@@ -6454,21 +6454,21 @@ Close and submit
     Capture Page Screenshot
     Enter Group id and submit
 
-Submit Order Button
-    Reload page
-    Wait until element is visible   //div[@title='Submit Order']    60s
-    Log to console    submitted
-    Click element  //div[@title='Submit Order']
-    #sleep  10s
-    Capture Page Screenshot
-    Wait until element is visible     //h2[text()='Submit Order']   30s
-    sleep  5s
-    Capture Page Screenshot
-    ${status} =    Run Keyword and Return status  Page should contain element   //div[text()='Please add Group Billing ID.']
-    Run Keyword if   ${status}  Enter Group id and submit
-    Run Keyword unless   ${status}   click element   //button[text()='Submit']
-    sleep  15s
-
+#Submit Order Button
+#    Reload page
+#    Wait until element is visible   //div[@title='Submit Order']    60s
+#    Log to console    submitted
+#    Click element  //div[@title='Submit Order']
+#    #sleep  10s
+#    Capture Page Screenshot
+#    Wait until element is visible     //h2[text()='Submit Order']   30s
+#    sleep  5s
+#    Capture Page Screenshot
+#    ${status} =    Run Keyword and Return status  Page should contain element   //div[text()='Please add Group Billing ID.']
+#    Run Keyword if   ${status}  Enter Group id and submit
+#    Run Keyword unless   ${status}   click element   //button[text()='Submit']
+#    sleep  15s
+#
 
 
 ValidateSapCallout
