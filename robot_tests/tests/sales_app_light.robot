@@ -12,21 +12,21 @@ Resource          ../resources/multibella_keywords.robot
 ##################################################  SANITY TESTS ###################################################
 Add new contact - Master
     [Documentation]    Go to SalesForce Lightning. Create new master contact and validate the details
-    [Tags]    BQA-8396  AUTOLIGHTNING   ContactsManagement
+    [Tags]    BQA-8396  AUTOLIGHTNINGOLD   ContactsManagement
     Go To Salesforce and Login into Lightning
     Create New Master Contact
     Validate Master Contact Details
 
 Add new contact - Non person
     [Documentation]    Go to SalesForce Lightning. Create new non master contact and validate the details.
-    [Tags]    BQA-8395  AUTOLIGHTNING   ContactsManagement
+    [Tags]    BQA-8395  AUTOLIGHTNINGOLD   ContactsManagement
     Go To Salesforce and Login into Lightning
     Create New NP Contact
     Validate NP Contact
 
 Add new contact from Accounts Page
     [Documentation]    Go to SalesForce Lightning. Create new contact for account and validate the details.
-    [Tags]    BQA-8394  AUTOLIGHTNING   ContactsManagement
+    [Tags]    BQA-8394  AUTOLIGHTNINGOLD   ContactsManagement
     Go To Salesforce and Login into Lightning
     Go to Entity    ${AP_ACCOUNT_NAME}
     Create New Contact for Account
@@ -35,7 +35,7 @@ Add new contact from Accounts Page
 Create opportunity from Account
     [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
     ...    and then in My all open Opportunities section.
-    [Tags]    BQA-8393    AUTOLIGHTNING        OpportunityValidation
+    [Tags]    BQA-8393    AUTOLIGHTNINGOLD        OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -45,7 +45,7 @@ Create opportunity from Account
 Negative - Validate Opportunity cannot be created for Passive account
     [Documentation]    Select the Passive account and validate that the Opportunity creation
     ...    throws an error
-    [Tags]    BQA-8457    AUTOLIGHTNING       OpportunityValidation
+    [Tags]    BQA-8457    AUTOLIGHTNINGOLD       OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${PASSIVE_TEST_ACCOUNT}
     Create New Opportunity For Customer    PASSIVEACCOUNT
@@ -53,7 +53,7 @@ Negative - Validate Opportunity cannot be created for Passive account
 Negative - Validate Opportunity cannot be created for Group account
     [Documentation]    Select the Group account and validate that the new opportunity button
     ...    is not displayed
-    [Tags]    BQA-8464    AUTOLIGHTNING         OpportunityValidation
+    [Tags]    BQA-8464    AUTOLIGHTNINGOLD         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Validate Opportunity cannot be created    GROUPACCOUNT
@@ -61,7 +61,7 @@ Negative - Validate Opportunity cannot be created for Group account
 Closing active opportunity as cancelled
     [Documentation]    Create new opportunity and cancel the opportunity and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8465    AUTOLIGHTNING         OpportunityValidation
+    [Tags]    BQA-8465    AUTOLIGHTNINGOLD         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -70,7 +70,7 @@ Closing active opportunity as cancelled
 Closing active opportunity as lost
     [Documentation]    Create new opportunity and close the opportunity as lost and validate that
     ...    it cannot be updated further
-    [Tags]    BQA-8466    AUTOLIGHTNING         OpportunityValidation
+    [Tags]    BQA-8466    AUTOLIGHTNINGOLD         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer    ACTIVEACCOUNT
@@ -78,14 +78,14 @@ Closing active opportunity as lost
 
 Check Attributes/Business Account are named right in Sales Force UI
     [Documentation]    To Verify the Business Account Attributes Are Named Right
-    [Tags]    BQA-8484    AUTOLIGHTNING        AcccountManagement
+    [Tags]    BQA-8484    AUTOLIGHTNINGOLD        AcccountManagement
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     Verify That Business Account Attributes Are Named Right
 
 Check Attributes/Contact Person are named right
     [Documentation]    To Verify the Contact Person Attributes and values Are Named Right after adding the contact
-    [Tags]    BQA-8483    AUTOLIGHTNING     ContactsManagement
+    [Tags]    BQA-8483    AUTOLIGHTNINGOLD     ContactsManagement
     Go To Salesforce and Login into Lightning
     Go to Contacts
     Create New Master Contact With All Details
@@ -94,7 +94,7 @@ Check Attributes/Contact Person are named right
 
 Lightning: Create Meeting from Account
     [Documentation]    To create meeting for a account
-    [Tags]    BQA-7948    AUTOLIGHTNING     QuickActionsForAccount
+    [Tags]    BQA-7948    AUTOLIGHTNINGOLD     QuickActionsForAccount
     Go To Salesforce and Login into Admin User
     Go To Entity    ${TEST_CONTACT}
     sleep    20s
@@ -107,7 +107,7 @@ Lightning: Create Meeting from Account
 
 Lightning: Create Call from Account
     [Documentation]    To create call for a account
-    [Tags]    BQA-8085    AUTOLIGHTNING     QuickActionsForAccount
+    [Tags]    BQA-8085    AUTOLIGHTNINGOLD     QuickActionsForAccount
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -116,7 +116,7 @@ Lightning: Create Call from Account
 
 Lightning: Create Task from Account
     [Documentation]    To create task for a account
-    [Tags]    BQA-8463    AUTOLIGHTNING     QuickActionsForAccount
+    [Tags]    BQA-8463    AUTOLIGHTNINGOLD     QuickActionsForAccount
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     Create New Contact for Account
@@ -132,7 +132,7 @@ Lightning: Create Task from Account
 
 Change Account owner for Group Account
     [Documentation]    To change the account  owner for group  account
-    [Tags]    BQA-8523     AUTOLIGHTNING      AccountManagement
+    [Tags]    BQA-8523     AUTOLIGHTNINGOLD      AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -141,7 +141,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    AUTOLIGHTNING      AccountManagement
+    [Tags]    BQA-8524    AUTOLIGHTNINGOLD      AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${RemoveAccountOwner}
     Remove change account owner
@@ -150,7 +150,7 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8525    AUTOLIGHTNING     AccountManagement
+    [Tags]    BQA-8525    AUTOLIGHTNINGOLD     AccountManagement
     Login to Salesforce as DigiSales Admin user
     Go to Entity    ${TEST_CONTACT}
     Change Account Owner
@@ -158,7 +158,7 @@ Lightning: Sales admin Change Account owner
 
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8526    AUTOLIGHTNING     AccountManagement
+    [Tags]    BQA-8526    AUTOLIGHTNINGOLD     AccountManagement
     Login to Salesforce as DigiSales Admin user
     Go to Entity    ${GROUP_TEST_ACCOUNT}
     Change Account Owner
@@ -258,7 +258,7 @@ Lightning: Sales admin Change Account owner for group account
 #    ValidateTheOrchestrationPlan
 
 Create HDC Order
-    [Tags]    BQA-11774    AUTOLIGHTNING       HDCOrderManagement
+    [Tags]    BQA-11774    AUTOLIGHTNINGOLD       HDCOrderManagement
     Login to Salesforce as DigiSales Lightning User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -284,7 +284,7 @@ Create HDC Order
     ValidateTheOrchestrationPlan
 
 Create B2B Order
-    [Tags]    BQA-8919     AUTOLIGHTNING        B2BOrderManagement
+    [Tags]    BQA-8919     AUTOLIGHTNINGOLD        B2BOrderManagement
     Login to Salesforce as DigiSales Lightning User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -317,7 +317,7 @@ Create B2B Order
     getOrderStatusAfterSubmitting
 
 Create B2O Order
-    [Tags]    BQA-8920    AUTOLIGHTNING         B2OOrderManagement
+    [Tags]    BQA-8920    AUTOLIGHTNINGOLD         B2OOrderManagement
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -358,7 +358,7 @@ Create B2O Order
     Verify That Opportunity is Found From My All Opportunities  ${oppo_name}
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    AUTOLIGHTNING
+    [Tags]    BQA-8798    AUTOLIGHTNINGOLD
     Login to Salesforce as DigiSales Lightning User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -374,7 +374,7 @@ createAOppoViaSVE
     Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
 
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
-    [Tags]    BQA-9121    AUTOLIGHTNING         B2BOrderManagement  rerun
+    [Tags]    BQA-9121    AUTOLIGHTNINGOLD         B2BOrderManagement  rerun
     Go To Salesforce and Login into Lightning
     Go To Entity    Ylöjärven Yrityspalvelu Oy
     ${contact_name}    run keyword    Create New Contact for Account
@@ -409,7 +409,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Closing the opportunity    No
 
 Lightning: Opportunity: Products used for reporting only must not be visible on Quote & Order
-    [Tags]    BQA-9122    AUTOLIGHTNING         B2BOrderManagement
+    [Tags]    BQA-9122    AUTOLIGHTNINGOLD         B2BOrderManagement
     ${next_button}=    set variable    //span[contains(text(),'Next')]
     @{products}    Set Variable    Telia Ulkoistettu asiakaspalvelu    Telia Neuvottelupalvelut    Telia Palvelunumero    Telia Yritysliittymä    Telia Laskutuspalvelu
     ...    Telia Ulkoistettu asiakaspalvelu - Lisäkirjaus    Telia Neuvottelupalvelut - Lisäkirjaus    Telia Palvelunumero - Lisäkirjaus    Telia Yritysliittymä - Lisäkirjaus    Telia Laskutuspalvelu - Lisäkirjaus
@@ -444,7 +444,7 @@ Lightning: Opportunity: Products used for reporting only must not be visible on 
     #verifying Multibella order case    ${multibella_GuiID}    @{products}
 
 HDC - Complete Sales Process: UAT/Sanity Regression
-    [Tags]    BQA-8560    AUTOLIGHTNING         HDCOrderManagement
+    [Tags]    BQA-8560    AUTOLIGHTNINGOLD         HDCOrderManagement
     ${win_prob_edit}=    Set Variable    //span[contains(text(),'Win Probability %')]/../../button
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -477,7 +477,7 @@ HDC - Complete Sales Process: UAT/Sanity Regression
     #clickOnSubmitOrder
 
 Automatic availability check B2B-Account
-    [Tags]    BQA-10225    AUTOLIGHTNING        AvailabilityCheck
+    [Tags]    BQA-10225    AUTOLIGHTNINGOLD        AvailabilityCheck
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Navigate to Availability check
@@ -487,7 +487,7 @@ Automatic availability check B2B-Account
     Check the CPQ-cart contains the wanted products    Telia Yritysinternet
 
 Automatic availability check B2O-Account
-    [Tags]    BQA-10225    AUTOLIGHTNING        AvailabilityCheck
+    [Tags]    BQA-10225    AUTOLIGHTNINGOLD        AvailabilityCheck
     Go To Salesforce and Login into Lightning    DigiSales B2O User
     Go to Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer      ACTIVEACCOUNT
@@ -507,7 +507,7 @@ Automatic availability check B2O-Account
 
 Check banner for customership and service contract
     [Documentation]    Create new opportunity for account without service contract and verify that service contract draft is automatically created
-    [Tags]      BQA-10334    AUTOLIGHTNING      ContractManagement
+    [Tags]      BQA-10334    AUTOLIGHTNINGOLD      ContractManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${CONTRACT_ACCOUNT}
     Delete all entities from Accounts Related tab      Contracts
@@ -527,7 +527,7 @@ Check banner for customership and service contract
 
 Create contact relationship for account
     [Documentation]    Add new relationship for contact and check that account are displayed correctly on contact page.
-    [Tags]     BQA-10523    AUTOLIGHTNING     ContactsManagement
+    [Tags]     BQA-10523    AUTOLIGHTNINGOLD     ContactsManagement
     Go To Salesforce and Login into Lightning
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Create New Contact for Account
@@ -537,14 +537,14 @@ Create contact relationship for account
 
 Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
-    [Tags]    BQA-10736    AUTOLIGHTNING     AccountManagement
+    [Tags]    BQA-10736    AUTOLIGHTNINGOLD     AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    Aacon Oy
     Change account owner to     B2B Lightning
     Validate that account owner was changed successfully    B2B Lightning
 
 Add an account team member as account owner
-    [Tags]    BQA-10524     AUTOLIGHTNING       AccountManagement
+    [Tags]    BQA-10524     AUTOLIGHTNINGOLD       AccountManagement
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -558,7 +558,7 @@ Add an account team member as account owner
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
-    [Tags]     BQA-10948    AUTOLIGHTNING       AccountManagement
+    [Tags]     BQA-10948    AUTOLIGHTNINGOLD       AccountManagement
     [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -568,7 +568,7 @@ Edit team member's role as account owner
     Change team member role from account
 
 Delete team member as account owner
-    [Tags]     BQA-10949       AUTOLIGHTNING        AccountManagement
+    [Tags]     BQA-10949       AUTOLIGHTNINGOLD        AccountManagement
     [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -579,7 +579,7 @@ Delete team member as account owner
 
 Add an account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then add some user as a team member for business account
-    [Tags]    BQA-10727     AUTOLIGHTNING       AccountManagement
+    [Tags]    BQA-10727     AUTOLIGHTNINGOLD       AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -589,7 +589,7 @@ Add an account team member as Sales Admin
 
 Edit team member's role as Sales Admin
     [Documentation]    Log in as Sales Admin and then edit existing team member's role for business account
-    [Tags]     BQA-10728     AUTOLIGHTNING          AccountManagement
+    [Tags]     BQA-10728     AUTOLIGHTNINGOLD          AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -599,7 +599,7 @@ Edit team member's role as Sales Admin
 
 Delete account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then delete team member from business account
-    [Tags]     BQA-10740    AUTOLIGHTNING       AccountManagement
+    [Tags]     BQA-10740    AUTOLIGHTNINGOLD       AccountManagement
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -609,7 +609,7 @@ Delete account team member as Sales Admin
 
 Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
-    [Tags]     BQA-10737    AUTOLIGHTNING       AccountManagement
+    [Tags]     BQA-10737    AUTOLIGHTNINGOLD       AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Navigate to view    Account Team Members
@@ -618,7 +618,7 @@ Add an account team member to Group
 
 Negative: Try to add account owner to Account team
     [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
-    [Tags]      BQA-10952     AUTOLIGHTNING     AccountManagement
+    [Tags]      BQA-10952     AUTOLIGHTNINGOLD     AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  Aacon Oy
     Navigate to related tab
@@ -627,7 +627,7 @@ Negative: Try to add account owner to Account team
 
 Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
-    [Tags]      BQA-10951       AUTOLIGHTNING       AccountManagement
+    [Tags]      BQA-10951       AUTOLIGHTNINGOLD       AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Add account owner to account team
@@ -635,7 +635,7 @@ Negative: Try to add group owner to group's account team
 
 Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
-    [Tags]    BQA-10738    AUTOLIGHTNING        AccountManagement
+    [Tags]    BQA-10738    AUTOLIGHTNINGOLD        AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Navigate to view    Account Team Members
@@ -644,7 +644,7 @@ Group: Edit team member's role
 
 Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
-    [Tags]     BQA-10739    AUTOLIGHTNING       AccountManagement
+    [Tags]     BQA-10739    AUTOLIGHTNINGOLD       AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Navigate to view    Account Team Members
@@ -653,7 +653,7 @@ Group: Delete team member
 
 Negative: Try to add same team member twice to account team
     [Documentation]     Expected result: It's not possible to add same team member twice to business account's account team.
-    [Tags]     BQA-11052       AUTOLIGHTNING        AccountManagement
+    [Tags]     BQA-11052       AUTOLIGHTNINGOLD        AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab
@@ -663,7 +663,7 @@ Negative: Try to add same team member twice to account team
     Delete team member from account
 
 Negative: Check external data is not editable when creating new contact
-    [Tags]      BQA-10945    AUTOLIGHTNING      ContactsManagement
+    [Tags]      BQA-10945    AUTOLIGHTNINGOLD      ContactsManagement
     [Documentation]     Log in as B2B-sales user and try to create new contact. External data fields in the form shouldn't be editable.
     Go To Salesforce and Login into Lightning
     Go to Contacts
@@ -672,7 +672,7 @@ Negative: Check external data is not editable when creating new contact
     Close contact form
 
 Negative: Check external data is not editable with existing contact
-    [Tags]       BQA-10946     AUTOLIGHTNING        ContactsManagement
+    [Tags]       BQA-10946     AUTOLIGHTNINGOLD        ContactsManagement
     [Documentation]     Search contact with external data. Click edit and chect that external data fields are read-only.
     Login to Salesforce as System Admin
     Create new contact with external data
@@ -683,7 +683,7 @@ Negative: Check external data is not editable with existing contact
     Close contact form
 
 Negative: Check external data is not editable from account contact relationship view
-    [Tags]      BQA-10947     AUTOLIGHTNING     ContactsManagement
+    [Tags]      BQA-10947     AUTOLIGHTNINGOLD     ContactsManagement
     [Documentation]     Search contact with external data. Go to related tab and click view relationship from related accounts. Check external data is not editable.
     Login to Salesforce as System Admin
     Create new contact with external data
@@ -694,7 +694,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]    BQA-10937    AUTOLIGHTNING          AccountManagement
+    [Tags]    BQA-10937    AUTOLIGHTNINGOLD          AccountManagement
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
@@ -715,7 +715,7 @@ Add several team members to business account team
 Group: Account team member is added as group owner
     [Documentation]     Account team member is added as group owner. History is checked and it should contain record about changing the owner.
     ...     Check that new owner is removed from the account team.
-    [Tags]      BQA-10933       AUTOLIGHTNING       AccountManagement
+    [Tags]      BQA-10933       AUTOLIGHTNINGOLD       AccountManagement
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Check original account owner and change if necessary for event
@@ -737,7 +737,7 @@ Group: Account team member is added as group owner
 Negative: Try to change account owner different from the group account owner
     [Documentation]     Log in as sales admin and find Business account from group hierarchy. Try to change the Business Account owner different from
     ...     the group account owner. This should not be possible.
-    [Tags]     BQA-10968     AUTOLIGHTNING     AccountManagement
+    [Tags]     BQA-10968     AUTOLIGHTNINGOLD     AccountManagement
     Go To Salesforce and Login into Admin User
     ${group_account_owner}=    Set variable     Maris Steinbergs
     Go to Entity  AT&T
@@ -747,7 +747,7 @@ Negative: Try to change account owner different from the group account owner
 
 Mobile coverage request redirects to Tellu
     [Documentation]     Check that mobile coverage request button redirects to Tellu-system log in.
-    [Tags]     BQA-10955      AUTOLIGHTNING         OpportunityValidation
+    [Tags]     BQA-10955      AUTOLIGHTNINGOLD         OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -760,7 +760,7 @@ Mobile coverage request redirects to Tellu
 
 Manual availability check redirects to Tellu
     [Documentation]     Check that manual availability check button from the opportunity page redirects to Tellu-system login.
-    [Tags]     BQA-10954     AUTOLIGHTNING          OpportunityValidation
+    [Tags]     BQA-10954     AUTOLIGHTNINGOLD          OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -770,7 +770,7 @@ Manual availability check redirects to Tellu
 
 Investment redirects to Tellu
     [Documentation]     In opportunity view clicking investment button redirects to Tellu-system login
-    [Tags]      BQA-10953      AUTOLIGHTNING        OpportunityValidation
+    [Tags]      BQA-10953      AUTOLIGHTNINGOLD        OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
@@ -779,7 +779,7 @@ Investment redirects to Tellu
     Validate that Tellu login page opens
 
 Price input for unmodeled products in omniscript
-    [Tags]    BQA-9160      AUTOLIGHTNING          OpportunityValidation
+    [Tags]    BQA-9160      AUTOLIGHTNINGOLD          OpportunityValidation
     Go To Salesforce and Login into Lightning
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Create New Opportunity For Customer     ACTIVEACCOUNT
@@ -791,7 +791,7 @@ Price input for unmodeled products in omniscript
     Check opportunity value is correct
 
 create a b2b direct order
-    [Tags]    BQA-10813    AUTOLIGHTNING       B2BOrderManagement
+    [Tags]    BQA-10813    AUTOLIGHTNINGOLD       B2BOrderManagement
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    Ylöjärven Yrityspalvelu Oy
@@ -812,7 +812,7 @@ create a b2b direct order
     getMultibellaCaseGUIID    ${order_no}
 
 Add Oppo Team Member and Edit the Oppo with New Team Member
-    [Tags]  BQA-10816       AUTOLIGHTNING       OpportunityValidation
+    [Tags]  BQA-10816       AUTOLIGHTNINGOLD       OpportunityValidation
     [Documentation]  Create an opportunity with User-A and add new Oppo team member User-B and try modifying the oppo with newly added team member
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  Sales Admin
@@ -860,7 +860,7 @@ Add Oppo Team Member and Edit the Oppo with New Team Member
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]      BQA-10817      AUTOLIGHTNING        OpportunityValidation
+    [Tags]      BQA-10817      AUTOLIGHTNINGOLD        OpportunityValidation
     Login to Salesforce as DigiSales Lightning User
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     Go To Entity    Digita Oy
@@ -908,7 +908,7 @@ AddProducrViaSVEandCPQFlow
 
 
 CreateB2BHDCGTMOrder
-    [Tags]      BQA-10818       AUTOLIGHTNING       HDCGTMOrderManagement
+    [Tags]      BQA-10818       AUTOLIGHTNINGOLD       HDCGTMOrderManagement
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #swithchtouser   B2B DigiSales
     Go To Salesforce and Login into Lightning
@@ -1012,7 +1012,7 @@ CreateB2BHDCGTMOrder
     #${fyr}  run keyword  addProductsViaSVE         ${product_name}
 
 createSalesProjectOppo
-    [Tags]        BQA-11776    AUTOLIGHTNING        OpportunityValidation
+    [Tags]        BQA-11776    AUTOLIGHTNINGOLD        OpportunityValidation
     Login to Salesforce as DigiSales Lightning User
     #login to salesforce as digisales lightning user vlocupgsandbox
     #swithchtouser  B2B DigiSales
@@ -1136,7 +1136,7 @@ createSalesProjectOppo
 
 
 Create B2B Order - Multibella
-    [Tags]    BQA-11778       AUTOLIGHTNING         B2BOrderManagement
+    [Tags]    BQA-11778       AUTOLIGHTNINGOLD         B2BOrderManagement
     #Login to Salesforce as DigiSales Lightning User vLocUpgSandbox
     #SwithchToUser  B2B DigiSales
     Go To Salesforce and Login into Lightning
@@ -1173,7 +1173,7 @@ Create B2B Order - Multibella
 
 
 Closing Opportunity as Won with FYR below 3 KEUR
-    [Tags]    BQA-8794     AUTOLIGHTNING
+    [Tags]    BQA-8794     AUTOLIGHTNINGOLD
     Closing Opportunity as Won with FYR    8    No
     #${FYR}=    set variable    //span[@title='FYR Total']/../div
     #Go To Salesforce and Login into Lightning
@@ -1195,7 +1195,7 @@ Closing Opportunity as Won with FYR below 3 KEUR
     #Log to console    The FYR value is ${FYR_value}
 
 Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
-    [Tags]    BQA-8795    AUTOLIGHTNING
+    [Tags]    BQA-8795    AUTOLIGHTNINGOLD
     Go To Salesforce and Login into Lightning
     ${FYR}=    set variable    //p[@title='FYR Total']/..//lightning-formatted-text
     ${Edit_continuation}=    Set Variable    //div/button[@title='Edit Create Continuation Sales Opportunity?']
@@ -1228,7 +1228,7 @@ Closing Opportunity as Won with FYR between 3 KEUR to 100KEUR
     Capture Page Screenshot
 
 Closing Opportunity as Won with FYR greater than 100KEUR
-    [Tags]    BQA-8796   AUTOLIGHTNING
+    [Tags]    BQA-8796   AUTOLIGHTNINGOLD
     Closing Opportunity as Won with FYR    300    Yes
     Closing the opportunity and check Continuation  Closed Won
 
@@ -1448,7 +1448,7 @@ Delete all the contacts in Account
     Delete all entries from Search list     Contacts
 
 Lightning - FYR Calculation for B2B
-     [Tags]     BQA-11305   AUTOLIGHTNING   rerun
+     [Tags]     BQA-11305   AUTOLIGHTNINGOLD   rerun
      Go To Salesforce and Login into Lightning
      Go to Entity    Kotipizza Group Oyj
      ${contact_name}   run keyword    Create New Contact for Account
