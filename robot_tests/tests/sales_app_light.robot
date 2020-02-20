@@ -1621,7 +1621,7 @@ Manual Credit Check Enquiry with Negative
     Go To Salesforce and Login into Lightning
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${oppo_name}     run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
     Go to Entity   ${oppo_name}
     clickingoncpq   ${oppo_name}
