@@ -1575,7 +1575,7 @@ Manual Credit Check Enquiry with postive
     logoutAsUser  B2B DigiSales
     sleep  20s
     Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
-    swithchtouser  Credit Control
+    swithchtouser  Credit Control User
     Activate The Manual Credit enquiry with positive   ${value}   Positive
     Login to Salesforce as DigiSales Lightning User
     ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
@@ -1589,7 +1589,6 @@ Manual Credit Check Enquiry with postive
 #    RequestActionDate
 #    SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
-    ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with postive and condition
     [Tags]  BQA-12674
@@ -1606,21 +1605,16 @@ Manual Credit Check Enquiry with postive and condition
     logoutAsUser  B2B DigiSales
     sleep  20s
     Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
-    swithchtouser  Credit Control
+    swithchtouser  Credit Control User
     Activate The Manual Credit enquiry with positive with condition   ${value}  Positive with Conditions
     Login to Salesforce as DigiSales Lightning User
-    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive.")]
+    ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive with Conditions.")]
     page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Positive with Conditions.")]
     Search Salesforce    ${quote_number}
-    Select Entity    ${oppo_name}    ${EMPTY}
+    Select Entity   ${oppo_name}   ${EMPTY}
     credit score status after approval
     Check the credit score result of the case with Positive with Conditions
-    SearchAndSelectBillingAccount   ${TEST_CONTACT}
-    select order contacts- HDC  ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
-    ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with Negative
     [Tags]  BQA-12673
@@ -1637,20 +1631,14 @@ Manual Credit Check Enquiry with Negative
     logoutAsUser  B2B DigiSales
     sleep  20s
     Login to Salesforce as DigiSales Lightning User  ${SYSTEM_ADMIN_USER}   ${SYSTEM_ADMIN_PWD}
-    swithchtouser  Credit Control
+    swithchtouser  Credit Control User
     Activate The Manual Credit enquiry with Negative    ${value}   Negative
     Login to Salesforce as DigiSales Lightning User
     ScrollUntillFound  //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Negative.")]
     page should contain element    //span[contains(text()," Your Manual Credit Inquiry Case ${value} has been completed. Final decision: Negative.")]
     Search Salesforce    ${quote_number}
     Select Entity    ${oppo_name}    ${EMPTY}
-    credit score status after approval
-    SearchAndSelectBillingAccount   ${TEST_CONTACT}
-    select order contacts- HDC  ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
-    clickOnSubmitOrder
-    ValidateTheOrchestrationPlan
+    Check the credit score result of the Negative cases
 
 Manual Credit Check Enquiry with No Result
     [Tags]  BQA-12675
@@ -1661,9 +1649,15 @@ Manual Credit Check Enquiry with No Result
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${TEST_CONTACT}
     Go to Entity   ${oppo_name}
     clickingoncpq   ${oppo_name}
-    Add product to cart (CPQ)  Telia Chat
-    UpdateAndAddSalesType  Telia Chat
-    sleep  20s
+    search products    ${B2bproductfyr1}
+    Adding Products for Telia Sopiva Pro N    ${B2bproductfyr1}
+    Adding Products for Telia Sopiva Pro N child products  ${B2bproductfyr2}   ${B2bproductfyr3}
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    wait until page contains element    //span[text()='Next']/..    100s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    unselect frame
+    UpdateAndAddSalesType for B2b products     ${B2bproductfyr1}   ${B2bproductfyr2}
+
 
 Pricing Escalation
     [Tags]   BQA-11368
