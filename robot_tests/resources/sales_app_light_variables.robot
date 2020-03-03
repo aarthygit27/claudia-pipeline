@@ -16,7 +16,7 @@ ${Endorser_User}  endorser@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
 ${Approver_User}  approver@teliacompany.com.${ENVIRONMENT}
 ${Approver_PW}  PahaPassu3
-${LIGHTNING_TEST_ACCOUNT}     ABB Asea Brown Boveri Ltd
+${LIGHTNING_TEST_ACCOUNT}     Telia Communication Oy
 ${vLocUpg_TEST_ACCOUNT}    Aarsleff Oy
 ${CONTRACT_ACCOUNT}     Telia Communication Oy
 #Digia Oyj
@@ -68,6 +68,9 @@ ${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
 ${DETAILS_TAB}    //li[@title="Details"]//a[text()="Details"]
 ${DEFAULT_EMAIL}    d@email.com
+${DEFAULT_NAME}    TEST
+
+
 #${MASTER_MOBILE_NUM}    +358999888001
 #${MASTER_FIRST_NAME}    SATEST
 #${MASTER_LAST_NAME}    SACONTACT
@@ -284,3 +287,5 @@ ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
 ${group_id}         SALES FORCE TEST 1
 #Changes for each account
+
+${order_contactrole}=    https://telia-fi--rel.lightning.force.com/lightning/r/8021w000000rmNSAAY/related/Order_Contact_Roles__r/view
