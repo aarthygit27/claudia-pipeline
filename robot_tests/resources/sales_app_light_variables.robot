@@ -3,7 +3,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    rel
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu3
+${Password_merge}    PahaPassu1
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pm@teliacompany.com.${ENVIRONMENT}
@@ -196,7 +196,7 @@ ${job_title_text}    verojohtaja - 8715
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
-${PASSWORD-SALESADMIN}    PahaPassu1
+${PASSWORD-SALESADMIN}    PahaPassu2
 ${Credit_control_user}     creditcontrol@teliacompany.com.${ENVIRONMENT}
 ${Credit_control_password}  PahaPassu1
 ${REMOVE_ACCOUNT}    GESB Integration
@@ -221,15 +221,18 @@ ${r}              b2b
 ${p}              b2o
 ${product_name}    Telia Robotics
 ${product_quantity}    1
-${NRC}            35
-${RC}             50000
+${NRC}            10
+${RC}             120
 ${B2bproductfyr1}    Telia Sopiva Pro N
 ${B2bproductfyr2}   Pro Nettikortti
 ${B2bproductfyr3}   Multi-SIM
 ${fixed_charge for_Telia Sopiva Pro N}  30
 ${fixed_charge for_Pro Nettikortti}     0
 ${fixed_charge for_Multi-SIM}           0
-${sales_type_value}    New Money-New Services
+${sales_type_value}   New Money-New Services
+${sales_type_value1}   New Money-Extending Services
+${sales_type_value2}   Renegotiation-Service Replacement
+${sales_type_value3}   Renegotiation-Service Continuation
 ${contract_lenght}    12
 ${360_VIEW}     //li//a[text()='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]

@@ -1756,7 +1756,7 @@ NextButtonOnOrderPage
     #click on the next button from the cart
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     ${status}    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
-    #Log to console      ${status}
+    Log to console      ${status}
     wait until page contains element    //span[text()='Next']/..    120s
     click element    //span[text()='Next']/..
     unselect frame
@@ -3667,11 +3667,12 @@ Delete all existing contracts from Accounts Related tab
     Select rows to delete the contract
 
 Delete all assets
-    ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
+    ${Accounts_More}  set variable   //div[@class="slds-tabs_default"]//li[6]//button
+#     //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
 
     wait until element is visible  ${Accounts_More}  60s
     Click element  ${Accounts_More}
-    Click element  //li[@class='uiMenuItem']/a[@title='Assets']
+    Click element   //div[@class="slds-tabs_default"]//li[6]//a//span[contains(text(),"Assets")]
     Wait until element is visible  //span[@title='Assets']  60s
     Click element  //span[@title='Assets']
     Wait until element is visible  //h1[@title='Assets']  60s
@@ -6829,7 +6830,6 @@ SearchAndSelectBillingAccount
 
 SelectingTechnicalContactforTeliaDomainNameService
     [Arguments]   ${d}
-
     ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
     ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
     ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
@@ -6841,8 +6841,6 @@ SelectingTechnicalContactforTeliaDomainNameService
 #   ${Street}=  Run Keyword   Create Unique Name    ${DEFAULT_NAME}
     ${Postal_Code}=  Run Keyword   Create Unique PostalCode
     ${City}=  Set variable   Helsiniki
-
-
     ${FirstName}=  set variable   //input[@id="MCFname"]
     ${LastName}=  set variable   //input[@id="MCLname"]
     ${EmailID}=  set variable   //input[@id="MCEmail"]
@@ -6850,8 +6848,6 @@ SelectingTechnicalContactforTeliaDomainNameService
     ${Street}=  set variable   //input[@id="MCStreet"]
     ${Postal_codes}=  set variable  //input[@id="MCPostalCode"]
     ${city_Name}=  set variable    //input[@id="MCCity"]
-
-
     Wait until Element is enabled    xpath=//div[contains(@class,'slds')]/iframe    60s
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     log to console    entering Technical COntact page
@@ -6958,5 +6954,3 @@ Validate ServiceAdministrator in Account contact role
     Page should contain element     //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]    30s
     Page should contain element   //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]//following::td[1]//span//span[text()="Service Administrator"]   30s
 #    Page should contain element   //*[@id="brandBand_1"]//td//span//a[text()="${email}"]    60s
-
-

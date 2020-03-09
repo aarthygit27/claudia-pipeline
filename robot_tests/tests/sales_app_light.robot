@@ -359,7 +359,8 @@ Create B2O Order
 
 createAOppoViaSVE
     [Tags]    BQA-8798    AUTOLIGHTNING
-    Login to Salesforce as DigiSales Lightning User
+#    Login to Salesforce as DigiSales Lightning User
+    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     #log to console    ${contact_name}.this is name
@@ -1799,13 +1800,15 @@ Check of Customership Contract
 
 
 
+
 One Order - B2B Colocation and Change Order
     [Tags]  BQA-11521
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
-    Go to Entity    ${vLocUpg_TEST_ACCOUNT}
-    Delete all assets
-    logoutAsUser   ${SALES_ADMIN_APP_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+#    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+#    Go to Entity    ${vLocUpg_TEST_ACCOUNT}
+#    Delete all assets
+#    logoutAsUser   ${SALES_ADMIN_APP_USER}
+#    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     HDC Order
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
@@ -1989,20 +1992,16 @@ Lead_Creation
 
 Validate Main User contact for DNS
     [Tags]  BQA-13122
+  [Documentation]  This script is designed to validate the main user contact being created for DNS product
 #    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
-    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
-    Log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
 #   ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
-#   log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
-##  Go To Entity  Test Robot Order_20200227-103807
-    sleep  20s
-##  ClickingOnCPQ    Test Robot Order_20200227-103807
+    #sleep  20s
     ClickingOnCPQ     ${oppo_name}
     Adding Telia Domain Name service    Telia Domain Name Service
     updating setting Telia Domain Name space  Telia Domain Name Service
@@ -2010,30 +2009,18 @@ Validate Main User contact for DNS
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     sleep  40s
-#   Go to   https://telia-fi--rel.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiaHR0cHM6Ly90ZWxpYS1maS0tcmVsLmxpZ2h0bmluZy5mb3JjZS5jb20vYXBleC92bG9jaXR5X2NtdF9fT21uaVNjcmlwdFVuaXZlcnNhbFBhZ2U%2FaWQ9ODAxMXcwMDAwMDJVQkF5QUFPJkFjY291bnRJZD0wMDExdzAwMDAwV3B6Tm1BQUombGF5b3V0PWxpZ2h0bmluZyZ0cmFja0tleT0xNTgyMTc3Nzc4NDA2Iy9PbW5pU2NyaXB0VHlwZS9TdWJtaXQlMjBPcmRlci9PbW5pU2NyaXB0U3ViVHlwZS9VcGRhdGUlMjBPcmRlci9PbW5pU2NyaXB0TGFuZy9FbmdsaXNoL0NvbnRleHRJZC84MDExdzAwMDAwMlVCQXlBQU8vUHJlZmlsbERhdGFSYXB0b3JCdW5kbGUvL3RydWUifSwic3RhdGUiOnt9fQ%3D%3D
     SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
     SelectingTechnicalContactforTeliaDomainNameService     ${contact}
-#   SelectingTechnicalContactforTeliaDomainNameService    Testing Contact_20200227-135631
     RequestActionDate
 #   SelectOwnerAccountInfo   ${billing_acc_name}
     SelectOwnerAccountInfo   Billing Telia Communication Oy
-#   Go to   https://telia-fi--rel.lightning.force.com/lightning/r/Order/8011w000002UBAyAAO/view
     clickOnSubmitOrder
     ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
     log to console   ${Ordernumber}
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-#   go to   https://telia-fi--rel.lightning.force.com/lightning/r/0011w00000WpzNmAAJ/related/AccountContactRoles__r/view
+    Go To Salesforce and Login into Lightning       System Admin
     Validate Main user in order product    ${Ordernumber}     Telia Domain Name Service
-#   Validate Main user in order product   320030218584   Telia Domain Name Service
-#   Validate ServiceAdministrator in Account contact role   TEST20200226-111615   TEST20200226-111615   20200226-111615noreply@teliasonera.com
-#   ${contact}=  set variable   Testing Contact_20200302-173710
     ${first_name}=   Fetch From Left  ${contact}  ${SPACE}
     ${second_name}=   Fetch From Right   ${contact}   ${SPACE}
-#   Log to console   ${first_name}
-#   Log to console   ${second_name}
     Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
-
-
-
 
