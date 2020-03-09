@@ -3,7 +3,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    rel
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu3
+${Password_merge}    PahaPassu1
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pm@teliacompany.com.${ENVIRONMENT}
@@ -191,9 +191,9 @@ ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
-${SYSTEM_ADMIN_PWD}          PahaPassu1
+${SYSTEM_ADMIN_PWD}          PahaPassu2
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
-${PASSWORD-SALESADMIN}    PahaPassu1
+${PASSWORD-SALESADMIN}    PahaPassu2
 ${Credit_control_user}     creditcontrol@teliacompany.com.${ENVIRONMENT}
 ${Credit_control_password}  PahaPassu1
 ${REMOVE_ACCOUNT}    GESB Integration
