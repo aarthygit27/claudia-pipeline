@@ -2015,3 +2015,17 @@ Validate Main User contact for DNS
     ${second_name}=   Fetch From Right   ${contact}   ${SPACE}
     Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
 
+
+validate FYR valuesin Oppo page by modifying salestype in SVE
+    [Tags]  BQA-13172
+
+#    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+
+
