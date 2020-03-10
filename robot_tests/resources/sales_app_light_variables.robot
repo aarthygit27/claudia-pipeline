@@ -194,7 +194,7 @@ ${gender}         1 - male
 ${sales_role_text}    Business Contact
 ${job_title_text}    verojohtaja - 8715
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
-${SYSTEM_ADMIN_PWD}          PahaPassu1
+${SYSTEM_ADMIN_PWD}          PahaPassu2
 ${SALES_ADMIN_APP_USER}    saleadm@teliacompany.com.${ENVIRONMENT}
 ${PASSWORD-SALESADMIN}    PahaPassu2
 ${Credit_control_user}     creditcontrol@teliacompany.com.${ENVIRONMENT}
@@ -221,8 +221,8 @@ ${r}              b2b
 ${p}              b2o
 ${product_name}    Telia Robotics
 ${product_quantity}    1
-${NRC}            10
-${RC}             120
+${NRC}            35
+${RC}             50000
 ${B2bproductfyr1}    Telia Sopiva Pro N
 ${B2bproductfyr2}   Pro Nettikortti
 ${B2bproductfyr3}   Multi-SIM
@@ -274,7 +274,18 @@ ${businessAccount}      Aacon Oy
 ${groupAccount}      Aacon Oy
 ${errorpopup}     //div[@class()='modal-container slds-modal__container']
 ${errorok}      //button[@title='OK']
-
+${editgtmapprovalrequest}      //button[@title="Edit GTM Approval Request Justification"]
+${gtmapprovaljustification}       //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
+${gtmsave}        //div[@class="footer active"]//button[@title="Save"]
+${moreactionslink}      //a[contains(@title, 'more actions')][1]
+${submitgtmapproval}      //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..
+${pendingapproval}     //span[text()='Pending Approval']
+${approvedstatus}      //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
+${mobilecoveragerequest}      //a[@title='Mobile Coverage Request']
+${showmoreactions}    //a[@title='Show 9 more actions']
+${manualavailabilitycheck}      //a[@title='Manual Availability Check']
+${investment}       //a[@title='Investment']
+${remindmelater}       //a[text()='Remind Me Later']
 ### Lead  Variables ###
 
 ${lead_account_name}                Academic Work HR Services Oy
@@ -290,5 +301,3 @@ ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
 ${group_id}         SALES FORCE TEST 1
 #Changes for each account
-
-${order_contactrole}=    https://telia-fi--rel.lightning.force.com/lightning/r/8021w000000rmNSAAY/related/Order_Contact_Roles__r/view

@@ -76,8 +76,8 @@ Login to Salesforce Lightning
     #Run Keyword unless    ${homepage}    reload page
     #Run Keyword unless    ${homepage}    sleep  30s
     sleep  45s
-    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    //a[text()='Remind Me Later']
-    Run Keyword If    ${infoAvailable}    force click element    //a[text()='Remind Me Later']
+    ${infoAvailable}=    Run Keyword And Return Status    element should be visible    ${remindmelater}
+    Run Keyword If    ${infoAvailable}    force click element    ${remindmelater}
     run keyword and ignore error    Check For Lightning Force
     ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${LIGHTNING_ICON}
     Run Keyword If    ${buttonNotAvailable}    reload page
@@ -1560,7 +1560,6 @@ UpdateAndAddSalesType
     wait until page contains element    ${update_order}    60s
     #log to console    selected new frame
     wait until page contains element    ${product_list}    70s
-    sleep  60s
     click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
     sleep    2s
     click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
@@ -1735,7 +1734,6 @@ ClickonCreateOrderButton
     Run Keyword If   ${status}   click button      //div//button[contains(text(),"Open Order")]
     unselect frame
     Sleep  30s
-
 clickonopenorderbutton
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element    //div//button[contains(text(),"Open Order")]    60s
@@ -1926,7 +1924,6 @@ SelectOwnerAccountInfo
 #    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
     sleep   10s
     force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
-#    Log to console   billing account is clicked
     sleep  10s
 #    unselect frame
     Scroll Page To Element       //*[@id="BuyerIsPayer"]//following-sibling::span
@@ -4187,7 +4184,7 @@ addProductsViaSVE
      [Arguments]    ${pname_sve}=${product_name}
      #log to console  ${pname_sve}.this is added via SVE
      select frame  xpath=//div[contains(@class,'slds')]/iframe
-     force click element  //div[@class='btn custom-button btn-primary pull-right']
+     #force click element  //div[@class='btn custom-button btn-primary pull-right']
      sleep  5s
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
      input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']    ${pname_sve}
@@ -4201,14 +4198,15 @@ addProductsViaSVE
      sleep  2s
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value}']
      sleep  5s
-     #click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.ContractLength']/option[@value='${contract_lenght}']
+     click element  //input[@type="number"][@ng-model="p.ContractLength"]
+     input text   //input[@type="number"][@ng-model="p.ContractLength"]   ${contract_lenght}
      #click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.ContractLength']/option[@value='${contract_lenght}']
      ${fyr_value}=      evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
      ${revenue_value}=  evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
-     wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
-     force click element  //button[normalize-space(.)='Save Changes']
+     wait until page contains element  //button[contains(text(),"Save")]   60s
+     click element  //button[contains(text(),"Save")]
      unselect frame
      sleep   30s
      [Return]   ${fyr_value}
@@ -6747,7 +6745,38 @@ Check the credit score result of the case with Positive with Conditions
     Sleep  10s
     NextButtonOnOrderPage
     sleep  30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //section[@id='OrderTypeCheck']/section/div/div/div/h1  40s
+    unselect frame
+    OrderNextStepsPage
 
+Check the credit score result of the Negative cases
+    ${send_quote}    Set Variable    //div[@title='Send Quote Email']
+    ${quote_n}    Set Variable    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
+    ${send_mail}    Set Variable    //p[text()='Send Email']
+    wait until page contains element    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span   60s
+    wait until page contains element    ${send_quote}   60s
+    click element  ${send_quote}
+    sleep  50s
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    page should contain element   //span[contains(text(),"Credit Score result: Manual Credit Inquiry Case is not approved")]
+    page should contain element  //p//h3[text()="Decision: Negative"]
+    click element  //div//p[text()="Next"]
+    unselect frame
+    wait until page contains element        //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']       60s
+    sleep  10s
+    force click element    //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
+    sleep    30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
+    wait until page contains element    //span[text()='Create Order']/..    60s
+    click element    //span[text()='Create Order']/..
+    unselect frame
+    Sleep  60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //h1[contains(text(),"Credit Score Validation")]   60s
+    page should contain element     //div/small[text()="Manual Credit Inquiry case is not accepted. Decision: Negative"]
 
 create two different billing account for payer and buyer validation
    [Arguments]  ${billing_acc_name}
