@@ -564,11 +564,10 @@ Domain name service with Finnish Domain - Complete Order
     log      Order Number is ${Order_Id}
 
 Telia ACE Complete Order
-    [Tags]    BQA-11732     Telia ACE    B2B_other     RunTest          TestingMail
+    [Documentation]    To create new P&O order adding Telia ACE and all its child products by overriding the prices in the cart
+    [Tags]    BQA-11732     PO_Scripts
     #General Setup    B2B
-    Open Salesforce and Login into Lightning
-    Go to Entity      Test Robot Order_20200208-103505
-    ClickingOnCPQ     Test Robot Order_20200208-103505
+    General Setup    B2B    ${Account_test}
     Searching and adding product    Telia ACE
     #log     ${oppo_name}
     Add all child products

@@ -474,6 +474,8 @@ Searching and adding product
     ${Toggle}  set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']
     Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
     select frame  xpath=//div[contains(@class,'slds')]/iframe
+    ${closing}    Run keyword and return status     Element should be visible     //*[@alt='close'][contains(@size,'large')]
+    Run Keyword If      ${closing}      Click Visible Element         //*[@alt='close'][contains(@size,'large')]
     ${status}     Run Keyword and return status    Element should be visible    //div[contains(@class, 'cpq-searchbox')]//input
     Sleep       10s
     #Log to console      ${status}

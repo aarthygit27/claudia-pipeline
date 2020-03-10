@@ -2,9 +2,9 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../resources/sales_app_light_keywords.robot
-Resource          ../resources/common.robot
-Resource          ../resources/multibella_keywords.robot
+Resource          ../../resources/sales_app_light_keywords.robot
+Resource          ../../resources/common.robot
+Resource          ../../resources/multibella_keywords.robot
 #Library             test123.py
 
 
@@ -25,29 +25,29 @@ CreateB2BHDCGTMOrder
     ${GTM_limit}=  set variable  600000
     ${result}=  evaluate  ${fyr} > ${GTM_limit}
     Run keyword If    ${result}=='True'   click on more actions
-    scrolluntillfound  //button[@title="Edit GTM Approval Request Justification"]
-    click element  //button[@title="Edit GTM Approval Request Justification"]
-    wait until page contains element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea   30s
-    force click element  //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea
-    input text    //Span[text()='GTM Approval Request Justification']/../following-sibling::textarea    Please APprove
-    click element  //div[@class="footer active"]//button[@title="Save"]
+    scrolluntillfound  ${editgtmapprovalrequest}
+    click element  ${editgtmapprovalrequest}
+    wait until page contains element  ${gtmapprovaljustification}   30s
+    force click element   ${gtmapprovaljustification}
+    input text    ${gtmapprovaljustification}    Please APprove
+    click element   ${gtmsave}
     scroll page to location  0  0
     sleep  3s
-    wait until page contains element  //a[contains(@title, 'more actions')][1]   30s
-    force click element  //a[contains(@title, 'more actions')][1]
-    wait until page contains element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..   20s
-    page should contain element   //div/div[@role="menu"]//a[@title="Submit for HDC GTM Approval"][1]/..
+    wait until page contains element    ${moreactionslink}   30s
+    force click element     ${moreactionslink}
+    wait until page contains element   ${submitgtmapproval}   20s
+    page should contain element   ${submitgtmapproval}
     force click element   //div[text()='Submit for HDC GTM Approval']
     sleep  5s
     reload page
     Sleep  60s
-    page should contain element  //span[text()='Pending Approval']
+    page should contain element   ${pendingapproval}
     logoutAsUser  B2B DigiSales
     sleep   10s
     Go To Salesforce and Login into Lightning       System Admin
     ApproveB2BGTMRequest  Leila Podduikin  ${oppo_name}
     ApproveB2BGTMRequest  Tommi Mattila    ${oppo_name}
     go to entity  ${oppo_name}
-    scrolluntillfound  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
-    page should contain element  //span[text()='GTM Pricing Approval Status']/..//following-sibling::div//span[text()='Approved']
+    scrolluntillfound    ${approvedstatus}
+    page should contain element    ${approvedstatus}
     ClickingOnCPQ    ${oppo_name}

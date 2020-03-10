@@ -2,9 +2,9 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../resources/sales_app_light_keywords.robot
-Resource          ../resources/common.robot
-Resource          ../resources/multibella_keywords.robot
+Resource          ../../resources/sales_app_light_keywords.robot
+Resource          ../../resources/common.robot
+Resource          ../../resources/multibella_keywords.robot
 #Library             test123.py
 
 
@@ -62,9 +62,9 @@ Mobile coverage request redirects to Tellu
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
-    ${status}=  Run keyword and return status    Wait element to load and click  //a[@title='Mobile Coverage Request']
-    Run keyword if      ${status} == False    Force click element  //a[@title='Show 9 more actions']
-    Run keyword if      ${status} == False    Click element   //a[@title='Mobile Coverage Request']
+    ${status}=  Run keyword and return status    Wait element to load and click   ${mobilecoveragerequest}
+    Run keyword if      ${status} == False    Force click element   ${showmoreactions}
+    Run keyword if      ${status} == False    Click element    ${mobilecoveragerequest}
     Sleep   10s
     Validate that Tellu login page opens
 
@@ -75,7 +75,7 @@ Manual availability check redirects to Tellu
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
-    Wait element to load and click  //a[@title='Manual Availability Check']
+    Wait element to load and click    ${manualavailabilitycheck}
     Validate that Tellu login page opens
 
 Investment redirects to Tellu
@@ -85,7 +85,7 @@ Investment redirects to Tellu
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to view  Opportunities
     Wait element to load and click  ${test_opportunity}
-    Wait element to load and click  //a[@title='Investment']
+    Wait element to load and click      ${investment}
     Validate that Tellu login page opens
 
 
