@@ -2018,7 +2018,7 @@ Validate Main User contact for DNS
 
 validate FYR valuesin Oppo page by modifying salestype in SVE
     [Tags]  BQA-13172
-
+   [Documentation]  This script is designed to validate the FYR values being created in Oppo page
 #    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
      Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
      Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -2028,5 +2028,6 @@ validate FYR valuesin Oppo page by modifying salestype in SVE
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     Go To Entity    ${oppo_name}
+
 
 
