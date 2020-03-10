@@ -2027,5 +2027,6 @@ validate FYR valuesin Oppo page by modifying salestype in SVE
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
 
 
