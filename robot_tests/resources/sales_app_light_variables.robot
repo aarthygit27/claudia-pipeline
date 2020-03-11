@@ -16,7 +16,7 @@ ${Endorser_User}  endorser@teliacompany.com.${ENVIRONMENT}
 ${Endorser_PW}  PahaPassu1
 ${Approver_User}  approver@teliacompany.com.${ENVIRONMENT}
 ${Approver_PW}  PahaPassu3
-${LIGHTNING_TEST_ACCOUNT}     ABB Asea Brown Boveri Ltd
+${LIGHTNING_TEST_ACCOUNT}     Telia Communication Oy
 ${vLocUpg_TEST_ACCOUNT}    Aarsleff Oy
 ${CONTRACT_ACCOUNT}     Telia Communication Oy
 #Digia Oyj
@@ -68,6 +68,9 @@ ${SAVE_BUTTON}    //div[@class="actionsContainer"]//button[@title='Save']
 ${CONTACT_DETAILS}    //section[@class='tabs__content active uiTab']
 ${DETAILS_TAB}    //li[@title="Details"]//a[text()="Details"]
 ${DEFAULT_EMAIL}    d@email.com
+${DEFAULT_NAME}    TEST
+
+
 #${MASTER_MOBILE_NUM}    +358999888001
 #${MASTER_FIRST_NAME}    SATEST
 #${MASTER_LAST_NAME}    SACONTACT
@@ -226,7 +229,10 @@ ${B2bproductfyr3}   Multi-SIM
 ${fixed_charge for_Telia Sopiva Pro N}  30
 ${fixed_charge for_Pro Nettikortti}     0
 ${fixed_charge for_Multi-SIM}           0
-${sales_type_value}    New Money-New Services
+${sales_type_value}   New Money-New Services
+${sales_type_value1}   New Money-Extending Services
+${sales_type_value2}   Renegotiation-Service Replacement
+${sales_type_value3}   Renegotiation-Service Continuation
 ${contract_lenght}    12
 ${360_VIEW}     //li//a[text()='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]
