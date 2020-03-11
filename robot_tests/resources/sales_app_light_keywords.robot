@@ -6854,6 +6854,7 @@ SearchAndSelectBillingAccount
 
 SelectingTechnicalContactforTeliaDomainNameService
     [Arguments]   ${d}
+    [Documentation]   For selecting Technical contact field for DNS product
     ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
     ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
     ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
@@ -6863,7 +6864,7 @@ SelectingTechnicalContactforTeliaDomainNameService
     ${Name}=  Run Keyword  Create Unique Name    ${DEFAULT_NAME}
     ${Mobile}=  Run Keyword   Create Unique Phone Number
 #   ${Street}=  Run Keyword   Create Unique Name    ${DEFAULT_NAME}
-    ${Postal_Code}=  Run Keyword   Create Unique PostalCode
+#    ${Postal_Code}=  Run Keyword   Create Unique PostalCode
     ${City}=  Set variable   Helsiniki
     ${FirstName}=  set variable   //input[@id="MCFname"]
     ${LastName}=  set variable   //input[@id="MCLname"]
@@ -6930,6 +6931,7 @@ SelectingTechnicalContactforTeliaDomainNameService
 
 Validate Main user in order product
     [Arguments]    ${Ordernumber}  ${pdtname}
+    [Documentation]   To validate the ordered product belongs to main user
     log to console  ${Ordernumber}.is the order number
     Go To Entity    ${Ordernumber}
     wait until page contains element      //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]   45s
@@ -6946,10 +6948,9 @@ Validate Main user in order product
     log to console  product is clicked
     sleep  60s
     Reload page
-#   Go to   https://telia-fi--rel.lightning.force.com/lightning/r/OrderItem/8021w000000rmNSAAY/view
     ${status_page} =  run keyword and return status  wait until page contains element   /a[@title="Related"]   60s
-    #Run Keyword If    ${status_page} == False    Reload Page
-    Run Keyword If    ${status_page} == False    Sleep  60s
+    Run Keyword If    ${status_page} == False    Reload Page
+#   Run Keyword If    ${status_page} == False    Sleep  60s
     sleep  60s
     Force Click Element  //a[@title="Related"]
     Log to console   related page is clicked
@@ -6964,6 +6965,7 @@ Validate Main user in order product
 
 Validate ServiceAdministrator in Account contact role
    [Arguments]    ${First_name}   ${lastname}
+   [Documentation]   This is to validate the account contact role created belongs to Service Adminisatrator
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Reload page
     wait until page contains element     ${ACCOUNT_RELATED}  45s
@@ -6973,7 +6975,7 @@ Validate ServiceAdministrator in Account contact role
     Click Element   //div[@class="slds-media__body"]//a//span[text()="Contact Roles"]
     sleep   10s
     wait until page contains element    //h1[@title="Contact Roles"]    30s
-    scrolluntillfound     //*[@id="brandBand_1"]//th//span//span[@title="${First_name}"]
+    scrolluntillfound     //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]
     Page should contain element     //*[@id="brandBand_1"]//th//span//span[@title="${First_name}"]   60s
     Page should contain element     //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]    30s
     Page should contain element   //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]//following::td[1]//span//span[text()="Service Administrator"]   30s
