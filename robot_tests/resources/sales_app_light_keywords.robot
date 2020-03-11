@@ -5492,10 +5492,82 @@ Fill Contract Details
     Click element  //p[text()='Load Attachment']
     Wait until element is visible  //p[contains(text(),'Attachment has been loaded successfully.')]  60s
     Unselect Frame
-    sleep  2s
-    go to   ${page}
+
+Add Attachment For Order
+
+    ${Attachment_Button}  set variable   //a[@title='Add Attachment']
+    ${File_Path}   set variable    ${CURDIR}\\..\\resources\\Input.txt
+    ${save}  set variable  //span[text()='Contractual Contact Person']//following::span[text()='Save']
+    ${ATTACHMENT_NAME}  set variable  //input[@id='name']
+    ${File}  set variable   //input[@type='file']
+    ${Type}  set variable   //select[@id='type']
+    ${Type_Option}  set variable   //select[@id='type']/option[@value='Customership Agreement']
+    ${Document}  set variable   //select[@id='Document_Stage']
+    ${Document_option}  set variable   //select[@id='Document_Stage']/option[@value='Approved']
+    ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
+    ${order_no}  set variable  //div[@class='slds-grid primaryFieldRow']//span[@class='uiOutputText']
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a/div[@title='Add Attachment']   60s
+    #Run Keyword If    ${status_page} == True    force click element    //li/a/div[@title='Billing Account']
+    Run Keyword If    ${status_page} == False   click element     //a[@title='Show 4 more actions']
+    click element     //a[@title='Show 4 more actions']
+    sleep  20s
+    Wait until element is visible  ${Attachment_Button}  60s
+    Click Link  ${Attachment_Button}
+    sleep  5s
+    Reload page
+        #Click element   ${Attachment_Button}
+    Wait until element is visible  ${Frame}  30s
+    Select frame  ${Frame}
+    sleep  15s
+    #Wait until element is visible  ${File}  60s  - Not working
+    ${status}  Run keyword and return status  Element should be visible  ${File}
+    Choose File   ${File}   ${File_Path}
+    Wait until element is visible  //textarea[@id='description']  30s
+    Force Click element  //textarea[@id='description']
+    Input text  //textarea[@id='description']  Test Description
+    Click element  ${Type}
+    Click element  ${Type_Option}
+    Click element  ${Document}
+    Click element  ${Document_option}
+    Wait until element is visible  //span[@class='slds-checkbox--faux']
+    Click element  //span[@class='slds-checkbox--faux']
+    Click element  //p[text()='Load Attachment']
+    Wait until element is visible  //p[contains(text(),'Attachment has been loaded successfully.')]  60s
+    Click element  //div[@id='attachment_nextBtn']
+    Wait element to load and click  //div[@id='update_metadata']
+    Click element  //span[contains(text(),'Show More')]
+    wait until element is visible   //a[@title='${order_no}']  30s
+    Click element  //a[@title='${order_no}']
+    Unselect Frame
+
+sendDocumentsToECM
+    [Documentation]  Documents are send to ECM after attaching the documents in the order and ECM id is verified
+    ${send_documents_button}  set variable   //a[@title='Send Documents to ECM']
+    ${order_no}  set variable  //div[@class='slds-grid primaryFieldRow']//span[@class='uiOutputText']
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a/div[@title='Send Documents to ECM']   60s
+    Run Keyword If    ${status_page} == False   click element     //a[@title='Show 4 more actions']
+    click element     //a[@title='Show 4 more actions']
+    sleep  20s
+    Wait until element is visible  ${send_documents_button}  60s
+    Click Link  ${send_documents_button}
+    sleep  20s
+    reload page
+    wait until element is visible  //div[contains(@class,'slds')]/iframe
+    select frame  //div[contains(@class,'slds')]/iframe
+    wait until element is visible  //td[contains(text(),'Input.txt')]//preceding::button[@type='checkbox']
+    click element  //td[contains(text(),'Input.txt')]//preceding::button[@type='checkbox']
+    sleep  10s
+    click element  //div[@id='send_to_ecm']
+    wait until element is visible  //label[contains(text(),'Results for ECM attachment load')]
+    ${ECM_attachment_status}   Run Keyword And Return Status  Page should contain element  //label[contains(text(),'Results for ECM attachment load')]//following::td[2][contains(text(),'OK')]
+    Run Keyword If  ${ECM_attachment_status} == True   click element  //a[@title='${order_no}']
     sleep  30s
-    log to console  file contracts details ended
+    ScrollUntillFound  //span[@title='Attached Documents']
+    Wait element to load and click  //span[@title='Attached Documents']
+    Wait until element is visible   //span[contains(text(),'ECM Id')]   60s
+    should not be empty   //span[@title='test']//following::td[8]  msg=ECM id generated
+    ${ECM_id}  get value  //span[@title='test']//following::td[8]/span/span
+
 Go to account from oppo page
     [Documentation]  Go back to account page from opportubnity page
     Reload page
