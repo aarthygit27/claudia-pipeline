@@ -1984,17 +1984,16 @@ Lead_Creation
 Validate Main User contact for DNS
    [Tags]  BQA-13122
   [Documentation]  This script is designed to validate the main user contact being created for DNS product
-#    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-#   ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
     Go To Entity    ${oppo_name}
-    #sleep  20s
     ClickingOnCPQ     ${oppo_name}
-    Adding Telia Domain Name service    Telia Domain Name Service
+    search products   Telia Domain Name Service
+    Adding Products   Telia Domain Name Service
     updating setting Telia Domain Name space  Telia Domain Name Service
     UpdateAndAddSalesType  Telia Domain Name Service
     ClickonCreateOrderButton
@@ -2003,17 +2002,17 @@ Validate Main User contact for DNS
     SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
     SelectingTechnicalContactforTeliaDomainNameService     ${contact}
     RequestActionDate
-#   SelectOwnerAccountInfo   ${billing_acc_name}
-    SelectOwnerAccountInfo   Billing Telia Communication Oy
+    SelectOwnerAccountInfo   ${billing_acc_name}
     clickOnSubmitOrder
     ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
     log to console   ${Ordernumber}
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Go To Salesforce and Login into Lightning       System Admin
-    Validate Main user in order product    ${Ordernumber}     Telia Domain Name Service
+    Validate Main user in order product    ${Ordernumber}   Telia Domain Name Service
     ${first_name}=   Fetch From Left  ${contact}  ${SPACE}
     ${second_name}=   Fetch From Right   ${contact}   ${SPACE}
     Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
+
 
 
 validate FYR valuesin Oppo page by modifying salestype in SVE
