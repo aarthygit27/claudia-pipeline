@@ -1989,7 +1989,7 @@ Validate Main User contact for DNS
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
+#    ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
     Go To Entity    ${oppo_name}
     ClickingOnCPQ     ${oppo_name}
     search products   Telia Domain Name Service
@@ -1999,7 +1999,8 @@ Validate Main User contact for DNS
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     sleep  40s
-    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
+#   SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
+    SelectOwnerAccountInfo   Billing Telia Communication Oy
     SelectingTechnicalContactforTeliaDomainNameService     ${contact}
     RequestActionDate
     SelectOwnerAccountInfo   ${billing_acc_name}
