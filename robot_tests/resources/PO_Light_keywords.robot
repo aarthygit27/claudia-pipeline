@@ -491,6 +491,7 @@ Searching and adding product
     ${status}   Run keyword and return status   Element should be visible   ${Toggle}
     #Log to console    Toggle status is ${status}
     Run keyword if  ${status}  Click element  ${Toggle}
+    Sleep   5s
     ${status}   Run keyword and return status  wait until page contains element   //span[contains(text(),"Required attribute missing")]  60s
     Run keyword if  ${status}   Click Settings  ${pname}
     Unselect frame
@@ -797,9 +798,14 @@ Click Settings
     #sleep  15s
     #Wait until element is visible   //div[contains(@class,'slds')]/iframe     60s
     #select frame  xpath=//div[contains(@class,'slds')]/iframe
-    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
-    Wait until element is visible   ${SETTINGS}   60s
-    Click Button    ${SETTINGS}
+    #${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
+    Sleep       5s
+    ${exist}=    Run Keyword And Return Status    Element Should Be Visible     //*[contains(text(),'${pname}')]/../../..//*[@alt='settings']/..
+    Run Keyword If    ${exist}      Click Button     //*[contains(text(),'${pname}')]/../../..//*[@alt='settings']/..
+    ...    ELSE         Click Button     //*[contains(text(),'${pname}')]/../../../..//*[@alt='settings']/..
+    #${SETTINGS}   set variable      //*[contains(text(),'${pname}')]/../../..//*[@alt='settings']/..
+    #Wait until element is visible   ${SETTINGS}   60s
+    #Click Button    ${SETTINGS}
     sleep  10s
 
 update setting common
@@ -844,7 +850,7 @@ update setting Toimenpide
     Run Keyword IF   ${status}  click element    ${Hinnoitteluperuste}/option[contains(text(),'${option}')]
     Wait until element is visible   ${Henkilötyöaika}  30s
     click element    ${Henkilötyöaika}
-    Press Key    ${Henkilötyöaika}    10
+    Press Key    ${Henkilötyöaika}    1
     Wait until element is visible   ${Palveluaika}  30s
     click element    ${Palveluaika}
     Wait until element is visible   ${Palveluaika}//option[contains(text(),'arkisin 8-16')]   30s
@@ -2248,17 +2254,51 @@ Add all child products
      \    Exit For Loop If    ${status}
      unselect frame
 
+Update Setting Laskutuksen Lisätieto
+    [Arguments]    ${product}
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    ${settings}  set variable  //*[contains(text(),'${product}')]/../../..//*[@alt='settings']/..
+    select frame        ${iframe}
+    Sleep       5s
+    Click Settings       ${product}
+    Update setting with label    ${product}       Laskutuksen lisätieto 1     Row1
+    Update setting with label    ${product}       Laskutuksen lisätieto 2     Row2
+    Update setting with label    ${product}       Laskutuksen lisätieto 3     Row3
+    Update setting with label    ${product}       Laskutuksen lisätieto 4     Row4
+    Update setting with label    ${product}       Laskutuksen lisätieto 5     Row5
+    Sleep       5s
+    Click element  ${closing}
+    unselect frame
+    #Update Setting     ${product}       productconfig_field_1_0     Row1
+    #Update Setting     ${product}       productconfig_field_1_1     Row2
+    #Update Setting     ${product}       productconfig_field_1_2     Row3
+    #Update Setting     ${product}       productconfig_field_1_3     Row4
+    #Update Setting     ${product}       productconfig_field_1_4     Row5
+
+Update setting with label
+    [Arguments]    ${product}       ${label}      ${value}
+    ${fieldname}  set variable   (//label[contains(.,'${label}')])[last()]//following::input
+    #ScrollUntillFound     ${settings}
+    #Force Click element     ${settings}
+    Input Text    ${fieldname}   ${value}
+    sleep  5s
+
+
 Update Setting
     [Arguments]    ${product}       ${field}      ${value}
-    ${settings}  set variable  //div[contains(text(),'${product}')]/../../..//*[@alt='settings']/..
+    #${settings}  set variable  //div[contains(text(),'${product}')]/../../../..//*[@alt='settings']/..
+    ${settings}  set variable  //*[contains(text(),'${product}')]/../../..//*[@alt='settings']/..
     ${fieldname}  set variable   //input[@name='${field}']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     select frame        ${iframe}
-    ScrollUntillFound     ${settings}
-    Force Click element     ${settings}
+    Sleep       5s
+    Click Settings       ${product}
+    #ScrollUntillFound     ${settings}
+    #Force Click element     ${settings}
     Input Text    ${fieldname}   ${value}
-    sleep  5s
+    sleep  10s
     Click element  ${closing}
     unselect frame
 

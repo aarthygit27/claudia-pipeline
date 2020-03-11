@@ -5418,7 +5418,7 @@ Fill Contract Details
     Run Keyword If  ${status}   Force Click element  ${contact}
     Capture Page Screenshot
     #sleep  5s
-
+    scrolluntillfound       ${Customer Signed Date}
     Wait until element is visible  ${Customer Signed Date}  30s
     Force Click element   ${Customer Signed Date}
     Wait until element is visible   //a[@title='Go to next month']   30s
@@ -5426,13 +5426,14 @@ Fill Contract Details
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
     Input Text   ${Customer Signature Place}  Helsinsiki
     Execute JavaScript    window.scrollTo(0,1700)
+    ScrollUntillFound       ${Telia Signed By}
     input text    ${Telia Signed By}   Automation Admin
     Wait until element is visible    //div[@title='Automation Admin']    30s
     Click element  //div[@title='Automation Admin']
+    ScrollUntillFound       ${Telia Signed Date}
     Force Click element   ${Telia Signed Date}
     Click element   //a[@title='Go to next month']
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
-
     #Wait until element is visible    ${Edit Contractual Contact Person}  60s
     #Click element    ${Edit Contractual Contact Person}
     Wait until element is visible    ${Search Contracts}  30s
@@ -5450,15 +5451,12 @@ Fill Contract Details
     Run keyword unless    ${status}   Reload page
     Run keyword unless    ${status}   sleep  10s
     Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
-
     ${status}   Run keyword and return status  Element should be visible  ${save}
     Run keyword unless    ${status}   Reload page
     Run keyword unless    ${status}   sleep  10s
     Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
-
     click element  ${save}
     sleep  10s
-
     ${status}  Run keyword and return status  Element should not be visible  ${save}
     Reload page
     sleep  10s
@@ -6240,9 +6238,6 @@ Validate Billing system response
 
 
 HDC Order
-
-
-
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
