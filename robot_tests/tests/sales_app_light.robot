@@ -1985,33 +1985,28 @@ Send_documents_to_ECM
     [Tags]    BQA-11735
     set test variable   ${Account}    Aacon Oy
     Go To Salesforce and Login into Lightning   B2B DigiSales
-    #Go To Entity    ${Account}
-    #${contact}    run keyword    CreateAContactFromAccount_HDC
-    #log to console    ${contact}.this is name
-    #Set test variable  ${contact_name}   ${contact}
-    #${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    #log to console    ${oppo_name}.this is opportunity
-    #${billing_acc_name}    run keyword    CreateABillingAccount     ${Account}
-    #log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    Test Robot Order_20200310-162732
+    Go To Entity    ${Account}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${Account}
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
     ChangeThePriceList      B2B
-    ClickingOnCPQ    Test Robot Order_20200310-162732
-    Add product to cart (CPQ)  Alerta projektointi
-    #UpdateSettingTeliaSopivaProN
-    #Update Setting Telia Robotics  Telia Sopiva Pro N
-    #NextButtonOnOrderPage
-    UpdateAndAddSalesType   Alerta projektointi
-    Manual Credit enquiry Button
+    ClickingOnCPQ    ${oppo_name}
+    adding vula  Alerta projektointi
+    NextButtonOnOrderPage
+    #UpdateAndAddSalesType   Alerta projektointi
+    #Manual Credit enquiry Button
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     OrderNextStepsPage
-    SearchAndSelectBillingAccount   ${TEST_ACCOUNT_CONTACT}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
-    #Go To  https://telia-fi--rel.lightning.force.com/lightning/r/Order/8011w000002V3NAAA0/view?0.source=alohaHeader
-    #Reload page
+    #SearchAndSelectBillingAccount   ${TEST_ACCOUNT_CONTACT}
+    #RequestActionDate
+    #SelectOwnerAccountInfo    ${billing_acc_name}
     Add Attachment For Order
-    #Go To  https://telia-fi--rel.lightning.force.com/lightning/r/Order/8011w000002V3NAAA0/view?0.source=alohaHeader
     sendDocumentsToECM
 
 
