@@ -1989,7 +1989,7 @@ Validate Main User contact for DNS
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-#    ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
+#   ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
     Go To Entity    ${oppo_name}
     ClickingOnCPQ     ${oppo_name}
     search products   Telia Domain Name Service
@@ -1998,12 +1998,11 @@ Validate Main User contact for DNS
     UpdateAndAddSalesType  Telia Domain Name Service
     ClickonCreateOrderButton
     NextButtonOnOrderPage
-    sleep  40s
-#   SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
-    SelectOwnerAccountInfo   Billing Telia Communication Oy
+    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
     SelectingTechnicalContactforTeliaDomainNameService     ${contact}
     RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name}
+#   SelectOwnerAccountInfo   ${billing_acc_name}
+    SelectOwnerAccountInfo   Billing Telia Communication Oy
     clickOnSubmitOrder
     ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
     log to console   ${Ordernumber}
@@ -2019,9 +2018,9 @@ Validate Main User contact for DNS
 validate FYR valuesin Oppo page by modifying salestype in SVE
     [Tags]  BQA-13172
    [Documentation]  This script is designed to validate the FYR values being created in Oppo page
-#    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     Log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}

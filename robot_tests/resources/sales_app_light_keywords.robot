@@ -1921,7 +1921,7 @@ SelectOwnerAccountInfo
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     #log to console    entering Owner Account page
     Scrolluntillfound   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
-#    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
     sleep   10s
     force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     sleep  10s
