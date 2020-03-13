@@ -1998,20 +1998,11 @@ Send_documents_to_ECM
     ClickingOnCPQ    ${oppo_name}
     adding vula  Alerta projektointi
     NextButtonOnOrderPage
-    #UpdateAndAddSalesType   Alerta projektointi
-    #Manual Credit enquiry Button
+    UpdateAndAddSalesType   Alerta projektointi
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     OrderNextStepsPage
-    #SearchAndSelectBillingAccount   ${TEST_ACCOUNT_CONTACT}
-    #RequestActionDate
-    #SelectOwnerAccountInfo    ${billing_acc_name}
     Add Attachment For Order
     sendDocumentsToECM
-
-
-sample
-
-    open
 
 

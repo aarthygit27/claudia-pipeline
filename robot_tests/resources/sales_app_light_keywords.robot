@@ -5555,10 +5555,6 @@ Add Attachment For Order
     sleep  10s
     Unselect Frame
     go to entity  ${order_no}
-    #Click element  //div[@class='slds-context-bar']//span[text()='More']
-    #sleep  10s
-    #wait until page contains element   //span[@class='slds-truncate']//span[text()='${order_no}']  10s
-    #Click element  //span[@class='slds-truncate']//span[text()='${order_no}']
 
 sendDocumentsToECM
     [Documentation]  Documents are send to ECM after attaching the documents in the order and ECM id is verified
