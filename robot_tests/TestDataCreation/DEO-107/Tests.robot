@@ -7,20 +7,34 @@ Resource          Variables.robot
 Resource          ../../resources/common.robot
 
 *** Variables ***
-${LIGHTNING_TEST_ACCOUNT}           9Lives Oy
-${ENVIRONMENT}                      rel
+${LIGHTNING_TEST_ACCOUNT}           testmerge8
+${ENVIRONMENT}                      fesit
 
 *** Test Cases ***
 
 Create opportunity from Account
-    [Documentation]    Create new opportunity and validate in accounts related tab search in salesforce
-    ...    and then in My all open Opportunities section.
+    [Documentation]    Open Oppo, Contact, Open Order, Closed Case.
     [Tags]    BQA-8393    AUTOLIGHTNING        OpportunityValidation
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    Create New Opportunity For Customer    ACTIVEACCOUNT
-    Verify That Opportunity Is Found With Search And Go To Opportunity
-    Verify That Opportunity is Found From My All Open Opportunities
+    ${contact}  run keyword    Create New Contact for Account
+    Set Test Variable    ${contact_name}  ${contact}
+    ${opportunity}    run keyword    Create Opportunity    ${contact_name}
+    Set Test Variable    ${oppo_name}     ${opportunity}
+    Go To Entity    ${oppo_name}
+    Create case from more actions
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ    ${oppo_name}
+    AddProductToCart    Fiksunetti
+    UpdateAndAddSalesTypeandClickDirectOrder    Fiksunetti
+    #View Open Quote
+    #openOrderFromDirecrOrder
+    getorderstatusbeforesubmitting
+    clickonsubmitorder
+    ${order_no}    run keyword    getorderstatusaftersubmitting
+    #go to entity    ${order_no}
+    getMultibellaCaseGUIID    ${order_no}
+    #Close this order
 
 Create Customership Contract
      [Tags]  BQA-12655
@@ -41,3 +55,21 @@ Create DNS Order
     clicking on next button
     Update Product Page    Telia Domain Name Service
     Create_Order
+
+
+Create Case
+    Go To Salesforce and Login into Lightning       DigiSales Admin
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${oppo_name}      run keyword  CreateAOppoFromAccount_HDC      ${contact_name}
+    Go To Entity    ${oppo_name}
+    Create case from more actions
+
+create a Colocation Order
+    [Tags]    BQA-10813    AUTOLIGHTNINGOLD       B2BOrderManagement
+    General Setup    B2B    ${LIGHTNING_TEST_ACCOUNT}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
