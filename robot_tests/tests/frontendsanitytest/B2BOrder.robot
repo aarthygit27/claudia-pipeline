@@ -41,7 +41,7 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     Go To Entity    ${oppo_name}
     sleep    5s
     Editing Win prob    no
-    Adding partner and competitor
+    #Adding partner and competitor
     Capture Page Screenshot
     sleep    10s
     ClickingOnCPQ    ${oppo_name}
