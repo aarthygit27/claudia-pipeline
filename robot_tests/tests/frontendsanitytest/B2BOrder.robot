@@ -91,7 +91,7 @@ Create B2B Direct Order
     [Tags]    BQA-10813    AUTOLIGHTNING       B2BOrderManagement
     [Documentation]     Create B2B Direct order
     Go To Salesforce and Login into Lightning       B2B DigiSales
-    Go To Entity    Ylöjärven Yrityspalvelu Oy
+    Go To Entity    Digita Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     sleep    10s
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
