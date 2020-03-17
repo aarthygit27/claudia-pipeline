@@ -1813,26 +1813,26 @@ getOrderStatusAfterSubmitting
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
 
-#SearchAndSelectBillingAccount
-#    [Arguments]   ${vLocUpg_TEST_ACCOUNT}
-#    execute javascript    window.location.reload(true)
-#    sleep    30s
-#    #log to console    SearchAndSelectBillingAccount
-#    #Selecting the billingAC FLow chart page
-#    #log to console    entering billingAC page
-#    Wait until element is visible    //div[contains(@class,'slds')]/iframe   60s
-#    select frame    xpath=//div[contains(@class,'slds')]/iframe
-#    wait until element is visible    //*[@id="ExtractAccount"]    30s
-#    click element    //*[@id="ExtractAccount"]
-#    wait until element is visible    //label[normalize-space(.)='Select Account']    30s
-#    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-#    wait until element is visible    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
-#    force click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
-#    sleep    2s
-#    click element    //*[@id="SearchAccount_nextBtn"]
-#    #log to console    Exiting billingAC page
-#    unselect frame
-#    sleep    30s
+SearchAndSelectBillingAccount
+    [Arguments]   ${vLocUpg_TEST_ACCOUNT}
+    execute javascript    window.location.reload(true)
+    sleep    30s
+    #log to console    SearchAndSelectBillingAccount
+    #Selecting the billingAC FLow chart page
+    #log to console    entering billingAC page
+    Wait until element is visible    //div[contains(@class,'slds')]/iframe   60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until element is visible    //*[@id="ExtractAccount"]    30s
+    click element    //*[@id="ExtractAccount"]
+    wait until element is visible    //label[normalize-space(.)='Select Account']    30s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until element is visible    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    force click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep    2s
+    click element    //*[@id="SearchAccount_nextBtn"]
+    #log to console    Exiting billingAC page
+    unselect frame
+    sleep    30s
 
 
 select order contacts- HDC
@@ -1921,16 +1921,16 @@ SelectOwnerAccountInfo
     #log to console    Select Owner Account FLow Chart Page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     #log to console    entering Owner Account page
-    Scrolluntillfound   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
-#    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    Scroll Page To Element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
     sleep   10s
     force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     sleep  10s
-#    unselect frame
+    unselect frame
     Scroll Page To Element       //*[@id="BuyerIsPayer"]//following-sibling::span
     sleep  10s
-#    select frame   xpath=//div[contains(@class,'slds')]/iframe
-    Wait until element is visible   //*[@id="BuyerIsPayer"]//following-sibling::span   30s
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is visible    //*[@id="BuyerIsPayer"]//following-sibling::span
     #Log to console   Click BIP
     force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
     ScrollUntillFound       //*[@id="SelectedBuyerAccount_nextBtn"]
@@ -3680,12 +3680,11 @@ Delete all existing contracts from Accounts Related tab
     Select rows to delete the contract
 
 Delete all assets
-    ${Accounts_More}  set variable   //div[@class="slds-tabs_default"]//li[6]//button
-#     //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
+    ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
 
     wait until element is visible  ${Accounts_More}  60s
     Click element  ${Accounts_More}
-    Click element   //div[@class="slds-tabs_default"]//li[6]//a//span[contains(text(),"Assets")]
+    Click element  //li[@class='uiMenuItem']/a[@title='Assets']
     Wait until element is visible  //span[@title='Assets']  60s
     Click element  //span[@title='Assets']
     Wait until element is visible  //h1[@title='Assets']  60s
@@ -5436,7 +5435,7 @@ Fill Contract Details
     Run Keyword If  ${status}   Force Click element  ${contact}
     Capture Page Screenshot
     #sleep  5s
-    scrolluntillfound       ${Customer Signed Date}
+
     Wait until element is visible  ${Customer Signed Date}  30s
     Force Click element   ${Customer Signed Date}
     Wait until element is visible   //a[@title='Go to next month']   30s
@@ -5444,14 +5443,13 @@ Fill Contract Details
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
     Input Text   ${Customer Signature Place}  Helsinsiki
     Execute JavaScript    window.scrollTo(0,1700)
-    ScrollUntillFound       ${Telia Signed By}
     input text    ${Telia Signed By}   Automation Admin
     Wait until element is visible    //div[@title='Automation Admin']    30s
     Click element  //div[@title='Automation Admin']
-    ScrollUntillFound       ${Telia Signed Date}
     Force Click element   ${Telia Signed Date}
     Click element   //a[@title='Go to next month']
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
+
     #Wait until element is visible    ${Edit Contractual Contact Person}  60s
     #Click element    ${Edit Contractual Contact Person}
     Wait until element is visible    ${Search Contracts}  30s
@@ -5469,12 +5467,15 @@ Fill Contract Details
     Run keyword unless    ${status}   Reload page
     Run keyword unless    ${status}   sleep  10s
     Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
+
     ${status}   Run keyword and return status  Element should be visible  ${save}
     Run keyword unless    ${status}   Reload page
     Run keyword unless    ${status}   sleep  10s
     Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
+
     click element  ${save}
     sleep  10s
+
     ${status}  Run keyword and return status  Element should not be visible  ${save}
     Reload page
     sleep  10s
