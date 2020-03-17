@@ -1980,33 +1980,6 @@ Lead_Creation
     scrolluntillfound    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
     page should contain element    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
 
-Send_documents_to_ECM
-    [Documentation]    This TC creates order which sends single document to ECM
-    [Tags]    BQA-11735
-    set test variable   ${Account}    Aacon Oy
-    Go To Salesforce and Login into Lightning   B2B DigiSales
-    Go To Entity    ${Account}
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact}.this is name
-    Set test variable  ${contact_name}   ${contact}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount     ${Account}
-    log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    ${oppo_name}
-    ChangeThePriceList      B2B
-    ClickingOnCPQ    ${oppo_name}
-    adding vula  Alerta projektointi
-    NextButtonOnOrderPage
-    UpdateAndAddSalesType   Alerta projektointi
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    OrderNextStepsPage
-    ${orderno}   run keyword   Add Attachment For Order
-    log to console   ${orderno}.this is order number
-    sendDocumentsToECM   ${orderno}
-
-
 
 Validate Main User contact for DNS
    [Tags]  BQA-13122
