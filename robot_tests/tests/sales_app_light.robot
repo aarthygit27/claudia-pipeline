@@ -1980,3 +1980,80 @@ Lead_Creation
     scrolluntillfound    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
     page should contain element    //span[text()='Opportunity Record Type']/../..//span[text()='Opportunity']
 
+Send_documents_to_ECM
+    [Documentation]    This TC creates order which sends single document to ECM
+    [Tags]    BQA-11735
+    set test variable   ${Account}    Aacon Oy
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${Account}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${Account}
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    adding vula  Alerta projektointi
+    NextButtonOnOrderPage
+    UpdateAndAddSalesType   Alerta projektointi
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    ${orderno}   run keyword   Add Attachment For Order
+    log to console   ${orderno}.this is order number
+    sendDocumentsToECM   ${orderno}
+
+
+
+Validate Main User contact for DNS
+   [Tags]  BQA-13122
+  [Documentation]  This script is designed to validate the main user contact being created for DNS product
+    Go To Salesforce and Login into Lightning       B2B DigiSales
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ     ${oppo_name}
+    search products   Telia Domain Name Service
+    Adding Products   Telia Domain Name Service
+    updating setting Telia Domain Name space  Telia Domain Name Service
+    UpdateAndAddSalesType  Telia Domain Name Service
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    sleep  40s
+    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
+    SelectingTechnicalContactforTeliaDomainNameService     ${contact}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name}
+    clickOnSubmitOrder
+    ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+    log to console   ${Ordernumber}
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    Go To Salesforce and Login into Lightning       System Admin
+    Validate Main user in order product    ${Ordernumber}   Telia Domain Name Service
+    ${first_name}=   Fetch From Left  ${contact}  ${SPACE}
+    ${second_name}=   Fetch From Right   ${contact}   ${SPACE}
+    Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
+
+
+
+validate FYR valuesin Oppo page by modifying salestype in SVE
+    [Tags]  BQA-13172
+   [Documentation]  This script is designed to validate the FYR values being created in Oppo page
+#    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
+
+
+
