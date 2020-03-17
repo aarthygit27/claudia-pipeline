@@ -5522,12 +5522,13 @@ Add Attachment For Order
     ${Document}  set variable   //select[@id='Document_Stage']
     ${Document_option}  set variable   //select[@id='Document_Stage']/option[@value='Approved']
     ${Frame}  set variable  //div[contains(@class,'slds')]/iframe
+    sleep  20s
+    ${order_no}  get text  //h1//div[text()="Order"]/../div[2]//span[@class='uiOutputText']
     ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a/div[@title='Add Attachment']   60s
     #Run Keyword If    ${status_page} == True    force click element    //li/a/div[@title='Billing Account']
     Run Keyword If    ${status_page} == False   click element     //a[@title='Show 4 more actions']
     click element     //a[@title='Show 4 more actions']
-    ${order_no}  get text  //div[@class='slds-media__body']//span[@class='uiOutputText']
-    sleep  20s
+    #sleep  20s
     Wait until element is visible  ${Attachment_Button}  60s
     Click Link  ${Attachment_Button}
     sleep  5s
@@ -5555,14 +5556,15 @@ Add Attachment For Order
     sleep  10s
     Unselect Frame
     go to entity  ${order_no}
+    [Return]  ${order_no}
 
 sendDocumentsToECM
     [Documentation]  Documents are send to ECM after attaching the documents in the order and ECM id is verified
+    [Arguments]  ${orderno}
     ${send_documents_button}  set variable   //a[@title='Send Documents to ECM']
     ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a/div[@title='Send Documents to ECM']   60s
     Run Keyword If    ${status_page} == False   click element     //a[@title='Show 4 more actions']
     click element     //a[@title='Show 4 more actions']
-    ${order_no}  get text  //div[@class='slds-grid primaryFieldRow']//span[@class='uiOutputText']
     sleep  20s
     Wait until element is visible  ${send_documents_button}  60s
     Click Link  ${send_documents_button}
@@ -5577,13 +5579,13 @@ sendDocumentsToECM
     wait until element is visible  //label[contains(text(),'Results for ECM attachment load')]
     wait until element is visible  //label[contains(text(),'Results for ECM attachment load')]//following::td[2][contains(text(),'OK')]
     unselect frame
-    go to entity  ${order_no}
+    go to entity  ${orderno}
     ScrollUntillFound  //span[@title='Attached Documents']
     Wait element to load and click  //span[@title='Attached Documents']
     Wait until element is visible   //span[contains(text(),'ECM Id')]   60s
     should not be empty   //span[@title='${ecm_file_name}']//following::td[7]  msg=ECM id generated
     ${ECM_id}  get text  //span[@title='${ecm_file_name}']//following::td[7]/span/span
-    [return]  ${ECM_id}
+    [Return]  ${ECM_id}
 
 Go to account from oppo page
     [Documentation]  Go back to account page from opportubnity page

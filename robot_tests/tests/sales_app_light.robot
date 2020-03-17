@@ -2002,7 +2002,8 @@ Send_documents_to_ECM
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     OrderNextStepsPage
-    Add Attachment For Order
-    sendDocumentsToECM
+    ${orderno}   run keyword   Add Attachment For Order
+    log to console   ${orderno}.this is order number
+    sendDocumentsToECM   ${orderno}
 
 
