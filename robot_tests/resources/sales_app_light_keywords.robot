@@ -1813,26 +1813,26 @@ getOrderStatusAfterSubmitting
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
 
-SearchAndSelectBillingAccount
-    [Arguments]   ${vLocUpg_TEST_ACCOUNT}
-    execute javascript    window.location.reload(true)
-    sleep    30s
-    #log to console    SearchAndSelectBillingAccount
-    #Selecting the billingAC FLow chart page
-    #log to console    entering billingAC page
-    Wait until element is visible    //div[contains(@class,'slds')]/iframe   60s
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until element is visible    //*[@id="ExtractAccount"]    30s
-    click element    //*[@id="ExtractAccount"]
-    wait until element is visible    //label[normalize-space(.)='Select Account']    30s
-    #select frame    xpath=//div[contains(@class,'slds')]/iframe
-    wait until element is visible    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
-    force click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
-    sleep    2s
-    click element    //*[@id="SearchAccount_nextBtn"]
-    #log to console    Exiting billingAC page
-    unselect frame
-    sleep    30s
+#SearchAndSelectBillingAccount
+#    [Arguments]   ${vLocUpg_TEST_ACCOUNT}
+#    execute javascript    window.location.reload(true)
+#    sleep    30s
+#    #log to console    SearchAndSelectBillingAccount
+#    #Selecting the billingAC FLow chart page
+#    #log to console    entering billingAC page
+#    Wait until element is visible    //div[contains(@class,'slds')]/iframe   60s
+#    select frame    xpath=//div[contains(@class,'slds')]/iframe
+#    wait until element is visible    //*[@id="ExtractAccount"]    30s
+#    click element    //*[@id="ExtractAccount"]
+#    wait until element is visible    //label[normalize-space(.)='Select Account']    30s
+#    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+#    wait until element is visible    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+#    force click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+#    sleep    2s
+#    click element    //*[@id="SearchAccount_nextBtn"]
+#    #log to console    Exiting billingAC page
+#    unselect frame
+#    sleep    30s
 
 
 select order contacts- HDC
@@ -1921,16 +1921,16 @@ SelectOwnerAccountInfo
     #log to console    Select Owner Account FLow Chart Page
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     #log to console    entering Owner Account page
-    Scroll Page To Element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
-    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    Scrolluntillfound   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+#    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
     sleep   10s
     force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     sleep  10s
-    unselect frame
+#    unselect frame
     Scroll Page To Element       //*[@id="BuyerIsPayer"]//following-sibling::span
     sleep  10s
-    select frame   xpath=//div[contains(@class,'slds')]/iframe
-    Wait until element is visible    //*[@id="BuyerIsPayer"]//following-sibling::span
+#    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is visible   //*[@id="BuyerIsPayer"]//following-sibling::span   30s
     #Log to console   Click BIP
     force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
     ScrollUntillFound       //*[@id="SelectedBuyerAccount_nextBtn"]
@@ -3680,11 +3680,12 @@ Delete all existing contracts from Accounts Related tab
     Select rows to delete the contract
 
 Delete all assets
-    ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
+    ${Accounts_More}  set variable   //div[@class="slds-tabs_default"]//li[6]//button
+#     //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
 
     wait until element is visible  ${Accounts_More}  60s
     Click element  ${Accounts_More}
-    Click element  //li[@class='uiMenuItem']/a[@title='Assets']
+    Click element   //div[@class="slds-tabs_default"]//li[6]//a//span[contains(text(),"Assets")]
     Wait until element is visible  //span[@title='Assets']  60s
     Click element  //span[@title='Assets']
     Wait until element is visible  //h1[@title='Assets']  60s
@@ -5435,7 +5436,7 @@ Fill Contract Details
     Run Keyword If  ${status}   Force Click element  ${contact}
     Capture Page Screenshot
     #sleep  5s
-
+    scrolluntillfound       ${Customer Signed Date}
     Wait until element is visible  ${Customer Signed Date}  30s
     Force Click element   ${Customer Signed Date}
     Wait until element is visible   //a[@title='Go to next month']   30s
@@ -5443,13 +5444,14 @@ Fill Contract Details
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
     Input Text   ${Customer Signature Place}  Helsinsiki
     Execute JavaScript    window.scrollTo(0,1700)
+    ScrollUntillFound       ${Telia Signed By}
     input text    ${Telia Signed By}   Automation Admin
     Wait until element is visible    //div[@title='Automation Admin']    30s
     Click element  //div[@title='Automation Admin']
+    ScrollUntillFound       ${Telia Signed Date}
     Force Click element   ${Telia Signed Date}
     Click element   //a[@title='Go to next month']
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
-
     #Wait until element is visible    ${Edit Contractual Contact Person}  60s
     #Click element    ${Edit Contractual Contact Person}
     Wait until element is visible    ${Search Contracts}  30s
@@ -5467,15 +5469,12 @@ Fill Contract Details
     Run keyword unless    ${status}   Reload page
     Run keyword unless    ${status}   sleep  10s
     Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
-
     ${status}   Run keyword and return status  Element should be visible  ${save}
     Run keyword unless    ${status}   Reload page
     Run keyword unless    ${status}   sleep  10s
     Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
-
     click element  ${save}
     sleep  10s
-
     ${status}  Run keyword and return status  Element should not be visible  ${save}
     Reload page
     sleep  10s
@@ -6331,9 +6330,6 @@ Validate Billing system response
 
 
 HDC Order
-
-
-
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
@@ -6888,6 +6884,185 @@ Validation for different billing account selection
 
 
 
+Adding Telia Domain Name service
+    [Arguments]   ${pname}=${product_name}
+    #Log to console      adding product
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
+    input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
+    wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
+    sleep   20s
+    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    unselect frame
 
+updating setting Telia Domain Name space
+    [Arguments]   ${pname}=${product_name}
 
+    ${Asiakkaan verkkotunnus}  set variable   //form[@name='productconfig']//label[text()[normalize-space() = 'Asiakkaan verkkotunnus (muotoa domain.pääte)']]/..//div//input
+    ${Linkittyvä tuote}  set variable   //form[@name='productconfig']//label[text()[normalize-space() = 'Linkittyvä tuote']]/..//div//input
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
+    Wait until element is visible   ${SETTINGS}   60s
+    Click Button    ${SETTINGS}
+    sleep  10s
+    Input Text   ${Asiakkaan verkkotunnus}     Test
+    Input Text   ${Linkittyvä tuote}    Test
+    sleep  3s
+    Click element  //*[@alt='close'][contains(@size,'large')]
+    sleep  10s
+    Reload page
+    sleep  10s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #sleep    10s
+    wait until page contains element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']    60s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    Unselect Frame
+    sleep    10s
 
+SearchAndSelectBillingAccount
+    [Arguments]   ${vLocUpg_TEST_ACCOUNT}
+    execute javascript    window.location.reload(true)
+    sleep    30s
+    Wait until element is visible    //div[contains(@class,'slds')]/iframe   60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until element is visible    //*[@id="ExtractAccount"]    60s
+    click element    //*[@id="ExtractAccount"]
+    wait until element is visible    //label[normalize-space(.)='Select Account']    30s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until element is visible    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    force click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep    2s
+    click element    //*[@id="SearchAccount_nextBtn"]
+    unselect frame
+    sleep    30s
+
+SelectingTechnicalContactforTeliaDomainNameService
+    [Arguments]   ${d}
+    [Documentation]   For selecting Technical contact field for DNS product
+    ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
+    ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
+    ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+#   ${primary_email}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
+    ${Main_User}=  set variable  //input[@id="MainContactTA"]
+    ${Name}=  Run Keyword  Create Unique Name    ${DEFAULT_NAME}
+    ${Mobile}=  Run Keyword   Create Unique Phone Number
+#   ${Street}=  Run Keyword   Create Unique Name    ${DEFAULT_NAME}
+#    ${Postal_Code}=  Run Keyword   Create Unique PostalCode
+    ${City}=  Set variable   Helsiniki
+    ${FirstName}=  set variable   //input[@id="MCFname"]
+    ${LastName}=  set variable   //input[@id="MCLname"]
+    ${EmailID}=  set variable   //input[@id="MCEmail"]
+    ${MobileNumber}=  set variable   //input[@id="MCMobile"]
+    ${Street}=  set variable   //input[@id="MCStreet"]
+    ${Postal_codes}=  set variable  //input[@id="MCPostalCode"]
+    ${city_Name}=  set variable    //input[@id="MCCity"]
+    Wait until Element is enabled    xpath=//div[contains(@class,'slds')]/iframe    60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Technical COntact page
+    Wait Until Element Is Visible    ${contact_search}    60s
+    Input Text    ${contact_search}   ${d}
+    sleep   15s
+    #Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    sleep   15s
+    Wait until element is visible  //input[@id='OCEmail']   30s
+    ${primary_email}  get text  //input[@id='OCEmail']
+#   Sleep    5s
+    Execute JavaScript    window.scrollTo(0,200)
+    Wait Until element is visible   ${Technical_contact_search}     30s
+    Input text   ${Technical_contact_search}  ${d}
+    sleep  15s
+    Wait until element is visible   css=.typeahead .ng-binding   60s
+    Click element   css=.typeahead .ng-binding
+    sleep   15s
+    Wait until element is visible  //input[@id='TCEmail']   30s
+#   Input text   //input[@id='TCEmail']    ${primary_email}
+    Execute JavaScript    window.scrollTo(0,200)
+    sleep  10s
+    Execute JavaScript    window.scrollTo(0,200)
+    Wait Until element is visible   ${Main_User}     30s
+    Input text    ${Main_User}  ${d}
+    sleep  10s
+    Click element   css=.typeahead .ng-binding
+    sleep  10s
+    Execute JavaScript    window.scrollTo(0,200)
+    Wait until element is visible   ${FirstName}  30s
+#   Input Text   ${FirstName}  ${Name}
+    Wait until element is visible  ${LastName}  30s
+#   Input Text   ${LastName}  ${Name}
+#   Wait until element is visible  ${EmailID}   30s
+#   Input Text   ${EmailID}  ${primary_email}
+    Wait until element is visible  ${MobileNumber}   30s
+    Input Text  ${MobileNumber}  ${Mobile}
+    Wait until element is visible  ${Street}  30s
+    Input Text   ${Street}   ${DEFAULT_ADDRESS}
+    Wait until element is visible  ${Postal_codes}   30s
+    Input Text   ${Postal_codes}   43500
+    Wait until element is visible   ${city_Name}   30s
+    Input Text    ${city_Name}   ${City}
+    force click element  //select[@id="MCLanguage"]
+    sleep  10s
+    wait until page contains element   //select[@id="MCLanguage"]//*[@value="English"]  60s
+    click visible element  //select[@id="MCLanguage"]//*[@value="English"]
+    #Drag and Drop   //select[@id="MCLanguage"]  //select[@id="MCLanguage"]//option[@value="English"]
+    sleep  60s
+    Click Element    ${contact_next_button}
+    log to console  clicked next button
+    sleep  60s
+    unselect frame
+    sleep   30s
+
+Validate Main user in order product
+    [Arguments]    ${Ordernumber}  ${pdtname}
+    [Documentation]   To validate the ordered product belongs to main user
+    log to console  ${Ordernumber}.is the order number
+    Go To Entity    ${Ordernumber}
+    wait until page contains element      //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]   45s
+    Force Click Element    //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]
+    sleep    10s
+    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Order Products"]    20s
+    Force Click Element  //div[@class="slds-media__body"]//a//span[text()="Order Products"]
+    sleep    10s
+    log to console  Order product is clicked
+    wait until page contains element  //th/span/a[@title='${pdtname}']  60s
+    sleep  60s
+    click element  //th/span/a[@title='${pdtname}']
+    sleep  20s
+    log to console  product is clicked
+    sleep  60s
+    Reload page
+    ${status_page} =  run keyword and return status  wait until page contains element   /a[@title="Related"]   60s
+    Run Keyword If    ${status_page} == False    Reload Page
+#   Run Keyword If    ${status_page} == False    Sleep  60s
+    sleep  60s
+    Force Click Element  //a[@title="Related"]
+    Log to console   related page is clicked
+    sleep  20s
+    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Order Contact Roles"]   60s
+    click element   //div[@class="slds-media__body"]//a//span[text()="Order Contact Roles"]
+   # Go to   ${order_contactrole}
+    Sleep  20s
+    wait until page contains element    //div[@id="brandBand_1"]//h1[@title="Order Contact Roles"]     20s
+    ${ordercontact role}  get text   //td[@role="gridcell"]//span[text()="Main User"]
+    Log to Console    ${ordercontact role}
+
+Validate ServiceAdministrator in Account contact role
+   [Arguments]    ${First_name}   ${lastname}
+   [Documentation]   This is to validate the account contact role created belongs to Service Adminisatrator
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Reload page
+    wait until page contains element     ${ACCOUNT_RELATED}  45s
+    Force Click Element    ${ACCOUNT_RELATED}
+    sleep    10s
+    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Contact Roles"]  45s
+    Click Element   //div[@class="slds-media__body"]//a//span[text()="Contact Roles"]
+    sleep   10s
+    wait until page contains element    //h1[@title="Contact Roles"]    30s
+    scrolluntillfound     //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]
+    Page should contain element     //*[@id="brandBand_1"]//th//span//span[@title="${First_name}"]   60s
+    Page should contain element     //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]    30s
+    Page should contain element   //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]//following::td[1]//span//span[text()="Service Administrator"]   30s
+#    Page should contain element   //*[@id="brandBand_1"]//td//span//a[text()="${email}"]    60s

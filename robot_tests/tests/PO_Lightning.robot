@@ -586,3 +586,118 @@ Telia ACE Complete Order
     clicking on next button
     Update Product Page    Telia ACE
     Create_Order
+
+Professional Services Complete Order
+    [Tags]    BQA-11733     PO_Scripts
+    Open Salesforce and Login into Lightning
+    Go To Entity    Test Robot Order_ 20200102-090343
+    Sleep      10s
+    ClickingOnCPQ   Test Robot Order_ 20200102-090343
+    Searching and adding product  Muut Asiantuntijapalvelut
+    Update Setting Laskutuksen Lisätieto       Muut Asiantuntijapalvelut
+    Add all child products
+    Update Setting         Kilometrikorvaus     productconfig_field_0_6     1
+    Update Setting Laskutuksen Lisätieto       Kilometrikorvaus
+    Update Setting      Päiväraha       productconfig_field_0_7     1
+    Update Setting Laskutuksen Lisätieto       Päiväraha
+    Update Setting      Puolipäiväraha      productconfig_field_0_8     1
+    Update Setting Laskutuksen Lisätieto       Puolipäiväraha
+    Searching and adding product  Telia Palvelunhallintakeskus
+    Update Setting Laskutuksen Lisätieto       Telia Palvelunhallintakeskus
+    Add Avainasiakaspalvelukeskus
+    Add Avainasiakaspalvelukeskus lisätyöt jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Avainasiakaspalvelukeskus Lisätyö jatkuva palvelu
+    Add Avainasiakaspalvelukeskus lisätyöt kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Avainasiakaspalvelukeskus Lisätyö kertapalvelu
+    Add Avainasiakaspalvelukeskus lisätyöt varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Avainasiakaspalvelukeskus Lisätyö varallaolo ja matkustus
+    Add Hallinta ja Tuki
+    Add Hallinta ja Tuki jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Hallinta ja Tuki jatkuva palvelu
+    Add Hallinta ja Tuki kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Hallinta ja Tuki kertapalvelu
+    Add Hallinta ja Tuki varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Hallinta ja Tuki varallaolo ja matkustus
+    Add Child product of Telia Palvelunhallintakeskus    Asiantuntijakäynti
+    Add Child product of Telia Palvelunhallintakeskus
+    Add Events jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Events jatkuva palvelu
+    Add Events kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Events kertapalvelu
+    Add Toimenpide XS
+    update setting Toimenpide    h    no
+    Update Setting Laskutuksen Lisätieto       Toimenpide XS
+    Add Toimenpide S
+    update setting Toimenpide    h    no
+    Update Setting Laskutuksen Lisätieto       Toimenpide S
+    Add Toimenpide M
+    update setting Toimenpide    h    no
+    Update Setting Laskutuksen Lisätieto       Toimenpide M
+    Add Toimenpide L
+    update setting Toimenpide    h    no
+    Update Setting Laskutuksen Lisätieto       Toimenpide L
+    Add Toimenpide XL
+    update setting Toimenpide    h    no
+    Update Setting Laskutuksen Lisätieto       Toimenpide XL
+    Add Koulutus jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Koulutus jatkuva palvelu
+    Add Child product of Telia Palvelunhallintakeskus   Koulutus kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Koulutus kertapalvelu
+    Add Child product of Telia Palvelunhallintakeskus   Koulutus varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Koulutus varallaolo ja matkustus
+    Add_child_product    Jatkuvuudenhallinta kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Jatkuvuudenhallinta kertapalvelu
+    Add_child_product    Jatkuvuudenhallinta jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Jatkuvuudenhallinta jatkuva palvelu
+    Add_child_product    Jatkuvuudenhallinta varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Jatkuvuudenhallinta varallaolo ja matkustus
+    Add Child product of Telia Palvelunhallintakeskus   Palvelujohtaminen jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Palvelujohtaminen jatkuva palvelu
+    Add Child product of Telia Palvelunhallintakeskus   Palvelujohtaminen kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Palvelujohtaminen kertapalvelu
+    Add Child product of Telia Palvelunhallintakeskus  Palvelujohtaminen varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Palvelujohtaminen varallaolo ja matkustus
+    Searching and adding product    Telia Arkkitehti varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Arkkitehti varallaolo ja matkustus
+    Searching and adding product    Telia Arkkitehti jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Arkkitehti jatkuva palvelu
+    Searching and adding product    Telia Arkkitehti kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Arkkitehti kertapalvelu
+    Searching and adding product    Telia Projektijohtaminen varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Projektijohtaminen varallaolo ja matkustus
+    Searching and adding product    Telia Projektijohtaminen jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Projektijohtaminen jatkuva palvelu
+    Searching and adding product    Telia Projektijohtaminen kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Projektijohtaminen kertapalvelu
+    Searching and adding product    Telia Konsultointi varallaolo ja matkustus
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Konsultointi varallaolo ja matkustus
+    Searching and adding product    Telia Konsultointi jatkuva palvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Konsultointi jatkuva palvelu
+    Searching and adding product    Telia Konsultointi kertapalvelu
+    update setting common    h    no
+    Update Setting Laskutuksen Lisätieto       Telia Konsultointi kertapalvelu

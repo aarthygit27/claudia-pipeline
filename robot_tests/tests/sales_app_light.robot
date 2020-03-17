@@ -2007,3 +2007,53 @@ Send_documents_to_ECM
     sendDocumentsToECM   ${orderno}
 
 
+
+Validate Main User contact for DNS
+   [Tags]  BQA-13122
+  [Documentation]  This script is designed to validate the main user contact being created for DNS product
+    Go To Salesforce and Login into Lightning       B2B DigiSales
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ     ${oppo_name}
+    search products   Telia Domain Name Service
+    Adding Products   Telia Domain Name Service
+    updating setting Telia Domain Name space  Telia Domain Name Service
+    UpdateAndAddSalesType  Telia Domain Name Service
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    sleep  40s
+    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
+    SelectingTechnicalContactforTeliaDomainNameService     ${contact}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name}
+    clickOnSubmitOrder
+    ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+    log to console   ${Ordernumber}
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    Go To Salesforce and Login into Lightning       System Admin
+    Validate Main user in order product    ${Ordernumber}   Telia Domain Name Service
+    ${first_name}=   Fetch From Left  ${contact}  ${SPACE}
+    ${second_name}=   Fetch From Right   ${contact}   ${SPACE}
+    Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
+
+
+
+validate FYR valuesin Oppo page by modifying salestype in SVE
+    [Tags]  BQA-13172
+   [Documentation]  This script is designed to validate the FYR values being created in Oppo page
+#    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
+
+
+
