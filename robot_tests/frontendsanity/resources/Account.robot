@@ -1,8 +1,7 @@
 *** Settings ***
 Library           Collections
-Resource          ../../resources/frontendsanity/Common.robot
-Resource          ../../resources/frontendsanity/Variables.robot
-
+Resource          ../../frontendsanity/resources/Variables.robot
+Resource          ../../frontendsanity/resources/Common.robot
 *** Keywords ***
 Verify That Business Account Attributes Are Named Right
     Verify That Record Contains Attribute    Account SF ID

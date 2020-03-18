@@ -1,7 +1,7 @@
 *** Settings ***
 Library           Collections
-Resource          ../../resources/frontendsanity/Common.robot
-Resource          ../../resources/frontendsanity/Variables.robot
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 
 *** Keywords ***
 Create New Opportunity For Customer

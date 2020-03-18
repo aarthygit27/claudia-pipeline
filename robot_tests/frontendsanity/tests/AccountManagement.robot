@@ -2,10 +2,10 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/frontendsanity/Common.robot
-Resource          ../../resources/frontendsanity/Login.robot
-Resource          ../../resources/frontendsanity/Account.robot
-Resource          ../../resources/frontendsanity/Variables.robot
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Account.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 #Library             test123.py
 
 

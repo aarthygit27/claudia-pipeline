@@ -6,7 +6,7 @@ Library           Screenshot
 Library           DateTime
 Library           Collections
 Library           OperatingSystem
-Resource          ../../resources/frontendsanity/Variables.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 
 *** Keywords ***
 Check For Lightning Force
