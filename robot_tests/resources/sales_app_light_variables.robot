@@ -229,10 +229,12 @@ ${B2bproductfyr3}   Multi-SIM
 ${fixed_charge for_Telia Sopiva Pro N}  30
 ${fixed_charge for_Pro Nettikortti}     0
 ${fixed_charge for_Multi-SIM}           0
-${sales_type_value}   New Money-New Services
-${sales_type_value1}   New Money-Extending Services
+${sales_type_value1}   New Money-New Services
+${sales_type_value4}   New Money-Extending Services
 ${sales_type_value2}   Renegotiation-Service Replacement
-${sales_type_value3}   Renegotiation-Service Continuation
+${sales_type_value3}   Frame Agreement - New Services
+${sales_type_value5}   Frame Agreement - Renegotiation
+${sales_type_value6}   Renegotiation-Service Replacement
 ${contract_lenght}    12
 ${360_VIEW}     //li//a[text()='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]
@@ -301,3 +303,4 @@ ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
 ${group_id}         SALES FORCE TEST 1
 #Changes for each account
+@{LIST}=  Telia chat  Telia Robotics  Telia ACE  #for adding different products

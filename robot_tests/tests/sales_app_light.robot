@@ -2027,6 +2027,42 @@ validate FYR valuesin Oppo page by modifying salestype in SVE
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     Go To Entity    ${oppo_name}
+    clickingOnSolutionValueEstimate   ${oppo_name}
+    ${fyr_total}  ${new}  ${renegotiation}  ${frame}  Add multiple products in SVE  @{LIST}
+    Validating FYR values in Opportunity Header   ${fyr_total}   ${new}  ${renegotiation}  ${frame}
+    clickingOnSolutionValueEstimate   ${oppo_name}
+    Modify the salestype
+    Validate modify salestype reflected in Oppo page   ${oppo_name}
+
+
+Change order process to show current billing accounts of the asset(s)
+       [Tags]  BQA-13163
+
+      Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+      Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+      Delete all assets
+      logoutAsUser  ${SALES_ADMIN_APP_USER}
+      Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+      ${contact}    run keyword    CreateAContactFromAccount_HDC
+      log to console    ${contact}.this is name
+      Set test variable  ${contact_name}   ${contact}
+      ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+      log to console    ${oppo_name}.this is opportunity
+      ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
+      log to console    ${billing_acc_name}.this is billing account name
+      Go To Entity    ${oppo_name}
+      ChangeThePriceList      B2B
+      ClickingOnCPQ    ${oppo_name}
+      Adding Telia Colocation    Telia Colocation
+      Updating Setting Telia Colocation
+      UpdateAndAddSalesType    Telia Colocation
+      ClickonCreateOrderButton
+      NextButtonOnOrderPage
+      SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
+      select order contacts- HDC  ${contact_name}
+      RequestActionDate
+      SelectOwnerAccountInfo    ${billing_acc_name}
+      clickOnSubmitOrder
 
 
 

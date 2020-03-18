@@ -1917,18 +1917,15 @@ RequestActionDate
 
 SelectOwnerAccountInfo
     [Arguments]    ${e}= ${billing_account}
-    #log to console    Select Owner Account FLow Chart Page
+
     select frame    xpath=//div[contains(@class,'slds')]/iframe
-    #log to console    entering Owner Account page
     Scrolluntillfound   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
     sleep   10s
     force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
     sleep  10s
-#    unselect frame
     Scroll Page To Element       //*[@id="BuyerIsPayer"]//following-sibling::span
     sleep  10s
-#    select frame   xpath=//div[contains(@class,'slds')]/iframe
     Wait until element is visible   //*[@id="BuyerIsPayer"]//following-sibling::span   30s
     #Log to console   Click BIP
     force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
@@ -6985,3 +6982,103 @@ Validate ServiceAdministrator in Account contact role
     Page should contain element     //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]    30s
     Page should contain element   //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]//following::td[1]//span//span[text()="Service Administrator"]   30s
 #    Page should contain element   //*[@id="brandBand_1"]//td//span//a[text()="${email}"]    60s
+
+Add multiple products in SVE
+
+   [Arguments]     @{items}
+    ${i} =    Set Variable    ${0}
+    ${fyr_value_total}=   Set Variable   ${0}
+    ${count_list}=  Get length  ${items}
+
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+     :FOR    ${item}    IN    @{items}
+     \    ${i} =    Set Variable    ${i + 1}
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][ ${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']    ${item}
+     \  Click element   css=.typeahead.dropdown-menu.ng-scope.am-fade.bottom-left li.ng-scope a.ng-binding
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@type='number']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@type='number']   ${product_quantity}
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.OneTimeTotalt']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.OneTimeTotalt']   ${NRC}
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.RecurringTotalt']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.RecurringTotalt']   ${RC}
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/select[@ng-model='p.SalesType']
+     \  sleep  2s
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value${i}}']
+     \  sleep  5s
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.ContractLength"]
+     \  Input text  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.ContractLength']  ${contract_lenght}
+     \  ${fyr_value}=   evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
+     \  ${revenue_value}=  evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
+     \  page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
+     \  page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
+     \  Run keyword if   ${i}<${count_list}   click element   //div[text()='Add']
+     \  ${fyr_value_total}=  evaluate  (${fyr_value_total}+${fyr_value})
+     \  ${new}  ${ren}  ${frame}   validateproductsbasedonsalestype  ${sales_type_value${i}}   ${fyr_value}
+
+     wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
+     force click element  //button[normalize-space(.)='Save Changes']
+     sleep  30s
+     unselect frame
+     sleep  30s
+
+    [Return]  ${fyr_value_total}  ${new}  ${ren}  ${frame}
+
+
+validateproductsbasedonsalestype
+    [Arguments]    ${pdt_salesType}    ${fyr_value}
+    ${a} =    Set Variable    ${0}
+    ${b} =    Set Variable    ${0}
+    ${c} =    Set Variable    ${0}
+
+    ${status_new}   Run keyword and return status  '${pdt_salesType}'=='New Money-New Services'  or   '${pdt_salesType}'== 'New Money-Extending Services'
+    ${a}=  evaluate  (${a}+${fyr_value})
+
+    ${status_renegotiation}   Run keyword and return status  '${pdt_salesType}'=='Renegotiation-Service Replacement'  or   '${pdt_salesType}'=='Renegotiation-Service Continuation'
+    ${b}=  evaluate  (${b}+${fyr_value})
+
+    ${status_frame}  Run keyword and return status  '${pdt_salesType}'=='Frame Agreement - New Services'  or   '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
+    ${c}=  evaluate  (${c}+${fyr_value})
+
+   [Return]   ${a}   ${b}   ${c}
+
+
+
+Validating FYR values in Opportunity Header
+     [Arguments]    ${fyr_total}   ${new}  ${renegotiation}  ${frame}
+
+     sleep  90s
+#     Wait until element is visible    //slot[@name="primaryField"]   60s
+#     Wait until element is visible    //slot[@slot="secondaryFields"]   60s
+#    page should contain element    //p[text()="Revenue Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
+     page should contain element    //p[text()="FYR Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
+     page should contain element    //p[text()="FYR New Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${new},00 €"]
+     page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${renegotiation},00 €"]
+     page should contain element    //p[text()="FYR Total Frame Agreement"]/../..//lightning-formatted-text[text()=normalize-space(.)="${frame},00 €"]
+
+Modify the salestype
+
+     select frame  xpath=//div[contains(@class,'slds')]/iframe
+     click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value4}']
+     sleep  5s
+     wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
+     force click element  //button[normalize-space(.)='Save Changes']
+     unselect frame
+     sleep   30s
+
+
+Validate modify salestype reflected in Oppo page
+    [Arguments]  ${oppot_name}
+
+    Go to Entity   ${oppot_name}
+    wait until page contains element   //li[@title="Related"]   30s
+    Force Click Element    //li[@title="Related"]
+    sleep  10s
+    wait until page contains element   //*[text()="Product"]   30s
+    wait until page contains element  //button[@title="View All"]
+    Force Click Element  //button[@title="View All"]
+    Switch Window  NEW
+    sleep  30s
+    ${salestype}   get text   //*[@data-label="Sales Type"]//span
+    Log to console    ${salestype}
+    Should be equal   ${salestype}   ${sales_type_value4}
