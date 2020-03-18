@@ -192,3 +192,44 @@ ScrollUntillFound
     \    Sleep    5s
     \    Exit For Loop If    ${status}
     \    Execute JavaScript    window.scrollTo(0,${i}*200)
+
+Get Date With Dashes
+    [Arguments]    ${days}
+    ${date}=    Get Current Date
+    ${date_in_future}=    Add Time To Date    ${date}    ${days} days
+    ${converted_date}=    Convert Date    ${date_in_future}    result_format=%d-%m-%Y
+    [Return]    ${converted_date}
+
+Get Date From Future
+    [Arguments]    ${days}
+    [Documentation]    Returns current date (format: day.month.year, e.g. 28.6.2020) + x days,
+    ...    where x = ${days} given as argument
+    ${date}=    Get Current Date
+    ${date_in_future}=    Add Time To Date    ${date}    ${days} days
+    ${converted_date}=    Convert Date    ${date_in_future}    result_format=datetime
+    ${converted_date}=    Set Variable    ${converted_date.day}.${converted_date.month}.${converted_date.year}
+    [Return]    ${converted_date}
+
+Create Unique Name
+    [Arguments]    ${prefix}
+    ${timestamp}=    Get Current Date    result_format=%Y%m%d-%H%M%S
+    ${name}=    Set Variable If    '${prefix}'=='${EMPTY}'    ${timestamp}    ${prefix}${timestamp}
+    ${length}=    Get Length    ${name}
+    # Removed the space between prefix and timestamp as having space will throw errro in giving email in contact page. Donot change this
+    ## By aarthy
+    # The search does not work if the name is too long. Cut characters to fit the timestamp. The timestamp takes 16 characters.
+    # For example 'Telia Palvelulaite Lenovo ThinkPad L460 i5-6200U / 14" FHD / 8GB / 256SSD / W10P Opportunity <timestamp>' is too long
+    ${name}=    Set Variable If    ${length} > 100    ${name[:70]} ${timestamp}    ${name}
+    [Return]    ${name}
+
+Input Quick Action Value For Attribute
+    [Arguments]    ${field}    ${value}
+    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]    60s
+    Input Text    xpath=${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]//following::input    ${value}
+
+Select Quick Action Value For Attribute
+    [Arguments]    ${field}    ${value}
+    Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']    60s
+    Force Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
+    Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]  60s
+    Force Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
