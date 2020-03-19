@@ -2093,3 +2093,20 @@ One Order- B2O Colocation and E2E B2O product
     Validate Billing system response
 
 
+Validate FYR values in Oppo page created through SVE
+    [Tags]  BQA-13171
+#     Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+     Go To Entity   Test Robot Order_20200302-110120
+    clickingOnSolutionValueEstimate     Test Robot Order_20200302-110120
+     go to  https://telia-fi--rel.lightning.force.com/one/one.app#eyJjb21wb25lbnREZWYiOiJvbmU6YWxvaGFQYWdlIiwiYXR0cmlidXRlcyI6eyJhZGRyZXNzIjoiL2FwZXgvdmxvY2l0eV9jbXRfX09tbmlTY3JpcHRVbml2ZXJzYWxQYWdlP2lkPXswfSZPbW5pU2NyaXB0VHlwZT1PcHBvcnR1bml0eSZPbW5pU2NyaXB0U3ViVHlwZT1Tb2x1dGlvbiUyMEFyZWElMjBHcmlkJk9tbmlTY3JpcHRMYW5nPUVuZ2xpc2gmUHJlZmlsbERhdGFSYXB0b3JCdW5kbGU9JnNjcmlwdE1vZGU9aG9yaXpvbnRhbCZDb250ZXh0SWQ9MDA2MXcwMDAwMUJoNmx4In0sInN0YXRlIjp7fX0%3D
+     sleep  30s
+    ${fyr_total}  ${new}  ${renegotiation}  ${frame}  Add multiple products in SVE  @{LIST}
+    Validating FYR values in Opportunity Header   ${fyr_total}   ${new}  ${renegotiation}  ${frame}
+
