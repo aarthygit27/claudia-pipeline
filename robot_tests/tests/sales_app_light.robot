@@ -1989,13 +1989,14 @@ Validate Main User contact for DNS
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-#   ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
+    ${billing_acc_name}    run keyword    CreateABillingAccount     ${LIGHTNING_TEST_ACCOUNT}
     Go To Entity    ${oppo_name}
     ClickingOnCPQ     ${oppo_name}
     search products   Telia Domain Name Service
     Adding Products   Telia Domain Name Service
     updating setting Telia Domain Name space  Telia Domain Name Service
     UpdateAndAddSalesType  Telia Domain Name Service
+    View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
@@ -2014,66 +2015,81 @@ Validate Main User contact for DNS
     Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
 
 
-
-validate FYR valuesin Oppo page by modifying salestype in SVE
-    [Tags]  BQA-13172
-   [Documentation]  This script is designed to validate the FYR values being created in Oppo page
-
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+DNS - Asset Verfication
+    [Tags]  BQA-12672
+#    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
-    Log to console    ${contact}.this is name
+    log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
+#    ${billing_acc_name}    run keyword    CreateABillingAccount     $${B2O Account}
+#    log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
-    clickingOnSolutionValueEstimate   ${oppo_name}
-    ${fyr_total}  ${new}  ${renegotiation}  ${frame}  Add multiple products in SVE  @{LIST}
-    Validating FYR values in Opportunity Header   ${fyr_total}   ${new}  ${renegotiation}  ${frame}
-    clickingOnSolutionValueEstimate   ${oppo_name}
-    Modify the salestype
-    Validate modify salestype reflected in Oppo page   ${oppo_name}
+    ClickingOnCPQ    ${oppo_name}
+    search products   Telia Domain Name Service
+    Adding Products   Telia Domain Name Service
+    updating setting Telia Domain Name space  Telia Domain Name Service
+    UpdateAndAddSalesType  Telia Domain Name Service
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    sleep  40s
+    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
+    SelectingTechnicalContactforTeliaDomainNameService  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name}
+    clickOnSubmitOrder
+    ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    Go To Salesforce and Login into Lightning       System Admin
+    Go To Entity   ${Ordernumber}
+    ${SubscriptionID}   run keyword  FetchfromOrderproduct  ${Ordernumber}   Telia Domain Name Service
+    log to console    ${SubscriptionID}.is a subscription ID
+    Validate technical contact in the asset history page using subscription as  ${SubscriptionID}  ${contact}
 
 
-Change order process to show current billing accounts of the asset(s)
-       [Tags]  BQA-13163
 
-      Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-      Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-      Delete all assets
-      logoutAsUser  ${SALES_ADMIN_APP_USER}
-      Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-      ${contact}    run keyword    CreateAContactFromAccount_HDC
-      log to console    ${contact}.this is name
-      Set test variable  ${contact_name}   ${contact}
-      ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-      log to console    ${oppo_name}.this is opportunity
-      ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
-      log to console    ${billing_acc_name}.this is billing account name
-      Go To Entity    ${oppo_name}
-      ChangeThePriceList      B2B
-      ClickingOnCPQ    ${oppo_name}
-      Adding Telia Colocation    Telia Colocation
-      Updating Setting Telia Colocation
-      UpdateAndAddSalesType    Telia Colocation
-      ClickonCreateOrderButton
-      NextButtonOnOrderPage
-      SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
-      select order contacts- HDC  ${contact_name}
-      RequestActionDate
-      SelectOwnerAccountInfo    ${billing_acc_name}
-      clickOnSubmitOrder
-      ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
-      logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-      Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-      DDM Request Handling   ${Ordernumber}
-      Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-      Go to Entity   ${Ordernumber}
-      Validate Order status   ${Ordernumber}
-      ${subscription_id}=  run keyword  FetchfromOrderproduct  ${Ordernumber}   Telia Colocation
-      Validate Billing and Payer in the asset page    ${subscription_id}   ${Ordernumber}
-      Change Order   ${contact_name}
-
-
+One Order- B2O Colocation and E2E B2O product
+    [Tags]  BQA-11525
+    set test variable   ${Account}    Digita Oy
+    Go To Salesforce and Login into Lightning  B2O User
+     Go To Entity    ${Account}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+#    ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
+#    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2O
+    ClickingOnCPQ    ${oppo_name}
+    sleep   10s
+    Adding Vula    VULA
+    Update Setting Vula without Next   VULA
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesTypeB2O   Telia Colocation
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${Account}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name1}
+    Submit Order Button
+    Reload page
+    ${order_number}   run keyword    ValidateTheOrchestrationPlan
+    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    DDM Request Handling   ${order_number}
+    Open Browser And Go To Login Page
+    Go To Salesforce and Login into Lightning  B2O User
+    Go To Entity    ${order_number}
+    Reload page
+    ValidateSapCallout
+    Validate Billing system response
 
 
