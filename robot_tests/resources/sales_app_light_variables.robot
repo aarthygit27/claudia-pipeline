@@ -230,9 +230,9 @@ ${fixed_charge for_Telia Sopiva Pro N}  30
 ${fixed_charge for_Pro Nettikortti}     0
 ${fixed_charge for_Multi-SIM}           0
 ${sales_type_value1}   New Money-New Services
-${sales_type_value4}   New Money-Extending Services
 ${sales_type_value2}   Renegotiation-Service Replacement
 ${sales_type_value3}   Frame Agreement - New Services
+${sales_type_value4}   New Money-Extending Services
 ${sales_type_value5}   Frame Agreement - Renegotiation
 ${sales_type_value6}   Renegotiation-Service Replacement
 ${contract_lenght}    12

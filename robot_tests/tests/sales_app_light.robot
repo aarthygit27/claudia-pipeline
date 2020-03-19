@@ -2063,6 +2063,17 @@ Change order process to show current billing accounts of the asset(s)
       RequestActionDate
       SelectOwnerAccountInfo    ${billing_acc_name}
       clickOnSubmitOrder
+      ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+      logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+      Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+      DDM Request Handling   ${Ordernumber}
+      Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+      Go to Entity   ${Ordernumber}
+      Validate Order status   ${Ordernumber}
+      ${subscription_id}=  run keyword  FetchfromOrderproduct  ${Ordernumber}   Telia Colocation
+      Validate Billing and Payer in the asset page    ${subscription_id}   ${Ordernumber}
+      Change Order   ${contact_name}
+
 
 
 

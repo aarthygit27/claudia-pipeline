@@ -5596,11 +5596,12 @@ Select Customer ship contract manually
 
 
 Change Order
+   [Arguments]   ${contact_name}
 
     Initiate Change Order
     Request Date
     CPQ Page
-    Order Post script
+    Order Post script   ${contact_name}
 
 CPQ Page
     Sleep  10s
@@ -5679,7 +5680,7 @@ Select Account - no frame
     sleep  5s
 
 select contact - no frame
-
+     [Arguments]   ${contact_name}
 
     ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
     ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
@@ -5697,7 +5698,7 @@ select contact - no frame
     #Input Text   //input[@id='OCEmail']   primaremail@noemail.com
 
     ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
-    Run Keyword if  ${status}  Enter technical contact
+    Run Keyword if  ${status}  Enter technical contact    ${contact_name}
     Execute JavaScript    window.scrollTo(0,200)
     Sleep    5s
 
@@ -5977,9 +5978,9 @@ Enter Group id and submit
     sleep  15s
 
 Order Post script
-
+    [Arguments]   ${contact_name}
     Select Account - no frame
-    select contact - no frame
+    select contact - no frame   ${contact_name}
     Select Date - no frame
     Select account Owner - no frame
     Verify Order Type
@@ -5997,16 +5998,16 @@ Verify Order Type
 Verify the Action of child product
 
     [Arguments]  ${pname}  ${Value}
-    ${Action_xpath}   set variable   //div[contains(text(),'${pname}')]//following::div[13]
+    ${Action_xpath}   set variable   //div[contains(text(),'${pname}')]//following::div[19]
     Wait until element is visible  ${Action_xpath}    60s
     ${Action}  Get Text  ${Action_xpath}
     Should be equal     ${Action}  ${Value}
     Log to console  The ACtion value for the product ${pname} is verified
 
 Verify the Action of product
-    [Arguments]  ${pname}  ${Value}
+      [Arguments]  ${pname}  ${Value}
     #${Action}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']//following::div[13]/div
-    ${Action}   set variable   //span[text()='${pname}']//following::div[13]/div
+    ${Action}   set variable   //span[text()='${pname}']//following::div[19]/div
     Wait until element is visible  ${Action}    60s
     ${Action Value}  Get Text  ${Action}
     Should be equal     ${Action Value}  ${Value}
@@ -6047,24 +6048,24 @@ Request date
 
 Initiate Change Order
 
-    Go to entity   ${vLocUpg_TEST_ACCOUNT}
+     Go to entity   ${vLocUpg_TEST_ACCOUNT}
     #Go to entity   ${Account}
-    Page should contain element   //span[text()='Account ID']
-    Force Click element  //span[text()='Account ID']
-    ${AssetHistory}   set variable   //div[@class='full forcePageBlock forceRecordLayout']/div/h3[contains(@class,'test-id')]/button/span[text()='Asset History']
+#    Page should contain element   //span[text()='Account ID']
+#    Force Click element  //span[text()='Account ID']
+    ${AssetHistory}   set variable   //button//span[text()='Asset History']
     Execute JavaScript    window.scrollTo(5000,4900)
     Page should contain element   ${AssetHistory}
     Log to console   Asset history found
-    ${frame}  set variable  //force-aloha-page[@title='AssetHistoryAndMACD']/div[@class='content iframe-parent']/iframe
+    ${frame}  set variable  //button/span[text()='Asset History']/../../..//div[@class="content iframe-parent"]/iframe
     Page should contain element    ${frame}
     select frame  ${frame}
-    ${status}   Run keyword and return status  Page should contain element   //li[@ng-repeat='prod in assetItems'][1]/div/div/div/div/span/a/span
+    ${status}   Run keyword and return status  Page should contain element   //li[@ng-repeat='prod in assetItems'][1]/div/div/input
     Run keyword if   ${status}   Page should contain element    //li[@ng-repeat='prod in assetItems'][1]/div/div/input
-    Wait until page contains element    //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input   60s
-    page should contain checkbox    //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
-    force Click element   //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
+    Wait until page contains element   //li[@ng-repeat='prod in assetItems'][1]/div/div/input   60s
+    page should contain checkbox    //li[@ng-repeat='prod in assetItems'][1]/div/div/input
+    force Click element   //li[@ng-repeat='prod in assetItems'][1]/div/div/input
     sleep  5s
-    Checkbox Should Be Selected   //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
+    Checkbox Should Be Selected   //li[@ng-repeat='prod in assetItems'][1]/div/div/input
     Capture Page Screenshot
     sleep  5s
     Log to console   Change Order Initiated
@@ -6073,9 +6074,10 @@ Initiate Change Order
     Unselect frame
 
 DDM Request Handling
+   [Arguments]  ${orderno}
 
     Login Workbench
-    File Handling - Change Order id
+    File Handling - Change Order id   ${orderno}
     File Handling - Get Debug Line
     Execute Debug code
     Verify Response code
@@ -6172,7 +6174,7 @@ Switch between windows
 
 
 File Handling - Change Order id
-
+    [Arguments]  ${order_no}
     #${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
     ${File_Path}   set variable    ${CURDIR}${/}DDM_Request.txt
     ${DDM_request}   get file    ${File_Path}
@@ -6182,8 +6184,8 @@ File Handling - Change Order id
     #Log to console  ${Line}
     ${Existing_Order_Number}   Get Substring    ${Line}  11
     #Log to console  ${Existing_Order_Number}
-    #${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
-    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '319103017660';
+    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
+    #${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '319103017660';
     #Log to console   ${Replaced_line}
     ${New_request}   Replace String Using Regexp    ${DDM_request}  ${Line}   ${Replaced_line}
     #Log to console   ${New_request}
@@ -7059,7 +7061,7 @@ Validating FYR values in Opportunity Header
 Modify the salestype
 
      select frame  xpath=//div[contains(@class,'slds')]/iframe
-     click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value4}']
+     click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value5}']
      sleep  5s
      wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
      force click element  //button[normalize-space(.)='Save Changes']
@@ -7077,8 +7079,62 @@ Validate modify salestype reflected in Oppo page
     wait until page contains element   //*[text()="Product"]   30s
     wait until page contains element  //button[@title="View All"]
     Force Click Element  //button[@title="View All"]
-    Switch Window  NEW
+    sleep  30s
+    switch between windows  1
     sleep  30s
     ${salestype}   get text   //*[@data-label="Sales Type"]//span
     Log to console    ${salestype}
-    Should be equal   ${salestype}   ${sales_type_value4}
+    Should be equal   ${salestype}   ${sales_type_value5}
+
+FetchfromOrderproduct
+    [Arguments]    ${Ordernumber}  ${pdtname}
+    log to console  ${Ordernumber}.is the order number
+#    go to  https://telia-fi--rel.lightning.force.com/lightning/r/8011w000002U7asAAC/related/OrderItems/view
+    Go To Entity    ${Ordernumber}
+    wait until page contains element      //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]   45s
+    Force Click Element    //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]
+    sleep    10s
+    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Order Products"]    20s
+    Force Click Element  //div[@class="slds-media__body"]//a//span[text()="Order Products"]
+    sleep    10s
+    log to console  Order product is clicked
+    sleep  10s
+    click element  //th/span/a[@title='${pdtname}']
+    log to console  product clicked in  order pdt page
+    sleep  20s
+    log to console  product is clicked
+#    wait until page contains element      //a[@title='Related']   45s
+#    Force Click Element   //a[@title='Related']
+    sleep  20s
+    Reload page
+    wait until page contains element     //span[contains(.,'Related')]   60s
+    Force Click Element   //span[contains(.,'Related')]
+    log to console  related is clicked
+    sleep  20s
+    wait until page contains element  //div[@class="slds-media__body"]//a//span[text()="Assets"]  60s
+    click element  //div[@class="slds-media__body"]//a//span[text()="Assets"]
+    sleep  10s
+    ${subscription_ID}   get text   //th//span/a[text()='${pdtname}']/following::td[3]
+    sleep  3s
+    log to console  ${subscription_ID}
+    [Return]   ${subscription_ID}
+
+Validate Billing and Payer in the asset page
+     [Arguments]   ${subscription_id}    ${order_no}
+
+      Go to Entity   ${LIGHTNING_TEST_ACCOUNT}
+      scroll page to location  0  9000
+      ScrollUntillFound   //button//span[text()='Asset History']
+      Log to console  scroll to asset history
+      select frame  xpath=//button/span[text()='Asset History']/../../..//div[@class="content iframe-parent"]/iframe
+      ScrollUntillFound  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
+      wait until page contains element  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a  60s
+      Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
+      Log to console  clicked the product
+      unselect frame
+      sleep  10s
+      Switch Window  NEW
+      ${owner_billing}  get text    //*[text()="Owner"]//following::td[1]
+      ${payer_billing}  get text   //*[text()="Payer"]//following::td[1]
+      Log to console   ${owner_billing}
+      Log to console    ${payer_billing}
