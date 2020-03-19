@@ -63,6 +63,7 @@ Add an account team member as account owner
     Go To Salesforce and Login into Lightning       DigiSales Admin
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Check original account owner and change if necessary for event
+    Delete all entities from Accounts Related tab   Account Team Members
     logoutAsUser  Sales Admin
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}

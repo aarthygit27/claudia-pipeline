@@ -179,12 +179,13 @@ Check original account owner and change if necessary for event
     #log to console     ${account_owner}
     #Run Keyword unless    ${user_is_already_owner}
     Run Keyword unless  ${user_is_already_owner}  Change account owner to     ${NEW_OWNER}
-
+    sleep       30s
 
 Add new team member
     [Documentation]     Add new team member to account
     [Arguments]     ${new_team_member}      ${role}=--None--
     sleep   10s
+    Delete Account team member
     Wait until page contains element    //ul/li/a[@title='New']     30s
     Force click element  //ul/li/a[@title='New']
     Wait until page contains element    //input[@title='Search People']     60s
@@ -195,6 +196,16 @@ Add new team member
     Sleep  10s
     Click element   //button[@title='Save']
     sleep   30s
+
+Delete Account team member
+    : FOR    ${i}    IN RANGE    1000
+    #\    Exit For Loop If    ${i} > ${count}-1
+    \   Wait Until Element Is Visible    ${table_row}    60s
+    \   ${count}=    get element count    ${table_row}
+    \   log to console       ${count}
+    \    exit for loop if       ${count}==0
+    \    Delete all entities    ${table_row}
+
 
 Validate that team member is created succesfully
     [Arguments]     ${name}=Sales,Admin     ${role}=

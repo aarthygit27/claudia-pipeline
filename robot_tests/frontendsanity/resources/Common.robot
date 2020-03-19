@@ -233,3 +233,53 @@ Select Quick Action Value For Attribute
     Force Click Element    ${NEW_ITEM_POPUP}//span[contains(text(),'${field}')]//following::div//a[@class='select']
     Wait Until Element Is Visible    //div[@class='select-options']//li//a[contains(text(),'${value}')]  60s
     Force Click Element    //div[@class='select-options']//li//a[contains(text(),'${value}')]
+
+Delete all entities from Accounts Related tab
+    [Arguments]     ${entities}
+    wait until element is visible    ${ACCOUNT_RELATED}    60s
+    Force click element    ${ACCOUNT_RELATED}
+    ${status}=    run keyword and return status    Element Should Be Visible    //span[@title='${entities}']
+    Run keyword Unless    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
+    Sleep    30s
+    ScrollUntillFound    //span[text()='${entities}']/../../a/span[@title="${entities}"]
+    Execute Javascript    window.scrollTo(0,800)
+    Sleep  30s
+    ${visible}=    run keyword and return status    Element Should Be Visible    //span[text()='View All']/span[text()='${entities}']
+    run keyword if    ${visible}    ScrollUntillFound    //span[text()='View All']/span[contains(text(),'${entities}')]
+    #//span[contains(text(),'${entities}')]/../../span/../../../a
+    ${display}=    run keyword and return status    Element Should Be Visible    //span[text()='View All']/span[contains(text(),'${entities}')]
+    run keyword if    ${display}    Select rows to delete the entities     ${entities}
+
+
+Select rows to delete the entities
+    [Arguments]         ${entities}
+    [Documentation]    Used to delete all the existing contracts for the business account
+    #Force Click element    //span[text()='View All']/span[text()='${entities}']
+    Force click element    //span[contains(text(),"${entities}")]/../../span[text()='View All']
+    Sleep    10s
+    wait until element is visible           //h1[@title='${entities}']
+    #Wait Until Element Is Visible    ${table_row}    60s
+    ${count}=    get element count    ${table_row}
+    #log to console       ${count}
+    : FOR    ${i}    IN RANGE    1000
+    \   Exit For Loop If    ${i} > ${count}-1
+    \   Wait Until Element Is Visible    ${table_row}    60s
+    \   Delete all entities    ${table_row}
+    ${count}=    get element count    ${table_row}
+    Run Keyword Unless   '${count}'=='0'  Select rows to delete the entities   ${entities}
+
+
+Delete all entities
+    [Arguments]    ${table_row}
+    ${IsVisible}=    Run Keyword And Return Status    element should be visible    ${table_row}
+    Run Keyword if    ${IsVisible}    Delete row items    ${table_row}
+
+Delete row items
+    [Arguments]    ${table_row}
+    [Documentation]    Used to delete the individual row
+    Force Click element    ${table_row}
+    wait until element is visible    //a[@title='Delete']   60s
+    Force Click element    //a[@title='Delete']
+    wait until element is visible    //button[@title='Delete']    60s
+    Click element    //button[@title='Delete']
+    Sleep    20s
