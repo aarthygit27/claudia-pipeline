@@ -1809,6 +1809,7 @@ getOrderStatusAfterSubmitting
     should not be equal as strings  ${status}  Error
     ${order_no}   get text   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Order Number']/../following-sibling::div/span/span
     #log to console  ${order_no}.this is getorderstatusafgtersubmirting function
+    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']  60s
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
 
@@ -7138,23 +7139,23 @@ Add multiple products in SVE
      sleep  30s
 
     [Return]  ${fyr_value_total}  ${new}  ${ren}  ${frame}
-
-validateproductsbasedonsalestype
-    [Arguments]    ${pdt_salesType}    ${fyr_value}
-    ${status_new}   Run keyword and return status  '${pdt_salesType}'=='New Money-New Services'  or   '${pdt_salesType}'== 'New Money-Extending Services'
-    ${d}=  evaluate  (${a}+${fyr_value})
-    Set Test Variable    ${a}    ${d}
-
-
-    ${status_renegotiation}   Run keyword and return status  '${pdt_salesType}'=='Renegotiation-Service Replacement'  or   '${pdt_salesType}'=='Renegotiation-Service Continuation'
-    ${e}=  evaluate  (${d}+${fyr_value})
-    Set Test Variable    ${b}    ${e}
-
-    ${status_frame}  Run keyword and return status  '${pdt_salesType}'=='Frame Agreement - New Services'  or   '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
-    ${f}=  evaluate  (${c}+${fyr_value})
-    Set Test Variable    ${c}    ${f}
-
-   [Return]   ${d}   ${e}   ${f}
+#
+#validateproductsbasedonsalestype
+#    [Arguments]    ${pdt_salesType}    ${fyr_value}
+#    ${status_new}   Run keyword and return status  '${pdt_salesType}'=='New Money-New Services'  or   '${pdt_salesType}'== 'New Money-Extending Services'
+#    ${d}=  evaluate  (${a}+${fyr_value})
+#    Set Test Variable    ${a}    ${d}
+#
+#
+#    ${status_renegotiation}   Run keyword and return status  '${pdt_salesType}'=='Renegotiation-Service Replacement'  or   '${pdt_salesType}'=='Renegotiation-Service Continuation'
+#    ${e}=  evaluate  (${d}+${fyr_value})
+#    Set Test Variable    ${b}    ${e}
+#
+#    ${status_frame}  Run keyword and return status  '${pdt_salesType}'=='Frame Agreement - New Services'  or   '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
+#    ${f}=  evaluate  (${c}+${fyr_value})
+#    Set Test Variable    ${c}    ${f}
+#
+#   [Return]   ${d}   ${e}   ${f}
 
 Validating FYR values in Opportunity Header
      [Arguments]    ${fyr_total}   ${new}  ${renegotiation}  ${frame}
@@ -7249,47 +7250,6 @@ Validate Billing and Payer in the asset page
       Log to console   ${owner_billing}
       Log to console    ${payer_billing}
 
-
-Add multiple products in SVE
-
-   [Arguments]     @{items}
-    ${i} =    Set Variable    ${0}
-    ${fyr_value_total}=   Set Variable   ${0}
-    ${count_list}=  Get length  ${items}
-
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
-     :FOR    ${item}    IN    @{items}
-     \    ${i} =    Set Variable    ${i + 1}
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
-     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][ ${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']    ${item}
-     \  Click element   css=.typeahead.dropdown-menu.ng-scope.am-fade.bottom-left li.ng-scope a.ng-binding
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@type='number']
-     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@type='number']   ${product_quantity}
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.OneTimeTotalt']
-     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.OneTimeTotalt']   ${NRC}
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.RecurringTotalt']
-     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.RecurringTotalt']   ${RC}
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/select[@ng-model='p.SalesType']
-     \  sleep  2s
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value${i}}']
-     \  sleep  5s
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.ContractLength"]
-     \  Input text  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.ContractLength']  ${contract_lenght}
-     \  ${fyr_value}=   evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
-     \  ${revenue_value}=  evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
-     \  page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
-     \  page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
-     \  Run keyword if   ${i}<${count_list}   click element   //div[text()='Add']
-     \  ${fyr_value_total}=  evaluate  (${fyr_value_total}+${fyr_value})
-     \  ${new}  ${ren}  ${frame}   validateproductsbasedonsalestype  ${sales_type_value${i}}   ${fyr_value}
-
-     wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
-     force click element  //button[normalize-space(.)='Save Changes']
-     sleep  30s
-     unselect frame
-     sleep  30s
-
-    [Return]  ${fyr_value_total}  ${new}  ${ren}  ${frame}
 
 validateproductsbasedonsalestype
     [Arguments]    ${pdt_salesType}    ${fyr_value}
