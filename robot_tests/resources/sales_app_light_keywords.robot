@@ -1803,8 +1803,8 @@ getOrderStatusAfterSubmitting
     click element  //*[@title="Details"]
     Log to console     Details tab
     Sleep  60s
-    wait until page contains element  //span[contains(text(),"Fulfilment Status")]/../following-sibling::div/span/span  80s
-    ${fulfilment_status} =  get text  //span[contains(text(),"Fulfilment Status")]/../following-sibling::div/span/span
+    wait until page contains element  //span[contains(text(),"Fulfilment Status") and (@class="test-id__field-label")]/../following-sibling::div/span/span 80s
+    ${fulfilment_status} =  get text  //span[contains(text(),"Fulfilment Status") and (@class="test-id__field-label")]/../following-sibling::div/span/span
     wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
     ${status} =  get text  //span[text()='Status']/../following-sibling::div/span/span
     should not be equal as strings  ${fulfilment_status}  Error
@@ -7098,7 +7098,8 @@ Validate technical contact in the asset history page using subscription as
      Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a
      unselect frame
      sleep  10s
-     Switch Window  NEW
+     switch between windows  1
+#    Switch Window  NEW
      ${contact_value}  get text  //table[@class='tb']//tr[19]//td[text()='Technical Contact']/following::td[1]
      Should be equal   ${contact_value}    ${Contact_name}
 
@@ -7208,18 +7209,27 @@ Validate Billing and Payer in the asset page
 validateproductsbasedonsalestype
     [Arguments]    ${pdt_salesType}    ${fyr_value}
     ${pdt_salesType}=  Evaluate  '${pdt_salesType}'.strip()
-    ${new}=    Run Keyword If    '${pdt_salesType}'=='New Money-New Services'    Swapingvariables  ${fyr_value}
-    \    ELSE IF    '${pdt_salesType}'== 'New Money-Extending Services'   Swapingvariables  ${fyr_value}
-    \    Log to console  ${a}.value of new
-    ${ren}=    Run Keyword If    '${pdt_salesType}'=='Renegotiation-Service Replacement'    Swapingvariables  ${fyr_value}
-    \    ELSE IF    '${pdt_salesType}'== 'Renegotiation-Service Continuation'   Swapingvariables  ${fyr_value}
-    \    Log to console  ${a}.value of ren
-    ${frame}=    Run Keyword If    '${pdt_salesType}'=='Frame Agreement - New Services'    Swapingvariables  ${fyr_value}
-    \    ELSE IF    '${pdt_salesType}'== 'Frame Agreement - Extending Services'   Swapingvariables  ${fyr_value}.
-    \    ELSE IF    '${pdt_salesType}'== 'Frame Agreement - Renegotiation'   Swapingvariables  ${fyr_value}.
-    \    Log to console  ${a}.value of frame
-
-
+#    ${status_new } =  run keyword and return status   '${pdt_salesType}'=='New Money-New Services'
+#    ${status_new1 } =  run keyword and return status  '${pdt_salesType}'== 'New Money-Extending Services'
+    ${new}=    Run Keyword If    '${pdt_salesType}'=='New Money-New Services'
+    Log to console  ${new}.value of new
+     ...   pass  Swapingvariables  ${fyr_value}
+     fail  sleep 10s
+     Log to console  ${new}.value of new
+     ${new1}=    Run Keyword If    '${pdt_salesType}'== 'New Money-Extending Services'
+     ...   TRUE  Swapingvariables  ${fyr_value}
+     ...   False  Log to console  False
+     Log to console  ${new}.value of new
+#    ${status_ren } =  run keyword and return status   '${pdt_salesType}'=='Renegotiation-Service Replacement'
+#    ${status_ren1 } =  run keyword and return status  '${pdt_salesType}'== 'Renegotiation-Service Continuation'
+    ${ren}=    Run Keyword If    ''${pdt_salesType}'=='Renegotiation-Service Replacement'
+      ...   TRUE  Swapingvariables  ${fyr_value}
+      ...   False  Log to console  False
+     Log to console  ${ren}.value of ren
+     ${ren1}=    Run Keyword If    ''${pdt_salesType}'=='Renegotiation-Service Continuation'
+      ...   TRUE  Swapingvariables  ${fyr_value}
+      ...   False  Log to console  False
+     Log to console  ${ren}.value of ren
 
 
 Swapingvariables
