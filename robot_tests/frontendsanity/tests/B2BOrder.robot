@@ -2,9 +2,12 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/CPQ.robot
+Resource          ../../frontendsanity/resources/QuoteAndOrder.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 #Library             test123.py
 
 
@@ -30,7 +33,6 @@ Create B2B Order
     clickOnSubmitOrder
     getOrderStatusAfterSubmitting
 
-
 E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Order
     [Tags]    BQA-9121    AUTOLIGHTNING         B2BOrderManagement  rerun
     [Documentation]     Create B2B order with modelled product Telia Yritysinternet plus and unmodelled product Data ner multi
@@ -42,7 +44,6 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     sleep    5s
     Editing Win prob    no
     #Adding partner and competitor
-    Capture Page Screenshot
     sleep    10s
     ClickingOnCPQ    ${oppo_name}
     search products  Telia Yritysinternet Plus
@@ -57,7 +58,6 @@ E2E opportunity process incl. modelled and unmodelled products & Quote & SA & Or
     View order and send summary
     Go to Entity    ${oppo_name}
     Closing the opportunity    No
-
 
 Opportunity: Products used for reporting only must not be visible on Quote & Order
     [Tags]    BQA-9122    AUTOLIGHTNING         B2BOrderManagement

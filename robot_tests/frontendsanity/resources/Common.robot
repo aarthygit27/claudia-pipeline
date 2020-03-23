@@ -222,6 +222,19 @@ Create Unique Name
     ${name}=    Set Variable If    ${length} > 100    ${name[:70]} ${timestamp}    ${name}
     [Return]    ${name}
 
+Create Unique Email
+    [Arguments]    ${email}=${DEFAULT_EMAIL}
+    ${email_prefix}=    Create Unique Name    ${EMPTY}
+    ${email}=    Set Variable If    '${email}' == '${DEFAULT_EMAIL}'    ${email_prefix}${email}    ${email}
+    [Return]    ${email}
+
+
+Create Unique Mobile Number
+    #${numbers}=    Generate Random String    6    [NUMBERS]
+    #[Return]    +358888${numbers}
+    [Return]    +358888888888
+
+
 Input Quick Action Value For Attribute
     [Arguments]    ${field}    ${value}
     Wait Until Element Is Visible    ${NEW_ITEM_POPUP}//label//*[contains(text(),'${field}')]    60s
@@ -283,3 +296,63 @@ Delete row items
     wait until element is visible    //button[@title='Delete']    60s
     Click element    //button[@title='Delete']
     Sleep    20s
+
+Click New Item For Account
+    [Arguments]    ${type}
+    ${status}=    Run Keyword And Return Status    Element Should Be Visible    //a[@title='${type}']
+    Run Keyword If    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=//a[@title='${type}']
+    Wait Until Page Contains Element    ${NEW_ITEM_POPUP}    60s
+
+Scroll Page To Element
+    [Arguments]    ${element}
+    #Run Keyword Unless    ${status}    Execsute JavaScript    window.scrollTo(0,100)
+    : FOR    ${i}    IN RANGE    99
+    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${element}
+    \    Execute JavaScript    window.scrollTo(0,100)
+    \    Sleep    5s
+    \    Exit For Loop If    ${status}
+
+
+Select option from Dropdown
+    [Arguments]    ${list}    ${item}
+    ScrollUntillFound  ${list}
+    force click element   ${list}
+    sleep  10s
+    wait until page contains element   ${list}/div[2]/lightning-base-combobox-item[@data-value="${item}"]  60s
+    click visible element  ${list}/div[2]/lightning-base-combobox-item[@data-value="${item}"]
+    sleep  10s
+
+
+Select option from Dropdown if not able to edit the element from the list
+    [Arguments]    ${list}    ${item}   ${element}
+    ScrollUntillFound  //button[text()="View all dependencies"]//following::span[text()="Opportunity Complete"]
+    Sleep   20s
+    Wait Until Page Contains Element    //div[@class="slds-form-element__control"]//span[text()="Create Continuation Sales Opportunity?"]//following::button[text()="View all dependencies"]    60s
+    force click element    //div[@class="slds-form-element__control"]//span[text()="Create Continuation Sales Opportunity?"]//following::button[text()="View all dependencies"]
+    sleep  20s
+    Click Element   //label[text()="Stage"]//following::input[@name="StageName"]
+    sleep  10s
+    Press Key    //label[text()="Stage"]//following::input[@name="StageName"]    ${element}
+    Sleep    10s
+    force click element    //a[@title='${element}']
+    Sleep  20s
+    Click Element   //span[text()="Apply"]
+
+Scroll Page To Location
+    [Arguments]    ${x_location}    ${y_location}
+    Execute JavaScript    window.scrollTo(${x_location},${y_location})
+    Sleep    10s
+
+Open tab
+    [Arguments]    ${tabName}    ${timeout}=60s
+    Wait Until Element is Visible    //a[@title='${tabName}']    60s
+    Click Element    //a[@title='${tabName}']
+    Sleep    10s
+
+Select option from Dropdown with Force Click Element
+    [Arguments]    ${list}    ${item}
+    #Select From List By Value    //div[@class="uiInput uiInput--default"]//a[@class="select"]    ${item}
+    ${element_xpath}=    Replace String    ${list}    \"    \\\"
+    Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep    5s
+    force click element    ${item}
