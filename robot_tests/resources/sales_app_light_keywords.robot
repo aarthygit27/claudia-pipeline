@@ -1796,11 +1796,13 @@ clickOnSubmitOrder
     sleep   40s
 
 getOrderStatusAfterSubmitting
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //a[@title='Details']   60s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //*[@title="Details"]  60s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    click element  //a[@title='Details']
-    Sleep  120s
+    Sleep  60s
+    click element  //*[@title="Details"]
+    Log to console     Details tab
+    Sleep  60s
     wait until page contains element  //span[contains(text(),"Fulfilment Status")]/../following-sibling::div/span/span  80s
     ${fulfilment_status} =  get text  //span[contains(text(),"Fulfilment Status")]/../following-sibling::div/span/span
     wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
@@ -7140,23 +7142,7 @@ Add multiple products in SVE
      sleep  30s
 
     [Return]  ${fyr_value_total}  ${new}  ${ren}  ${frame}
-#
-#validateproductsbasedonsalestype
-#    [Arguments]    ${pdt_salesType}    ${fyr_value}
-#    ${status_new}   Run keyword and return status  '${pdt_salesType}'=='New Money-New Services'  or   '${pdt_salesType}'== 'New Money-Extending Services'
-#    ${d}=  evaluate  (${a}+${fyr_value})
-#    Set Test Variable    ${a}    ${d}
-#
-#
-#    ${status_renegotiation}   Run keyword and return status  '${pdt_salesType}'=='Renegotiation-Service Replacement'  or   '${pdt_salesType}'=='Renegotiation-Service Continuation'
-#    ${e}=  evaluate  (${d}+${fyr_value})
-#    Set Test Variable    ${b}    ${e}
-#
-#    ${status_frame}  Run keyword and return status  '${pdt_salesType}'=='Frame Agreement - New Services'  or   '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
-#    ${f}=  evaluate  (${c}+${fyr_value})
-#    Set Test Variable    ${c}    ${f}
-#
-#   [Return]   ${d}   ${e}   ${f}
+
 
 Validating FYR values in Opportunity Header
      [Arguments]    ${fyr_total}   ${new}  ${renegotiation}  ${frame}
@@ -7254,22 +7240,31 @@ Validate Billing and Payer in the asset page
 
 validateproductsbasedonsalestype
     [Arguments]    ${pdt_salesType}    ${fyr_value}
+    ${pdt_salesType}=  Evaluate  '${pdt_salesType}'.strip()
+    ${status_new}   Run keyword and return if  '${pdt_salesType}'=='New Money-New Services'  OR    '${pdt_salesType}'== 'New Money-Extending Services'
+    ${val}= Run Keyword If   '${status_new}'=='True'   Swapingvariables  ${fyr_value}
+    Log to console   ${val}.a is product
 
-    ${status_new}   Run keyword and return status  '${pdt_salesType}'=='New Money-New Services'  or   '${pdt_salesType}'== 'New Money-Extending Services'
-    ${d}=  evaluate  (${a}+${fyr_value})
-    Set Test Variable    ${a}    ${d}
-    Log to console   ${a}.a is product
-    ${status_renegotiation}   Run keyword and return status  '${pdt_salesType}'=='Renegotiation-Service Replacement'  or   '${pdt_salesType}'=='Renegotiation-Service Continuation'
-    ${e}=  evaluate  (${b}+${fyr_value})
-    Set Test Variable    ${b}    ${e}
-    Log to console   ${b}.b is product
-    ${status_frame}  Run keyword and return status  '${pdt_salesType}'=='Frame Agreement - New Services'  or   '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
-    ${f}=  evaluate  (${c}+${fyr_value})
-    Set Test Variable    ${c}    ${f}
-    Log to console   ${c}.c is product
+    ${status_renegotiation}   Run keyword and return if  '${pdt_salesType}'=='Renegotiation-Service Replacement'  OR    '${pdt_salesType}'=='Renegotiation-Service Continuation'
+    ${val}= Run Keyword If   '${status_renegotiation}'=='True'   Swapingvariables  ${fyr_value}
+    Log to console   ${val}.b is product
+#    ${e}=  evaluate  (${b}+${fyr_value})
+#    Set Test Variable    ${b}    ${e}
+#    Log to console   ${b}.b is product
+
+    ${status_frame}  Run keyword and return if  '${pdt_salesType}'=='Frame Agreement - New Services'  OR    '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
+    ${val}= Run Keyword If   '${status_frame}'=='True'   Swapingvariables  ${fyr_value}
+    Log to console   ${val}.c is product
+#    ${f}=  evaluate  (${c}+${fyr_value})
+#    Set Test Variable    ${c}    ${f}
+#    Log to console   ${c}.c is product
    [Return]   ${a}   ${b}   ${c}
 
-
+Swapingvariables
+    [Arguments]     ${fyr_value}
+    ${d}=  evaluate  (${a}+${fyr_value})
+    Set Test Variable    ${a}    ${d}
+    [Return]   ${a}
 
 Validating FYR values in Opportunity Header
      [Arguments]    ${fyr_total}   ${new}  ${renegotiation}  ${frame}
