@@ -1800,9 +1800,9 @@ getOrderStatusAfterSubmitting
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
     click element  //a[@title='Details']
-    Sleep  60s
-    wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  80s
-    ${fulfilment_status} =  get text  //span[text()='Fulfilment Status']/../following-sibling::div/span/span
+    Sleep  120s
+    wait until page contains element  //span[contains(text(),"Fulfilment Status")]/../following-sibling::div/span/span  80s
+    ${fulfilment_status} =  get text  //span[contains(text(),"Fulfilment Status")]/../following-sibling::div/span/span
     wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
     ${status} =  get text  //span[text()='Status']/../following-sibling::div/span/span
     should not be equal as strings  ${fulfilment_status}  Error
@@ -7107,7 +7107,7 @@ Add multiple products in SVE
     ${fyr_value_total}=   Set Variable   ${0}
     ${count_list}=  Get length  ${items}
     log to console  ${count_list}.number of items
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+   select frame  xpath=//div[contains(@class,'slds')]/iframe
      :FOR    ${item}    IN    @{items}
      \    ${i} =    Set Variable    ${i + 1}
      \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
@@ -7257,15 +7257,16 @@ validateproductsbasedonsalestype
 
     ${status_new}   Run keyword and return status  '${pdt_salesType}'=='New Money-New Services'  or   '${pdt_salesType}'== 'New Money-Extending Services'
     ${d}=  evaluate  (${a}+${fyr_value})
-     Set Test Variable    ${a}    ${d}
+    Set Test Variable    ${a}    ${d}
+    Log to console   ${a}.a is product
     ${status_renegotiation}   Run keyword and return status  '${pdt_salesType}'=='Renegotiation-Service Replacement'  or   '${pdt_salesType}'=='Renegotiation-Service Continuation'
     ${e}=  evaluate  (${b}+${fyr_value})
     Set Test Variable    ${b}    ${e}
-
+    Log to console   ${b}.b is product
     ${status_frame}  Run keyword and return status  '${pdt_salesType}'=='Frame Agreement - New Services'  or   '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
     ${f}=  evaluate  (${c}+${fyr_value})
     Set Test Variable    ${c}    ${f}
-
+    Log to console   ${c}.c is product
    [Return]   ${a}   ${b}   ${c}
 
 
