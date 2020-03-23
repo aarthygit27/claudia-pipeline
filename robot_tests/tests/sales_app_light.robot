@@ -2016,7 +2016,7 @@ Validate Main User contact for DNS
 
 
 DNS - Asset Verfication
-    [Tags]  BQA-12672    AUTOLIGHTNINGORDERS
+    [Tags]  BQA-12672
 #    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
@@ -2052,7 +2052,7 @@ DNS - Asset Verfication
 
 
 One Order- B2O Colocation and E2E B2O product
-    [Tags]  BQA-11525    AUTOLIGHTNINGORDERS
+    [Tags]  BQA-11525
     set test variable   ${Account}    Digita Oy
     sleep  40s
     Go To Salesforce and Login into Lightning  B2O User

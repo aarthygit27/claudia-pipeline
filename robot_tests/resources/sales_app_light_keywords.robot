@@ -1800,7 +1800,7 @@ getOrderStatusAfterSubmitting
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
     click element  //a[@title='Details']
-    #Sleep  20s
+    Sleep  60s
     wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  80s
     ${fulfilment_status} =  get text  //span[text()='Fulfilment Status']/../following-sibling::div/span/span
     wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
