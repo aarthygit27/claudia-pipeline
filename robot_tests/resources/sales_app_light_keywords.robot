@@ -7184,39 +7184,6 @@ Validate modify salestype reflected in Oppo page
     Log to console    ${salestype}
     Should be equal   ${salestype}   ${sales_type_value5}
 
-FetchfromOrderproduct
-    [Arguments]    ${Ordernumber}  ${pdtname}
-    log to console  ${Ordernumber}.is the order number
-#    go to  https://telia-fi--rel.lightning.force.com/lightning/r/8011w000002U7asAAC/related/OrderItems/view
-    Go To Entity    ${Ordernumber}
-    wait until page contains element      //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]   45s
-    Force Click Element    //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]
-    sleep    10s
-    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Order Products"]    20s
-    Force Click Element  //div[@class="slds-media__body"]//a//span[text()="Order Products"]
-    sleep    10s
-    log to console  Order product is clicked
-    sleep  10s
-    click element  //th/span/a[@title='${pdtname}']
-    log to console  product clicked in  order pdt page
-    sleep  20s
-    log to console  product is clicked
-#    wait until page contains element      //a[@title='Related']   45s
-#    Force Click Element   //a[@title='Related']
-    sleep  20s
-    Reload page
-    wait until page contains element     //span[contains(.,'Related')]   60s
-    Force Click Element   //span[contains(.,'Related')]
-    log to console  related is clicked
-    sleep  20s
-    wait until page contains element  //div[@class="slds-media__body"]//a//span[text()="Assets"]  60s
-    click element  //div[@class="slds-media__body"]//a//span[text()="Assets"]
-    sleep  10s
-    ${subscription_ID}   get text   //th//span/a[text()='${pdtname}']/following::td[3]
-    sleep  3s
-    log to console  ${subscription_ID}
-    [Return]   ${subscription_ID}
-
 Validate Billing and Payer in the asset page
      [Arguments]   ${subscription_id}    ${order_no}
 
@@ -7241,29 +7208,25 @@ Validate Billing and Payer in the asset page
 validateproductsbasedonsalestype
     [Arguments]    ${pdt_salesType}    ${fyr_value}
     ${pdt_salesType}=  Evaluate  '${pdt_salesType}'.strip()
-    ${status_new}   Run keyword and return if  '${pdt_salesType}'=='New Money-New Services'  OR    '${pdt_salesType}'== 'New Money-Extending Services'
-    ${val}= Run Keyword If   '${status_new}'=='True'   Swapingvariables  ${fyr_value}
-    Log to console   ${val}.a is product
+    ${new}=    Run Keyword If    '${pdt_salesType}'=='New Money-New Services'    Swapingvariables  ${fyr_value}
+    \    ELSE IF    '${pdt_salesType}'== 'New Money-Extending Services'   Swapingvariables  ${fyr_value}
+    \    Log to console  ${a}.value of new
+    ${ren}=    Run Keyword If    '${pdt_salesType}'=='Renegotiation-Service Replacement'    Swapingvariables  ${fyr_value}
+    \    ELSE IF    '${pdt_salesType}'== 'Renegotiation-Service Continuation'   Swapingvariables  ${fyr_value}
+    \    Log to console  ${a}.value of ren
+    ${frame}=    Run Keyword If    '${pdt_salesType}'=='Frame Agreement - New Services'    Swapingvariables  ${fyr_value}
+    \    ELSE IF    '${pdt_salesType}'== 'Frame Agreement - Extending Services'   Swapingvariables  ${fyr_value}.
+    \    ELSE IF    '${pdt_salesType}'== 'Frame Agreement - Renegotiation'   Swapingvariables  ${fyr_value}.
+    \    Log to console  ${a}.value of frame
 
-    ${status_renegotiation}   Run keyword and return if  '${pdt_salesType}'=='Renegotiation-Service Replacement'  OR    '${pdt_salesType}'=='Renegotiation-Service Continuation'
-    ${val}= Run Keyword If   '${status_renegotiation}'=='True'   Swapingvariables  ${fyr_value}
-    Log to console   ${val}.b is product
-#    ${e}=  evaluate  (${b}+${fyr_value})
-#    Set Test Variable    ${b}    ${e}
-#    Log to console   ${b}.b is product
 
-    ${status_frame}  Run keyword and return if  '${pdt_salesType}'=='Frame Agreement - New Services'  OR    '${pdt_salesType}'=='Frame Agreement - Extending Services'   or   '${pdt_salesType}'== 'Frame Agreement - Extending Services'
-    ${val}= Run Keyword If   '${status_frame}'=='True'   Swapingvariables  ${fyr_value}
-    Log to console   ${val}.c is product
-#    ${f}=  evaluate  (${c}+${fyr_value})
-#    Set Test Variable    ${c}    ${f}
-#    Log to console   ${c}.c is product
-   [Return]   ${a}   ${b}   ${c}
+
 
 Swapingvariables
     [Arguments]     ${fyr_value}
     ${d}=  evaluate  (${a}+${fyr_value})
     Set Test Variable    ${a}    ${d}
+    Log to console  ${a}.value of a
     [Return]   ${a}
 
 Validating FYR values in Opportunity Header
