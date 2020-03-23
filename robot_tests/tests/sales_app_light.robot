@@ -2054,7 +2054,9 @@ DNS - Asset Verfication
 One Order- B2O Colocation and E2E B2O product
     [Tags]  BQA-11525    AUTOLIGHTNINGORDERS
     set test variable   ${Account}    Digita Oy
+    sleep  40s
     Go To Salesforce and Login into Lightning  B2O User
+    sleep  40s
      Go To Entity    ${Account}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name

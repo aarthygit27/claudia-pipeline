@@ -1809,6 +1809,7 @@ getOrderStatusAfterSubmitting
     should not be equal as strings  ${status}  Error
     ${order_no}   get text   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Order Number']/../following-sibling::div/span/span
     #log to console  ${order_no}.this is getorderstatusafgtersubmirting function
+    Sleep  20s
     wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']  60s
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
