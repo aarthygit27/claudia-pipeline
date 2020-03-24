@@ -157,3 +157,39 @@ UpdateAndAddSalesType for 2 products
     click element    ${next_button}
     Unselect Frame
     sleep    20s
+
+Add product to cart (CPQ)
+    [Documentation]     In the CPQ cart search for the wanted product and add it to the cart
+    [Arguments]    ${pname}=${product_name}
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    ${CPQ_SEARCH_FIELD}    60s
+    input text    ${CPQ_SEARCH_FIELD}    ${pname}
+    Wait element to load and click  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    wait until page contains element    //button/span[text()='${pname}']   60s
+    #scrolluntillfound    ${CPQ_CART_NEXT_BUTTON}
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
+    #Log to console      ${status}
+    wait until page contains element    //span[text()='Next']/..    100s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #click element    ${CPQ_CART_NEXT_BUTTON}
+    unselect frame
+    sleep    30s
+
+
+Update products
+    [Documentation]     Create Quote in draft status in the post-CPQ omniscript
+    ${iframe}   Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']//div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${Viwe_quote}=    Set Variable    //button[@title="View Quote"]
+    ${open_quote}=    Set Variable   //button[@title="Open Quote"]
+    Wait Until Element Is Enabled   ${iframe}   80s
+    select frame    ${iframe}
+    #Wait until page contains element    ${SERVICE_CONTRACT_WARNING}     60s
+    Wait element to load and click      ${SALES_TYPE_DROPDOWN}
+    Click element   ${NEW_MONEY_NEW_SERVICES}
+    Wait Until Element Is Visible    ${next_button}    60s
+    click element    ${next_button}
+    sleep   50s
+    unselect frame
+    Wait until page contains element    //h1/div[@title='${OPPORTUNITY_NAME}']  30s
+

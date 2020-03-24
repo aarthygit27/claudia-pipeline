@@ -68,7 +68,6 @@ Close Notification
     ${visible}=    run keyword and return status    element should be visible    ${CLOSE_NOTIFICATION}
     run keyword if    ${visible}    Click Element    xpath=${CLOSE_NOTIFICATION}
 
-
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
@@ -356,3 +355,25 @@ Select option from Dropdown with Force Click Element
     Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep    5s
     force click element    ${item}
+
+
+Select Date From DATEPICKER
+    [Arguments]    ${dateElement}
+    ${select_year}=    Set Variable    //option[text()='${year}']
+    ${element_xpath}=    Replace String    ${dateElement}    \"    \\\"
+    Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    : FOR    ${INDEX}    IN RANGE    1    12
+    \    sleep    2s
+    \    ${month}=    Get Text    ${MONTH_TEXT}
+    \    Run Keyword If    "${month}" != "${to_select_month}"    click element    ${NEXT_BUTTON_MONTH}
+    \    Exit For Loop If    "${month}" == "${to_select_month}"
+    click element    ${YEAR_DROPDOWN}
+    sleep    2s
+    wait until element is visible    ${select_year}
+    click element    ${select_year}
+    Pick Date
+
+Pick Date
+    ${select_day}=    Set Variable    //span[@data-aura-class='uiDayInMonthCell--default' and text()='${day}']
+    click element    ${select_day}
+

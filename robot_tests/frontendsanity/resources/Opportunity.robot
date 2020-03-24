@@ -194,3 +194,24 @@ Filter Opportunities By
     #get_all_links
     Force click element    //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a[contains(@class,'forceOutputLookup') and (@title='${value}')]
     #Run Keyword If    ${Count} > 1    click visible element    xpath=${RESULTS_TABLE}[contains(@class,'forceOutputLookup') and (@title='${value}')]
+
+
+Verify that warning banner is displayed on opportunity page
+    [Arguments]    ${OPPORTUNITY_NAME}
+    [Documentation]    After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
+    Go To Entity   ${OPPORTUNITY_NAME}
+    #Wait until element is visible    ${OPPORTUNITY_WARNING_BANNER}  30s
+
+Verify that warning banner is displayed on opportunity page sevice contract
+    [Arguments]    ${OPPORTUNITY_NAME}
+    [Documentation]    After creating opportunity without service contract make sure warning banner is displayed on the opportunity page
+    Go To Entity   ${OPPORTUNITY_NAME}
+    Wait until element is visible    ${SERVICE_CONTRACT_WARNING_oppo}  30s
+
+
+Verify that warning banner is not displayed on opportunity page
+    [Arguments]    ${oppo_name}
+    [Documentation]    After creating oppotunity which has an active cutomer ship contract, the banner should not be available
+    Go To Entity    ${oppo_name}
+    Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
+    Page should not contain element    ${OPPORTUNITY_WARNING_BANNER}

@@ -5,8 +5,6 @@ Test Teardown     Logout From All Systems and Close Browser
 Resource          ../../frontendsanity/resources/Common.robot
 Resource          ../../frontendsanity/resources/Login.robot
 Resource          ../../frontendsanity/resources/Contact.robot
-Resource          ../../frontendsanity/resources/CPQ.robot
-Resource          ../../frontendsanity/resources/QuoteAndOrder.robot
 Resource          ../../frontendsanity/resources/Variables.robot
 #Library             test123.py
 

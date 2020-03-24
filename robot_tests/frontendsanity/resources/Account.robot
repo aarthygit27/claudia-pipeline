@@ -267,3 +267,28 @@ Validate that Account history contains record
 Validate that account owner cannot be different from the group account owner
     Wait until page contains element    //span[text()='Owner ID: Account Owner cannot be different from the Group Account owner']   30s
     Click button  //button[text()='Cancel']
+
+
+Add relationship for the contact person
+    Set Test Variable    ${contact_name}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
+    sleep    20s
+    Wait element to load and click    ${ACCOUNT_RELATED}
+    Wait element to load and click    //a[@title='Add Relationship']
+    Wait until element is visible    //input[@title='Search Contacts']    30s
+    Input text    //input[@title='Search Contacts']    ${contact_name}
+    Wait element to load and click    //a[@role='option']/div/div[@title='${contact_name}']
+    Wait element to load and click    //span[text()='Account']/../..//div//li//a[@class='deleteAction']
+    Wait until keyword succeeds    30s    2s    Input text    //input[@title='Search Accounts']    Aacon Oy
+    Wait element to load and click    //input[@title='Search Accounts']/..//a[@role='option']/div/div[@title='Aacon Oy']
+    Wait until keyword succeeds    30s    2s    Click element    //button[@title='Save']
+
+Validate contact relationship
+    #log to console    Validating contact relationship
+    Execute Javascript    window.location.reload(false);
+    Wait element to load and click    ${ACCOUNT_RELATED}
+    ScrollUntillFound    //h2/a/span[text()='Related Accounts']
+    Click element    //h2/a/span[text()='Related Accounts']
+    Wait until page contains element    //table/tbody/tr/th/span/a[text()='Aacon Oy']    20s
+    Wait until page contains element    //table/tbody/tr/th/span/a[text()='${LIGHTNING_TEST_ACCOUNT}']    20s
+    Wait until page contains element    //table/tbody/tr[2]/td[2]/span/span/img[@class='slds-truncate checked']    20s
+
