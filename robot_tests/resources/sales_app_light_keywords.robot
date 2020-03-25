@@ -6658,6 +6658,7 @@ Activate The Manual Credit enquiry with Negative
     sleep  20s
 
 Validate the credit score is NO
+    [Documentation]  Validate the credit score is NO
     select frame   xpath=//div[contains(@class,'slds')]/iframe
     Wait until page contains element  //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]   60
     wait until page contains element  //div//small[text()="Quote Not Approved"]   60s
@@ -6735,6 +6736,7 @@ credit score status after approval
     Sleep  60s
 
 Check the credit score result of the case with postive
+    [Documentation]  Check the credit score result of the case with postive
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //button[contains(text(),"Create Order")]  60s
     page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive"]
@@ -6750,6 +6752,7 @@ Check the credit score result of the case with postive
     OrderNextStepsPage
 
 Check the credit score result of the case with Positive with Conditions
+    [Documentation]  Check the credit score result of the case with Positive with Conditions
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //button[contains(text(),"Create Order")]  60s
     page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive with Conditions"]
@@ -6765,6 +6768,7 @@ Check the credit score result of the case with Positive with Conditions
     OrderNextStepsPage
 
 Check the credit score result of the Negative cases
+    [Documentation]  Check the credit score result of the Negative cases
     ${send_quote}    Set Variable    //div[@title='Send Quote Email']
     ${quote_n}    Set Variable    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
     ${send_mail}    Set Variable    //p[text()='Send Email']
@@ -6849,7 +6853,6 @@ Adding Telia Domain Name service
 
 updating setting Telia Domain Name space
     [Arguments]   ${pname}=${product_name}
-
     ${Asiakkaan verkkotunnus}  set variable   //form[@name='productconfig']//label[text()[normalize-space() = 'Asiakkaan verkkotunnus (muotoa domain.pääte)']]/..//div//input
     ${Linkittyvä tuote}  set variable   //form[@name='productconfig']//label[text()[normalize-space() = 'Linkittyvä tuote']]/..//div//input
     select frame    xpath=//div[contains(@class,'slds')]/iframe
@@ -6873,6 +6876,7 @@ updating setting Telia Domain Name space
     sleep    10s
 
 Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
+   [Documentation]  To Validate that HDC Rack Amount and HDC Total KW fields and Edit the values in the opportunity page
    scrolluntillfound  //span[text()="Additional Details"]
    wait until page contains element  //span[text()="HDC Total KW"]  60s
    page should contain element    //div//div//span[text()="Investment ID"]//following::div[8]//span[text()="HDC Total KW"]
@@ -6977,6 +6981,7 @@ updateandaddsalestype for multiple products with different salestype
     Unselect Frame
 
 Mofify the contract length and validate in the opportunity page
+     [Documentation]  Mofify the contract length in the solution value estimate and validate in the opportunity page
      ${contract_lenght_updated}   Set Variable   24
      select frame  xpath=//div[contains(@class,'slds')]/iframe
      wait until page contains element  //input[@type="number"][@ng-model="p.ContractLength"]  60s
@@ -6992,7 +6997,7 @@ Mofify the contract length and validate in the opportunity page
      [Return]   ${fyr_value}
 
 Add Finnish_Domain_Service
-
+    [Documentation]  Add Finnish_Domain_Service  in the cpq page
     ${Internet Domain_Toggle}  set variable  //span[text()='Internet Domain']/../button
     ${Finnish Domain Name Registrant}  set variable  //div[contains(text(),'Finnish Domain Name Registrant')]/../../..//*[@alt='settings']/..
     ${Finnish_Domain_Service_Add_To_Cart}   set variable   //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
@@ -7029,6 +7034,7 @@ Add Finnish_Domain_Service
 
 
 Add Other Domain Name and update settings
+    [Documentation]  Add Other Domain Name and update settings in the cpq page
     [Arguments]    ${Verkotunnus}         ${Voimassaoloaika}        ${otc}
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${Other_Domain_Service_Add_To_Cart}   set variable   //*[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
