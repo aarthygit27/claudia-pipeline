@@ -2029,7 +2029,7 @@ validate FYR valuesin Oppo page by modifying salestype in SVE
     Go To Entity    ${oppo_name}
 
 FYR calculation with annually recurring charges
-   [Tags]  BQA-
+    [Tags]  BQA-
     Go To Salesforce and Login into Lightning   B2B DigiSales
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact}    run keyword    Create New Contact for Account
