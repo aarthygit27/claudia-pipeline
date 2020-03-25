@@ -234,6 +234,8 @@ ${sales_type_value1}   New Money-Extending Services
 ${sales_type_value2}   Renegotiation-Service Replacement
 ${sales_type_value3}   Renegotiation-Service Continuation
 ${contract_lenght}    12
+${HDC_Total_KW}     5000
+${HDC_Rack_Amount}   1000
 ${360_VIEW}     //li//a[text()='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]
 ${DEFAULT_ADDRESS}      Korpijärventie 3

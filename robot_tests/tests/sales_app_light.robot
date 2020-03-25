@@ -2051,6 +2051,7 @@ FYR calculation with annually recurring charges
     updating setting Telia Domain Name space  Telia Domain Name Service
 
 Availability of HDC Related Fields in b2b opportunitty
+    [Documentation]  To Check the Availability the HDC related Fields in B2b opportunity  and Edit the values and validate sales user and admin user
     [Tags]  BQA-13174
     Go To Salesforce and Login into Lightning  B2B DigiSales
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
@@ -2061,7 +2062,7 @@ Availability of HDC Related Fields in b2b opportunitty
     AddProductToCart    Alerta projektointi
     UpdateAndAddSalesType    Alerta projektointi
     Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
-    Closing the opportunity with reason    Closed Won
+    Closing the opportunity with reason without error    Closed Won
     Validate the HDc Related fields are non editable after closing Opportunity
     logoutAsUser  ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
@@ -2069,11 +2070,11 @@ Availability of HDC Related Fields in b2b opportunitty
     Validate the HDc Related fields aeditable if the profile is admin after closing Opportunity
 
 Credit score results Ok for B2b opportunity
+    [Documentation]  To check the Credit score Result is Ok  for  B2B opportunity and without Manual credit score process
     [Tags]  BQA-13169
     Go To Salesforce and Login into Lightning   B2B DigiSales
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
-    ${contact}    run keyword    Create New Contact for Account
-    Set test variable  ${contact_name}   ${contact}
+    ${contact_name}     run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     Go To Entity    ${oppo_name}
     ClickingOnCPQ   ${oppo_name}
