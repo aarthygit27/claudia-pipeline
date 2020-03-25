@@ -1508,8 +1508,8 @@ validateCreatedOppoForFYR
     sleep    10s
     ScrollUntillFound    //a[text()='${product_name}']
     page should contain element    //a[text()='${product_name}']
-    page should contain element    //span[text()='New Money - New Services']
-    page should contain element    //span[text()='New Money - New Services']//following::span[@class="slds-truncate uiOutputNumber"][text()="${product_quantity},00"]
+    page should contain element    //lightning-formatted-text[contains(text(),'New Money-New Services')]
+    page should contain element    //lightning-formatted-text[contains(text(),'New Money-New Services')]//following::lightning-formatted-number[text()="${product_quantity},00"]
 
 
 AddProductToCart
@@ -2113,7 +2113,7 @@ search products
     wait until page contains element    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    60s
     #sleep    10s
     input text    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    ${product}
-
+    Sleep  20s
 
 Adding Telia Colocation
     [Arguments]   ${pname}=${product_name}
@@ -2232,14 +2232,20 @@ Closing the opportunity with reason
     click element    ${EDIT_STAGE_BUTTON}
     Sleep  30s
     Select option from Dropdown    //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div   ${stage1}
-    Execute Javascript    window.scrollTo(0,7000)
-    Wait Until Page Contains Element    //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   60s
-    #Get Text    //span[contains(text(),'Service Address Street')]/../../span
-    Select option from Dropdown    //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div    08 Other
+    scrolluntillfound    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div
     Scroll Page To Location    0    3000
+    Sleep  20s
     Click element    //lightning-textarea//label[text()="Close Comment"]/../div/textarea
     Input Text    //lightning-textarea//label[text()="Close Comment"]/../div/textarea    this is a test opportunity to closed won
-    #sleep  30s
+    #Execute Javascript    window.scrollTo(0,3000)
+    Wait Until Page Contains Element    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   60s
+    #Get Text    //span[contains(text(),'Service Address Street')]/../../span
+    Select option from Dropdown     //lightning-combobox//label[text()="Relationship"]/..//div/*[@class="slds-combobox_container"]/div           Long
+    Select option from Dropdown    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div    Solution
+    wait until page contains element  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   60s
+    Select option from Dropdown  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   05 Availability
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   Quality
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason"]/..//div/*[@class="slds-combobox_container"]/div    Service quality
     Wait Until Page Contains Element     //button[@title="Save"]   60s
     click element   //button[@title="Save"]
     sleep  30s
@@ -4188,12 +4194,17 @@ addProductsViaSVE
      sleep  5s
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
      input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']    ${pname_sve}
+     sleep  2s
+     click element  //ul[contains(@class,"typeahead dropdown-menu")]
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@type='number']
      input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@type='number']   ${product_quantity}
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.OneTimeTotalt']
      input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.OneTimeTotalt']   ${NRC}
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.RecurringTotalt']
      input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.RecurringTotalt']  ${RC}
+     page should contain element  //th[contains(text(),"Annual Charge Unit")]
+     click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.AnnualChargeUnit']
+     input text  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model='p.AnnualChargeUnit']  ${ARC}
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']
      sleep  2s
      click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value}']
@@ -4201,8 +4212,8 @@ addProductsViaSVE
      click element  //input[@type="number"][@ng-model="p.ContractLength"]
      input text   //input[@type="number"][@ng-model="p.ContractLength"]   ${contract_lenght}
      #click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.ContractLength']/option[@value='${contract_lenght}']
-     ${fyr_value}=      evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
-     ${revenue_value}=  evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
+     ${fyr_value}=      evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity} +${ARC}
+     ${revenue_value}=  evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity} +${ARC}
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
      wait until page contains element  //button[contains(text(),"Save")]   60s
@@ -6338,7 +6349,7 @@ Adding Telia Cid
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     unselect frame
 
-Adding Vula
+Adding prouct To cart (cpq) without Next
 
     [Arguments]   ${pname}=${product_name}
     Log to console      adding product
@@ -6646,6 +6657,14 @@ Activate The Manual Credit enquiry with Negative
     logoutAsUser    Credit Control
     sleep  20s
 
+Validate the credit score is NO
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until page contains element  //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]   60
+    wait until page contains element  //div//small[text()="Quote Not Approved"]   60s
+    page should contain element    //li//span[text()="You are not able to proceed with Quote or Order"]
+    unselect frame
+
+
 Activate The Manual Credit enquiry with positive with condition
     [Arguments]  ${value}   ${Decision}
     reload page
@@ -6776,16 +6795,34 @@ Check the credit score result of the Negative cases
 create two different billing account for payer and buyer validation
    [Arguments]  ${billing_acc_name}
    go to entity  ${vLocUpg_TEST_ACCOUNT}
-   ${billing_acc_name1}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
+   #${billing_acc_name1}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
+   ${billing_acc_name1}   set variable  Billing_Aarsleff Oy_5771
    Go to Entity  ${billing_acc_name1}
-   wait until page contains element  //div//span[text()="Payer for"]
+   wait until page contains element  //div//span[text()="Payer for"]   60s
    click button  //button[@title="Edit Payer for"]
-   Select from search List   //div//input[@title="Search Accounts"]   ${vLocUpg_TEST_ACCOUNT}
+   sleep  10s
+   wait until page contains element   //div//input[@placeholder="Search Accounts..."]   60s
+   click element  //div//input[@placeholder="Search Accounts..."]
+   input text    //div//input[@placeholder="Search Accounts..."]   ${vLocUpg_TEST_ACCOUNT}
+   sleep  5s
+   press enter on  //div//input[@placeholder="Search Accounts..."]
+   wait until page contains element   //a[@title="Aarsleff Oy"]  60s
+   force click element   //a[@title="Aarsleff Oy"]
+   wait until page contains element   //button[@title="Save"]  60s
    click element  //button[@title="Save"]
+   sleep  10s
    go to entity   ${billing_acc_name}
-   wait until page contains element  //div//span[text()="Payer for"]
+   wait until page contains element  //div//span[text()="Payer for"]    60s
    click button  //button[@title="Edit Payer for"]
-   Select from search List   //div//input[@title="Search Accounts"]   ${vLocUpg_TEST_ACCOUNT}
+   sleep  10s
+   wait until page contains element   //div//input[@placeholder="Search Accounts..."]   60s
+   click element  //div//input[@placeholder="Search Accounts..."]
+   sleep  5s
+   input text    //div//input[@placeholder="Search Accounts..."]   ${vLocUpg_TEST_ACCOUNT}
+   press enter on  //div//input[@placeholder="Search Accounts..."]
+   wait until page contains element   //a[@title="Aarsleff Oy"]  60s
+   force click element   //a[@title="Aarsleff Oy"]
+   wait until page contains element   //button[@title="Save"]  60s
    click element  //button[@title="Save"]
    [Return]     ${billing_acc_name1}
 
@@ -6834,6 +6871,196 @@ updating setting Telia Domain Name space
     click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     Unselect Frame
     sleep    10s
+
+Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
+   scrolluntillfound  //span[text()="Additional Details"]
+   wait until page contains element  //span[text()="HDC Total KW"]  60s
+   page should contain element    //div//div//span[text()="Investment ID"]//following::div[8]//span[text()="HDC Total KW"]
+   page should contain element   //div//div//span[text()="Investment ID"]//following::div[16]//span[text()="HDC Rack Amount"]
+   click element  //div//div//span[text()="Investment ID"]//following::div[16]//button[@title="Edit HDC Rack Amount"]
+   Scroll Page To Location    0    2000
+   sleep  20s
+   click element   //div//input[@name="HDC_Total_KW__c"]
+   input text  //input[@name="HDC_Total_KW__c"]      ${HDC_Total_KW}
+   input text  //input[@name="HDC_Rack_Amount__c"]   ${HDC_Rack_Amount}
+   wait until page contains element  //button[@title="Save"]  60s
+   click element  //button[@title="Save"]
+   wait until page contains element  //div//span[text()="HDC Total KW"]//following::lightning-formatted-number[text()=normalize-space(.)="${HDC_Total_KW},00"]   60s
+   page should contain element      //div//span[text()="HDC Rack Amount"]//following::lightning-formatted-number[text()=normalize-space(.)="${HDC_Rack_Amount},00"]
+   scroll page to element  //span[text()="System Information"]
+   page should contain element   //label//span[text()="Is Migration"]
+
+Verify that Credit Score Validation step is skipped
+    [Documentation]  verify the quote page after update sales type is it  redirectly to quote page and the result of credit score.
+    ${send_quote}    Set Variable    //div[@title='Send Quote Email']
+    ${send_mail}    Set Variable    //p[text()='Send Email']
+    ${submitted}    Set Variable    //a[@aria-selected='true'][@title='Submitted']
+    wait until page contains element   //div[text()="Quote"]   60s
+    wait until page contains element  //li//a[@title="Details"]  60s
+    force click element  //li//a[@title="Details"]
+    scrolluntillfound   //span[text()="Credit Score"]
+    page should contain element    //span[text()="Credit Score"]//preceding::div[@class="test-id__field-label-container slds-form-element__label"]//following::span[text()="OK"]
+    ${quote_number}    get text    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
+    wait until page contains element    ${send_quote}   60s
+    click element  ${send_quote}
+    sleep  10s
+    Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    ${status}=  Run Keyword And Return Status  Wait until page contains element   ${send_mail}    100s
+    Run Keyword If   ${status}   Click Visible Element    ${send_mail}
+    Run Keyword unless   ${status}  Upadte the contact details for sending mail
+    Unselect Frame
+    sleep    30s
+    ${Quote_Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${submitted}    60s
+
+Upadte the contact details for sending mail
+    [Documentation]   Upadte the existing contact details for sending mail if the email filed is missing in the sending quote mail page .
+    ${page}  get location
+    page should contain elementv    //span[contains(text(),"Email is missing on")]
+    click element  //div[contains(text(),"Cancel")]
+    wait until page contains element  //h2[contains(text(),"Confirm")]   60s
+    click element  //button[@id="alert-ok-button"]
+    wait until page contains element  //li//a[@title="Details"]  60s
+    force click element  //li//a[@title="Details"]
+    scrolluntillfound  //span[text()="Contact Name"]
+    click element  //span[text()="Contact Name"]//following::div[1]//a
+    wait until page contains element  //span[text()="Primary eMail"]//following::div[1]//a   60s
+    ${mail_name}  get text  //span[text()="Primary eMail"]//following::div[1]//a
+    click visible element  //span[text()="Email"]//following::div[1]//button
+    click visible element  //input[@name="Email"]
+    input text  //input[@name="Email"]   ${mail_name}
+    click visible element    //button[@title="Save"]
+    sleep  30s
+    go to  ${page}
+    click visible element  //p[text()='Send Email']
+updateandaddsalestype for multiple products with different salestype
+    [Arguments]    @{products}
+    [Documentation]    This is used to Update sales type for multiple products with different salestype
+    ...
+    ...    The input for this keyword is \ list of products
+    ${one time total}    Set Variable   0
+    ${recurring_total}   Set Variable   0
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${prod}    create list    @{products}
+    ${count}    Get Length    ${prod}
+    #Sleep  20s
+    #log to console    Updating sales type multiple products
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}    60s
+    Run Keyword If    ${status} == False    Reload Page
+    Run Keyword If    ${status} == False     Sleep     20s
+    Wait Until Element Is Enabled    ${frame}    60s
+    select frame    ${frame}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${product_list}    Set Variable    //td[normalize-space(.)='${product_name}']
+    \    wait until page contains element    ${update_order}    60s
+    \    log to console    selected new frame
+    \    wait until page contains element  //div[normalize-space(.)='Update Products']//following::td[normalize-space(.)='${product_name}']/../td[4]   60s
+    \    Wait Until Element Is Visible    ${product_list}//following-sibling::td/select[contains(@class,'required')]    120s
+    \    click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+    \    sleep    2s
+    \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[${i+1}]
+    \    Sleep  5s
+    \    ${status}    Run Keyword And Return Status    wait until page contains element    //Select/*[contains(text(),"New Money")]    60s
+    \    Run Keyword If    ${status} == True    Reload Page
+    \    ${ot charge}  get text   //div[normalize-space(.)='Update Products']//following::td[normalize-space(.)='${product_name}']/../td[6]
+    \    ${recurring_charge}  get text  //div[normalize-space(.)='Update Products']//following::td[normalize-space(.)='${product_name}']/../td[7]
+    \    ${one time total}  evaluate  ${ot charge}+${one time total}
+    \    ${recurring_total}  evaluate  ${recurring_charge}+${recurring_total}
+    sleep    20s
+    Wait Until Element Is Visible    ${next_button}    60s
+    click element    ${next_button}
+    Capture Page Screenshot
+    Unselect Frame
+
+Mofify the contract length and validate in the opportunity page
+     ${contract_lenght_updated}   Set Variable   24
+     select frame  xpath=//div[contains(@class,'slds')]/iframe
+     wait until page contains element  //input[@type="number"][@ng-model="p.ContractLength"]  60s
+     click element  //input[@type="number"][@ng-model="p.ContractLength"]
+     input text   //input[@type="number"][@ng-model="p.ContractLength"]   ${contract_lenght_updated}
+     ${fyr_value}=      evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity} +${ARC}
+     ${revenue_value}=  evaluate  ((${RC}*${contract_lenght_updated})+ ${NRC}) * ${product_quantity} +(${ARC}*2)
+     page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
+     page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
+     wait until page contains element  //button[contains(text(),"Save")]   60s
+     click element  //button[contains(text(),"Save")]
+     unselect frame
+     [Return]   ${fyr_value}
+
+Add Finnish_Domain_Service
+
+    ${Internet Domain_Toggle}  set variable  //span[text()='Internet Domain']/../button
+    ${Finnish Domain Name Registrant}  set variable  //div[contains(text(),'Finnish Domain Name Registrant')]/../../..//*[@alt='settings']/..
+    ${Finnish_Domain_Service_Add_To_Cart}   set variable   //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
+    ${Finnish_Domain_Service_Settings_Icon}   set variable     //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//*[@alt='settings']/..
+    ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
+    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.FI']
+    ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_1')]
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_1')]//option[text()='5']
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait until element is visible  ${Internet Domain_Toggle}   60s
+    Click element  ${Internet Domain_Toggle}
+    Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
+    click element    ${Finnish_Domain_Service_Add_To_Cart}
+    Wait Until Element Is Visible    ${Finnish_Domain_Service_Settings_Icon}    240s
+    force click element    ${Finnish_Domain_Service_Settings_Icon}
+    Wait Until Element Is Visible   ${Verkotunnus_Field}   10s
+    press enter on    ${Verkotunnus_Field}
+    Wait Until Element Is Visible   ${Verkotunnus_option}   2s
+    click element    ${Verkotunnus_option}
+    #Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
+    #press enter on    ${Voimassaoloaika_Field}
+    #Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
+    #click element    ${Voimassaoloaika_option}
+    #Wait Until Element Is Visible    10s
+    Validate the validity and the price for Finnish Domain     ${Voimassaoloaika_Field}        1      19
+    Validate the validity and the price for Finnish Domain     ${Voimassaoloaika_Field}        2      25
+    click element    ${closing}
+    Wait until element is visible  ${Finnish Domain Name Registrant}   60s
+    sleep       120s
+    #Log to console   Finnish Domain Name Registrant added automatically
+    wait until element is visible       //span[text()='Internet Domain']/../button      240s
+    click element       //span[text()='Internet Domain']/../button
+    Unselect Frame
+
+
+Add Other Domain Name and update settings
+    [Arguments]    ${Verkotunnus}         ${Voimassaoloaika}        ${otc}
+    ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
+    ${Other_Domain_Service_Add_To_Cart}   set variable   //*[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
+    ${Other_Domain_Service_Settings_Icon}   set variable     //*[contains(text(),'Other Domain name')]/../../..//*[@alt='settings']/..
+    ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
+    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='${Verkotunnus}']
+    ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_2')]
+    ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_2')]//option[text()='${Voimassaoloaika}']
+    ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    Wait Until Element Is Visible    ${iframe}    60s
+    Select Frame    ${iframe}
+    wait until element is visible       //span[text()='Internet Domain']/../button      240s
+    click element       //span[text()='Internet Domain']/../button
+    Wait Until Element Is Visible    ${Other_Domain_Service_Add_To_Cart}    240s
+    click element    ${Other_Domain_Service_Add_To_Cart}
+    Wait Until Element Is Visible    ${Other_Domain_Service_Settings_Icon}    240s
+    force click element    ${Other_Domain_Service_Settings_Icon}
+    Wait Until Element Is Visible   ${Verkotunnus_Field}   10s
+    press enter on    ${Verkotunnus_Field}
+    Wait Until Element Is Visible   ${Verkotunnus_option}   2s
+    click element    ${Verkotunnus_option}
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        1          ${otc}
+    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        existing       ${otc}
+    Wait Until Element Is Visible    ${Voimassaoloaika_Field}  10s
+    press enter on    ${Voimassaoloaika_Field}
+    Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
+    click element    ${Voimassaoloaika_option}
+    #Wait Until Element Is Visible    10s
+    click element    ${closing}
+    wait until element is visible       //span[text()='Internet Domain']/../button      240s
+    click element       //span[text()='Internet Domain']/../button
+    Unselect Frame
 
 SearchAndSelectBillingAccount
     [Arguments]   ${vLocUpg_TEST_ACCOUNT}
@@ -6980,3 +7207,21 @@ Validate ServiceAdministrator in Account contact role
     Page should contain element     //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]    30s
     Page should contain element   //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]//following::td[1]//span//span[text()="Service Administrator"]   30s
 #    Page should contain element   //*[@id="brandBand_1"]//td//span//a[text()="${email}"]    60s
+
+Validate the HDc Related fields are non editable after closing Opportunity
+    [Documentation]  This is to validate the  closed opportunity HDC fields non editable
+    ScrollUntillFound  //span[text()="Additional Details"]
+    wait until page contains element  //span[text()="HDC Total KW"]  60s
+    page should contain element    //div//div//span[text()="Investment ID"]//following::div[8]//span[text()="HDC Total KW"]
+    page should contain element   //div//div//span[text()="Investment ID"]//following::div[16]//span[text()="HDC Rack Amount"]
+    Page should Not contain element     //div//div//span[text()="Investment ID"]//following::div[16]//button[@title="Edit HDC Rack Amount"]
+    page should Not contain element   //div//div//span[text()="Investment ID"]//following::button[@title="Edit HDC Total KW"]
+
+Validate the HDc Related fields aeditable if the profile is admin after closing Opportunity
+    [Documentation]  This is to validate the closed opportunity HDC fields are editable
+    ScrollUntillFound  //span[text()="Additional Details"]
+    wait until page contains element  //span[text()="HDC Total KW"]  60s
+    page should contain element    //div//div//span[text()="Investment ID"]//following::div[8]//span[text()="HDC Total KW"]
+    page should contain element   //div//div//span[text()="Investment ID"]//following::div[16]//span[text()="HDC Rack Amount"]
+    Page should contain element     //div//div//span[text()="Investment ID"]//following::div[16]//button[@title="Edit HDC Rack Amount"]
+    page should contain element   //div//div//span[text()="Investment ID"]//following::button[@title="Edit HDC Total KW"]
