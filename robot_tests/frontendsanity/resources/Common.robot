@@ -163,18 +163,6 @@ Click Visible Element
     Wait Until Element Is Visible    ${locator}    120s
     Click Element    ${locator}
 
-logoutAsUser
-    [Arguments]  ${user}
-    [Documentation]     Logout through seetings button as direct logout is not available in some pages.
-    ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
-    sleep  20s
-    ${count}  set variable  Get Element Count   ${setting_lighting}
-    click element   ${setting_lighting}
-    sleep  2s
-    wait until page contains element   //a[text()='Log Out']  60s
-    click element  //a[text()='Log Out']
-    sleep  10s
-
 Navigate to related tab
     Wait Until Element Is Visible    ${ACCOUNT_RELATED}    60s
     Force click element    ${ACCOUNT_RELATED}
@@ -376,4 +364,21 @@ Select Date From DATEPICKER
 Pick Date
     ${select_day}=    Set Variable    //span[@data-aura-class='uiDayInMonthCell--default' and text()='${day}']
     click element    ${select_day}
+
+
+Delete all entries from Search list
+    [Arguments]     ${entities}
+    Element Should Be Visible    //a[@title='View more ${entities} search results']//span[text()='View More']
+    click element  //a[@title='View more ${entities} search results']//span[text()='View More']
+    Sleep    10s
+    wait until element is visible           //div[text()='Contacts']
+    #Wait Until Element Is Visible    ${table_row}    60s
+    #${count}=    get element count    ${table_row}
+    : FOR    ${i}    IN RANGE    1000
+    #\    Exit For Loop If    ${i} > ${count}-1
+    \   Wait Until Element Is Visible    ${table_row}    60s
+    \   ${count}=    get element count    ${table_row}
+    \   log to console       ${count}
+    \    exit for loop if       ${count}==0
+    \    Delete all entities    ${table_row}
 

@@ -292,3 +292,67 @@ Validate contact relationship
     Wait until page contains element    //table/tbody/tr/th/span/a[text()='${LIGHTNING_TEST_ACCOUNT}']    20s
     Wait until page contains element    //table/tbody/tr[2]/td[2]/span/span/img[@class='slds-truncate checked']    20s
 
+
+Go to account from oppo page
+    [Documentation]  Go back to account page from opportubnity page
+    Reload page
+    ${Account}  set variable  //span[@class='slds-form-element__label slds-truncate'][@title='Account Name']//following::div[3]/a
+    Wait until element is visible   ${Account}   30s
+    Click element  ${Account}
+    sleep  3s
+
+
+CreateABillingAccount
+    [Arguments]    ${LIGHTNING_TEST_ACCOUNT}
+    # go to particular account and create a billing accouint from there
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible     //li/a/div[@title='Billing Account']   60s
+    #Run Keyword If    ${status_page} == True    force click element    //li/a/div[@title='Billing Account']
+    Run Keyword If    ${status_page} == False   force click element     //a[@title="Show 2 more actions"]
+    sleep  20s
+    wait until page contains element    //li/a/div[@title='Billing Account']    45s
+    force click element    //li/a/div[@title='Billing Account']
+    #sleep    20s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #wait until page contains element    //*[@id="RemoteAction1"]    30s
+    #click element    //*[@id="RemoteAction1"]
+    #unselect frame
+    #sleep    10s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #wait until page contains element    //*[@id="Customer_nextBtn"]    30s
+    #click element    //*[@id="Customer_nextBtn"]
+    #unselect frame
+    sleep    20s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]    30s
+    ${account_name_get}=    get value    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
+    ${numbers}=    Generate Random String    4    [NUMBERS]
+    sleep  30s
+    clear element text  //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]
+    input text    //div[@class='vlc-control-wrapper']/input[@id="Name_Billing"]    Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
+    Execute JavaScript    window.scrollTo(0,700)
+    #scroll page to element    //*[@id="billing_country"]
+    click element    //*[@id="billing_country"]
+    sleep  2s
+    click element    //*[@id="billing_country"]/option[@value='FI']
+    sleep  2s
+    click element    //*[@id="Invoice_Delivery_Method"]
+    sleep  2s
+    click element    //*[@id="Invoice_Delivery_Method"]/option[@value='Paper Invoice']
+    sleep  2s
+    input text    //*[@id="payment_term"]    10
+    sleep  2s
+    click element    //*[@id="create_billing_account"]/p[text()='Create Billing Account']
+    sleep    10s
+    execute javascript    window.scrollTo(0,2100)
+    #scroll page to element    //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
+    sleep    5s
+    wait until page contains element    //*[@id="billing_account_creation_result"]/div/p[text()='Billing account added succesfully to Claudia']    30s
+    force click element    //*[@id="Create Billing account_nextBtn"]/p[text()='Next']
+    unselect frame
+    sleep    30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    sleep    20s
+    force click element    //*[@id="return_billing_account"]
+    sleep    10s
+    unselect frame
+    [Return]    Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}

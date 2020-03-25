@@ -243,3 +243,72 @@ Select rows to delete the contract
     ${count}=    get element count    ${table_row}
     Run Keyword Unless   '${count}'=='0'  Select rows to delete the contract
 
+
+Select Customer ship contract manually
+    [Documentation]   When multiple contracts are present for an account and their status are not merged, select the customer ship contract manually
+    [Arguments]  ${Contract_Number}
+    ${Customership_Contract_Filed}   set variable  //span[text()='Customership Contract']
+    ${save}  set variable  //span[text()='Customership Contract']/following::span[text()='Save']
+    #${save}  set variable  //div[@class='footer ']/div/div/button[@title='Save']
+    ScrollUntillFound   //span[text()='Edit Customership Contract']
+    Wait until element is visible  //span[text()='Edit Customership Contract']   30s
+    Force Click element  //span[text()='Edit Customership Contract']
+    Input Text   //input[@title='Search Contracts']  ${Contract_Number}
+    Wait until element is visible   //div[@title='${Contract_Number}']
+    Click element   //div[@title='${Contract_Number}']
+    sleep  5s
+    Wait until page contains element   ${save}  20s
+    ${status}   Run keyword and return status   Get element count  ${save}
+    #Log to console  ${status}
+    Set focus to element  ${save}
+    click element  ${save}
+    sleep  5s
+
+Verify Populated Cutomership Contract
+    [Documentation]  Verify if the opportunity page has customership contract details populated properly
+    [Arguments]  ${Contract_Number}
+    ${Customership_Contract_Filed}   set variable  //span[text()='Customership Contract']
+    ScrollUntillFound   ${Customership_Contract_Filed}
+    Run keyword if  '${Contract_Number}' =='${EMPTY}'  Page should not contain   //span[text()='Customership Contract'][@class='test-id__field-label']//following::span[1]/div/a
+    Run keyword if  '${Contract_Number}' =='${EMPTY}'  Log to console  Customer contract ship field is empty
+    Return From Keyword if   '${Contract_Number}' =='${EMPTY}'
+    ${populated_Contract value}  Get Text   //span[text()='Customership Contract'][@class='test-id__field-label']//following::span[1]/div/a
+    Should be equal   ${populated_Contract value}  ${Contract_Number}
+    #Log to console  Contract Number Population validation is succesful in opportunity page
+
+
+Change Merged Status
+    [Documentation]   Toggle the merge status for the given cutomer contract by going into the related tab of account
+    [Arguments]  ${contract_Number}
+    Go To Entity    ${account}
+    ${save}  set variable  //button[@title='Save']
+    wait until element is visible    ${ACCOUNT_RELATED}    60s
+    Force click element    ${ACCOUNT_RELATED}
+    ScrollUntillFound   //span[text()='View All']/span[text()='Contracts']
+    Force Click element    //span[text()='View All']/span[text()='Contracts']
+    Wait until element is visible   //th[@scope='row']/span/a[contains(text(),'${contract_Number}')]  30s
+    Click element  //th[@scope='row']/span/a[contains(text(),'${contract_Number}')]
+    ScrollUntillFound    //button[@title='Edit Merged']
+    Click element  //button[@title='Edit Merged']
+    Wait until element is visible  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]  30s
+    Click element  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]
+    sleep   5s
+    ${status}  Run keyword and return status  Element should be visible  ${save}
+    Run keyword Unless   ${status}   Reload page
+    Run keyword Unless   ${status}   Toggle Merge Checkbox
+    click element  ${save}
+    sleep  5s
+
+Toggle Merge Checkbox
+    [Documentation]  Reload the page and set the merge status. To use this keyword when the save button does not work properly in the contract page while setting the merge status.
+    sleep  10s
+    ${save}  set variable  //button[@title='Save']
+    ScrollUntillFound    //button[@title='Edit Merged']
+    Click element  //button[@title='Edit Merged']
+    Wait until element is visible  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]  30s
+    Click element  //div[@class='slds-form-element slds-hint-parent']//following::span[text()='Merged']//following::input[@type='checkbox'][1]
+    ${status}  Run keyword and return status  Element should be visible  ${save}
+    Run keyword Unless   ${status}   Reload page
+    Run keyword Unless   ${status}   Toggle Merge Checkbox
+
+

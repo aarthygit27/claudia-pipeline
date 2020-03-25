@@ -215,3 +215,70 @@ Verify that warning banner is not displayed on opportunity page
     Go To Entity    ${oppo_name}
     Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
     Page should not contain element    ${OPPORTUNITY_WARNING_BANNER}
+
+
+Verify Warning banner about existing of duplicate contract
+    [Arguments]    ${oppo_name}
+    [Documentation]  This warning should Add product to cart (CPQ)be visible when multiple customer ship contract are available for the oppo
+    Go To Entity    ${oppo_name}
+    Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
+    Page should contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please confirm that the pre-populated customership contract is valid for this opportunity.']
+
+Verify Warning banner about Manual selection of contract
+    [Arguments]    ${oppo_name}
+    [Documentation]  This warning should be visible when multiple customer ship contract are available for the oppo
+    Go To Entity    ${oppo_name}
+    Wait until element is visible   //div[@class='entityNameTitle slds-line-height_reset'][text()='Opportunity']   30s
+    Page should contain element     //div[@class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info cContractStatusToasts"]//h2[text()='Note! Selected Account has multiple active customership contracts, please select the preferred customership contract manually on the record.']
+
+
+CreateAOppoFromAccount_HDC
+    [Arguments]    ${b}=${contact_name}
+    #log to console    this is to create a Oppo from contact for HDC flow.${b}.contact
+    Sleep  10s
+    ${oppo_name}    create unique name    Test Robot Order_
+    wait until page contains element    //li/a[@title="New Opportunity"]   60s
+    #force click element    //li/a/div[text()='New Opportunity']
+    click element    //li/a[@title="New Opportunity"]
+    #sleep    30s
+    wait until page contains element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    60s
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[1]    ${oppo_name}
+    sleep    3s
+    ${close_date}    get date from future    10
+    input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[2]    ${close_date}
+    sleep    10s
+    click element    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
+    Capture Page Screenshot
+    Select from search List   //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    #input text    //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]    ${b}
+    #wait until page contains element    //*[@title='${b}']/../../..    10s
+    #press enter on  //div[@class='modal-body scrollable slds-modal__content slds-p-around--medium']//following::label/span[text()='Opportunity Name']/following::input[3]
+    #click element   //h2[contains(text(),"Contact Results")]//following::*[@title='Testing Contact_ 20190731-171453']/../../..
+    #click element    //*[@title='${b}']/../../..
+    sleep    2s
+    input text    //textarea    ${oppo_name}.${close_date}.Description Testing
+    click element    //button[@data-aura-class="uiButton"]/span[text()='Save']
+    sleep    30s
+    [Return]    ${oppo_name}
+
+
+Adding partner and competitor
+    [Documentation]    Used to add partner and competitor for a existing opportunity
+    ${save_button}    set variable      //button[@title="Save"]
+    ${competitor_list}    set variable    //ul[contains(@id,'source-list')]/li/div/span/span[text()='Accenture']
+    ${partner_list}=    set variable    //ul[contains(@id,'source-list')]/li/div/span/span[text()='Accenture Oy']
+    ${competitor_list_add}    set variable    //div[text()='Competitor']/../div/div/div/lightning-button-icon/button[@title='Move selection to Chosen']
+    ${partner_list_add}    set variable    //div[text()='Partner']/../div/div/div/lightning-button-icon/button[@title='Move selection to Chosen']
+    Execute Javascript    window.scrollTo(0,1700)
+    Sleep  10s
+    click element    ${competitor_list}
+    click element    ${competitor_list_add}
+    Capture Page Screenshot
+    Execute Javascript    window.scrollTo(0,1900)
+    Sleep  10s
+    click element    ${partner_list}
+    click element    ${partner_list_add}
+    Capture Page Screenshot
+    click element    ${save_button}
+    Sleep  30s
+    Capture Page Screenshot

@@ -193,3 +193,56 @@ Update products
     unselect frame
     Wait until page contains element    //h1/div[@title='${OPPORTUNITY_NAME}']  30s
 
+
+Adding Telia Colocation
+    [Arguments]   ${pname}=${product_name}
+    #Log to console      adding product
+    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
+    wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
+    input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
+    wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
+    sleep   20s
+    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
+    unselect frame
+    #wait until page contains element  //div[@class='cpq-item-product']/div[@class='cpq-item-base-product']//following::div[@class='cpq-item-no-children']/span[normalize-space(.)='${pname}']   60s
+
+
+Updating Setting Telia Colocation
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    xpath=//div[@class='cpq-item-product']/div[@class='cpq-item-base-product']/div/div/button[1]/span[@class='cpq-product-name' and text()='Telia Colocation']    60s
+    click element    xpath=//span[@class='cpq-product-name' and text()='Telia Colocation']/..
+    wait until page contains element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button    60s
+    click element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-actions slds-text-align_right']/button
+    #wait until page contains element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']    60s
+    ##page should contain element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']
+    ##wait until page contains element    xpath=//*[text()="Cabinet 52 RU"]/../../../../div[@class='cpq-item-base-product-string cpq-item-text-value']/div[text()='Add']    60s
+    #wait until page contains element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']    60s
+    #execute javascript    window.scrollTo(0,200)
+    ##scroll page to element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    sleep    10s
+    wait until page contains element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']    60s
+    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    #log to console    before teardiwn
+    Unselect Frame
+    sleep    60s
+
+UpdateAndAddSalesType
+    [Arguments]    ${products}
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${product_list}=    Set Variable    //td[normalize-space(.)='${products}']
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    #log to console    UpdateAndAddSalesType
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    wait until page contains element    ${update_order}    60s
+    #log to console    selected new frame
+    wait until page contains element    ${product_list}    70s
+    click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    click element    ${next_button}
+    unselect frame
+    sleep    60s
+

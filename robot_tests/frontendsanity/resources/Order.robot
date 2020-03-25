@@ -106,76 +106,6 @@ getOrderStatusAfterSubmitting
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
 
-
-preview and submit quote
-    [Arguments]    ${oppo_FOR}
-    ${preview_quote}    Set Variable    //div[@title='Preview Quote']
-    ${send_quote}    Set Variable    //div[@title='Send Quote Email']
-    ${quote_n}    Set Variable    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
-    ${send_mail}    Set Variable    //p[text()='Send Email']
-    ${submitted}    Set Variable    //a[@aria-selected='true'][@title='Submitted']
-    wait until page contains element    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span   60s
-    ${quote_number}    get text    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
-    #Log To Console    preview and submit quote
-    ${path}=  get location
-    ${status}    Run Keyword And Return Status    Wait Until page contains element     ${preview_quote}    60s
-    Run Keyword If    ${status} == True    Reload Page
-    Run Keyword If    ${status} == True    Sleep  50s
-    click element    ${preview_quote}
-    sleep    10s
-    Capture Page Screenshot
-    #log to console  to view the quote
-    Execute Javascript    window.scrollTo(0,400)
-    sleep  5s
-    Capture Page Screenshot
-    #log to console  clicked
-    Sleep  10
-    #Go Back
-    go to   ${path}
-    wait until page contains element    ${send_quote}   60s
-    Click Element    ${send_quote}
-    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
-    Run Keyword If    ${status} == False    Reload Page
-    sleep    10s
-    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
-    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    Capture Page Screenshot
-    #Sleep  30s
-    ${status}=  Run Keyword And Return Status  Wait until page contains element   ${send_mail}    100s
-    Run Keyword If   ${status}   Click Visible Element    ${send_mail}
-    Run Keyword unless   ${status}  approve the quote   ${oppo_FOR}
-    #Click Element    ${send_mail}
-    Unselect Frame
-    sleep    10s
-    ${Quote_Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${submitted}    60s
-    #Log To Console    Quote is submitted: \ \ ${Quote_Status}
-    [Return]    ${quote_number}
-
-
-approve the quote
-    [Arguments]    ${oppo_FOR}
-    ${page}=  get location
-    click visible element   //div/p[text()="Next"]
-    unselect frame
-    reload page
-    sleep  60s
-    logoutAsUser    ${B2B_DIGISALES_LIGHT_USER}
-    sleep  30s
-    Login To Salesforce Lightning   ${SYSTEM_ADMIN_USER}    ${SYSTEM_ADMIN_PWD}
-    sleep  20s
-	Search Salesforce    ${oppo_FOR}
-    #Input Text    //input[@name="Quote-search-input"]
-    Wait Until Element Is Visible       //a[contains(text(),"Quote")]//following::a[text()="${oppo_FOR}"]       60s
-    Click Element   //a[contains(text(),"Quote")]//following::a[text()="${oppo_FOR}"]
-    sleep  10s
-    creditscoreapproving
-    logoutAsUser  ${SYSTEM_ADMIN_USER}
-    Login to Salesforce as B2B DigiSales
-    sleep  30s
-    go to   ${page}
-    Sending quote as email
-
-
 Create Order from quote
     [Arguments]    ${quote_number}    ${oppo_name}
     ${CPQ}    Set Variable    //div[@title='CPQ']
@@ -203,62 +133,6 @@ Create Order from quote
     Sleep   20s
     Unselect Frame
 
-CreditScoreApproving
-    ${details}=    set variable    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    ${edit_approval}=    Set Variable    //button[@title='Edit Approval Status']
-    sleep    30s
-    click element    ${details}
-    sleep    20s
-    ScrollUntillFound    ${edit_approval}
-    Execute Javascript    window.location.reload(true)
-    sleep    40s
-    click element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    sleep    10s
-    ScrollUntillFound    ${edit_approval}
-    sleep    20s
-    wait until page contains element    //button[@title='Edit Approval Status']    45s
-    click element    //button[@title='Edit Approval Status']
-    sleep    20s
-    wait until page contains element    //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]    45s
-    wait until element is enabled    //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]    45s
-    Set Focus To Element    //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
-    capture page screenshot
-    force click element    //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
-    Execute Javascript    window.location.reload(true)
-    sleep    50s
-    click element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Details']
-    sleep    10s
-    ScrollUntillFound    //button[@title='Edit Approval Status']
-    sleep    50s
-    click element    //button[@title='Edit Approval Status']
-    sleep    10s
-    click element    //div[@class='uiMenu']/div[@class='uiPopupTrigger']/div/div/a[text()='Not Approved'][1]
-    sleep    5s
-    force click element    //a[@title='Approved']
-    sleep    2s
-    sleep    50s
-    sleep    2s
-    click element    //button[@title='Save']
-    sleep    20s
-    Execute JavaScript    window.scrollTo(0,0)
-    sleep    10s
-
-Sending quote as email
-    ${spinner}    Set Variable    //div[contains(@class,'slds-spinner--large')]
-    ${send_mail}    Set Variable    //p[text()='Send Email']
-    ${iframe}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
-    Sleep  40s
-    ${status}    Wait Until Element Is Enabled    ${iframe}    60s
-    Run Keyword If    ${status} == False    Reload Page
-    Wait Until Element Is Enabled    ${iframe}    60s
-    select frame    ${iframe}
-    Sleep  30s
-    Wait Until Element Is Visible    ${send_mail}    60s
-    Capture Page Screenshot
-    Click Element    ${send_mail}
-    Unselect Frame
-
-
 View order and send summary
     ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
     ${view_button}    Set Variable    //div[@class="slds-button-group"]//button[@title="View"]
@@ -285,7 +159,7 @@ View order and send summary
     #Go Back
     Wait Until Element Is Visible    ${send_order_summary}    60s
     click element    ${send_order_summary}
-    Sending quote as email
+    #Sending quote as email
     Sleep  20s
     Wait Until Element Is Enabled    ${submit_order}    60s
     click element    ${submit_order}
@@ -296,3 +170,140 @@ View order and send summary
     #sleep    40s
     wait until page contains element    ${order_progress}    80s
     Capture Page Screenshot
+
+
+SearchAndSelectBillingAccount
+    [Arguments]   ${vLocUpg_TEST_ACCOUNT}
+    execute javascript    window.location.reload(true)
+    sleep    30s
+    Wait until element is visible    //div[contains(@class,'slds')]/iframe   60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until element is visible    //*[@id="ExtractAccount"]    60s
+    click element    //*[@id="ExtractAccount"]
+    wait until element is visible    //label[normalize-space(.)='Select Account']    30s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until element is visible    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    force click element    //div[text()='${vLocUpg_TEST_ACCOUNT}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep    2s
+    click element    //*[@id="SearchAccount_nextBtn"]
+    unselect frame
+    sleep    30s
+
+select order contacts- HDC
+    [Arguments]    ${d}= ${contact_technical}
+    #${contact_search_title}=    Set Variable    //h3[text()='Contact Search']
+    ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
+    ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
+    ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+    ${primary_email}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
+    #Wait Until Element Is Visible    ${contact_search_title}    120s
+    #Reload page
+    #sleep   15s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #log to console    entering Technical COntact page
+    Wait Until Element Is Visible    ${contact_search}    120s
+    Input Text    ${contact_search}   ${d}
+    sleep    15s
+    Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    sleep   10s
+    Wait until element is visible  //input[@id='OCEmail']   30s
+    Input Text   //input[@id='OCEmail']   ${primary_email}
+    #Wait until element is visible    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
+    #Click Element    xpath=//ng-form[@id='OrderContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
+    Sleep    5s
+    Execute JavaScript    window.scrollTo(0,200)
+    Wait Until element is visible   ${Technical_contact_search}     30s
+    Input text   ${Technical_contact_search}  ${d}
+    sleep  10s
+    Wait until element is visible   css=.typeahead .ng-binding  30s
+    Click element   css=.typeahead .ng-binding
+    sleep  10s
+    Wait until element is visible  //input[@id='TCEmail']   30s
+    Input Text   //input[@id='TCEmail']   ${primary_email}
+    Execute JavaScript    window.scrollTo(0,200)
+    #Wait until element is visible       xpath=//ng-form[@id='TechnicalContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a    30s
+    #click element   xpath=//ng-form[@id='TechnicalContactTA-Block']/div/div/div/child/div/ng-form/div[2]/div/ul/li/a
+    sleep  10s
+    #${order_name}    set variable    //input[@id='OrderContactDetailsTypeAhead']
+    #${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${order_name}    5s
+    #run keyword if    ${status} == True    update order details
+    Click Element    ${contact_next_button}
+    unselect frame
+    sleep   30s
+
+RequestActionDate
+    #log to console    selecting Requested Action Date FLow chart page
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #log to console    entering Requested action date page
+    wait until page contains element    //*[@id="RequestedActionDateSelection"]     30s
+    click element   //*[@id="RequestedActionDateSelection"]
+    ${date_requested}=    Get Current Date    result_format=%d-%m-%Y
+    #${date_requested}=  Get Date From Future        1
+    #log to console    ${d}
+    input text    //*[@id="RequestedActionDateSelection"]     ${date_requested}
+    sleep  10s
+    #click element    //*[@id="Additional data_nextBtn"]
+    Click element       //*[@id="SelectRequestActionDate_nextBtn"]
+    unselect frame
+    #log to console    Exiting    Requested Action Date page
+    sleep    30s
+
+
+SelectOwnerAccountInfo
+    [Arguments]    ${e}= ${billing_account}
+    #log to console    Select Owner Account FLow Chart Page
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #log to console    entering Owner Account page
+    Scrolluntillfound   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+#    wait until element is visible    //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']    30s
+    sleep   10s
+    force click element   //div[text()='${e}']/..//preceding-sibling::td[2]/label/input[@type='checkbox']
+    sleep  10s
+#    unselect frame
+    Scroll Page To Element       //*[@id="BuyerIsPayer"]//following-sibling::span
+    sleep  10s
+#    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until element is visible   //*[@id="BuyerIsPayer"]//following-sibling::span   30s
+    #Log to console   Click BIP
+    force click element  //*[@id="BuyerIsPayer"]//following-sibling::span
+    ScrollUntillFound       //*[@id="SelectedBuyerAccount_nextBtn"]
+    click element    //*[@id="SelectedBuyerAccount_nextBtn"]
+    unselect frame
+    sleep    30s
+
+ValidateTheOrchestrationPlan
+    wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
+    ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
+    log to console  ${order_number}.this is order numner
+    set test variable  ${order_no}   ${order_number}
+    #Do not remove. Required for change order
+    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    #execute javascript    window.scrollTo(0,2000)
+    #sleep    10s
+    #log to console    plan validation
+    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
+    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    sleep    10s
+    ${location}=    Get Location
+    set test variable   ${url}   ${location}
+    Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
+    select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
+    sleep    30s
+    Element should be visible    //a[text()='Start']
+    Element should be visible    //a[text()='Create Assets']
+    Element should be visible    //a[text()='Deliver Service']
+    Element should be visible    //a[text()='Order Events Update']
+    Element should be visible   //a[text()='Call Billing System']
+    #go back
+    sleep   3s
+    force click element       //a[@class='item-label item-header' and text()='Deliver Service']
+    unselect frame
+    #sleep       80s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[text()="Completed"]    60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    Run Keyword If    ${status_page} == False    Sleep  60s
+    wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
+    [Return]  ${order_number}
+

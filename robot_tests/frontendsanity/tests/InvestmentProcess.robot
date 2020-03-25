@@ -2,14 +2,14 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
-#Library             test123.py
-
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/ApprovalProcess.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 
 *** Test Cases ***
-
 Investment Process - B2B
     [Tags]   BQA-11387
     [Documentation]    Create B2B Investment case. Complete the approval flow.
@@ -35,3 +35,4 @@ Investment Process - B2O
     PM details    ${oppo_name}   ${case_number}  B2O
     Case Approval By Approver   ${Case_number}  ${oppo_name}
     Check Case Status  ${Case_number}  B2O
+

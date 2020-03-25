@@ -67,7 +67,7 @@ Check of Customership Contract
     Delete all existing contracts from Accounts Related tab
     Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
-    Verify warning banner on oppo page   ${oppo_name}
+    #Verify warning banner on oppo page   ${oppo_name}
     Go to account from oppo page
     Create contract Agreement  Customership
     ${Contract_A_Number}  set variable  ${Customer_contract}

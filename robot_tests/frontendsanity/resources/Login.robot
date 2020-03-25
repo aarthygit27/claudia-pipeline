@@ -64,3 +64,41 @@ Login to Salesforce Lightning
     Run Keyword If    ${buttonNotAvailable}    reload page
     Wait Until Page Contains Element    xpath=${LIGHTNING_ICON}    60 seconds
 
+SwithchToUser
+    [Arguments]  ${user}
+    #log to console   ${user}.this is user
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${user}
+    sleep  3s
+    press key   xpath=${SEARCH_SALESFORCE}    \\13
+    wait until page contains element    //a[text()='${user}']     45s
+    #wait until page contains element  //span[@title='${user}']//following::div[text()='User']   30s
+    #click element  //span[@title='${user}']//following::div[text()='User']
+    click element  //a[text()='${user}']
+    wait until page contains element  //div[@class='primaryFieldAndActions truncate primaryField highlightsH1 slds-m-right--small']//span[text()='${user}']  60s
+    wait until page contains element  //div[text()='User Detail']   60s
+    click element  //div[text()='User Detail']
+    wait until page contains element  //div[@id="setupComponent"]   60s
+    Wait until element is visible  //div[contains(@class,'iframe')]/iframe  60s
+    select frame  //div[contains(@class,'iframe')]/iframe
+    wait until page contains element  //td[@class="pbButton"]/input[@title='Login']   60s
+    force click element  //td[@class="pbButton"]/input[@title='Login']
+    sleep  2s
+    unselect frame
+    Reload page
+    Execute Javascript    window.location.reload(true)
+    #reload page
+    wait until page contains element  //a[text()='Log out as ${user}']   60s
+    page should contain element  //a[text()='Log out as ${user}']
+
+logoutAsUser
+    [Arguments]  ${user}
+    [Documentation]     Logout through seetings button as direct logout is not available in some pages.
+    ${setting_lighting}    Set Variable    //button[contains(@class,'userProfile-button')]
+    sleep  20s
+    ${count}  set variable  Get Element Count   ${setting_lighting}
+    click element   ${setting_lighting}
+    sleep  2s
+    wait until page contains element   //a[text()='Log Out']  60s
+    click element  //a[text()='Log Out']
+    sleep  10s
