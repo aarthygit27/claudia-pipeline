@@ -6250,9 +6250,9 @@ Validate Billing system response
     force click element       //a[@class='item-label item-header' and text()='Call Billing System']
 
     unselect frame
-    #sleep       80s
-#    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]
-    ${status_page}    Run Keyword And Return Status    Page should contain element     //lightning-formatted-text[contains(text(),"Completed")]   60s
+    sleep       80s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[contains(text(),"Completed")]
+#    ${status_page}    Run Keyword And Return Status    Page should contain element     //lightning-formatted-text[contains(text(),"Completed")]   60s
     Run Keyword If    ${status_page} == False    force click element   //button[text()='Complete Item']
     sleep   20s
     Run Keyword If    ${status_page} == False    Reload Page

@@ -243,7 +243,7 @@ ${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scop
 ${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[7]/td[1]/label/input/../span
 ${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
-${B2O_DIGISALES_LIGHT_PASSWORD}    PahaPassu2
+${B2O_DIGISALES_LIGHT_PASSWORD}    PahaPassu3
 ${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input/../span
 ${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
