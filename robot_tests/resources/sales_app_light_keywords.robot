@@ -61,7 +61,7 @@ Login to Salesforce as Pricing Manager
     Login To Salesforce Lightning    ${PM_User}  ${PM_PW}
 
 Login to Salesforce as B2O User
-    [Arguments]    ${username}=${B2O_DIGISALES_LIGHT_USER}    ${password}=${B2O_DIGISALES_LIGHT_PASSWORD}
+    [Arguments]    ${username}= ${B2O_DIGISALES_LIGHT_USER}    ${password}= ${B2O_DIGISALES_LIGHT_PASSWORD}
     Login To Salesforce Lightning    ${username}    ${password}
 
 Login to Salesforce Lightning

@@ -2054,7 +2054,10 @@ DNS - Asset Verfication
 One Order- B2O Colocation and E2E B2O product
     [Tags]  BQA-11525
     set test variable   ${Account}    Digita Oy
-    sleep  40s
+    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go to Entity  ${Account}
+    Delete all assets
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
     Go To Salesforce and Login into Lightning  B2O User
     sleep  40s
      Go To Entity    ${Account}
