@@ -2,10 +2,16 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
-#Library             test123.py
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Account.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/CPQ.robot
+Resource          ../../frontendsanity/resources/Quote.robot
+Resource          ../../frontendsanity/resources/Order.robot
+Resource          ../../frontendsanity/resources/OtherSystem.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 
 
 *** Test Cases ***
@@ -36,8 +42,6 @@ One Order - B2B Colocation and Change Order
     Go to   ${url}
     Validate Billing system response
     Capture Page Screenshot
-
-
 
 One Order- B2O Colocation and change order
     [Tags]  BQA-11523
@@ -109,4 +113,4 @@ One Order- B2B Colocation, Case management product, Modeled Case management prod
     Go to   ${url}
     Validate Billing system response
     Validate Order status
-    Validate Billing account
+    #Validate Billing account

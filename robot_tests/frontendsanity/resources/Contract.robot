@@ -229,19 +229,7 @@ Delete all existing contracts from Accounts Related tab
     run keyword if    ${display}    Force Click element    //span[text()='View All']/span[text()='Contracts']
     Sleep    10s
     Wait Until Element Is Visible    ${table_row}    60s
-    Select rows to delete the contract
-
-
-Select rows to delete the contract
-    [Documentation]    Used to delete all the existing contracts for the business account
-
-    ${count}=    get element count    ${table_row}
-    #log to console    ${count}
-    : FOR    ${i}    IN RANGE    9999
-    \    Exit For Loop If    ${i} > ${count}-1
-    \    Delete all Contracts    ${table_row}
-    ${count}=    get element count    ${table_row}
-    Run Keyword Unless   '${count}'=='0'  Select rows to delete the contract
+    Select rows to delete the items
 
 
 Select Customer ship contract manually

@@ -125,3 +125,72 @@ Select B2O product available and connect existing opportunity
     Run Keyword If    ${isVisible}    Click element    //button[contains(text(),"Continue")]
     unselect frame
     Wait until page contains element    xpath=//a[@title='CPQ']    60s
+
+Click Manual Availabilty
+    [Documentation]  Click manual availability button and select the product segment
+    ${Manual_availability_button}   set variable  //div[text()='Manual Availability (Sproject)']
+    Wait until element is visible   ${Manual_availability_button}  30s
+    Click element  ${Manual_availability_button}
+    sleep  10s
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    sleep  5s
+    ${count}  Run Keyword and Return Status  Get Element Count   //select[@id='Product Segment']
+    #Log to console  ${count}
+    force click element   //select[@id='Product Segment']
+    #Wait until element is visible  //select[@id='Product Segment']   30s
+    #Click element  //select[@id='Product Segment']
+    Wait until element is visible  //select[@id='Product Segment']/option[3]  30s
+    Click element   //select[@id='Product Segment']/option[3]
+    Wait until element is visible  //div[@id='Product_nextBtn']  30s
+    Click element   //div[@id='Product_nextBtn']
+
+
+Fill Request Form
+    [Documentation]  Fill Manual availabilty request form
+    #Log to console   Fiiling Manual Availability form
+    ${street}  set variable   //input[@id='Street Name Site A']
+    ${Building Number}  set variable  //input[@id='Building Number Site A']
+    ${Postal code}  set variable  //input[@id='Postal Code Site A']
+    ${city}  set variable  //input[@id='City Site A']
+    ${speed}  set variable  //select[@id='Speed']
+    ${product}  set variable   //input[@id='TypeAhead']
+    Wait until element is visible   ${street}    30s
+    Input Text  ${street}   Street
+    Input Text   ${Building Number}  4
+    Input Text   ${Postal code}  001100
+    Input Text    ${city}   Helsinsiki
+    Click element    ${speed}
+    Wait until element is visible  //select[@id='Speed']/option[2]  20s
+    Click element  //select[@id='Speed']/option[2]
+    Execute JavaScript    window.scrollTo(0,500)
+    Wait until element is visible  ${product}  30s
+    Click element    ${product}
+    Input Text   ${product}   Telia Unmanaged IP VPN
+    Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    Click element  //div[@id ='Address_nextBtn']/p
+    ${Send Request}  set variable  //p[text()='Send Request']
+    Wait until element is visible   ${Send Request}  30s
+    Click element  ${Send Request}
+    sleep  5s
+    Wait until element is visible   //ng-form[@id='Request Complated']/div/p/p  30s
+    ${Message}   Run keyword   Get Text  //ng-form[@id='Request Complated']/div/p/p
+    Should contain    ${Message}   request has been sent successfully to Sproject
+    Wait until element is visible  //div[@id='Send Manual Availability Request_nextBtn']/p  30s
+    Click element  //div[@id='Send Manual Availability Request_nextBtn']/p
+
+Verify Opportunity after performing availability request
+    [Documentation]  Verify if the details populated in Manual Availability check in the opportunity page s correct
+    Wait until element is visible  //div[@id='GetBackToOpportunity']  30s
+    Click element  //div[@id='GetBackToOpportunity']
+    Unselect Frame
+    Navigate to related tab
+    Wait until element is visible  //a[@title='Manual Availability Checks']  30s
+    Click element  //a[@title='Manual Availability Checks']
+    Capture Page Screenshot
+    Wait until element is visible   //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[2]/span/span  30s
+    ${status}  Run Keyword  Get Text  //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[2]/span/span
+    ${Product}  Run Keyword  Get Text  //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[4]/span/span
+    ${Document_id}  Run Keyword  Get Text  //h1[@title='Manual Availability Checks']//following::table[1]/tbody/tr/td[6]/span/span
+    #Log to console  Status and Document id Of Manual Availabilty Request for the product ${Product} is ${status}, ${Document_id}

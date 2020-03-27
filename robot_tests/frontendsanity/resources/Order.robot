@@ -307,3 +307,320 @@ ValidateTheOrchestrationPlan
     wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
     [Return]  ${order_number}
 
+
+Check the credit score result of the case with postive
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //button[contains(text(),"Create Order")]  60s
+    page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive"]
+    page should contain element  //button[contains(text(),"Create Order")]
+    click element  //button[contains(text(),"Create Order")]
+    unselect frame
+    Sleep  10s
+    NextButtonOnOrderPage
+    sleep  30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //section[@id='OrderTypeCheck']/section/div/div/div/h1  40s
+    unselect frame
+    OrderNextStepsPage
+
+Check the credit score result of the case with Positive with Conditions
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //button[contains(text(),"Create Order")]  60s
+    page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive with Conditions"]
+    page should contain element  //button[contains(text(),"Create Order")]
+    click element  //button[contains(text(),"Create Order")]
+    unselect frame
+    Sleep  10s
+    NextButtonOnOrderPage
+    sleep  30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //section[@id='OrderTypeCheck']/section/div/div/div/h1  40s
+    unselect frame
+    OrderNextStepsPage
+
+Change Order
+    Initiate Change Order
+    Request Date
+    CPQ Page
+    Order Post script
+
+
+Initiate Change Order
+    Go to entity   ${vLocUpg_TEST_ACCOUNT}
+    #Go to entity   ${Account}
+    Page should contain element   //span[text()='Account ID']
+    Force Click element  //span[text()='Account ID']
+    ${AssetHistory}   set variable   //div[@class='full forcePageBlock forceRecordLayout']/div/h3[contains(@class,'test-id')]/button/span[text()='Asset History']
+    Execute JavaScript    window.scrollTo(5000,4900)
+    Page should contain element   ${AssetHistory}
+    Log to console   Asset history found
+    ${frame}  set variable  //force-aloha-page[@title='AssetHistoryAndMACD']/div[@class='content iframe-parent']/iframe
+    Page should contain element    ${frame}
+    select frame  ${frame}
+    ${status}   Run keyword and return status  Page should contain element   //li[@ng-repeat='prod in assetItems'][1]/div/div/div/div/span/a/span
+    Run keyword if   ${status}   Page should contain element    //li[@ng-repeat='prod in assetItems'][1]/div/div/input
+    Wait until page contains element    //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input   60s
+    page should contain checkbox    //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
+    force Click element   //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
+    sleep  5s
+    Checkbox Should Be Selected   //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
+    Capture Page Screenshot
+    sleep  5s
+    Log to console   Change Order Initiated
+    ${status}   Run keyword and return status   Element Should Be Enabled   //button[text()='Change To Order']
+    Force Click element  //button[text()='Change To Order']
+    Unselect frame
+
+Request date
+    Wait until element is visible  //input[@id='RequestDate']   30s
+    Click element  //input[@id='RequestDate']
+    Wait until element is visible  //button[@title='Next Month']  30s
+    Click element  //button[@title='Next Month']
+    Click element  //tr[@id='week-0']/td[2]/span
+    Click element  //div[@id='Request Date_nextBtn']
+
+Verify the Action of child product
+    [Arguments]  ${pname}  ${Value}
+    ${Action_xpath}   set variable   //div[contains(text(),'${pname}')]//following::div[13]
+    Wait until element is visible  ${Action_xpath}    60s
+    ${Action}  Get Text  ${Action_xpath}
+    Should be equal     ${Action}  ${Value}
+    Log to console  The ACtion value for the product ${pname} is verified
+
+
+Order Post script
+    Select Account - no frame
+    select contact - no frame
+    Select Date - no frame
+    Select account Owner - no frame
+    Verify Order Type
+    Submit Order Button
+    ValidateTheOrchestrationPlan
+
+
+Select Account - no frame
+    [Documentation]    This is to search and select the account
+    ${account_name}=    Set Variable    //div[@title='Search']
+    ${account_checkbox}=    Set Variable    //td[@class='slds-cell-shrink']//span[@class='slds-checkbox--faux']
+    ${search_account_next_button}=    Set Variable    //div[@id='SearchAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    sleep    5s
+    Wait Until Element Is Visible    ${account_name}    120s
+    click element    ${account_name}
+    #sleep    3s
+    Wait Until Element Is Visible    ${account_checkbox}    120s
+    click element    ${account_checkbox}
+    #sleep    3s
+    Capture Page Screenshot
+    Wait Until Element Is Visible    ${search_account_next_button}    120s
+    Click Element    ${search_account_next_button}
+    sleep  5s
+
+
+select contact - no frame
+    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
+    ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
+    ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+    #Wait until element is visible   //div[contains(@class,'slds')]/iframe   30s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    log to console    entering Technical COntact page
+    Wait Until Element Is Visible    ${contact_search}    120s
+    Input Text    ${contact_search}   ${contact_name}  # For Telia Communication Oy Account
+    #sleep    15s
+    Wait until element is visible   css=.typeahead .ng-binding   30s
+    Click element   css=.typeahead .ng-binding
+    ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
+    Run Keyword if  ${status}  Enter technical contact
+    Execute JavaScript    window.scrollTo(0,200)
+    Sleep    5s
+    ${status}=    Run Keyword and return status  Element should be visible  //p[text()='Copy technical contact from first product to other products']
+    Run keyword if  ${status}  Click element   //p[text()='Copy technical contact from first product to other products']
+    sleep  5s
+    #sleep  10s
+    Wait until element is visible   ${contact_next_button}  30s
+    Click Element    ${contact_next_button}
+    #unselect frame
+    #sleep   10s
+
+
+Select Date - no frame
+    [Documentation]    Used for selecting \ requested action date
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    #Wait until element is visible   //div[contains(@class,'slds')]/iframe  30s
+    #select frame    xpath=//div[contains(@class,'slds')]/iframe
+    #sleep    60s
+    Wait until element is visible   ${additional_info_next_button}  60s
+    ${status}    Run Keyword and Return Status    Page should contain element    //input[@id='RequestedActionDate']
+    #Log to console    ${status}
+    Run Keyword if    ${status}   Pick Date without product
+    Run Keyword Unless    ${status}    Click Element    ${additional_info_next_button}
+   # Unselect frame
+
+Pick Date without product
+    Log to console    picking date
+    ${date_id}=    Set Variable    //input[@id='RequestedActionDate']
+    ${next_month}=    Set Variable    //button[@title='Next Month']
+    ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
+    ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
+    #${additional_info_next_button}=    Set Variable    //div[@id='Additional data_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${date_id}    120s
+    Click Element    ${date_id}
+    Wait Until Element Is Visible    ${next_month}    120s
+    Click Button    ${next_month}
+    click element    ${firstday}
+    #sleep    5s
+    Capture Page Screenshot
+    Click Element    ${additional_info_next_button}
+
+
+Select account Owner - no frame
+    log to console    Select Owner Account FLow Chart Page
+    log to console    entering Owner Account page
+    ${owner_account}=    Set Variable    //ng-form[@id='BuyerAccount']//span[@class='slds-checkbox--faux']
+    ${buyer_payer}=    Set Variable    //input[@id='BuyerIsPayer']/../span
+    ${buyer_account_next_button}=    Set Variable    //div[@id='SelectedBuyerAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+    Wait Until Element Is Visible    ${buyer_payer}    120s
+    sleep  10s
+    #Click Element    ${owner_account}
+    #Removing this as this will be ticked automatically as part fo feature delivered recently
+    sleep    3s
+    click element    ${buyer_payer}
+    sleep    3s
+    Wait Until Element Is Visible    ${buyer_account_next_button}    120s
+    click element    ${buyer_account_next_button}
+    sleep  3s
+    log to console    Exiting owner Account page
+    sleep    10s
+
+
+Verify Order Type
+    ${ACCOUNT_DETAILS}  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    Wait until element is visible   ${ACCOUNT_DETAILS}  60s
+    Force Click element  ${ACCOUNT_DETAILS}
+    ${Order_Type}  get text   //div[@class='test-id__field-label-container slds-form-element__label']/span[text()='Order Type']//following::span[2]
+    Should be equal   ${Order_Type}  Change
+
+
+Submit Order Button
+    Reload page
+    Wait until element is visible   //div[@title='Submit Order']    60s
+    Log to console    submitted
+    Click element  //div[@title='Submit Order']
+    #sleep  10s
+    Capture Page Screenshot
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    sleep  5s
+    Capture Page Screenshot
+    ${status} =    Run Keyword and Return status  Page should contain element   //div[text()='Please add Group Billing ID.']
+    Run Keyword if   ${status}  Enter Group id and submit
+    Run Keyword unless   ${status}   click element   //button[text()='Submit']
+    sleep  15s
+
+Enter Group id and submit
+    ${cancel}=  set variable    //span[text()='Cancel']
+    ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    #${Group id}=  set variable   //span[text()='Edit Group Billing ID']
+    ${Group Billing ID}=  set variable   //div/span[text()='Group Billing ID']
+    #${status}   Run keyword and return status   Wait until element is visible   ${cancel}   30s
+    #Run keyword if   ${status}  Click element   ${cancel}
+    sleep  3s
+    Wait until element is visible   ${Detail}  60s
+    Force click element   ${Detail}
+    #sleep  10s
+    Wait until element is visible  //span[text()='Edit Status']     30s
+    Force Click element  //span[text()='Edit Status']
+    sleep  3s
+    Page should contain element  //label/span[text()='Group Billing ID']
+    ScrollUntillFound    //label/span[text()='Group Billing ID']
+    #Input Text   //input[@title='Search Group Billing IDs']     ${group_id}
+    Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
+    #${status}    Run keyword and return status   Page should contain element   //div[@title='${group_id}']
+    #Wait until element is visible  //div[@title='${group_id}']  30s
+    #Click element   //div[@title='${group_id}']
+    Wait until element is visible  //label/span[text()='Desired Installation Date']/..//following::input[1]   30s
+    Force Click element  //label/span[text()='Desired Installation Date']/..//following::input[1]
+    Click element   //a[@title='Go to next month']
+    Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
+    Click element  //tr[@class='calRow'][2]/td[1]/span
+    Wait until element is visible  //label/span[text()='SAP Contract ID']/..//following::input[1]  30s
+    Clear element Text  //label/span[text()='SAP Contract ID']/..//following::input[1]
+    Input Text  //label/span[text()='SAP Contract ID']/..//following::input[1]  1010004095
+    Wait until element is visible   //button[@title='Save']  30s
+    Click element  //button[@title='Save']
+    sleep  5s
+    Wait until element is visible   //div[@title='Submit Order']    60s
+    Click element  //div[@title='Submit Order']/..
+    sleep  5s
+    Capture Page Screenshot
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    click element   //button[text()='Submit']
+    sleep  15s
+
+Validate Order status
+    Wait until page contains element   //a[text()='${order_no}']  60s
+    Click element   //a[text()='${order_no}']
+    ${Order status}  set variable   //span[@title='Status']/../div/div/span
+    Wait until element is visible  ${Order status}   60s
+    ${Status}  Get text   ${Order status}
+    Should be equal   ${Status}   Completed
+    Log to console  The Order is completed
+
+clickonopenorderbutton
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element    //div//button[contains(text(),"Open Order")]    60s
+    click button      //div//button[contains(text(),"Open Order")]
+    unselect frame
+    Sleep  30s
+
+
+validatation on order page
+    [Arguments]  ${fyr_total}    ${Revenue_Total}
+    scrolluntillfound  //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[11]//span[text()="View All"]
+    page should contain element     //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[text()="${B2bproductfyr1}"]
+    page should contain element     //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[text()="${B2bproductfyr2}"]
+    page should contain element     //div[@class="container forceRelatedListSingleContainer"]//span[@title="Order Products"]//following::a[text()="${B2bproductfyr3}"]
+    sleep  20s
+    Wait Until Element Is Enabled   //a[@title='Details']   60s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //a[@title='Details']   60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    sleep    60s
+    click element   //a[@title='Details']
+    sleep  5s
+    #${fyr_total1} =  Set Variable  ${fyr_total}€
+    scrolluntillfound  //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span
+    Element text should be  //span[text()='FYR Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span  ${fyr_total}
+    Element text should be  //span[text()='Revenue Total' and @class='test-id__field-label']/../../div[@class='slds-form-element__control slds-grid itemBody']/span/span    ${Revenue_Total}
+    #log to console  validatation sucessfull on order page
+
+Close and submit
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    ${status}   set variable   Run Keyword and Return Status   Frame should contain   //div[@id='Close']/p   Close
+    Run Keyword if   ${status}   Click Element    //div[@id='Close']/p
+    sleep  10s
+    #sleep  15s
+    Unselect frame
+    Capture Page Screenshot
+    Wait until element is visible     //h2[text()='Submit Order']   30s
+    sleep  5s
+    Capture Page Screenshot
+    Enter Group id and submit
+
+
+getMultibellaCaseGUIID
+    [Arguments]  ${order_no}
+    #go to entity  ${order_no}
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //span[text()='Details']  60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    sleep    60s
+    click element  //span[text()='Details']
+    wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  60s
+    Sleep  10s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible   //span[text()='MultibellaCaseGuiId']/../..//span[@class='uiOutputText']  60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    sleep    60s
+    ${case_GUI_id}  get text  //span[text()='MultibellaCaseGuiId']/../..//span[@class='uiOutputText']
+    ${case_id}  get text  //span[text()='MultibellaCaseId']/../..//span[@class='uiOutputText']
+    should not be equal as strings  ${case_GUI_id}  ${EMPTY}
+    should not be equal as strings  ${case_id}  ${EMPTY}
+    #log to console  ${case_GUI_id}.this is GUIId
+    #log to console  ${case_id} .this is case id
+    [return]  ${case_GUI_id}

@@ -360,3 +360,155 @@ Check Case Status
     ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
     #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
 
+
+Create Pricing Request
+    ${More}   set variable   //a[@title='CPQ']//following::a[contains(@title,'more actions')]
+    ${Create Pricing List}   set variable  //div[@class='branding-actions actionMenu']//following::a[@title='Create Pricing Request']
+    Wait until element is visible  ${More}  30S
+    cLICK ELEMENT   ${More}
+    Wait until element is visible    ${Create Pricing List}   30s
+    Click element  ${Create Pricing List}
+    sleep  5s    # for the page to load
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe  30s
+    select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    #Wait until element is visible  //section[@class='slds-page-header vlc-slds-page--header ng-scope']//following::h1[contains(text(),'Pricing Request')]  60s
+    Wait until element is visible   //input[@id='Subject']  30s
+    Input Text   //input[@id='Subject']  Test Pricing Request
+    Click element   //label[@class='slds-checkbox']/span[1]
+    Input Text  //input[@id='OtherReason']  Test
+    execute javascript    window.scrollTo(0,200)
+    Click Element  //input[@id='PricingNeededBy']
+    Wait until element is visible  //button[@title='Next Month']  30s
+    Click element  //button[@title='Next Month']
+    Click element  //table[@class='slds-datepicker__month nds-datepicker__month']/tbody/tr[1]/td[1]/span[1]
+    Wait until element is visible   //p[text()='Create Pricing Request']  30s
+    Click element  //p[text()='Create Pricing Request']
+    Unselect Frame
+    Wait until element is visible   //p[@title='Case Number']//following::lightning-formatted-text[1]   30s
+    ${Case_number}     get text   //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text    //p[@title='Status']//following::lightning-formatted-text[1]
+    #Log to console   ${Case_number} is the Case number for Pricing Request and the status is ${Case_status}
+    Capture Page Screenshot
+
+
+Create Pricing Escalation
+    ${More_actions}   set variable  //a[@title='CPQ']//following::a[contains(@title,'more actions')]
+    ${CPE}    set variable   //a[@title='Create Pricing Escalation']
+    Reload Page
+    Wait until element is visible   ${More_actions}  30s
+    set focus to element  ${More_actions}
+    Force Click element  ${More_actions}
+    Wait until element is visible  ${CPE}   30s
+    Click element  ${CPE}
+    sleep  5s
+    Wait until element is visible  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Select frame  //div[@class='iframe-parent slds-template_iframe slds-card']/iframe
+    Wait until element is visible  //input[@id='Subject']  20s
+    Input Text   //input[@id='Subject']  Test Subject
+    Click element  //input[@id='Type'][@type='checkbox']//following::span[text()='Mobile']
+    Click element  //input[@id='ReasonCategories'][@type='checkbox']//following::span[text()='Revenue']
+    Input text  //textarea[@id='Comments']  Test Comments
+    Click element  //input[@id='EndorserLookup']
+    Wait until element is visible  //li[contains(text(),'Endorser Automation')]  30s
+    Click element  //li[contains(text(),'Endorser Automation')]
+    Click element  //input[@id='ApproverLookup']
+    Wait until element is visible  //li[contains(text(),'Approver Automation')]  30s
+    Click element  //li[contains(text(),'Approver Automation')]
+    Click element     //input[@id='NotifyLookup']
+    Wait until element is visible  //li[contains(text(),'notifier Automation')]  30s
+    Click element  //li[contains(text(),'notifier Automation')]
+    execute javascript    window.scrollTo(0,300)
+    Wait until element is visible  //p[text()='Create Pricing Escalation']  30s
+    Click element  //p[text()='Create Pricing Escalation']
+    Unselect frame
+    Sleep  5s
+    execute javascript    window.scrollTo(0,200)
+    Capture Page Screenshot
+    Reload Page
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
+    #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
+    [Return]  ${Case_number}
+
+
+Verify case Status by PM
+    [Arguments]   ${Case_number}
+    Login to Salesforce Lightning   ${PM_User}  ${PM_PW}
+    #Log to console  Logged in as Pm to verify the Case Status
+    #Reload page
+    Search Salesforce    ${Case_number}
+    ${element_catenate} =    set variable    [@title='${Case_number}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    #Sleep    15s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    sleep  10s
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
+    #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
+    logoutAsUser    ${PM_User}
+
+
+Verify case Status by Endorser
+    [Arguments]   ${Case_number}  ${status}=${EMPTY}
+    Login to Salesforce Lightning   ${Endorser_User}  ${Endorser_PW}
+    #Log to console  Logged in as Endorser to verify the Case Status
+    Check for Notification  ${Case_number}   ${status}
+    #Reload page
+    Search Salesforce    ${Case_number}
+    ${element_catenate} =    set variable    [@title='${Case_number}']
+    Wait Until Page Contains element    ${TABLE_HEADER}${element_catenate}    120s
+    #Sleep    15s
+    Click Element    ${TABLE_HEADER}${element_catenate}
+    sleep  10s
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
+    #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
+    logoutAsUser    ${Endorser_User}
+
+
+Case Not visible to Normal User
+    [Arguments]   ${Case_number}
+    Login to Salesforce Lightning       ${B2B_DIGISALES_LIGHT_USER}   ${Password_merge}
+    Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
+    Input Text    xpath=${SEARCH_SALESFORCE}    ${Case_number}
+    Press Enter On    ${SEARCH_SALESFORCE}
+    sleep  10s
+    Page should not contain  //span[@class='slds-form-element__label slds-truncate'][@title='Case Number']//following::div[1]/div/span[text()='${Case_number}']
+    #Log to console  Case Not visible to Normal User
+    Capture Page Screenshot
+
+
+Case Rejection By Approver
+     [Arguments]   ${Case_number}  ${oppo_name}
+    Login to Salesforce Lightning   ${Approver_User}  ${Approver_PW}
+    #Log to console  Logged in as Approver
+    Check for Notification  ${Case_number}
+    Wait until element is visible  //span[text()='Items to Approve']  30s
+    #Click element  //a[text()='00031101']
+    Wait until element is visible  //a[text()='${Case_number}']  30s
+    Click element  //a[text()='${Case_number}']
+    sleep  10s
+    Click element  //a[text()='${Case_number}']
+    Wait until element is visible  //p[@title='Case Number']//following::lightning-formatted-text[1]  30s
+    ${Case_number}     get text  //p[@title='Case Number']//following::lightning-formatted-text[1]
+    ${Case_status}      get text   //p[@title='Status']//following::lightning-formatted-text[1]
+    #Log to console   ${Case_number} is the Case number and the status is ${Case_status}
+    Wait until element is visible   //a[contains(text(),'Test Robot Order')]  30s
+    ${oppo}  Run Keyword  Get Text  //a[contains(text(),'Test Robot Order')]
+    Should be equal   ${oppo_name}   ${oppo}
+    #Log to console  Opportunity Validation is Sucessful
+    sleep  5s
+    #Log to console  Linked Opportunity is ${oppo}
+    Go back
+    Wait until element is visible  //div[@title='Reject']  30s
+    Capture Page Screenshot
+    Click element  //div[@title='Reject']
+    Wait until element is visible  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  30s
+    Input text  //textarea[@class='inputTextArea cuf-messageTextArea textarea']  Rejected
+    Click element  //span[text()='Reject']
+    Capture Page Screenshot
+    sleep  5s
+    logoutAsUser    ${Approver_User}

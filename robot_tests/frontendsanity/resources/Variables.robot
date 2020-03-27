@@ -1,4 +1,81 @@
 *** Variables ***
+#Console Variables
+${CONS_BROWSER}                                  Firefox
+${CONS_LOGIN_PAGE}                               https://test.salesforce.com/
+${CONS_ENVIRONMENT_CONSOLE}                      rel
+${CONS_B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
+${CONS_PASSWORDCONSOLE}                          PahaPassu3
+${CONS_LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
+${CONS_CLASSIC_MENU}                             //*[@id="userNav"]
+${CONS_SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
+${CONS_LIGHTNING_ICON}                           //img[@class='icon noicon']
+${CONS_SEARCH_SALESFORCE}                        //*[@data-aura-class="forceSearchInputEntitySelector"]/..//input[contains(@placeholder,"Search")]
+#//*[@title='Search Salesforce' or @title='Search Opportunities and more']
+${CONS_TABLE_HEADER}                             //div[@data-aura-class='forceSearchResultsRegion']//div[@data-aura-class='forceInlineEditGrid']//tbody//tr//th//a
+${CONS_TABS_OPENED}                              //*[@class='tabBarItems slds-grid']
+${CONS_NEW_ITEM_POPUP}                           //div[@class='modal-container slds-modal__container']
+${CONS_SAVE_OPPORTUNITY}                         //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]//parent::button
+${CONS_SUCCESS_MESSAGE}                          //div[@class='forceVisualMessageQueue']//div[@class='toastContainer slds-notify_container slds-is-relative']
+
+#New Opportunity
+#${OPPORTUNITY_NAME}                        TestOpportunity1
+${CONS_ACCOUNT_RELATED}                         //span[text()='Related']//parent::a
+#${RELATED_OPPORTUNITY}                     //*[@class='primaryField']
+${CONS_RELATED_OPPORTUNITY}                      //tbody
+${CONS_OPPORTUNITYNAME_TAB}                     //*[contains(@class,'slds-page-header')]
+${CONS_OPPORTUNITIES_SECTION}                   //li//span[text()='Opportunities']
+${CONS_SEARCH_INPUT}                            //input[contains(@name,'search-input')]
+${CONS_RESULTS_TABLE}                            //table[contains(@class,'uiVirtualDataTable')]//tbody//tr//th//a
+${CONS_SALES_CONSOLE_MENU}                       //*[@title='Show Navigation Menu']
+${CONS_CONTACTS}                                 //div[@class="slds-context-bar__primary navLeft"]//span//span[text()="Contacts"]
+#//*[@id='navMenuList']/div/ul/li[3]/div/a/span[1]/lightning-icon
+${CONS_OPPORTUNITIES}                            //*[@id="navMenuList"]//a[@title='Opportunities']
+${CONS_HOME}                                     //*[@id="navMenuList"]//a[@title='Home']
+${CONS_SELECT_LIST_VIEW}                         //*[@id="navMenuList"]/div/ul/li[4]/div/a
+${CONS_NEW_CONTACT}                              //*[@id='split-left']/div/div/div/div/div[1]/div[1]/div[2]/ul/li[1]/a/div
+
+#NEW CONTACT - MASTER
+${CONS_CONTACT_ACCOUNTNAME}                      Aacon Oy
+#${CONTACT_FIRSTNAME}                        TEST1
+#${CONTACT_LASTNAME}                         CONTACT1
+#${CONTACT_EMAIL}                            master1@email.com
+${CONS_CONTACT_MOBILE}                            +358222222222
+${CONS_MOBILE_NUM}                               //input[@class=' input' and @type='tel']
+${CONS_FIRST_NAME_FIELD}                         //input[@placeholder='First Name']
+${CONS_LAST_NAME_FIELD}                          //input[@placeholder='Last Name']
+${CONS_ACCOUNT_NAME}                             //input[@title='Search Accounts']
+${CONS_PRIMARY_EMAIL}                            //input[@type='email']
+${CONS_SAVE_BUTTON}                              //button[@title="Save"]
+${CONS_CONTACT_INFO}                             //span[text()='Contact Information']
+${CONS_CONTACT_DETAILS}                          //section[@class='tabs__content active uiTab']
+
+#NEW CONTACT - Non-person
+${CONS_NP_CONTACT_ACCOUNTNAME}                   Aktia Fondbolag Ab
+#${NP_CONTACT_FIRSTNAME}                     NPTEST5
+#${NP_CONTACT_LASTNAME}                      NPCONTACT5
+#${NP_CONTACT_EMAIL}                         nptest5@email.com
+${CONS_NP_CONTACT_MOBILE}                        +358333333333
+
+#NEW CONTACT FROM ACCOUNTS PAGE
+${CONS_AP_CONTACT_ACCOUNTNAME}                   Aktia Fondbolag Ab
+${CONS_AP_NEW_CONTACT}                           //div[@title="New Contact"]
+#${AP_CONTACT_FIRSTNAME}                     APTEST10
+#${AP_CONTACT_LASTNAME}                      APCONTACT10
+#${AP_CONTACT_EMAIL}                         aptest10@email.com
+${CONS_AP_CONTACT_MOBILE}                        +358444444444
+${CONS_APP_LAUNCHER}                             //*[contains(@class,'slds-icon-waffle')]
+#//button[contains(@class,'salesforceIdentityAppLauncherHeader')]
+${CONS_SALES_CONSOLE_LINK}                       //*[@id="visibleDescription_07p58000000POLIAA4"]
+${CONS_SALES_APP_NAME}                           //*[contains(@class,'appName')]//span[text()='Sales Console']
+${CONS_ACCOUNTS}                                 //span[text()="Accounts"]
+${CONS_SEARCH_CONTACTS}                          //*[@title='Search Contacts and more']
+${CONS_AP_SAVE_BUTTON}                           //div[@class='modal-container slds-modal__container']//div[@class='modal-footer slds-modal__footer']//span[contains(text(),'Save')]
+${CONS_AP_MOBILE_NUM}                            //span[contains(text(),'Mobile')]/../following-sibling::input[@class=" input" and @type="tel"]
+#${AP_TEL_NUM}                               //input[@class=' input' and @type='tel']
+${CONS_AP_SAVE_BUTTON}                           //div[@class="modal-footer slds-modal__footer"]//span[contains(text(),"Save")]
+
+
+################# Sales App Variables ###################
 ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    rel

@@ -7,6 +7,13 @@ Library           DateTime
 Library           Collections
 Library           OperatingSystem
 Resource          ../../frontendsanity/resources/Variables.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/Account.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/CPQ.robot
+Resource          ../../frontendsanity/resources/Quote.robot
+Resource          ../../frontendsanity/resources/Order.robot
 
 *** Keywords ***
 Check For Lightning Force
@@ -381,4 +388,79 @@ Delete all entries from Search list
     \   log to console       ${count}
     \    exit for loop if       ${count}==0
     \    Delete all entities    ${table_row}
+
+
+Delete all assets
+    ${Accounts_More}  set variable   //div[@class="slds-tabs_default"]//li[6]//button
+#     //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
+    wait until element is visible  ${Accounts_More}  60s
+    Click element  ${Accounts_More}
+    Click element   //div[@class="slds-tabs_default"]//li[6]//a//span[contains(text(),"Assets")]
+    Wait until element is visible  //span[@title='Assets']  60s
+    Click element  //span[@title='Assets']
+    Wait until element is visible  //h1[@title='Assets']  60s
+    sleep  10s
+    Select rows to delete the items
+
+Select rows to delete the items
+    [Documentation]    Used to delete all the existing contracts for the business account
+    ${count}=    get element count    ${table_row}
+    #log to console    ${count}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    Delete all Contracts    ${table_row}
+    ${count}=    get element count    ${table_row}
+    Run Keyword Unless   '${count}'=='0'  Select rows to delete the contract
+
+
+HDC Order
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    #View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan
+
+Switch between windows
+    [Arguments]    ${index}
+    @{titles}    Get Window Titles
+    Select Window    title=@{titles}[${index}]
+    ${title}    Get Title
+
+
+Click Clear All Notifications
+    ${notifi_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[text()='Clear All']/..
+    Run Keyword If    ${notifi_present}    Clear Notifications
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
+    Run Keyword If    ${present}    Close All Notifications
+
+Clear Notifications
+    click element    xpath=//*[text()='Clear All']/..
+
+Close All Notifications
+    @{locators}=    Get Webelements    xpath=${CLOSE_NOTIFICATION}
+    ${original}=    Create List
+    : FOR    ${locator}    IN    @{locators}
+    \    Run Keyword and Ignore Error    Close Notification
+
+Close Notification
+    ${visible}=    run keyword and return status    element should be visible    ${CLOSE_NOTIFICATION}
+    run keyword if    ${visible}    Click Element    xpath=${CLOSE_NOTIFICATION}
 

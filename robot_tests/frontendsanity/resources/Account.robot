@@ -356,3 +356,231 @@ CreateABillingAccount
     sleep    10s
     unselect frame
     [Return]    Billing_${LIGHTNING_TEST_ACCOUNT}_${numbers}
+
+
+Terminate asset
+    [Arguments]   ${asset}
+    ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
+    wait until element is visible  ${Accounts_More}  60s
+    Click element  ${Accounts_More}
+    Click element  //li[@class='uiMenuItem']/a[@title='Assets']
+    Wait until element is visible  //span[@title='Assets']  60s
+    Click element  //span[@title='Assets']
+    Wait until element is visible  //h1[@title='Assets']  60s
+    sleep  10s
+    ${product}   set variable   //div[@class='slds-col slds-no-space forceListViewManagerPrimaryDisplayManager']//tr//a[contains(text(),'${asset}')]
+    Click element   ${product}
+    Wait until element is visible  //a[@title='Edit']  60s
+    wait until page contains element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Asset Name']/../following-sibling::div/span/span    60s
+    page should contain element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Asset Name']/../following-sibling::div/span/span
+    page should contain element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Product']/../following-sibling::div/span/div/a[text()='${asset}']
+    click element    //div[contains(@class,'-flexi-truncate')]//following::span[text()='Status']/../..//following::button[@title='Edit Status']
+    sleep    10s
+    click element    //Span[text()='Status']//following::div[@class="uiMenu"]/div[@data-aura-class="uiPopupTrigger"]/div/div/a[@class='select' and text()='Active']
+    click element    //a[@title='Terminated']
+    click element    //div[@class="footer active"]//button[@title="Save"]
+
+Create a Meeting
+    #Check original account owner and change if necessary for event
+    ${unique_subject_task}=    run keyword    Create Unique Task Subject
+    Click Clear All Notifications
+    click Meeting Link on Page
+    Enter Mandatory Info on Meeting Form    ${unique_subject_task}
+    Save Meeting and click on Suucess Message
+    Search And Select the Entity    ${unique_subject_task}    ${EMPTY}
+    Validate Created Meeting
+    Modify Meeting Outcome
+    Validate the Modified Outcome
+
+
+Enter Mandatory Info on Meeting Form
+    [Arguments]    ${task_subject}
+    sleep    5s
+    input text    xpath=${SUBJECT_INPUT}    ${task_subject}
+    sleep    5s
+    click element    xpath=${EVENT_TYPE}
+    Click Visible Element   xpath=${meeting_select_dropdown}
+    sleep    5s
+    Select option from Dropdown with Force Click Element    ${reason_select_dropdown}    ${reason_select_dropdown_value}
+    #click element    xpath=${reason_select_dropdown}
+    #click element    xpath=${reason_select_dropdown_value}
+    Enter Meeting Start and End Date
+    sleep    5s
+    Input Text    ${city_input}    ${DEFAULT_CITY}
+    sleep    5s
+    Enter and Select Contact Meeting
+    sleep    10s
+
+Enter Meeting Start and End Date
+    ${date}=    Get Date From Future    1
+    Set Test Variable    ${meeting_start_DATE}    ${date}
+    #log to console    ${meeting_start_DATE}
+    Clear Element Text   ${meeting_start_date_input}
+    sleep  3s
+    Input Text    ${meeting_start_date_input}    ${meeting_start_DATE}
+    click element   ${meeting_start_time_input}
+    clear element text    ${meeting_start_time_input}
+    input text    ${meeting_start_time_input}    ${meeting_start_time}
+    ${date}=    Get Date From Future    2
+    Set Test Variable    ${meeting_end_DATE}    ${date}
+    Input Text    ${meeting_end_date_input}    ${meeting_end_DATE}
+    click element   ${meeting_end_time_input}
+    sleep  3s
+    clear element text    ${meeting_end_time_input}
+    input text    ${meeting_end_time_input}    ${meeting_end_time}
+
+Enter and Select Contact Meeting
+    Set Test Variable    ${name_input}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
+    Scroll Page To Element    ${save_button_create}
+    Force click element    ${contact_name_input}
+    #click element    ${contact_name_input}
+    input text    ${contact_name_input}    ${name_input}
+    Wait Until Page Contains Element    //*[@title='${name_input}']/../..    60s
+    Sleep    15s
+    click element    //div[@title='${name_input}']/../..
+    sleep    5s
+
+click Meeting Link on Page
+    force click element  ${NEW_EVENT_LABEL}
+    #Sleep    10s
+    Wait Until Page Contains element    xpath=${SUBJECT_INPUT}    100s
+
+Save Meeting and click on Suucess Message
+    #click element    ${save_button_create}
+    Force click element    ${save_button_create}
+    sleep    30s
+    #click element    ${success_message_anchor}
+    : FOR    ${i}    IN RANGE    10
+    \    sleep  10s
+    \    ${status}=    Run Keyword And Return Status    Element Should Be Visible    ${success_message_anchor}
+    \    Sleep    5s
+    \    Run Keyword Unless   ${status}   Click element   //button[text()="View More"]
+    \    Exit For Loop If    ${status}
+    click visible element  ${success_message_anchor}
+    sleep    10s
+
+
+Validate Created Meeting
+    sleep    10s
+    ${date}=    Get Date From Future    1
+    Set Test Variable    ${meeting_start_DATE}    ${date}
+    ${date}=    Get Date From Future    2
+    Set Test Variable    ${meeting_end_DATE}    ${date}
+    ${start_date_form}    get text    xpath=${start_date_form_span}
+    ${end_date_from}    get text    xpath=${end_date_form_span}
+    ${location_form}    get text    xpath=${location_form_span}
+    # log to console    ${location_form}.this is form data
+    #log to console    ${DEFAULT_CITY}.this is inputdata from variables
+    should be equal as strings    ${location_form}    ${DEFAULT_CITY}
+    #log to console    ${start_date_form}.this is form start date
+    #log to console    ${meeting_start_DATE} ${meeting_start time}.this user entered start date
+    should be equal as strings    ${start_date_form}    ${meeting_start_DATE} ${meeting_start time}
+    should be equal as strings    ${end_date_from}    ${meeting_end_DATE} ${meeting_end_time}
+
+
+
+Modify Meeting Outcome
+    Set Test Variable    ${EDIT_EVENT_POPUP}    //div[@class="slds-form-element slds-hint-parent"]
+    Click element    //div[@title='Edit']/..
+    wait until page contains element    //*[contains(text(),'Edit Task')]    30s
+    Sleep    5s
+    Select Quick Action Value For Attribute    Meeting Outcome    Positive
+    Sleep    5s
+    Select Quick Action Value For Attribute    Meeting Status    Done
+    Wait Until Element Is Visible    ${EDIT_EVENT_POPUP}//label//*[contains(text(),'Description')]    60s
+    Input Text    xpath=${EDIT_EVENT_POPUP}//label//*[contains(text(),'Description')]//following::span/../textarea    ${name_input}.Edited.${Meeting}
+    click element    ${save_button_editform}
+    sleep    20s
+
+Validate the Modified Outcome
+    #${description_form}    get text    ${description_span}
+    #should be equal as strings    ${name_input}.Edited.${Meeting}    ${description_form}
+    ${meeting_outcome_form}    get text    ${meeting_outocme_span}
+    should be equal as strings    ${meeting_outcome_form}    Positive
+
+Create a Call
+    ${unique_subject_task}=    run keyword    Create Unique Task Subject
+    Click Clear All Notifications
+    click Meeting Link on Page
+    Enter Mandatory Info on Call Form    ${unique_subject_task}
+    Save Meeting and click on Suucess Message
+    Search And Select the Entity    ${unique_subject_task}    ${EMPTY}
+    Validate Created Meeting
+    Modify Meeting Outcome
+    Validate the Modified Outcome
+
+
+Enter Mandatory Info on Call Form
+    [Arguments]    ${task_subject}
+    sleep    10s
+    input text    xpath=${SUBJECT_INPUT}    ${task_subject}
+    click element    xpath=${EVENT_TYPE}
+    click element    xpath=${subject_call_type}
+    select option from dropdown with force click element    ${reason_select_dropdown}    ${reason_select_dropdown_value}
+    #click element    xpath=${reason_select_dropdown}
+    #click element    xpath=${reason_select_dropdown_value}
+    Enter Meeting Start and End Date
+    Sleep    10s
+    input text    ${city_input}    ${DEFAULT_CITY}
+    sleep    10s
+    Enter and Select Contact Meeting
+    sleep    10s
+
+Create a Task
+    ${unique_subject_task}=    run keyword    Create Unique Task Subject
+    Click Clear All Notifications
+    click Task Link on Page
+    Enter Mandatory Info on Task Form    ${unique_subject_task}
+    Save Task and click on Suucess Message
+    Sleep  20s
+    Search Salesforce   ${unique_subject_task}
+    ${element_catenate} =    set variable    [@title='${unique_subject_task}']
+    Wait Until Page Contains element    ${TABLE_HEADERForEvent}${element_catenate}  60s
+    Click Visible Element    ${TABLE_HEADERForEvent}${element_catenate}
+    Wait Until Page Contains element    //h1//span[text()='${unique_subject_task}']    400s
+    #Search And Select the Entity    ${unique_subject_task}    ${EMPTY}
+    Sleep  30s
+    Validate Created Task    ${unique_subject_task}
+
+
+click Task Link on Page
+    click element    ${NEW_TASK_LABEL}
+    Sleep    10s
+    wait until page contains element    xpath=${task_subject_input}    40s
+
+
+Enter Mandatory Info on Task Form
+    [Arguments]    ${task_subject}
+    input text    xpath=${task_subject_input}    ${task_subject}
+    sleep    10s
+    ${a}=    run keyword    Enter Task Due Date
+    Enter and Select Contact
+
+Enter Task Due Date
+    ${date}=    Get Date From Future    7
+    Set Test Variable    ${task_due_DATE}    ${date}
+    Input Text    xpath=//*[text()='Due Date']/../../div/input    ${task_due_DATE}
+    [Return]    ${task_due_DATE}
+
+Enter and Select Contact
+    Set Test Variable    ${name_input}    ${AP_FIRST_NAME} ${AP_LAST_NAME}
+    Force click element    ${name_input_task}
+    Input text    ${name_input_task}    ${name_input}
+    Wait Until Page Contains Element    //*[@title='${name_input}']/../..    60s
+    Force click element    //*[@title='${name_input}']/../..
+    sleep    10s
+
+Save Task and click on Suucess Message
+    force click element    ${save_task_button}
+    sleep    30s
+    #force click element    ${suucess_msg_task_anchor}
+    #sleep    40s
+
+Validate Created Task
+    [Arguments]    ${unique_subject_task_form}
+    ${name_form}    get text    ${contact_name_form}    #helina kejiyu comoare
+    #${related_to_form}    get text    ${related_to}    #aacon Oy ${save_opportunity}
+    #log to console    ${name_form}
+    ${date_due}=    Get Date From Future    7
+    page should contain element    //span[@class='uiOutputDate' and text()='${date_due}']
+    page should contain element    //span[@class='test-id__field-value slds-form-element__static slds-grow ']/span[@class='uiOutputText' and text()='${unique_subject_task_form}']
