@@ -1796,15 +1796,13 @@ clickOnSubmitOrder
     sleep   40s
 
 getOrderStatusAfterSubmitting
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //*[@title="Details"]  60s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //a[@title='Details']   60s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    Sleep  60s
-    click element  //*[@title="Details"]
-    Log to console     Details tab
-    Sleep  60s
-    wait until page contains element  //span[contains(text(),"Fulfilment Status") and (@class="test-id__field-label")]/../following-sibling::div/span/span 80s
-    ${fulfilment_status} =  get text  //span[contains(text(),"Fulfilment Status") and (@class="test-id__field-label")]/../following-sibling::div/span/span
+    click element  //a[@title='Details']
+    #Sleep  20s
+    wait until page contains element  //span[text()='Fulfilment Status']/../following-sibling::div/span/span  80s
+    ${fulfilment_status} =  get text  //span[text()='Fulfilment Status']/../following-sibling::div/span/span
     wait until page contains element    //span[text()='Status']/../following-sibling::div/span/span   60s
     ${status} =  get text  //span[text()='Status']/../following-sibling::div/span/span
     should not be equal as strings  ${fulfilment_status}  Error
@@ -4487,14 +4485,15 @@ ValidateTheOrchestrationPlan
     log to console  ${order_number}.this is order numner
     set test variable  ${order_no}   ${order_number}
     #Do not remove. Required for change order
+    #At times the Orchestration Plan is not visible in Related Page then get the Plan ID from Detail Page
     ${status} =    Run Keyword and Return status  Page should contain element   //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     Run Keyword if   ${status} == False    GetOrchestrationPlanfromDetail
 #    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     #execute javascript    window.scrollTo(0,2000)
     #sleep    10s
-    log to console    plan validation
-#    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
-#    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    #log to console    plan validation
+    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
+    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     sleep    10s
     ${location}=    Get Location
     set test variable   ${url}   ${location}
@@ -4519,6 +4518,7 @@ ValidateTheOrchestrationPlan
 
 
 GetOrchestrationPlanfromDetail
+   [Documentation]  In Orchestration Plan Page it capture the Plan ID from the Details TAB
     Reload page
     wait until page contains element    //span[@class='title' and text()='Details']    100s
     click element   //span[@class='title' and text()='Details']
@@ -5954,7 +5954,6 @@ Enter Group id and submit
     ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
     #${Group id}=  set variable   //span[text()='Edit Group Billing ID']
     ${Group Billing ID}=  set variable   //div/span[text()='Group Billing ID']
-
     ${status}   Run keyword and return status   Wait until element is visible   ${cancel}   30s
     Run keyword if   ${status}  Click element   ${cancel}
     sleep  3s
@@ -5966,24 +5965,16 @@ Enter Group id and submit
     sleep  3s
     Page should contain element  //label/span[text()='Group Billing ID']
     ScrollUntillFound    //label/span[text()='Group Billing ID']
-    #Input Text   //input[@title='Search Group Billing IDs']     ${group_id}
     Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
-    #${status}    Run keyword and return status   Page should contain element   //div[@title='${group_id}']
-    #Wait until element is visible  //div[@title='${group_id}']  30s
-    #Click element   //div[@title='${group_id}']
-
     Wait until element is visible  //label/span[text()='Desired Installation Date']/..//following::input[1]   30s
     Force Click element  //label/span[text()='Desired Installation Date']/..//following::input[1]
     Click element   //a[@title='Go to next month']
     Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
     Click element  //tr[@class='calRow'][2]/td[1]/span
 
-    # Contract id issue
+    # Contract id issue at times in Order submition SAP Contract ID is not visible  during the submittion of order
     ${status}    Run keyword and return status   Page should contain element   //label/span[text()='SAP Contract ID']/..//following::input[1]
     Run Keyword If    ${status} == True    Input Text  //label/span[text()='SAP Contract ID']/..//following::input[1]  1010004095
-#    Wait until element is visible  //label/span[text()='SAP Contract ID']/..//following::input[1]  30s
-#    Clear element Text  //label/span[text()='SAP Contract ID']/..//following::input[1]
-#    Input Text  //label/span[text()='SAP Contract ID']/..//following::input[1]  1010004095
 
     Wait until element is visible   //button[@title='Save']  30s
     Click element  //button[@title='Save']
@@ -6233,8 +6224,6 @@ Fetch Result
 
 
 Validate Billing system response
-
-
     Reload page
     #Go back
     Wait until element is visible    //div[@class='content iframe-parent']/iframe   60s
@@ -6248,7 +6237,6 @@ Validate Billing system response
     #go back
     log to console    Validate Billing system Response
     force click element       //a[@class='item-label item-header' and text()='Call Billing System']
-
     unselect frame
     sleep       80s
     ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[contains(text(),"Completed")]
@@ -6832,41 +6820,24 @@ Validation for different billing account selection
    click element  //li[@role="presentation"]//a[@title="Assets"]
 
 
-
-Adding Telia Domain Name service
-    [Arguments]   ${pname}=${product_name}
-    #Log to console      adding product
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
-    wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
-    wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
-    input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
-    wait until page contains element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button   60s
-    sleep   20s
-    click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
-    unselect frame
-
 updating setting Telia Domain Name space
-    [Arguments]   ${pname}=${product_name}
-
-    ${Asiakkaan verkkotunnus}  set variable   //form[@name='productconfig']//label[text()[normalize-space() = 'Asiakkaan verkkotunnus (muotoa domain.pääte)']]/..//div//input
-    ${Linkittyvä tuote}  set variable   //form[@name='productconfig']//label[text()[normalize-space() = 'Linkittyvä tuote']]/..//div//input
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
-    Wait until element is visible   ${SETTINGS}   60s
-    Click Button    ${SETTINGS}
+    [Documentation]   Go to CPQ Page and updating setting Telia Domain Name space
+    select frame    ${Page_iframe}
+    Wait until element is visible   ${DNS_Setting}   60s
+    Click Button    ${DNS_Setting}
     sleep  10s
     Input Text   ${Asiakkaan verkkotunnus}     Test
     Input Text   ${Linkittyvä tuote}    Test
     sleep  3s
-    Click element  //*[@alt='close'][contains(@size,'large')]
+    Click element  ${Setting_Close}
     sleep  10s
     Reload page
     sleep  10s
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
-    scrolluntillfound    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    select frame    ${Page_iframe}
+    scrolluntillfound    ${CPQ_Next_Button}
     #sleep    10s
-    wait until page contains element    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']    60s
-    click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+    wait until page contains element   ${CPQ_Next_Button}    60s
+    click element    ${CPQ_Next_Button}
     Unselect Frame
     sleep    10s
 
@@ -6888,47 +6859,29 @@ SearchAndSelectBillingAccount
     sleep    30s
 
 SelectingTechnicalContactforTeliaDomainNameService
-    [Arguments]   ${d}
     [Documentation]   For selecting Technical contact field for DNS product
-    ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
-    ${contact_search}=    Set Variable    //input[@id='OrderContactTA']
-    ${contact_next_button}=    Set Variable    //div[@id='SelectOrderLevelContacts_nextBtn']
-    ${updateContactDR}=    Set Variable    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
-#   ${primary_email}=    Run Keyword    Create Unique Email    ${DEFAULT_EMAIL}
-    ${Main_User}=  set variable  //input[@id="MainContactTA"]
+    [Arguments]   ${contact_name}
     ${Name}=  Run Keyword  Create Unique Name    ${DEFAULT_NAME}
     ${Mobile}=  Run Keyword   Create Unique Phone Number
-#   ${Street}=  Run Keyword   Create Unique Name    ${DEFAULT_NAME}
-#    ${Postal_Code}=  Run Keyword   Create Unique PostalCode
-    ${City}=  Set variable   Helsiniki
-    ${FirstName}=  set variable   //input[@id="MCFname"]
-    ${LastName}=  set variable   //input[@id="MCLname"]
-    ${EmailID}=  set variable   //input[@id="MCEmail"]
-    ${MobileNumber}=  set variable   //input[@id="MCMobile"]
-    ${Street}=  set variable   //input[@id="MCStreet"]
-    ${Postal_codes}=  set variable  //input[@id="MCPostalCode"]
-    ${city_Name}=  set variable    //input[@id="MCCity"]
-    Wait until Element is enabled    xpath=//div[contains(@class,'slds')]/iframe    60s
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    Wait until Element is enabled    ${Page_iframe}    60s
+    select frame    ${Page_iframe}
     log to console    entering Technical COntact page
     Wait Until Element Is Visible    ${contact_search}    60s
-    Input Text    ${contact_search}   ${d}
+    Input Text    ${contact_search}   ${contact_name}
     sleep   15s
     #Wait until element is visible   css=.typeahead .ng-binding   30s
     Click element   css=.typeahead .ng-binding
     sleep   15s
-    Wait until element is visible  //input[@id='OCEmail']   30s
-    ${primary_email}  get text  //input[@id='OCEmail']
-#   Sleep    5s
+    Wait until element is visible  ${contact_email}   30s
+    ${primary_email}  get text  ${contact_email}
     Execute JavaScript    window.scrollTo(0,200)
     Wait Until element is visible   ${Technical_contact_search}     30s
-    Input text   ${Technical_contact_search}  ${d}
+    Input text   ${Technical_contact_search}  ${contact_name}
     sleep  15s
     Wait until element is visible   css=.typeahead .ng-binding   60s
     Click element   css=.typeahead .ng-binding
     sleep   15s
-    Wait until element is visible  //input[@id='TCEmail']   30s
-#   Input text   //input[@id='TCEmail']    ${primary_email}
+    Wait until element is visible  ${Technical_contact_email}   30s
     Execute JavaScript    window.scrollTo(0,200)
     sleep  10s
     Execute JavaScript    window.scrollTo(0,200)
@@ -6939,11 +6892,8 @@ SelectingTechnicalContactforTeliaDomainNameService
     sleep  10s
     Execute JavaScript    window.scrollTo(0,200)
     Wait until element is visible   ${FirstName}  30s
-#   Input Text   ${FirstName}  ${Name}
+
     Wait until element is visible  ${LastName}  30s
-#   Input Text   ${LastName}  ${Name}
-#   Wait until element is visible  ${EmailID}   30s
-#   Input Text   ${EmailID}  ${primary_email}
     Wait until element is visible  ${MobileNumber}   30s
     Input Text  ${MobileNumber}  ${Mobile}
     Wait until element is visible  ${Street}  30s
@@ -6952,11 +6902,11 @@ SelectingTechnicalContactforTeliaDomainNameService
     Input Text   ${Postal_codes}   43500
     Wait until element is visible   ${city_Name}   30s
     Input Text    ${city_Name}   ${City}
-    force click element  //select[@id="MCLanguage"]
+    force click element  ${Communication}
     sleep  10s
-    wait until page contains element   //select[@id="MCLanguage"]//*[@value="English"]  60s
-    click visible element  //select[@id="MCLanguage"]//*[@value="English"]
-    #Drag and Drop   //select[@id="MCLanguage"]  //select[@id="MCLanguage"]//option[@value="English"]
+    wait until page contains element  ${DNS_communication_language} 60s
+    click visible element  ${DNS_communication_language}
+
     sleep  60s
     Click Element    ${contact_next_button}
     log to console  clicked next button
@@ -7017,23 +6967,13 @@ Validate ServiceAdministrator in Account contact role
 #    Page should contain element   //*[@id="brandBand_1"]//td//span//a[text()="${email}"]    60s
 
 Update Setting Vula without Next
-     [Arguments]        ${pname}
-    ${Nopeus}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Nopeus']]//following::select[1]
-    ${Asennuskohde}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Asennuskohde']]//following::select[1]
-    ${Toimitustapa}  setvariable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Toimitustapa']]//following::select[1]
-    ${VLAN}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'VLAN']]//following::input[1]
-    ${VULA NNI}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'VULA NNI']]//following::input[1]
-    ${Yhteyshenkilön nimi}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Yhteyshenkilön nimi']]//following::input[1]
-    ${Yhteyshenkilön puhelinnumero}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Yhteyshenkilön puhelinnumero']]//following::input[1]
-    ${Katuosoite}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Katuosoite']]//following::input[1]
-    ${Katuosoite numero}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Katuosoite numero']]//following::input[1]
-    ${Postinumero}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Postinumero']]//following::input[1]
-    ${Postitoimipaikka}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Postitoimipaikka']]//following::input[1]
-    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    [Documentation]    Go to CPQPage and Update Setting Vula without going Next
+    [Arguments]        ${pname}
+    select frame    ${Page_iframe}
     ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
     Wait until element is visible   ${SETTINGS}   60s
     Click Button    ${SETTINGS}
-    sleep  10s
+    sleep  30s
     Click element  ${Nopeus}
     Click element  ${Nopeus}/option[2]
     Click element   ${Asennuskohde}
@@ -7055,44 +6995,46 @@ Update Setting Vula without Next
     sleep  5s
     Click element   //div[@class="slds-grid slds-grid--vertical cpq-product-cart-config"]
     sleep  10s
-    Click element  //*[@alt='close'][contains(@size,'large')]
+    Click element  ${Setting_Close}
     sleep  10s
     Reload page
     sleep  10s
 
 
 FetchfromOrderproduct
-    [Arguments]    ${Ordernumber}  ${pdtname}
+    [Documentation]    Go to OrderProductPage and fetch the subscription ID
+    [Arguments]    ${Ordernumber}
     Go To Entity    ${Ordernumber}
-    wait until page contains element      //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]   45s
-    Force Click Element    //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]
+    wait until page contains element      ${Order_Related_Tab}   45s
+    Force Click Element    ${Order_Related_Tab}
     sleep    10s
-    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Order Products"]    20s
-    Force Click Element  //div[@class="slds-media__body"]//a//span[text()="Order Products"]
+    wait until page contains element    ${Order_Products_Tab}    20s
+    Force Click Element  ${Order_Products_Tab}
     sleep    10s
     sleep  10s
-    click element  //th/span/a[@title='${pdtname}']
+    click element  ${Order_Products_Select}
     sleep  20s
     Reload page
-    wait until page contains element     //span[contains(.,'Related')]   60s
-    Force Click Element   //span[contains(.,'Related')]
+    wait until page contains element     ${Order_Products_Related_Tab}   60s
+    Force Click Element   ${Order_Products_Related_Tab}
     log to console  related is clicked
     sleep  20s
-    wait until page contains element  //div[@class="slds-media__body"]//a//span[text()="Assets"]  60s
-    click element  //div[@class="slds-media__body"]//a//span[text()="Assets"]
+    wait until page contains element  ${Order_Products_Assets_Tab}  60s
+    click element  ${Order_Products_Assets_Tab}
     sleep  10s
-    ${subscription_ID}   get text   //th//span/a[text()='${pdtname}']/following::td[3]
+    ${subscription_ID}   get text   ${Order_Products_SubID}
     sleep  3s
     [Return]   ${subscription_ID}
 
 
 Validate technical contact in the asset history page using subscription as
+   [Documentation]    Go to Account asset History and select the respective product based on subscription ID and validate the technical contact details
    [Arguments]    ${sub_name}     ${Contact_name}
      Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
      scroll page to location  0  9000
      ScrollUntillFound   //button//span[text()='Asset History']
      Log to console  scroll to asset history
-     select frame  xpath=//button/span[text()='Asset History']/../../..//div[@class="content iframe-parent"]/iframe
+     select frame   ${Account_Asset_iframe}
      ScrollUntillFound  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a
      wait until page contains element  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a  60s
      Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a
@@ -7100,7 +7042,7 @@ Validate technical contact in the asset history page using subscription as
      sleep  10s
      switch between windows  1
 #    Switch Window  NEW
-     ${contact_value}  get text  //table[@class='tb']//tr[19]//td[text()='Technical Contact']/following::td[1]
+     ${contact_value}  get text  ${Account_Asset_TechnicalContact}
      Should be equal   ${contact_value}    ${Contact_name}
 
 Add multiple products in SVE

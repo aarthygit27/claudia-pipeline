@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
-#Test Teardown     Logout From All Systems and Close Browser
+Test Teardown     Logout From All Systems and Close Browser
 Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
@@ -2015,9 +2015,13 @@ Validate Main User contact for DNS
     Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
 
 
-DNS - Asset Verfication
+DNS - Asset Verification
     [Tags]  BQA-12672
-#    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    [Documentation]  This script is designed to validate Technical Contact Information on Asset for DNS product by B2B user
+    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Delete all assets
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
@@ -2029,23 +2033,24 @@ DNS - Asset Verfication
 #    log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ClickingOnCPQ    ${oppo_name}
-    search products   Telia Domain Name Service
-    Adding Products   Telia Domain Name Service
-    updating setting Telia Domain Name space  Telia Domain Name Service
-    UpdateAndAddSalesType  Telia Domain Name Service
+    search products   ${pdtname}
+    Adding Products   ${pdtname}
+    updating setting Telia Domain Name space
+    UpdateAndAddSalesType  ${pdtname}
+    View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     sleep  40s
     SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
     SelectingTechnicalContactforTeliaDomainNameService  ${contact_name}
     RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name}
+    SelectOwnerAccountInfo   ${billing_acc_name_digi1}
     clickOnSubmitOrder
     ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Go To Salesforce and Login into Lightning       System Admin
     Go To Entity   ${Ordernumber}
-    ${SubscriptionID}   run keyword  FetchfromOrderproduct  ${Ordernumber}   Telia Domain Name Service
+    ${SubscriptionID}   run keyword  FetchfromOrderproduct  ${Ordernumber}
     log to console    ${SubscriptionID}.is a subscription ID
     Validate technical contact in the asset history page using subscription as  ${SubscriptionID}  ${contact}
 
@@ -2053,6 +2058,7 @@ DNS - Asset Verfication
 
 One Order- B2O Colocation and E2E B2O product
     [Tags]  BQA-11525
+    [Documentation]  This script is designed to  validate the functional flow of  the add two products added and update the  order status correctly by using  B20 user
     set test variable   ${Account}    Digita Oy
     Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
     Go to Entity  ${Account}
@@ -2060,7 +2066,7 @@ One Order- B2O Colocation and E2E B2O product
     logoutAsUser   ${SALES_ADMIN_APP_USER}
     Go To Salesforce and Login into Lightning  B2O User
     sleep  40s
-     Go To Entity    ${Account}
+    Go To Entity    ${Account}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}
@@ -2083,7 +2089,7 @@ One Order- B2O Colocation and E2E B2O product
     SearchAndSelectBillingAccount   ${Account}
     select order contacts- HDC  ${contact_name}
     RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name1}
+    SelectOwnerAccountInfo   ${billing_acc_name_digi1}
     Submit Order Button
     Reload page
     ${order_number}   run keyword    ValidateTheOrchestrationPlan
