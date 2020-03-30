@@ -3,6 +3,16 @@ Library           Collections
 Resource          ../../frontendsanity/resources/Variables.robot
 Resource          ../../frontendsanity/resources/Common.robot
 *** Keywords ***
+
+Go To Accounts
+    ${element_xpath}=    Replace String    ${ACCOUNTS_LINK}    \"    \\\"
+    Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    Sleep    2s
+    #Click on Account Name
+    #    sleep    5s
+    ## Log To Console    Count:${count}
+    #click element    ${ACCOUNT_NAME}[1]
+
 Verify That Business Account Attributes Are Named Right
     Verify That Record Contains Attribute    Account SF ID
     Verify That Record Contains Attribute    Record Type Name
@@ -148,6 +158,14 @@ Change to original owner
      \   Exit For Loop If    ${status}
      #log to console   ${new_owner}
      sleep  120s
+
+Click on a given account
+    [Arguments]    ${acc_name}
+    sleep    5s
+    ${present}=    Run Keyword And Return Status    Element Should Be Visible    //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
+    Run Keyword If    ${present}    Click specific element    //th[@scope='row' and contains(@class,'slds-cell-edit')]//a[@title='${acc_name}']
+    ...    ELSE    Log To Console    No account name available
+    sleep    10s
 
 Change Account Owner
     ${CurrentOwnerName}=    Get Text    ${OWNER_NAME}

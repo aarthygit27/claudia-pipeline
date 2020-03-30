@@ -937,3 +937,70 @@ Sync quote
     wait until page contains element  //div[@role="listitem"]//span[text()="Syncing"]    60s
     page should contain element   //div[@role="listitem"]//span[text()="Syncing"]/../../div[2]/span/span/img
 
+
+Searching and adding multiple products
+    [Arguments]    @{products}
+    [Documentation]    This is used to search and add multiple products
+    ...
+    ...    In order to add the product we are using the product-id
+    ...
+    ...    the tag used to extract the product-id is "data-product-id"
+    ${iframe}    Set Variable    //div[contains(@class,'slds')]/iframe
+    ${next_button}    set variable    //span[contains(text(),'Next')]
+    ${prod}    Create List    @{products}
+    ${count}    Get Length    ${prod}
+    #Log To Console    ${count}
+    #Log To Console    Searching and adding multiple products
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${product_id}    Set Variable    ${product_name}
+    \    Log To Console    product name ${product_name}
+    \    search products    ${product_name}
+    \    Log To Console    Product id ${product_id}
+    \    Adding Products    ${product_id}
+    Wait Until Element Is Enabled    ${iframe}    60s
+    select frame    ${iframe}
+    Scroll Page To Location    0    100
+    Click Element    ${next_button}
+    #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
+    #Run Keyword If    ${status} == True    click element    ${next_button}
+    Unselect Frame
+    Sleep  60s
+
+
+Updating sales type multiple products
+    [Arguments]    @{products}
+    [Documentation]    This is used to Update sales type for multiple products
+    ...
+    ...    The input for this keyword is \ list of products
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${prod}    create list    @{products}
+    ${count}    Get Length    ${prod}
+    #Sleep  20s
+    #log to console    Updating sales type multiple products
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}    60s
+    Run Keyword If    ${status} == False    Reload Page
+    sleep    20s
+    Wait Until Element Is Enabled    ${frame}    60s
+    select frame    ${frame}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${product_list}    Set Variable    //td[normalize-space(.)='${product_name}']
+    \    wait until page contains element    ${update_order}    60s
+    \    log to console    selected new frame
+    \    Wait Until Element Is Visible    ${product_list}//following-sibling::td/select[contains(@class,'required')]    120s
+    \    click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+    \    sleep    2s
+    \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    log    Completed updating the sales type
+    sleep    5s
+    Wait Until Element Is Visible    ${next_button}    60s
+    click element    ${next_button}
+    Capture Page Screenshot
+    Unselect Frame
+    sleep    5s
+

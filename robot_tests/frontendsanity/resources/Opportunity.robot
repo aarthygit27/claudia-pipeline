@@ -27,6 +27,22 @@ Fill Mandatory Opportunity Information
     Sleep    5s
     Input Quick Action Value For Attribute    Close Date    ${OPPORTUNITY_CLOSE_DATE}
 
+Verify That Opportunity Creation Succeeded
+    Sleep    10s
+    Wait Until Element Is Visible    ${ACCOUNT_RELATED}    60s
+    Force click element    ${ACCOUNT_RELATED}
+    ${status}=    Run Keyword And Return Status    Element Should Be Visible    //span[@title='Account Team Members']
+    Run Keyword If    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
+    Sleep    15s
+    ScrollUntillFound    //span[text()='Opportunities']/../../span/../../../a
+    #Scroll element into view    xpath=//span[text()='Opportunities']/../../span/../../../a
+    Run Keyword And Continue On Failure    Scroll Page To Element    //span[text()='Opportunities']/../../span/../../../a
+    ${element_xpath}=    Replace String    //span[text()='Opportunities']/../../span/../../../a    \"    \\\"
+    Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
+    #Click Visible Element    //span[text()='Opportunities']/../../span/../../../a
+    Verify That Opportunity Is Saved And Data Is Correct    ${RELATED_OPPORTUNITY}
+
+
 Fill Mandatory Classification
     [Arguments]    ${account_name}=${LIGHTNING_TEST_ACCOUNT}
     Set Test Variable    ${OPPO_DESCRIPTION}    Test Automation opportunity description
@@ -342,6 +358,35 @@ Cancel Opportunity and Validate
     Cancel and save
     Validate Closed Opportunity Details    ${opportunity}    ${stage}
     Verify That Opportunity is Not Found under My All Open Opportunities    ${opportunity}
+
+Validate Closed Opportunity Details
+    [Arguments]    ${opportunity_name}    ${stage}
+    #${current_date}=    Get Current Date    result_format=%d.%m.%Y
+    ${current_ts}=    Get Current Date
+    ${c_date} =    Convert Date    ${current_ts}    datetime
+    ${oppo_close_date}=    Set Variable    //div//span[text()='Close Date']/../../div[2]/span//lightning-formatted-text[text()='${c_date.day}.${c_date.month}.${c_date.year}']
+    Go to Entity    ${opportunity_name}
+    Scroll Page To Element    ${oppo_close_date}
+    Wait Until Page Contains Element    ${oppo_close_date}    60s
+    #Scroll Page To Element    ${OPPORTUNITY_CLOSE_DATE}
+    #Wait Until Page Contains Element    ${OPPORTUNITY_CLOSE_DATE}    60s
+    Wait Until Page Contains Element    //div//div/span[text()="Stage"]/../../div[2]/span//lightning-formatted-text[text()="${stage}"]    60s
+    ${oppo_status}=    set variable if    '${stage}'== 'Closed Lost'    Lost    Cancelled
+    ${buttonNotAvailable}=    Run Keyword And Return Status    element should not be visible    ${EDIT_STAGE_BUTTON}
+    Run Keyword If    ${buttonNotAvailable}    reload page
+    Click Visible Element    ${EDIT_STAGE_BUTTON}
+    Select option from Dropdown     //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div   Closed Won
+    Save
+    Wait Until Page Contains Element   //div/strong[text()='Review the following fields']    60s
+    Click element   //button[@title="Close error dialog"]//*[@data-key="close"]
+    Sleep  10s
+    #Press ESC On    //span[text()='Review the following errors']
+    click element   //button[@title="Cancel"]
+     #Click element   //div[@class="riseTransitionEnabled test-id__inline-edit-record-layout-container risen"]//div[@class="actionsContainer"]//*[contains(text(),"Cancel")]
+
+Save
+    click element    //button[@title='Save']
+    sleep    2s
 
 
 Validate error message

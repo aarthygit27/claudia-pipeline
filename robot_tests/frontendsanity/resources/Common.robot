@@ -228,6 +228,16 @@ Create Unique Mobile Number
     #[Return]    +358888${numbers}
     [Return]    +358888888888
 
+Create Unique Task Subject
+    ${random_string}    generate random string    8
+    [Return]    Task-${random_string}
+
+Click specific element
+    [Arguments]    ${element}
+    @{locators}=    Get Webelements    xpath=${element}
+    ${original}=    Create List
+    : FOR    ${locator}    IN    @{locators}
+    Click Element    xpath=${element}
 
 Input Quick Action Value For Attribute
     [Arguments]    ${field}    ${value}

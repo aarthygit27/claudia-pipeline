@@ -624,3 +624,28 @@ getMultibellaCaseGUIID
     #log to console  ${case_GUI_id}.this is GUIId
     #log to console  ${case_id} .this is case id
     [return]  ${case_GUI_id}
+
+
+Preview order summary and verify order
+    [Arguments]    @{products}
+    ${preview_order_summary}    Set Variable    //div[@title='Preview Order Summary']
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${prod}    Create List    @{products}
+    ${count}    Get Length    ${prod}
+    Wait Until Element Is Visible    ${preview_order_summary}    120s
+    ${page} =  get location
+    Click Element    ${preview_order_summary}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}
+    Run Keyword If    ${status} == False    Reload Page
+    sleep    20s
+    Wait Until Element Is Enabled    ${frame}    60s
+    select frame    ${frame}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${status}    Run Keyword And Return Status    ${product_name}
+    \    Log    ${product_name} is present in order summary ${status}
+    unselect frame
+    sleep  10s
+    go to  ${page}
+    sleep  30s
