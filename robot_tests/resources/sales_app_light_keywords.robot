@@ -4,6 +4,7 @@ Resource          ..${/}resources${/}common.robot
 Resource          ..${/}resources${/}cpq_keywords.robot
 Resource          ..${/}resources${/}sales_app_light_variables.robot
 Resource          ..${/}resources${/}multibella_keywords.robot
+Library             ../resources/customPythonKeywords.py
 
 *** Keywords ***
 Go To Salesforce
@@ -6180,6 +6181,7 @@ Switch between windows
     ${title}    Get Title
 
 
+
 File Handling - Change Order id
     [Arguments]   ${orderNo}
     #${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
@@ -7047,10 +7049,10 @@ Add multiple products in SVE
     ${fyr_value_total}=   Set Variable   ${0}
     ${count_list}=  Get length  ${items}
     log to console  ${count_list}.number of items
-   select frame  xpath=//div[contains(@class,'slds')]/iframe
+    select frame   ${Page_iframe}
      :FOR    ${item}    IN    @{items}
      \    ${i} =    Set Variable    ${i + 1}
-     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
+#     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
      \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][ ${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']    ${item}
      \  Click element   css=.typeahead.dropdown-menu.ng-scope.am-fade.bottom-left li.ng-scope a.ng-binding
      \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@type='number']
@@ -7071,119 +7073,42 @@ Add multiple products in SVE
      \  page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
      \  Run keyword if   ${i}<${count_list}   click element   //div[text()='Add']
      \  ${fyr_value_total}=  evaluate  (${fyr_value_total}+${fyr_value})
-     \  ${new}  ${ren}  ${frame}   validateproductsbasedonsalestype  ${sales_type_value${i}}   ${fyr_value}
-
      wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
      force click element  //button[normalize-space(.)='Save Changes']
      sleep  30s
      unselect frame
      sleep  30s
+    [Return]  ${fyr_value_total}
 
-    [Return]  ${fyr_value_total}  ${new}  ${ren}  ${frame}
+validateproductsbasedonsalestype
 
-
-Validating FYR values in Opportunity Header
-     [Arguments]    ${fyr_total}   ${new}  ${renegotiation}  ${frame}
-
-     sleep  90s
-#     Wait until element is visible    //slot[@name="primaryField"]   60s
-#     Wait until element is visible    //slot[@slot="secondaryFields"]   60s
-#    page should contain element    //p[text()="Revenue Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
-     page should contain element    //p[text()="FYR Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
-     page should contain element    //p[text()="FYR New Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${new},00 €"]
-     page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${renegotiation},00 €"]
-     page should contain element    //p[text()="FYR Total Frame Agreement"]/../..//lightning-formatted-text[text()=normalize-space(.)="${frame},00 €"]
-
-Modify the salestype
-
-     select frame  xpath=//div[contains(@class,'slds')]/iframe
-     click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value5}']
-     sleep  5s
-     wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
-     force click element  //button[normalize-space(.)='Save Changes']
-     unselect frame
-     sleep   30s
-
-
-Validate modify salestype reflected in Oppo page
-    [Arguments]  ${oppot_name}
-
-    Go to Entity   ${oppot_name}
-    wait until page contains element   //li[@title="Related"]   30s
-    Force Click Element    //li[@title="Related"]
-    sleep  10s
-    wait until page contains element   //*[text()="Product"]   30s
-    wait until page contains element  //button[@title="View All"]
-    Force Click Element  //button[@title="View All"]
+   [Arguments]     @{items}
+    ${list_Prd}    Create List    @{items}
+    @{list_with prod and sales}     create list
+    ${count}    Get Length    ${list_Prd}
+    Wait until element is visible   ${Oppo_Related_Tab}   10s
+    Force click element     ${Oppo_Related_Tab}
+    Wait until element is visible   ${Oppo_Product_panel}   10s
+    Wait until element is visible   ${Product_viewall_button}   30s
+    Click Button    ${Product_viewall_button}
     sleep  30s
     switch between windows  1
     sleep  30s
-    ${salestype}   get text   //*[@data-label="Sales Type"]//span
-    Log to console    ${salestype}
-    Should be equal   ${salestype}   ${sales_type_value5}
+    :FOR    ${i}    IN RANGE    ${count}
+    \    ${i} =    Set Variable    ${i + 1}
+    \   ${sales_type}  get text   //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[2]//div
+    \   ${sales_value}  get text  //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[8]//div
+    \   Append To List  ${list_with prod and sales}    ${sales_type}    ${sales_value}
+    ${add_new}  ${add_ren}  ${add_frame} =   addFYRbasedonSalesType  ${list_with prod and sales}
+    switch between windows  0
+    [Return]   ${add_new}  ${add_ren}  ${add_frame}
 
-Validate Billing and Payer in the asset page
-     [Arguments]   ${subscription_id}    ${order_no}
-
-      Go to Entity   ${LIGHTNING_TEST_ACCOUNT}
-      scroll page to location  0  9000
-      ScrollUntillFound   //button//span[text()='Asset History']
-      Log to console  scroll to asset history
-      select frame  xpath=//button/span[text()='Asset History']/../../..//div[@class="content iframe-parent"]/iframe
-      ScrollUntillFound  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
-      wait until page contains element  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a  60s
-      Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
-      Log to console  clicked the product
-      unselect frame
-      sleep  10s
-      Switch Window  NEW
-      ${owner_billing}  get text    //*[text()="Owner"]//following::td[1]
-      ${payer_billing}  get text   //*[text()="Payer"]//following::td[1]
-      Log to console   ${owner_billing}
-      Log to console    ${payer_billing}
-
-
-validateproductsbasedonsalestype
-    [Arguments]    ${pdt_salesType}    ${fyr_value}
-    ${pdt_salesType}=  Evaluate  '${pdt_salesType}'.strip()
-#    ${status_new } =  run keyword and return status   '${pdt_salesType}'=='New Money-New Services'
-#    ${status_new1 } =  run keyword and return status  '${pdt_salesType}'== 'New Money-Extending Services'
-    ${new}=    Run Keyword If    '${pdt_salesType}'=='New Money-New Services'
-    Log to console  ${new}.value of new
-     ...   pass  Swapingvariables  ${fyr_value}
-     fail  sleep 10s
-     Log to console  ${new}.value of new
-     ${new1}=    Run Keyword If    '${pdt_salesType}'== 'New Money-Extending Services'
-     ...   TRUE  Swapingvariables  ${fyr_value}
-     ...   False  Log to console  False
-     Log to console  ${new}.value of new
-#    ${status_ren } =  run keyword and return status   '${pdt_salesType}'=='Renegotiation-Service Replacement'
-#    ${status_ren1 } =  run keyword and return status  '${pdt_salesType}'== 'Renegotiation-Service Continuation'
-    ${ren}=    Run Keyword If    ''${pdt_salesType}'=='Renegotiation-Service Replacement'
-      ...   TRUE  Swapingvariables  ${fyr_value}
-      ...   False  Log to console  False
-     Log to console  ${ren}.value of ren
-     ${ren1}=    Run Keyword If    ''${pdt_salesType}'=='Renegotiation-Service Continuation'
-      ...   TRUE  Swapingvariables  ${fyr_value}
-      ...   False  Log to console  False
-     Log to console  ${ren}.value of ren
-
-
-Swapingvariables
-    [Arguments]     ${fyr_value}
-    ${d}=  evaluate  (${a}+${fyr_value})
-    Set Test Variable    ${a}    ${d}
-    Log to console  ${a}.value of a
-    [Return]   ${a}
 
 Validating FYR values in Opportunity Header
-     [Arguments]    ${fyr_total}   ${new}  ${renegotiation}  ${frame}
 
+     [Arguments]    ${fyr_total}   ${new}   ${ren}   ${frame}
      sleep  90s
-#     Wait until element is visible    //slot[@name="primaryField"]   60s
-#     Wait until element is visible    //slot[@slot="secondaryFields"]   60s
-#    page should contain element    //p[text()="Revenue Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
      page should contain element    //p[text()="FYR Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
      page should contain element    //p[text()="FYR New Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${new},00 €"]
-     page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${renegotiation},00 €"]
+     page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${ren},00 €"]
      page should contain element    //p[text()="FYR Total Frame Agreement"]/../..//lightning-formatted-text[text()=normalize-space(.)="${frame},00 €"]
