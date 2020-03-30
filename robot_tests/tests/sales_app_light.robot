@@ -6,6 +6,7 @@ Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 #Library             test123.py
+Library             ../resources/customPythonKeywords.py
 
 *** Test Cases ***
 
@@ -2105,18 +2106,28 @@ One Order- B2O Colocation and E2E B2O product
 
 
 Validate FYR values in Oppo page created through SVE
+    [Documentation]  This script is designed to  validate and verify the FYR values in Opportunity page  based on SalesType selected for the multiple products added SVE by using  B2B user
     [Tags]  BQA-13171
-#     Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-#    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-#    ${contact}    run keyword    CreateAContactFromAccount_HDC
-#    Log to console    ${contact}.this is name
-#    Set test variable  ${contact_name}   ${contact}
-#    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-#    log to console    ${oppo_name}.this is opportunity
-     Go To Entity   Test Robot Order_20200302-110120
-    clickingOnSolutionValueEstimate     Test Robot Order_20200302-110120
-     sleep  30s
-    ${fyr_total}  ${new}  ${renegotiation}  ${frame}  Add multiple products in SVE  @{LIST}
-    Validating FYR values in Opportunity Header   ${fyr_total}   ${new}  ${renegotiation}  ${frame}
+     Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity   ${oppo_name}
+    clickingOnSolutionValueEstimate     ${oppo_name}
+    sleep  10s
+    ${fyr_total}  Add multiple products in SVE  @{LIST}
+    reload page
+    sleep  10s
+    ${new}  ${ren}  ${frame}   validateproductsbasedonsalestype  @{LIST}
+    reload page
+    sleep  10s
+    Validating FYR values in Opportunity Header   ${fyr_total}  ${new}  ${ren}  ${frame}
+
+
+
+
+
 

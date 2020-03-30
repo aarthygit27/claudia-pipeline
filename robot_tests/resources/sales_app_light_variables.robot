@@ -229,13 +229,13 @@ ${B2bproductfyr3}   Multi-SIM
 ${fixed_charge for_Telia Sopiva Pro N}  30
 ${fixed_charge for_Pro Nettikortti}     0
 ${fixed_charge for_Multi-SIM}           0
-${sales_type_value}   New Money-New Services
-${sales_type_value1}   New Money-Extending Services
-${sales_type_value2}   Renegotiation-Service Replacement
-${sales_type_value3}   Renegotiation-Service Continuation
-${sales_type_value4}   Frame Agreement - New Services
-${sales_type_value5}   Frame Agreement - Extending Services
-${sales_type_value6}   Frame Agreement - Renegotiation
+${sales_type_value1}   New Money-New Services
+${sales_type_value2}   New Money-Extending Services
+${sales_type_value3}   Renegotiation-Service Replacement
+${sales_type_value4}   Renegotiation-Service Continuation
+${sales_type_value5}   Frame Agreement - New Services
+${sales_type_value6}   Frame Agreement - Extending Services
+${sales_type_value7}   Frame Agreement - Renegotiation
 ${contract_lenght}    12
 ${360_VIEW}     //li//a[text()='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]
@@ -306,7 +306,7 @@ ${group_id}         SALES FORCE TEST 1
 #Changes for each account
 ${billing_acc_name}    Billing Telia Communication Oy_001
 ${billing_acc_name_digi1}   Billing_Digita Oy_2961
-@{List}=  Telia chat  Telia Robotics   Telia colocation   Telia ACE
+@{List}=  Telia chat  Telia Robotics   Telia colocation   Telia ACE   DataNet  Telia IOT Office  Telia Yhteyspiste
 ${a} =  0
 ${b} =  0
 ${c} =  0
@@ -369,3 +369,6 @@ ${return_opportunity_button}    //button[@id="Return to Opportunity"]
 
 #Opportunity Page
 ${MarkStageasComplete_button}    //span[contains(text(),"Mark Stage as Complete")]
+${Oppo_Related_Tab}    //a[@id="relatedListsTab__item"]
+${Oppo_Product_panel}  	//h1[contains(.,'Product')]
+${Product_viewall_button} 	//button[contains(.,'View All')]
