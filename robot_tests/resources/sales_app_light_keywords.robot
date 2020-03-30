@@ -6182,6 +6182,7 @@ Switch between windows
     ${title}    Get Title
 
 
+
 File Handling - Change Order id
     [Arguments]   ${orderNo}
     #${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
@@ -7102,7 +7103,7 @@ validateproductsbasedonsalestype
     \   ${sales_type}  get text   //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[2]//div
     \   ${sales_value}  get text  //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[8]//div
     \   Append To List  ${list_with prod and sales}    ${sales_type}    ${sales_value}
-    ${add_new}  ${add_ren}  ${add_frame} =   func1  ${list_with prod and sales}
+    ${add_new}  ${add_ren}  ${add_frame} =   addFYRbasedonSalesType  ${list_with prod and sales}
     switch between windows  0
     [Return]   ${add_new}  ${add_ren}  ${add_frame}
 

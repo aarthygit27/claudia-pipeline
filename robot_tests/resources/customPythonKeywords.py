@@ -1,4 +1,4 @@
-def func1(a):
+def addFYRbasedonSalesType(a):
     b  = 0
     c  = 0
     d  = 0
@@ -18,8 +18,7 @@ def func1(a):
     prices_list.append(d)
     # return  prices_list
     return (b, c, d)
-if __name__ == '__main__':
-    a= func1([u'New Money-New Services', u'635.00', u'New Money-Extending Services', u'635.00', u'Frame Agreement - Extending Services', u'399.00', u'Frame Agreement - Renegotiation', u'370.00', u'Frame Agreement - Renegotiation', u'630.00'])
-    # a=func1(a)
-    print (a)
+# if __name__ == '__main__':
+#     a= addFYRbasedonSalesType([u'New Money-New Services', u'635.00', u'New Money-Extending Services', u'635.00', u'Frame Agreement - Extending Services', u'399.00', u'Frame Agreement - Renegotiation', u'370.00', u'Frame Agreement - Renegotiation', u'630.00'])
+#     print (a)
     # hello()

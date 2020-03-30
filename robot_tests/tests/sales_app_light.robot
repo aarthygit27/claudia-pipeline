@@ -2019,7 +2019,7 @@ Validate Main User contact for DNS
 DNS - Asset Verification
     [Tags]  BQA-12672
     [Documentation]  This script is designed to validate Technical Contact Information on Asset for DNS product by B2B user
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Lightning   System Admin
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
@@ -2061,7 +2061,7 @@ One Order- B2O Colocation and E2E B2O product
     [Tags]  BQA-11525
     [Documentation]  This script is designed to  validate the functional flow of  the add two products added and update the  order status correctly by using  B20 user
     set test variable   ${Account}    Digita Oy
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Lightning   System Admin
     Go to Entity  ${Account}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
@@ -2108,7 +2108,7 @@ One Order- B2O Colocation and E2E B2O product
 Validate FYR values in Oppo page created through SVE
     [Documentation]  This script is designed to  validate and verify the FYR values in Opportunity page  based on SalesType selected for the multiple products added SVE by using  B2B user
     [Tags]  BQA-13171
-     Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     Log to console    ${contact}.this is name
@@ -2125,6 +2125,7 @@ Validate FYR values in Oppo page created through SVE
     reload page
     sleep  10s
     Validating FYR values in Opportunity Header   ${fyr_total}  ${new}  ${ren}  ${frame}
+
 
 
 
