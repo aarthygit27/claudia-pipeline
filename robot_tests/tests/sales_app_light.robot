@@ -2046,9 +2046,10 @@ FYR calculation with annually recurring charges
     validateCreatedOppoForFYR   Telia Domain Name Service  ${fyr_new}
     ClickingOnCPQ     ${oppo_name}
     Adding prouct To cart (cpq) without Next   Telia Domain Name Service
-    Add Finnish_Domain_Service
-    Add Other Domain Name and update settings
+    ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}      run keyword      Add Finnish_Domain_Service
     updating setting Telia Domain Name space  Telia Domain Name Service
+    UpdateAndAddSalesType  Telia Domain Name Service
+    Validation of Telia Domain Name Service   ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}
 
 Availability of HDC Related Fields in b2b opportunitty
     [Documentation]  To Check the Availability the HDC related Fields in B2b opportunity  and Edit the values and validate sales user and admin user

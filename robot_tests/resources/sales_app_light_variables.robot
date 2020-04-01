@@ -223,6 +223,7 @@ ${product_name}    Telia Robotics
 ${product_quantity}    1
 ${NRC}            35
 ${RC}             50000
+${ARC}    10
 ${B2bproductfyr1}    Telia Sopiva Pro N
 ${B2bproductfyr2}   Pro Nettikortti
 ${B2bproductfyr3}   Multi-SIM

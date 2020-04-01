@@ -6990,7 +6990,7 @@ Mofify the contract length and validate in the opportunity page
      ${fyr_value}=      evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity} +${ARC}
      ${revenue_value}=  evaluate  ((${RC}*${contract_lenght_updated})+ ${NRC}) * ${product_quantity} +(${ARC}*2)
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
-     page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
+     page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00']
      wait until page contains element  //button[contains(text(),"Save")]   60s
      click element  //button[contains(text(),"Save")]
      unselect frame
@@ -6999,14 +6999,17 @@ Mofify the contract length and validate in the opportunity page
 Add Finnish_Domain_Service
     [Documentation]  Add Finnish_Domain_Service  in the cpq page
     ${Internet Domain_Toggle}  set variable  //span[text()='Internet Domain']/../button
-    ${Finnish Domain Name Registrant}  set variable  //div[contains(text(),'Finnish Domain Name Registrant')]/../../..//*[@alt='settings']/..
+    ${Finnish Domain Name Registrant}  set variable  //div[contains(text(),'Finnish Domain Name Registrant Agreement(without Maintenance)')]//following::div[15]//button[1]
     ${Finnish_Domain_Service_Add_To_Cart}   set variable   //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
     ${Finnish_Domain_Service_Settings_Icon}   set variable     //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//*[@alt='settings']/..
     ${Verkotunnus_Field}  set variable    //select[@name='productconfig_field_0_0']
-    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[text()='.FI']
+    ${Verkotunnus_option}   set variable    //select[contains(@name,'productconfig_field_0_0')]//option[@value=".fi"]
     ${Voimassaoloaika_Field}  set variable    //select[contains(@name,'productconfig_field_0_1')]
     ${Voimassaoloaika_option}   set variable    //select[contains(@name,'productconfig_field_0_1')]//option[text()='5']
     ${closing}    Set Variable    //*[@alt='close'][contains(@size,'large')]
+    select frame   //div[contains(@class,'slds')]/iframe
+    wait until page contains element  //button[@class="slds-button cpq-item-has-children"]  60s
+    click element  //button[@class="slds-button cpq-item-has-children"]
     Wait until element is visible  ${Internet Domain_Toggle}   60s
     Click element  ${Internet Domain_Toggle}
     Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
@@ -7017,25 +7020,31 @@ Add Finnish_Domain_Service
     press enter on    ${Verkotunnus_Field}
     Wait Until Element Is Visible   ${Verkotunnus_option}   2s
     click element    ${Verkotunnus_option}
-    #Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
-    #press enter on    ${Voimassaoloaika_Field}
-    #Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
-    #click element    ${Voimassaoloaika_option}
-    #Wait Until Element Is Visible    10s
-    Validate the validity and the price for Finnish Domain     ${Voimassaoloaika_Field}        1      19
-    Validate the validity and the price for Finnish Domain     ${Voimassaoloaika_Field}        2      25
+    Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
+    press enter on    ${Voimassaoloaika_Field}
+    Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
+    click element    ${Voimassaoloaika_option}
+    Wait Until Element Is Visible  ${closing}  10s
     click element    ${closing}
+    Sleep  40s
+    wait until page contains element  //div[@class="slds-is-relative"]//div[@ng-if="customField.type === 'currency'"]//span/span  60s
+    ${value}  get text   //div[@class="slds-is-relative"]//div[@ng-if="customField.type === 'currency'"]//span/span
+    ${value}=  remove string  ${value}  /year
+    wait until page contains element  //div[@class="cpq-item-child-product-name-wrapper"]//button[@class="slds-button cpq-item-has-children"]   60s
+    click visible element  //div[@class="cpq-item-child-product-name-wrapper"]//button[@class="slds-button cpq-item-has-children"]
     Wait until element is visible  ${Finnish Domain Name Registrant}   60s
-    sleep       120s
-    #Log to console   Finnish Domain Name Registrant added automatically
-    wait until element is visible       //span[text()='Internet Domain']/../button      240s
-    click element       //span[text()='Internet Domain']/../button
+    click visible element  ${Finnish Domain Name Registrant}
+    sleep  40s
+    wait until page contains element    //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[2]/div[normalize-space(.)="${value}"]   60s
+    ${value1}  get text   //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[1]/div[2]
+    ${value2}  get text    //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[3]/div[2]
+    Page should contain element    //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[2]/div[normalize-space(.)="${value}"]
     Unselect Frame
-
+    [Return]  ${value}  ${value1}   ${value2}
 
 Add Other Domain Name and update settings
     [Documentation]  Add Other Domain Name and update settings in the cpq page
-    [Arguments]    ${Verkotunnus}         ${Voimassaoloaika}        ${otc}
+    [Arguments]    ${Verkotunnus}         ${Voimassaoloaika}
     ${iframe}    set variable    xpath=//div[contains(@class,'slds')]/iframe
     ${Other_Domain_Service_Add_To_Cart}   set variable   //*[contains(text(),'Other Domain name')]/../../..//button[contains(text(),'Add to Cart')]
     ${Other_Domain_Service_Settings_Icon}   set variable     //*[contains(text(),'Other Domain name')]/../../..//*[@alt='settings']/..
@@ -7056,8 +7065,6 @@ Add Other Domain Name and update settings
     press enter on    ${Verkotunnus_Field}
     Wait Until Element Is Visible   ${Verkotunnus_option}   2s
     click element    ${Verkotunnus_option}
-    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        1          ${otc}
-    Validate the validity and the price for Other Domain     ${Voimassaoloaika_Field}        existing       ${otc}
     Wait Until Element Is Visible    ${Voimassaoloaika_Field}  10s
     press enter on    ${Voimassaoloaika_Field}
     Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
@@ -7231,3 +7238,18 @@ Validate the HDc Related fields aeditable if the profile is admin after closing 
     page should contain element   //div//div//span[text()="Investment ID"]//following::div[16]//span[text()="HDC Rack Amount"]
     Page should contain element     //div//div//span[text()="Investment ID"]//following::div[16]//button[@title="Edit HDC Rack Amount"]
     page should contain element   //div//div//span[text()="Investment ID"]//following::button[@title="Edit HDC Total KW"]
+
+Validation of Telia Domain Name Service
+    [Arguments]     ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}
+    wait until page contains element      //div/span[@title="Quote Number"]   60s
+    click element  //li//a[@title="Details"]
+    scrolluntillfound  //span[text()="Recurring Total(Exc. Reporting)"]
+    page should contain element   //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="Annual Recurring Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Annual Recurring charge}"]
+    page should contain element     //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="Monthly Recurring Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Monthly recurring chage}"]
+    page should contain element       //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="OneTime Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${One time total}"]
+    ${Annual Recurring charge}=  remove string  ${Annual Recurring charge}  €
+    ${Monthly recurring chage}=  remove string  ${Monthly recurring chage}  €
+    ${One time total}=  remove string  ${One time total}  €
+    ${Fyr_value} =  Evaluate   ${One time total}+(${Monthly recurring chage}*12)+${Annual Recurring charge}
+    page should contain element     //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="FYR Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Fyr_value} €"]
+
