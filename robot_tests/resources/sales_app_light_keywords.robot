@@ -2197,35 +2197,41 @@ OpenQuoteButtonPage_release
     unselect frame
 
 Closing the opportunity
-    [Arguments]    ${continuation}
+    [Arguments]    ${stage1}
     #${stage_complete}=    set variable    //span[text()='Mark Stage as Complete']
     ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
     ${edit_stage}=    set variable    //button[@title='Edit Stage']
-    #Wait Until Element Is Visible    ${stage_complete}    60s
+    #Wait Until Element Is Visible     ${stage_complete}    60s
     ${stage}=    Get Text    ${current_stage}
-    #Log To Console    The current stage is ${stage}
+    Log To Console    The current stage is ${stage}
     Capture Page Screenshot
     click element    ${EDIT_STAGE_BUTTON}
     Sleep  30s
-    Select option from Dropdown    //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div    Closed Won
-    Execute Javascript    window.scrollTo(0,600)
-    Select option from Dropdown if not able to edit the element from the list    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}   Closed Won
-    Select option from Dropdown   //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}
-    Wait Until Page Contains Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    60s
-    Execute Javascript    window.scrollTo(0,9000)
+    Select option from Dropdown    //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div   ${stage1}
+    scrolluntillfound    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div
+    Scroll Page To Location    0    3000
+    Sleep  20s
+    Click element    //lightning-textarea//label[text()="Close Comment"]/../div/textarea
+    Input Text    //lightning-textarea//label[text()="Close Comment"]/../div/textarea    this is a test opportunity to closed won
+    #Execute Javascript    window.scrollTo(0,3000)
+    Wait Until Page Contains Element    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   60s
     #Get Text    //span[contains(text(),'Service Address Street')]/../../span
-    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    08 Other
-    input text    //span[text()='Close Comment']/../../textarea    this is a test opportunity to closed won
-    #sleep  30s
+    Select option from Dropdown     //lightning-combobox//label[text()="Relationship"]/..//div/*[@class="slds-combobox_container"]/div           Long
+    Select option from Dropdown    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div    Solution
+    wait until page contains element  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   60s
+    Select option from Dropdown  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   05 Availability
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   Quality
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason"]/..//div/*[@class="slds-combobox_container"]/div    Service quality
     Wait Until Page Contains Element     //button[@title="Save"]   60s
     click element   //button[@title="Save"]
+    sleep  30s
 
 Closing the opportunity with reason
     [Arguments]    ${stage1}
     #${stage_complete}=    set variable    //span[text()='Mark Stage as Complete']
     ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
     ${edit_stage}=    set variable    //button[@title='Edit Stage']
-    #Wait Until Element Is Visible    ${stage_complete}    60s
+    #Wait Until Element Is Visible     ${stage_complete}    60s
     ${stage}=    Get Text    ${current_stage}
     Log To Console    The current stage is ${stage}
     Capture Page Screenshot

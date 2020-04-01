@@ -2029,7 +2029,7 @@ validate FYR valuesin Oppo page by modifying salestype in SVE
     Go To Entity    ${oppo_name}
 
 FYR calculation with annually recurring charges
-    [Tags]  BQA-
+    [Tags]  BQA-13123
     Go To Salesforce and Login into Lightning   B2B DigiSales
     Go To Entity    ${TEST_ACCOUNT_CONTACT}
     ${contact}    run keyword    Create New Contact for Account
@@ -2063,7 +2063,9 @@ Availability of HDC Related Fields in b2b opportunitty
     AddProductToCart    Alerta projektointi
     UpdateAndAddSalesType    Alerta projektointi
     Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
-    Closing the opportunity with reason without error    Closed Won
+    Log to console  1
+    Closing the opportunity    Closed Won
+    log to console  2
     Validate the HDc Related fields are non editable after closing Opportunity
     logoutAsUser  ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
