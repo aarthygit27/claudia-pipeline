@@ -2064,8 +2064,9 @@ One Order- B2O Colocation and E2E B2O product
     Go To Salesforce and Login into Lightning   System Admin
     Go to Entity  ${Account}
     Delete all assets
-    logoutAsUser   ${SALES_ADMIN_APP_USER}
-    Go To Salesforce and Login into Lightning  B2O User
+    swithchtouser   B2O Test User
+#    logoutAsUser   ${SALES_ADMIN_APP_USER}
+#    Go To Salesforce and Login into Lightning  B2O User
     sleep  40s
     Go To Entity    ${Account}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
@@ -2098,7 +2099,9 @@ One Order- B2O Colocation and E2E B2O product
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling   ${order_number}
     Open Browser And Go To Login Page
-    Go To Salesforce and Login into Lightning  B2O User
+#    Go To Salesforce and Login into Lightning  B2O User
+    Go To Salesforce and Login into Lightning   System Admin
+    swithchtouser   B2O Test User
     Go To Entity    ${order_number}
     Reload page
     ValidateSapCallout

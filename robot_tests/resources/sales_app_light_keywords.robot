@@ -4491,10 +4491,12 @@ ValidateTheOrchestrationPlan
     Run Keyword if   ${status} == False    GetOrchestrationPlanfromDetail
 #    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     #execute javascript    window.scrollTo(0,2000)
-    #sleep    10s
+    sleep    30s
     #log to console    plan validation
-    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
-    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+#    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
+#    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+     wait until page contains element   //span[text()='Orchestration Plan']   30s
+#    click element   //span[text()='Orchestration Plan']
     sleep    10s
     ${location}=    Get Location
     set test variable   ${url}   ${location}
