@@ -16,7 +16,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 
 *** Test Cases ***
 Manual Credit Check Enquiry with postive
-    [Tags]  BQA-12600
+    [Tags]  BQA-12600       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -43,7 +43,7 @@ Manual Credit Check Enquiry with postive
     ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with postive and condition
-    [Tags]  BQA-12674
+    [Tags]  BQA-12674       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -74,7 +74,7 @@ Manual Credit Check Enquiry with postive and condition
     ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with Negative
-    [Tags]  BQA-12673
+    [Tags]  BQA-12673       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -104,7 +104,7 @@ Manual Credit Check Enquiry with Negative
     ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with No Result
-    [Tags]  BQA-12675
+    [Tags]  BQA-12675       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account

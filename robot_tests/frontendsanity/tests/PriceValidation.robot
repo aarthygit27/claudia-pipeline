@@ -27,7 +27,7 @@ Price input for unmodeled products in omniscript
     Check opportunity value is correct
 
 Lightning - FYR Calculation for B2B
-     [Tags]     BQA-11305   AUTOLIGHTNING   rerun
+     [Tags]     BQA-11305   AUTOLIGHTNING   OpportunityValidation
      [Documentation]    Add products to cart, calculate otc, mrc. Validate FYR and revenue.
     Go To Salesforce and Login into Lightning       B2B DigiSales
      Go to Entity    Kotipizza Group Oyj

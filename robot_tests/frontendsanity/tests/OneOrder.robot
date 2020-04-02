@@ -17,7 +17,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 *** Test Cases ***
 
 One Order - B2B Colocation and Change Order
-    [Tags]  BQA-11521
+    [Tags]  BQA-11521       OneOrder
     [Documentation]    Create new order with product B2B Telia colocation and then perform change order
     Go To Salesforce and Login into Lightning       DigiSales Admin
     Go to Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -44,7 +44,7 @@ One Order - B2B Colocation and Change Order
     Capture Page Screenshot
 
 One Order- B2O Colocation and change order
-    [Tags]  BQA-11523
+    [Tags]  BQA-11523       OneOrder
     [Documentation]    Create new order with product B2O Telia colocation and then perform change order
     Go To Salesforce and Login into Lightning       DigiSales Admin
     Go to Entity   ${vLocUpg_TEST_ACCOUNT}
@@ -75,7 +75,7 @@ One Order- B2O Colocation and change order
 
 
 One Order- B2B Colocation, Case management product, Modeled Case management product
-    [Tags]  BQA-11522
+    [Tags]  BQA-11522       OneOrder
     [Documentation]    Create new order with product B2B Telia colocation , Arkkitehti, CID and then perform change order
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}

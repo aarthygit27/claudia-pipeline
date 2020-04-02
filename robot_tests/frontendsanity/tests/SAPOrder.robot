@@ -14,7 +14,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 *** Test Cases ***
 
 SAP Order
-    [Tags]  BQA-12512
+    [Tags]  BQA-12512       Order
     [Documentation]     This script is designed for Digita Oy. If account is changed, the corresponding group id has to be changed for the script to work. SAP contract id hardcoded as it is getting failed nowadys.
     set test variable   ${Account}    Digita Oy
     #Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}

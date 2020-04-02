@@ -14,7 +14,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 *** Test Cases ***
 
 Sync_quote
-    [Tags]  BQA-12587
+    [Tags]  BQA-12587       SyncQuote
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC

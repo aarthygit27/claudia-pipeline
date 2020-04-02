@@ -12,7 +12,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 *** Test Cases ***
 
 Manual Availability - B2O
-    [Tags]   BQA-11380  Test
+    [Tags]   BQA-11380  Test    AvailabilityCheck
     [Documentation]    Create Opportunity and perform manual availability check
     Go To Salesforce and Login into Lightning       B2O User
     Go To Entity    ${B2O Account}

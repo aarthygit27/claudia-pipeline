@@ -16,7 +16,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 *** Test Cases ***
 
 Pricing Escalation
-    [Tags]   BQA-11368
+    [Tags]   BQA-11368      Escalation
     [Documentation]    Create Pricing escatalation case and then complete the approval flow by endorser and approver
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -35,7 +35,7 @@ Pricing Escalation
     Case Not visible to Normal User    ${Case_number}
 
 Pricing Escalation - Rejection
-    [Tags]   BQA-11386
+    [Tags]   BQA-11386      Escalation
     [Documentation]    Create Pricing
     Go To Salesforce and Login into Lightning       System Admin
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}

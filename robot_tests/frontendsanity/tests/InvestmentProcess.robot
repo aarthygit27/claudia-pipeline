@@ -11,7 +11,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 
 *** Test Cases ***
 Investment Process - B2B
-    [Tags]   BQA-11387
+    [Tags]   BQA-11387      Investment
     [Documentation]    Create B2B Investment case. Complete the approval flow.
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    Aacon Oy
@@ -25,7 +25,7 @@ Investment Process - B2B
     Check Case Status  ${case_number}  B2B
 
 Investment Process - B2O
-    [Tags]   BQA-11395
+    [Tags]   BQA-11395      Investment
     [Documentation]    Create B2O Investment case. Complete the approval flow.
     Go To Salesforce and Login into Lightning       B2O User
     Go To Entity    ${B2O Account}

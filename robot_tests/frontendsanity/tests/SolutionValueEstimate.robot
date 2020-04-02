@@ -16,7 +16,7 @@ Resource          ../../frontendsanity/resources/Variables.robot
 *** Test Cases ***
 
 createAOppoViaSVE
-    [Tags]    BQA-8798    AUTOLIGHTNING
+    [Tags]    BQA-8798    AUTOLIGHTNING     SVE
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
@@ -32,7 +32,7 @@ createAOppoViaSVE
 
 
 AddProducrViaSVEandCPQFlow
-    [Tags]      BQA-10817      AUTOLIGHTNING        OpportunityValidation
+    [Tags]      BQA-10817      AUTOLIGHTNING        SVE
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    Digita Oy
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
