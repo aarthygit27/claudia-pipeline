@@ -2063,6 +2063,7 @@ Availability of HDC Related Fields in b2b opportunitty
     AddProductToCart    Alerta projektointi
     UpdateAndAddSalesType    Alerta projektointi
     log to console  0
+    Go To Entity    ${oppo_name}
     Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
     Log to console  1
     Closing the opportunity    Closed Won
