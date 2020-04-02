@@ -56,25 +56,6 @@ Force click element
     Execute JavaScript    document.evaluate("${element_xpath}", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(0).click();
     Sleep    2s
 
-Click Clear All Notifications
-    ${notifi_present}=    Run Keyword And Return Status    Element Should Be Visible    xpath=//*[text()='Clear All']/..
-    Run Keyword If    ${notifi_present}    Clear Notifications
-    ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
-    Run Keyword If    ${present}    Close All Notifications
-
-Clear Notifications
-    click element    xpath=//*[text()='Clear All']/..
-
-Close All Notifications
-    @{locators}=    Get Webelements    xpath=${CLOSE_NOTIFICATION}
-    ${original}=    Create List
-    : FOR    ${locator}    IN    @{locators}
-    \    Run Keyword and Ignore Error    Close Notification
-
-Close Notification
-    ${visible}=    run keyword and return status    element should be visible    ${CLOSE_NOTIFICATION}
-    run keyword if    ${visible}    Click Element    xpath=${CLOSE_NOTIFICATION}
-
 Go to Entity
     [Arguments]    ${target}    ${type}=${EMPTY}
     ${present}=    Run Keyword And Return Status    Element Should Be Visible    ${CLOSE_NOTIFICATION}
@@ -265,7 +246,6 @@ Delete all entities from Accounts Related tab
     run keyword if    ${visible}    ScrollUntillFound    //span[text()='View All']/span[contains(text(),'${entities}')]
     #//span[contains(text(),'${entities}')]/../../span/../../../a
     ${display}=    run keyword and return status    Element Should Be Visible    //span[text()='View All']/span[contains(text(),'${entities}')]
-    run keyword if    ${display}    Select rows to delete the entities     ${entities}
 
 
 Select rows to delete the entities

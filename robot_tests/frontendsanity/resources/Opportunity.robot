@@ -603,34 +603,6 @@ Closing the opportunity and check Continuation
     Page Should Contain Element   //*[text()="Create Continuation Sales Opportunity?"]
     log to console   Create Continuation Sales Opportunity is visible
 
-
-Closing the opportunity and check Continuation
-    [Arguments]    ${stage1}
-    #${stage_complete}=    set variable    //span[text()='Mark Stage as Complete']
-    ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
-    ${edit_stage}=    set variable    //button[@title='Edit Stage']
-    #Wait Until Element Is Visible    ${stage_complete}    60s
-    ${stage}=    Get Text    ${current_stage}
-    Log To Console    The current stage is ${stage}
-    Capture Page Screenshot
-    click element    ${EDIT_STAGE_BUTTON}
-    Sleep  30s
-    Select option from Dropdown   //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div   ${stage1}
-    #Wait Until Page Contains Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    60s
-    Execute Javascript    window.scrollTo(0,7000)
-    #Get Text    //span[contains(text(),'Service Address Street')]/../../span
-    Select option from Dropdown    //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div    08 Other
-    Scroll Page To Location    0    3000
-    Click element    //lightning-textarea//label[text()="Close Comment"]/../div/textarea
-    Input Text    //lightning-textarea//label[text()="Close Comment"]/../div/textarea    this is a test opportunity to closed won
-    #sleep  30s
-    Wait Until Page Contains Element     //button[@title="Save"]   60s
-    click element    //button[@title="Save"]
-    sleep  30s
-    wait until page contains element  //*[text()="Create Continuation Sales Opportunity?"]   30s
-    Page Should Contain Element   //*[text()="Create Continuation Sales Opportunity?"]
-    log to console   Create Continuation Sales Opportunity is visible
-
 Check opportunity value is correct
     ScrollUntillFound    //h3/button/span[text()='Opportunity Value and FYR']
     Wait until page contains element    //span[text()='OneTime Total']/../../../div/div[2]/span//lightning-formatted-text[text()='200,00 €']    30s
