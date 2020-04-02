@@ -2062,12 +2062,9 @@ Availability of HDC Related Fields in b2b opportunitty
     ClickingOnCPQ   ${oppo_name}
     AddProductToCart    Alerta projektointi
     UpdateAndAddSalesType    Alerta projektointi
-    log to console  0
     Go To Entity    ${oppo_name}
     Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
-    Log to console  1
     Closing the opportunity    Closed Won
-    log to console  2
     Validate the HDc Related fields are non editable after closing Opportunity
     logoutAsUser  ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}

@@ -6884,7 +6884,6 @@ updating setting Telia Domain Name space
 Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
    [Documentation]  To Validate that HDC Rack Amount and HDC Total KW fields and Edit the values in the opportunity page
    scrolluntillfound  //span[text()="Additional Details"]
-   log to console  1
    wait until page contains element  //span[text()="HDC Total KW"]  60s
    page should contain element    //div//div//span[text()="Investment ID"]//following::div[8]//span[text()="HDC Total KW"]
    page should contain element   //div//div//span[text()="Investment ID"]//following::div[16]//span[text()="HDC Rack Amount"]
@@ -6896,7 +6895,6 @@ Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
    input text  //input[@name="HDC_Rack_Amount__c"]   ${HDC_Rack_Amount}
    wait until page contains element  //button[@title="Save"]  60s
    click element  //button[@title="Save"]
-   LOg to console  2
    wait until page contains element  //div//span[text()="HDC Total KW"]//following::lightning-formatted-number[text()=normalize-space(.)="${HDC_Total_KW},00"]   60s
    page should contain element      //div//span[text()="HDC Rack Amount"]//following::lightning-formatted-number[text()=normalize-space(.)="${HDC_Rack_Amount},00"]
    scroll page to element  //span[text()="System Information"]
