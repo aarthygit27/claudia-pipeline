@@ -6244,11 +6244,15 @@ Validate Billing system response
 #    ${status_page}    Run Keyword And Return Status    Page should contain element     //lightning-formatted-text[contains(text(),"Completed")]   60s
     Run Keyword If    ${status_page} == False    force click element   //button[text()='Complete Item']
     sleep   20s
-    Run Keyword If    ${status_page} == False    Reload Page
-    Run Keyword If    ${status_page} == False    Sleep  60s
+#    Run Keyword If    ${status_page} == False    Reload Page
+#    Run Keyword If    ${status_page} == False    Sleep  60s
 #    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
     wait until page contains element  //lightning-formatted-text[contains(text(),"Completed")]    300s
-    #Go back
+    wait until page contains element    //*[@records-formulaoutput_formulaoutput=""]//a   30s
+    force click element   //*[@records-formulaoutput_formulaoutput=""]//a
+    switch between windows  1
+    sleep   20s
+#    Go back
 
 
 HDC Order
@@ -7039,7 +7043,6 @@ Validate technical contact in the asset history page using subscription as
      unselect frame
      sleep  10s
      switch between windows  1
-#    Switch Window  NEW
      ${contact_value}  get text  ${Account_Asset_TechnicalContact}
      Should be equal   ${contact_value}    ${Contact_name}
 
