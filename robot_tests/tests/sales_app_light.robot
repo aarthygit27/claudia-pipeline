@@ -2102,7 +2102,7 @@ One Order- B2O Colocation and E2E B2O product
 #    Go To Salesforce and Login into Lightning  B2O User
     Go To Salesforce and Login into Lightning   System Admin
     swithchtouser   B2O Test User
-    Go To Entity    ${order_number}
+    Go to   ${url}
     Reload page
     ValidateSapCallout
     Validate Billing system response
