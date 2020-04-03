@@ -4025,7 +4025,7 @@ SwithchToUser
     #log to console   ${user}.this is user
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${user}
-    sleep  3s
+    sleep  30s
     press key   xpath=${SEARCH_SALESFORCE}    \\13
     wait until page contains element    //a[text()='${user}']     45s
     #wait until page contains element  //span[@title='${user}']//following::div[text()='User']   30s
@@ -4039,7 +4039,7 @@ SwithchToUser
     select frame  //div[contains(@class,'iframe')]/iframe
     wait until page contains element  //td[@class="pbButton"]/input[@title='Login']   60s
     force click element  //td[@class="pbButton"]/input[@title='Login']
-    sleep  2s
+    sleep  20s
     unselect frame
     Reload page
     Execute Javascript    window.location.reload(true)
