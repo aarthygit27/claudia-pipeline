@@ -546,7 +546,7 @@ Change business account owner
 Add an account team member as account owner
     [Tags]    BQA-10524     AUTOLIGHTNINGOLD       AccountManagement
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
-    Go To Salesforce and Login into Admin User
+    Go To Salesforce and Login into Admin User    System Admin
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Check original account owner and change if necessary for event
     logoutAsUser  Sales Admin
@@ -2103,5 +2103,6 @@ Validate FYR values created through CPQ page in Oppo page
     updateandaddsalestype for multiple products with different salestype  @{products}
     Go To Entity    ${oppo_name}
 
-
-
+Testing Admin issuses
+    [Tags]  BQA-bosstest
+    Go To Salesforce and Login into Lightning   System Admin
