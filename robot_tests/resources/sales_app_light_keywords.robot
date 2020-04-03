@@ -4031,6 +4031,7 @@ SwithchToUser
     #wait until page contains element  //span[@title='${user}']//following::div[text()='User']   30s
     #click element  //span[@title='${user}']//following::div[text()='User']
     click element  //a[text()='${user}']
+    sleep  90s
     wait until page contains element  //div[@class='primaryFieldAndActions truncate primaryField highlightsH1 slds-m-right--small']//span[text()='${user}']  60s
     wait until page contains element  //div[text()='User Detail']   60s
     click element  //div[text()='User Detail']
@@ -5450,7 +5451,6 @@ Fill Contract Details
     Force Click element   ${Telia Signed Date}
     Click element   //a[@title='Go to next month']
     Click element   //table[@class='calGrid']/tbody/tr[1]/td[1]/span[1]
-
     #Wait until element is visible    ${Edit Contractual Contact Person}  60s
     #Click element    ${Edit Contractual Contact Person}
     Wait until element is visible    ${Search Contracts}  30s
@@ -5472,10 +5472,8 @@ Fill Contract Details
     Run keyword unless    ${status}   Reload page
     Run keyword unless    ${status}   sleep  10s
     Run keyword unless    ${status}   Fill Contract Details   ${Contract_Type}  ${Linked Customer Contract}
-
     click element  ${save}
     sleep  10s
-
     ${status}  Run keyword and return status  Element should not be visible  ${save}
     Reload page
     sleep  10s
@@ -6254,9 +6252,6 @@ Validate Billing system response
 
 
 HDC Order
-
-
-
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     log to console    ${contact}.this is name
