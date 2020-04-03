@@ -2103,9 +2103,9 @@ One Order- B2O Colocation and E2E B2O product
     Go To Salesforce and Login into Lightning   System Admin
     swithchtouser   B2O Test User
     Go to   ${url}
+    Validate Billing system response
     Reload page
     ValidateSapCallout
-    Validate Billing system response
 
 
 Validate FYR values in Oppo page created through SVE

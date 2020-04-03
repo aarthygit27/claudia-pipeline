@@ -6482,7 +6482,7 @@ Close and submit
 
 
 ValidateSapCallout
-
+    sleep  30s
     wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
     ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
     log to console  ${order_number}.this is order numner
@@ -6493,7 +6493,6 @@ ValidateSapCallout
     sleep  3s
     Wait until element is visible   ${Detail}  60s
     Force click element   ${Detail}
-    log to console   ${Detail}.details is clicked
     Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
     Click element  //span[text()='Orchestration Plan']//following::a[1]
     sleep    100s
@@ -6517,6 +6516,7 @@ ValidateSapCallout
 #   wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
     wait until page contains element    //span[text()='State']/../../../../..//lightning-formatted-text[text()='Completed']      300s
     force click element      //span[contains(text(),"Orchestration Plan")]/../..//*[@class="slds-form-element__control"]//span/..//a
+     log to console   ValidateSapCallout
 create another quote with same opportunity
 
     Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
