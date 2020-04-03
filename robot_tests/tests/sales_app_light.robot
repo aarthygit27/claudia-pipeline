@@ -2106,3 +2106,6 @@ Validate FYR values created through CPQ page in Oppo page
 Testing Admin issuses
     [Tags]  BQA-bosstest
     Go To Salesforce and Login into Lightning   System Admin
+    swithchtouser   B2O NetworkSales
+
+
