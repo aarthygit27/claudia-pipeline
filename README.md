@@ -1,15 +1,12 @@
-# Structure
-```
-├───config
-└───salesforce_configs
-    └───metadata_configurations
-        └───endpoints
-            ├───remoteSiteSettings
-            └───workflows
-```
+# Test Automation
+    > Pack has different set of tests for Frontend, Integration, P&O.
 
-## config
-Config files for Salesforce sandboxes and `config_parser.py` for automatically parsing the config files.
+## Contents
 
-## salesforce_configs
-Different configuration files required to run after Salesforce sandbox refreshes.
+- [Installation](#installation)
+
+## Installation
+- Softwares & Frameworks
+    - 
+    
+
