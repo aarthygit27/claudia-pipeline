@@ -6906,8 +6906,8 @@ SelectingTechnicalContactforTeliaDomainNameService
     Input Text    ${city_Name}   ${City}
     force click element  ${Communication}
     sleep  10s
-    wait until page contains element  ${DNS_communication_language} 60s
-    click visible element  ${DNS_communication_language}
+    wait until page contains element  ${DNS_communication_language_english} 60s
+    click visible element  ${DNS_communication_language_english}
 
     sleep  60s
     Click Element    ${contact_next_button}
