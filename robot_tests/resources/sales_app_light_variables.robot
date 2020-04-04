@@ -339,7 +339,7 @@ ${contact_email}    //input[@id='OCEmail']
 ${Technical_contact_email}    //input[@id='TCEmail']
 ${contact_next_button}   //div[@id='SelectOrderLevelContacts_nextBtn']
 ${updateContactDR}    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
-${Main_User} //input[@id="MainContactTA"]
+${Main_User}     //input[@id="MainContactTA"]
 ${City}     Helsiniki
 ${FirstName}    //input[@id="MCFname"]
 ${LastName}    //input[@id="MCLname"]
@@ -348,7 +348,7 @@ ${MobileNumber}     //input[@id="MCMobile"]
 ${Street}     //input[@id="MCStreet"]
 ${Postal_codes}     //input[@id="MCPostalCode"]
 ${city_Name}     //input[@id="MCCity"]
-${Communication}  //select[@id="MCLanguage"]
+${Communication}    //select[@id="MCLanguage"]
 ${DNS_communication_language_english}      //select[@id="MCLanguage"]//*[@value="English"]
 
 #VULA CPQ Psge
