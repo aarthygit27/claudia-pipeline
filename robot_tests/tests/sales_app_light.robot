@@ -2038,7 +2038,7 @@ DNS - Asset Verification
     Adding Products   ${pdtname}
     updating setting Telia Domain Name space
     UpdateAndAddSalesType  ${pdtname}
-    View Open Quote
+#    View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
     sleep  40s
