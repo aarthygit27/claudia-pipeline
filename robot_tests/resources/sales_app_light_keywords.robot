@@ -6888,7 +6888,7 @@ SelectingTechnicalContactforTeliaDomainNameService
     sleep  10s
     Execute JavaScript    window.scrollTo(0,200)
     Wait Until element is visible   ${Main_User}     30s
-    Input text    ${Main_User}  ${d}
+    Input text    ${Main_User}  ${contact_name}
     sleep  10s
     Click element   css=.typeahead .ng-binding
     sleep  10s
