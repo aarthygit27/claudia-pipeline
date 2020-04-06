@@ -2103,9 +2103,6 @@ Validate FYR values created through CPQ page in Oppo page
     updateandaddsalestype for multiple products with different salestype  @{products}
     Go To Entity    ${oppo_name}
 
-Testing Admin issuses
-    [Tags]  BQA-bosstest
-    Go To Salesforce and Login into Lightning   System Admin
-    swithchtouser   B2O NetworkSales
+
 
 
