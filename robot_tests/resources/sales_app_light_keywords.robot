@@ -6858,6 +6858,7 @@ Adding Telia Domain Name service
     unselect frame
 
 updating setting Telia Domain Name space
+    [Documentation]  This is to update the settings in Telia domain name service
     [Arguments]   ${pname}=${product_name}
     select frame    ${iframe}
     ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
@@ -6996,8 +6997,8 @@ Mofify the contract length and validate in the opportunity page
      ${revenue_value}=  evaluate  ((${RC}*${contract_lenght_updated})+ ${NRC}) * ${product_quantity} +(${ARC}*2)
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
      page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00']
-     wait until page contains element  ${Save_OPPO}  60s
-     click element  ${Save_OPPO}
+     wait until page contains element  ${Save_sve}  60s
+     click element  ${Save_sve}
      unselect frame
      [Return]   ${fyr_value}
 
@@ -7167,8 +7168,8 @@ Validate Main user in order product
     Log to Console    ${ordercontact role}
 
 Validate ServiceAdministrator in Account contact role
-   [Arguments]    ${First_name}   ${lastname}
-   [Documentation]   This is to validate the account contact role created belongs to Service Adminisatrator
+    [Arguments]    ${First_name}   ${lastname}
+    [Documentation]   This is to validate the account contact role created belongs to Service Adminisatrator
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Reload page
     wait until page contains element     ${ACCOUNT_RELATED}  45s
@@ -7203,9 +7204,10 @@ Validate the HDc Related fields aeditable if the profile is admin after closing 
     page should contain element   ${Edit HDC Total KW}
 
 Validation of Telia Domain Name Service
+    [Documentation]  this is to validate the annnual,monthly,one time total charges in the quote page
     [Arguments]     ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}
     wait until page contains element      ${quote_number}   60s
-    click element  ${DETAILS_TAB}
+    click element  ${DETAILS}
     scrolluntillfound  ${Recurring Total(Exc. Reporting)}
     page should contain element   //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="Annual Recurring Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Annual Recurring charge}"]
     page should contain element     //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="Monthly Recurring Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Monthly recurring chage}"]

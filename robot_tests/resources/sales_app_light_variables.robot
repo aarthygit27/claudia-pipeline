@@ -175,7 +175,7 @@ ${OFFICE_NAME_FIELD}    //span[text()='Office Name']/ancestor::label/../input
 ${MONTH_TEXT}     //h2[@class='monthYear']
 ${NEXT_BUTTON_MONTH}    //a[@title='Go to next month']
 ${YEAR_DROPDOWN}    //select[contains(@class,'slds-select')]
-${DETAILS_TAB}    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+${DETAILS}    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
 ${DATE_PICKER}    //span[text()='Date Picker']/..
 ${EMAIL_ID_FIELD}    //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
 #//div[@id='email']//input
@@ -321,6 +321,7 @@ ${quote_number}   //div/span[@title="Quote Number"]
 ${Recurring Total(Exc. Reporting)}      //span[text()="Recurring Total(Exc. Reporting)"]
 ${Asiakkaan verkkotunnus}     //form[@name='productconfig']//label[text()[normalize-space() = 'Asiakkaan verkkotunnus (muotoa domain.pääte)']]/..//div//input
 ${Linkittyvä tuote}   //form[@name='productconfig']//label[text()[normalize-space() = 'Linkittyvä tuote']]/..//div//input
+${Save_sve}   //button[contains(text(),"Save")]
 ### Lead  Variables ###
 
 ${lead_account_name}                Academic Work HR Services Oy
