@@ -1809,6 +1809,8 @@ getOrderStatusAfterSubmitting
     should not be equal as strings  ${fulfilment_status}  Error
     should not be equal as strings  ${status}  Error
     ${order_no}   get text   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Order Number']/../following-sibling::div/span/span
+    ${location}=    Get Location
+    set test variable   ${Order_url}   ${location}
     #log to console  ${order_no}.this is getorderstatusafgtersubmirting function
     Sleep  20s
     wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']  60s
@@ -4025,12 +4027,13 @@ SwithchToUser
     #log to console   ${user}.this is user
     Wait Until Page Contains element    xpath=${SEARCH_SALESFORCE}    60s
     Input Text    xpath=${SEARCH_SALESFORCE}    ${user}
-    sleep  3s
+    sleep  30s
     press key   xpath=${SEARCH_SALESFORCE}    \\13
     wait until page contains element    //a[text()='${user}']     45s
     #wait until page contains element  //span[@title='${user}']//following::div[text()='User']   30s
     #click element  //span[@title='${user}']//following::div[text()='User']
     click element  //a[text()='${user}']
+    sleep  90s
     wait until page contains element  //div[@class='primaryFieldAndActions truncate primaryField highlightsH1 slds-m-right--small']//span[text()='${user}']  60s
     wait until page contains element  //div[text()='User Detail']   60s
     click element  //div[text()='User Detail']
@@ -4039,7 +4042,7 @@ SwithchToUser
     select frame  //div[contains(@class,'iframe')]/iframe
     wait until page contains element  //td[@class="pbButton"]/input[@title='Login']   60s
     force click element  //td[@class="pbButton"]/input[@title='Login']
-    sleep  2s
+    sleep  20s
     unselect frame
     Reload page
     Execute Javascript    window.location.reload(true)
@@ -4491,10 +4494,12 @@ ValidateTheOrchestrationPlan
     Run Keyword if   ${status} == False    GetOrchestrationPlanfromDetail
 #    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     #execute javascript    window.scrollTo(0,2000)
-    #sleep    10s
+    sleep    30s
     #log to console    plan validation
-    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
-    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+#    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
+#    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+     wait until page contains element   //span[text()='Orchestration Plan']   30s
+#    click element   //span[text()='Orchestration Plan']
     sleep    10s
     ${location}=    Get Location
     set test variable   ${url}   ${location}
@@ -6243,11 +6248,15 @@ Validate Billing system response
 #    ${status_page}    Run Keyword And Return Status    Page should contain element     //lightning-formatted-text[contains(text(),"Completed")]   60s
     Run Keyword If    ${status_page} == False    force click element   //button[text()='Complete Item']
     sleep   20s
-    Run Keyword If    ${status_page} == False    Reload Page
-    Run Keyword If    ${status_page} == False    Sleep  60s
+#    Run Keyword If    ${status_page} == False    Reload Page
+#    Run Keyword If    ${status_page} == False    Sleep  60s
 #    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
     wait until page contains element  //lightning-formatted-text[contains(text(),"Completed")]    300s
-    #Go back
+    wait until page contains element    //*[@records-formulaoutput_formulaoutput=""]//a   30s
+    force click element   //*[@records-formulaoutput_formulaoutput=""]//a
+    switch between windows  1
+    sleep   20s
+#    Go back
 
 
 HDC Order
@@ -6481,7 +6490,7 @@ Close and submit
 
 
 ValidateSapCallout
-
+    sleep  30s
     wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
     ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
     log to console  ${order_number}.this is order numner
@@ -6492,7 +6501,6 @@ ValidateSapCallout
     sleep  3s
     Wait until element is visible   ${Detail}  60s
     Force click element   ${Detail}
-    log to console   ${Detail}.details is clicked
     Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
     Click element  //span[text()='Orchestration Plan']//following::a[1]
     sleep    100s
@@ -6516,6 +6524,7 @@ ValidateSapCallout
 #   wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
     wait until page contains element    //span[text()='State']/../../../../..//lightning-formatted-text[text()='Completed']      300s
     force click element      //span[contains(text(),"Orchestration Plan")]/../..//*[@class="slds-form-element__control"]//span/..//a
+     log to console   ValidateSapCallout
 create another quote with same opportunity
 
     Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
@@ -6883,7 +6892,7 @@ SelectingTechnicalContactforTeliaDomainNameService
     sleep  10s
     Execute JavaScript    window.scrollTo(0,200)
     Wait Until element is visible   ${Main_User}     30s
-    Input text    ${Main_User}  ${d}
+    Input text    ${Main_User}  ${contact_name}
     sleep  10s
     Click element   css=.typeahead .ng-binding
     sleep  10s
@@ -6899,10 +6908,11 @@ SelectingTechnicalContactforTeliaDomainNameService
     Input Text   ${Postal_codes}   43500
     Wait until element is visible   ${city_Name}   30s
     Input Text    ${city_Name}   ${City}
-    force click element  ${Communication}
+#    force click element  ${Communication}
+    Select From List by Value    ${Communication}    ${COMMUNICATION_LANG}
     sleep  10s
-    wait until page contains element  ${DNS_communication_language} 60s
-    click visible element  ${DNS_communication_language}
+#    wait until page contains element  ${DNS_communication_language_english} 60s
+#    click visible element  ${DNS_communication_language_english}
 
     sleep  60s
     Click Element    ${contact_next_button}
@@ -7038,7 +7048,6 @@ Validate technical contact in the asset history page using subscription as
      unselect frame
      sleep  10s
      switch between windows  1
-#    Switch Window  NEW
      ${contact_value}  get text  ${Account_Asset_TechnicalContact}
      Should be equal   ${contact_value}    ${Contact_name}
 

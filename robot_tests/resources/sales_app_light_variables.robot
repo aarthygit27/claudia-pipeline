@@ -304,7 +304,7 @@ ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
 ${group_id}         SALES FORCE TEST 1
 #Changes for each account
-${billing_acc_name}    Billing Telia Communication Oy_001
+${billing_acc_name_comm1}    Billing Telia Communication Oy_001
 ${billing_acc_name_digi1}   Billing_Digita Oy_2961
 @{List}=  Telia chat  Telia Robotics   Telia colocation   Telia ACE   DataNet  Telia IOT Office  Telia Yhteyspiste
 ${a} =  0
@@ -339,7 +339,7 @@ ${contact_email}    //input[@id='OCEmail']
 ${Technical_contact_email}    //input[@id='TCEmail']
 ${contact_next_button}   //div[@id='SelectOrderLevelContacts_nextBtn']
 ${updateContactDR}    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
-${Main_User} //input[@id="MainContactTA"]
+${Main_User}     //input[@id="MainContactTA"]
 ${City}     Helsiniki
 ${FirstName}    //input[@id="MCFname"]
 ${LastName}    //input[@id="MCLname"]
@@ -348,7 +348,7 @@ ${MobileNumber}     //input[@id="MCMobile"]
 ${Street}     //input[@id="MCStreet"]
 ${Postal_codes}     //input[@id="MCPostalCode"]
 ${city_Name}     //input[@id="MCCity"]
-${Communication}  //select[@id="MCLanguage"]
+${Communication}    //select[@id="MCLanguage"]
 ${DNS_communication_language_english}      //select[@id="MCLanguage"]//*[@value="English"]
 
 #VULA CPQ Psge
