@@ -2031,7 +2031,7 @@ DNS - Asset Verification
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
 #    ${billing_acc_name}    run keyword    CreateABillingAccount     $${B2O Account}
-#    log to console    ${billing_acc_name}.this is billing account name
+#   log to console    ${billing_acc_name}.this is billing account name
     Go To Entity    ${oppo_name}
     ClickingOnCPQ    ${oppo_name}
     search products   ${pdtname}
@@ -2045,15 +2045,15 @@ DNS - Asset Verification
     SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
     SelectingTechnicalContactforTeliaDomainNameService  ${contact_name}
     RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name_digi1}
+    SelectOwnerAccountInfo   ${billing_acc_name_comm1}
     clickOnSubmitOrder
     ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Go To Salesforce and Login into Lightning       System Admin
-    Go To Entity   ${Ordernumber}
+    Go To  ${Order_url}
     ${SubscriptionID}   run keyword  FetchfromOrderproduct  ${Ordernumber}
     log to console    ${SubscriptionID}.is a subscription ID
-    Validate technical contact in the asset history page using subscription as  ${SubscriptionID}  ${contact}
+    Validate technical contact in the asset history page using subscription as  ${SubscriptionID}  ${contact_name}
 
 
 
@@ -2062,46 +2062,47 @@ One Order- B2O Colocation and E2E B2O product
     [Documentation]  This script is designed to  validate the functional flow of  the add two products added and update the  order status correctly by using  B20 user
     set test variable   ${Account}    Digita Oy
     Go To Salesforce and Login into Lightning   System Admin
-    Go to Entity  ${Account}
-    Delete all assets
+##    Go to Entity  ${Account}
+##    Delete all assets
     swithchtouser   B2O Test User
 #    logoutAsUser   ${SALES_ADMIN_APP_USER}
 #    Go To Salesforce and Login into Lightning  B2O User
-    sleep  40s
-    Go To Entity    ${Account}
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact}.this is name
-    Set test variable  ${contact_name}   ${contact}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
-#    ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
-#    log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    ${oppo_name}
-    ChangeThePriceList      B2O
-    ClickingOnCPQ    ${oppo_name}
-    sleep   10s
-    Adding Vula    VULA
-    Update Setting Vula without Next   VULA
-    Adding Telia Colocation    Telia Colocation
-    Updating Setting Telia Colocation
-    UpdateAndAddSalesTypeB2O   Telia Colocation
-    View Open Quote
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    SearchAndSelectBillingAccount   ${Account}
-    select order contacts- HDC  ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name_digi1}
-    Submit Order Button
-    Reload page
+#    sleep  40s
+#    Go To Entity    ${Account}
+#    ${contact}    run keyword    CreateAContactFromAccount_HDC
+#    log to console    ${contact}.this is name
+#    Set test variable  ${contact_name}   ${contact}
+#    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+#    log to console    ${oppo_name}.this is opportunity
+##    ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
+##    log to console    ${billing_acc_name}.this is billing account name
+#    Go To Entity    ${oppo_name}
+#    ChangeThePriceList      B2O
+#    ClickingOnCPQ    ${oppo_name}
+#    sleep   10s
+#    Adding Vula    VULA
+#    Update Setting Vula without Next   VULA
+#    Adding Telia Colocation    Telia Colocation
+#    Updating Setting Telia Colocation
+#    UpdateAndAddSalesTypeB2O   Telia Colocation
+#    View Open Quote
+#    ClickonCreateOrderButton
+#    NextButtonOnOrderPage
+#    SearchAndSelectBillingAccount   ${Account}
+#    select order contacts- HDC  ${contact_name}
+#    RequestActionDate
+#    SelectOwnerAccountInfo   ${billing_acc_name_digi1}
+#    Submit Order Button
+#    Reload page
+    go to  https://telia-fi--rel.lightning.force.com/lightning/r/Order/8011w000002uixRAAQ/view
     ${order_number}   run keyword    ValidateTheOrchestrationPlan
-    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-    DDM Request Handling   ${order_number}
-    Open Browser And Go To Login Page
+#    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
+#    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+#    DDM Request Handling   ${order_number}
+#    Open Browser And Go To Login Page
 #    Go To Salesforce and Login into Lightning  B2O User
-    Go To Salesforce and Login into Lightning   System Admin
-    swithchtouser   B2O Test User
+#    Go To Salesforce and Login into Lightning   System Admin
+#    swithchtouser   B2O Test User
     Go to   ${url}
     Validate Billing system response
     Reload page
@@ -2128,6 +2129,26 @@ Validate FYR values in Oppo page created through SVE
     reload page
     sleep  10s
     Validating FYR values in Opportunity Header   ${fyr_total}  ${new}  ${ren}  ${frame}
+
+B2B opportunity closing
+    [Documentation]  This script is designed to close opportunity by B2B User
+    [Tags]  BQA-13357
+     set test variable  ${contact_name}   Testing Contact_20200331-143447
+     set test variable  ${oppo_name}   Test Robot Order_20200331-143556
+     Go To Salesforce and Login into Lightning  B2B DigiSales
+#    Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
+#    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+#    Log to console    ${contact}.this is name
+#    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+#    log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    search products   Telia Chat
+    AddProductToCart   Telia Chat
+    UpdateAndAddSalesType    Telia Chat
+#    go to  https://telia-fi--rel.lightning.force.com/lightning/r/Opportunity/0061w00001BipqTAAR/view
+    Cancel Opportunity and Validate     ${oppo_name}     Cancelled
+#    Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
 
 
 

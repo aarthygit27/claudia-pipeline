@@ -304,7 +304,7 @@ ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
 ${group_id}         SALES FORCE TEST 1
 #Changes for each account
-${billing_acc_name}    Billing Telia Communication Oy_001
+${billing_acc_name_comm1}    Billing Telia Communication Oy_001
 ${billing_acc_name_digi1}   Billing_Digita Oy_2961
 @{List}=  Telia chat  Telia Robotics   Telia colocation   Telia ACE   DataNet  Telia IOT Office  Telia Yhteyspiste
 ${a} =  0

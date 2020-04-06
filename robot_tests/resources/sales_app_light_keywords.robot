@@ -1809,6 +1809,8 @@ getOrderStatusAfterSubmitting
     should not be equal as strings  ${fulfilment_status}  Error
     should not be equal as strings  ${status}  Error
     ${order_no}   get text   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Order Number']/../following-sibling::div/span/span
+    ${location}=    Get Location
+    set test variable   ${Order_url}   ${location}
     #log to console  ${order_no}.this is getorderstatusafgtersubmirting function
     Sleep  20s
     wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']  60s
@@ -6904,10 +6906,11 @@ SelectingTechnicalContactforTeliaDomainNameService
     Input Text   ${Postal_codes}   43500
     Wait until element is visible   ${city_Name}   30s
     Input Text    ${city_Name}   ${City}
-    force click element  ${Communication}
+#    force click element  ${Communication}
+    Select From List by Value    ${Communication}    ${COMMUNICATION_LANG}
     sleep  10s
-    wait until page contains element  ${DNS_communication_language_english} 60s
-    click visible element  ${DNS_communication_language_english}
+#    wait until page contains element  ${DNS_communication_language_english} 60s
+#    click visible element  ${DNS_communication_language_english}
 
     sleep  60s
     Click Element    ${contact_next_button}
