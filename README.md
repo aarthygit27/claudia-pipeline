@@ -29,11 +29,22 @@
 - FrontEnd Automation
     - Path - robot_tests/frontendsanity
     - Here robot test cases are grouped w.r.t functionality in path - robot_tests/frontendsanity/tests
-    - Below are the test cases and the keywords to be used for the test cases in respective functionality.
+    - Below are the existing keywords and description.
     
-
-| Test                             | Description                                                                        | Varibles.robot                                   | Login.robot                              | Common.robot                                        | Account.robot                                             | Opportunity.robot |
-|----------------------------------|------------------------------------------------------------------------------------|--------------------------------------------------|------------------------------------------|-----------------------------------------------------|-----------------------------------------------------------|-------------------|
-| AccountManagement.robot          | Functionalities related to Business Account, <br>Group Account and Account related | Resusable xpath, data are <br>passed to the test | Keywords related to login <br>and logout | Generic keywords used across <br>the tests/keywords | Keywords specific to Account <br>management functionality |                   |
-| AutomaticAvailabilityCheck.robot | Functionalities related to Automatic <br>Availability check                        | Resusable xpath, data are <br>passed to the test | Keywords related to login <br>and logout | Generic keywords used across <br>the tests/keywords |                                                           |                   |
-|                                  |                                                                                    |                                                  |                                          |                                                     |                                                           |                   |    
+| Keywords                    | Description                                                                                                                               |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| Account.robot               | Keywords related to Account Management and related functionalities                                                                        |
+| Availability.robot          | Keywords related to Automatic and Manual availability                                                                                     |
+| Cases&ApprovalRequest.robot | Keywords related to GTM request, Pricing request approval process, Investment case approval process, Pricing escalation approval process  |
+| Common. robot               | All common keywords used across tests/keywords                                                                                            |
+| Contact.robot               | Keywords related to Contacts and related functionality                                                                                    |
+| Contract.robot              | Keywords related to Contract and related functionality                                                                                    |
+| CPQ.robot                   | Keywords related to CPQ, Adding and validating products in the cart, Updating settings, salestype etc..                                   |
+| LeadValidation.robot        | Keywords related to Lead functionality                                                                                                    |
+| Login.robot                 | Keywords related to Login (different users) & Logout                                                                                      |
+| Opportunity.robot           | Keywords related to creating Opportunity, update fields in Opportunity, validation, closing Oppo, Opportunity lists.                      |
+| Order.Robot                 | Keywords related to creating Order, entering details in Post-create Order omniscript, submitting, validation                              |
+| OtherSystem.robot           | Keywords related to validation of callout after Order submission.                                                                         |
+| Quote.robot                 | Keywords related to creating Quote, credit score approval, Manual enqiry, send quote email.                                               |
+| SalesConsole.robot          | Keywords related to Sales console functionality                                                                                           |
+| SolutionValueEstimate.robot | Keywords related to adding products in SVE,                                                                                               |
