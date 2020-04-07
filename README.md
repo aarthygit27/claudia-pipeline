@@ -5,9 +5,10 @@
 ## Contents
 
 - [Installation](#installation)
+- [Framework and Scripts](#Framework and Scripts)
 
 ## Installation
-- Softwares & Frameworks
+####Softwares & Frameworks
     - Install Python 3.7 from https://www.python.org/downloads/windows/
     - Add Python Application path and Scripts path to Environment Variables
     - Install Robot Frameework by using command - pip install robotframework
@@ -17,7 +18,7 @@
     - Download geckodriver 0.17.0 and place it to PATH.
     - Download Pycharm or RIDE IDE or any other which suits you
     - Download Git Bash from https://git-scm.com/downloads
-- Project Repository Setup
+####Project Repository Setup
     - Go to Project Repository in Bitbucket (https://git.verso.sonera.fi/projects/BBDIG/repos/claudia-pipeline/browse)
     - Click on the Clone action in the side bar and copy the http link. Example : https://git.verso.sonera.fi/scm/bbdig/claudia-pipeline.git
     - Open git bash and clone the repository using command - git clone https://git.verso.sonera.fi/scm/bbdig/claudia-pipeline.git
@@ -26,10 +27,12 @@
     - The test cases can be found in 'robot_tests' folders of the cloned repository 
 
 ## Framework and Scripts
-- FrontEnd Automation
+#### FrontEnd Automation
     - Path - robot_tests/frontendsanity
     - Here robot test cases are grouped w.r.t functionality in path - robot_tests/frontendsanity/tests
     - Below are the existing keywords and description.
+    - Do not create new keywords file for any existing functionality.
+    - For new test case development, try to use the existing keywords first. If no generic keyword is found, search for the relevant keyword and check if that can be used with slight modification. If nothing works out, go ahead and create new keyword. 
     
 | Keywords                    | Description                                                                                                                               |
 |-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
@@ -47,4 +50,4 @@
 | OtherSystem.robot           | Keywords related to validation of callout after Order submission.                                                                         |
 | Quote.robot                 | Keywords related to creating Quote, credit score approval, Manual enqiry, send quote email.                                               |
 | SalesConsole.robot          | Keywords related to Sales console functionality                                                                                           |
-| SolutionValueEstimate.robot | Keywords related to adding products in SVE,                                                                                               |
+| SolutionValueEstimate.robot | Keywords related to adding products in SVE.                                                                                               |
