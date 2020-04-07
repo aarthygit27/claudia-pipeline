@@ -5,7 +5,7 @@
 ## Contents
 
 - [Installation](#installation)
-- [Framework and Scripts](#Framework and Scripts)
+- [Framework](#framework-and-scripts)
 
 ## Installation
 
