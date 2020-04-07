@@ -8,7 +8,8 @@
 - [Framework and Scripts](#Framework and Scripts)
 
 ## Installation
-####Softwares & Frameworks
+
+#### Softwares & Frameworks
     - Install Python 3.7 from https://www.python.org/downloads/windows/
     - Add Python Application path and Scripts path to Environment Variables
     - Install Robot Frameework by using command - pip install robotframework
@@ -18,7 +19,8 @@
     - Download geckodriver 0.17.0 and place it to PATH.
     - Download Pycharm or RIDE IDE or any other which suits you
     - Download Git Bash from https://git-scm.com/downloads
-####Project Repository Setup
+    
+#### Project Repository Setup
     - Go to Project Repository in Bitbucket (https://git.verso.sonera.fi/projects/BBDIG/repos/claudia-pipeline/browse)
     - Click on the Clone action in the side bar and copy the http link. Example : https://git.verso.sonera.fi/scm/bbdig/claudia-pipeline.git
     - Open git bash and clone the repository using command - git clone https://git.verso.sonera.fi/scm/bbdig/claudia-pipeline.git
@@ -27,6 +29,7 @@
     - The test cases can be found in 'robot_tests' folders of the cloned repository 
 
 ## Framework and Scripts
+
 #### FrontEnd Automation
     - Path - robot_tests/frontendsanity
     - Here robot test cases are grouped w.r.t functionality in path - robot_tests/frontendsanity/tests
