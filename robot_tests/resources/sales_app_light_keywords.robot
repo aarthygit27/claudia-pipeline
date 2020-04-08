@@ -3198,6 +3198,7 @@ Searching and adding multiple products
     Wait Until Element Is Enabled    ${iframe}    60s
     select frame    ${iframe}
     Scroll Page To Location    0    100
+    wait until page contains element  ${next_button}  60s
     Click Element    ${next_button}
     #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True    click element    ${next_button}
@@ -6283,9 +6284,7 @@ HDC Order
 HDC Order_B2O
 
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact}.this is name
-    Set test variable  ${contact_name}   ${contact}
+    ${contact_name}    run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
@@ -7168,8 +7167,8 @@ Validate Main user in order product
     Log to Console    ${ordercontact role}
 
 Validate ServiceAdministrator in Account contact role
-    [Arguments]    ${First_name}   ${lastname}
-    [Documentation]   This is to validate the account contact role created belongs to Service Adminisatrator
+   [Arguments]    ${First_name}   ${lastname}
+   [Documentation]   This is to validate the account contact role created belongs to Service Adminisatrator
     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     Reload page
     wait until page contains element     ${ACCOUNT_RELATED}  45s

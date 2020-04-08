@@ -546,7 +546,7 @@ Change business account owner
 Add an account team member as account owner
     [Tags]    BQA-10524     AUTOLIGHTNINGOLD       AccountManagement
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
-    Go To Salesforce and Login into Admin User    System Admin
+    Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Check original account owner and change if necessary for event
     logoutAsUser  Sales Admin
@@ -1825,19 +1825,19 @@ One Order - B2B Colocation and Change Order
 
 One Order- B2O Colocation and change order
     [Tags]  BQA-11523
-
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Lightning   DigiSales Admin
     Go to Entity   ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
-    HDC Order
+    Login to Salesforce as System Admin
+    swithchtouser   B2O Test User
+    HDC Order_B2O
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Login to Salesforce as System Admin
     DDM Request Handling
     Switch between windows    0
     logoutAsUser   ${SYSTEM_ADMIN_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Login to Salesforce as B2B DigiSales
     Go to   ${url}
     Validate Billing system response
     Change Order

@@ -325,7 +325,7 @@ ${Save_sve}   //button[contains(text(),"Save")]
 ### Lead  Variables ###
 
 ${lead_account_name}                Academic Work HR Services Oy
-${lead_business_id}                2733621-7`
+${lead_business_id}                2733621-7
 ${lead_email}                       kasibhotla.sreeramachandramurthy@teliacompany.com
 ${convert_lead_btn}                 //div[@title='Convert Lead']
 ${converting_lead_header}           //div[text()='Converting Lead']
