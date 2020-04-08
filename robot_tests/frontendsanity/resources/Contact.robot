@@ -64,7 +64,7 @@ Select from search List
     Run Keyword unless  ${IsErrorVisible}    Click Element       //button[@title='OK']
     #Press Enter On   ${field}
     Sleep   5s
-    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[@title='${value}']
+    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[text()='${value}']
     Sleep    2s
 
 Validate Contact Details

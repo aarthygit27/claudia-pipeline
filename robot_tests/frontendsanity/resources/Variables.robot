@@ -2,8 +2,8 @@
 #Console Variables
 ${CONS_BROWSER}                                  Firefox
 ${CONS_LOGIN_PAGE}                               https://test.salesforce.com/
-${CONS_ENVIRONMENT_CONSOLE}                      rel
-${CONS_B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${CONS_ENVIRONMENT_CONSOLE}
+${ENVIRONMENT_CONSOLE}                           rel
+${CONS_B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
 ${CONS_PASSWORDCONSOLE}                          PahaPassu3
 ${CONS_LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
 ${CONS_CLASSIC_MENU}                             //*[@id="userNav"]

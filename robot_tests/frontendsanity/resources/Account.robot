@@ -85,6 +85,8 @@ Open change owner view and fill the form
     #Wait element to load and click  //a[@role='option']/div/div[@title='${username}']
 #   Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
     Click element  //button[text()='Change Owner']
+    ${error}=    Run Keyword And Return Status    Element Should Be Visible    //button[text()='Change Owner']
+    Run Keyword If    ${error}    click button      //button[text()='Change Owner']
     sleep   40s
 
 Validate that account owner was changed successfully
@@ -206,18 +208,20 @@ Add new team member
     Delete Account team member
     Wait until page contains element    //ul/li/a[@title='New']     30s
     Force click element  //ul/li/a[@title='New']
-    Wait until page contains element    //input[@title='Search People']     60s
-    Input text  //input[@title='Search People']     ${new_team_member}
-    Wait element to load and click  //a[@role='option']/div//div[@title='${new_team_member}']
+    Wait until page contains element    //span[text()='User']//following::input     60s
+    Select from search List     //span[text()='User']//following::input     ${new_team_member}
+    sleep   2s
+    #Wait element to load and click  //a[@role='option']/div//div[@title='${new_team_member}']
     Wait element to load and click  //a[text()='--None--']
-    force click element  //div[@class="select-options"]//ul/li/a[@title="${role}"]
+    force click element     //div[@class="select-options"]//ul/li/a[@title="${role}"]
     Sleep  10s
     Click element   //button[@title='Save']
     sleep   30s
 
 Delete Account team member
     : FOR    ${i}    IN RANGE    1000
-    #\    Exit For Loop If    ${i} > ${count}-1
+    \   ${status}=  Run Keyword And Return Status    Element Should Be Visible    ${table_row}
+    \    Exit For Loop If    ${status}== False
     \   Wait Until Element Is Visible    ${table_row}    60s
     \   ${count}=    get element count    ${table_row}
     \   log to console       ${count}
