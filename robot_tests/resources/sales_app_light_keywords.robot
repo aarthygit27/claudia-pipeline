@@ -6203,6 +6203,7 @@ Switch between windows
     ${title}    Get Title
 
 
+
 File Handling - Change Order id
     [Arguments]   ${orderNo}
     #${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
@@ -6517,9 +6518,13 @@ ValidateSapCallout
     Force click element   ${Detail}
     Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
     Click element  //span[text()='Orchestration Plan']//following::a[1]
-    sleep    10s
-    Wait until element is visible  xpath=//*[@title='Orchestration Plan View']/div/iframe[1]   60s
-    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    sleep    100s
+#    Wait until element is visible  xpath=//*[@title='Orchestration Plan View']/div/iframe[1]   60s
+#     Wait until element is visible  xpath=//div[contains(@class,'content iframe-parent')]/iframe   100s
+#    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[contains(@class,'content iframe-parent')]/iframe
+   Run Keyword If    ${status_page} == False    Reload Page
+    select frame    xpath= //div[contains(@class,'content iframe-parent')]/iframe
     Wait until element is visible  //a[text()='Start Order']  60s
     Element should be visible    //a[text()='Start Order']
     Element should be visible    //a[text()='Create Assets']
@@ -6527,11 +6532,14 @@ ValidateSapCallout
     force click element       //a[@class='item-label item-header' and text()='Callout to SAP Provisioning I']
     unselect frame
     #sleep       80s
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
+#    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //span[text()='State']/../../../../..//lightning-formatted-text[text()='Completed']    200s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
-
+#   wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
+    wait until page contains element    //span[text()='State']/../../../../..//lightning-formatted-text[text()='Completed']      300s
+    force click element      //span[contains(text(),"Orchestration Plan")]/../..//*[@class="slds-form-element__control"]//span/..//a
+     log to console   ValidateSapCallout
 create another quote with same opportunity
 
     Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
@@ -7204,8 +7212,148 @@ Validate ServiceAdministrator in Account contact role
     Page should contain element   //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]//following::td[1]//span//span[text()="Service Administrator"]   30s
 #    Page should contain element   //*[@id="brandBand_1"]//td//span//a[text()="${email}"]    60s
 
+Update Setting Vula without Next
+    [Documentation]    Go to CPQPage and Update Setting Vula without going Next
+    [Arguments]        ${pname}
+    select frame    ${Page_iframe}
+    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
+    Wait until element is visible   ${SETTINGS}   60s
+    Click Button    ${SETTINGS}
+    sleep  30s
+    Click element  ${Nopeus}
+    Click element  ${Nopeus}/option[2]
+    Click element   ${Asennuskohde}
+    Click element   ${Asennuskohde}/option[2]
+    Click element   ${Toimitustapa}
+    Click element   ${Toimitustapa}/option[2]
+    Input Text  ${VLAN}  1
+    Input Text   ${VULA NNI}    Test
+    Input Text   ${Yhteyshenkilön nimi}    Test
+    Input Text    ${Yhteyshenkilön puhelinnumero}   Test
+    Input Text   ${Katuosoite}   Test
+    Input Text    ${Katuosoite numero}  Test
+    sleep  3s
+    Input Text  ${Postinumero}   00510
+    sleep  3s
+    Input Text    ${Postitoimipaikka}   Test
+    sleep  4s
+    Click element    ${Postitoimipaikka}
+    sleep  5s
+    Click element   //div[@class="slds-grid slds-grid--vertical cpq-product-cart-config"]
+    sleep  10s
+    Click element  ${Setting_Close}
+    sleep  10s
+    Reload page
+    sleep  10s
+
+
+FetchfromOrderproduct
+    [Documentation]    Go to OrderProductPage and fetch the subscription ID
+    [Arguments]    ${Ordernumber}
+    Go To Entity    ${Ordernumber}
+    wait until page contains element      ${Order_Related_Tab}   45s
+    Force Click Element    ${Order_Related_Tab}
+    sleep    10s
+    wait until page contains element    ${Order_Products_Tab}    20s
+    Force Click Element  ${Order_Products_Tab}
+    sleep    10s
+    sleep  10s
+    click element  ${Order_Products_Select}
+    sleep  20s
+    Reload page
+    wait until page contains element     ${Order_Products_Related_Tab}   60s
+    Force Click Element   ${Order_Products_Related_Tab}
+    log to console  related is clicked
+    sleep  20s
+    wait until page contains element  ${Order_Products_Assets_Tab}  60s
+    click element  ${Order_Products_Assets_Tab}
+    sleep  10s
+    ${subscription_ID}   get text   ${Order_Products_SubID}
+    sleep  3s
+    [Return]   ${subscription_ID}
+
+
+Validate technical contact in the asset history page using subscription as
+   [Documentation]    Go to Account asset History and select the respective product based on subscription ID and validate the technical contact details
+   [Arguments]    ${sub_name}     ${Contact_name}
+     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+     scroll page to location  0  9000
+     ScrollUntillFound   //button//span[text()='Asset History']
+     Log to console  scroll to asset history
+     select frame   ${Account_Asset_iframe}
+     ScrollUntillFound  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a
+     wait until page contains element  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a  60s
+     Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a
+     unselect frame
+     sleep  10s
+     switch between windows  1
+     ${contact_value}  get text  ${Account_Asset_TechnicalContact}
+     Should be equal   ${contact_value}    ${Contact_name}
+
+Add multiple products in SVE
+
+   [Arguments]     @{items}
+    ${i} =    Set Variable    ${0}
+    ${fyr_value_total}=   Set Variable   ${0}
+    ${count_list}=  Get length  ${items}
+    log to console  ${count_list}.number of items
+    select frame   ${Page_iframe}
+     :FOR    ${item}    IN    @{items}
+     \    ${i} =    Set Variable    ${i + 1}
+#     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][ ${i}]/td/input[@class='form-control ng-pristine ng-untouched ng-valid ng-empty']    ${item}
+     \  Click element   css=.typeahead.dropdown-menu.ng-scope.am-fade.bottom-left li.ng-scope a.ng-binding
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@type='number']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@type='number']   ${product_quantity}
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.OneTimeTotalt']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.OneTimeTotalt']   ${NRC}
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.RecurringTotalt']
+     \  input text     //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.RecurringTotalt']   ${RC}
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/select[@ng-model='p.SalesType']
+     \  sleep  2s
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value${i}}']
+     \  sleep  5s
+     \  click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.ContractLength"]
+     \  Input text  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model='p.ContractLength']  ${contract_lenght}
+     \  ${fyr_value}=   evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
+     \  ${revenue_value}=  evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity}
+     \  page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
+     \  page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][${i}]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00'][2]
+     \  Run keyword if   ${i}<${count_list}   click element   //div[text()='Add']
+     \  ${fyr_value_total}=  evaluate  (${fyr_value_total}+${fyr_value})
+     wait until page contains element  //button[normalize-space(.)='Save Changes']   60s
+     force click element  //button[normalize-space(.)='Save Changes']
+     sleep  30s
+     unselect frame
+     sleep  30s
+    [Return]  ${fyr_value_total}
+
+validateproductsbasedonsalestype
+
+   [Arguments]     @{items}
+    ${list_Prd}    Create List    @{items}
+    @{list_with prod and sales}     create list
+    ${count}    Get Length    ${list_Prd}
+    Wait until element is visible   ${Oppo_Related_Tab}   10s
+    Force click element     ${Oppo_Related_Tab}
+    Wait until element is visible   ${Oppo_Product_panel}   10s
+    Wait until element is visible   ${Product_viewall_button}   30s
+    Click Button    ${Product_viewall_button}
+    sleep  30s
+    switch between windows  1
+    sleep  30s
+    :FOR    ${i}    IN RANGE    ${count}
+    \    ${i} =    Set Variable    ${i + 1}
+    \   ${sales_type}  get text   //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[2]//div
+    \   ${sales_value}  get text  //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[8]//div
+    \   Append To List  ${list_with prod and sales}    ${sales_type}    ${sales_value}
+    ${add_new}  ${add_ren}  ${add_frame} =   addFYRbasedonSalesType  ${list_with prod and sales}
+    switch between windows  0
+    [Return]   ${add_new}  ${add_ren}  ${add_frame}
+
 
 Validating FYR values in Opportunity Header
+
      [Arguments]    ${fyr_total}   ${new}   ${ren}   ${frame}
      sleep  90s
      page should contain element    //p[text()="FYR Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
