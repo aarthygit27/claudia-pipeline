@@ -7204,6 +7204,15 @@ Validate ServiceAdministrator in Account contact role
     Page should contain element   //*[@id="brandBand_1"]//td//span//span[@title="${lastname}"]//following::td[1]//span//span[text()="Service Administrator"]   30s
 #    Page should contain element   //*[@id="brandBand_1"]//td//span//a[text()="${email}"]    60s
 
+
+Validating FYR values in Opportunity Header
+     [Arguments]    ${fyr_total}   ${new}   ${ren}   ${frame}
+     sleep  90s
+     page should contain element    //p[text()="FYR Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
+     page should contain element    //p[text()="FYR New Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${new},00 €"]
+     page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${ren},00 €"]
+     page should contain element    //p[text()="FYR Total Frame Agreement"]/../..//lightning-formatted-text[text()=normalize-space(.)="${frame},00 €"]
+
 Validate the HDc Related fields are non editable after closing Opportunity
     [Documentation]  This is to validate the  closed opportunity HDC fields non editable
     ScrollUntillFound  ${Additional_Details}
