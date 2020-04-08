@@ -2148,21 +2148,6 @@ B2B opportunity closing
     Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
     Cancel Opportunity and Validate     ${oppo_name}     Cancelled
 
-
-
-validate FYR valuesin Oppo page by modifying salestype in SVE
-    [Tags]  BQA-13172
-   [Documentation]  This script is designed to validate the FYR values being created in Oppo page
-#    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    Log to console    ${contact}.this is name
-    Set test variable  ${contact_name}   ${contact}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
-    Go To Entity    ${oppo_name}
-
 FYR calculation with annually recurring charges
     [Tags]  BQA-13123
     Go To Salesforce and Login into Lightning   B2B DigiSales
