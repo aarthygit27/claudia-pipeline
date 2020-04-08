@@ -105,10 +105,10 @@
     - All the test files should have generic documentation which explains the brief functionality of the test with the environment to be executed. This is useful in report generation.
     - Test setup and teardown are used for cleanup
     - Import only the required resource files
-    - Pass static data & xpath from variables file, avoid hardcoding
-    - Include Tags with respective task id, generic tag and functionity tag.
+    - Pass static data & xpath from variables file only, do not define in test cases to avoid hardcoding. 
+    - Include Tags with respective task id (BQA Id from Jira), generic tag and functionity tag.
     - Try to use keywords with dynamic data wherever possible to ensure the reusability. 
-    - Do not include any logic in the testcase, all the manipulations should be done in the keyword.
+    - Do not include any logic in the testcase, all the manipulations should be done in the keyword or custom python file.
     - Use abstraction level consistently
 
 ### Keyword Structure
