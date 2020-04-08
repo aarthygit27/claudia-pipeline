@@ -6,8 +6,10 @@
 
 - [Installation](#installation)
 - [Framework & Scripts](#framework-and-scripts)
+- [Steps for new Development](#steps-for-new-development)
 - [Running Scripts](#running-scripts)
 - [Configuring test for different environment](#configuring-test-for-different-environment)
+- [Standards & Guidelines](#standards--guidelines)
 - [Related Links](#related-links)
 
 ## Installation
@@ -58,6 +60,15 @@
 | SalesConsole.robot          | Keywords related to Sales console functionality                                                                                           |
 | SolutionValueEstimate.robot | Keywords related to adding products in SVE.                                                                                               |
 
+## Steps for new development
+    - Checkout merge branch and make sure that local merge branch is updated from remote. To ensure perform - git pull origin merge
+    - Now create a new branch from merge using command - git checkout -b <newbranch> merge
+    - Push the created branch to remote using command - git push origin <newbranch>
+    - Do the development of the assigned task and commit the changes to your newbranch
+    - Once all the changes are committed and pushed, validate once and then create a pull request from actions menu of BitBucket.
+    - Select Source and Destination branch, assign it to respective person for review.
+    - The reviewer will update comments in Bitbucket for any modification needed.
+    - Once Pull request is merged successfully update your local branches from repository. 
 
 ## Running Scripts
 ### Multiple tests using tag
@@ -83,6 +94,34 @@
       Example - Go To Salesforce and Login into Lightning       B2B DigiSales
     - Similarly, we can pass parameter for other users as well. If the user keyword is not present in Login.robot, kindly create a new keyword.
     
+## Standards & Guidelines
+### Naming Convention & Documentation
+    - Test case, Keyword and variables name should be easy to understand, descriptive and not too long.
+    - All Robot files should be functionally named. As the groupind is done w.r.t functionality.
+    - All Tests and keywords should have [Documentation], which explain the background, prerequisites and brief functional explanation.
+    - Any negative test cases should be prefixed with Negative : <TC Name>
+    
+### Test Structure
+    - All the test files should have generic documentation which explains the brief functionality of the test with the environment to be executed. This is useful in report generation.
+    - Test setup and teardown are used for cleanup
+    - Import only the required resource files
+    - Pass static data & xpath from variables file, avoid hardcoding
+    - Include Tags with respective task id, generic tag and functionity tag.
+    - Try to use keywords with dynamic data wherever possible to ensure the reusability. 
+    - Do not include any logic in the testcase, all the manipulations should be done in the keyword.
+    - Use abstraction level consistently
+
+### Keyword Structure
+    - Explain in Documentation what the keyword does, not how it does
+    - Import only the required resource files
+    - Clear structure is required.
+    - Can contain programming loops and conditions
+   
+### Passing and returning values
+    - Common approach is to return values from keywords, assign them to variables and then pass them as arguments to other keywords.
+    - Alternative approach is using the BuiltIn 'Set Test Variable' keyword
+   
 ## Related Links
     - Automation Dashboard - https://devopsjira.verso.sonera.fi/secure/Dashboard.jspa?selectPageId=11504
     - Bitbucket Repository - https://git.verso.sonera.fi/projects/BBDIG/repos/claudia-pipeline/browse    
+    - To know more on Robot Framework - https://wiki.intra.sonera.fi/display/VERSO/Test+Automation+-+Robot+Framework

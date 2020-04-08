@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
+Documentation     Account Management functionality are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
 Resource          ../../frontendsanity/resources/Common.robot
