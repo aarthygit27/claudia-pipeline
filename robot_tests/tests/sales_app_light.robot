@@ -6,6 +6,7 @@ Resource          ../resources/sales_app_light_keywords.robot
 Resource          ../resources/common.robot
 Resource          ../resources/multibella_keywords.robot
 #Library             test123.py
+Library             ../resources/customPythonKeywords.py
 
 *** Test Cases ***
 
@@ -1996,13 +1997,14 @@ Validate Main User contact for DNS
     Adding Products   Telia Domain Name Service
     updating setting Telia Domain Name space  Telia Domain Name Service
     UpdateAndAddSalesType  Telia Domain Name Service
+    View Open Quote
     ClickonCreateOrderButton
     NextButtonOnOrderPage
-    sleep  40s
     SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
     SelectingTechnicalContactforTeliaDomainNameService     ${contact}
     RequestActionDate
-    SelectOwnerAccountInfo   ${billing_acc_name}
+#   SelectOwnerAccountInfo   ${billing_acc_name}
+    SelectOwnerAccountInfo   Billing Telia Communication Oy
     clickOnSubmitOrder
     ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
     log to console   ${Ordernumber}
@@ -2012,6 +2014,139 @@ Validate Main User contact for DNS
     ${first_name}=   Fetch From Left  ${contact}  ${SPACE}
     ${second_name}=   Fetch From Right   ${contact}   ${SPACE}
     Validate ServiceAdministrator in Account contact role    ${first_name}     ${second_name}
+
+
+DNS - Asset Verification
+    [Tags]  BQA-12672
+    [Documentation]  This script is designed to validate Technical Contact Information on Asset for DNS product by B2B user
+    Go To Salesforce and Login into Lightning   System Admin
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Delete all assets
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+#    ${billing_acc_name}    run keyword    CreateABillingAccount     $${B2O Account}
+#   log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ    ${oppo_name}
+    search products   ${pdtname}
+    Adding Products   ${pdtname}
+    updating setting Telia Domain Name space
+    UpdateAndAddSalesType  ${pdtname}
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    sleep  40s
+    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
+    SelectingTechnicalContactforTeliaDomainNameService  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name_comm1}
+    clickOnSubmitOrder
+    ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    Go To Salesforce and Login into Lightning       System Admin
+    Go To  ${Order_url}
+    ${SubscriptionID}   run keyword  FetchfromOrderproduct  ${Ordernumber}
+    log to console    ${SubscriptionID}.is a subscription ID
+    Validate technical contact in the asset history page using subscription as  ${SubscriptionID}  ${contact_name}
+
+
+
+One Order- B2O Colocation and E2E B2O product
+    [Tags]  BQA-11525
+    [Documentation]  This script is designed to  validate the functional flow of  the add two products added and update the  order status correctly by using  B20 user
+    set test variable   ${Account}    Digita Oy
+    Go To Salesforce and Login into Lightning   System Admin
+    Go to Entity  ${Account}
+    Delete all assets
+    swithchtouser   B2O Test User
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
+    Go To Salesforce and Login into Lightning  B2O User
+    sleep  40s
+    Go To Entity    ${Account}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+#    ${billing_acc_name}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
+#    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2O
+    ClickingOnCPQ    ${oppo_name}
+    sleep   10s
+    Adding Vula    VULA
+    Update Setting Vula without Next   VULA
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesTypeB2O   Telia Colocation
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${Account}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name_digi1}
+    Submit Order Button
+    Reload page
+    ${order_number}   run keyword    ValidateTheOrchestrationPlan
+    logoutAsUser   ${B2O_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    DDM Request Handling   ${order_number}
+    Open Browser And Go To Login Page
+    Go To Salesforce and Login into Lightning  B2O User
+    Go To Salesforce and Login into Lightning   System Admin
+    swithchtouser   B2O Test User
+    Go to   ${url}
+    Validate Billing system response
+    Reload page
+    ValidateSapCallout
+
+
+Validate FYR values in Oppo page created through SVE
+    [Documentation]  This script is designed to  validate and verify the FYR values in Opportunity page  based on SalesType selected for the multiple products added SVE by using  B2B user
+    [Tags]  BQA-13171
+    Go To Salesforce and Login into Lightning       B2B DigiSales
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity   ${oppo_name}
+    clickingOnSolutionValueEstimate     ${oppo_name}
+    sleep  10s
+    ${fyr_total}  Add multiple products in SVE  @{LIST}
+    reload page
+    sleep  10s
+    ${new}  ${ren}  ${frame}   validateproductsbasedonsalestype  @{LIST}
+    reload page
+    sleep  10s
+    Validating FYR values in Opportunity Header   ${fyr_total}  ${new}  ${ren}  ${frame}
+
+
+B2B opportunity closing
+    [Documentation]  This script is designed to close opportunity by B2B User
+    [Tags]  BQA-13357
+     set test variable  ${contact_name}   Testing Contact_20200331-143447
+     set test variable  ${oppo_name}   Test Robot Order_20200331-143556
+     Go To Salesforce and Login into Lightning  B2B DigiSales
+    Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesTypeB2O   Telia Colocation
+    Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
+    Cancel Opportunity and Validate     ${oppo_name}     Cancelled
 
 
 

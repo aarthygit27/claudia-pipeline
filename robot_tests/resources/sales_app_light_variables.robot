@@ -230,10 +230,13 @@ ${B2bproductfyr3}   Multi-SIM
 ${fixed_charge for_Telia Sopiva Pro N}  30
 ${fixed_charge for_Pro Nettikortti}     0
 ${fixed_charge for_Multi-SIM}           0
-${sales_type_value}   New Money-New Services
-${sales_type_value1}   New Money-Extending Services
-${sales_type_value2}   Renegotiation-Service Replacement
-${sales_type_value3}   Renegotiation-Service Continuation
+${sales_type_value1}   New Money-New Services
+${sales_type_value2}   New Money-Extending Services
+${sales_type_value3}   Renegotiation-Service Replacement
+${sales_type_value4}   Renegotiation-Service Continuation
+${sales_type_value5}   Frame Agreement - New Services
+${sales_type_value6}   Frame Agreement - Extending Services
+${sales_type_value7}   Frame Agreement - Renegotiation
 ${contract_lenght}    12
 ${HDC_Total_KW}     5000
 ${HDC_Rack_Amount}   1000
@@ -244,7 +247,7 @@ ${ADDRESS_VALIDATION_DROPDOWN}      //ul[@class='typeahead dropdown-menu ng-scop
 ${PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[7]/td[1]/label/input/../span
 ${NEW_OPPORTUNITY_RADIOBUTTON}     //span[text()='New Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${B2O_DIGISALES_LIGHT_USER}     network@teliacompany.com.${ENVIRONMENT}
-${B2O_DIGISALES_LIGHT_PASSWORD}    PahaPassu2
+${B2O_DIGISALES_LIGHT_PASSWORD}    PahaPassu3
 ${B2O_PRODUCT_CHECKBOX}     //*[@id="Product List"]/div/ng-include/div/table/tbody/tr[18]/td[1]/label/input/../span
 ${EXISTING_OPPORTUNITY_RADIOBUTTON}     //span[text()='Existing Opportunity']/../input[@id='CreateOrUpdateRadio']/../span
 ${EXISTING_OPPORTUNITY_TEXT_FIELD}      //input[@id='TypeAheadOpp']
@@ -337,3 +340,71 @@ ${converting_lead_overlay}           //button[text()='Convert Lead']
 ${lead_converted_h4}                //h4[text()='Lead Converted']
 ${group_id}         SALES FORCE TEST 1
 #Changes for each account
+${billing_acc_name_comm1}    Billing Telia Communication Oy_001
+${billing_acc_name_digi1}   Billing_Digita Oy_2961
+@{List}=  Telia chat  Telia Robotics   Telia colocation   Telia ACE   DataNet  Telia IOT Office  Telia Yhteyspiste
+${a} =  0
+${b} =  0
+${c} =  0
+#Order Page
+${pdtname}   Telia Domain Name Service
+${Order_Related_Tab}        //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]
+${Order_Products_Tab}    //div[@class="slds-media__body"]//a//span[text()="Order Products"]
+${Order_Products_Related_Tab}   //span[contains(.,'Related')]
+${Order_Products_Assets_Tab}   //div[@class="slds-media__body"]//a//span[text()="Assets"]
+${Order_Products_Select}      //th/span/a[@title='${pdtname}']
+${Order_Products_SubID}   //th//span/a[text()='${pdtname}']/following::td[3]
+
+#Account Page
+${Account_Asset_History}    //button//span[text()='Asset History']
+${Account_Asset_iframe}   //button/span[text()='Asset History']/../../..//div[@class="content iframe-parent"]/iframe
+${Account_Asset_TechnicalContact}   //table[@class='tb']//tr[19]//td[text()='Technical Contact']/following::td[1]
+
+#DNS CPQ Page
+${Asiakkaan verkkotunnus}     //form[@name='productconfig']//label[text()[normalize-space() = 'Asiakkaan verkkotunnus (muotoa domain.pääte)']]/..//div//input
+${Linkittyvä tuote}      //form[@name='productconfig']//label[text()[normalize-space() = 'Linkittyvä tuote']]/..//div//input
+${DNS_Setting}        //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pdtname}']//following::button[@title='Settings']
+${Setting_Close}   //*[@alt='close'][contains(@size,'large')]
+${Page_iframe}    //div[contains(@class,'slds')]/iframe
+${CPQ_Next_Button}    //button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
+
+#DNS Technical Page
+${Technical_contact_search}    //input[@id='TechnicalContactTA']
+${contact_search}   //input[@id='OrderContactTA']
+${contact_email}    //input[@id='OCEmail']
+${Technical_contact_email}    //input[@id='TCEmail']
+${contact_next_button}   //div[@id='SelectOrderLevelContacts_nextBtn']
+${updateContactDR}    //button[@class='slds-button slds-button--neutral ng-binding ng-scope'][@ng-click='nextRepeater(child.nextIndex, child.indexInParent)']
+${Main_User}     //input[@id="MainContactTA"]
+${City}     Helsiniki
+${FirstName}    //input[@id="MCFname"]
+${LastName}    //input[@id="MCLname"]
+${EmailID}    //input[@id="MCEmail"]
+${MobileNumber}     //input[@id="MCMobile"]
+${Street}     //input[@id="MCStreet"]
+${Postal_codes}     //input[@id="MCPostalCode"]
+${city_Name}     //input[@id="MCCity"]
+${Communication}    //select[@id="MCLanguage"]
+${DNS_communication_language_english}      //select[@id="MCLanguage"]//*[@value="English"]
+
+#VULA CPQ Psge
+${Nopeus}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Nopeus']]//following::select[1]
+${Asennuskohde}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Asennuskohde']]//following::select[1]
+${Toimitustapa}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Toimitustapa']]//following::select[1]
+${VLAN}     //form[@name='productconfig']//following::label[text()[normalize-space() = 'VLAN']]//following::input[1]
+${VULA NNI}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'VULA NNI']]//following::input[1]
+${Yhteyshenkilön nimi}     //form[@name='productconfig']//following::label[text()[normalize-space() = 'Yhteyshenkilön nimi']]//following::input[1]
+${Yhteyshenkilön puhelinnumero}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Yhteyshenkilön puhelinnumero']]//following::input[1]
+${Katuosoite}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Katuosoite']]//following::input[1]
+${Katuosoite numero}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Katuosoite numero']]//following::input[1]
+${Postinumero}    //form[@name='productconfig']//following::label[text()[normalize-space() = 'Postinumero']]//following::input[1]
+${Postitoimipaikka}      //form[@name='productconfig']//following::label[text()[normalize-space() = 'Postitoimipaikka']]//following::input[1]
+
+#CreditScorePage
+${return_opportunity_button}    //button[@id="Return to Opportunity"]
+
+#Opportunity Page
+${MarkStageasComplete_button}    //span[contains(text(),"Mark Stage as Complete")]
+${Oppo_Related_Tab}    //a[@id="relatedListsTab__item"]
+${Oppo_Product_panel}  	//h1[contains(.,'Product')]
+${Product_viewall_button} 	//button[contains(.,'View All')]
