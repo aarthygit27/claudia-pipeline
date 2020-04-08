@@ -2149,7 +2149,6 @@ B2B opportunity closing
     Cancel Opportunity and Validate     ${oppo_name}     Cancelled
 
 
-
 validate FYR valuesin Oppo page by modifying salestype in SVE
     [Tags]  BQA-13172
    [Documentation]  This script is designed to validate the FYR values being created in Oppo page
