@@ -175,7 +175,7 @@ ${OFFICE_NAME_FIELD}    //span[text()='Office Name']/ancestor::label/../input
 ${MONTH_TEXT}     //h2[@class='monthYear']
 ${NEXT_BUTTON_MONTH}    //a[@title='Go to next month']
 ${YEAR_DROPDOWN}    //select[contains(@class,'slds-select')]
-${DETAILS_TAB}    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
+${DETAILS}    //div[@class='tabset slds-tabs_card uiTabset--base uiTabset--default uiTabset--dense uiTabset flexipageTabset']//a[@title='Details']
 ${DATE_PICKER}    //span[text()='Date Picker']/..
 ${EMAIL_ID_FIELD}    //span[contains(text(),'Email')]/../following-sibling::input[@type='email']
 #//div[@id='email']//input
@@ -223,6 +223,7 @@ ${product_name}    Telia Robotics
 ${product_quantity}    1
 ${NRC}            35
 ${RC}             50000
+${ARC}    10
 ${B2bproductfyr1}    Telia Sopiva Pro N
 ${B2bproductfyr2}   Pro Nettikortti
 ${B2bproductfyr3}   Multi-SIM
@@ -237,6 +238,8 @@ ${sales_type_value5}   Frame Agreement - New Services
 ${sales_type_value6}   Frame Agreement - Extending Services
 ${sales_type_value7}   Frame Agreement - Renegotiation
 ${contract_lenght}    12
+${HDC_Total_KW}     5000
+${HDC_Rack_Amount}   1000
 ${360_VIEW}     //li//a[text()='360 View']
 ${AVAILABILITY_CHECK_BUTTON}        //button[@onclick="OpenAddressValidation();"]
 ${DEFAULT_ADDRESS}      Korpijärventie 3
@@ -289,6 +292,39 @@ ${showmoreactions}    //a[@title='Show 9 more actions']
 ${manualavailabilitycheck}      //a[@title='Manual Availability Check']
 ${investment}       //a[@title='Investment']
 ${remindmelater}       //a[text()='Remind Me Later']
+${Additional_Details}    //span[text()="Additional Details"]
+${HDC Total}     //span[text()="HDC Total KW"]
+${HDC Total KW_investment}  //div//div//span[text()="Investment ID"]//following::div[8]//span[text()="HDC Total KW"]
+${HDC Rack Amount_investment}     //div//div//span[text()="Investment ID"]//following::div[16]//span[text()="HDC Rack Amount"]
+${Edit HDC Rack Amount}    //div//div//span[text()="Investment ID"]//following::div[16]//button[@title="Edit HDC Rack Amount"]
+${Edit HDC Total KW}     //div//div//span[text()="Investment ID"]//following::button[@title="Edit HDC Total KW"]
+${input_HDC_Total_KW}    //div//input[@name="HDC_Total_KW__c"]
+${input_HDC_Rack_Amount}      //input[@name="HDC_Rack_Amount__c"]
+${System Information}    //span[text()="System Information"]
+${Migration}   //label//span[text()="Is Migration"]
+${Save_OPPO}    //button[@title="Save"]
+${iframe}   //div[contains(@class,'slds')]/iframe
+${contractLength_Sve}   //input[@type="number"][@ng-model="p.ContractLength"]
+${contract_lenght_updated}    24
+${Internet Domain_Toggle}   //span[text()='Internet Domain']/../button
+${Finnish Domain Name Registrant}   //div[contains(text(),'Finnish Domain Name Registrant Agreement(without Maintenance)')]//following::div[15]//button[1]
+${Finnish_Domain_Service_Add_To_Cart}     //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//button[contains(text(),'Add to Cart')]
+${Finnish_Domain_Service_Settings_Icon}       //div[contains(text(),'Finnish Domain Name') and not(contains(text(),'Finnish Domain Name Registrant'))]/../../..//*[@alt='settings']/..
+${Verkotunnus_Field}    //select[@name='productconfig_field_0_0']
+${Verkotunnus_option}      //select[contains(@name,'productconfig_field_0_0')]//option[@value=".fi"]
+${Voimassaoloaika_Field}      //select[contains(@name,'productconfig_field_0_1')]
+${Voimassaoloaika_option}      //select[contains(@name,'productconfig_field_0_1')]//option[text()='5']
+${closing}       //*[@alt='close'][contains(@size,'large')]
+${Annual Recurring charge_finish_time}    //div[@class="slds-is-relative"]//div[@ng-if="customField.type === 'currency'"]//span/span
+${Monthly recurring chage_finish_time}  //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[1]/div[2]
+${one time_charge_finish_doamin}    //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[3]/div[2]
+${Child_product_Dns_finish doamin}     //button[@class="slds-button cpq-item-has-children"]
+${Child_product_Dns_finish doamin_child}  //div[@class="cpq-item-child-product-name-wrapper"]//button[@class="slds-button cpq-item-has-children"]
+${quote_number}   //div/span[@title="Quote Number"]
+${Recurring Total(Exc. Reporting)}      //span[text()="Recurring Total(Exc. Reporting)"]
+${Asiakkaan verkkotunnus}     //form[@name='productconfig']//label[text()[normalize-space() = 'Asiakkaan verkkotunnus (muotoa domain.pääte)']]/..//div//input
+${Linkittyvä tuote}   //form[@name='productconfig']//label[text()[normalize-space() = 'Linkittyvä tuote']]/..//div//input
+${Save_sve}   //button[contains(text(),"Save")]
 ### Lead  Variables ###
 
 ${lead_account_name}                Academic Work HR Services Oy

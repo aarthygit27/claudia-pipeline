@@ -1826,19 +1826,19 @@ One Order - B2B Colocation and Change Order
 
 One Order- B2O Colocation and change order
     [Tags]  BQA-11523
-
-    Login to Salesforce Lightning   ${SALES_ADMIN_APP_USER}  ${PASSWORD-SALESADMIN}
+    Go To Salesforce and Login into Lightning   DigiSales Admin
     Go to Entity   ${vLocUpg_TEST_ACCOUNT}
     Delete all assets
     logoutAsUser   ${SALES_ADMIN_APP_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2O_DIGISALES_LIGHT_USER}   ${B2O_DIGISALES_LIGHT_PASSWORD}
-    HDC Order
+    Login to Salesforce as System Admin
+    swithchtouser   B2O Test User
+    HDC Order_B2O
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Login to Salesforce as System Admin
     DDM Request Handling
     Switch between windows    0
     logoutAsUser   ${SYSTEM_ADMIN_USER}
-    Login to Salesforce as DigiSales Lightning User   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+    Login to Salesforce as B2B DigiSales
     Go to   ${url}
     Validate Billing system response
     Change Order
@@ -2147,6 +2147,96 @@ B2B opportunity closing
     UpdateAndAddSalesTypeB2O   Telia Colocation
     Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
     Cancel Opportunity and Validate     ${oppo_name}     Cancelled
+
+
+
+validate FYR valuesin Oppo page by modifying salestype in SVE
+    [Tags]  BQA-13172
+   [Documentation]  This script is designed to validate the FYR values being created in Oppo page
+#    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
+     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
+
+FYR calculation with annually recurring charges
+    [Tags]  BQA-13123
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact}    run keyword    Create New Contact for Account
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    clickingOnSolutionValueEstimate    ${oppo_name}
+    ${fyr}    run keyword    addProductsViaSVE    Telia Domain Name Service
+    Go To Entity    ${oppo_name}
+    validateCreatedOppoForFYR   Telia Domain Name Service  ${fyr}
+    clickingOnSolutionValueEstimate    ${oppo_name}
+    ${fyr_new}    run keyword   Mofify the contract length and validate in the opportunity page
+    Go To Entity    ${oppo_name}
+    validateCreatedOppoForFYR   Telia Domain Name Service  ${fyr_new}
+    ClickingOnCPQ     ${oppo_name}
+    Adding prouct To cart (cpq) without Next   Telia Domain Name Service
+    ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}      run keyword      Add Finnish_Domain_Service
+    updating setting Telia Domain Name space  Telia Domain Name Service
+    UpdateAndAddSalesType  Telia Domain Name Service
+    Validation of Telia Domain Name Service   ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}
+
+Availability of HDC Related Fields in b2b opportunitty
+    [Documentation]  To Check the Availability the HDC related Fields in B2b opportunity  and Edit the values and validate sales user and admin user
+    [Tags]  BQA-13174
+    Go To Salesforce and Login into Lightning  B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    AddProductToCart    Alerta projektointi
+    UpdateAndAddSalesType    Alerta projektointi
+    Go To Entity    ${oppo_name}
+    Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
+    Closing the opportunity    Closed Won
+    Validate the HDc Related fields are non editable after closing Opportunity
+    logoutAsUser  ${B2B_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${oppo_name}
+    Validate the HDc Related fields aeditable if the profile is admin after closing Opportunity
+
+Credit score results Ok for B2b opportunity
+    [Documentation]  To check the Credit score Result is Ok  for  B2B opportunity and without Manual credit score process
+    [Tags]  BQA-13169
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact_name}     run keyword    Create New Contact for Account
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    AddProductToCart    Alerta projektointi
+    UpdateAndAddSalesType    Alerta projektointi
+    Verify that Credit Score Validation step is skipped
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    Submit Order Button
+
+
+Validate FYR values created through CPQ page in Oppo page
+    [Tags]  BQA-13173
+    @{products}    Set Variable    Alerta projektointi    Fiksunetti    Telia Chat    Telia Verkkotunnuspalvelu    Genesys PureCloud
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact}    run keyword    Create New Contact for Account
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    Searching and adding multiple products    @{products}
+    updateandaddsalestype for multiple products with different salestype  @{products}
+    Go To Entity    ${oppo_name}
 
 
 
