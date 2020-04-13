@@ -4,8 +4,9 @@ Resource          ../../frontendsanity/resources/Variables.robot
 Resource          ../../frontendsanity/resources/Common.robot
 *** Keywords ***
 DDM Request Handling
+    [Arguments]    ${orderNo}
     Login Workbench
-    File Handling - Change Order id
+    File Handling - Change Order id   ${orderNo}
     File Handling - Get Debug Line
     Execute Debug code
     Verify Response code
@@ -38,6 +39,7 @@ Login Workbench
     Run Keyword If    ${status} == False    Login Workbench
 
 File Handling - Change Order id
+    [Arguments]   ${orderNo}
     #${File_Path}   set variable    ${CURDIR}\\..\\resources\\DDM_Request.txt
     ${File_Path}   set variable    ${CURDIR}${/}DDM_Request.txt
     ${DDM_request}   get file    ${File_Path}
@@ -47,8 +49,8 @@ File Handling - Change Order id
     #Log to console  ${Line}
     ${Existing_Order_Number}   Get Substring    ${Line}  11
     #Log to console  ${Existing_Order_Number}
-    #${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${order_no}';
-    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '319103017660';
+    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '${orderNo}';
+#    ${Replaced_line}   Replace String Using Regexp    ${Line}   ${Existing_Order_Number}   '319103017660';
     #Log to console   ${Replaced_line}
     ${New_request}   Replace String Using Regexp    ${DDM_request}  ${Line}   ${Replaced_line}
     #Log to console   ${New_request}
@@ -116,6 +118,7 @@ Close opened windows
 
 Validate Billing system response
     Reload page
+    #Go back
     Wait until element is visible    //div[@class='content iframe-parent']/iframe   60s
     select frame    //div[@class='content iframe-parent']/iframe
     sleep    30s
@@ -128,12 +131,16 @@ Validate Billing system response
     log to console    Validate Billing system Response
     force click element       //a[@class='item-label item-header' and text()='Call Billing System']
     unselect frame
-    #sleep       80s
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]
-    Run Keyword If    ${status_page} == False    Reload Page
-    Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
-    #Go back
+    sleep       80s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[contains(text(),"Completed")]
+    Run Keyword If    ${status_page} == False    force click element   //button[text()='Complete Item']
+    sleep   20s
+    wait until page contains element  //lightning-formatted-text[contains(text(),"Completed")]    300s
+    wait until page contains element    //*[@records-formulaoutput_formulaoutput=""]//a   30s
+    force click element   //*[@records-formulaoutput_formulaoutput=""]//a
+    switch between windows  1
+    sleep   20s
+#    Go back
 
 Validate Call case Management status
     Wait until element is visible    //div[@class='content iframe-parent']/iframe
@@ -150,28 +157,30 @@ Validate Call case Management status
 
 
 ValidateSapCallout
+    sleep  30s
     wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
     ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
     log to console  ${order_number}.this is order numner
     Set test variable   ${order_no}      ${order_number}
-    # Donot remove as reusing it for change plan - Aarthy
-    ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    ${Detail}=  set variable   //span[@class='title' and text()='Details']
     sleep  3s
     Wait until element is visible   ${Detail}  60s
     Force click element   ${Detail}
     Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
     Click element  //span[text()='Orchestration Plan']//following::a[1]
-    sleep    10s
-    Wait until element is visible  xpath=//*[@title='Orchestration Plan View']/div/iframe[1]   60s
-    select frame    xpath=//*[@title='Orchestration Plan View']/div/iframe[1]
+    sleep    100s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Enabled    //div[contains(@class,'content iframe-parent')]/iframe
+    Run Keyword If    ${status_page} == False    Reload Page
+    select frame    xpath= //div[contains(@class,'content iframe-parent')]/iframe
     Wait until element is visible  //a[text()='Start Order']  60s
     Element should be visible    //a[text()='Start Order']
     Element should be visible    //a[text()='Create Assets']
     sleep   3s
     force click element       //a[@class='item-label item-header' and text()='Callout to SAP Provisioning I']
     unselect frame
-    #sleep       80s
-    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]   200s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //span[text()='State']/../../../../..//lightning-formatted-text[text()='Completed']    200s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
-    wait until page contains element    //div[@class="slds-form-element__control slds-grid itemBody"]//span[text()="Completed"]      300s
+    wait until page contains element    //span[text()='State']/../../../../..//lightning-formatted-text[text()='Completed']      300s
+    force click element      //span[contains(text(),"Orchestration Plan")]/../..//*[@class="slds-form-element__control"]//span/..//a
+    log to console   ValidateSapCallout

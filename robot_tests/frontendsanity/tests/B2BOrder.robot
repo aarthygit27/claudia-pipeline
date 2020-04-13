@@ -125,3 +125,42 @@ Create B2B Order - Multibella
     clickOnSubmitOrder
     ${order_no}  run keyword  getOrderStatusAfterSubmitting
     getMultibellaCaseGUIID   ${order_no}
+
+
+DNS - Asset Verification
+    [Tags]  BQA-12672
+    [Documentation]  This script is designed to validate Technical Contact Information on Asset for DNS product by B2B user
+    Go To Salesforce and Login into Lightning   System Admin
+    Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
+    Delete all assets
+    logoutAsUser   ${SALES_ADMIN_APP_USER}
+    Go To Salesforce and Login into Lightning       B2B DigiSales
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+#    ${billing_acc_name}    run keyword    CreateABillingAccount     $${B2O Account}
+#   log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ    ${oppo_name}
+    search products   ${pdtname}
+    Adding Products   ${pdtname}
+    updating setting Telia Domain Name space
+    UpdateAndAddSalesType  ${pdtname}
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    sleep  40s
+    SearchAndSelectBillingAccount   ${LIGHTNING_TEST_ACCOUNT}
+    SelectingTechnicalContactforTeliaDomainNameService  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_name_comm1}
+    clickOnSubmitOrder
+    ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+    logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
+    Go To Salesforce and Login into Lightning       System Admin
+    Go To  ${Order_url}
+    ${SubscriptionID}   run keyword  FetchfromOrderproduct  ${Ordernumber}
+    log to console    ${SubscriptionID}.is a subscription ID
+    Validate technical contact in the asset history page using subscription as  ${SubscriptionID}  ${contact_name}

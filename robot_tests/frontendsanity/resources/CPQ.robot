@@ -76,7 +76,7 @@ search products
     wait until page contains element    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    60s
     #sleep    10s
     input text    //div[contains(@class,'cpq-searchbox')]//input[contains(@class,'ng-valid')]    ${product}
-
+    Sleep  20s
 
 Adding Yritysinternet Plus
     [Arguments]    ${Yritysinternet_Plus}
@@ -246,6 +246,25 @@ UpdateAndAddSalesType
     unselect frame
     sleep    60s
 
+UpdateAndAddSalesTypeB2O
+    [Arguments]    ${pname}=${product_name}
+    ${spinner}    Set Variable    //div[@class='center-block spinner']
+    ${status}=    Run Keyword And Return Status    wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    #log to console    UpdateAndAddSalesTypeB2O
+    run keyword if    ${status} == False    Reload Page
+    wait until page contains element    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    Wait Until Element Is Not Visible    ${spinner}    60s
+    wait until page contains element    xpath=//h1[normalize-space(.) = 'Update Products']    60s
+    sleep    10s
+    wait until page contains element    xpath=//td[normalize-space(.)='${pname}']    70s
+    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]
+    sleep    2s
+    click element    xpath=//td[normalize-space(.)='${pname}']//following-sibling::td/select[contains(@class,'required')]/option[@value='New Money-New Services']
+    Wait Until Element Is Visible    xpath=//button[normalize-space(.)='Next']    60s
+    click element    xpath=//button[normalize-space(.)='Next']
+    unselect frame
+    sleep    60s
 
 CPQ Page
     Sleep  10s
@@ -267,9 +286,9 @@ CPQ Page
 
 
 Verify the Action of product
-    [Arguments]  ${pname}  ${Value}
+      [Arguments]  ${pname}  ${Value}
     #${Action}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='${pname}']//following::div[13]/div
-    ${Action}   set variable   //span[text()='${pname}']//following::div[13]/div
+    ${Action}   set variable   //span[text()='${pname}']//following::div[19]/div
     Wait until element is visible  ${Action}    60s
     ${Action Value}  Get Text  ${Action}
     Should be equal     ${Action Value}  ${Value}
@@ -602,10 +621,10 @@ UpdateAndAddSalesType for B2b products
     #Unselect frame
 
 
-Adding Vula
+Adding prouct To cart (cpq) without Next
     [Arguments]   ${pname}=${product_name}
     Log to console      adding product
-    select frame  xpath=//div[contains(@class,'slds')]/iframe
+    select frame  ${iframe}
     wait until page contains element  xpath=//div[contains(@class, 'cpq-searchbox')]//input    60s
     wait until page contains element    //div[contains(@class,'cpq-products-list')]     60s
     input text   //div[contains(@class, 'cpq-searchbox')]//input  ${pname}
@@ -693,6 +712,7 @@ Searching and adding multiple products
     Wait Until Element Is Enabled    ${iframe}    60s
     select frame    ${iframe}
     Scroll Page To Location    0    100
+    wait until page contains element  ${next_button}  60s
     Click Element    ${next_button}
     #${status}    Run Keyword And Return Status    Wait Until Element Is Not Visible    ${next_button}    60s
     #Run Keyword If    ${status} == True    click element    ${next_button}
@@ -735,3 +755,177 @@ Updating sales type multiple products
     Unselect Frame
     sleep    5s
 
+
+Update Setting Vula without Next
+    [Documentation]    Go to CPQPage and Update Setting Vula without going Next
+    [Arguments]        ${pname}
+    select frame    ${Page_iframe}
+    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
+    Wait until element is visible   ${SETTINGS}   60s
+    Click Button    ${SETTINGS}
+    sleep  30s
+    Click element  ${Nopeus}
+    Click element  ${Nopeus}/option[2]
+    Click element   ${Asennuskohde}
+    Click element   ${Asennuskohde}/option[2]
+    Click element   ${Toimitustapa}
+    Click element   ${Toimitustapa}/option[2]
+    Input Text  ${VLAN}  1
+    Input Text   ${VULA NNI}    Test
+    Input Text   ${Yhteyshenkilön nimi}    Test
+    Input Text    ${Yhteyshenkilön puhelinnumero}   Test
+    Input Text   ${Katuosoite}   Test
+    Input Text    ${Katuosoite numero}  Test
+    sleep  3s
+    Input Text  ${Postinumero}   00510
+    sleep  3s
+    Input Text    ${Postitoimipaikka}   Test
+    sleep  4s
+    Click element    ${Postitoimipaikka}
+    sleep  5s
+    Click element   //div[@class="slds-grid slds-grid--vertical cpq-product-cart-config"]
+    sleep  10s
+    Click element  ${Setting_Close}
+    sleep  10s
+    Reload page
+    sleep  10s
+
+Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
+   [Documentation]  To Validate that HDC Rack Amount and HDC Total KW fields and Edit the values in the opportunity page
+   ${Amount_validation_HDC_Total_KW}          Set Variable  //div//span[text()="HDC Total KW"]//following::lightning-formatted-number[text()=normalize-space(.)="${HDC_Total_KW},00"]
+   ${Amount_validation_HDC_Rack_Amount}       Set Variable          //div//span[text()="HDC Rack Amount"]//following::lightning-formatted-number[text()=normalize-space(.)="${HDC_Rack_Amount},00"]
+   scrolluntillfound  ${Additional_Details}
+   wait until page contains element  ${HDC Total}   60s
+   page should contain element    ${HDC Total KW_investment}
+   page should contain element   ${HDC Rack Amount_investment}
+   click element  ${Edit HDC Rack Amount}
+   Scroll Page To Location    0    2000
+   sleep  20s
+   click element   ${input_HDC_Total_KW}
+   input text  ${input_HDC_Total_KW}     ${HDC_Total_KW}
+   input text  ${input_HDC_Rack_Amount}   ${HDC_Rack_Amount}
+   wait until page contains element  ${Save_OPPO}    60s
+   click element  ${Save_OPPO}
+   wait until page contains element  ${Amount_validation_HDC_Total_KW}   60s
+   page should contain element      //div//span[text()="HDC Rack Amount"]//following::lightning-formatted-number[text()=normalize-space(.)="${HDC_Rack_Amount},00"]
+   scroll page to element  ${System Information}
+   page should contain element   ${Migration}
+
+updateandaddsalestype for multiple products with different salestype
+    [Arguments]    @{products}
+    [Documentation]    This is used to Update sales type for multiple products with different salestype
+    ...
+    ...    The input for this keyword is \ list of products
+    ${one time total}    Set Variable   0
+    ${recurring_total}   Set Variable   0
+    ${update_order}=    Set Variable    //h1[contains(text(),'Update Products')]
+    ${next_button}=    Set Variable    //button[contains(@class,'form-control')][contains(text(),'Next')]
+    ${frame}    Set Variable    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    ${prod}    create list    @{products}
+    ${count}    Get Length    ${prod}
+    #Sleep  20s
+    #log to console    Updating sales type multiple products
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Enabled    ${frame}    60s
+    Run Keyword If    ${status} == False    Reload Page
+    Run Keyword If    ${status} == False     Sleep     20s
+    Wait Until Element Is Enabled    ${frame}    60s
+    select frame    ${frame}
+    : FOR    ${i}    IN RANGE    9999
+    \    Exit For Loop If    ${i} > ${count}-1
+    \    ${product_name}    Set Variable    @{products}[${i}]
+    \    ${product_list}    Set Variable    //td[normalize-space(.)='${product_name}']
+    \    wait until page contains element    ${update_order}    60s
+    \    log to console    selected new frame
+    \    wait until page contains element  //div[normalize-space(.)='Update Products']//following::td[normalize-space(.)='${product_name}']/../td[4]   60s
+    \    Wait Until Element Is Visible    ${product_list}//following-sibling::td/select[contains(@class,'required')]    120s
+    \    click element    ${product_list} //following-sibling::td/select[contains(@class,'required')]
+    \    sleep    2s
+    \    click element    ${product_list}//following-sibling::td/select[contains(@class,'required')]/option[${i+1}]
+    \    Sleep  5s
+    \    ${status}    Run Keyword And Return Status    wait until page contains element    //Select/*[contains(text(),"New Money")]    60s
+    \    Run Keyword If    ${status} == True    Reload Page
+    \    ${ot charge}  get text   //div[normalize-space(.)='Update Products']//following::td[normalize-space(.)='${product_name}']/../td[6]
+    \    ${recurring_charge}  get text  //div[normalize-space(.)='Update Products']//following::td[normalize-space(.)='${product_name}']/../td[7]
+    \    ${one time total}  evaluate  ${ot charge}+${one time total}
+    \    ${recurring_total}  evaluate  ${recurring_charge}+${recurring_total}
+    sleep    20s
+    Wait Until Element Is Visible    ${next_button}    60s
+    click element    ${next_button}
+    Capture Page Screenshot
+    Unselect Frame
+
+Mofify the contract length and validate in the opportunity page
+     [Documentation]  Mofify the contract length in the solution value estimate and validate in the opportunity page
+     select frame  ${iframe}
+     wait until page contains element  ${contractLength_Sve}   60s
+     click element  ${contractLength_Sve}
+     input text  ${contractLength_Sve}   ${contract_lenght_updated}
+     ${fyr_value}=      evaluate  ((${RC}*${contract_lenght})+ ${NRC}) * ${product_quantity} +${ARC}
+     ${revenue_value}=  evaluate  ((${RC}*${contract_lenght_updated})+ ${NRC}) * ${product_quantity} +(${ARC}*2)
+     page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${fyr_value}.00'][1]
+     page should contain element  //th[normalize-space(.)='FYR']//following::tr[@class='parent-product ng-scope'][1]/td/input[@ng-model="p.RecurringTotalt"]/../following-sibling::td[normalize-space(.)='${revenue_value}.00']
+     wait until page contains element  ${Save_sve}  60s
+     click element  ${Save_sve}
+     unselect frame
+     [Return]   ${fyr_value}
+
+
+Add Finnish_Domain_Service
+    [Documentation]  Add Finnish_Domain_Service  in the cpq page
+    select frame   ${iframe}
+    wait until page contains element  ${Child_product_Dns_finish doamin}  60s
+    click element  ${Child_product_Dns_finish doamin}
+    Wait until element is visible  ${Internet Domain_Toggle}   60s
+    Click element  ${Internet Domain_Toggle}
+    Wait Until Element Is Visible    ${Finnish_Domain_Service_Add_To_Cart}    240s
+    click element    ${Finnish_Domain_Service_Add_To_Cart}
+    Wait Until Element Is Visible    ${Finnish_Domain_Service_Settings_Icon}    240s
+    force click element    ${Finnish_Domain_Service_Settings_Icon}
+    Wait Until Element Is Visible   ${Verkotunnus_Field}   10s
+    press enter on    ${Verkotunnus_Field}
+    Wait Until Element Is Visible   ${Verkotunnus_option}   2s
+    click element    ${Verkotunnus_option}
+    Wait Until Element Is Visible    ${Voimassaoloaika_Field}  5s
+    press enter on    ${Voimassaoloaika_Field}
+    Wait Until Element Is Visible    ${Voimassaoloaika_option}    2s
+    click element    ${Voimassaoloaika_option}
+    Wait Until Element Is Visible  ${closing}  10s
+    click element    ${closing}
+    Sleep  40s
+    wait until page contains element  ${Annual Recurring charge_finish_time}  60s
+    ${value}  get text  ${Annual Recurring charge_finish_time}
+    ${value}=  remove string  ${value}  /year
+    wait until page contains element  ${Child_product_Dns_finish doamin_child}   60s
+    click visible element  ${Child_product_Dns_finish doamin_child}
+    Wait until element is visible  ${Finnish Domain Name Registrant}   60s
+    click visible element  ${Finnish Domain Name Registrant}
+    sleep  40s
+    wait until page contains element    //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[2]/div[normalize-space(.)="${value}"]   60s
+    ${value1}  get text   ${Monthly recurring chage_finish_time}
+    ${value2}  get text    ${one time_charge_finish_doamin}
+    Page should contain element    //div[@class="slds-grid slds-nowrap cpq-total-card"]/div[2]/div[normalize-space(.)="${value}"]
+    Unselect Frame
+    [Return]  ${value}  ${value1}   ${value2}
+
+updating setting Telia Domain Name space
+    [Documentation]  This is to update the settings in Telia domain name service
+    [Arguments]   ${pname}=${product_name}
+    select frame    ${iframe}
+    ${SETTINGS}   set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/div/span[text()='${pname}']//following::button[@title='Settings']
+    Wait until element is visible   ${SETTINGS}   60s
+    Click Button    ${SETTINGS}
+    sleep  10s
+    Input Text   ${Asiakkaan verkkotunnus}     Test
+    Input Text   ${Linkittyvä tuote}    Test
+    sleep  3s
+    Click element  //*[@alt='close'][contains(@size,'large')]
+    sleep  10s
+    Reload page
+    sleep  10s
+    select frame    ${iframe}
+    scrolluntillfound    ${CPQ_CART_NEXT_BUTTON}
+    #sleep    10s
+    wait until page contains element   ${CPQ_CART_NEXT_BUTTON}    60s
+    click element    ${CPQ_CART_NEXT_BUTTON}
+    Unselect Frame
+    sleep    10s

@@ -529,3 +529,103 @@ Sync quote
     wait until page contains element  //div[@role="listitem"]//span[text()="Syncing"]    60s
     page should contain element   //div[@role="listitem"]//span[text()="Syncing"]/../../div[2]/span/span/img
 
+
+Validation of Telia Domain Name Service
+    [Documentation]  this is to validate the annnual,monthly,one time total charges in the quote page
+    [Arguments]     ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}
+    wait until page contains element      ${quote_number}   60s
+    click element  ${DETAILS}
+    scrolluntillfound  ${Recurring Total(Exc. Reporting)}
+    page should contain element   //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="Annual Recurring Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Annual Recurring charge}"]
+    page should contain element     //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="Monthly Recurring Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Monthly recurring chage}"]
+    page should contain element       //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="OneTime Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${One time total}"]
+    ${Annual Recurring charge}=  remove string  ${Annual Recurring charge}  €
+    ${Monthly recurring chage}=  remove string  ${Monthly recurring chage}  €
+    ${One time total}=  remove string  ${One time total}  €
+    ${Fyr_value} =  Evaluate   ${One time total}+(${Monthly recurring chage}*12)+${Annual Recurring charge}
+    page should contain element     //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="FYR Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Fyr_value} €"]
+
+
+Verify that Credit Score Validation step is skipped
+    [Documentation]  verify the quote page after update sales type is it  redirectly to quote page and the result of credit score.
+    ${send_quote}    Set Variable    //div[@title='Send Quote Email']
+    ${send_mail}    Set Variable    //p[text()='Send Email']
+    ${submitted}    Set Variable    //a[@aria-selected='true'][@title='Submitted']
+    wait until page contains element   //div[text()="Quote"]   60s
+    wait until page contains element  //li//a[@title="Details"]  60s
+    force click element  //li//a[@title="Details"]
+    scrolluntillfound   //span[text()="Credit Score"]
+    page should contain element    //span[text()="Credit Score"]//preceding::div[@class="test-id__field-label-container slds-form-element__label"]//following::span[text()="OK"]
+    ${quote_number}    get text    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
+    wait until page contains element    ${send_quote}   60s
+    click element  ${send_quote}
+    sleep  10s
+    Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    ${status}=  Run Keyword And Return Status  Wait until page contains element   ${send_mail}    100s
+    Run Keyword If   ${status}   Click Visible Element    ${send_mail}
+    Run Keyword unless   ${status}  Upadte the contact details for sending mail
+    Unselect Frame
+    sleep    30s
+    ${Quote_Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${submitted}    60s
+
+
+Upadte the contact details for sending mail
+    [Documentation]   Upadte the existing contact details for sending mail if the email filed is missing in the sending quote mail page .
+    ${page}  get location
+    page should contain elementv    //span[contains(text(),"Email is missing on")]
+    click element  //div[contains(text(),"Cancel")]
+    wait until page contains element  //h2[contains(text(),"Confirm")]   60s
+    click element  //button[@id="alert-ok-button"]
+    wait until page contains element  //li//a[@title="Details"]  60s
+    force click element  //li//a[@title="Details"]
+    scrolluntillfound  //span[text()="Contact Name"]
+    click element  //span[text()="Contact Name"]//following::div[1]//a
+    wait until page contains element  //span[text()="Primary eMail"]//following::div[1]//a   60s
+    ${mail_name}  get text  //span[text()="Primary eMail"]//following::div[1]//a
+    click visible element  //span[text()="Email"]//following::div[1]//button
+    click visible element  //input[@name="Email"]
+    input text  //input[@name="Email"]   ${mail_name}
+    click visible element    //button[@title="Save"]
+    sleep  30s
+    go to  ${page}
+    click visible element  //p[text()='Send Email']
+
+
+Check the credit score result of the Negative cases
+    [Documentation]  Check the credit score result of the Negative cases
+    ${send_quote}    Set Variable    //div[@title='Send Quote Email']
+    ${quote_n}    Set Variable    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span
+    ${send_mail}    Set Variable    //p[text()='Send Email']
+    wait until page contains element    //div[contains(@class,'oneContent active')]//span[@title='Quote Number'][contains(text(),'Quote Number')]/../div/div/span   60s
+    wait until page contains element    ${send_quote}   60s
+    click element  ${send_quote}
+    sleep  50s
+    Wait Until Element Is Enabled    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe    60s
+    select frame    //div[@class='windowViewMode-normal oneContent active lafPageHost']/div[@class='oneAlohaPage']/force-aloha-page/div/iframe
+    page should contain element   //span[contains(text(),"Credit Score result: Manual Credit Inquiry Case is not approved")]
+    page should contain element  //p//h3[text()="Decision: Negative"]
+    click element  //div//p[text()="Next"]
+    unselect frame
+    wait until page contains element        //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']       60s
+    sleep  10s
+    force click element    //*[text()='Quote']//following::div[@role='group'][1]/ul/li/a/div[text()='CPQ']
+    sleep    30s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Create Order']/..    Create Order
+    wait until page contains element    //span[text()='Create Order']/..    60s
+    click element    //span[text()='Create Order']/..
+    unselect frame
+    Sleep  60s
+    select frame    xpath=//div[contains(@class,'slds')]/iframe
+    wait until page contains element  //h1[contains(text(),"Credit Score Validation")]   60s
+    page should contain element     //div/small[text()="Manual Credit Inquiry case is not accepted. Decision: Negative"]
+
+Validate the credit score is NO
+    [Documentation]  Validate the credit score is NO
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until page contains element  //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]   60
+    wait until page contains element  //div//small[text()="Quote Not Approved"]   60s
+    page should contain element    //li//span[text()="You are not able to proceed with Quote or Order"]
+    unselect frame
+

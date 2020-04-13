@@ -102,7 +102,11 @@ getOrderStatusAfterSubmitting
     should not be equal as strings  ${fulfilment_status}  Error
     should not be equal as strings  ${status}  Error
     ${order_no}   get text   //div[contains(@class,'-flexi-truncate')]//following::span[text()='Order Number']/../following-sibling::div/span/span
+    ${location}=    Get Location
+    set test variable   ${Order_url}   ${location}
     #log to console  ${order_no}.this is getorderstatusafgtersubmirting function
+    Sleep  20s
+    wait until page contains element    //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']  60s
     click element     //li[@class='tabs__item uiTabItem']/a[@class='tabHeader']/span[text()='Related']
     [Return]   ${order_no}
 
@@ -273,18 +277,24 @@ SelectOwnerAccountInfo
     unselect frame
     sleep    30s
 
+
 ValidateTheOrchestrationPlan
     wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
     ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
     log to console  ${order_number}.this is order numner
     set test variable  ${order_no}   ${order_number}
     #Do not remove. Required for change order
-    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    #At times the Orchestration Plan is not visible in Related Page then get the Plan ID from Detail Page
+    ${status} =    Run Keyword and Return status  Page should contain element   //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    Run Keyword if   ${status} == False    GetOrchestrationPlanfromDetail
+#    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     #execute javascript    window.scrollTo(0,2000)
-    #sleep    10s
+    sleep    10s
     #log to console    plan validation
-    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
-    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+#    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
+#    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+     wait until page contains element   //span[text()='Orchestration Plan']   30s
+#    click element   //span[text()='Orchestration Plan']
     sleep    10s
     ${location}=    Get Location
     set test variable   ${url}   ${location}
@@ -308,7 +318,19 @@ ValidateTheOrchestrationPlan
     [Return]  ${order_number}
 
 
+
+
+GetOrchestrationPlanfromDetail
+   [Documentation]  In Orchestration Plan Page it capture the Plan ID from the Details TAB
+    Reload page
+    wait until page contains element    //span[@class='title' and text()='Details']    100s
+    click element   //span[@class='title' and text()='Details']
+    sleep  40s
+    scrolluntillfound    //span[text()='Orchestration Plan']/following::div[1]//a[contains(@class,'textUnderline')]
+    click element   //span[text()='Orchestration Plan']/following::div[1]//a[contains(@class,'textUnderline')]
+
 Check the credit score result of the case with postive
+    [Documentation]  Check the credit score result of the case with postive
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //button[contains(text(),"Create Order")]  60s
     page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive"]
@@ -324,6 +346,7 @@ Check the credit score result of the case with postive
     OrderNextStepsPage
 
 Check the credit score result of the case with Positive with Conditions
+    [Documentation]  Check the credit score result of the case with Positive with Conditions
     select frame    xpath=//div[contains(@class,'slds')]/iframe
     wait until page contains element  //button[contains(text(),"Create Order")]  60s
     page should contain element  //div//small[text()="Manual Credit Inquiry accepted. Decision: Positive with Conditions"]
@@ -346,24 +369,24 @@ Change Order
 
 
 Initiate Change Order
-    Go to entity   ${vLocUpg_TEST_ACCOUNT}
+     Go to entity   ${vLocUpg_TEST_ACCOUNT}
     #Go to entity   ${Account}
-    Page should contain element   //span[text()='Account ID']
-    Force Click element  //span[text()='Account ID']
-    ${AssetHistory}   set variable   //div[@class='full forcePageBlock forceRecordLayout']/div/h3[contains(@class,'test-id')]/button/span[text()='Asset History']
+#    Page should contain element   //span[text()='Account ID']
+#    Force Click element  //span[text()='Account ID']
+    ${AssetHistory}   set variable   //button//span[text()='Asset History']
     Execute JavaScript    window.scrollTo(5000,4900)
     Page should contain element   ${AssetHistory}
     Log to console   Asset history found
-    ${frame}  set variable  //force-aloha-page[@title='AssetHistoryAndMACD']/div[@class='content iframe-parent']/iframe
+    ${frame}  set variable  //button/span[text()='Asset History']/../../..//div[@class="content iframe-parent"]/iframe
     Page should contain element    ${frame}
     select frame  ${frame}
-    ${status}   Run keyword and return status  Page should contain element   //li[@ng-repeat='prod in assetItems'][1]/div/div/div/div/span/a/span
+    ${status}   Run keyword and return status  Page should contain element   //li[@ng-repeat='prod in assetItems'][1]/div/div/input
     Run keyword if   ${status}   Page should contain element    //li[@ng-repeat='prod in assetItems'][1]/div/div/input
-    Wait until page contains element    //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input   60s
-    page should contain checkbox    //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
-    force Click element   //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
+    Wait until page contains element   //li[@ng-repeat='prod in assetItems'][1]/div/div/input   60s
+    page should contain checkbox    //li[@ng-repeat='prod in assetItems'][1]/div/div/input
+    force Click element   //li[@ng-repeat='prod in assetItems'][1]/div/div/input
     sleep  5s
-    Checkbox Should Be Selected   //div[@class="asset-bd"]//li[@class="root-asset ng-scope"]//div[@class="asset ng-scope"]//div[@class="p-check"]//input
+    Checkbox Should Be Selected   //li[@ng-repeat='prod in assetItems'][1]/div/div/input
     Capture Page Screenshot
     sleep  5s
     Log to console   Change Order Initiated
@@ -381,7 +404,7 @@ Request date
 
 Verify the Action of child product
     [Arguments]  ${pname}  ${Value}
-    ${Action_xpath}   set variable   //div[contains(text(),'${pname}')]//following::div[13]
+    ${Action_xpath}   set variable   //div[contains(text(),'${pname}')]//following::div[19]
     Wait until element is visible  ${Action_xpath}    60s
     ${Action}  Get Text  ${Action_xpath}
     Should be equal     ${Action}  ${Value}
@@ -389,8 +412,9 @@ Verify the Action of child product
 
 
 Order Post script
+    [Arguments]   ${contact_name}
     Select Account - no frame
-    select contact - no frame
+    select contact - no frame   ${contact_name}
     Select Date - no frame
     Select account Owner - no frame
     Verify Order Type
@@ -520,8 +544,8 @@ Enter Group id and submit
     ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
     #${Group id}=  set variable   //span[text()='Edit Group Billing ID']
     ${Group Billing ID}=  set variable   //div/span[text()='Group Billing ID']
-    #${status}   Run keyword and return status   Wait until element is visible   ${cancel}   30s
-    #Run keyword if   ${status}  Click element   ${cancel}
+    ${status}   Run keyword and return status   Wait until element is visible   ${cancel}   30s
+    Run keyword if   ${status}  Click element   ${cancel}
     sleep  3s
     Wait until element is visible   ${Detail}  60s
     Force click element   ${Detail}
@@ -531,19 +555,15 @@ Enter Group id and submit
     sleep  3s
     Page should contain element  //label/span[text()='Group Billing ID']
     ScrollUntillFound    //label/span[text()='Group Billing ID']
-    #Input Text   //input[@title='Search Group Billing IDs']     ${group_id}
     Select from search List     //input[@title='Search Group Billing IDs']     ${group_id}
-    #${status}    Run keyword and return status   Page should contain element   //div[@title='${group_id}']
-    #Wait until element is visible  //div[@title='${group_id}']  30s
-    #Click element   //div[@title='${group_id}']
     Wait until element is visible  //label/span[text()='Desired Installation Date']/..//following::input[1]   30s
     Force Click element  //label/span[text()='Desired Installation Date']/..//following::input[1]
     Click element   //a[@title='Go to next month']
     Wait until element is visible      //tr[@class='calRow'][2]/td[1]/span  30s
     Click element  //tr[@class='calRow'][2]/td[1]/span
-    Wait until element is visible  //label/span[text()='SAP Contract ID']/..//following::input[1]  30s
-    Clear element Text  //label/span[text()='SAP Contract ID']/..//following::input[1]
-    Input Text  //label/span[text()='SAP Contract ID']/..//following::input[1]  1010004095
+    # Contract id issue at times in Order submition SAP Contract ID is not visible  during the submittion of order
+    ${status}    Run keyword and return status   Page should contain element   //label/span[text()='SAP Contract ID']/..//following::input[1]
+    Run Keyword If    ${status} == True    Input Text  //label/span[text()='SAP Contract ID']/..//following::input[1]  1010004095
     Wait until element is visible   //button[@title='Save']  30s
     Click element  //button[@title='Save']
     sleep  5s
@@ -554,6 +574,7 @@ Enter Group id and submit
     Wait until element is visible     //h2[text()='Submit Order']   30s
     click element   //button[text()='Submit']
     sleep  15s
+
 
 Validate Order status
     Wait until page contains element   //a[text()='${order_no}']  60s
@@ -649,3 +670,29 @@ Preview order summary and verify order
     sleep  10s
     go to  ${page}
     sleep  30s
+
+
+FetchfromOrderproduct
+    [Documentation]    Go to OrderProductPage and fetch the subscription ID
+    [Arguments]    ${Ordernumber}
+    Go To Entity    ${Ordernumber}
+    wait until page contains element      ${Order_Related_Tab}   45s
+    Force Click Element    ${Order_Related_Tab}
+    sleep    10s
+    wait until page contains element    ${Order_Products_Tab}    20s
+    Force Click Element  ${Order_Products_Tab}
+    sleep    10s
+    sleep  10s
+    click element  ${Order_Products_Select}
+    sleep  20s
+    Reload page
+    wait until page contains element     ${Order_Products_Related_Tab}   60s
+    Force Click Element   ${Order_Products_Related_Tab}
+    log to console  related is clicked
+    sleep  20s
+    wait until page contains element  ${Order_Products_Assets_Tab}  60s
+    click element  ${Order_Products_Assets_Tab}
+    sleep  10s
+    ${subscription_ID}   get text   ${Order_Products_SubID}
+    sleep  3s
+    [Return]   ${subscription_ID}

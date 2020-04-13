@@ -606,3 +606,55 @@ Validate Created Task
     ${date_due}=    Get Date From Future    7
     page should contain element    //span[@class='uiOutputDate' and text()='${date_due}']
     page should contain element    //span[@class='test-id__field-value slds-form-element__static slds-grow ']/span[@class='uiOutputText' and text()='${unique_subject_task_form}']
+
+
+Validate technical contact in the asset history page using subscription as
+   [Documentation]    Go to Account asset History and select the respective product based on subscription ID and validate the technical contact details
+   [Arguments]    ${sub_name}     ${Contact_name}
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    scroll page to location  0  9000
+    ScrollUntillFound   //button//span[text()='Asset History']
+    Log to console  scroll to asset history
+    select frame   ${Account_Asset_iframe}
+    ScrollUntillFound  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a
+    wait until page contains element  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a  60s
+    Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${sub_name}']/../..//div[@class="p-name"]/a
+    unselect frame
+    sleep  10s
+    switch between windows  1
+    ${contact_value}  get text  ${Account_Asset_TechnicalContact}
+    Should be equal   ${contact_value}    ${Contact_name}
+
+
+create two different billing account for payer and buyer validation
+   [Arguments]  ${billing_acc_name}
+   go to entity  ${vLocUpg_TEST_ACCOUNT}
+   ${billing_acc_name1}    run keyword    CreateABillingAccount   ${vLocUpg_TEST_ACCOUNT}
+   Go to Entity  ${billing_acc_name1}
+   wait until page contains element  //div//span[text()="Payer for"]   60s
+   click button  //button[@title="Edit Payer for"]
+   sleep  10s
+   wait until page contains element   //div//input[@placeholder="Search Accounts..."]   60s
+   click element  //div//input[@placeholder="Search Accounts..."]
+   input text    //div//input[@placeholder="Search Accounts..."]   ${vLocUpg_TEST_ACCOUNT}
+   sleep  5s
+   press enter on  //div//input[@placeholder="Search Accounts..."]
+   wait until page contains element   //a[@title="Aarsleff Oy"]  60s
+   force click element   //a[@title="Aarsleff Oy"]
+   wait until page contains element   //button[@title="Save"]  60s
+   click element  //button[@title="Save"]
+   sleep  10s
+   go to entity   ${billing_acc_name}
+   wait until page contains element  //div//span[text()="Payer for"]    60s
+   click button  //button[@title="Edit Payer for"]
+   sleep  10s
+   wait until page contains element   //div//input[@placeholder="Search Accounts..."]   60s
+   click element  //div//input[@placeholder="Search Accounts..."]
+   sleep  5s
+   input text    //div//input[@placeholder="Search Accounts..."]   ${vLocUpg_TEST_ACCOUNT}
+   press enter on  //div//input[@placeholder="Search Accounts..."]
+   wait until page contains element   //a[@title="Aarsleff Oy"]  60s
+   force click element   //a[@title="Aarsleff Oy"]
+   wait until page contains element   //button[@title="Save"]  60s
+   click element  //button[@title="Save"]
+   [Return]     ${billing_acc_name1}

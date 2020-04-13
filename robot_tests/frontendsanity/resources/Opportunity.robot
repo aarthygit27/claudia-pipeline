@@ -105,25 +105,34 @@ Opportunity status
     ${Oppo_Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${oppo_status}    60s
 
 Closing the opportunity
-    [Arguments]    ${continuation}
+    [Arguments]    ${stage1}
+    #${stage_complete}=    set variable    //span[text()='Mark Stage as Complete']
     ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
     ${edit_stage}=    set variable    //button[@title='Edit Stage']
+    #Wait Until Element Is Visible     ${stage_complete}    60s
     ${stage}=    Get Text    ${current_stage}
+    Log To Console    The current stage is ${stage}
     Capture Page Screenshot
     click element    ${EDIT_STAGE_BUTTON}
     Sleep  30s
-    Select option from Dropdown    //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div    Closed Won
-    Execute Javascript    window.scrollTo(0,600)
-    Select option from Dropdown if not able to edit the element from the list    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}   Closed Won
-    Select option from Dropdown   //span[contains(@class,'label inputLabel')]/span[contains(text(),'Create Continuation Sales Opportunity?')]/../../div/div/div/div/a    ${continuation}
-    Wait Until Page Contains Element    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    60s
-    Execute Javascript    window.scrollTo(0,9000)
+    Select option from Dropdown    //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div   ${stage1}
+    scrolluntillfound    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div
+    Scroll Page To Location    0    3000
+    Sleep  20s
+    Click element    //lightning-textarea//label[text()="Close Comment"]/../div/textarea
+    Input Text    //lightning-textarea//label[text()="Close Comment"]/../div/textarea    this is a test opportunity to closed won
+    #Execute Javascript    window.scrollTo(0,3000)
+    Wait Until Page Contains Element    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   60s
     #Get Text    //span[contains(text(),'Service Address Street')]/../../span
-    Select option from Dropdown    //span[contains(@class,'label inputLabel')]/span[contains(text(),'Close Reason')]/../../div/div/div/div/a    08 Other
-    input text    //span[text()='Close Comment']/../../textarea    this is a test opportunity to closed won
-    #sleep  30s
+    Select option from Dropdown     //lightning-combobox//label[text()="Relationship"]/..//div/*[@class="slds-combobox_container"]/div           Long
+    Select option from Dropdown    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div    Solution
+    wait until page contains element  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   60s
+    Select option from Dropdown  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   05 Availability
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   Quality
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason"]/..//div/*[@class="slds-combobox_container"]/div    Service quality
     Wait Until Page Contains Element     //button[@title="Save"]   60s
     click element   //button[@title="Save"]
+    sleep  30s
 
 verifying quote and opportunity status
     [Arguments]    ${oppo_name}
@@ -147,21 +156,27 @@ Closing the opportunity with reason
     #${stage_complete}=    set variable    //span[text()='Mark Stage as Complete']
     ${current_stage}=    set variable    //div[contains(@class,'test-id__field')]/span[contains(text(),'Stage')]/../../div/span[contains(@class,'field-value')]
     ${edit_stage}=    set variable    //button[@title='Edit Stage']
-    #Wait Until Element Is Visible    ${stage_complete}    60s
+    #Wait Until Element Is Visible     ${stage_complete}    60s
     ${stage}=    Get Text    ${current_stage}
     Log To Console    The current stage is ${stage}
     Capture Page Screenshot
     click element    ${EDIT_STAGE_BUTTON}
     Sleep  30s
     Select option from Dropdown    //lightning-combobox//label[text()="Stage"]/..//div/*[@class="slds-combobox_container"]/div   ${stage1}
-    Execute Javascript    window.scrollTo(0,7000)
-    Wait Until Page Contains Element    //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   60s
-    #Get Text    //span[contains(text(),'Service Address Street')]/../../span
-    Select option from Dropdown    //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div    08 Other
+    scrolluntillfound    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div
     Scroll Page To Location    0    3000
+    Sleep  20s
     Click element    //lightning-textarea//label[text()="Close Comment"]/../div/textarea
     Input Text    //lightning-textarea//label[text()="Close Comment"]/../div/textarea    this is a test opportunity to closed won
-    #sleep  30s
+    #Execute Javascript    window.scrollTo(0,3000)
+    Wait Until Page Contains Element    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   60s
+    #Get Text    //span[contains(text(),'Service Address Street')]/../../span
+    Select option from Dropdown     //lightning-combobox//label[text()="Relationship"]/..//div/*[@class="slds-combobox_container"]/div           Long
+    Select option from Dropdown    //lightning-combobox//label[text()="Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div    Solution
+    wait until page contains element  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   60s
+    Select option from Dropdown  //lightning-combobox//label[text()="Close Reason"]/..//div/*[@class="slds-combobox_container"]/div   05 Availability
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason Category"]/..//div/*[@class="slds-combobox_container"]/div   Quality
+    Select option from Dropdown    //lightning-combobox//label[text()="Secondary Close Reason"]/..//div/*[@class="slds-combobox_container"]/div    Service quality
     Wait Until Page Contains Element     //button[@title="Save"]   60s
     click element   //button[@title="Save"]
     sleep  30s
@@ -713,8 +728,8 @@ validateCreatedOppoForFYR
     sleep    10s
     ScrollUntillFound    //a[text()='${product_name}']
     page should contain element    //a[text()='${product_name}']
-    page should contain element    //span[text()='New Money - New Services']
-    page should contain element    //span[text()='New Money - New Services']//following::span[@class="slds-truncate uiOutputNumber"][text()="${product_quantity},00"]
+    page should contain element    //lightning-formatted-text[contains(text(),'New Money-New Services')]
+    page should contain element    //lightning-formatted-text[contains(text(),'New Money-New Services')]//following::lightning-formatted-number[text()="${product_quantity},00"]
 
 
 Move the Opportunity to next stage
@@ -739,3 +754,52 @@ Move the Opportunity to next stage
     Click element   //button[text()="Save"]
     Sleep  10s
 
+validateproductsbasedonsalestype
+   [Arguments]     @{items}
+    ${list_Prd}    Create List    @{items}
+    @{list_with prod and sales}     create list
+    ${count}    Get Length    ${list_Prd}
+    Wait until element is visible   ${Oppo_Related_Tab}   10s
+    Force click element     ${Oppo_Related_Tab}
+    Wait until element is visible   ${Oppo_Product_panel}   10s
+    Wait until element is visible   ${Product_viewall_button}   30s
+    Click Button    ${Product_viewall_button}
+    sleep  30s
+    switch between windows  1
+    sleep  30s
+    :FOR    ${i}    IN RANGE    ${count}
+    \    ${i} =    Set Variable    ${i + 1}
+    \   ${sales_type}  get text   //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[2]//div
+    \   ${sales_value}  get text  //table[@role="treegrid"]/tbody/tr[${i}]/th/following::td[8]//div
+    \   Append To List  ${list_with prod and sales}    ${sales_type}    ${sales_value}
+    ${add_new}  ${add_ren}  ${add_frame} =   addFYRbasedonSalesType  ${list_with prod and sales}
+    switch between windows  0
+    [Return]   ${add_new}  ${add_ren}  ${add_frame}
+
+
+Validating FYR values in Opportunity Header
+     [Arguments]    ${fyr_total}   ${new}   ${ren}   ${frame}
+     sleep  90s
+     page should contain element    //p[text()="FYR Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
+     page should contain element    //p[text()="FYR New Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${new},00 €"]
+     page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${ren},00 €"]
+     page should contain element    //p[text()="FYR Total Frame Agreement"]/../..//lightning-formatted-text[text()=normalize-space(.)="${frame},00 €"]
+
+
+Validate the HDc Related fields are non editable after closing Opportunity
+    [Documentation]  This is to validate the  closed opportunity HDC fields non editable
+    ScrollUntillFound  ${Additional_Details}
+    wait until page contains element  ${HDC Total}   60s
+    page should contain element    ${HDC Total KW_investment}
+    page should contain element   ${HDC Rack Amount_investment}
+    Page should Not contain element     ${Edit HDC Rack Amount}
+    page should Not contain element   ${Edit HDC Total KW}
+
+Validate the HDc Related fields aeditable if the profile is admin after closing Opportunity
+    [Documentation]  This is to validate the closed opportunity HDC fields are editable
+    ScrollUntillFound  ${Additional_Details}
+    wait until page contains element  ${HDC Total}   60s
+    page should contain element    ${HDC Total KW_investment}
+    page should contain element   ${HDC Rack Amount_investment}
+    Page should contain element     ${Edit HDC Rack Amount}
+    page should contain element   ${Edit HDC Total KW}

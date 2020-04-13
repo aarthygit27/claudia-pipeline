@@ -49,3 +49,64 @@ Lightning - FYR Calculation for B2B
      NextButtonOnOrderPage
      OrderNextStepsPage
      validatation on order page     ${fyrt_total}    ${Revenue_Total}
+
+
+Validate FYR values in Oppo page created through SVE
+    [Documentation]  This script is designed to  validate and verify the FYR values in Opportunity page  based on SalesType selected for the multiple products added SVE by using  B2B user
+    [Tags]  BQA-13171
+    Go To Salesforce and Login into Lightning       B2B DigiSales
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity   ${oppo_name}
+    clickingOnSolutionValueEstimate     ${oppo_name}
+    sleep  10s
+    ${fyr_total}  Add multiple products in SVE  @{LIST}
+    reload page
+    sleep  10s
+    ${new}  ${ren}  ${frame}   validateproductsbasedonsalestype  @{LIST}
+    reload page
+    sleep  10s
+    Validating FYR values in Opportunity Header   ${fyr_total}  ${new}  ${ren}  ${frame}
+
+
+FYR calculation with annually recurring charges
+    [Tags]  BQA-13123
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact}    run keyword    Create New Contact for Account
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    clickingOnSolutionValueEstimate    ${oppo_name}
+    ${fyr}    run keyword    addProductsViaSVE    Telia Domain Name Service
+    Go To Entity    ${oppo_name}
+    validateCreatedOppoForFYR   Telia Domain Name Service  ${fyr}
+    clickingOnSolutionValueEstimate    ${oppo_name}
+    ${fyr_new}    run keyword   Mofify the contract length and validate in the opportunity page
+    Go To Entity    ${oppo_name}
+    validateCreatedOppoForFYR   Telia Domain Name Service  ${fyr_new}
+    ClickingOnCPQ     ${oppo_name}
+    Adding prouct To cart (cpq) without Next   Telia Domain Name Service
+    ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}      run keyword      Add Finnish_Domain_Service
+    updating setting Telia Domain Name space  Telia Domain Name Service
+    UpdateAndAddSalesType  Telia Domain Name Service
+    Validation of Telia Domain Name Service   ${Annual Recurring charge}  ${Monthly recurring chage}  ${One time total}
+
+
+Validate FYR values created through CPQ page in Oppo page
+    [Tags]  BQA-13173
+    @{products}    Set Variable    Alerta projektointi    Fiksunetti    Telia Chat    Telia Verkkotunnuspalvelu    Genesys PureCloud
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact}    run keyword    Create New Contact for Account
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    Searching and adding multiple products    @{products}
+    updateandaddsalestype for multiple products with different salestype  @{products}
+    Go To Entity    ${oppo_name}

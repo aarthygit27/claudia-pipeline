@@ -115,3 +115,21 @@ Manual Credit Check Enquiry with No Result
     Add product to cart (CPQ)  Telia Chat
     UpdateAndAddSalesType  Telia Chat
     sleep  20s
+
+
+Credit score results Ok for B2b opportunity
+    [Documentation]  To check the Credit score Result is Ok  for  B2B opportunity and without Manual credit score process
+    [Tags]  BQA-13169
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact_name}     run keyword    Create New Contact for Account
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    AddProductToCart    Alerta projektointi
+    UpdateAndAddSalesType    Alerta projektointi
+    Verify that Credit Score Validation step is skipped
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    Submit Order Button
