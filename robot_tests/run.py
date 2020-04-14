@@ -17,7 +17,7 @@ RESOURCEROOT = path_join(CURDIR, 'resources')
 DOCROOT = path_join(CURDIR, 'docs')
 ESCAPED_CURDIR = CURDIR.replace(' ', '!')
 DEFAULT_ARGS = '--escape space:! --variable PROJECTROOT:{root} {source}'.format(
-    root=ESCAPED_CURDIR, source=path_join(ESCAPED_CURDIR, 'tests'))
+    root=ESCAPED_CURDIR, source=path_join(ESCAPED_CURDIR, 'frontendsanity'))
 
 def extend_pythonpath(libroot):
     for dirname in os.listdir(libroot):

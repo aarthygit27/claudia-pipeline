@@ -133,7 +133,7 @@ Lightning: Create Task from Account
 
 Change Account owner for Group Account
     [Documentation]    To change the account  owner for group  account
-    [Tags]    BQA-8523     AUTOLIGHTNINGOLD      AccountManagement
+    [Tags]    BQA-8523     AUTOLIGHTNINGOLD      AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go To Entity    ${GROUP_TEST_ACCOUNT}
     Check original account owner and change if necessary
@@ -142,7 +142,7 @@ Change Account owner for Group Account
 
 Remove Account owner
     [Documentation]    REmoving the account owner (changing the account owner to GESB Integration)
-    [Tags]    BQA-8524    AUTOLIGHTNINGOLD      AccountManagement
+    [Tags]    BQA-8524    AUTOLIGHTNINGOLD      AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go To Entity    ${RemoveAccountOwner}
     Remove change account owner
@@ -151,7 +151,7 @@ Remove Account owner
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8525    AUTOLIGHTNINGOLD     AccountManagement
+    [Tags]    BQA-8525    AUTOLIGHTNINGOLD     AccountManagementOld
     Login to Salesforce as DigiSales Admin user
     Go to Entity    ${TEST_CONTACT}
     Change Account Owner
@@ -159,7 +159,7 @@ Lightning: Sales admin Change Account owner
 
 Lightning: Sales admin Change Account owner for group account
     [Documentation]    Change Group Account owner by logging into Digisales Admin User
-    [Tags]    BQA-8526    AUTOLIGHTNINGOLD     AccountManagement
+    [Tags]    BQA-8526    AUTOLIGHTNINGOLD     AccountManagementOld
     Login to Salesforce as DigiSales Admin user
     Go to Entity    ${GROUP_TEST_ACCOUNT}
     Change Account Owner
@@ -538,14 +538,14 @@ Create contact relationship for account
 
 Change business account owner
     [Documentation]    Change owner of the Business account to B2BDigisales Lightning user
-    [Tags]    BQA-10736    AUTOLIGHTNINGOLD     AccountManagement
+    [Tags]    BQA-10736    AUTOLIGHTNINGOLD     AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go To Entity    Aacon Oy
     Change account owner to     B2B Lightning
     Validate that account owner was changed successfully    B2B Lightning
 
 Add an account team member as account owner
-    [Tags]    BQA-10524     AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]    BQA-10524     AUTOLIGHTNINGOLD       AccountManagementOld
     [Documentation]     Log in as digisales user and navigate to business account that you own. Add some user to business account team.
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -559,7 +559,7 @@ Add an account team member as account owner
     Validate that team member is created succesfully
 
 Edit team member's role as account owner
-    [Tags]     BQA-10948    AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]     BQA-10948    AUTOLIGHTNINGOLD       AccountManagementOld
     [Documentation]     Log in as B2B-sales user and edit team member's role when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -569,7 +569,7 @@ Edit team member's role as account owner
     Change team member role from account
 
 Delete team member as account owner
-    [Tags]     BQA-10949       AUTOLIGHTNINGOLD        AccountManagement
+    [Tags]     BQA-10949       AUTOLIGHTNINGOLD        AccountManagementOld
     [Documentation]     Log in as B2B-sales user and remove team member when you are the owner of the account.
     Go To Salesforce and Login into Lightning
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
@@ -580,7 +580,7 @@ Delete team member as account owner
 
 Add an account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then add some user as a team member for business account
-    [Tags]    BQA-10727     AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]    BQA-10727     AUTOLIGHTNINGOLD       AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -590,7 +590,7 @@ Add an account team member as Sales Admin
 
 Edit team member's role as Sales Admin
     [Documentation]    Log in as Sales Admin and then edit existing team member's role for business account
-    [Tags]     BQA-10728     AUTOLIGHTNINGOLD          AccountManagement
+    [Tags]     BQA-10728     AUTOLIGHTNINGOLD          AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -600,7 +600,7 @@ Edit team member's role as Sales Admin
 
 Delete account team member as Sales Admin
     [Documentation]    Log in as Sales Admin and then delete team member from business account
-    [Tags]     BQA-10740    AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]     BQA-10740    AUTOLIGHTNINGOLD       AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Navigate to related tab
@@ -610,7 +610,7 @@ Delete account team member as Sales Admin
 
 Add an account team member to Group
     [Documentation]    Log in as Sales Admin and add team member to concern/group
-    [Tags]     BQA-10737    AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]     BQA-10737    AUTOLIGHTNINGOLD       AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Navigate to view    Account Team Members
@@ -619,7 +619,7 @@ Add an account team member to Group
 
 Negative: Try to add account owner to Account team
     [Documentation]     Log in as sales admin and try to add the account owner to account team. This should not be possible.
-    [Tags]      BQA-10952     AUTOLIGHTNINGOLD     AccountManagement
+    [Tags]      BQA-10952     AUTOLIGHTNINGOLD     AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go to Entity  Aacon Oy
     Navigate to related tab
@@ -628,7 +628,7 @@ Negative: Try to add account owner to Account team
 
 Negative: Try to add group owner to group's account team
     [Documentation]     Log in as sales admin and try to add group owner to group's account team as a member. This should not be possible.
-    [Tags]      BQA-10951       AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]      BQA-10951       AUTOLIGHTNINGOLD       AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Add account owner to account team
@@ -636,7 +636,7 @@ Negative: Try to add group owner to group's account team
 
 Group: Edit team member's role
     [Documentation]    Log in as Sales Admin. Go to group and edit existing team member's role.
-    [Tags]    BQA-10738    AUTOLIGHTNINGOLD        AccountManagement
+    [Tags]    BQA-10738    AUTOLIGHTNINGOLD        AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Navigate to view    Account Team Members
@@ -645,7 +645,7 @@ Group: Edit team member's role
 
 Group: Delete team member
     [Documentation]    Log in as Sales Admin. Go to group and delete existing team member.
-    [Tags]     BQA-10739    AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]     BQA-10739    AUTOLIGHTNINGOLD       AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Navigate to view    Account Team Members
@@ -654,7 +654,7 @@ Group: Delete team member
 
 Negative: Try to add same team member twice to account team
     [Documentation]     Expected result: It's not possible to add same team member twice to business account's account team.
-    [Tags]     BQA-11052       AUTOLIGHTNINGOLD        AccountManagement
+    [Tags]     BQA-11052       AUTOLIGHTNINGOLD        AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go to Entity  ${LIGHTNING_TEST_ACCOUNT}
     Navigate to related tab
@@ -695,7 +695,7 @@ Negative: Check external data is not editable from account contact relationship 
     Validate external contact data can not be modified
 
 Add several team members to business account team
-    [Tags]    BQA-10937    AUTOLIGHTNINGOLD          AccountManagement
+    [Tags]    BQA-10937    AUTOLIGHTNINGOLD          AccountManagementOld
     [Documentation]     Log in as sales amdin and open business account that is member in some group hierarchy. Add several account team members and validate that
     ...     it's not possible to add same user twice and there can be several users with same role. Validate that it's possible for users to have different roles.
     Go To Salesforce and Login into Admin User
@@ -716,7 +716,7 @@ Add several team members to business account team
 Group: Account team member is added as group owner
     [Documentation]     Account team member is added as group owner. History is checked and it should contain record about changing the owner.
     ...     Check that new owner is removed from the account team.
-    [Tags]      BQA-10933       AUTOLIGHTNINGOLD       AccountManagement
+    [Tags]      BQA-10933       AUTOLIGHTNINGOLD       AccountManagementOld
     Go To Salesforce and Login into Admin User
     Go to Entity  Aho Group
     Check original account owner and change if necessary for event
@@ -738,7 +738,7 @@ Group: Account team member is added as group owner
 Negative: Try to change account owner different from the group account owner
     [Documentation]     Log in as sales admin and find Business account from group hierarchy. Try to change the Business Account owner different from
     ...     the group account owner. This should not be possible.
-    [Tags]     BQA-10968     AUTOLIGHTNINGOLD     AccountManagement
+    [Tags]     BQA-10968     AUTOLIGHTNINGOLD     AccountManagementOld
     Go To Salesforce and Login into Admin User
     ${group_account_owner}=    Set variable     Maris Steinbergs
     Go to Entity  AT&T

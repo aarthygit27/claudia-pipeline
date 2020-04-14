@@ -2,9 +2,14 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Account.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/CPQ.robot
+Resource          ../../frontendsanity/resources/Contract.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 #Library             test123.py
 
 
@@ -62,7 +67,7 @@ Check of Customership Contract
     Delete all existing contracts from Accounts Related tab
     Set Test Variable   ${contact_name}   Testing Contact_ 20190924-174806
     ${oppo_name}   run keyword  CreateAOppoFromAccount_HDC  ${contact_name}
-    Verify warning banner on oppo page   ${oppo_name}
+    #Verify warning banner on oppo page   ${oppo_name}
     Go to account from oppo page
     Create contract Agreement  Customership
     ${Contract_A_Number}  set variable  ${Customer_contract}

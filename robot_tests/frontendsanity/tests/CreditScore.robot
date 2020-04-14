@@ -2,16 +2,21 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Account.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/CPQ.robot
+Resource          ../../frontendsanity/resources/Quote.robot
+Resource          ../../frontendsanity/resources/Order.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 #Library             test123.py
 
 
 *** Test Cases ***
-
 Manual Credit Check Enquiry with postive
-    [Tags]  BQA-12600
+    [Tags]  BQA-12600       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -38,7 +43,7 @@ Manual Credit Check Enquiry with postive
     ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with postive and condition
-    [Tags]  BQA-12674
+    [Tags]  BQA-12674       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -69,7 +74,7 @@ Manual Credit Check Enquiry with postive and condition
     ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with Negative
-    [Tags]  BQA-12673
+    [Tags]  BQA-12673       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -99,7 +104,7 @@ Manual Credit Check Enquiry with Negative
     ValidateTheOrchestrationPlan
 
 Manual Credit Check Enquiry with No Result
-    [Tags]  BQA-12675
+    [Tags]  BQA-12675       CreditCheck
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${TEST_CONTACT}
     ${contact_name}    run keyword    Create New Contact for Account
@@ -110,3 +115,21 @@ Manual Credit Check Enquiry with No Result
     Add product to cart (CPQ)  Telia Chat
     UpdateAndAddSalesType  Telia Chat
     sleep  20s
+
+
+Credit score results Ok for B2b opportunity
+    [Documentation]  To check the Credit score Result is Ok  for  B2B opportunity and without Manual credit score process
+    [Tags]  BQA-13169
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact_name}     run keyword    Create New Contact for Account
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    AddProductToCart    Alerta projektointi
+    UpdateAndAddSalesType    Alerta projektointi
+    Verify that Credit Score Validation step is skipped
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    OrderNextStepsPage
+    Submit Order Button

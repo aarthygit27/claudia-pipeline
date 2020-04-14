@@ -2,10 +2,11 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
-#Library             test123.py
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/LeadValidation.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 
 
 *** Test Cases ***
@@ -22,8 +23,8 @@ Lead_Creation
     ${title}    generate random string    5    [NUMBERS]abcdefghi
     ${desc}    generate random string    10    [NUMBERS]abcdef
     sleep    5s
-    enter random data to lead web form    ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
-    go to    ${LOGIN_PAGE_APP}
+    Enter Random Data to Lead Web Form   ${fname}    ${lname}    ${lead_email}    ${mobile}    ${title}    ${desc}
+    Go to    ${LOGIN_PAGE_APP}
     Go To Salesforce and Login into Lightning       B2B DigiSales
     #login to salesforce as digisales lightning user vlocupgsandbox
     go to entity    ${lead_account_name}

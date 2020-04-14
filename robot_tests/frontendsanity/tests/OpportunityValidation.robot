@@ -2,10 +2,13 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
-#Library             test123.py
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/SolutionValueEstimate.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/Quote.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 
 
 *** Test Cases ***
@@ -169,3 +172,44 @@ Closing Opportunity as Won with FYR greater than 100KEUR
     [Tags]    BQA-8796   AUTOLIGHTNING
     Closing Opportunity as Won with FYR    300    Yes
     Closing the opportunity and check Continuation  Closed Won
+
+
+B2B opportunity closing
+    [Documentation]  This script is designed to close opportunity by B2B User
+    [Tags]  BQA-13357
+     set test variable  ${contact_name}   Testing Contact_20200331-143447
+     set test variable  ${oppo_name}   Test Robot Order_20200331-143556
+     Go To Salesforce and Login into Lightning  B2B DigiSales
+    Go To Entity   ${LIGHTNING_TEST_ACCOUNT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    Log to console    ${contact}.this is name
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesTypeB2O   Telia Colocation
+    Move the Opportunity to next stage      ${oppo_name}    Negotiate and Close  Closed Won
+    Cancel Opportunity and Validate     ${oppo_name}     Cancelled
+
+
+Availability of HDC Related Fields in b2b opportunitty
+    [Documentation]  To Check the Availability the HDC related Fields in B2b opportunity  and Edit the values and validate sales user and admin user
+    [Tags]  BQA-13174
+    Go To Salesforce and Login into Lightning  B2B DigiSales
+    Go To Entity    ${TEST_ACCOUNT_CONTACT}
+    ${contact_name}    run keyword    CreateAContactFromAccount_HDC
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    AddProductToCart    Alerta projektointi
+    UpdateAndAddSalesType    Alerta projektointi
+    Go To Entity    ${oppo_name}
+    Validate that HDC Rack Amount and HDC Total KW fields and Edit the value
+    Closing the opportunity    Closed Won
+    Validate the HDc Related fields are non editable after closing Opportunity
+    logoutAsUser  ${B2B_DIGISALES_LIGHT_USER}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${oppo_name}
+    Validate the HDc Related fields aeditable if the profile is admin after closing Opportunity

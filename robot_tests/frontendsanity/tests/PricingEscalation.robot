@@ -2,23 +2,28 @@
 Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
-#Library             test123.py
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Cases&ApprovalRequest.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/CPQ.robot
+Resource          ../../frontendsanity/resources/Quote.robot
+Resource          ../../frontendsanity/resources/Order.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 
 
 *** Test Cases ***
 
 Pricing Escalation
-    [Tags]   BQA-11368
+    [Tags]   BQA-11368      Escalation
     [Documentation]    Create Pricing escatalation case and then complete the approval flow by endorser and approver
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     ${contact_name}    run keyword    CreateAContactFromAccount_HDC
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     logoutAsUser  ${B2B_DIGISALES_LIGHT_USER}
-    Login to Salesforce as DigiSales Lightning User  ${PM_User}  ${PM_PW}
+    Login to Salesforce as Pricing Manager
     Go To Entity  ${oppo_name}
     Create Pricing Request
     ${Case_number}   run keyword   Create Pricing Escalation
@@ -30,7 +35,7 @@ Pricing Escalation
     Case Not visible to Normal User    ${Case_number}
 
 Pricing Escalation - Rejection
-    [Tags]   BQA-11386
+    [Tags]   BQA-11386      Escalation
     [Documentation]    Create Pricing
     Go To Salesforce and Login into Lightning       System Admin
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}

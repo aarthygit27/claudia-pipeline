@@ -1,10 +1,11 @@
 *** Settings ***
-Documentation     Sanity Test cases are executed in ${ENVIRONMENT} Sandbox
+Documentation     Account Management functionality are executed in ${ENVIRONMENT} Sandbox
 Test Setup        Open Browser And Go To Login Page
 Test Teardown     Logout From All Systems and Close Browser
-Resource          ../../resources/sales_app_light_keywords.robot
-Resource          ../../resources/common.robot
-Resource          ../../resources/multibella_keywords.robot
+Resource          ../../frontendsanity/resources/Common.robot
+Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Account.robot
+Resource          ../../frontendsanity/resources/Variables.robot
 #Library             test123.py
 
 
@@ -32,8 +33,6 @@ Remove Account owner
     Go To Salesforce and Login into Lightning       DigiSales Admin
     Go To Entity    ${RemoveAccountOwner}
     Remove change account owner
-    #Change account owner to  ${REMOVE_ACCOUNT}
-    #Validate that account owner was changed successfully  ${REMOVE_ACCOUNT}
 
 Lightning: Sales admin Change Account owner
     [Documentation]    Change Business Account owner by logging into Digisales Admin User
@@ -64,6 +63,7 @@ Add an account team member as account owner
     Go To Salesforce and Login into Lightning       DigiSales Admin
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
     Check original account owner and change if necessary for event
+    Delete all entities from Accounts Related tab   Account Team Members
     logoutAsUser  Sales Admin
     Go To Salesforce and Login into Lightning       B2B DigiSales
     Go To Entity    ${vLocUpg_TEST_ACCOUNT}
