@@ -4,7 +4,7 @@ ${CONS_BROWSER}                                  Firefox
 ${CONS_LOGIN_PAGE}                               https://test.salesforce.com/
 ${ENVIRONMENT_CONSOLE}                           rel
 ${CONS_B2B_DIGISALES_LIGHT_USER}                 b2blight@teliacompany.com.${ENVIRONMENT_CONSOLE}
-${CONS_PASSWORDCONSOLE}                          PahaPassu3
+${CONS_PASSWORDCONSOLE}                          PahaPassu2
 ${CONS_LIGHTNING_TEST_ACCOUNT}                   Aacon Oy
 ${CONS_CLASSIC_MENU}                             //*[@id="userNav"]
 ${CONS_SWITCH_TO_LIGHTNING}                      //a[@title='Switch to Lightning Experience']
@@ -80,7 +80,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    rel
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu1
+${Password_merge}    PahaPassu2
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pm@teliacompany.com.${ENVIRONMENT}
