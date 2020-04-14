@@ -6697,7 +6697,6 @@ Validate the credit score is NO
     page should contain element    //li//span[text()="You are not able to proceed with Quote or Order"]
     unselect frame
 
-
 Activate The Manual Credit enquiry with positive with condition
     [Arguments]  ${value}   ${Decision}
     reload page
@@ -7506,3 +7505,19 @@ Validating FYR values in Opportunity Header
      page should contain element    //p[text()="FYR New Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${new},00 €"]
      page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${ren},00 €"]
      page should contain element    //p[text()="FYR Total Frame Agreement"]/../..//lightning-formatted-text[text()=normalize-space(.)="${frame},00 €"]
+
+Validate Credit Score Result - Input Data Invalid
+    [Documentation]  Validate the credit score is Input Data Invalid
+    select frame   xpath=//div[contains(@class,'slds')]/iframe
+    Wait until page contains element  //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]   60
+    wait until page contains element  //div//small[text()="Quote Not Approved"]   60s
+    page should contain element    //div//small[text()="Credit Score Not Accepted - Result: Input data invalid"]
+    unselect frame
+
+
+Validate The Bussiness account With respect To Credit Score
+    [Documentation]  Validate The Bussiness account If the Business Account the account Doesn't have the business id and  Telia Customer ID
+    ${Business ID}  get text  //div/span[text()="Business ID"]/..//following::div[2]//lightning-formatted-text
+    ${Telia Customer ID}   get text    //div/span[text()="Telia Customer ID"]/..//following::div[2]//lightning-formatted-text
+    ${status}   Run keyword and return status   should  be empty  ${Business ID}
+    ${status}   Run keyword and return status   should  be empty    ${Telia Customer ID}
