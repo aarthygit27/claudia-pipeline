@@ -2,7 +2,7 @@
 Library           Collections
 Resource          ../../frontendsanity/resources/Common.robot
 Resource          ../../frontendsanity/resources/Variables.robot
-Library           ../resources/customPythonKeywords.py
+Library           ../../frontendsanity/resources/customPythonKeywords.py
 
 *** Keywords ***
 Create New Opportunity For Customer
