@@ -237,7 +237,8 @@ Delete all entities from Accounts Related tab
     wait until element is visible    ${ACCOUNT_RELATED}    60s
     Force click element    ${ACCOUNT_RELATED}
     ${status}=    run keyword and return status    Element Should Be Visible    //span[@title='${entities}']
-    Run keyword Unless    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
+    #Run keyword Unless    ${status}    Run Keyword With Delay    0.10s    Click Element    xpath=${ACCOUNT_RELATED}
+    Run keyword Unless    ${status}    Click Element    xpath=${ACCOUNT_RELATED}
     Sleep    30s
     ScrollUntillFound    //span[text()='${entities}']/../../a/span[@title="${entities}"]
     Execute Javascript    window.scrollTo(0,800)

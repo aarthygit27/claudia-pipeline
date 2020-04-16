@@ -86,7 +86,7 @@ Open change owner view and fill the form
 #   Click element   //div[@class='modal-footer slds-modal__footer']//button[@title='Change Owner']
     Click element  //button[text()='Change Owner']
     ${error}=    Run Keyword And Return Status    Element Should Be Visible    //button[text()='Change Owner']
-    Run Keyword If    ${error}    click button      //button[text()='Change Owner']
+    Run Keyword If    ${error}     Force click element       //button[text()='Change Owner']
     sleep   40s
 
 Validate that account owner was changed successfully
