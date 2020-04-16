@@ -3,7 +3,7 @@ ${BROWSER}        Firefox
 ${LOGIN_PAGE_APP}    https://test.salesforce.com/
 ${ENVIRONMENT}    rel
 ${B2B_DIGISALES_LIGHT_USER}    b2blight@teliacompany.com.${ENVIRONMENT}
-${Password_merge}    PahaPassu1
+${Password_merge}    PahaPassu2
 ${SYSTEM_ADMIN_USER}        autoadmin@teliacompany.com.${ENVIRONMENT}
 ${SYSTEM_ADMIN_PWD}          PahaPassu1
 ${PM_User}  pm@teliacompany.com.${ENVIRONMENT}
@@ -325,6 +325,11 @@ ${Recurring Total(Exc. Reporting)}      //span[text()="Recurring Total(Exc. Repo
 ${Asiakkaan verkkotunnus}     //form[@name='productconfig']//label[text()[normalize-space() = 'Asiakkaan verkkotunnus (muotoa domain.pääte)']]/..//div//input
 ${Linkittyvä tuote}   //form[@name='productconfig']//label[text()[normalize-space() = 'Linkittyvä tuote']]/..//div//input
 ${Save_sve}   //button[contains(text(),"Save")]
+${Business ID}    //div/span[text()="Business ID"]/..//following::div[2]//lightning-formatted-text
+${Telia Customer ID}    //div/span[text()="Telia Customer ID"]/..//following::div[2]//lightning-formatted-text
+${Credit_Score_validation After upadte salestype}   //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]
+${Credit_Score_validation After upadte salestype_Quote}       //div//small[text()="Quote Not Approved"]
+${Credit_score_Input_invalid}       //div//small[text()="Credit Score Not Accepted - Result: Input data invalid"]
 ### Lead  Variables ###
 
 ${lead_account_name}                Academic Work HR Services Oy

@@ -6322,8 +6322,8 @@ HDC Order_B2O
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
-    ValidateTheOrchestrationPlan- B20
-
+    ${order_number}    run keyword   ValidateTheOrchestrationPlan- B20
+    [Return]  ${order_number}
 Terminate asset
     [Arguments]   ${asset}
     ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
@@ -7508,16 +7508,16 @@ Validating FYR values in Opportunity Header
 
 Validate Credit Score Result - Input Data Invalid
     [Documentation]  Validate the credit score is Input Data Invalid
-    select frame   xpath=//div[contains(@class,'slds')]/iframe
-    Wait until page contains element  //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]   60
-    wait until page contains element  //div//small[text()="Quote Not Approved"]   60s
-    page should contain element    //div//small[text()="Credit Score Not Accepted - Result: Input data invalid"]
+    select frame   ${Page_iframe}
+    Wait until page contains element  ${Credit_Score_validation After upadte salestype}   60s
+    wait until page contains element  ${Credit_Score_validation After upadte salestype_Quote}    60s
+    page should contain element    ${Credit_score_Input_invalid}
     unselect frame
 
 
 Validate The Bussiness account With respect To Credit Score
     [Documentation]  Validate The Bussiness account If the Business Account the account Doesn't have the business id and  Telia Customer ID
-    ${Business ID}  get text  //div/span[text()="Business ID"]/..//following::div[2]//lightning-formatted-text
+    ${Business ID}  get text  ${Business ID}
     ${Telia Customer ID}   get text    //div/span[text()="Telia Customer ID"]/..//following::div[2]//lightning-formatted-text
     ${status}   Run keyword and return status   should  be empty  ${Business ID}
     ${status}   Run keyword and return status   should  be empty    ${Telia Customer ID}
