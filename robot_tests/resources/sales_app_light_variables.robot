@@ -330,6 +330,7 @@ ${Telia Customer ID}    //div/span[text()="Telia Customer ID"]/..//following::di
 ${Credit_Score_validation After upadte salestype}   //div[@class="panel-heading"]//h1[contains(text(),"Credit Score Validation")]
 ${Credit_Score_validation After upadte salestype_Quote}       //div//small[text()="Quote Not Approved"]
 ${Credit_score_Input_invalid}       //div//small[text()="Credit Score Not Accepted - Result: Input data invalid"]
+${Invalid_bussiness_account}    Esso-huoltoasema Paavo Syväniemi
 ### Lead  Variables ###
 
 ${lead_account_name}                Academic Work HR Services Oy

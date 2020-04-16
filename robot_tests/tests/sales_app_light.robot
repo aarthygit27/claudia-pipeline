@@ -2237,7 +2237,7 @@ Credit Score Result - Input Data Invalid
     [Documentation]  Validate the credit score of result of bussiness account if the bussiness id is empty
     [Tags]  BQA-13167
     Go To Salesforce and Login into Lightning   B2B DigiSales
-    Go To Entity    Esso-huoltoasema Paavo Syväniemi
+    Go To Entity    ${Invalid_bussiness_account}
     Validate The Bussiness account With respect To Credit Score
     ${contact_name}  run keyword    Create New Contact for Account
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
