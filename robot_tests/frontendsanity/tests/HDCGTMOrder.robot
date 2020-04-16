@@ -7,7 +7,7 @@ Resource          ../../frontendsanity/resources/Login.robot
 Resource          ../../frontendsanity/resources/Opportunity.robot
 Resource          ../../frontendsanity/resources/CPQ.robot
 Resource          ../../frontendsanity/resources/SolutionValueEstimate.robot
-Resource          ../../frontendsanity/resources/ApprovalProcess.robot
+Resource          ../../frontendsanity/resources/Cases&ApprovalRequest.robot
 Resource          ../../frontendsanity/resources/Variables.robot
 #Library             test123.py
 

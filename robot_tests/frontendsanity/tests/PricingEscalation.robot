@@ -6,9 +6,6 @@ Resource          ../../frontendsanity/resources/Common.robot
 Resource          ../../frontendsanity/resources/Cases&ApprovalRequest.robot
 Resource          ../../frontendsanity/resources/Login.robot
 Resource          ../../frontendsanity/resources/Opportunity.robot
-Resource          ../../frontendsanity/resources/CPQ.robot
-Resource          ../../frontendsanity/resources/Quote.robot
-Resource          ../../frontendsanity/resources/Order.robot
 Resource          ../../frontendsanity/resources/Contact.robot
 Resource          ../../frontendsanity/resources/Variables.robot
 
