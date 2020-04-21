@@ -52,21 +52,6 @@ Validate Master Contact Details
     #Wait Until Page Contains Element    ${element}${phone_number}
     #Wait Until Page Contains Element    ${element}${email}
 
-Select from search List
-    [Arguments]    ${field}    ${value}
-    Input Text    ${field}    ${value}
-    Sleep    10s
-    click element  //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]
-    ${count}=    Get Element Count      //*[text()='Sorry to interrupt']
-    ${IsErrorVisible}=    Run Keyword And Return Status        element should not be visible      //*[text()='Sorry to interrupt']
-    Sleep   2s
-    #log to console          ${IsErrorVisible}
-    Run Keyword unless  ${IsErrorVisible}    Click Element       //button[@title='OK']
-    #Press Enter On   ${field}
-    Sleep   5s
-    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[text()='${value}']
-    Sleep    2s
-
 Validate Contact Details
     [Arguments]    ${element}    ${contact_name}    ${account_name}    ${mobile_number}   ${primary_email}  ${email}
     Wait Until Page Contains Element    ${contact_name}    240s

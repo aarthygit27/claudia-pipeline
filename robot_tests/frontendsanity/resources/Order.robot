@@ -3,6 +3,12 @@ Library           Collections
 Resource          ../../frontendsanity/resources/Variables.robot
 Resource          ../../frontendsanity/resources/Common.robot
 Resource          ../../frontendsanity/resources/Login.robot
+Resource          ../../frontendsanity/resources/Opportunity.robot
+Resource          ../../frontendsanity/resources/CPQ.robot
+Resource          ../../frontendsanity/resources/Quote.robot
+Resource          ../../frontendsanity/resources/Account.robot
+Resource          ../../frontendsanity/resources/Contact.robot
+
 *** Keywords ***
 
 ClickonCreateOrderButton
@@ -696,3 +702,89 @@ FetchfromOrderproduct
     ${subscription_ID}   get text   ${Order_Products_SubID}
     sleep  3s
     [Return]   ${subscription_ID}
+
+
+HDC Order
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    log to console    ${contact}.this is name
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    #View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan
+
+
+
+HDC Order_B2O
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact_name}    run keyword    Create New Contact for Account
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    log to console    ${oppo_name}.this is opportunity
+    ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
+    log to console    ${billing_acc_name}.this is billing account name
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    View Open Quote
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_name}
+    clickOnSubmitOrder
+    ValidateTheOrchestrationPlan- B20
+
+
+
+ValidateTheOrchestrationPlan- B20
+
+    [Documentation]   Orchestration plan will not be available in the realated tab in case of B2o user. So move to Details tab and then  click on plan
+    wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
+    ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
+    log to console  ${order_number}.this is order numner
+    set test variable  ${order_no}   ${order_number}
+    ${Detail}=  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    sleep  3s
+    Wait until element is visible   ${Detail}  60s
+    Force click element   ${Detail}
+    Wait until element is visible  //span[text()='Orchestration Plan']//following::a[1]  30s
+    Click element  //span[text()='Orchestration Plan']//following::a[1]
+    sleep    10s
+    Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
+    select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
+    Wait until element is visible  //a[text()='Start']  60s
+    Element should be visible    //a[text()='Start']
+    Element should be visible    //a[text()='Create Assets']
+    Element should be visible    //a[text()='Deliver Service']
+    Element should be visible    //a[text()='Order Events Update']
+    Element should be visible   //a[text()='Call Billing System']
+    #go back
+    sleep   3s
+    force click element       //a[@class='item-label item-header' and text()='Deliver Service']
+    unselect frame
+    #sleep       80s
+    ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //lightning-formatted-text[text()="Completed"]    60s
+    Run Keyword If    ${status_page} == False    Reload Page
+    Run Keyword If    ${status_page} == False    Sleep  60s
+    wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
+    [Return]  ${order_number}

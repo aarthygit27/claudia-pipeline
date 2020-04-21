@@ -7,13 +7,6 @@ Library           DateTime
 Library           Collections
 Library           OperatingSystem
 Resource          ../../frontendsanity/resources/Variables.robot
-Resource          ../../frontendsanity/resources/Login.robot
-Resource          ../../frontendsanity/resources/Contact.robot
-Resource          ../../frontendsanity/resources/Account.robot
-Resource          ../../frontendsanity/resources/Opportunity.robot
-Resource          ../../frontendsanity/resources/CPQ.robot
-Resource          ../../frontendsanity/resources/Quote.robot
-Resource          ../../frontendsanity/resources/Order.robot
 
 *** Keywords ***
 Check For Lightning Force
@@ -404,56 +397,6 @@ Select rows to delete the items
     Run Keyword Unless   '${count}'=='0'  Select rows to delete the contract
 
 
-HDC Order
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact}    run keyword    CreateAContactFromAccount_HDC
-    log to console    ${contact}.this is name
-    Set test variable  ${contact_name}   ${contact}
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
-    log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    ${oppo_name}
-    ChangeThePriceList      B2B
-    ClickingOnCPQ    ${oppo_name}
-    Adding Telia Colocation    Telia Colocation
-    Updating Setting Telia Colocation
-    UpdateAndAddSalesType    Telia Colocation
-    #View Open Quote
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
-    select order contacts- HDC  ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
-    clickOnSubmitOrder
-    ValidateTheOrchestrationPlan
-
-
-
-HDC Order_B2O
-    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
-    ${contact_name}    run keyword    Create New Contact for Account
-    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
-    log to console    ${oppo_name}.this is opportunity
-    ${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
-    log to console    ${billing_acc_name}.this is billing account name
-    Go To Entity    ${oppo_name}
-    ChangeThePriceList      B2B
-    ClickingOnCPQ    ${oppo_name}
-    Adding Telia Colocation    Telia Colocation
-    Updating Setting Telia Colocation
-    UpdateAndAddSalesType    Telia Colocation
-    View Open Quote
-    ClickonCreateOrderButton
-    NextButtonOnOrderPage
-    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
-    select order contacts- HDC  ${contact_name}
-    RequestActionDate
-    SelectOwnerAccountInfo    ${billing_acc_name}
-    clickOnSubmitOrder
-    ValidateTheOrchestrationPlan- B20
-
 Switch between windows
     [Arguments]    ${index}
     @{titles}    Get Window Titles
@@ -480,3 +423,18 @@ Close Notification
     ${visible}=    run keyword and return status    element should be visible    ${CLOSE_NOTIFICATION}
     run keyword if    ${visible}    Click Element    xpath=${CLOSE_NOTIFICATION}
 
+
+Select from search List
+    [Arguments]    ${field}    ${value}
+    Input Text    ${field}    ${value}
+    Sleep    10s
+    click element  //div[@role="listbox"]//div[@role="option"]/lightning-icon//lightning-primitive-icon/*[@data-key="search"]
+    ${count}=    Get Element Count      //*[text()='Sorry to interrupt']
+    ${IsErrorVisible}=    Run Keyword And Return Status        element should not be visible      //*[text()='Sorry to interrupt']
+    Sleep   2s
+    #log to console          ${IsErrorVisible}
+    Run Keyword unless  ${IsErrorVisible}    Click Element       //button[@title='OK']
+    #Press Enter On   ${field}
+    Sleep   5s
+    Click Visible Element    //div[@data-aura-class="forceSearchResultsGridView"]//a[text()='${value}']
+    Sleep    2s
