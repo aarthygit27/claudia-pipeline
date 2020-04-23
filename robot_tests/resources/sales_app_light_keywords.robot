@@ -6322,8 +6322,8 @@ HDC Order_B2O
     RequestActionDate
     SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
-    ValidateTheOrchestrationPlan- B20
-
+    ${order_number}    run keyword   ValidateTheOrchestrationPlan- B20
+    [Return]  ${order_number}
 Terminate asset
     [Arguments]   ${asset}
     ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
@@ -6696,7 +6696,6 @@ Validate the credit score is NO
     wait until page contains element  //div//small[text()="Quote Not Approved"]   60s
     page should contain element    //li//span[text()="You are not able to proceed with Quote or Order"]
     unselect frame
-
 
 Activate The Manual Credit enquiry with positive with condition
     [Arguments]  ${value}   ${Decision}
@@ -7506,3 +7505,19 @@ Validating FYR values in Opportunity Header
      page should contain element    //p[text()="FYR New Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${new},00 €"]
      page should contain element   //p[text()="FYR Continuation Sales"]/../..//lightning-formatted-text[text()=normalize-space(.)="${ren},00 €"]
      page should contain element    //p[text()="FYR Total Frame Agreement"]/../..//lightning-formatted-text[text()=normalize-space(.)="${frame},00 €"]
+
+Validate Credit Score Result - Input Data Invalid
+    [Documentation]  Validate the credit score is Input Data Invalid
+    select frame   ${Page_iframe}
+    Wait until page contains element  ${Credit_Score_validation After upadte salestype}   60s
+    wait until page contains element  ${Credit_Score_validation After upadte salestype_Quote}    60s
+    page should contain element    ${Credit_score_Input_invalid}
+    unselect frame
+
+
+Validate The Bussiness account With respect To Credit Score
+    [Documentation]  Validate The Bussiness account If the Business Account the account Doesn't have the business id and  Telia Customer ID
+    ${Business ID}  get text  ${Business ID}
+    ${Telia Customer ID}   get text    //div/span[text()="Telia Customer ID"]/..//following::div[2]//lightning-formatted-text
+    ${status}   Run keyword and return status   should  be empty  ${Business ID}
+    ${status}   Run keyword and return status   should  be empty    ${Telia Customer ID}

@@ -1533,7 +1533,6 @@ Sync_quote
     Adding Products  Telia Cid
     updating setting Telia Cid
     UpdateAndAddSalesType  Telia Cid
-    #OpenQuoteButtonPage_release
     Go to Entity   ${oppo_name}
     reload page
     clickingoncpq  ${oppo_name}
@@ -1549,7 +1548,7 @@ Lightning_Customership Contract
      #${contact_name}   run keyword    Create New Contact for Account
      #Delete all entities from Accounts Related tab   Contracts
      Create contract Agreement  Customership
-     #Create contract Agreement  Sevice
+     Create contract Agreement  Sevice
 
 Lightning_Service Contract
     [Tags]  BQA-12666
@@ -1585,10 +1584,6 @@ Manual Credit Check Enquiry with postive
     Select Entity    ${oppo_name}    ${EMPTY}
     credit score status after approval
     Check the credit score result of the case with postive
-#    SearchAndSelectBillingAccount   ${TEST_CONTACT}
-#    select order contacts- HDC  ${contact_name}
-#    RequestActionDate
-#    SelectOwnerAccountInfo    ${billing_acc_name}
     clickOnSubmitOrder
 
 Manual Credit Check Enquiry with postive and condition
@@ -1658,7 +1653,7 @@ Manual Credit Check Enquiry with No Result
     click element    xpath=//button[@class='slds-button slds-m-left_large slds-button_brand']/span[text()='Next']
     unselect frame
     UpdateAndAddSalesType for B2b products     ${B2bproductfyr1}   ${B2bproductfyr2}
-
+    Validate the credit score is NO
 
 Pricing Escalation
     [Tags]   BQA-11368
@@ -1832,10 +1827,10 @@ One Order- B2O Colocation and change order
     logoutAsUser   ${SALES_ADMIN_APP_USER}
     Login to Salesforce as System Admin
     swithchtouser   B2O Test User
-    HDC Order_B2O
+    ${order_number}    run keyword      HDC Order_B2O
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce as System Admin
-    DDM Request Handling
+    DDM Request Handling  ${order_number}
     Switch between windows    0
     logoutAsUser   ${SYSTEM_ADMIN_USER}
     Login to Salesforce as B2B DigiSales
@@ -2237,6 +2232,20 @@ Validate FYR values created through CPQ page in Oppo page
     Searching and adding multiple products    @{products}
     updateandaddsalestype for multiple products with different salestype  @{products}
     Go To Entity    ${oppo_name}
+
+Credit Score Result - Input Data Invalid
+    [Documentation]  Validate the credit score of result of bussiness account if the bussiness id is empty
+    [Tags]  BQA-13167
+    Go To Salesforce and Login into Lightning   B2B DigiSales
+    Go To Entity    ${Invalid_bussiness_account}
+    Validate The Bussiness account With respect To Credit Score
+    ${contact_name}  run keyword    Create New Contact for Account
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    Go To Entity    ${oppo_name}
+    ClickingOnCPQ   ${oppo_name}
+    AddProductToCart    Alerta projektointi
+    UpdateAndAddSalesType    Alerta projektointi
+    Validate Credit Score Result - Input Data Invalid
 
 
 
