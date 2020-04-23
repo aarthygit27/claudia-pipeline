@@ -1807,7 +1807,7 @@ One Order - B2B Colocation and Change Order
     Go to   ${url}
     Validate Billing system response
     Log to console   Entering change Order
-    Change Order
+    ${order_no}    Change Order   ${contact_name}
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
@@ -1836,7 +1836,7 @@ One Order- B2O Colocation and change order
     Login to Salesforce as B2B DigiSales
     Go to   ${url}
     Validate Billing system response
-    Change Order
+    ${order_no}    Change Order   ${contact_name}
     logoutAsUser   ${B2B_DIGISALES_LIGHT_USER}
     Login to Salesforce Lightning  ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
     DDM Request Handling
@@ -2148,15 +2148,20 @@ B2B opportunity closing
 validate FYR valuesin Oppo page by modifying salestype in SVE
     [Tags]  BQA-13172
    [Documentation]  This script is designed to validate the FYR values being created in Oppo page
-#    Login to Salesforce as B2B DigiSales   ${B2B_DIGISALES_LIGHT_USER}  ${Password_merge}
-     Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
-     Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go To Entity    ${LIGHTNING_TEST_ACCOUNT}
     ${contact}    run keyword    CreateAContactFromAccount_HDC
     Log to console    ${contact}.this is name
     Set test variable  ${contact_name}   ${contact}
     ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
     log to console    ${oppo_name}.this is opportunity
     Go To Entity    ${oppo_name}
+    clickingOnSolutionValueEstimate   ${oppo_name}
+    ${fyr_total}  ${new}  ${renegotiation}  ${frame}  Add multiple products in SVE  @{LIST}
+    Validating FYR values in Opportunity Header   ${fyr_total}   ${new}  ${renegotiation}  ${frame}
+    clickingOnSolutionValueEstimate   ${oppo_name}
+    Modify the salestype
+    Validate modify salestype reflected in Oppo page   ${oppo_name}
 
 FYR calculation with annually recurring charges
     [Tags]  BQA-13123
@@ -2247,6 +2252,79 @@ Credit Score Result - Input Data Invalid
     UpdateAndAddSalesType    Alerta projektointi
     Validate Credit Score Result - Input Data Invalid
 
+Change order process to show current billing accounts of the asset(s)
+    [Tags]  BQA-13163
+    [Documentation]  This script is designed to validate the change order process to show current billing assets
+    Go To Salesforce and Login into Lightning       System Admin
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Delete all assets
+    logoutAsUser  ${SALES_ADMIN_APP_USER}
+    #Go To Salesforce and Login into Lightning       B2B DigiSales
+    Go To Salesforce and Login into Lightning       System Admin
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    #${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo   ${billing_acc_namep}
+    clickOnSubmitOrder
+    ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+    ${subscription_id}=  run keyword  FetchfromOrderproduct  ${Ordernumber}   Telia Colocation
+    Validate Billing and Payer in the asset page    ${subscription_id}   ${Ordernumber}     ${billing_acc_namep}
+    DDM And validating Order status   ${Ordernumber}
+    ${order_no}    Change Order   ${contact_name}
+    Log to console   ${order_no}
+    logoutAsUser  ${SALES_ADMIN_APP_USER}
+    DDM And validating Order status   ${order_no}
+    Validate Billing and Payer in the asset page    ${subscription_id}   ${Ordernumber}     ${billing_acc_namep}
 
-
-
+prepopulated Billing and payer account can be changed while placing change order
+    [Tags]  BQA-13165
+    [Documentation]  This script is designed to validate the billing and payer account details done during change order process
+    Go To Salesforce and Login into Lightning    System Admin
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    Delete all assets
+    logoutAsUser  ${SALES_ADMIN_APP_USER}
+    #Go To Salesforce and Login into Lightning    B2B DigiSales
+    Go To Salesforce and Login into Lightning    System Admin
+    Go To Entity    ${vLocUpg_TEST_ACCOUNT}
+    ${contact}    run keyword    CreateAContactFromAccount_HDC
+    Set test variable  ${contact_name}   ${contact}
+    ${oppo_name}    run keyword    CreateAOppoFromAccount_HDC    ${contact_name}
+    #${billing_acc_name}    run keyword    CreateABillingAccount  ${vLocUpg_TEST_ACCOUNT}
+    Go To Entity    ${oppo_name}
+    ChangeThePriceList      B2B
+    ClickingOnCPQ    ${oppo_name}
+    Adding Telia Colocation    Telia Colocation
+    Updating Setting Telia Colocation
+    UpdateAndAddSalesType    Telia Colocation
+    ClickonCreateOrderButton
+    NextButtonOnOrderPage
+    SearchAndSelectBillingAccount   ${vLocUpg_TEST_ACCOUNT}
+    select order contacts- HDC  ${contact_name}
+    RequestActionDate
+    SelectOwnerAccountInfo    ${billing_acc_namep}
+    clickOnSubmitOrder
+    ${Ordernumber}  run keyword  getOrderStatusAfterSubmitting
+    ${subscription_id}=  run keyword  FetchfromOrderproduct     ${Ordernumber}    Telia Colocation
+    Validate Billing and Payer in the asset page    ${subscription_id}   ${Ordernumber}   ${billing_acc_namep}
+    DDM And validating Order status   ${Ordernumber}
+    Initiate Change Order
+    ChangeOrderRequestActionDate
+    CPQ Page
+    ${order_no}    Order Post script-Different Buyer and Payer   ${contact_name}  Billing_Aarsleff Oy_1554
+    Log to console   ${order_no}
+    logoutAsUser  ${SALES_ADMIN_APP_USER}
+    DDM And validating Order status  ${order_no}
+    Validate Billing and Payer in the asset page    ${subscription_id}   ${order_no}    Billing_Aarsleff Oy_1554

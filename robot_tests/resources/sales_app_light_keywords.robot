@@ -1797,6 +1797,7 @@ clickOnSubmitOrder
     sleep   40s
 
 getOrderStatusAfterSubmitting
+    Reload page      #In jenkins  not able to access the objects so Reload page is used
     ${status_page}    Run Keyword And Return Status    Wait Until Element Is Visible    //a[@title='Details']   60s
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
@@ -4483,7 +4484,7 @@ ValidateTheOrchestrationPlan- B20
     sleep    10s
     Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
     select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
-    Wait until element is visible  //a[text()='Start']  60s
+    Wait until element is visible  //a[text()='Start']  80s
     Element should be visible    //a[text()='Start']
     Element should be visible    //a[text()='Create Assets']
     Element should be visible    //a[text()='Deliver Service']
@@ -4501,28 +4502,26 @@ ValidateTheOrchestrationPlan- B20
     [Return]  ${order_number}
 
 ValidateTheOrchestrationPlan
-    wait until page contains element        //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
+    wait until page contains element  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span        30s
     ${order_number}   get text  //div[@class='slds-page-header__title slds-m-right--small slds-align-middle fade-text']/span
     log to console  ${order_number}.this is order numner
     set test variable  ${order_no}   ${order_number}
     #Do not remove. Required for change order
-    #At times the Orchestration Plan is not visible in Related Page then get the Plan ID from Detail Page
-    ${status} =    Run Keyword and Return status  Page should contain element   //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
-    Run Keyword if   ${status} == False    GetOrchestrationPlanfromDetail
-#    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
+    Reload page
+    Sleep   60s
+    scrolluntillfound    //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     #execute javascript    window.scrollTo(0,2000)
-    sleep    10s
+    #sleep    10s
     #log to console    plan validation
-#    wait until page contains element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
-#    click element     //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
-     wait until page contains element   //span[text()='Orchestration Plan']   30s
-#    click element   //span[text()='Orchestration Plan']
+    sleep  30s
+    wait until page contains element  //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]    30s
+    click element   //th[text()='Orchestration Plan Name']//ancestor::table//a[contains(@class,'textUnderline')]
     sleep    10s
     ${location}=    Get Location
     set test variable   ${url}   ${location}
     Wait until element is visible  xpath=//iframe[@title='accessibility title'][@scrolling='yes']   60s
     select frame    xpath=//iframe[@title='accessibility title'][@scrolling='yes']
-    sleep    30s
+    sleep    60s
     Element should be visible    //a[text()='Start']
     Element should be visible    //a[text()='Create Assets']
     Element should be visible    //a[text()='Deliver Service']
@@ -4537,7 +4536,7 @@ ValidateTheOrchestrationPlan
     Run Keyword If    ${status_page} == False    Reload Page
     Run Keyword If    ${status_page} == False    Sleep  60s
     wait until page contains element    //lightning-formatted-text[text()="Completed"]     60s
-    [Return]  ${order_number}
+    [Return]    ${order_no}
 
 
 GetOrchestrationPlanfromDetail
@@ -5637,12 +5636,13 @@ Change Order
    [Arguments]   ${contact_name}
 
     Initiate Change Order
-    Request Date
+    ChangeOrderRequestActionDate
     CPQ Page
-    Order Post script   ${contact_name}
+    ${order_no}   Order Post script   ${contact_name}
+    [Return]   ${order_no}
 
 CPQ Page
-    Sleep  10s
+    Sleep  30s
     Verify the Action of product  Telia Colocation   Existing
     Verify onetime total charge
     ${Toggle}  set variable   //div[@id='tab-default-1']/div/ng-include/div/div/div/div[3]/div/div/button/span[2][text()='Telia Colocation']
@@ -5736,7 +5736,7 @@ select contact - no frame
     #Input Text   //input[@id='OCEmail']   primaremail@noemail.com
 
     ${status}=  Run keyword and return status   Element should be visible  //p[text()='Select Technical Contact:']
-    Run Keyword if  ${status}  Enter technical contact
+    Run Keyword if   ${status}  Enter technical contact    ${contact_name}
     Execute JavaScript    window.scrollTo(0,200)
     Sleep    5s
 
@@ -5779,6 +5779,7 @@ select contact
     unselect frame
 
 Enter technical contact
+    [Arguments]   ${contact_name}
     ${Technical_contact_search}=  set variable    //input[@id='TechnicalContactTA']
     Execute JavaScript    window.scrollTo(0,200)
     Wait Until element is visible   ${Technical_contact_search}     30s
@@ -5844,7 +5845,7 @@ Select Date - no frame
 Pick Date without product
 
     Log to console    picking date
-    ${date_id}=    Set Variable    //input[@id='RequestedActionDate']
+    ${date_id}=    Set Variable    //*[@id="RequestedActionDateSelection"]
     ${next_month}=    Set Variable    //button[@title='Next Month']
     ${firstday}=    Set Variable    //span[contains(@class,'slds-day nds-day')][text()='01']
     ${additional_info_next_button}=    Set Variable    //div[@id='SelectRequestActionDate_nextBtn']//p
@@ -6016,11 +6017,16 @@ Order Post script
     Select account Owner - no frame
     Verify Order Type
     Submit Order Button
-    ValidateTheOrchestrationPlan
+   ${order_no}  ValidateTheOrchestrationPlan
+   [Return]    ${order_no}
+
 
 Verify Order Type
 
     ${ACCOUNT_DETAILS}  set variable   //div[contains(@class,'active')]//span[text()='Details']//parent::a
+    Sleep  30s
+    Reload page
+    sleep  30s
     Wait until element is visible   ${ACCOUNT_DETAILS}  60s
     Force Click element  ${ACCOUNT_DETAILS}
     ${Order_Type}  get text   //div[@class='test-id__field-label-container slds-form-element__label']/span[text()='Order Type']//following::span[2]
@@ -6324,6 +6330,7 @@ HDC Order_B2O
     clickOnSubmitOrder
     ${order_number}    run keyword   ValidateTheOrchestrationPlan- B20
     [Return]  ${order_number}
+
 Terminate asset
     [Arguments]   ${asset}
     ${Accounts_More}  set variable  //div[contains(@class,'tabset slds-tabs_card uiTabset')]/div[@role='tablist']/ul/li[8]/div/div/div/div/a
@@ -6374,7 +6381,6 @@ Adding Telia Cid
     unselect frame
 
 Adding prouct To cart (cpq) without Next
-
     [Arguments]   ${pname}=${product_name}
     Log to console      adding product
     select frame  ${iframe}
@@ -6386,13 +6392,7 @@ Adding prouct To cart (cpq) without Next
     click element  xpath=//span[normalize-space(.) = '${pname}']/../../../div[@class='slds-tile__detail']/div/div/button
     unselect frame
 
-
-
-
-
-
 Update Setting Vula
-
      [Arguments]        ${pname}
     ${Nopeus}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Nopeus']]//following::select[1]
     ${Asennuskohde}  set variable   //form[@name='productconfig']//following::label[text()[normalize-space() = 'Asennuskohde']]//following::select[1]
@@ -6451,9 +6451,11 @@ Validate Call case Management status
     #Go back
 
 Validate Order status
-
-    Wait until page contains element   //a[text()='${order_no}']  60s
-    Click element   //a[text()='${order_no}']
+    [Arguments]   ${order_no}
+#    Wait until page contains element   //a[text()='${order_no}']  60s
+    Wait until page contains element   //div[@title="${order_no}"]    60s
+#    Click element   //a[text()='${order_no}']
+    Click element  //div[@title="${order_no}"]
     ${Order status}  set variable   //span[@title='Status']/../div/div/span
     Wait until element is visible  ${Order status}   60s
     ${Status}  Get text   ${Order status}
@@ -6539,8 +6541,8 @@ ValidateSapCallout
     wait until page contains element    //span[text()='State']/../../../../..//lightning-formatted-text[text()='Completed']      300s
     force click element      //span[contains(text(),"Orchestration Plan")]/../..//*[@class="slds-form-element__control"]//span/..//a
      log to console   ValidateSapCallout
-create another quote with same opportunity
 
+create another quote with same opportunity
     Wait Until Element Is Enabled    //div[contains(@class,'slds')]/iframe    60s
     Select Frame    //div[contains(@class,'slds')]/iframe
     ${status}   set variable    Run Keyword and return status    Frame should contain    //span[text()='Next']/..    Next
@@ -7163,11 +7165,11 @@ Validate Main user in order product
     [Documentation]   To validate the ordered product belongs to main user
     log to console  ${Ordernumber}.is the order number
     Go To Entity    ${Ordernumber}
-    wait until page contains element      //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]   45s
-    Force Click Element    //li[@class="tabs__item active uiTabItem"]//a//span[text()="Related"]
+    wait until page contains element   ${DNS_orderrealted}   45s
+    Force Click Element   ${DNS_orderrealted}
     sleep    10s
-    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Order Products"]    20s
-    Force Click Element  //div[@class="slds-media__body"]//a//span[text()="Order Products"]
+    wait until page contains element    ${orderproducts}    20s
+    Force Click Element  ${orderproducts}
     sleep    10s
     log to console  Order product is clicked
     wait until page contains element  //th/span/a[@title='${pdtname}']  60s
@@ -7177,19 +7179,19 @@ Validate Main user in order product
     log to console  product is clicked
     sleep  60s
     Reload page
-    ${status_page} =  run keyword and return status  wait until page contains element   /a[@title="Related"]   60s
+    ${status_page} =  run keyword and return status  wait until page contains element   ${product_related}  60s
     Run Keyword If    ${status_page} == False    Reload Page
 #   Run Keyword If    ${status_page} == False    Sleep  60s
     sleep  60s
-    Force Click Element  //a[@title="Related"]
+    Force Click Element  ${product_related}
     Log to console   related page is clicked
     sleep  20s
-    wait until page contains element    //div[@class="slds-media__body"]//a//span[text()="Order Contact Roles"]   60s
-    click element   //div[@class="slds-media__body"]//a//span[text()="Order Contact Roles"]
+    wait until page contains element    ${order_contactrole}   60s
+    click element   ${order_contactrole}
    # Go to   ${order_contactrole}
     Sleep  20s
-    wait until page contains element    //div[@id="brandBand_1"]//h1[@title="Order Contact Roles"]     20s
-    ${ordercontact role}  get text   //td[@role="gridcell"]//span[text()="Main User"]
+    wait until page contains element    ${ordercontactrole_title}     20s
+    ${ordercontact role}  get text   ${mainuser_text}
     Log to Console    ${ordercontact role}
 
 Validate ServiceAdministrator in Account contact role
@@ -7289,7 +7291,7 @@ Validate technical contact in the asset history page using subscription as
      Should be equal   ${contact_value}    ${Contact_name}
 
 Add multiple products in SVE
-
+   [Documentation]    To add multiple products using oppo SVE
    [Arguments]     @{items}
     ${i} =    Set Variable    ${0}
     ${fyr_value_total}=   Set Variable   ${0}
@@ -7351,7 +7353,7 @@ validateproductsbasedonsalestype
 
 
 Validating FYR values in Opportunity Header
-
+    [Documentation]    To validate the FYR values created via SVE is reflected in Oppo header
      [Arguments]    ${fyr_total}   ${new}   ${ren}   ${frame}
      sleep  90s
      page should contain element    //p[text()="FYR Total"]/../..//lightning-formatted-text[text()=normalize-space(.)=" ${fyr_total},00 €"]
@@ -7392,6 +7394,36 @@ Validation of Telia Domain Name Service
     ${Fyr_value} =  Evaluate   ${One time total}+(${Monthly recurring chage}*12)+${Annual Recurring charge}
     page should contain element     //div[@class="test-id__section-content slds-section__content section__content"]//span[text()="FYR Total"]/../..//div[2]/span/span[normalize-space(.)=text()="${Fyr_value} €"]
 
+
+Modify the salestype
+    [Documentation]  To  change the salestupe of the already added product
+     select frame  xpath=//div[contains(@class,'slds')]/iframe
+     click element  //th[normalize-space(.)='Solution Area']//following::tr[@class='parent-product ng-scope'][1]/td/select[@ng-model='p.SalesType']/option[@value='${sales_type_value5}']
+     sleep  5s
+     wait until page contains element  ${oppoSVE_save}   60s
+     force click element  ${oppoSVE_save}
+     unselect frame
+     sleep   30s
+
+
+Validate modify salestype reflected in Oppo page
+    [Documentation]    To validate the changed salestype of the product reflected in Oppo page
+    [Arguments]  ${oppot_name}
+
+    Go to Entity   ${oppot_name}
+    wait until page contains element   ${oppo_related}   30s
+    Force Click Element    ${oppo_related}
+    sleep  10s
+    wait until page contains element   ${name_product}   30s
+    wait until page contains element  ${button_viewall}
+    Force Click Element  ${button_viewall}
+    sleep  30s
+    switch between windows  1
+    sleep  30s
+    ${salestype}   get text   ${salestype_text}
+    Log to console    ${salestype}
+    Should be equal   ${salestype}   ${sales_type_value5}
+
 FetchfromOrderproduct
     [Documentation]    Go to OrderProductPage and fetch the subscription ID
     [Arguments]    ${Ordernumber}
@@ -7417,6 +7449,72 @@ FetchfromOrderproduct
     sleep  3s
     [Return]   ${subscription_ID}
 
+Validate Billing and Payer in the asset page
+     [Documentation]   This keyword will validate the Billing and payer details in the asset being created
+     [Arguments]   ${subscription_id}    ${order_no}   ${validated_owner}
+
+      Go to Entity   ${vLocUpg_TEST_ACCOUNT}
+      scroll page to location  0  9000
+      ScrollUntillFound   ${Asset_history}
+      Log to console  scroll to asset history
+      select frame  ${asset_iframe}
+      ScrollUntillFound  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
+      wait until page contains element  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a  60s
+      Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
+      Log to console  clicked the product
+      sleep  10s
+      Switch between windows   1
+      ${owner_billing}  get text    ${owner_Detail}
+      ${payer_billing}  get text   ${payer_detail}
+      should be equal   ${validated_owner}    ${owner_billing}
+      Log to console   owner and payer details are same
+      sleep  60s
+      Open Browser And Go To Login Page
+
+DDM And validating Order status
+   [Documentation]   DDM handling to complete the order and validate the completed order
+   [Arguments]   ${Ordernumber}
+   Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+   DDM Request Handling   ${Ordernumber}
+   Open Browser And Go To Login Page
+   Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+   Go to Entity   ${Ordernumber}
+   Validate Order status   ${Ordernumber}
+
+Select account Owner: different buyer and payer validation - no frame
+    [Documentation]    In change order to select the different buyer and payer account
+    [Arguments]   ${BillingAccount}
+    ${owner_account}=  set variable  //ng-form[@id='BuyerAccount']//span[@class='slds-checkbox--faux']//following::tr//td[@data-label="Type"]//div[text()="${BillingAccount}"]/..//preceding-sibling::td//label
+
+    log to console    Select Owner Account FLow Chart Page
+    log to console    entering Owner Account
+    Wait Until Element Is Visible    ${Buyer_account}    60s
+    Wait Until Element Is Visible    ${buyer_payer}  60s
+    sleep  10s
+    ScrollUntillFound    ${owner_account}
+    click element   ${owner_account}
+    log to console   ${owner_account}.is clicked
+    #Removing this as this will be ticked automatically as part fo feature delivered recently
+    sleep    3s
+    click element    ${buyer_payer}
+    sleep    3s
+    Wait Until Element Is Visible    ${buyer_account_next_button}    120s
+    click element    ${buyer_account_next_button}
+    sleep  3s
+    log to console    Exiting owner Account page
+    sleep    10s
+
+Order Post script-Different Buyer and Payer
+    [Documentation]   Order post script for different billing and payer account
+    [Arguments]   ${contact_name}   ${BillingAcoount}
+    Select Account - no frame
+    select contact - no frame   ${contact_name}
+    Select Date - no frame
+    Select account Owner: different buyer and payer validation - no frame   ${BillingAcoount}
+    Verify Order Type
+    Submit Order Button
+    ${order_no}  ValidateTheOrchestrationPlan
+    [Return]   ${order_no}
 
 Validate technical contact in the asset history page using subscription as
    [Documentation]    Go to Account asset History and select the respective product based on subscription ID and validate the technical contact details
@@ -7434,6 +7532,7 @@ Validate technical contact in the asset history page using subscription as
      switch between windows  1
      ${contact_value}  get text  ${Account_Asset_TechnicalContact}
      Should be equal   ${contact_value}    ${Contact_name}
+
 
 Add multiple products in SVE
 
@@ -7472,6 +7571,7 @@ Add multiple products in SVE
      unselect frame
      sleep  30s
     [Return]  ${fyr_value_total}
+
 
 validateproductsbasedonsalestype
 
@@ -7521,3 +7621,68 @@ Validate The Bussiness account With respect To Credit Score
     ${Telia Customer ID}   get text    //div/span[text()="Telia Customer ID"]/..//following::div[2]//lightning-formatted-text
     ${status}   Run keyword and return status   should  be empty  ${Business ID}
     ${status}   Run keyword and return status   should  be empty    ${Telia Customer ID}
+
+Validate Billing and Payer in the asset page
+     [Documentation]   This keyword will validate the Billing and payer details in the asset being created
+     [Arguments]   ${subscription_id}    ${order_no}   ${validated_owner}
+     Go to Entity   ${vLocUpg_TEST_ACCOUNT}
+     scroll page to location  0  9000
+     ScrollUntillFound   ${Asset_history}
+     Log to console  scroll to asset history
+     select frame  ${asset_iframe}
+     ScrollUntillFound  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
+     wait until page contains element  //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a  60s
+     Force click element   //div[text()='Subscription Id']/following::ul/li/div/div[3]/div[text()='${subscription_id}']/../..//div[@class="p-name"]/a
+     Log to console  clicked the product
+     sleep  10s
+     Switch between windows   1
+     ${owner_billing}  get text    ${owner_Detail}
+     ${payer_billing}  get text   ${payer_detail}
+     should be equal   ${validated_owner}    ${owner_billing}
+     Log to console   owner and payer details are same
+     sleep  60s
+     Open Browser And Go To Login Page
+
+DDM And validating Order status
+    [Documentation]   DDM handling to complete the order and validate the completed order
+    [Arguments]   ${Ordernumber}
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    DDM Request Handling   ${Ordernumber}
+    Open Browser And Go To Login Page
+    Login to Salesforce Lightning   ${SYSTEM_ADMIN_USER}  ${SYSTEM_ADMIN_PWD}
+    Go to Entity   ${Ordernumber}
+    Validate Order status   ${Ordernumber}
+
+Select account Owner: different buyer and payer validation - no frame
+     [Documentation]    In change order to select the different buyer and payer account
+     [Arguments]   ${BillingAccount}
+     ${owner_account}=  set variable  //ng-form[@id='BuyerAccount']//span[@class='slds-checkbox--faux']//following::tr//td[@data-label="Type"]//div[text()="${BillingAccount}"]/..//preceding-sibling::td//label
+     log to console    Select Owner Account FLow Chart Page
+     log to console    entering Owner Account
+     Wait Until Element Is Visible    ${Buyer_account}    60s
+     Wait Until Element Is Visible    ${buyer_payer}  60s
+     sleep  10s
+     ScrollUntillFound    ${owner_account}
+     click element   ${owner_account}
+     log to console   ${owner_account}.is clicked
+     #Removing this as this will be ticked automatically as part fo feature delivered recently
+     sleep    3s
+     click element    ${buyer_payer}
+     sleep    3s
+     Wait Until Element Is Visible    ${buyer_account_next_button}    120s
+     click element    ${buyer_account_next_button}
+     sleep  3s
+     log to console    Exiting owner Account page
+     sleep    10s
+
+Order Post script-Different Buyer and Payer
+     [Documentation]   Order post script for different billing and payer account
+     [Arguments]   ${contact_name}   ${BillingAcoount}
+     Select Account - no frame
+     select contact - no frame   ${contact_name}
+     Select Date - no frame
+     Select account Owner: different buyer and payer validation - no frame   ${BillingAcoount}
+     Verify Order Type
+     Submit Order Button
+     ${order_no}  ValidateTheOrchestrationPlan
+     [Return]   ${order_no}

@@ -414,3 +414,18 @@ ${MarkStageasComplete_button}    //span[contains(text(),"Mark Stage as Complete"
 ${Oppo_Related_Tab}    //a[@id="relatedListsTab__item"]
 ${Oppo_Product_panel}  	//h1[contains(.,'Product')]
 ${Product_viewall_button} 	//button[contains(.,'View All')]
+#FYRviaSVE
+${oppo_related}   //li[@title="Related"]
+${name_product}  //*[text()="Product"]
+${button_viewall}  //button[@title="View All"]
+${salestype_text}  //*[@data-label="Sales Type"]//span
+##oneorder13163
+${Asset_history}   //button//span[text()='Asset History']
+${asset_iframe}   xpath=//button/span[text()='Asset History']/../../..//div[@class="content iframe-parent"]/iframe
+${subscription_id}   //div[text()='Subscription Id']/following::ul/li/div/div[3]
+${owner_Detail}    //*[text()="Owner"]//following::td[1]
+${payer_detail}   //*[text()="Payer"]//following::td[1]
+${Buyer_account}   //label[@for="BuyerAccount"]
+${buyer_payer}    //input[@id='BuyerIsPayer']/../span
+${buyer_account_next_button}   //div[@id='SelectedBuyerAccount_nextBtn']//p[@class='ng-binding'][contains(text(),'Next')]
+${billing_acc_namep}   Billing Aarsleff Oy
